@@ -1,0 +1,359 @@
+{
+  "id": "CS-0xF86A-lounge-datafile_download",
+  "opcode": "0xF86A",
+  "direction": "CS",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "datafile_download",
+  "source_dir": "protocol_analysis/commands/CS-0xF86A-lounge-datafile_download",
+  "meta": {
+    "opcode": "`0xF86A`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`datafile_download`",
+    "名字符串": "`)<-_proto_lounge_client::send_datafile_download( ` @ `0x00EEA2A4`",
+    "代码位置": "`sub_B89BE0` @ `0x00B89BE0`（`0x00B89BE0`..`0x00B89DF6`）",
+    "opcode 写入证据": "`0x00B89C69`",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0x106`（262）",
+    "容量申请证据": "`0x00B89C23`（分配器 `[obj+0Ch]` 的 `vt[0x78]`）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)` @ `0x00B89D87`",
+    "提交": "`sub_B02FF0` @ `0x00B89CF4`",
+    "附加通知回调": "`[obj+79A8h]`（模块 id `0x8`）",
+    "配对命令": "S→C `SC-0x5290-lounge-datafile_download_r`"
+  },
+  "handler": "sub_B89BE0",
+  "handler_va": "0x00B89BE0",
+  "block": [
+    "0xB89BE0",
+    "0xB89DF6"
+  ],
+  "name_str": ")<-_proto_lounge_client::send_datafile_download(",
+  "name_str_va": "0x00EEA2A4",
+  "capacity": "0x106",
+  "capacity_va": "0x00B89C23",
+  "closer_va": "0xB89CF4",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)` @ `0x00B89D87`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": "0x00B89D87",
+  "wire": {
+    "length_expr": "var + 4",
+    "fixed": false,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x106（容量记账口径，非线长）",
+    "field_count": 2,
+    "length_source": "field_sum",
+    "readme_conclusion": "字段数：**3**（含 opcode 第 0 项）",
+    "readme_close": "2 + 256 + 4 = 262 == 容量 0x106 = 262（**上限场景精确相等**：串取满 255 字符 + NUL）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "写入 `buf+0`，供服务端分发；无 case 块（C→S）",
+      "enum": "0xF86A",
+      "evidence_va": [
+        "`00B89C69`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "var",
+      "wire_type": "bytes",
+      "name": "filepath",
+      "meaning": "请求下载的数据文件路径（NUL 结尾串）",
+      "purpose": "来源=入参 `arg_0`；写原语 `sub_B02B40`(@`0xB89C73`)，紧邻其前 `push 100h`(@`0xB89C5E`) = **串槽预算 256**；消费 = `strlen(src,256)+1 ≤ 256`（`len ≥ maxlen` 即失败）",
+      "enum": "槽预算 256",
+      "evidence_va": [
+        "`0xB89C5E`,`0xB89C73`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "var",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "hashval",
+      "meaning": "该数据文件的校验哈希",
+      "purpose": "来源=入参 `arg_4` → 内联写 `[eax],ecx`(@`0xB89C98`)",
+      "enum": null,
+      "evidence_va": [
+        "`0xB89C98`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0xF86A（分发器 switch 选择子）",
+      "evidence_va": "0x00B89C69"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0x106 B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xB89C23"
+    },
+    {
+      "step": 3,
+      "kind": "write_scalar",
+      "detail": "filepath：`bytes`（线长 var）—— 请求下载的数据文件路径（NUL 结尾串）",
+      "evidence_va": "0xB89C5E"
+    },
+    {
+      "step": 4,
+      "kind": "write_scalar",
+      "detail": "hashval：`u32`（线长 4）—— 该数据文件的校验哈希",
+      "evidence_va": "0xB89C98"
+    },
+    {
+      "step": 5,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xB89CF4"
+    },
+    {
+      "step": 6,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xB89D90"
+    }
+  ],
+  "capabilities": [
+    "unclassified",
+    "lounge.datafile_download"
+  ],
+  "capabilities_derived": [
+    "unclassified"
+  ],
+  "db_effects": [],
+  "pair": "SC-0x5290-lounge-datafile_download_r",
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:46",
+    "batch": 14,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 262,
+        "va": "0xB89C23",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB89C20",
+        "call_va": "0xB89C28"
+      },
+      "field_window": {
+        "start_va": "0xB89BE0",
+        "end_va": "0xB89CF4",
+        "guard": null,
+        "closer_or_commit_va": "0xB89CF4",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "filepath",
+            "wire_type": "bytes",
+            "width": null,
+            "seq": 1,
+            "shape": "agg",
+            "evidence_va": [
+              "`0xB89C5E`,`0xB89C73`"
+            ]
+          },
+          {
+            "name": "hashval",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "`0xB89C98`"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB89C69",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB89C73",
+            "kind": "write",
+            "width": null,
+            "wire_type": "str",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB89C98",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB89CCA",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 1,
+        "checkable": 1,
+        "pairs": [
+          {
+            "field": "hashval",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB89C98",
+            "kind": "inline_store"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB89C69",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          },
+          {
+            "va": "0xB89C73",
+            "kind": "write",
+            "width": null,
+            "wire_type": "str"
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB89BE0",
+          "0xB89CF4"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 6,
+          "capacity": 262,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB89C73",
+              "kind": "write",
+              "name": ""
+            },
+            {
+              "va": "0xB89CCA",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）6 / 容量 0x106"
+        }
+      },
+      "closer": {
+        "va": "0xB89CF4",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xB89D90",
+        "mov_va": "0xB89D87",
+        "host": "[edx+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "filepath=\"",
+        "hashval="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0xF86A-lounge-datafile_download.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0x00B89C69",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "`00B89C69`"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "DatafileDownload",
+      "role": "request",
+      "wire_length": "var + 4",
+      "members": [
+        {
+          "name": "Filepath",
+          "wire_type": "bytes",
+          "length": "var",
+          "field_ref": "filepath",
+          "element": null,
+          "element_length": null,
+          "cap": null,
+          "count_field": null,
+          "count_field_source": null,
+          "note": "元素成员未建模（composites/ 无此结构），须以 IDA 复核补"
+        },
+        {
+          "name": "Hashval",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "hashval"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "aa97873e0efa7b0c",
+  "check_fingerprint": "3316909b008f07d2"
+}

@@ -1,0 +1,95 @@
+{
+  "id": "tbl_progress",
+  "title": "战况进度",
+  "status": "complete",
+  "table_disposition": "EVENT",
+  "purpose": "EVENT 快照 progress 46B 线；14 成员据点·量表·规则计时等（sub_B07880/sub_B0A820）",
+  "entity_ref": "progress",
+  "evidence_commands": [
+    "SC-0x1365-battle-game_begin",
+    "SC-0xA5DA-battle-authenticate_r",
+    "SC-0xC66B-battle-game_round_end",
+    "SC-0xD5E6-lounge-result_info"
+  ],
+  "column_groups": [
+    {
+      "name": "progress（46B 线 · 14 成员）",
+      "columns": [
+        "progress"
+      ]
+    }
+  ],
+  "columns": [
+    {
+      "name": "progress",
+      "disposition": "COMPOSITE",
+      "composite_ref": "progress",
+      "meaning": "战况进度（日志 `progress=`；claim 64 / 线长 46）",
+      "wire_sources": [
+        {
+          "command": "SC-0x1365-battle-game_begin",
+          "struct": "progress",
+          "field_name": "progress",
+          "offset": 80,
+          "length": 46,
+          "wire_type": "struct",
+          "protocol_path": "protocol_analysis/commands/SC-0x1365-battle-game_begin/README.md",
+          "section": "§3 / §3.2",
+          "reader": "sub_B07880",
+          "printer": "sub_B0A820",
+          "evidence_va": "B0FE6B|B0FE7A|B10358",
+          "notes": "字段 #15；sub_B05ED0 预留 0x40=64 槽"
+        },
+        {
+          "command": "SC-0xA5DA-battle-authenticate_r",
+          "struct": "progress",
+          "field_name": "progress",
+          "offset": null,
+          "length": 46,
+          "wire_type": "struct",
+          "protocol_path": "protocol_analysis/commands/SC-0xA5DA-battle-authenticate_r/README.md",
+          "section": "§3 / §4.3",
+          "reader": "sub_B07880",
+          "printer": "sub_B0A820",
+          "evidence_va": "B25D47|B25D56|B2612E",
+          "notes": "字段 #16；偏移随 room_name 变长浮动"
+        },
+        {
+          "command": "SC-0xC66B-battle-game_round_end",
+          "struct": "progress",
+          "field_name": "progress",
+          "offset": 2,
+          "length": 46,
+          "wire_type": "struct",
+          "protocol_path": "protocol_analysis/commands/SC-0xC66B-battle-game_round_end/README.md",
+          "section": "§3",
+          "reader": "sub_B07880",
+          "printer": "sub_B0A820",
+          "evidence_va": "B2B0FD|B2B10C"
+        },
+        {
+          "command": "SC-0xD5E6-lounge-result_info",
+          "struct": "progress",
+          "field_name": "progress",
+          "offset": 8,
+          "length": 46,
+          "wire_type": "struct",
+          "protocol_path": "protocol_analysis/commands/SC-0xD5E6-lounge-result_info/README.md",
+          "section": "§3",
+          "reader": "sub_B07880",
+          "printer": "sub_B0A820",
+          "evidence_va": "B7DA9B|B7DAAD|B7E050",
+          "notes": "结算包字段 #3；同布局"
+        }
+      ],
+      "asm_verified": true
+    }
+  ],
+  "asm_audit": {
+    "composite_ref": "progress",
+    "status": "pass",
+    "issues_count": 0,
+    "memory_status": "pass",
+    "memory_issues_count": 0
+  }
+}

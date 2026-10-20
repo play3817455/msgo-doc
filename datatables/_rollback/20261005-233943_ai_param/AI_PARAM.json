@@ -1,0 +1,749 @@
+{
+  "id": "AI_PARAM",
+  "title": "AI_PARAM",
+  "csv_path": "npc/ai_param.csv",
+  "purpose": "NPC AI 参数",
+  "table_id": "42",
+  "download_order": "42",
+  "class_name": "CAIParam",
+  "column_count": 43,
+  "disposition": "DOWNLOAD",
+  "source_md": "datatables/01-列注释/42-42-AI_PARAM.md",
+  "columns": [
+    {
+      "read_order": 1,
+      "csv_index": 0,
+      "db_column": "ai_param_id",
+      "type": "u32",
+      "meaning": "主键；CAIParam 索引键（sub_56EA00 col0→+0）",
+      "confidence": "★确证",
+      "status": "confirmed",
+      "name": "ai_param_id",
+      "display_name": "AI 参数 ID",
+      "asm_va": "0x56ea38",
+      "asm_reader": "sub_56EA00",
+      "memory_offset": 0
+    },
+    {
+      "read_order": 2,
+      "csv_index": 1,
+      "db_column": "ai_archetype",
+      "type": "enum",
+      "meaning": "NPC 战斗原型：NORMAL/SHIELD/SNIPER/TANK 等（sub_56E570→+4；驱动行为树模板）",
+      "confidence": "★确证",
+      "status": "confirmed",
+      "name": "ai_archetype",
+      "display_name": "AI 原型",
+      "asm_va": "0x56ea4e",
+      "asm_reader": "sub_56EA00",
+      "enum_converter": "sub_56E570",
+      "enum_values": [
+        {
+          "name": "NORMAL",
+          "value": 1
+        },
+        {
+          "name": "SHIELD",
+          "value": 2
+        },
+        {
+          "name": "UNDERWATER",
+          "value": 3
+        },
+        {
+          "name": "AMPHIBIAN",
+          "value": 4
+        },
+        {
+          "name": "SHOTGUN",
+          "value": 5
+        },
+        {
+          "name": "GATLINGGUN",
+          "value": 6
+        },
+        {
+          "name": "REPAIR",
+          "value": 7
+        },
+        {
+          "name": "SUPPORT",
+          "value": 8
+        },
+        {
+          "name": "CAMERAGUN",
+          "value": 9
+        },
+        {
+          "name": "CANNON",
+          "value": 10
+        },
+        {
+          "name": "SNIPER",
+          "value": 11
+        },
+        {
+          "name": "TANK",
+          "value": 12
+        },
+        {
+          "name": "AREA_AIRCRAFT",
+          "value": 13
+        },
+        {
+          "name": "AA_AIRCRAFT",
+          "value": 14
+        },
+        {
+          "name": "AAA",
+          "value": 15
+        },
+        {
+          "name": "BATTERY",
+          "value": 16
+        },
+        {
+          "name": "DEBRIS",
+          "value": 17
+        }
+      ],
+      "enum_doc": "reverse-login-chain/formats/枚举表.md",
+      "memory_offset": 4
+    },
+    {
+      "read_order": 3,
+      "csv_index": 2,
+      "db_column": "mobility_class",
+      "type": "enum",
+      "meaning": "地形/机动：LAND/UNDERWATER/AIRCRAFT 等（sub_56E610→+8；寻路约束）",
+      "confidence": "★确证",
+      "status": "confirmed",
+      "name": "mobility_class",
+      "display_name": "机动类别",
+      "asm_va": "0x56ea94",
+      "asm_reader": "sub_56EA00",
+      "enum_converter": "sub_56E610",
+      "enum_values": [
+        {
+          "name": "NORMAL",
+          "value": 0
+        },
+        {
+          "name": "LANDLUBBERLY",
+          "value": 1
+        },
+        {
+          "name": "UNDERWATER",
+          "value": 2
+        },
+        {
+          "name": "AMPHIBIAN",
+          "value": 3
+        },
+        {
+          "name": "TANK",
+          "value": 4
+        },
+        {
+          "name": "AIRCRAFT",
+          "value": 5
+        },
+        {
+          "name": "MINOVSKYCRAFT",
+          "value": 6
+        },
+        {
+          "name": "FIXED",
+          "value": 7
+        },
+        {
+          "name": "BROADWAYONLY",
+          "value": 8
+        }
+      ],
+      "enum_doc": "reverse-login-chain/formats/枚举表.md",
+      "memory_offset": 8
+    },
+    {
+      "read_order": 4,
+      "csv_index": 3,
+      "db_column": "custom_aim_cone",
+      "type": "bool",
+      "meaning": "启用 CSV 照准角覆盖（col3!=0→+44；否则用机体默认锥）",
+      "confidence": "★确证",
+      "status": "confirmed",
+      "name": "custom_aim_cone",
+      "display_name": "自定义瞄准锥",
+      "asm_va": "0x56eada",
+      "asm_reader": "sub_56EA00",
+      "memory_offset": 44
+    },
+    {
+      "read_order": 5,
+      "csv_index": 4,
+      "db_column": "aim_pitch_min_deg",
+      "type": "str_float",
+      "meaning": "照准俯仰下限（CSV 度数×π/180 取负存 +12；sub_551CE0 合成俯仰锥）",
+      "confidence": "★确证",
+      "status": "confirmed",
+      "name": "aim_pitch_min_deg",
+      "display_name": "俯仰下限",
+      "asm_va": "0x56eaed",
+      "asm_reader": "sub_56EA00",
+      "memory_offset": 12,
+      "parse": "deg_to_rad_neg"
+    },
+    {
+      "read_order": 6,
+      "csv_index": 5,
+      "db_column": "aim_pitch_max_deg",
+      "type": "str_float",
+      "meaning": "照准俯仰上限（度→弧度 +16）",
+      "confidence": "★确证",
+      "status": "confirmed",
+      "name": "aim_pitch_max_deg",
+      "display_name": "俯仰上限",
+      "asm_va": "0x56eafe",
+      "asm_reader": "sub_56EA00",
+      "memory_offset": 16,
+      "parse": "deg_to_rad"
+    },
+    {
+      "read_order": 7,
+      "csv_index": 6,
+      "db_column": "aim_yaw_min_deg",
+      "type": "str_float",
+      "meaning": "照准偏航下限（度→弧度 +20）",
+      "confidence": "★确证",
+      "status": "confirmed",
+      "name": "aim_yaw_min_deg",
+      "display_name": "偏航下限",
+      "asm_va": "0x56eb0f",
+      "asm_reader": "sub_56EA00",
+      "memory_offset": 20,
+      "parse": "deg_to_rad"
+    },
+    {
+      "read_order": 8,
+      "csv_index": 7,
+      "db_column": "aim_yaw_max_neg_deg",
+      "type": "str_float",
+      "meaning": "照准偏航上限（度→弧度取负 +24）",
+      "confidence": "★确证",
+      "status": "confirmed",
+      "name": "aim_yaw_max_neg_deg",
+      "display_name": "偏航上限(负)",
+      "asm_va": "0x56eb22",
+      "asm_reader": "sub_56EA00",
+      "memory_offset": 24,
+      "parse": "deg_to_rad_neg"
+    },
+    {
+      "read_order": 9,
+      "csv_index": 8,
+      "db_column": "aim_yaw_max_deg",
+      "type": "str_float",
+      "meaning": "照准偏航上限（度→弧度 +28）",
+      "confidence": "★确证",
+      "status": "confirmed",
+      "name": "aim_yaw_max_deg",
+      "display_name": "偏航上限",
+      "asm_va": "0x56eb33",
+      "asm_reader": "sub_56EA00",
+      "memory_offset": 28,
+      "parse": "deg_to_rad"
+    },
+    {
+      "read_order": 10,
+      "csv_index": 9,
+      "db_column": "spread_timing_a",
+      "type": "float",
+      "meaning": "集弾/散布计时系数 A（+32；与 AI_WEAPON_PARAM col9 同语义）",
+      "confidence": "★确证",
+      "status": "confirmed",
+      "name": "spread_timing_a",
+      "display_name": "集弾系数A",
+      "asm_va": "0x56eb44",
+      "asm_reader": "sub_56EA00",
+      "memory_offset": 32
+    },
+    {
+      "read_order": 11,
+      "csv_index": 10,
+      "db_column": "score_weight_x100",
+      "type": "u32",
+      "meaning": "AI 目标评分权重×100（col10→+36；选敌优先级缩放）",
+      "confidence": "○ASM确证",
+      "status": "confirmed",
+      "name": "score_weight_x100",
+      "display_name": "评分权重",
+      "asm_va": "0x56eb55",
+      "asm_reader": "sub_56EA00",
+      "memory_offset": 36
+    },
+    {
+      "read_order": 12,
+      "csv_index": 11,
+      "db_column": "warning_shot_range_deg",
+      "type": "str_float",
+      "meaning": "警告射击阈值角（度→弧度 +40；负值用 flt_D6D398 默认）",
+      "confidence": "★确证",
+      "status": "confirmed",
+      "name": "warning_shot_range_deg",
+      "display_name": "警告射击角",
+      "asm_va": "0x56eb58",
+      "asm_reader": "sub_56EA00",
+      "memory_offset": 40
+    },
+    {
+      "read_order": 13,
+      "csv_index": 12,
+      "db_column": "use_default_spread",
+      "type": "bool",
+      "meaning": "使用内置散布默认值（col12→+520 bit0；置位则 +48/+52/+56 写常量）",
+      "confidence": "○ASM确证",
+      "status": "confirmed",
+      "name": "use_default_spread",
+      "display_name": "默认散布",
+      "asm_va": "0x56eb98",
+      "asm_reader": "sub_56EA00"
+    },
+    {
+      "read_order": 14,
+      "csv_index": 13,
+      "db_column": "move_wait_flag",
+      "type": "bool",
+      "meaning": "移动-射击等待标志（col13→+520 bit2；CGoal_MoveActionWait）",
+      "confidence": "○ASM确证",
+      "status": "confirmed",
+      "name": "move_wait_flag",
+      "display_name": "移动等待",
+      "asm_va": "0x56ebc1",
+      "asm_reader": "sub_56EA00"
+    },
+    {
+      "read_order": 15,
+      "csv_index": 14,
+      "db_column": "burst_fire_flag",
+      "type": "bool",
+      "meaning": "连射/点射行为标志（col14→+520 bit1）",
+      "confidence": "○ASM确证",
+      "status": "confirmed",
+      "name": "burst_fire_flag",
+      "display_name": "连射标志",
+      "asm_va": "0x56ebe0",
+      "asm_reader": "sub_56EA00"
+    },
+    {
+      "read_order": 16,
+      "csv_index": 15,
+      "db_column": "near_range_weight",
+      "type": "float",
+      "meaning": "近距离段交战权重（col15→+76 float）",
+      "confidence": "○ASM确证",
+      "status": "confirmed",
+      "name": "near_range_weight",
+      "display_name": "近距离权重",
+      "asm_va": "0x56ec0a",
+      "asm_reader": "sub_56EA00",
+      "memory_offset": 76
+    },
+    {
+      "read_order": 17,
+      "csv_index": 16,
+      "db_column": "mid_range_weight",
+      "type": "float",
+      "meaning": "中距离段交战权重（col16→+80）",
+      "confidence": "○ASM确证",
+      "status": "confirmed",
+      "name": "mid_range_weight",
+      "display_name": "中距离权重",
+      "asm_va": "0x56ec14",
+      "asm_reader": "sub_56EA00",
+      "memory_offset": 80
+    },
+    {
+      "read_order": 18,
+      "csv_index": 17,
+      "db_column": "sniper_mode_flag",
+      "type": "bool",
+      "meaning": "狙击/精密射击模式（col17→+520 bit3）",
+      "confidence": "○ASM确证",
+      "status": "confirmed",
+      "name": "sniper_mode_flag",
+      "display_name": "狙击模式",
+      "asm_va": "0x56ec43",
+      "asm_reader": "sub_56EA00"
+    },
+    {
+      "read_order": 19,
+      "csv_index": 18,
+      "db_column": "near_band_param",
+      "type": "u32",
+      "meaning": "近距离段 sub_56E220 块首 float（→+228）",
+      "confidence": "○ASM确证",
+      "status": "confirmed",
+      "name": "near_band_param",
+      "display_name": "近距带参数",
+      "asm_va": "0x56ec4b",
+      "asm_reader": "sub_56EA00",
+      "memory_offset": 228
+    },
+    {
+      "read_order": 20,
+      "csv_index": 19,
+      "name": "col19",
+      "db_column": "col19",
+      "type": "u32",
+      "status": "gap",
+      "meaning": "CSV col19 预留（sub_56EA00 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）",
+      "display_name": "CSV col19 预留",
+      "confidence": "○ASM确证",
+      "asm_reader": "sub_56EA00"
+    },
+    {
+      "read_order": 21,
+      "csv_index": 20,
+      "db_column": "near_weight_a",
+      "type": "u32",
+      "meaning": "近距离权重 A（col20×flt_D69A58→+232）",
+      "confidence": "○ASM确证",
+      "status": "confirmed",
+      "name": "near_weight_a",
+      "display_name": "近距权重A",
+      "asm_va": "0x56ec4b",
+      "asm_reader": "sub_56EA00",
+      "memory_offset": 232
+    },
+    {
+      "read_order": 22,
+      "csv_index": 21,
+      "db_column": "near_weight_b",
+      "type": "enum",
+      "meaning": "近距离权重 B（→+236）",
+      "confidence": "○ASM确证",
+      "status": "confirmed",
+      "name": "near_weight_b",
+      "display_name": "近距权重B",
+      "asm_va": "0x56ec4b",
+      "asm_reader": "sub_56EA00",
+      "memory_offset": 236
+    },
+    {
+      "read_order": 23,
+      "csv_index": 22,
+      "name": "col22",
+      "db_column": "col22",
+      "type": "u32",
+      "status": "gap",
+      "meaning": "CSV col22 预留（sub_56EA00 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）",
+      "display_name": "CSV col22 预留",
+      "confidence": "○ASM确证",
+      "asm_reader": "sub_56EA00"
+    },
+    {
+      "read_order": 24,
+      "csv_index": 23,
+      "db_column": "mid_weight_a",
+      "type": "float",
+      "meaning": "中距离权重 A（→+340）",
+      "confidence": "○ASM确证",
+      "status": "confirmed",
+      "name": "mid_weight_a",
+      "display_name": "中距权重A",
+      "asm_va": "0x56ec71",
+      "asm_reader": "sub_56EA00",
+      "memory_offset": 340
+    },
+    {
+      "read_order": 25,
+      "csv_index": 24,
+      "db_column": "mid_weight_b",
+      "type": "float",
+      "meaning": "中距离权重 B（→+344）",
+      "confidence": "○ASM确证",
+      "status": "confirmed",
+      "name": "mid_weight_b",
+      "display_name": "中距权重B",
+      "asm_va": "0x56ecd2",
+      "asm_reader": "sub_56EA00",
+      "memory_offset": 344
+    },
+    {
+      "read_order": 26,
+      "csv_index": 25,
+      "db_column": "field_25",
+      "type": "float",
+      "meaning": "浮点参数 col25（× flt_D69A58）",
+      "confidence": "○ASM确证",
+      "status": "confirmed",
+      "name": "field_25",
+      "display_name": "浮点参数 col25",
+      "asm_va": "0x56ece2",
+      "asm_reader": "sub_56EA00"
+    },
+    {
+      "read_order": 27,
+      "csv_index": 26,
+      "db_column": "field_26",
+      "type": "float",
+      "meaning": "浮点参数 col26（× flt_D69A58）",
+      "confidence": "○ASM确证",
+      "status": "confirmed",
+      "name": "field_26",
+      "display_name": "浮点参数 col26",
+      "asm_va": "0x56ecff",
+      "asm_reader": "sub_56EA00"
+    },
+    {
+      "read_order": 28,
+      "csv_index": 27,
+      "db_column": "field_27",
+      "type": "float",
+      "meaning": "浮点参数 col27（sub_56E220 block2）",
+      "confidence": "○ASM确证",
+      "status": "confirmed",
+      "name": "field_27",
+      "display_name": "浮点参数 col27",
+      "asm_va": "0x56ed24",
+      "asm_reader": "sub_56EA00"
+    },
+    {
+      "read_order": 29,
+      "csv_index": 28,
+      "db_column": "field_28",
+      "type": "float",
+      "meaning": "浮点参数 col28（sub_56E220 block2）",
+      "confidence": "○ASM确证",
+      "status": "confirmed",
+      "name": "field_28",
+      "display_name": "浮点参数 col28",
+      "asm_va": "0x56ed24",
+      "asm_reader": "sub_56EA00"
+    },
+    {
+      "read_order": 30,
+      "csv_index": 29,
+      "db_column": "field_29",
+      "type": "float",
+      "meaning": "浮点参数 col29（sub_56E220 block2）",
+      "confidence": "○ASM确证",
+      "status": "confirmed",
+      "name": "field_29",
+      "display_name": "浮点参数 col29",
+      "asm_va": "0x56ed24",
+      "asm_reader": "sub_56EA00"
+    },
+    {
+      "read_order": 31,
+      "csv_index": 30,
+      "db_column": "far_weight_a",
+      "type": "float",
+      "meaning": "远距离权重 A（→+448）",
+      "confidence": "○ASM确证",
+      "status": "confirmed",
+      "name": "far_weight_a",
+      "display_name": "远距权重A",
+      "asm_va": "0x56ed24",
+      "asm_reader": "sub_56EA00",
+      "memory_offset": 448
+    },
+    {
+      "read_order": 32,
+      "csv_index": 31,
+      "db_column": "far_weight_b",
+      "type": "float",
+      "meaning": "远距离权重 B（→+452）",
+      "confidence": "○ASM确证",
+      "status": "confirmed",
+      "name": "far_weight_b",
+      "display_name": "远距权重B",
+      "asm_va": "0x56ed24",
+      "asm_reader": "sub_56EA00",
+      "memory_offset": 452
+    },
+    {
+      "read_order": 33,
+      "csv_index": 32,
+      "db_column": "fire_mode_weight_a",
+      "type": "u32",
+      "meaning": "射击模式权重 A（归一化→+480）",
+      "confidence": "○ASM确证",
+      "status": "confirmed",
+      "name": "fire_mode_weight_a",
+      "display_name": "射击模式A",
+      "asm_va": "0x56ed7a",
+      "asm_reader": "sub_56EA00",
+      "memory_offset": 480
+    },
+    {
+      "read_order": 34,
+      "csv_index": 33,
+      "db_column": "fire_mode_weight_b",
+      "type": "float",
+      "meaning": "射击模式权重 B（→+484）",
+      "confidence": "○ASM确证",
+      "status": "confirmed",
+      "name": "fire_mode_weight_b",
+      "display_name": "射击模式B",
+      "asm_va": "0x56ed84",
+      "asm_reader": "sub_56EA00",
+      "memory_offset": 484
+    },
+    {
+      "read_order": 35,
+      "csv_index": 34,
+      "db_column": "fire_mode_weight_c",
+      "type": "float",
+      "meaning": "射击模式权重 C（→+488）",
+      "confidence": "○ASM确证",
+      "status": "confirmed",
+      "name": "fire_mode_weight_c",
+      "display_name": "射击模式C",
+      "asm_va": "0x56ed9f",
+      "asm_reader": "sub_56EA00",
+      "memory_offset": 488
+    },
+    {
+      "read_order": 36,
+      "csv_index": 35,
+      "db_column": "field_35",
+      "type": "float",
+      "meaning": "浮点参数 col35（sub_56E220 block3）",
+      "confidence": "○ASM确证",
+      "status": "confirmed",
+      "name": "field_35",
+      "display_name": "浮点参数 col35",
+      "asm_va": "0x56edc4",
+      "asm_reader": "sub_56EA00"
+    },
+    {
+      "read_order": 37,
+      "csv_index": 36,
+      "db_column": "field_36",
+      "type": "float",
+      "meaning": "浮点参数 col36（sub_56E220 block3）",
+      "confidence": "○ASM确证",
+      "status": "confirmed",
+      "name": "field_36",
+      "display_name": "浮点参数 col36",
+      "asm_va": "0x56edc4",
+      "asm_reader": "sub_56EA00"
+    },
+    {
+      "read_order": 38,
+      "csv_index": 37,
+      "db_column": "field_37",
+      "type": "float",
+      "meaning": "浮点参数 col37（sub_56E220 block3）",
+      "confidence": "○ASM确证",
+      "status": "confirmed",
+      "name": "field_37",
+      "display_name": "浮点参数 col37",
+      "asm_va": "0x56edc4",
+      "asm_reader": "sub_56EA00"
+    },
+    {
+      "read_order": 39,
+      "csv_index": 38,
+      "db_column": "field_38",
+      "type": "float",
+      "meaning": "浮点参数 col38（sub_56E220 block3）",
+      "confidence": "○ASM确证",
+      "status": "confirmed",
+      "name": "field_38",
+      "display_name": "浮点参数 col38",
+      "asm_va": "0x56edc4",
+      "asm_reader": "sub_56EA00"
+    },
+    {
+      "read_order": 40,
+      "csv_index": 39,
+      "db_column": "linked_weapon_param_a",
+      "type": "float",
+      "meaning": "关联 AI_WEAPON_PARAM ID（col0x86→+32）",
+      "confidence": "○ASM确证",
+      "status": "confirmed",
+      "name": "linked_weapon_param_a",
+      "display_name": "关联武器参A",
+      "asm_va": "0x56edc4",
+      "asm_reader": "sub_56EA00",
+      "memory_offset": 32
+    },
+    {
+      "read_order": 41,
+      "csv_index": 40,
+      "db_column": "linked_weapon_param_b",
+      "type": "float",
+      "meaning": "关联 AI_WEAPON_PARAM ID（col0x87→+36）",
+      "confidence": "○ASM确证",
+      "status": "confirmed",
+      "name": "linked_weapon_param_b",
+      "display_name": "关联武器参B",
+      "asm_va": "0x56ee5b",
+      "asm_reader": "sub_56EA00",
+      "memory_offset": 36
+    },
+    {
+      "read_order": 42,
+      "csv_index": 41,
+      "db_column": "melee_subtype",
+      "type": "u32",
+      "meaning": "WRESTLE 子类（sub_596990→+2224）",
+      "confidence": "○ASM确证",
+      "status": "confirmed",
+      "name": "melee_subtype",
+      "display_name": "近战子类",
+      "asm_va": "0x56eff3",
+      "asm_reader": "sub_56EA00",
+      "memory_offset": 2224
+    },
+    {
+      "read_order": 43,
+      "csv_index": 42,
+      "db_column": "unknown_u32_42",
+      "type": "u32",
+      "meaning": "整型参数 col42",
+      "confidence": "○ASM确证",
+      "status": "confirmed",
+      "name": "unknown_u32_42",
+      "display_name": "整型参数 col42",
+      "asm_va": "0x56f005",
+      "asm_reader": "sub_56EA00"
+    },
+    {
+      "read_order": 44,
+      "csv_index": 43,
+      "db_column": "unknown_u32_43",
+      "type": "u32",
+      "meaning": "整型参数 col43",
+      "confidence": "○ASM确证",
+      "status": "confirmed",
+      "name": "unknown_u32_43",
+      "display_name": "整型参数 col43",
+      "asm_va": "0x56f020",
+      "asm_reader": "sub_56EA00"
+    },
+    {
+      "read_order": 45,
+      "csv_index": 44,
+      "db_column": "flag_44",
+      "type": "bool",
+      "meaning": "开关位 col44（@+521 bit0）",
+      "confidence": "○ASM确证",
+      "status": "confirmed",
+      "name": "flag_44",
+      "display_name": "开关位 col44",
+      "asm_va": "0x56f039",
+      "asm_reader": "sub_56EA00"
+    }
+  ],
+  "column_defined": 45,
+  "column_confirmed": 43,
+  "column_partial": 0,
+  "column_pending": 0,
+  "column_gap": 2,
+  "asm_reader": "sub_56EA00",
+  "asm_status": "complete",
+  "column_gap_note": "CSV 行含 col0..col44，读表跳过未映射列见 gap 标记"
+}

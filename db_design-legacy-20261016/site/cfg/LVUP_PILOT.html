@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LVUP_PILOT · db_design</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <h1><a href="../index.html">db_design</a></h1>
+      <p class="header-note">唯一证据源：<code>protocol_analysis/</code></p>
+      <nav><a href="../index.html">首页</a>
+      <a href="../homing/index.html">归位库</a>
+      <a href="../tables/index.html">旧表留档</a>
+      <a href="../commands/index.html">命令</a>
+      <a href="../cfg/index.html" class="active">配置表79</a>
+      <a href="../srv/index.html">服务端配置</a>
+      <a href="../asm-audit/index.html">ASM 审计</a>
+      <a href="../oracle-audit/index.html">Oracle 审计</a>
+      <a href="../entities/index.html">协议实体</a>
+      <a href="../fields/index.html">字段索引</a>
+      <a href="../relations.html">表关系</a></nav>
+    </div>
+  </header>
+  <main class="wrap">
+
+    <p class="breadcrumb"><a href="index.html">配置表79</a> / <code>LVUP_PILOT</code></p>
+    <h2><code>LVUP_PILOT</code> <span class="badge" style="background:#1565c0">DOWNLOAD</span> <span class="badge" style="background:#2e7d32">确证</span></h2>
+    <dl class="asm-dl">
+      <dt>CSV</dt><dd><code>growth/lvup_pilot.csv</code></dd>
+      <dt>用途</dt><dd>机师等级成长曲线</dd>
+      <dt>读表函数</dt><dd><code>sub_57A160</code></dd>
+      <dt>表ID</dt><dd>11</dd>
+      <dt>下载序</dt><dd>11</dd>
+      <dt>类名</dt><dd><code>CLvupPilotTable</code></dd>
+      <dt>列统计</dt><dd>9 列 · 确证 9 · 已映射 0 · 间隙 36</dd>
+      <dt>证据</dt><dd><a href="../../../datatables/01-列注释/11-11-LVUP_PILOT.md" target="_blank">datatables/01-列注释/11-11-LVUP_PILOT.md</a></dd>
+    </dl>
+    <section>
+      <h3>列定案</h3>
+      <p class="muted"><code>db_column</code> = PostgreSQL 列名（确证/有语义的 partial 用订案名；<code>unknown_*</code> 暂保留 colN）</p>
+      <table class="wide">
+        <thead>
+          <tr>
+            <th>CSV#</th><th>DB列</th><th>订案名</th><th>中文摘要</th><th>类型</th>
+            <th>状态</th><th>读表</th><th>偏移/VA</th><th>语义详情</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><code>0</code></td>
+      <td><code>pilot_level</code></td>
+      <td><code>pilot_level</code></td>
+      <td>机师等级</td>
+      <td><code>u8</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_57A160</code></td>
+      <td class="muted">csv 0 · +0 · 0x57a19a</td>
+      <td class="meaning-cell">机师等级（u8 主键 col0）</td>
+    </tr>
+    <tr>
+      <td><code>1</code></td>
+      <td><code>level_name</code></td>
+      <td><code>level_name</code></td>
+      <td>等级名称</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_57A160</code></td>
+      <td class="muted">csv 1 · +4 · 0x57a1a5</td>
+      <td class="meaning-cell">等级显示名称（wstring col1；sub_456D90→sub_4029E0）</td>
+    </tr>
+    <tr>
+      <td><code>2</code></td>
+      <td><code>col2</code></td>
+      <td><code>col2</code></td>
+      <td>CSV col2 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_57A160</code></td>
+      <td class="muted">csv 2</td>
+      <td class="meaning-cell">CSV col2 预留（sub_57A160 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>3</code></td>
+      <td><code>col3</code></td>
+      <td><code>col3</code></td>
+      <td>CSV col3 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_57A160</code></td>
+      <td class="muted">csv 3</td>
+      <td class="meaning-cell">CSV col3 预留（sub_57A160 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>4</code></td>
+      <td><code>col4</code></td>
+      <td><code>col4</code></td>
+      <td>CSV col4 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_57A160</code></td>
+      <td class="muted">csv 4</td>
+      <td class="meaning-cell">CSV col4 预留（sub_57A160 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>5</code></td>
+      <td><code>col5</code></td>
+      <td><code>col5</code></td>
+      <td>CSV col5 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_57A160</code></td>
+      <td class="muted">csv 5</td>
+      <td class="meaning-cell">CSV col5 预留（sub_57A160 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>6</code></td>
+      <td><code>col6</code></td>
+      <td><code>col6</code></td>
+      <td>CSV col6 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_57A160</code></td>
+      <td class="muted">csv 6</td>
+      <td class="meaning-cell">CSV col6 预留（sub_57A160 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>7</code></td>
+      <td><code>col7</code></td>
+      <td><code>col7</code></td>
+      <td>CSV col7 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_57A160</code></td>
+      <td class="muted">csv 7</td>
+      <td class="meaning-cell">CSV col7 预留（sub_57A160 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>8</code></td>
+      <td><code>col8</code></td>
+      <td><code>col8</code></td>
+      <td>CSV col8 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_57A160</code></td>
+      <td class="muted">csv 8</td>
+      <td class="meaning-cell">CSV col8 预留（sub_57A160 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>9</code></td>
+      <td><code>col9</code></td>
+      <td><code>col9</code></td>
+      <td>CSV col9 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_57A160</code></td>
+      <td class="muted">csv 9</td>
+      <td class="meaning-cell">CSV col9 预留（sub_57A160 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>10</code></td>
+      <td><code>col10</code></td>
+      <td><code>col10</code></td>
+      <td>CSV col10 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_57A160</code></td>
+      <td class="muted">csv 10</td>
+      <td class="meaning-cell">CSV col10 预留（sub_57A160 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>11</code></td>
+      <td><code>col11</code></td>
+      <td><code>col11</code></td>
+      <td>CSV col11 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_57A160</code></td>
+      <td class="muted">csv 11</td>
+      <td class="meaning-cell">CSV col11 预留（sub_57A160 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>12</code></td>
+      <td><code>col12</code></td>
+      <td><code>col12</code></td>
+      <td>CSV col12 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_57A160</code></td>
+      <td class="muted">csv 12</td>
+      <td class="meaning-cell">CSV col12 预留（sub_57A160 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>13</code></td>
+      <td><code>col13</code></td>
+      <td><code>col13</code></td>
+      <td>CSV col13 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_57A160</code></td>
+      <td class="muted">csv 13</td>
+      <td class="meaning-cell">CSV col13 预留（sub_57A160 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>14</code></td>
+      <td><code>col14</code></td>
+      <td><code>col14</code></td>
+      <td>CSV col14 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_57A160</code></td>
+      <td class="muted">csv 14</td>
+      <td class="meaning-cell">CSV col14 预留（sub_57A160 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>15</code></td>
+      <td><code>col15</code></td>
+      <td><code>col15</code></td>
+      <td>CSV col15 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_57A160</code></td>
+      <td class="muted">csv 15</td>
+      <td class="meaning-cell">CSV col15 预留（sub_57A160 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>16</code></td>
+      <td><code>col16</code></td>
+      <td><code>col16</code></td>
+      <td>CSV col16 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_57A160</code></td>
+      <td class="muted">csv 16</td>
+      <td class="meaning-cell">CSV col16 预留（sub_57A160 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>17</code></td>
+      <td><code>col17</code></td>
+      <td><code>col17</code></td>
+      <td>CSV col17 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_57A160</code></td>
+      <td class="muted">csv 17</td>
+      <td class="meaning-cell">CSV col17 预留（sub_57A160 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>18</code></td>
+      <td><code>col18</code></td>
+      <td><code>col18</code></td>
+      <td>CSV col18 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_57A160</code></td>
+      <td class="muted">csv 18</td>
+      <td class="meaning-cell">CSV col18 预留（sub_57A160 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>19</code></td>
+      <td><code>col19</code></td>
+      <td><code>col19</code></td>
+      <td>CSV col19 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_57A160</code></td>
+      <td class="muted">csv 19</td>
+      <td class="meaning-cell">CSV col19 预留（sub_57A160 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>20</code></td>
+      <td><code>col20</code></td>
+      <td><code>col20</code></td>
+      <td>CSV col20 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_57A160</code></td>
+      <td class="muted">csv 20</td>
+      <td class="meaning-cell">CSV col20 预留（sub_57A160 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>21</code></td>
+      <td><code>col21</code></td>
+      <td><code>col21</code></td>
+      <td>CSV col21 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_57A160</code></td>
+      <td class="muted">csv 21</td>
+      <td class="meaning-cell">CSV col21 预留（sub_57A160 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>22</code></td>
+      <td><code>col22</code></td>
+      <td><code>col22</code></td>
+      <td>CSV col22 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_57A160</code></td>
+      <td class="muted">csv 22</td>
+      <td class="meaning-cell">CSV col22 预留（sub_57A160 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>23</code></td>
+      <td><code>col23</code></td>
+      <td><code>col23</code></td>
+      <td>CSV col23 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_57A160</code></td>
+      <td class="muted">csv 23</td>
+      <td class="meaning-cell">CSV col23 预留（sub_57A160 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>24</code></td>
+      <td><code>col24</code></td>
+      <td><code>col24</code></td>
+      <td>CSV col24 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_57A160</code></td>
+      <td class="muted">csv 24</td>
+      <td class="meaning-cell">CSV col24 预留（sub_57A160 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>25</code></td>
+      <td><code>col25</code></td>
+      <td><code>col25</code></td>
+      <td>CSV col25 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_57A160</code></td>
+      <td class="muted">csv 25</td>
+      <td class="meaning-cell">CSV col25 预留（sub_57A160 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>26</code></td>
+      <td><code>col26</code></td>
+      <td><code>col26</code></td>
+      <td>CSV col26 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_57A160</code></td>
+      <td class="muted">csv 26</td>
+      <td class="meaning-cell">CSV col26 预留（sub_57A160 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>27</code></td>
+      <td><code>col27</code></td>
+      <td><code>col27</code></td>
+      <td>CSV col27 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_57A160</code></td>
+      <td class="muted">csv 27</td>
+      <td class="meaning-cell">CSV col27 预留（sub_57A160 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>28</code></td>
+      <td><code>col28</code></td>
+      <td><code>col28</code></td>
+      <td>CSV col28 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_57A160</code></td>
+      <td class="muted">csv 28</td>
+      <td class="meaning-cell">CSV col28 预留（sub_57A160 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>29</code></td>
+      <td><code>col29</code></td>
+      <td><code>col29</code></td>
+      <td>CSV col29 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_57A160</code></td>
+      <td class="muted">csv 29</td>
+      <td class="meaning-cell">CSV col29 预留（sub_57A160 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>30</code></td>
+      <td><code>col30</code></td>
+      <td><code>col30</code></td>
+      <td>CSV col30 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_57A160</code></td>
+      <td class="muted">csv 30</td>
+      <td class="meaning-cell">CSV col30 预留（sub_57A160 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>31</code></td>
+      <td><code>col31</code></td>
+      <td><code>col31</code></td>
+      <td>CSV col31 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_57A160</code></td>
+      <td class="muted">csv 31</td>
+      <td class="meaning-cell">CSV col31 预留（sub_57A160 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>32</code></td>
+      <td><code>col32</code></td>
+      <td><code>col32</code></td>
+      <td>CSV col32 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_57A160</code></td>
+      <td class="muted">csv 32</td>
+      <td class="meaning-cell">CSV col32 预留（sub_57A160 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>33</code></td>
+      <td><code>col33</code></td>
+      <td><code>col33</code></td>
+      <td>CSV col33 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_57A160</code></td>
+      <td class="muted">csv 33</td>
+      <td class="meaning-cell">CSV col33 预留（sub_57A160 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>34</code></td>
+      <td><code>col34</code></td>
+      <td><code>col34</code></td>
+      <td>CSV col34 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_57A160</code></td>
+      <td class="muted">csv 34</td>
+      <td class="meaning-cell">CSV col34 预留（sub_57A160 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>35</code></td>
+      <td><code>exp_multiplier</code></td>
+      <td><code>exp_multiplier</code></td>
+      <td>经验倍率(CSV)</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_57A160</code></td>
+      <td class="muted">csv 35 · +32 · 0x57a1f8</td>
+      <td class="meaning-cell">经验倍率系数（CSV col35 × flt_D6AE54=0.01 → 临时 +32；sub_57A160 尾段 @0x57a243 清零，客户端运行时恒为 0）。升级 UI 实际读 +48/+52/+56（bonus_gp/reward_id/skill_point）。私服 DB 可保留本列作自定义成长规则。</td>
+    </tr>
+    <tr>
+      <td><code>36</code></td>
+      <td><code>flag_milestone</code></td>
+      <td><code>flag_milestone</code></td>
+      <td>里程碑标志(CSV)</td>
+      <td><code>bool</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_57A160</code></td>
+      <td class="muted">csv 36 · +36 · 0x57a208</td>
+      <td class="meaning-cell">里程碑等级标志（bool col36 → 临时 +36；@0x57a24c 清零，无 runtime consumer）。CSV 占位/兼容列，官方客户端不生效。</td>
+    </tr>
+    <tr>
+      <td><code>37</code></td>
+      <td><code>legacy_unlock_param</code></td>
+      <td><code>legacy_unlock_param</code></td>
+      <td>遗留解锁参数</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_57A160</code></td>
+      <td class="muted">csv 37 · +40 · 0x57a213</td>
+      <td class="meaning-cell">遗留解锁参数（u32 col37 → 临时 +40；@0x57a24f 清零）。读表校验用，未接入升级逻辑（对比 col41/42/44 会持久化）。</td>
+    </tr>
+    <tr>
+      <td><code>38</code></td>
+      <td><code>flag_special_level</code></td>
+      <td><code>flag_special_level</code></td>
+      <td>特殊等级标志(CSV)</td>
+      <td><code>bool</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_57A160</code></td>
+      <td class="muted">csv 38 · +44 · 0x57a223</td>
+      <td class="meaning-cell">特殊等级标志（bool col38 → 临时 +44；@0x57a252 清零）。CSV 兼容列；持久化奖励见 col41 reward_id、col42 bonus_gp、col44 skill_point（sub_8BE4B0 升级演出读取 +48/+52）。</td>
+    </tr>
+    <tr>
+      <td><code>39</code></td>
+      <td><code>col39</code></td>
+      <td><code>col39</code></td>
+      <td>CSV col39 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_57A160</code></td>
+      <td class="muted">csv 39</td>
+      <td class="meaning-cell">CSV col39 预留（sub_57A160 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>40</code></td>
+      <td><code>col40</code></td>
+      <td><code>col40</code></td>
+      <td>CSV col40 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_57A160</code></td>
+      <td class="muted">csv 40</td>
+      <td class="meaning-cell">CSV col40 预留（sub_57A160 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>41</code></td>
+      <td><code>reward_id</code></td>
+      <td><code>reward_id</code></td>
+      <td>等级达成奖励 ID</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_57A160</code></td>
+      <td class="muted">csv 41 · +52 · 0x57a22e</td>
+      <td class="meaning-cell">等级达成奖励 ID（u32 col41 → +52；sub_8BE4B0 升级 UI 读取）</td>
+    </tr>
+    <tr>
+      <td><code>42</code></td>
+      <td><code>bonus_gp</code></td>
+      <td><code>bonus_gp</code></td>
+      <td>等级奖励 GP</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_57A160</code></td>
+      <td class="muted">csv 42 · +48 · 0x57a239</td>
+      <td class="meaning-cell">等级奖励 GP（u32 col42 → +48；sub_8BE4B0 / sub_69FD20 读取）</td>
+    </tr>
+    <tr>
+      <td><code>43</code></td>
+      <td><code>col43</code></td>
+      <td><code>col43</code></td>
+      <td>CSV col43 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_57A160</code></td>
+      <td class="muted">csv 43</td>
+      <td class="meaning-cell">CSV col43 预留（sub_57A160 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>44</code></td>
+      <td><code>skill_point</code></td>
+      <td><code>skill_point</code></td>
+      <td>获得技能/属性点</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_57A160</code></td>
+      <td class="muted">csv 44 · +56 · 0x57a23c</td>
+      <td class="meaning-cell">获得技能/属性点（u32 col44 → +56；sub_69FD20 等级差计算用 v6[17]）</td>
+    </tr></tbody>
+      </table>
+    </section>
+
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">生成于 2026-10-12 · 改 JSON 后重跑 build_site.py · HTML 只读</div>
+  </footer>
+</body>
+</html>

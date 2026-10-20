@@ -1,0 +1,661 @@
+{
+  "id": "mapgimmick_entry",
+  "title": "地图机关元素 mapgimmick_entry（52B 线 / 64B 槽）",
+  "length": 52,
+  "status": "complete",
+  "reader": "sub_B07BD0",
+  "printer": "sub_B0AEA0",
+  "memory_claim": 188,
+  "wire_layout": "1+1+2+4+4+4+7×2+2×2+8×2+2",
+  "evidence": {
+    "commands": [
+      "SC-0x1365-battle-game_begin"
+    ],
+    "protocol_paths": [
+      "protocol_analysis/commands/SC-0x1365-battle-game_begin/README.md"
+    ],
+    "note": "元素线长 52（读取器 sub_B07BD0 整函数扫描：i8 + i8 + u16 + u32 + u32 + u32 + 7×u16 + ctrl_ent_id 2×u16 + 8×u16 + 尾 u16）≠ 槽步进 64。前 13 个成员名与内存偏移取自元素打印器 sub_B0AEA0；`ctrl_ent_id={` 之后 8 个 u16 打印器只打长度不打名字，按线序记 `param_*`，尾 1×u16 记 `tail_1`。　落地槽（memory_claim）188B：sub_B05F50 的 `add dword ptr [edx],0BCh` = 188B/槽（元素线长 52，槽按最大变体预留）。"
+  },
+  "members": [
+    {
+      "name": "type",
+      "offset": 0,
+      "memory_offset": 0,
+      "length": 1,
+      "wire_type": "i8",
+      "meaning": "机关类型",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x1365-battle-game_begin",
+          "struct": "mapgimmick_entry",
+          "field_name": "type",
+          "offset": 0,
+          "length": 1,
+          "wire_type": "i8",
+          "protocol_path": "protocol_analysis/commands/SC-0x1365-battle-game_begin/README.md",
+          "section": "§3 字段 3.4（mapgimmicks）",
+          "reader": "sub_B07BD0",
+          "printer": null,
+          "evidence_va": "0xB07BD7"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07BD7",
+      "asm_audit_date": "2026-09-22"
+    },
+    {
+      "name": "stat",
+      "offset": 1,
+      "memory_offset": 1,
+      "length": 1,
+      "wire_type": "i8",
+      "meaning": "状态",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x1365-battle-game_begin",
+          "struct": "mapgimmick_entry",
+          "field_name": "stat",
+          "offset": 1,
+          "length": 1,
+          "wire_type": "i8",
+          "protocol_path": "protocol_analysis/commands/SC-0x1365-battle-game_begin/README.md",
+          "section": "§3 字段 3.4（mapgimmicks）",
+          "reader": "sub_B07BD0",
+          "printer": null,
+          "evidence_va": "0xB07BF1"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07BF1",
+      "asm_audit_date": "2026-09-22"
+    },
+    {
+      "name": "ent_id",
+      "offset": 2,
+      "memory_offset": 2,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "实体 ID",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x1365-battle-game_begin",
+          "struct": "mapgimmick_entry",
+          "field_name": "ent_id",
+          "offset": 2,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0x1365-battle-game_begin/README.md",
+          "section": "§3 字段 3.4（mapgimmicks）",
+          "reader": "sub_B07BD0",
+          "printer": null,
+          "evidence_va": "0xB07C07"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07C07",
+      "asm_audit_date": "2026-09-22"
+    },
+    {
+      "name": "gauge_max",
+      "offset": 4,
+      "memory_offset": 4,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "计量上限",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x1365-battle-game_begin",
+          "struct": "mapgimmick_entry",
+          "field_name": "gauge_max",
+          "offset": 4,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x1365-battle-game_begin/README.md",
+          "section": "§3 字段 3.4（mapgimmicks）",
+          "reader": "sub_B07BD0",
+          "printer": null,
+          "evidence_va": "0xB07C1F"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07C1F",
+      "asm_audit_date": "2026-09-22"
+    },
+    {
+      "name": "msma_id",
+      "offset": 8,
+      "memory_offset": 8,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "机体 ID",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x1365-battle-game_begin",
+          "struct": "mapgimmick_entry",
+          "field_name": "msma_id",
+          "offset": 8,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x1365-battle-game_begin/README.md",
+          "section": "§3 字段 3.4（mapgimmicks）",
+          "reader": "sub_B07BD0",
+          "printer": null,
+          "evidence_va": "0xB07C38"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07C38",
+      "asm_audit_date": "2026-09-22"
+    },
+    {
+      "name": "msma_id2",
+      "offset": 12,
+      "memory_offset": 12,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "机体 ID 2",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x1365-battle-game_begin",
+          "struct": "mapgimmick_entry",
+          "field_name": "msma_id2",
+          "offset": 12,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x1365-battle-game_begin/README.md",
+          "section": "§3 字段 3.4（mapgimmicks）",
+          "reader": "sub_B07BD0",
+          "printer": null,
+          "evidence_va": "0xB07C4D"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07C4D",
+      "asm_audit_date": "2026-09-22"
+    },
+    {
+      "name": "pos_x",
+      "offset": 16,
+      "memory_offset": 16,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "X 坐标",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x1365-battle-game_begin",
+          "struct": "mapgimmick_entry",
+          "field_name": "pos_x",
+          "offset": 16,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0x1365-battle-game_begin/README.md",
+          "section": "§3 字段 3.4（mapgimmicks）",
+          "reader": "sub_B07BD0",
+          "printer": null,
+          "evidence_va": "0xB07C5E"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07C5E",
+      "asm_audit_date": "2026-09-22"
+    },
+    {
+      "name": "pos_y",
+      "offset": 18,
+      "memory_offset": 18,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "Y 坐标",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x1365-battle-game_begin",
+          "struct": "mapgimmick_entry",
+          "field_name": "pos_y",
+          "offset": 18,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0x1365-battle-game_begin/README.md",
+          "section": "§3 字段 3.4（mapgimmicks）",
+          "reader": "sub_B07BD0",
+          "printer": null,
+          "evidence_va": "0xB07C6F"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07C6F",
+      "asm_audit_date": "2026-09-22"
+    },
+    {
+      "name": "pos_z",
+      "offset": 20,
+      "memory_offset": 20,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "Z 坐标",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x1365-battle-game_begin",
+          "struct": "mapgimmick_entry",
+          "field_name": "pos_z",
+          "offset": 20,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0x1365-battle-game_begin/README.md",
+          "section": "§3 字段 3.4（mapgimmicks）",
+          "reader": "sub_B07BD0",
+          "printer": null,
+          "evidence_va": "0xB07C80"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07C80",
+      "asm_audit_date": "2026-09-22"
+    },
+    {
+      "name": "dir",
+      "offset": 22,
+      "memory_offset": 22,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "朝向",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x1365-battle-game_begin",
+          "struct": "mapgimmick_entry",
+          "field_name": "dir",
+          "offset": 22,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0x1365-battle-game_begin/README.md",
+          "section": "§3 字段 3.4（mapgimmicks）",
+          "reader": "sub_B07BD0",
+          "printer": null,
+          "evidence_va": "0xB07C91"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07C91",
+      "asm_audit_date": "2026-09-22"
+    },
+    {
+      "name": "pos2_x",
+      "offset": 24,
+      "memory_offset": 24,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "坐标 2 X",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x1365-battle-game_begin",
+          "struct": "mapgimmick_entry",
+          "field_name": "pos2_x",
+          "offset": 24,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0x1365-battle-game_begin/README.md",
+          "section": "§3 字段 3.4（mapgimmicks）",
+          "reader": "sub_B07BD0",
+          "printer": null,
+          "evidence_va": "0xB07CA2"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07CA2",
+      "asm_audit_date": "2026-09-22"
+    },
+    {
+      "name": "pos2_y",
+      "offset": 26,
+      "memory_offset": 26,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "坐标 2 Y",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x1365-battle-game_begin",
+          "struct": "mapgimmick_entry",
+          "field_name": "pos2_y",
+          "offset": 26,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0x1365-battle-game_begin/README.md",
+          "section": "§3 字段 3.4（mapgimmicks）",
+          "reader": "sub_B07BD0",
+          "printer": null,
+          "evidence_va": "0xB07CB3"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07CB3",
+      "asm_audit_date": "2026-09-22"
+    },
+    {
+      "name": "pos2_z",
+      "offset": 28,
+      "memory_offset": 28,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "坐标 2 Z",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x1365-battle-game_begin",
+          "struct": "mapgimmick_entry",
+          "field_name": "pos2_z",
+          "offset": 28,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0x1365-battle-game_begin/README.md",
+          "section": "§3 字段 3.4（mapgimmicks）",
+          "reader": "sub_B07BD0",
+          "printer": null,
+          "evidence_va": "0xB07CC4"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07CC4",
+      "asm_audit_date": "2026-09-22"
+    },
+    {
+      "name": "ctrl_ent_id",
+      "offset": 30,
+      "memory_offset": 30,
+      "length": 4,
+      "wire_type": "u16[2]",
+      "meaning": "控制实体 ID（2 元定长，`cmp ebx,2`）",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x1365-battle-game_begin",
+          "struct": "mapgimmick_entry",
+          "field_name": "ctrl_ent_id",
+          "offset": 30,
+          "length": 4,
+          "wire_type": "u16[2]",
+          "protocol_path": "protocol_analysis/commands/SC-0x1365-battle-game_begin/README.md",
+          "section": "§3 字段 3.4（mapgimmicks）",
+          "reader": "sub_B07BD0",
+          "printer": null,
+          "evidence_va": "0xB07CFB"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07CFB",
+      "asm_audit_date": "2026-09-22"
+    },
+    {
+      "name": "param_1",
+      "offset": 34,
+      "memory_offset": 34,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "打印器只打 ctrl_count，未命名",
+      "disposition": "TBD",
+      "wire_sources": [
+        {
+          "command": "SC-0x1365-battle-game_begin",
+          "struct": "mapgimmick_entry",
+          "field_name": "param_1",
+          "offset": 34,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0x1365-battle-game_begin/README.md",
+          "section": "§3 字段 3.4（mapgimmicks）",
+          "reader": "sub_B07BD0",
+          "printer": null,
+          "evidence_va": "0xB07D02"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07D02",
+      "asm_audit_date": "2026-09-22"
+    },
+    {
+      "name": "param_2",
+      "offset": 36,
+      "memory_offset": 36,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "打印器只打 ctrl_count，未命名",
+      "disposition": "TBD",
+      "wire_sources": [
+        {
+          "command": "SC-0x1365-battle-game_begin",
+          "struct": "mapgimmick_entry",
+          "field_name": "param_2",
+          "offset": 36,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0x1365-battle-game_begin/README.md",
+          "section": "§3 字段 3.4（mapgimmicks）",
+          "reader": "sub_B07BD0",
+          "printer": null,
+          "evidence_va": "0xB07D13"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07D13",
+      "asm_audit_date": "2026-09-22"
+    },
+    {
+      "name": "param_3",
+      "offset": 38,
+      "memory_offset": 38,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "打印器只打 ctrl_count，未命名",
+      "disposition": "TBD",
+      "wire_sources": [
+        {
+          "command": "SC-0x1365-battle-game_begin",
+          "struct": "mapgimmick_entry",
+          "field_name": "param_3",
+          "offset": 38,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0x1365-battle-game_begin/README.md",
+          "section": "§3 字段 3.4（mapgimmicks）",
+          "reader": "sub_B07BD0",
+          "printer": null,
+          "evidence_va": "0xB07D24"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07D24",
+      "asm_audit_date": "2026-09-22"
+    },
+    {
+      "name": "param_4",
+      "offset": 40,
+      "memory_offset": 40,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "打印器只打 ctrl_count，未命名",
+      "disposition": "TBD",
+      "wire_sources": [
+        {
+          "command": "SC-0x1365-battle-game_begin",
+          "struct": "mapgimmick_entry",
+          "field_name": "param_4",
+          "offset": 40,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0x1365-battle-game_begin/README.md",
+          "section": "§3 字段 3.4（mapgimmicks）",
+          "reader": "sub_B07BD0",
+          "printer": null,
+          "evidence_va": "0xB07D35"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07D35",
+      "asm_audit_date": "2026-09-22"
+    },
+    {
+      "name": "param_5",
+      "offset": 42,
+      "memory_offset": 42,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "打印器只打 ctrl_count，未命名",
+      "disposition": "TBD",
+      "wire_sources": [
+        {
+          "command": "SC-0x1365-battle-game_begin",
+          "struct": "mapgimmick_entry",
+          "field_name": "param_5",
+          "offset": 42,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0x1365-battle-game_begin/README.md",
+          "section": "§3 字段 3.4（mapgimmicks）",
+          "reader": "sub_B07BD0",
+          "printer": null,
+          "evidence_va": "0xB07D46"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07D46",
+      "asm_audit_date": "2026-09-22"
+    },
+    {
+      "name": "param_6",
+      "offset": 44,
+      "memory_offset": 44,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "打印器只打 ctrl_count，未命名",
+      "disposition": "TBD",
+      "wire_sources": [
+        {
+          "command": "SC-0x1365-battle-game_begin",
+          "struct": "mapgimmick_entry",
+          "field_name": "param_6",
+          "offset": 44,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0x1365-battle-game_begin/README.md",
+          "section": "§3 字段 3.4（mapgimmicks）",
+          "reader": "sub_B07BD0",
+          "printer": null,
+          "evidence_va": "0xB07D57"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07D57",
+      "asm_audit_date": "2026-09-22"
+    },
+    {
+      "name": "param_7",
+      "offset": 46,
+      "memory_offset": 46,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "打印器只打 ctrl_count，未命名",
+      "disposition": "TBD",
+      "wire_sources": [
+        {
+          "command": "SC-0x1365-battle-game_begin",
+          "struct": "mapgimmick_entry",
+          "field_name": "param_7",
+          "offset": 46,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0x1365-battle-game_begin/README.md",
+          "section": "§3 字段 3.4（mapgimmicks）",
+          "reader": "sub_B07BD0",
+          "printer": null,
+          "evidence_va": "0xB07D68"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07D68",
+      "asm_audit_date": "2026-09-22"
+    },
+    {
+      "name": "param_8",
+      "offset": 48,
+      "memory_offset": 48,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "打印器只打 ctrl_count，未命名",
+      "disposition": "TBD",
+      "wire_sources": [
+        {
+          "command": "SC-0x1365-battle-game_begin",
+          "struct": "mapgimmick_entry",
+          "field_name": "param_8",
+          "offset": 48,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0x1365-battle-game_begin/README.md",
+          "section": "§3 字段 3.4（mapgimmicks）",
+          "reader": "sub_B07BD0",
+          "printer": null,
+          "evidence_va": "0xB07D79"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07D79",
+      "asm_audit_date": "2026-09-22"
+    },
+    {
+      "name": "tail_1",
+      "offset": 50,
+      "memory_offset": 50,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "线尾 u16（打印器未命名）",
+      "disposition": "TBD",
+      "wire_sources": [
+        {
+          "command": "SC-0x1365-battle-game_begin",
+          "struct": "mapgimmick_entry",
+          "field_name": "tail_1",
+          "offset": 50,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0x1365-battle-game_begin/README.md",
+          "section": "§3 字段 3.4（mapgimmicks）",
+          "reader": "sub_B07BD0",
+          "printer": null,
+          "evidence_va": "0xB07D91"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07D91",
+      "asm_audit_date": "2026-09-22"
+    }
+  ],
+  "asm_audit": {
+    "verified": "2026-09-22",
+    "reader": "sub_B07BD0",
+    "writer": null,
+    "total_bytes": 52,
+    "fields_ok": 23,
+    "fields_fail": 0,
+    "issues": [],
+    "status": "pass",
+    "memory": {
+      "verified": "2026-09-22",
+      "status": "pass",
+      "memory_claim": 188,
+      "mem_fields": 23,
+      "fields_ok": 23,
+      "fields_fail": 0,
+      "issues": []
+    }
+  }
+}

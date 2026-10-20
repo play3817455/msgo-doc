@@ -1,0 +1,45 @@
+{
+  "id": "config",
+  "title": "config",
+  "description": "协议实体 config；34B 线 / 40B 槽；10 成员（sub_B077B0/sub_B0A670）",
+  "table_ref": "tbl_config",
+  "disposition": "EVENT",
+  "wire_forms": [
+    {
+      "name": "game_begin",
+      "length": 34,
+      "memory_claim": 40,
+      "commands": [
+        "SC-0x1365-battle-game_begin"
+      ],
+      "protocol_path": "protocol_analysis/commands/SC-0x1365-battle-game_begin/README.md",
+      "reader": "sub_B077B0",
+      "printer": "sub_B0A670",
+      "note": "报文字段 #14；包内定长偏移 46"
+    },
+    {
+      "name": "authenticate",
+      "length": 34,
+      "memory_claim": 40,
+      "commands": [
+        "SC-0xA5DA-battle-authenticate_r"
+      ],
+      "protocol_path": "protocol_analysis/commands/SC-0xA5DA-battle-authenticate_r/README.md",
+      "reader": "sub_B077B0",
+      "printer": "sub_B0A670",
+      "note": "报文字段 #15；偏移随 room_name 变长浮动"
+    }
+  ],
+  "fields": [
+    { "name": "A_troops", "offset": 0, "length": 2, "wire_type": "u16", "meaning": "A 军兵力", "disposition": "EVENT" },
+    { "name": "A_point_max", "offset": 4, "length": 4, "wire_type": "u32", "meaning": "A 军点数上限", "disposition": "EVENT" },
+    { "name": "A_win_cnt", "offset": 8, "length": 4, "wire_type": "u32", "meaning": "A 军胜利计数", "disposition": "EVENT" },
+    { "name": "B_troops", "offset": 12, "length": 2, "wire_type": "u16", "meaning": "B 军兵力", "disposition": "EVENT" },
+    { "name": "B_point_max", "offset": 16, "length": 4, "wire_type": "u32", "meaning": "B 军点数上限", "disposition": "EVENT" },
+    { "name": "B_win_cnt", "offset": 20, "length": 4, "wire_type": "u32", "meaning": "B 军胜利计数", "disposition": "EVENT" },
+    { "name": "dotdmg_min", "offset": 24, "length": 4, "wire_type": "u32", "meaning": "dot 伤害下限", "disposition": "EVENT" },
+    { "name": "atk_team", "offset": 28, "length": 2, "wire_type": "u16", "meaning": "当前进攻方队伍", "disposition": "EVENT" },
+    { "name": "round_now", "offset": 32, "length": 4, "wire_type": "u32", "meaning": "当前回合", "disposition": "EVENT" },
+    { "name": "round_max", "offset": 36, "length": 4, "wire_type": "u32", "meaning": "回合上限", "disposition": "EVENT" }
+  ]
+}

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>杯赛队伍 · db_design</title>
+  <link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <h1><a href="../../index.html">db_design</a></h1>
+      <p class="header-note">唯一证据源：<code>protocol_analysis/</code></p>
+      <nav><a href="../../index.html">首页</a>
+      <a href="../../homing/index.html" class="active">归位库</a>
+      <a href="../../tables/index.html">旧表留档</a>
+      <a href="../../commands/index.html">命令</a>
+      <a href="../../cfg/index.html">配置表79</a>
+      <a href="../../srv/index.html">服务端配置</a>
+      <a href="../../asm-audit/index.html">ASM 审计</a>
+      <a href="../../oracle-audit/index.html">Oracle 审计</a>
+      <a href="../../entities/index.html">协议实体</a>
+      <a href="../../fields/index.html">字段索引</a>
+      <a href="../../relations.html">表关系</a></nav>
+    </div>
+  </header>
+  <main class="wrap">
+
+    <nav class="breadcrumb"><a href="../index.html">归位库</a> / <span><code>cupteam</code></span></nav>
+    <h2>杯赛队伍 <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="badge" style="background:#9e9e9e">root</span></h2>
+    <section class="asm-panel"><dl class="asm-dl"><dt>对象</dt><dd><code>cupteam</code></dd><dt>形态</dt><dd>根表</dd><dt>L1 域</dt><dd>unknown <span class="muted">{}</span></dd><dt>生命周期</dt><dd><span class="badge" style="background:#2e7d32">PERSIST</span></dd><dt>旧表锚点</dt><dd><span class="muted">—</span></dd><dt>身份列</dt><dd><code>cupteam_id</code> </dd><dt>主键</dt><dd><code>world_id</code> <code>cupteam_id</code> </dd><dt>主键类别</dt><dd><code>self_named</code></dd><dt>作用域</dt><dd><code>world_id</code> </dd><dt>数组子表键</dt><dd><code>elem_index</code> </dd><dt>内嵌成员</dt><dd><span class="muted">—</span></dd><dt>父对象</dt><dd><span class="muted">—</span></dd><dt>线视图</dt><dd><code>cupteam</code> </dd><dt>宿主线体</dt><dd><code>cupteam</code></dd><dt>折叠线形</dt><dd><span class="muted">—</span></dd></dl></section>
+
+    <h3>线视图（同一对象在线上可能有多种形态）</h3>
+    <table>
+      <thead><tr><th>复合体</th><th>线长</th><th>槽宽</th><th>reader</th><th>printer</th><th>命令</th></tr></thead>
+      <tbody><tr><td><code>cupteam</code></td><td>0 B</td><td> B</td><td><code></code></td><td><code></code></td><td>0 · </td></tr></tbody>
+    </table>
+
+    <h3>落库</h3>
+    
+    <section class="col-group">
+      <h3><code>game.cupteam</code> 根表
+        </h3>
+      <p class="muted">自然键 <code>world_id, cupteam_id</code>
+        
+        
+         · 唯一索引 <code>uq_game_cupteam_world_id_cupteam_id</code> (world_id, cupteam_id)</p>
+      <table>
+        <thead><tr><th>列</th><th>DDL 类型</th><th>角色</th><th>线类型 / 长</th><th>含义</th><th>DDL 注释（出处）</th><th>归位出处</th></tr></thead>
+        <tbody><tr><td><code>cupteam_id</code> <span class="muted">PK</span></td><td><code>BIGINT NOT NULL</code></td><td><span class="badge" style="background:#2e7d32">identity</span></td><td><code>u32</code> · 4B</td><td>杯赛队伍 ID（服务端分配，身份列；dailycup_team_info_get_r 里叫 team_id）</td><td class="muted">杯赛队伍 ID（服务端分配，身份列；dailycup_team_info_get_r 里叫 team_id） [u32] SC-0x6B2C-battle-roomlobby_cupteam_notice@0xb1d48e</td><td><a href="../../commands/SC-0x6B2C-battle-roomlobby_cupteam_notice.html"><code>SC-0x6B2C-battle-roomlobby_cupteam_notice</code></a> <span class="muted">@0xb1d48e</span></td></tr><tr><td><code>cupteam_rate</code></td><td><code>BIGINT</code></td><td><span class="badge" style="background:#455a64">attribute</span></td><td><code>u32</code> · 4B</td><td>杯赛队伍积分率</td><td class="muted">杯赛队伍积分率 [u32] SC-0x6B2C-battle-roomlobby_cupteam_notice@0xb1d4b2</td><td><a href="../../commands/SC-0x6B2C-battle-roomlobby_cupteam_notice.html"><code>SC-0x6B2C-battle-roomlobby_cupteam_notice</code></a> <span class="muted">@0xb1d4b2</span></td></tr></tbody>
+      </table>
+    </section>
+
+    <h3>子表链接</h3>
+    <table><thead><tr><th>成员</th><th>类别</th><th>子表 / 行所在表</th><th>元素数</th><th>元素线长</th><th>复合体</th><th>VA</th></tr></thead>
+      <tbody><tr><td colspan="7" class="muted">无</td></tr></tbody></table>
+    
+
+    <h3>外键（出向）</h3>
+    <table><thead><tr><th>本列</th><th>目标</th><th>类别</th><th>依据</th><th>VA</th></tr></thead>
+      <tbody><tr><td colspan="5" class="muted">无</td></tr></tbody></table>
+    
+    <h3>外键（入向：别人指向我）</h3>
+    <table><thead><tr><th>来源列</th><th>目标</th><th>类别</th><th>VA</th></tr></thead>
+      <tbody><tr><td><code>bracket_node.win_team_id</code></td><td><code>cupteam.cupteam_id</code></td><td>fk</td><td><span class="muted">0xB46FFC</span></td></tr><tr><td><code>pilot.cupteam_id</code></td><td><code>cupteam.cupteam_id</code></td><td>fk</td><td><span class="muted">B8A18E|B08AD0|B06980</span></td></tr><tr><td><code>pilot_detail.cupteam_id</code></td><td><code>cupteam.cupteam_id</code></td><td>fk</td><td><span class="muted">0xb426bb</span></td></tr></tbody></table>
+    <h3>主数据引用（→ cfg.*）</h3>
+    <table><thead><tr><th>本列</th><th>目标</th><th>依据</th><th>VA</th></tr></thead>
+      <tbody><tr><td colspan="4" class="muted">无</td></tr></tbody></table>
+    <h3>未决引用</h3>
+    <table><thead><tr><th>本列</th><th>原因</th><th>VA</th></tr></thead>
+      <tbody><tr><td colspan="3" class="muted">无</td></tr></tbody></table>
+
+    <h3>不落库成员（0）</h3>
+    <p class="muted">EVENT/TBD 生命周期、<code>memory_only</code>、对齐补位：线上有、库里不建列，
+      理由在此显式登记（反向覆盖门）。</p>
+    <table><thead><tr><th>成员</th><th>角色</th><th>理由</th><th>线类型</th><th>VA</th></tr></thead>
+      <tbody><tr><td colspan="5" class="muted">无</td></tr></tbody></table>
+
+    <h3>命令归属（CS 写 / SC 读）</h3>
+    <table><thead><tr><th>写命令</th><th>op</th><th>via</th><th>verbs</th></tr></thead>
+      <tbody><tr><td colspan="4" class="muted">无</td></tr></tbody></table>
+    <table><thead><tr><th>读命令</th><th>op</th><th>via</th><th>verbs</th></tr></thead>
+      <tbody><tr><td><a href="../../commands/SC-0x3199-lounge-notify_cupteam_party_rate_update.html"><code>SC-0x3199-lounge-notify_cupteam_party_rate_update</code></a></td><td>read</td><td><code></code></td><td></td></tr><tr><td><a href="../../commands/SC-0x6B2C-battle-roomlobby_cupteam_notice.html"><code>SC-0x6B2C-battle-roomlobby_cupteam_notice</code></a></td><td>read</td><td><code></code></td><td></td></tr><tr><td><a href="../../commands/SC-0x8669-lounge-dailycup_team_info_get_r.html"><code>SC-0x8669-lounge-dailycup_team_info_get_r</code></a></td><td>read</td><td><code></code></td><td></td></tr><tr><td><a href="../../commands/SC-0xD784-lounge-cupteam_party_status_update.html"><code>SC-0xD784-lounge-cupteam_party_status_update</code></a></td><td>read</td><td><code></code></td><td></td></tr></tbody></table>
+    
+    <p class="muted">子表：—</p>
+    
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">生成于 2026-10-12 · 改 JSON 后重跑 build_site.py · HTML 只读</div>
+  </footer>
+</body>
+</html>

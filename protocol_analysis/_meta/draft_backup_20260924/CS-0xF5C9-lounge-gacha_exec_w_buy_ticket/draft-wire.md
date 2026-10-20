@@ -1,0 +1,45 @@
+# 机器草案：线格式 —— CS-0xF5C9-lounge-gacha_exec_w_buy_ticket
+
+> 本文件由 `tools/ida_draft_wire.py` 生成，**不要手工编辑**。
+> 类型/偏移/长度/证据均来自汇编；**含义/用途一律待人工补齐**（规范 §7）。
+> 定稿请写 `README.md` 的帧格式表 + `fields.csv`，并把状态改为 `WIP`/`DONE`。
+
+## 命令
+
+| 项 | 值 |
+|---|---|
+| opcode | `0xF5C9` |
+| 方向 | CS |
+| 协议类 | `lounge_client` |
+| 命令名 | `gacha_exec_w_buy_ticket` |
+| 代码位置 | `0xb9e240`..`0xb9e5cc` |
+| 声明容量 | `0x22` |
+| 字段总长 | **20** 字节 |
+| **自校验** | **PASS(容量≥线长)**（全定长时：S→C「容量 == 负载长」；C→S「容量 ≥ 负载长 + 2」）
+
+## 草案字段表（机器提取）
+
+| # | 偏移 | 长度 | 线类型 | 证据VA |
+|---|---|---|---|---|
+| 1 | 0 | 4 | u32 | `0xb9e2cc` |
+| 2 | 4 | 1 | u8 | `0xb9e2e5` |
+| 3 | 5 | 4 | u32 | `0xb9e2ed` |
+| 4 | 9 | 1 | u8 | `0xb9e307` |
+| 5 | 10 | 1 | u8 | `0xb9e321` |
+| 6 | 11 | 4 | u32 | `0xb9e33b` |
+| 7 | 15 | 4 | u32 | `0xb9e355` |
+| 8 | 19 | 1 | u8 | `0xb9e36f` |
+
+## 汇编证据序列（按线序）
+
+```asm
+; 0xb9e2cc  mov [ecx] → 内联写 u32
+; 0xb9e2e5  mov [edx] → 内联写 u8
+; 0xb9e2ed  call sub_B02D80 → 写 u32
+; 0xb9e307  call sub_B061C0 → 写 u8
+; 0xb9e321  call sub_B061C0 → 写 u8
+; 0xb9e33b  call sub_B02D80 → 写 u32
+; 0xb9e355  call sub_B02D80 → 写 u32
+; 0xb9e36f  call sub_B061C0 → 写 u8
+; —— 扫描停止于 0xb9e3b3：call sub_B03020（非 IO）
+```

@@ -1,0 +1,43 @@
+# 汇编证据 —— CS-0x9B19-battle-roomlobby_pilot_mindex_update
+
+> 所有地址为完整 VA（`VA = 文件偏移 + 0x400000`，无重定位），可在 IDA 中直接 `G` 跳转。
+
+## 1. 代码位置
+
+- sub_B31E20 @ `0xB31E20`（`0xB31E20`..`0xB31FC9`）
+- 命令名字符串：`)<-_proto_battle_client::send_roomlobby_pilot_mindex_update(` @ `0xEE05A4`
+- opcode 写入：`0xB31E91`
+- 声明容量：`0x0006`（分配器容量 `push` @ `0xB31E63`）
+- 发送去向：`vt[0x58]` @ `0xB31F5A`
+
+## 2. 组包块切片（容量申请 → opcode → 逐字段写线 → 提交）
+
+```asm
+  00b31e63  push    6
+  00b31e91  mov     word ptr [ebp+0], 9B19h   ; 字段 0 `opcode` => 2
+  00b31ea1  mov     [eax], cl   ; 字段 1 `member_index` => 1
+```
+
+> `sub_B02D80`=写 u32 / `sub_B02DA0`=写 u16 / `sub_B061C0`=写 u8 / `sub_B06190`=写 u64 /
+> `sub_B061E0`=写 f32 / `sub_B02B40`=写 NUL 串（**紧邻其前的 `push N`** = 串槽预算）；内联 `mov [reg],src` 宽度看操作数。
+
+## 3. 提交后的 trace 打印块（字段名取证：日志名序 == 线序）
+
+```asm
+  00EDC33C  push offset a<name>; "member_index="
+```
+
+## 4. 发送去向切片
+
+```asm
+  00b31f5a  mov     eax, [edx+58h]
+```
+
+> `vt[0x58]` = 客户端对象虚表槽；实参 = `(buf, 负载长度)`（`sub <len>, <buf首址>` 即「游标 − 缓冲首址」）。
+
+## 5. 字段证据索引
+
+| 字段 | 证据 VA | 说明 |
+|---|---|---|
+| `opcode` | `0xB31E91` | u16 / 2 |
+| `member_index` | `0xB31EA1` | u8 / 1 |

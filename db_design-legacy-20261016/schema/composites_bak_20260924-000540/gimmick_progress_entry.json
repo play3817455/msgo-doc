@@ -1,0 +1,121 @@
+{
+  "id": "gimmick_progress_entry",
+  "title": "机关进度元素 gimmick_progress_entry（7B 线 / 8B 槽）",
+  "length": 7,
+  "status": "complete",
+  "reader": "sub_B07DB0",
+  "printer": null,
+  "memory_claim": 32,
+  "wire_layout": "4+1+2",
+  "evidence": {
+    "commands": [
+      "SC-0x1159-battle-game_mapgimmick_update"
+    ],
+    "protocol_paths": [
+      "protocol_analysis/commands/SC-0x1159-battle-game_mapgimmick_update/README.md"
+    ],
+    "note": "元素线长 7（读取器 sub_B07DB0：u32 + 1B + u16）≠ 槽步进 8。无元素打印器（日志只打数组整体）；成员名沿用草稿占位行 `gimmick_progress.gauge_now` / `.stat` / `.access_ent_id`（线宽与读取器一致），占位行已由覆写删除，成员改由本文件承载。　落地槽（memory_claim）32B：sub_B05FC0 的 `add dword ptr [edx],20h` = 32B/槽（元素线长 7）。"
+  },
+  "members": [
+    {
+      "name": "gauge_now",
+      "offset": 0,
+      "memory_offset": 0,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "当前计量",
+      "disposition": "TBD",
+      "wire_sources": [
+        {
+          "command": "SC-0x1159-battle-game_mapgimmick_update",
+          "struct": "gimmick_progress_entry",
+          "field_name": "gauge_now",
+          "offset": 0,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x1159-battle-game_mapgimmick_update/README.md",
+          "section": "§3 字段 2",
+          "reader": "sub_B07DB0",
+          "printer": null,
+          "evidence_va": "0xB07DB6"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07DB6",
+      "asm_audit_date": "2026-09-22"
+    },
+    {
+      "name": "stat",
+      "offset": 4,
+      "memory_offset": 4,
+      "length": 1,
+      "wire_type": "i8",
+      "meaning": "机关状态",
+      "disposition": "TBD",
+      "wire_sources": [
+        {
+          "command": "SC-0x1159-battle-game_mapgimmick_update",
+          "struct": "gimmick_progress_entry",
+          "field_name": "stat",
+          "offset": 4,
+          "length": 1,
+          "wire_type": "i8",
+          "protocol_path": "protocol_analysis/commands/SC-0x1159-battle-game_mapgimmick_update/README.md",
+          "section": "§3 字段 2",
+          "reader": "sub_B07DB0",
+          "printer": null,
+          "evidence_va": "0xB07DCC"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07DCC",
+      "asm_audit_date": "2026-09-22"
+    },
+    {
+      "name": "access_ent_id",
+      "offset": 5,
+      "memory_offset": 6,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "接入实体 ID",
+      "disposition": "TBD",
+      "wire_sources": [
+        {
+          "command": "SC-0x1159-battle-game_mapgimmick_update",
+          "struct": "gimmick_progress_entry",
+          "field_name": "access_ent_id",
+          "offset": 5,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0x1159-battle-game_mapgimmick_update/README.md",
+          "section": "§3 字段 2",
+          "reader": "sub_B07DB0",
+          "printer": null,
+          "evidence_va": "0xB07DDE"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07DDE",
+      "asm_audit_date": "2026-09-22"
+    }
+  ],
+  "asm_audit": {
+    "verified": "2026-09-22",
+    "reader": "sub_B07DB0",
+    "writer": null,
+    "total_bytes": 7,
+    "fields_ok": 3,
+    "fields_fail": 0,
+    "issues": [],
+    "status": "pass",
+    "memory": {
+      "verified": "2026-09-22",
+      "status": "pass",
+      "memory_claim": 32,
+      "mem_fields": 3,
+      "fields_ok": 3,
+      "fields_fail": 0,
+      "issues": []
+    }
+  }
+}

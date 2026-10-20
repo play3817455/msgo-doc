@@ -1,0 +1,217 @@
+{
+ "id": "SC-0xB317-lounge-btlroom_change_mission_r",
+ "verified_at": "2026-09-30 15:25:44",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "block",
+ "block": [
+  "0xB73954",
+  "0xB73C0F"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 82,
+   "va": "0xB73970",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xB7396D",
+   "call_va": "0xB73972"
+  },
+  "field_window": {
+   "start_va": "0xB7395C",
+   "end_va": "0xB73A87",
+   "guard": {
+    "va": "0xB7395B",
+    "func": "0xB41120",
+    "module_id": 149,
+    "release_va": "0xB41110"
+   },
+   "closer_or_commit_va": "0xB73A60",
+   "within_model_block": true,
+   "range_from": "block"
+  },
+  "primitive_widths": {
+   "direction": "SC",
+   "expected": [
+    {
+     "name": "result",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "B739AB"
+     ]
+    },
+    {
+     "name": "room_name",
+     "wire_type": "bytes(NUL 串)",
+     "width": null,
+     "seq": 2,
+     "shape": "agg",
+     "evidence_va": [
+      "B739EC",
+      "B739D9"
+     ]
+    },
+    {
+     "name": "mission_id",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 3,
+     "shape": "scalar",
+     "evidence_va": [
+      "B73A2C"
+     ]
+    },
+    {
+     "name": "is_lock",
+     "wire_type": "u8",
+     "width": 1,
+     "seq": 4,
+     "shape": "scalar",
+     "evidence_va": [
+      "B73A50",
+      "B73BD2"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB739AB",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB739EC",
+     "kind": "read",
+     "width": null,
+     "wire_type": "str",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB73A2C",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB73A50",
+     "kind": "read",
+     "width": 1,
+     "wire_type": "u8",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 3,
+   "checkable": 3,
+   "pairs": [
+    {
+     "field": "result",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB739AB",
+     "kind": "read"
+    },
+    {
+     "field": "mission_id",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB73A2C",
+     "kind": "read"
+    },
+    {
+     "field": "is_lock",
+     "width": 1,
+     "shape": "scalar",
+     "va": "0xB73A50",
+     "kind": "read"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [
+    {
+     "va": "0xB739EC",
+     "kind": "read",
+     "width": null,
+     "wire_type": "str"
+    }
+   ],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB7395C",
+    "0xB73A87"
+   ],
+   "scalar_match_verifiable": true,
+   "capacity_relation": {
+    "observed_min": 9,
+    "capacity": 82,
+    "relation": "within",
+    "unknown_events": [
+     {
+      "va": "0xB739EC",
+      "kind": "read",
+      "name": ""
+     }
+    ],
+    "is_lower_bound": true,
+    "note": "观测线长（下界）9 / 容量 0x52"
+   }
+  },
+  "closer": {
+   "va": "0xB73A60",
+   "kind": "jz",
+   "jcc_va": "0xB73A66",
+   "seq_va": "0xB73A5C",
+   "jcc_dst": "0xB73A82",
+   "cmp": "cmp     ebx, [esp+2C5Ch+var_2C40]",
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x1BC]",
+   "slot_value": 444,
+   "va": "0xB73BF3",
+   "mov_va": "0xB73BDB",
+   "host": "[edx+1BCh]",
+   "argc": 4,
+   "form": "mov_then_call",
+   "error_slot": {
+    "slot": "vt[0x64]",
+    "va": "0xB739C5",
+    "argc": 2
+   }
+  },
+  "log_strings": [
+   "result=",
+   "room_name=\"",
+   "mission_id=",
+   "is_lock="
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "is_lock",
+  "mission_id",
+  "result",
+  "room_name"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 11
+}

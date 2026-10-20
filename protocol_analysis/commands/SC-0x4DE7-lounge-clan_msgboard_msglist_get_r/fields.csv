@@ -1,0 +1,13 @@
+序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+0,-,2,u16,opcode,命令号,分发器 switch 选择子,0x4DE7,0xB5F267,确证
+1,0,4,u32,result,结果码,经 `vt[0x470]` 交业务,-,0xB5EF9D|0xB5F2BD,确证
+2,4,4,u32,sv_time,服务器时间,经 `vt[0x470]` 交业务,-,0xB5EFDD|0xB5F2E7,确证
+3,8,4,u32,comment_social_count,"社交评论数（上限 50，`cmp ebx,32h`@`0xB5F01F`）",经 `vt[0x470]` 交业务,-,0xB5EFF3|0xB5F302,确证
+4,12,267,array<comment>,comment_social[],社交评论数组（元素线长 267 / 槽步进 `0x118`=280，`sub_B41810`）,经 `vt[0x470]` 交业务,-,0xB5F04B|0xB5F302,确证
+5,14012,4,u32,comment_event_count,活动评论数（上限 50）,经 `vt[0x470]` 交业务,-,0xB5F082|0xB5F37E,确证
+6,14016,267,array<comment>,comment_event[],活动评论数组,经 `vt[0x470]` 交业务,-,0xB5F0CC|0xB5F37E,确证
+7,28016,4,u32,comment_question_count,提问评论数（上限 50）,经 `vt[0x470]` 交业务,-,0xB5F103|0xB5F400,确证
+8,28020,267,array<comment>,comment_question[],提问评论数组,经 `vt[0x470]` 交业务,-,0xB5F14A|0xB5F400,确证
+9,42020,4,u32,comment_system_count,系统评论数（上限 50）,经 `vt[0x470]` 交业务,-,0xB5F181|0xB5F47E,确证
+10,42024,267,array<comment>,comment_system[],系统评论数组,经 `vt[0x470]` 交业务,-,0xB5F1C8|0xB5F47E,确证
+11,56024,1,u8,clan_kind,战队种类,经 `vt[0x470]` 交业务,-,0xB5F1FB|0xB5F506,确证

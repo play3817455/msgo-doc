@@ -1,0 +1,232 @@
+{
+ "id": "CS-0x6142-lounge-pilot_delete",
+ "verified_at": "2026-09-30 15:25:42",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "handler_func",
+ "block": [
+  "0xB8A630",
+  "0xB8A8A8"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 18,
+   "va": "0xB8A673",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xB8A670",
+   "call_va": "0xB8A675"
+  },
+  "field_window": {
+   "start_va": "0xB8A630",
+   "end_va": "0xB8A764",
+   "guard": null,
+   "closer_or_commit_va": "0xB8A764",
+   "within_model_block": true,
+   "range_from": "handler_func"
+  },
+  "primitive_widths": {
+   "direction": "CS",
+   "expected": [
+    {
+     "name": "troops",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB8A6B9"
+     ]
+    },
+    {
+     "name": "slot",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 2,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB8A6D4"
+     ]
+    },
+    {
+     "name": "pilot_id",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 3,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB8A6DC"
+     ]
+    },
+    {
+     "name": "del_kind",
+     "wire_type": "u8",
+     "width": 1,
+     "seq": 4,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB8A6F6"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB8A6A9",
+     "kind": "inline_store",
+     "width": 2,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB8A6B9",
+     "kind": "inline_store",
+     "width": 4,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB8A6D4",
+     "kind": "inline_store",
+     "width": 4,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB8A6DC",
+     "kind": "write",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB8A6F6",
+     "kind": "write",
+     "width": 1,
+     "wire_type": "u8",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB8A73A",
+     "kind": "composite",
+     "width": null,
+     "wire_type": null,
+     "name": "sub_B03020",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 4,
+   "checkable": 4,
+   "pairs": [
+    {
+     "field": "troops",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB8A6B9",
+     "kind": "inline_store"
+    },
+    {
+     "field": "slot",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB8A6D4",
+     "kind": "inline_store"
+    },
+    {
+     "field": "pilot_id",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB8A6DC",
+     "kind": "write"
+    },
+    {
+     "field": "del_kind",
+     "width": 1,
+     "shape": "scalar",
+     "va": "0xB8A6F6",
+     "kind": "write"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [
+    {
+     "va": "0xB8A6A9",
+     "kind": "inline_store",
+     "width": 2,
+     "wire_type": null
+    }
+   ],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB8A630",
+    "0xB8A764"
+   ],
+   "scalar_match_verifiable": false,
+   "capacity_relation": {
+    "observed_min": 15,
+    "capacity": 18,
+    "relation": "within",
+    "unknown_events": [
+     {
+      "va": "0xB8A73A",
+      "kind": "composite",
+      "name": "sub_B03020"
+     }
+    ],
+    "is_lower_bound": true,
+    "note": "观测线长（下界）15 / 容量 0x12"
+   }
+  },
+  "closer": {
+   "va": "0xB8A764",
+   "kind": "commit",
+   "jcc_va": null,
+   "seq_va": null,
+   "cmp": null,
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x58]",
+   "slot_value": 88,
+   "va": "0xB8A842",
+   "mov_va": "0xB8A839",
+   "host": "[edx+58h]",
+   "argc": 2,
+   "form": "mov_then_call",
+   "error_slot": null
+  },
+  "log_strings": [
+   "troops=",
+   "slot=",
+   "pilot_id=",
+   "del_kind="
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "del_kind",
+  "pilot_id",
+  "slot",
+  "troops"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 2
+}

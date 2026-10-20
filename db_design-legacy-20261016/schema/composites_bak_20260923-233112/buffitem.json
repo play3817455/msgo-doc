@@ -1,0 +1,121 @@
+{
+  "id": "buffitem",
+  "title": "战斗增益道具 buffitem（6B 线 / 8B 槽）",
+  "length": 6,
+  "status": "complete",
+  "reader": "sub_B07E70",
+  "printer": "sub_B0B410",
+  "memory_claim": 8,
+  "wire_layout": "4+1+1",
+  "evidence": {
+    "commands": [
+      "SC-0x91C9-battle-battle_buffitem_list"
+    ],
+    "protocol_paths": [
+      "protocol_analysis/commands/SC-0x91C9-battle-battle_buffitem_list/README.md"
+    ],
+    "note": "定长数组 14 元（cmp edi,0Eh）；槽步进 8（add ebx,8）；同布局亦用于 buffitem_ex"
+  },
+  "members": [
+    {
+      "name": "itemid",
+      "offset": 0,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "道具 ID",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x91C9-battle-battle_buffitem_list",
+          "struct": "buffitem",
+          "field_name": "itemid",
+          "offset": 0,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x91C9-battle-battle_buffitem_list/README.md",
+          "section": "§3 / §4.3",
+          "reader": "sub_B07E70",
+          "printer": "sub_B0B410",
+          "evidence_va": "0xb07e86"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xb07e86",
+      "asm_audit_date": "2026-09-20"
+    },
+    {
+      "name": "is_used",
+      "offset": 4,
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "是否已使用",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x91C9-battle-battle_buffitem_list",
+          "struct": "buffitem",
+          "field_name": "is_used",
+          "offset": 4,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0x91C9-battle-battle_buffitem_list/README.md",
+          "section": "§3 / §4.3",
+          "reader": "sub_B07E70",
+          "printer": "sub_B0B410",
+          "evidence_va": "0xb07e99"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xb07e99",
+      "asm_audit_date": "2026-09-20"
+    },
+    {
+      "name": "is_usable",
+      "offset": 5,
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "是否可用",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x91C9-battle-battle_buffitem_list",
+          "struct": "buffitem",
+          "field_name": "is_usable",
+          "offset": 5,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0x91C9-battle-battle_buffitem_list/README.md",
+          "section": "§3 / §4.3",
+          "reader": "sub_B07E70",
+          "printer": "sub_B0B410",
+          "notes": "槽内 offset 6-7 填充至步进 8",
+          "evidence_va": "0xb07eab"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xb07eab",
+      "asm_audit_date": "2026-09-20"
+    }
+  ],
+  "asm_audit": {
+    "verified": "2026-09-20",
+    "reader": "sub_B07E70",
+    "writer": null,
+    "total_bytes": 6,
+    "fields_ok": 3,
+    "fields_fail": 0,
+    "issues": [],
+    "status": "pass",
+    "memory": {
+      "manual_batch": 4,
+      "verified": "2026-09-20",
+      "status": "pass",
+      "wire_eq_mem_prefix": true,
+      "mem_fields": 0,
+      "fields_ok": 0,
+      "fields_fail": 0,
+      "issues": [],
+      "note": "字段 @0/4/5 wire==mem；槽步进 8（is_usable 后 +2B pad）"
+    }
+  }
+}

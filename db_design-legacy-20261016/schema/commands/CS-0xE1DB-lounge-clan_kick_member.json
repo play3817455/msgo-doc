@@ -1,0 +1,348 @@
+{
+  "id": "CS-0xE1DB-lounge-clan_kick_member",
+  "opcode": "0xE1DB",
+  "direction": "CS",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "clan_kick_member",
+  "source_dir": "protocol_analysis/commands/CS-0xE1DB-lounge-clan_kick_member",
+  "meta": {
+    "opcode": "`0xE1DB`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`clan_kick_member`",
+    "名字符串": "`)<-_proto_lounge_client::send_clan_kick_member(` @ `0x00EECA44`",
+    "代码位置": "`sub_BA1410` @ `0x00BA1410`（`0x00BA1410`..`0x00BA15F8`）",
+    "opcode 写入证据": "`0x00BA1484`",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0x00A`（10）",
+    "容量申请证据": "`0x00BA1456`（分配器 `[obj+0Ch]` 的 `vt[0x78]`）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)` @ `0x00BA1586`",
+    "提交": "`sub_B02FF0` @ `0x00BA1501`",
+    "配对命令": "S→C `SC-0x924C-lounge-clan_kick_member_r`"
+  },
+  "handler": "sub_BA1410",
+  "handler_va": "0x00BA1410",
+  "block": [
+    "0xBA1410",
+    "0xBA15F8"
+  ],
+  "name_str": ")<-_proto_lounge_client::send_clan_kick_member(",
+  "name_str_va": "0x00EECA44",
+  "capacity": "0xA",
+  "capacity_va": "0xBA1456",
+  "closer_va": "0xBA1501",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)` @ `0x00BA1586`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": "0x00BA1586",
+  "wire": {
+    "length_expr": "4 + 1",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0xA（容量记账口径，非线长）",
+    "field_count": 2,
+    "length_source": "field_sum",
+    "readme_conclusion": "字段数：**3**（含 opcode 第 0 项）",
+    "readme_close": "2 + 4 + 1 = 7 ≤ 容量 0xA = 10（富余 3）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "写入 `buf+0`，供服务端分发；无 case 块（C→S）",
+      "enum": "0xE1DB",
+      "evidence_va": [
+        "`00BA1484`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "pilot_id_kick",
+      "meaning": "被踢出驾驶员 ID",
+      "purpose": "来源=入参 `arg_0`（`mov edi,[esp+arg_0]`）→ 内联写 `[ecx],edi`（@`0xBA1499`）",
+      "enum": null,
+      "evidence_va": [
+        "`0xBA1499`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "clan_kind",
+      "meaning": "氏族种类（1 字节）",
+      "purpose": "来源=入参 `arg_4`（`mov cl,...`）→ 内联写 `[edx],cl`（@`0xBA14A5`）",
+      "enum": "取值域 {0,1}（0=部隊 1=大会チーム）",
+      "evidence_va": [
+        "`0xBA14A5`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0xE1DB（分发器 switch 选择子）",
+      "evidence_va": "0x00BA1484"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0xA B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xBA1456"
+    },
+    {
+      "step": 3,
+      "kind": "write_scalar",
+      "detail": "pilot_id_kick：`u32`（线长 4）—— 被踢出驾驶员 ID",
+      "evidence_va": "0xBA1499"
+    },
+    {
+      "step": 4,
+      "kind": "write_scalar",
+      "detail": "clan_kind：`u8`（线长 1）—— 氏族种类（1 字节）",
+      "evidence_va": "0xBA14A5"
+    },
+    {
+      "step": 5,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xBA1501"
+    },
+    {
+      "step": 6,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xBA158F"
+    }
+  ],
+  "capabilities": [
+    "delete",
+    "lounge.clan"
+  ],
+  "capabilities_derived": [
+    "delete"
+  ],
+  "db_effects": [],
+  "pair": "SC-0x924C-lounge-clan_kick_member_r",
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:45",
+    "batch": 13,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 10,
+        "va": "0xBA1456",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xBA1453",
+        "call_va": "0xBA1458"
+      },
+      "field_window": {
+        "start_va": "0xBA1410",
+        "end_va": "0xBA1501",
+        "guard": null,
+        "closer_or_commit_va": "0xBA1501",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "pilot_id_kick",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "`0xBA1499`"
+            ]
+          },
+          {
+            "name": "clan_kind",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "`0xBA14A5`"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xBA1484",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xBA1499",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xBA14A5",
+            "kind": "inline_store",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xBA14D7",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 2,
+        "checkable": 2,
+        "pairs": [
+          {
+            "field": "pilot_id_kick",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xBA1499",
+            "kind": "inline_store"
+          },
+          {
+            "field": "clan_kind",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xBA14A5",
+            "kind": "inline_store"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xBA1484",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xBA1410",
+          "0xBA1501"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 7,
+          "capacity": 10,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xBA14D7",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）7 / 容量 0xa"
+        }
+      },
+      "closer": {
+        "va": "0xBA1501",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xBA158F",
+        "mov_va": "0xBA1586",
+        "host": "[edx+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "pilot_id_kick=",
+        "clan_kind="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0xE1DB-lounge-clan_kick_member.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0x00BA1484",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "`00BA1484`"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "ClanKickMember",
+      "role": "request",
+      "wire_length": "4 + 1",
+      "members": [
+        {
+          "name": "PilotIdKick",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "pilot_id_kick"
+        },
+        {
+          "name": "ClanKind",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "clan_kind"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "ec1fc4ae042b541e",
+  "check_fingerprint": "335a50b4bd0136ad"
+}

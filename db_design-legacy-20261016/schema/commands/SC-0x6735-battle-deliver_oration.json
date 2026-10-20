@@ -1,0 +1,327 @@
+{
+  "id": "SC-0x6735-battle-deliver_oration",
+  "opcode": "0x6735",
+  "direction": "SC",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "deliver_oration",
+  "source_dir": "protocol_analysis/commands/SC-0x6735-battle-deliver_oration",
+  "meta": {
+    "opcode": "`0x6735`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`battle_client`",
+    "命令名": "`deliver_oration`",
+    "处理块范围": "`0xb1c9d4`..`0xb1cbe4`",
+    "名字串引用点": "`0xb1cac4`",
+    "声明容量（解码缓冲）": "`0x8`（`0xb1c9f2`）",
+    "长度闭合点": "`0xb1ca77`",
+    "去向": "`vt[0x320]` @ `0xb1cb9f`（2 实参）"
+  },
+  "handler": null,
+  "handler_va": null,
+  "block": [
+    "0xb1c9d4",
+    "0xb1cbe4"
+  ],
+  "name_str": null,
+  "name_str_va": "0xb1cac4",
+  "capacity": "0x8",
+  "capacity_va": "0xb1c9f2",
+  "closer_va": "0xB1CA7B",
+  "dispatch": "`vt[0x320]` @ `0xb1cb9f`（2 实参）",
+  "dispatch_slot": "vt[0x320]",
+  "dispatch_va": "0xb1cb9f",
+  "wire": {
+    "length_expr": "4 + 4",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x8（容量记账口径，非线长）",
+    "field_count": 2,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：8。",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0x6735",
+      "evidence_va": [
+        "`0xb1cac4`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "voice_id",
+      "meaning": "语音 id（日志串 `voice_id=`）",
+      "purpose": "`vt[0x320]` 第 2 实参",
+      "enum": null,
+      "evidence_va": [
+        "0xb1ca2b"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "elap_msec",
+      "meaning": "已过毫秒（日志串 `elap_msec=`）",
+      "purpose": "`vt[0x320]` 第 1 实参",
+      "enum": null,
+      "evidence_va": [
+        "0xb1ca6b"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0x6735（分发器 switch 选择子）",
+      "evidence_va": "0xB1CAC4"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB05DA0`（模块 id 263）→ 之后逐字段读线",
+      "evidence_va": "0xB1C9DB"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "voice_id：`u32`（线长 4）—— 语音 id（日志串 `voice_id=`）",
+      "evidence_va": "0xB1CA2B"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "elap_msec：`u32`（线长 4）—— 已过毫秒（日志串 `elap_msec=`）",
+      "evidence_va": "0xB1CA6B"
+    },
+    {
+      "step": 5,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB1CA7B"
+    },
+    {
+      "step": 6,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x320]`，实参 2 个",
+      "evidence_va": "0xB1CB9F"
+    },
+    {
+      "step": 7,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB1CA45"
+    }
+  ],
+  "capabilities": [
+    "unclassified",
+    "battle.deliver_oration"
+  ],
+  "capabilities_derived": [
+    "unclassified"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:47",
+    "batch": 17,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 8,
+        "va": "0xB1C9F0",
+        "reg": "eax",
+        "host": "[edx+78h]",
+        "alloc_va": "0xB1C9ED",
+        "call_va": "0xB1C9F2"
+      },
+      "field_window": {
+        "start_va": "0xB1C9DC",
+        "end_va": "0xB1CAA2",
+        "guard": {
+          "va": "0xB1C9DB",
+          "func": "0xB05DA0",
+          "module_id": 263,
+          "release_va": "0xB05D90"
+        },
+        "closer_or_commit_va": "0xB1CA7B",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "voice_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb1ca2b"
+            ]
+          },
+          {
+            "name": "elap_msec",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb1ca6b"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB1CA2B",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB1CA6B",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 2,
+        "checkable": 2,
+        "pairs": [
+          {
+            "field": "voice_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB1CA2B",
+            "kind": "read"
+          },
+          {
+            "field": "elap_msec",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB1CA6B",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB1C9DC",
+          "0xB1CAA2"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 8,
+          "capacity": 8,
+          "relation": "exact",
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）8 / 容量 0x8"
+        }
+      },
+      "closer": {
+        "va": "0xB1CA7B",
+        "kind": "jz",
+        "jcc_va": "0xB1CA81",
+        "seq_va": "0xB1CA77",
+        "jcc_dst": "0xB1CA9D",
+        "cmp": "cmp     ebx, [esp+1B3Ch+var_1B24]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x320]",
+        "slot_value": 800,
+        "va": "0xB1CB9F",
+        "mov_va": "0xB1CB93",
+        "host": "[edx+320h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB1CA45",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "voice_id=",
+        "elap_msec="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0x6735-battle-deliver_oration.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "`0xb1cac4`"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "DeliverOration",
+      "role": "response",
+      "wire_length": "4 + 4",
+      "members": [
+        {
+          "name": "VoiceId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "voice_id"
+        },
+        {
+          "name": "ElapMsec",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "elap_msec"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "1f83fda06fec2bd4",
+  "check_fingerprint": "010d3afe22825098"
+}

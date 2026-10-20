@@ -1,0 +1,346 @@
+{
+  "id": "CS-0x4550-lounge-clan_info_get_other",
+  "opcode": "0x4550",
+  "direction": "CS",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "clan_info_get_other",
+  "source_dir": "protocol_analysis/commands/CS-0x4550-lounge-clan_info_get_other",
+  "meta": {
+    "opcode": "`0x4550`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`clan_info_get_other`",
+    "名字符串": "`)<-_proto_lounge_client::send_clan_info_get_other(` @ `0xeec6f8`",
+    "代码位置": "sub_B9F300 @ `0xb9f300`（`0xb9f300`..`0xb9f4e8`）",
+    "opcode 写入证据": "`0xb9f374`",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0xA`（10）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)`",
+    "配对命令（同 opcode 反向）": "见 §4.3 与其他命令的关联 / INDEX 反向表"
+  },
+  "handler": "sub_B9F300",
+  "handler_va": "0xb9f300",
+  "block": [
+    "0xB9F300",
+    "0xB9F4E8"
+  ],
+  "name_str": ")<-_proto_lounge_client::send_clan_info_get_other(",
+  "name_str_va": "0xeec6f8",
+  "capacity": "0xA",
+  "capacity_va": null,
+  "closer_va": "0xB9F3F1",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": null,
+  "wire": {
+    "length_expr": "4 + 1",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0xA（容量记账口径，非线长）",
+    "field_count": 2,
+    "length_source": "field_sum",
+    "readme_conclusion": "结论：获取他人部队（clan）信息。",
+    "readme_close": "2 + 4 + 1 = 7 ≤ 容量 0xA=10（富余 3）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发给 lounge 协议类处理块（C→S 无 case 块）",
+      "enum": "0x4550",
+      "evidence_va": [
+        "0xB9F374"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "2",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "clan_id",
+      "meaning": "部队 id",
+      "purpose": "来源=入参 arg_0（@0xB9F380）；内联 `mov [ecx],edi`；经 `vt[0x58]` 发送",
+      "enum": null,
+      "evidence_va": [
+        "0xB9F389"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "6",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "clan_kind",
+      "meaning": "部队类别",
+      "purpose": "来源=入参 arg_4 的低字节（@0xB9F391 `mov cl,[arg_4]`）；内联 `mov [edx],cl`；经 `vt[0x58]` 发送",
+      "enum": null,
+      "evidence_va": [
+        "0xB9F395"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0x4550（分发器 switch 选择子）",
+      "evidence_va": "0xB9F374"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0xA B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xB9F346"
+    },
+    {
+      "step": 3,
+      "kind": "write_scalar",
+      "detail": "clan_id：`u32`（线长 4）—— 部队 id",
+      "evidence_va": "0xB9F389"
+    },
+    {
+      "step": 4,
+      "kind": "write_scalar",
+      "detail": "clan_kind：`u8`（线长 1）—— 部队类别",
+      "evidence_va": "0xB9F395"
+    },
+    {
+      "step": 5,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xB9F3F1"
+    },
+    {
+      "step": 6,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xB9F47F"
+    }
+  ],
+  "capabilities": [
+    "query",
+    "lounge.clan"
+  ],
+  "capabilities_derived": [
+    "unclassified"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:43",
+    "batch": 6,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 10,
+        "va": "0xB9F346",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB9F343",
+        "call_va": "0xB9F348"
+      },
+      "field_window": {
+        "start_va": "0xB9F300",
+        "end_va": "0xB9F3F1",
+        "guard": null,
+        "closer_or_commit_va": "0xB9F3F1",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "clan_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB9F389"
+            ]
+          },
+          {
+            "name": "clan_kind",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB9F395"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB9F374",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB9F389",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB9F395",
+            "kind": "inline_store",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB9F3C7",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 2,
+        "checkable": 2,
+        "pairs": [
+          {
+            "field": "clan_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB9F389",
+            "kind": "inline_store"
+          },
+          {
+            "field": "clan_kind",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB9F395",
+            "kind": "inline_store"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB9F374",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB9F300",
+          "0xB9F3F1"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 7,
+          "capacity": 10,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB9F3C7",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）7 / 容量 0xa"
+        }
+      },
+      "closer": {
+        "va": "0xB9F3F1",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xB9F47F",
+        "mov_va": "0xB9F476",
+        "host": "[edx+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "clan_id=",
+        "clan_kind="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0x4550-lounge-clan_info_get_other.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0xb9f374",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xB9F374"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "ClanInfoGetOther",
+      "role": "request",
+      "wire_length": "4 + 1",
+      "members": [
+        {
+          "name": "ClanId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "clan_id"
+        },
+        {
+          "name": "ClanKind",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "clan_kind"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "634ff2a1ae28e8a9",
+  "check_fingerprint": "40a6771f494188dd"
+}

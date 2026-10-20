@@ -1,0 +1,51 @@
+{
+  "id": "tbl_pointdmg",
+  "title": "点位伤害",
+  "status": "complete",
+  "table_disposition": "EVENT",
+  "purpose": "EVENT pointdmg 12B；gaugedmg u32[3]",
+  "entity_ref": "pointdmg",
+  "evidence_commands": [
+    "SC-0xD5E6-lounge-result_info"
+  ],
+  "column_groups": [
+    {
+      "name": "pointdmg（12B）",
+      "columns": [
+        "pointdmg"
+      ]
+    }
+  ],
+  "columns": [
+    {
+      "name": "pointdmg",
+      "disposition": "COMPOSITE",
+      "composite_ref": "pointdmg",
+      "meaning": "结算点位伤害（日志 pointdmg= / gaugedmg={；claim 24 / 线 12）",
+      "wire_sources": [
+        {
+          "command": "SC-0xD5E6-lounge-result_info",
+          "struct": "pointdmg",
+          "field_name": "pointdmg",
+          "offset": null,
+          "length": 12,
+          "wire_type": "struct",
+          "protocol_path": "protocol_analysis/commands/SC-0xD5E6-lounge-result_info/README.md",
+          "section": "§3",
+          "reader": "sub_B45760",
+          "printer": "sub_B4DEE0",
+          "evidence_va": "B7DE8D|B7E44B",
+          "notes": "D5E6 字段 #21；可变偏移"
+        }
+      ],
+      "asm_verified": true
+    }
+  ],
+  "asm_audit": {
+    "composite_ref": "pointdmg",
+    "status": "pass",
+    "issues_count": 0,
+    "memory_status": "pass",
+    "memory_issues_count": 0
+  }
+}

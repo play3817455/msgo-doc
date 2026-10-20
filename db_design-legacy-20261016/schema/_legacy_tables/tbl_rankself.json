@@ -1,0 +1,50 @@
+{
+  "id": "tbl_rankself",
+  "title": "我的排名",
+  "status": "complete",
+  "table_disposition": "PERSIST",
+  "purpose": "持久化 rankself 40B 线格式；6 成员（sub_B464A0/sub_B4F710）",
+  "entity_ref": "rankself",
+  "evidence_commands": [
+    "SC-0xB985-lounge-ranking_pilot_get_r"
+  ],
+  "column_groups": [
+    {
+      "name": "rankself（40B · 6 成员）",
+      "columns": [
+        "rankself"
+      ]
+    }
+  ],
+  "columns": [
+    {
+      "name": "rankself",
+      "disposition": "COMPOSITE",
+      "composite_ref": "rankself",
+      "meaning": "我的排名信息（跨度 40B = 线长 40B；日志串 `rankself=`）",
+      "wire_sources": [
+        {
+          "command": "SC-0xB985-lounge-ranking_pilot_get_r",
+          "struct": "rankself",
+          "field_name": "rankself",
+          "offset": 18,
+          "length": 40,
+          "wire_type": "struct",
+          "protocol_path": "protocol_analysis/commands/SC-0xB985-lounge-ranking_pilot_get_r/README.md",
+          "section": "§3",
+          "reader": "sub_B464A0",
+          "printer": "sub_B4F710",
+          "evidence_va": "0xB75C9E"
+        }
+      ],
+      "asm_verified": true
+    }
+  ],
+  "asm_audit": {
+    "composite_ref": "rankself",
+    "status": "pass",
+    "issues_count": 0,
+    "memory_status": "pass",
+    "memory_issues_count": 0
+  }
+}

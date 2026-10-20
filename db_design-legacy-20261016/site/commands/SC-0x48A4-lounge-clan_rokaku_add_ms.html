@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SC-0x48A4-lounge-clan_rokaku_add_ms · db_design</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <h1><a href="../index.html">db_design</a></h1>
+      <p class="header-note">唯一证据源：<code>protocol_analysis/</code></p>
+      <nav><a href="../index.html">首页</a>
+      <a href="../homing/index.html">归位库</a>
+      <a href="../tables/index.html">旧表留档</a>
+      <a href="../commands/index.html" class="active">命令</a>
+      <a href="../cfg/index.html">配置表79</a>
+      <a href="../srv/index.html">服务端配置</a>
+      <a href="../asm-audit/index.html">ASM 审计</a>
+      <a href="../oracle-audit/index.html">Oracle 审计</a>
+      <a href="../entities/index.html">协议实体</a>
+      <a href="../fields/index.html">字段索引</a>
+      <a href="../relations.html">表关系</a></nav>
+    </div>
+  </header>
+  <main class="wrap">
+
+    <nav class="breadcrumb"><a href="index.html">命令</a> / <span><code>SC-0x48A4-lounge-clan_rokaku_add_ms</code></span></nav>
+    <h2>SC-0x48A4-lounge-clan_rokaku_add_ms
+      <span class="badge" style="background:#455a64">SC</span>
+      <span class="badge" style="background:#1565c0">lounge</span>
+      <span class="badge" style="background:#1565c0">BEHAVIOR-DONE</span></h2>
+    
+      <dl class="asm-dl">
+        <dt>opcode</dt><dd><code>0x48A4</code> · SC · lounge</dd>
+        <dt>协议类</dt><dd><code>lounge_client</code></dd>
+        <dt>处理函数</dt><dd><code>sub_B51930</code> <code>0xB51930</code></dd>
+        <dt>处理块</dt><dd>0xB5E72E .. 0xB5EA0E</dd>
+        <dt>名字串</dt><dd><code>—</code> <code>0xB5E894</code></dd>
+        <dt>声明容量</dt><dd>0x11108 <code>0xB5E74A</code>
+          <span class="muted">（缓冲 claim，非线长）</span></dd>
+        <dt>长度闭合点</dt><dd><code>0xB5E84B</code></dd>
+        <dt>去向槽</dt><dd><code>vt[0x488]</code> <code>0xB5E9C7</code></dd>
+        <dt>配对 / 同族</dt><dd><span class="muted">—</span></dd>
+        <dt>证据目录</dt><dd><a href="../../../protocol_analysis/commands/SC-0x48A4-lounge-clan_rokaku_add_ms/README.md" target="_blank">README.md</a> · <a href="../../../protocol_analysis/commands/SC-0x48A4-lounge-clan_rokaku_add_ms/fields.csv" target="_blank">fields.csv</a> · <a href="../../../protocol_analysis/commands/SC-0x48A4-lounge-clan_rokaku_add_ms/asm.md" target="_blank">asm.md</a> · <a href="../../../protocol_analysis/commands/SC-0x48A4-lounge-clan_rokaku_add_ms/notes.md" target="_blank">notes.md</a></dd>
+      </dl>
+    
+
+    <section>
+      <h3>线长</h3>
+      <dl class="asm-dl">
+        <dt>报文体线长</dt><dd><code>4 + 401·ms_count + 4</code>
+          <span class="badge" style="background:#e65100">变长</span>
+          <span class="muted">来源 override</span></dd>
+        <dt>变长驱动</dt><dd><code>ms_count</code></dd>
+        <dt>负载字段数</dt><dd>3</dd>
+        <dt>容量口径</dt><dd class="muted">声明容量 0x11108（容量记账口径，非线长）</dd>
+        <dt>README 结论</dt><dd class="muted">**报文体总长**：**69896** 字节（== 容量 0x11108）。 <span class="badge" style="background:#e65100">草稿口径，见下行订正</span></dd>
+        <dt>README 闭合</dt><dd class="muted">容量 0x11108 与线长的关系：**相等**（全定长）</dd>
+        <dt>人工订正</dt><dd>草稿的「总长 69896 == 容量 0x11108」是**槽口径**：69896 = 4 + 168×416 + 4（槽 0x1A0）。线长按元素线长 401 记 = `4 + 401·ms_count + 4`（count=168 时 67376）。容量记账只用于反推漏读段（§3.1），不进线长列。</dd>
+      </dl>
+    </section>
+
+    <section>
+      <h3>包结构体</h3>
+      <p class="muted">由 <code>fields[]</code> 归并而成；线序即字段行序，可复用的聚合体只在
+        <code>element</code> 里引用 <code>schema/composites/</code>。</p>
+      
+      <div class="struct-block">
+        <h4><code>ClanRokakuAddMs</code> <span class="muted">(response · 角色 response)</span>
+          <span class="muted">线长 4 + 401·ms_count + 4</span></h4>
+        <table class="srv-table">
+          <thead><tr><th>Go 成员</th><th>线类型</th><th>线长</th><th>字段引用</th><th>元素 / 计数</th></tr></thead>
+          <tbody><tr>
+          <td><code class="fname">MsCount</code></td>
+          <td><code>u32</code></td>
+          <td><code>4</code></td>
+          <td>ms_count</td>
+          <td class="muted">—</td>
+        </tr><tr>
+          <td><code class="fname">Ms</code></td>
+          <td><code>array&lt;ms_rokaku,ms_count&gt;</code></td>
+          <td><code>401·ms_count</code></td>
+          <td>ms[]</td>
+          <td class="muted">元素 <div class="composite-inline"><span class="muted">39 个成员：</span><code>uniqid</code> u64 · <code>msma_id</code> u32 · <code>tm_sec</code> u32 · <code>tm_usec</code> u32 · <code>rental_time_limit</code> u32 · <code>nickname</code> char[61] · <code>energy_now</code> u32 · <code>decal</code> u32 · <code>color</code> u8 · <code>deckslot</code> char[2] · <code>is_costover</code> char[2] · <code>cost</code> u32 · <code>mission_cost</code> u32 · <code>eqweapon_itemid</code> u32[3] · <code>eqshield_itemid</code> u32 · <code>eqspecial_itemid</code> u32 · <code>eq_modules</code> u32[10] · <code>eq_bonus_modules</code> u32 · <code>eq_bonus_modules_lot</code> u32[3] · <code>eq_rental_modules</code> u32 · <code>sp_parts</code> u32 · <code>sp_parts_exp</code> u32 · <code>buildup_cnt</code> u16 · <code>up_param</code> u16[7] · <code>up_param_develop</code> u16[7] · <code>weapon_buildup_extra_cnt</code> u16 · <code>over_custom_exp</code> u32 · <code>over_custom_level</code> u32 · <code>over_custom_buildup_cnt</code> u32 · <code>over_custom_param</code> u32[7] · <code>over_custom_count</code> u32[7] · <code>msbits</code> u16 · <code>unlocked_colors</code> u32 · <code>spticket_success_ms</code> u8 · <code>spticket_greatest_ms</code> u8 · <code>is_favorite</code> u8 · <code>weapons</code> unlockw[3] · <code>limit_use</code> u32 · <code>limit_coolup</code> u32</div> · 条数 ← <code>ms_count</code></td>
+        </tr><tr>
+          <td><code class="fname">IsFirstonetime</code></td>
+          <td><code>u32</code></td>
+          <td><code>4</code></td>
+          <td>is_firstonetime</td>
+          <td class="muted">—</td>
+        </tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h3>字段解剖</h3>
+      <table class="wide">
+        <thead><tr>
+          <th>序</th><th>偏移</th><th>线长</th><th>线类型</th><th>字段名</th>
+          <th>含义</th><th>用途（来源/去向）</th><th>取值/枚举</th><th>去向</th><th>证据 VA</th><th>置信度</th>
+        </tr></thead>
+        <tbody><tr>
+          <td>0</td>
+          <td><code>-</code></td>
+          <td><code>2</code></td>
+          <td><code>u16</code></td>
+          <td><code class="fname">opcode</code></td>
+          <td>命令号</td>
+          <td>分发器 switch 选择子</td>
+          <td class="muted">0x48A4</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB5E894</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>1</td>
+          <td><code>0</code></td>
+          <td><code>4</code></td>
+          <td><code>u32</code></td>
+          <td><code class="fname">ms_count</code></td>
+          <td>机体条数（上限 `0xA8`=168，`cmp ebx,0A8h`@`0xB5E7A6`）</td>
+          <td>经 `vt[0x488]` 交业务</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB5E77A</code> <code>0xB5E8DE</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>2</td>
+          <td><code>4</code></td>
+          <td><code>401·ms_count</code></td>
+          <td><code>array&lt;ms_rokaku,ms_count&gt;</code></td>
+          <td><code class="fname">ms[]</code></td>
+          <td>络格追加机体数组（元素 = ms_rokaku：ms_lounge 303B + weapons[3]×30B + 2×u32 = 401B）</td>
+          <td>经 `vt[0x488]` 交业务（3 实参）；元素成员就地展开在 composites/ms_rokaku.json</td>
+          <td class="muted">元素线长 401 / 槽步进 0x1A0=416；条数上限 168（`cmp ebx,0A8h`@`0xB5E7A6`）</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB5E7B4</code> <code>0xB5E7DA</code> <code>0xB43A80</code></td>
+          <td class="muted">确证</td>
+        </tr><tr class="row-members"><td colspan="11"><div class="composite-block"><div class="composite-head"><code>ms_rokaku</code> <span class="muted">数组元素</span> <span class="muted">线长 401B · 槽 416B · ASM pass</span> <span class="muted">定义 <code>schema/composites/ms_rokaku.json</code></span></div><table class="srv-table composite-table"><thead><tr><th>成员</th><th>线类型</th><th>线偏移 / 线长</th><th>disposition</th><th>含义</th></tr></thead><tbody><tr><td><code class="fname">uniqid</code></td><td><code>u64</code></td><td class="muted">线 +0 8B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xb4358a">✓</span></td><td>机体唯一 ID</td></tr><tr><td><code class="fname">msma_id</code></td><td><code>u32</code></td><td class="muted">线 +8 4B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xb435a5">✓</span></td><td>机体模板 ID</td></tr><tr><td><code class="fname">tm_sec</code></td><td><code>u32</code></td><td class="muted">线 +12 4B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xb435bb">✓</span></td><td>取得时间（秒）</td></tr><tr><td><code class="fname">tm_usec</code></td><td><code>u32</code></td><td class="muted">线 +16 4B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xb435d5">✓</span></td><td>取得时间（微秒）</td></tr><tr><td><code class="fname">rental_time_limit</code></td><td><code>u32</code></td><td class="muted">线 +20 4B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xb435dc">✓</span></td><td>租赁时限</td></tr><tr><td><code class="fname">nickname</code></td><td><code>char[61]</code></td><td class="muted">线 +24 61B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xb43600">✓</span></td><td>机体昵称（NUL 结尾定长串）</td></tr><tr><td><code class="fname">energy_now</code></td><td><code>u32</code></td><td class="muted">线 +85 mem +88 4B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xb4361f">✓</span></td><td>当前 EN</td></tr><tr><td><code class="fname">decal</code></td><td><code>u32</code></td><td class="muted">线 +89 mem +92 4B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xb43639">✓</span></td><td>贴纸/标识</td></tr><tr><td><code class="fname">color</code></td><td><code>u8</code></td><td class="muted">线 +93 mem +96 1B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xb43640">✓</span></td><td>配色</td></tr><tr><td><code class="fname">deckslot</code></td><td><code>char[2]</code></td><td class="muted">线 +94 mem +97 2B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xb43662">✓</span></td><td>两副当前编成的独立槽号，裸字节数组；每项 0..3，未编入 FF（有符号 -1）；不是文本</td></tr><tr><td><code class="fname">is_costover</code></td><td><code>char[2]</code></td><td class="muted">线 +96 mem +99 2B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xb4368e">✓</span></td><td>两副当前编成的独立超 COST 标志，两个裸 00/01 字节；不是文本</td></tr><tr><td><code class="fname">cost</code></td><td><code>u32</code></td><td class="muted">线 +98 mem +104 4B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xb436ad">✓</span></td><td>机体 COST 值</td></tr><tr><td><code class="fname">mission_cost</code></td><td><code>u32</code></td><td class="muted">线 +102 mem +108 4B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xb436c3">✓</span></td><td>任务 COST 值</td></tr><tr><td><code class="fname">eqweapon_itemid</code></td><td><code>u32[3]</code></td><td class="muted">线 +106 mem +112 12B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xb436df">✓</span></td><td>装备武器道具 ID（3 项）</td></tr><tr><td><code class="fname">eqshield_itemid</code></td><td><code>u32</code></td><td class="muted">线 +118 mem +124 4B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xb436ff">✓</span></td><td>装备盾道具 ID</td></tr><tr><td><code class="fname">eqspecial_itemid</code></td><td><code>u32</code></td><td class="muted">线 +122 mem +128 4B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xb43715">✓</span></td><td>装备特殊道具 ID</td></tr><tr><td><code class="fname">eq_modules</code></td><td><code>u32[10]</code></td><td class="muted">线 +126 mem +132 40B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xb4373e">✓</span></td><td>装备模块（10 项）</td></tr><tr><td><code class="fname">eq_bonus_modules</code></td><td><code>u32</code></td><td class="muted">线 +166 mem +172 4B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xb4376e">✓</span></td><td>奖励模块（1 项）</td></tr><tr><td><code class="fname">eq_bonus_modules_lot</code></td><td><code>u32[3]</code></td><td class="muted">线 +170 mem +176 12B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xb4379e">✓</span></td><td>抽选奖励模块（3 项）</td></tr><tr><td><code class="fname">eq_rental_modules</code></td><td><code>u32</code></td><td class="muted">线 +182 mem +188 4B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xb437ce">✓</span></td><td>租赁模块（1 项）</td></tr><tr><td><code class="fname">sp_parts</code></td><td><code>u32</code></td><td class="muted">线 +186 mem +192 4B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xb437ee">✓</span></td><td>特殊部件</td></tr><tr><td><code class="fname">sp_parts_exp</code></td><td><code>u32</code></td><td class="muted">线 +190 mem +196 4B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xb43807">✓</span></td><td>特殊部件经验</td></tr><tr><td><code class="fname">buildup_cnt</code></td><td><code>u16</code></td><td class="muted">线 +194 mem +200 2B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xb43821">✓</span></td><td>强化次数</td></tr><tr><td><code class="fname">up_param</code></td><td><code>u16[7]</code></td><td class="muted">线 +196 mem +202 14B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xb4384f">✓</span></td><td>强化参数（7 项）</td></tr><tr><td><code class="fname">up_param_develop</code></td><td><code>u16[7]</code></td><td class="muted">线 +210 mem +216 14B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xb4387f">✓</span></td><td>开发强化参数（7 项）</td></tr><tr><td><code class="fname">weapon_buildup_extra_cnt</code></td><td><code>u16</code></td><td class="muted">线 +224 mem +230 2B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xb438a1">✓</span></td><td>武器强化追加次数</td></tr><tr><td><code class="fname">over_custom_exp</code></td><td><code>u32</code></td><td class="muted">线 +226 mem +232 4B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xb438bb">✓</span></td><td>超限自定义经验</td></tr><tr><td><code class="fname">over_custom_level</code></td><td><code>u32</code></td><td class="muted">线 +230 mem +236 4B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xb438d4">✓</span></td><td>超限自定义等级</td></tr><tr><td><code class="fname">over_custom_buildup_cnt</code></td><td><code>u32</code></td><td class="muted">线 +234 mem +240 4B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xb438ed">✓</span></td><td>超限自定义强化次数</td></tr><tr><td><code class="fname">over_custom_param</code></td><td><code>u32[7]</code></td><td class="muted">线 +238 mem +244 28B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xb4390e">✓</span></td><td>超限自定义参数（7 项）</td></tr><tr><td><code class="fname">over_custom_count</code></td><td><code>u32[7]</code></td><td class="muted">线 +266 mem +272 28B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xb4393e">✓</span></td><td>超限自定义计数（7 项）</td></tr><tr><td><code class="fname">msbits</code></td><td><code>u16</code></td><td class="muted">线 +294 mem +300 2B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xb4395b">✓</span></td><td>机体位标志</td></tr><tr><td><code class="fname">unlocked_colors</code></td><td><code>u32</code></td><td class="muted">线 +296 mem +304 4B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xb43971">✓</span></td><td>已解锁配色</td></tr><tr><td><code class="fname">spticket_success_ms</code></td><td><code>u8</code></td><td class="muted">线 +300 mem +308 1B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xb43986">✓</span></td><td>补给券保底机体</td></tr><tr><td><code class="fname">spticket_greatest_ms</code></td><td><code>u8</code></td><td class="muted">线 +301 mem +309 1B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xb4399b">✓</span></td><td>补给券最高机体</td></tr><tr><td><code class="fname">is_favorite</code></td><td><code>u8</code></td><td class="muted">线 +302 mem +310 1B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xb439b1">✓</span></td><td>是否收藏</td></tr><tr><td><code class="fname">weapons</code> <span class="muted" title="数组：元素成员就地展开">［数组］</span></td><td><code>unlockw[3]</code></td><td class="muted">线 +303 mem +312 90B <span class="muted">（3×30B）</span></td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xb43a9f">✓</span></td><td>络格武器列表（3 项，元素 = unlockw）<details class='composite-details'><summary>展开 <code>unlockw</code> 元素成员</summary><table class="srv-table composite-table"><thead><tr><th>成员</th><th>线类型</th><th>线偏移 / 线长</th><th>disposition</th><th>含义</th></tr></thead><tbody><tr><td><code class="fname">item_id</code></td><td><code>u32</code></td><td class="muted">线 +0 4B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xb439eb">✓</span></td><td>道具/武器 ID</td></tr><tr><td><code class="fname">db_index</code></td><td><code>u16</code></td><td class="muted">线 +4 2B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xb439ff">✓</span></td><td>数据库索引</td></tr><tr><td><code class="fname">buildup_cnt</code></td><td><code>u16</code></td><td class="muted">线 +6 2B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xb43a13">✓</span></td><td>强化次数</td></tr><tr><td><code class="fname">buildup_val</code></td><td><code>u16[10]</code></td><td class="muted">线 +8 20B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xb43a2e">✓</span></td><td>强化值（10×u16）</td></tr><tr><td><code class="fname">spticket_success_wp</code></td><td><code>u8</code></td><td class="muted">线 +28 1B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xB43A48">✓</span></td><td>特殊票成功武器点</td></tr><tr><td><code class="fname">spticket_greatest_wp</code></td><td><code>u8</code></td><td class="muted">线 +29 1B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xB43A5B">✓</span></td><td>特殊票最大武器点</td></tr></tbody></table></details></td></tr><tr><td><code class="fname">limit_use</code></td><td><code>u32</code></td><td class="muted">线 +393 mem +408 4B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xb43aca">✓</span></td><td>络格限制使用</td></tr><tr><td><code class="fname">limit_coolup</code></td><td><code>u32</code></td><td class="muted">线 +397 mem +412 4B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xb43ae0">✓</span></td><td>络格限制冷却</td></tr></tbody></table></div></td></tr><tr>
+          <td>3</td>
+          <td><code>var</code></td>
+          <td><code>4</code></td>
+          <td><code>u32</code></td>
+          <td><code class="fname">is_firstonetime</code></td>
+          <td>是否首次（紧跟变长数组之后，线偏移 = 4 + 401·ms_count）</td>
+          <td>经 `vt[0x488]` 交业务</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB5E81F</code></td>
+          <td class="muted">确证</td>
+        </tr></tbody>
+      </table>
+    </section>
+
+    <section>
+      <h3>客户端行为</h3>
+      <table class="srv-table">
+        <thead><tr><th>步</th><th>类别</th><th>动作</th><th>证据 VA</th></tr></thead>
+        <tbody><tr>
+          <td>1</td>
+          <td><code>read_scalar</code></td>
+          <td>opcode 0x48A4（分发器 switch 选择子）</td>
+          <td><code>0xB5E894</code></td>
+        </tr><tr>
+          <td>2</td>
+          <td><code>guard</code></td>
+          <td>进入解码窗口：守卫 `0xB41120`（模块 id 481）→ 之后逐字段读线</td>
+          <td><code>0xB5E735</code></td>
+        </tr><tr>
+          <td>3</td>
+          <td><code>read_count</code></td>
+          <td>ms_count：`u32`（线长 4）—— 机体条数（上限 `0xA8`=168，`cmp ebx,0A8h`@`0xB5E7A6`）</td>
+          <td><code>0xB5E77A</code></td>
+        </tr><tr>
+          <td>4</td>
+          <td><code>read_array</code></td>
+          <td>ms[]：`array&lt;ms_rokaku,ms_count&gt;`（线长 401·ms_count）—— 络格追加机体数组（元素 = ms_rokaku：ms_lounge 303B + weapons[3]×30B + 2×u32 = 401B）；元素线长 401 / 槽步进 0x1A0=416；条数上限 168（`cmp ebx,0A8h`@`0xB5E7A6`）</td>
+          <td><code>0xB5E7B4</code></td>
+        </tr><tr>
+          <td>5</td>
+          <td><code>read_scalar</code></td>
+          <td>is_firstonetime：`u32`（线长 4）—— 是否首次（紧跟变长数组之后，线偏移 = 4 + 401·ms_count）</td>
+          <td><code>0xB5E81F</code></td>
+        </tr><tr>
+          <td>6</td>
+          <td><code>close_check</code></td>
+          <td>闭合校验：读游标 == 报文末尾（jz）</td>
+          <td><code>0xB5E84B</code></td>
+        </tr><tr>
+          <td>7</td>
+          <td><code>dispatch</code></td>
+          <td>交业务 `vt[0x488]`，实参 3 个</td>
+          <td><code>0xB5E9C7</code></td>
+        </tr><tr>
+          <td>8</td>
+          <td><code>error_path</code></td>
+          <td>失败路径 `vt[0x64](1, 错误码)`（不是业务去向）</td>
+          <td><code>0xB5E794</code></td>
+        </tr></tbody>
+      </table>
+    </section>
+
+    <section>
+      <h3>能力</h3>
+      <span class="cap-chip">create</span><span class="cap-chip">lounge.clan_rokaku</span><div class="muted">命名学推断（非证据）：<span class="cap-chip cap-derived">create</span></div>
+    </section>
+
+    <section>
+      <h3>DB 影响</h3>
+      <table class="srv-table">
+        <thead><tr><th>实体 / 表</th><th>op</th><th>业务字段</th><th>disposition</th><th>证据 VA</th></tr></thead>
+        <tbody><tr>
+          <td><a href="../homing/objects/ms_rokaku.html"><code>ms_rokaku</code></a> <a href="../tables/tbl_ms_rokaku.html"><code>tbl_ms_rokaku</code></a></td>
+          <td><code>create</code></td>
+          <td>ms_rokaku</td>
+          <td><span class="badge" style="background:#455a64">COMPOSITE</span></td>
+          <td><code>0xB43A80</code></td>
+        </tr></tbody>
+      </table>
+    </section>
+
+    <section>
+      <h3>人工复核覆盖（订正 <code>fields.csv</code>）</h3>
+      <ul><li><code>override_patch:2</code></li></ul>
+      <dl class="asm-dl">
+        <dt>修订版本</dt><dd>rev 1 · 2026-09-22</dd>
+        <dt>覆写文件</dt><dd><code>schema/commands/_overrides/SC-0x48A4-lounge-clan_rokaku_add_ms.json</code></dd>
+        <dt>订正理由</dt><dd>`ms[]` 的草稿行有两处错：① 线类型写成 `array&lt;ms&gt;`，元素名撞上了 battle 线形的 `ms`（244B）；实际元素由 `sub_B43A80` 读，整函数消费 `sub_B43570`(303) + 3×`sub_B439D0`(30) + 2×u32(8) = **401B**，成员落 `schema/composites/ms_rokaku.json`（打印器 `sub_B4A6D0` 打 `body=` / `weapons={` / `limit_use=` / `limit_coolup=`）。② 长度列只写了元素线宽 `401`（条数另有线上字段 `ms_count`），按 §3.1 应为 `401·ms_count ≈ 4+401·ms_count+4`；草稿的「总长 69896」与 `is_firstonetime` 偏移 `69892` 都是**容量/内存记账**（`4+168×416+4`，槽 0x1A0=416），不是线偏移 —— 线偏移只能是 `var`。元素线长 401 ≠ 槽 416（内存里 3 个 weapons 槽各 32B，线上各 30B），两者必须分开记。</dd>
+      </dl>
+      <p class="muted">这些字段的口径由 IDA 汇编逐条核对后人工订正，<strong>不再等同</strong> <code>fields.csv</code> 原值
+        （覆盖行带 <code>override_verified: true</code>）；<code>revision</code> 变号会让旧汇编复核结论作废、
+        必须重跑 <code>verify_commands_ida.py ingest</code>。</p>
+    </section>
+
+    <section>
+      <h3>汇编复核（IDA asm 为唯一权威）</h3>
+      
+      <dl class="asm-dl">
+        <dt>状态</dt><dd><span class="badge" style="background:#1565c0">BEHAVIOR-DONE</span></dd>
+        <dt>复核批次</dt><dd>2</dd>
+        <dt>复核时间</dt><dd>2026-09-30 15:25:42</dd>
+        <dt>提取器</dt><dd><code>tools/verify_commands_ida.py</code></dd>
+      </dl>
+      <table class="srv-table">
+        <thead><tr><th>检查项</th><th>键</th><th>结果</th></tr></thead>
+        <tbody><tr><td>容量指纹</td><td><code>capacity</code></td><td><code>{&quot;value&quot;: 69896, &quot;va&quot;: &quot;0xB5E74A&quot;, &quot;reg&quot;: &quot;edx&quot;, &quot;host&quot;: &quot;[eax+78h]&quot;, &quot;alloc_va&quot;: &quot;0xB5E747&quot;, &quot;call_va&quot;: &quot;0xB5E74F&quot;}</code></td></tr><tr><td>字段窗口</td><td><code>field_window</code></td><td><code>{&quot;start_va&quot;: &quot;0xB5E736&quot;, &quot;end_va&quot;: &quot;0xB5E872&quot;, &quot;guard&quot;: {&quot;va&quot;: &quot;0xB5E735&quot;, &quot;func&quot;: &quot;0xB41120&quot;, &quot;module_id&quot;: 481, &quot;release_va&quot;: &quot;0xB41110&quot;}, &quot;closer_or_commit_va&quot;: &quot;0xB5E84B&quot;, &quot;within_model_block&quot;: true, &quot;range_from&quot;: &quot;block&quot;}</code></td></tr><tr><td>原语宽度</td><td><code>primitive_widths</code></td><td><code>{&quot;direction&quot;: &quot;SC&quot;, &quot;expected&quot;: [{&quot;name&quot;: &quot;ms_count&quot;, &quot;wire_type&quot;: &quot;u32&quot;, &quot;width&quot;: 4, &quot;seq&quot;: 1, &quot;shape&quot;: &quot;scalar&quot;, &quot;evidence_va&quot;: [&quot;0xB5E77A&quot;, &quot;0xB5E8DE&quot;]}, {&quot;name&quot;: &quot;ms[]&quot;, &quot;wire_type&quot;: &quot;array&lt;ms_rokaku,ms_count&gt;&quot;, &quot;width&quot;: null, &quot;seq&quot;: 2, &quot;shape&quot;: &quot;agg&quot;, &quot;evidence_va&quot;: [&quot;0xB5E7B4&quot;, &quot;0xB5E7DA&quot;, &quot;0xB43A80&quot;]}, {&quot;name&quot;: &quot;is_firstonetime&quot;, &quot;wire_type&quot;: &quot;u32&quot;, &quot;width&quot;: 4, &quot;seq&quot;: 3, &quot;shape&quot;: &quot;scalar&quot;, &quot;evidence_va&quot;: [&quot;0xB5E81F&quot;]}], &quot;actual&quot;: [{&quot;va&quot;: &quot;0xB43AC8&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 4, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 4, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43ADD&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 4, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 4, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB5E77A&quot;, &quot;kind&quot;: &quot;read&quot;, &quot;width&quot;: 4, &quot;wire_type&quot;: &quot;u32&quot;, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: null, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB5E7B8&quot;, &quot;kind&quot;: &quot;opaque&quot;, &quot;width&quot;: null, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;sub_B41880&quot;, &quot;consumed&quot;: null, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB5E7DA&quot;, &quot;kind&quot;: &quot;composite&quot;, &quot;width&quot;: null, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;sub_B43A80&quot;, &quot;consumed&quot;: null, &quot;consumed_effective&quot;: 8, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB5E81F&quot;, &quot;kind&quot;: &quot;read&quot;, &quot;width&quot;: 4, &quot;wire_type&quot;: &quot;u32&quot;, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: null, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}], &quot;matched&quot;: 2, &quot;checkable&quot;: 2, &quot;pairs&quot;: [{&quot;field&quot;: &quot;ms_count&quot;, &quot;width&quot;: 4, &quot;shape&quot;: &quot;scalar&quot;, &quot;va&quot;: &quot;0xB5E77A&quot;, &quot;kind&quot;: &quot;read&quot;}, {&quot;field&quot;: &quot;is_firstonetime&quot;, &quot;width&quot;: 4, &quot;shape&quot;: &quot;scalar&quot;, &quot;va&quot;: &quot;0xB5E81F&quot;, &quot;kind&quot;: &quot;read&quot;}], &quot;gaps&quot;: [], &quot;unmatched_actual&quot;: [{&quot;va&quot;: &quot;0xB5E7DA&quot;, &quot;kind&quot;: &quot;composite&quot;, &quot;width&quot;: null, &quot;wire_type&quot;: null}, {&quot;va&quot;: &quot;0xB43AC8&quot;, &quot;kind&quot;: &quot;nested_run&quot;, &quot;width&quot;: 8, &quot;wire_type&quot;: null}], &quot;nested_unmatchable&quot;: [], &quot;window&quot;: [&quot;0xB5E736&quot;, &quot;0xB5E872&quot;], &quot;scalar_match_verifiable&quot;: true, &quot;capacity_relation&quot;: {&quot;observed_min&quot;: 8, &quot;capacity&quot;: 69896, &quot;relation&quot;: &quot;within&quot;, &quot;unknown_events&quot;: [{&quot;va&quot;: &quot;0xB5E7B8&quot;, &quot;kind&quot;: &quot;opaque&quot;, &quot;name&quot;: &quot;sub_B41880&quot;}, {&quot;va&quot;: &quot;0xB5E7DA&quot;, &quot;kind&quot;: &quot;composite&quot;, &quot;name&quot;: &quot;sub_B43A80&quot;}], &quot;is_lower_bound&quot;: true, &quot;note&quot;: &quot;观测线长（下界）8 / 容量 0x11108&quot;}}</code></td></tr><tr><td>闭合点</td><td><code>closer</code></td><td><code>{&quot;va&quot;: &quot;0xB5E84B&quot;, &quot;kind&quot;: &quot;jz&quot;, &quot;jcc_va&quot;: &quot;0xB5E851&quot;, &quot;seq_va&quot;: &quot;0xB5E847&quot;, &quot;jcc_dst&quot;: &quot;0xB5E86D&quot;, &quot;cmp&quot;: &quot;cmp     ecx, [esp+2C5Ch+var_2C40]&quot;, &quot;va_convention&quot;: &quot;cmp&quot;}</code></td></tr><tr><td>去向槽+实参</td><td><code>dispatch_slot</code></td><td><code>{&quot;slot&quot;: &quot;vt[0x488]&quot;, &quot;slot_value&quot;: 1160, &quot;va&quot;: &quot;0xB5E9C7&quot;, &quot;mov_va&quot;: &quot;0xB5E9BC&quot;, &quot;host&quot;: &quot;[edx+488h]&quot;, &quot;argc&quot;: 3, &quot;form&quot;: &quot;mov_then_call&quot;, &quot;error_slot&quot;: {&quot;slot&quot;: &quot;vt[0x64]&quot;, &quot;va&quot;: &quot;0xB5E794&quot;, &quot;argc&quot;: 2}}</code></td></tr><tr><td>日志串</td><td><code>log_strings</code></td><td><code>[&quot;ms={&quot;, &quot;is_firstonetime=&quot;]</code></td></tr></tbody>
+      </table>
+      <p>无差异。</p>
+      <p>原始证据切片：<a href="../../../db_design/schema/commands/_verify/SC-0x48A4-lounge-clan_rokaku_add_ms.json" target="_blank"><code>commands/_verify/SC-0x48A4-lounge-clan_rokaku_add_ms.json</code></a></p>
+    </section>
+
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">生成于 2026-10-12 · 改 JSON 后重跑 build_site.py · HTML 只读</div>
+  </footer>
+</body>
+</html>

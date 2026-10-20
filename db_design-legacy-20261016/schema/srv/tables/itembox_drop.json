@@ -1,0 +1,80 @@
+{
+  "id": "srv.itembox_drop",
+  "slug": "itembox_drop",
+  "title": "itembox_drop",
+  "kind": "server_config",
+  "status": "complete",
+  "ddl": "serverv/migrations/0035_srv_itembox_drop.up.sql",
+  "generated_by": "db_design/tools/build_srv_docs.py",
+  "note": "本文件由 db_design/tools/build_srv_docs.py 从 serverv/migrations/0035_srv_itembox_drop.up.sql 生成，勿手改：改 srv.* 请改迁移再重跑生成器",
+  "purpose": "物品箱掉落表（本服自定抽取口径）：CS-0x2D19 result_open_item / CS-0xA53B result_item_fullopen 的唯一数据源。加权抽 1 件；`weight = 0` = 永不掉落。客户端 datafile 不含掉落概率（cfg.\"ITEMPACK_INFO\" 只有形状没有算法）⇒ 见 0035 文件头",
+  "primary_key": [
+    "box_itemid",
+    "drop_itemid",
+    "drop_id_type"
+  ],
+  "columns": [
+    {
+      "name": "box_itemid",
+      "sql_type": "BIGINT",
+      "not_null": true,
+      "default": null,
+      "checks": [],
+      "meaning": "箱子物品 id [u32] = cfg.\"ITEM\".item_id；对应 game.item_info 里 is_itmbox = 1 的那一行的 itemid（行键之一）"
+    },
+    {
+      "name": "drop_itemid",
+      "sql_type": "BIGINT",
+      "not_null": true,
+      "default": null,
+      "checks": [],
+      "meaning": "掉落物 id [u32]（在 drop_id_type 指定的 id 空间内，行键之一）"
+    },
+    {
+      "name": "drop_id_type",
+      "sql_type": "SMALLINT",
+      "not_null": true,
+      "default": "0",
+      "checks": [
+        "drop_id_type BETWEEN 0 AND 255"
+      ],
+      "meaning": "掉落物 id 空间 [u8] = 写入 game.item_info.id_type 的值（客户端拿 id_type + itemid 一起查名称/图标）；行键之一"
+    },
+    {
+      "name": "weight",
+      "sql_type": "BIGINT",
+      "not_null": true,
+      "default": "0,",
+      "checks": [],
+      "meaning": "掉落权重 [u32]；★0 = 永不掉落（等于停用开关，读取侧 WHERE weight > 0 过滤）。同一箱子的权重和按 uint64 累加后掷点，次序 = drop_itemid 升序"
+    },
+    {
+      "name": "amount",
+      "sql_type": "INTEGER",
+      "not_null": true,
+      "default": "1",
+      "checks": [
+        "amount BETWEEN 1 AND 65535"
+      ],
+      "meaning": "一次掉落的数量 [u16]（对齐 game.item_info.amount 的线上宽度，1..65535）"
+    },
+    {
+      "name": "sort_order",
+      "sql_type": "INTEGER",
+      "not_null": true,
+      "default": "0,",
+      "checks": [],
+      "meaning": "备注用排序（供 GM 列表显示；抽取次序**不看**这一列，见 weight 注释）"
+    },
+    {
+      "name": "updated_at",
+      "sql_type": "TIMESTAMPTZ",
+      "not_null": true,
+      "default": "now(),",
+      "checks": [],
+      "meaning": "本行最后修改时间（GM 改权重/数量时更新）"
+    }
+  ],
+  "seed_columns": [],
+  "seed_rows": []
+}

@@ -1,0 +1,555 @@
+{
+  "id": "SC-0x7300-lounge-clan_rokaku_use_point_r",
+  "opcode": "0x7300",
+  "direction": "SC",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "clan_rokaku_use_point_r",
+  "source_dir": "protocol_analysis/commands/SC-0x7300-lounge-clan_rokaku_use_point_r",
+  "meta": {
+    "opcode": "`0x7300`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`clan_rokaku_use_point_r`",
+    "处理块范围": "`0xb66745`..`0xb66aa8`",
+    "名字串引用点": "`0xb668d1`",
+    "声明容量（解码缓冲）": "`0x15`（`0xb66761`）",
+    "长度闭合点": "`0xb66888`",
+    "去向": "`vt[0x490]` @ `0xb66a71`（6 实参）"
+  },
+  "handler": null,
+  "handler_va": null,
+  "block": [
+    "0xb66745",
+    "0xb66aa8"
+  ],
+  "name_str": null,
+  "name_str_va": "0xb668d1",
+  "capacity": "0x15",
+  "capacity_va": "0xb66761",
+  "closer_va": "0xB66888",
+  "dispatch": "`vt[0x490]` @ `0xb66a71`（6 实参）",
+  "dispatch_slot": "vt[0x490]",
+  "dispatch_va": "0xb66a71",
+  "wire": {
+    "length_expr": "4 + 4 + 4 + 4 + 4 + 1",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x15（容量记账口径，非线长）",
+    "field_count": 6,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：21。",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0x7300",
+      "evidence_va": [
+        "`0xb668d1`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "result",
+      "meaning": "结果码（日志串 `result=`）",
+      "purpose": "`vt[0x490]` 实参（`0xb66a6c`）",
+      "enum": null,
+      "evidence_va": [
+        "0xb6679c"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "tree_id",
+      "meaning": "技树 id（日志串 `tree_id=`）",
+      "purpose": "`vt[0x490]` 实参（`0xb66a65`）",
+      "enum": null,
+      "evidence_va": [
+        "0xb667dc"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "8",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "node_no",
+      "meaning": "节点号（日志串 `node_no=`）",
+      "purpose": "`vt[0x490]` 实参（`0xb66a5e`）",
+      "enum": null,
+      "evidence_va": [
+        "0xb66800"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 4,
+      "offset": "12",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "idx_no",
+      "meaning": "索引号（日志串 `idx_no=`）",
+      "purpose": "`vt[0x490]` 实参（`0xb66a57`）",
+      "enum": null,
+      "evidence_va": [
+        "0xb66824"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    },
+    {
+      "seq": 5,
+      "offset": "16",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "point_use",
+      "meaning": "消耗点数（日志串 `point_use=`）",
+      "purpose": "`vt[0x490]` 实参（`0xb66a50`）",
+      "enum": null,
+      "evidence_va": [
+        "0xb6684c"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 7
+    },
+    {
+      "seq": 6,
+      "offset": "20",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "is_supply",
+      "meaning": "是否补给（日志串 `is_supply=`）",
+      "purpose": "`vt[0x490]` 实参（`0xb1e7bb` 同型 `movzx …byte ptr`）",
+      "enum": null,
+      "evidence_va": [
+        "0xb66874"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 8
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0x7300（分发器 switch 选择子）",
+      "evidence_va": "0xB668D1"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB41120`（模块 id 484）→ 之后逐字段读线",
+      "evidence_va": "0xB6674C"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "result：`u32`（线长 4）—— 结果码（日志串 `result=`）",
+      "evidence_va": "0xB6679C"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "tree_id：`u32`（线长 4）—— 技树 id（日志串 `tree_id=`）",
+      "evidence_va": "0xB667DC"
+    },
+    {
+      "step": 5,
+      "kind": "read_scalar",
+      "detail": "node_no：`u32`（线长 4）—— 节点号（日志串 `node_no=`）",
+      "evidence_va": "0xB66800"
+    },
+    {
+      "step": 6,
+      "kind": "read_scalar",
+      "detail": "idx_no：`u32`（线长 4）—— 索引号（日志串 `idx_no=`）",
+      "evidence_va": "0xB66824"
+    },
+    {
+      "step": 7,
+      "kind": "read_scalar",
+      "detail": "point_use：`u32`（线长 4）—— 消耗点数（日志串 `point_use=`）",
+      "evidence_va": "0xB6684C"
+    },
+    {
+      "step": 8,
+      "kind": "read_scalar",
+      "detail": "is_supply：`u8`（线长 1）—— 是否补给（日志串 `is_supply=`）",
+      "evidence_va": "0xB66874"
+    },
+    {
+      "step": 9,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB66888"
+    },
+    {
+      "step": 10,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x490]`，实参 6 个",
+      "evidence_va": "0xB66A71"
+    },
+    {
+      "step": 11,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB667B6"
+    }
+  ],
+  "capabilities": [
+    "unclassified",
+    "lounge.clan_rokaku"
+  ],
+  "capabilities_derived": [
+    "unclassified"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:44",
+    "batch": 8,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 21,
+        "va": "0xB66761",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB6675E",
+        "call_va": "0xB66763"
+      },
+      "field_window": {
+        "start_va": "0xB6674D",
+        "end_va": "0xB668AF",
+        "guard": {
+          "va": "0xB6674C",
+          "func": "0xB41120",
+          "module_id": 484,
+          "release_va": "0xB41110"
+        },
+        "closer_or_commit_va": "0xB66888",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "result",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb6679c"
+            ]
+          },
+          {
+            "name": "tree_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb667dc"
+            ]
+          },
+          {
+            "name": "node_no",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb66800"
+            ]
+          },
+          {
+            "name": "idx_no",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 4,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb66824"
+            ]
+          },
+          {
+            "name": "point_use",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 5,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb6684c"
+            ]
+          },
+          {
+            "name": "is_supply",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 6,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb66874"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB6679C",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB667DC",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB66800",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB66824",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB6684C",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB66874",
+            "kind": "read",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 6,
+        "checkable": 6,
+        "pairs": [
+          {
+            "field": "result",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB6679C",
+            "kind": "read"
+          },
+          {
+            "field": "tree_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB667DC",
+            "kind": "read"
+          },
+          {
+            "field": "node_no",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB66800",
+            "kind": "read"
+          },
+          {
+            "field": "idx_no",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB66824",
+            "kind": "read"
+          },
+          {
+            "field": "point_use",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB6684C",
+            "kind": "read"
+          },
+          {
+            "field": "is_supply",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB66874",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB6674D",
+          "0xB668AF"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 21,
+          "capacity": 21,
+          "relation": "exact",
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）21 / 容量 0x15"
+        }
+      },
+      "closer": {
+        "va": "0xB66888",
+        "kind": "jz",
+        "jcc_va": "0xB6688E",
+        "seq_va": "0xB66884",
+        "jcc_dst": "0xB668AA",
+        "cmp": "cmp     ebx, [esp+2C5Ch+var_2C40]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x490]",
+        "slot_value": 1168,
+        "va": "0xB66A71",
+        "mov_va": "0xB66A49",
+        "host": "[edx+490h]",
+        "argc": 6,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB667B6",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "result=",
+        "tree_id=",
+        "node_no=",
+        "idx_no=",
+        "point_use=",
+        "is_supply="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0x7300-lounge-clan_rokaku_use_point_r.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "`0xb668d1`"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "ClanRokakuUsePointR",
+      "role": "response",
+      "wire_length": "4 + 4 + 4 + 4 + 4 + 1",
+      "members": [
+        {
+          "name": "Result",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "result"
+        },
+        {
+          "name": "TreeId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "tree_id"
+        },
+        {
+          "name": "NodeNo",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "node_no"
+        },
+        {
+          "name": "IdxNo",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "idx_no"
+        },
+        {
+          "name": "PointUse",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "point_use"
+        },
+        {
+          "name": "IsSupply",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "is_supply"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "1fd6bb04ca8e4932",
+  "check_fingerprint": "772c99ee75f53979"
+}

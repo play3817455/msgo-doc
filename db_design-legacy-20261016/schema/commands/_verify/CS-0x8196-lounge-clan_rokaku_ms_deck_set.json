@@ -1,0 +1,186 @@
+{
+ "id": "CS-0x8196-lounge-clan_rokaku_ms_deck_set",
+ "verified_at": "2026-09-30 15:25:44",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "handler_func",
+ "block": [
+  "0xBA2D40",
+  "0xBA2F32"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 14,
+   "va": "0xBA2D86",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xBA2D83",
+   "call_va": "0xBA2D88"
+  },
+  "field_window": {
+   "start_va": "0xBA2D40",
+   "end_va": "0xBA2E38",
+   "guard": null,
+   "closer_or_commit_va": "0xBA2E38",
+   "within_model_block": true,
+   "range_from": "handler_func"
+  },
+  "primitive_widths": {
+   "direction": "CS",
+   "expected": [
+    {
+     "name": "uniq_msid",
+     "wire_type": "u64",
+     "width": 8,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xBA2DC4, 0xBA2DCF"
+     ]
+    },
+    {
+     "name": "decktype",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 2,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xBA2DDC"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xBA2DB4",
+     "kind": "inline_store",
+     "width": 2,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xBA2DC4",
+     "kind": "inline_store",
+     "width": 4,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xBA2DDC",
+     "kind": "inline_store",
+     "width": 4,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xBA2E0E",
+     "kind": "composite",
+     "width": null,
+     "wire_type": null,
+     "name": "sub_B03020",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 1,
+   "checkable": 2,
+   "pairs": [
+    {
+     "field": "decktype",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xBA2DC4",
+     "kind": "inline_store"
+    }
+   ],
+   "gaps": [
+    {
+     "field": "uniq_msid",
+     "wire_type": "u64",
+     "width": 8,
+     "shape": "scalar",
+     "note": "汇编事件序列里找不到与之对位的读写点（缺字段或宽度不符）"
+    }
+   ],
+   "unmatched_actual": [
+    {
+     "va": "0xBA2DB4",
+     "kind": "inline_store",
+     "width": 2,
+     "wire_type": null
+    },
+    {
+     "va": "0xBA2DDC",
+     "kind": "inline_store",
+     "width": 4,
+     "wire_type": null
+    }
+   ],
+   "nested_unmatchable": [],
+   "window": [
+    "0xBA2D40",
+    "0xBA2E38"
+   ],
+   "scalar_match_verifiable": false,
+   "capacity_relation": {
+    "observed_min": 10,
+    "capacity": 14,
+    "relation": "within",
+    "unknown_events": [
+     {
+      "va": "0xBA2E0E",
+      "kind": "composite",
+      "name": "sub_B03020"
+     }
+    ],
+    "is_lower_bound": true,
+    "note": "观测线长（下界）10 / 容量 0xe"
+   }
+  },
+  "closer": {
+   "va": "0xBA2E38",
+   "kind": "commit",
+   "jcc_va": null,
+   "seq_va": null,
+   "cmp": null,
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x58]",
+   "slot_value": 88,
+   "va": "0xBA2EC9",
+   "mov_va": "0xBA2EC0",
+   "host": "[eax+58h]",
+   "argc": 2,
+   "form": "mov_then_call",
+   "error_slot": null
+  },
+  "log_strings": [
+   "uniq_msid=",
+   "decktype="
+  ]
+ },
+ "mismatches": [],
+ "notes": [
+  {
+   "check": "primitive_widths",
+   "note": "定宽对位不可判定：C→S 写线在复合写入器内部 consumed 未知；缺口 uniq_msid"
+  }
+ ],
+ "log_name_hits": [
+  "decktype",
+  "uniq_msid"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 9
+}

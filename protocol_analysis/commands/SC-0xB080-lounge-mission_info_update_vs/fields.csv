@@ -1,0 +1,9 @@
+序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+0,-,2,u16,opcode,命令号,分发器 switch 选择子,0xB080,0xb728c9,确证
+1,0,4,u32,exvs_num,exvs 任务 ID 数量（上限 128）,"驱动 mission_ids_exvs 数组循环（`cmp ebx,80h`）",0..128,B72706|B7272F,确证
+2,4,4·n₁,"array<u32,128>",mission_ids_exvs,参加演习(VS)的任务 ID 列表（日志串 `mission_ids_exvs={...}`）,经 `vt[0x13C]` 交业务（7 实参）,-,B72741|B7275E|B7276A,确证
+3,var,4,u32,vslocal_num,vslocal 任务 ID 数量（上限 128）,"驱动 mission_ids_vslocal 数组循环（`cmp ebx,80h`）",0..128,B7278F|B727A3,确证
+4,var,4·n₂,"array<u32,128>",mission_ids_vslocal,本地 VS 任务 ID 列表（日志串 `mission_ids_vslocal={...}`）,经 `vt[0x13C]` 交业务,-,B727B9|B727D6|B727E2,确证
+5,var,1,u8,is_mission_vs_force_entry,是否强制进入 VS 任务（日志串 `is_mission_vs_force_entry=`）,经 `vt[0x13C]` 交业务,0/1,B72815|B72AA1,确证
+6,var,1,u8,xwar_entry_is_freeze,XWAR 入场是否冻结（日志串 `xwar_entry_is_freeze=`）,经 `vt[0x13C]` 交业务,0/1,B72852|B72AB1,确证
+7,var,1,u8,vswar_entry_is_freeze,VS 战入场是否冻结（日志串 `vswar_entry_is_freeze=`）,经 `vt[0x13C]` 交业务,0/1,B72876|B72AB9,确证

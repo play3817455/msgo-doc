@@ -1,0 +1,723 @@
+{
+  "id": "SC-0x1146-auth-worldlist_select_r",
+  "opcode": "0x1146",
+  "direction": "SC",
+  "proto": "auth",
+  "proto_class": "auth_client",
+  "name": "worldlist_select_r",
+  "source_dir": "protocol_analysis/commands/SC-0x1146-auth-worldlist_select_r",
+  "meta": {
+    "opcode": "`0x1146`",
+    "方向": "SC（服务端 → 客户端（recv））",
+    "协议类": "`auth_client`",
+    "命令名": "`worldlist_select_r`",
+    "名字字符串": "`)->_proto_auth_client::recv_worldlist_select_r( `，引用点 `0xB0417E`（`push offset aProtoAuthClien_7`）",
+    "处理函数": "`sub_B03D30` @ `0xB03D30`（auth 分发器）",
+    "处理块范围": "`0xB04068` .. `0xB04355`（块首即 `push 0Dh`，错误码 `0x0D`）",
+    "错误码": "`0x0D`（`0xB040BD push 0Dh` → `loc_B04854` 错误分支）",
+    "关联命令": "配对请求 `../CS-0xA380-auth-worldlist_select/`（`0xA380`，容量 `0xA`）；同族 `../SC-0x298E-auth-worldlist_get_r/`（`0x298E`）"
+  },
+  "handler": "sub_B03D30",
+  "handler_va": "0xB03D30",
+  "block": [
+    "0xB04068",
+    "0xB04355"
+  ],
+  "name_str": ")->_proto_auth_client::recv_worldlist_select_r(",
+  "name_str_va": "0xB0417E",
+  "capacity": "0xE7",
+  "capacity_va": "0xB0407F",
+  "closer_va": "0xB04156",
+  "dispatch": null,
+  "dispatch_slot": "vt[0x80]",
+  "dispatch_va": "0xB04340",
+  "wire": {
+    "length_expr": "17+Len_en+Len_host+Len_otp",
+    "fixed": false,
+    "var_drivers": [
+      "Len_en",
+      "Len_host",
+      "Len_otp",
+      "L"
+    ],
+    "capacity_note": "声明容量 0xE7（容量记账口径，非线长）",
+    "field_count": 6,
+    "length_source": "closure_row",
+    "readme_conclusion": "**报文体总长：变长 = 17 + L_en + L_host + L_otp**（u32 result + NUL 串 world_name_en + NUL 串 loungesv_host + u32 loungesv_port + u32 userid + NUL 串 otp）。",
+    "readme_close": "4 + (Len_en+1) + (Len_host+1) + 4 + 4 + (Len_otp+1) = 17 + Len_en + Len_host + Len_otp；"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "auth 分发的 switch 选择子",
+      "enum": "0x1146",
+      "evidence_va": [
+        "0xB0417E"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "result",
+      "meaning": "大区（world）选择结果码",
+      "purpose": "交 vt[0x80] 第1实参；日志 result=",
+      "enum": "?",
+      "evidence_va": [
+        "0xB040AF",
+        "0xB040A8",
+        "0xB02DE9",
+        "0xB041D1",
+        "0xB0433D"
+      ],
+      "confidence": "类型确证/枚举待定",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "Len+1",
+      "wire_type": "bytes(NUL 串)",
+      "name": "world_name_en",
+      "meaning": "大区英文名",
+      "purpose": "交 vt[0x80] 第2实参；日志 world_name_en=\"",
+      "enum": "Len<=48（预算 0x31）",
+      "evidence_va": [
+        "0xB040D5",
+        "0xB040C6",
+        "0xB02BEE",
+        "0xB041FE",
+        "0xB0433A"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "5+Len_en",
+      "length": "Len+1",
+      "wire_type": "bytes(NUL 串)",
+      "name": "loungesv_host",
+      "meaning": "大厅服务器主机名/IP",
+      "purpose": "交 vt[0x80] 第3实参；日志 loungesv_host=\"",
+      "enum": "Len<=128（预算 0x81）",
+      "evidence_va": [
+        "0xB040F8",
+        "0xB040E3",
+        "0xB04236",
+        "0xB04335"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 4,
+      "offset": "6+Len_en+Len_host",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "loungesv_port",
+      "meaning": "大厅服务器端口",
+      "purpose": "交 vt[0x80] 第4实参；日志 loungesv_port=",
+      "enum": null,
+      "evidence_va": [
+        "0xB04113",
+        "0xB0410C",
+        "0xB0426B",
+        "0xB04330"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    },
+    {
+      "seq": 5,
+      "offset": "10+Len_en+Len_host",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "userid",
+      "meaning": "分配给本会话的玩家 ID",
+      "purpose": "交 vt[0x80] 第5实参；日志 userid=",
+      "enum": null,
+      "evidence_va": [
+        "0xB0412E",
+        "0xB04127",
+        "0xB04295",
+        "0xB04329"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 7
+    },
+    {
+      "seq": 6,
+      "offset": "14+Len_en+Len_host",
+      "length": "Len+1",
+      "wire_type": "bytes(NUL 串)",
+      "name": "otp",
+      "meaning": "一次性口令（OTP）",
+      "purpose": "交 vt[0x80] 第6实参；日志 otp=\"",
+      "enum": "Len<=40（预算 0x29）",
+      "evidence_va": [
+        "0xB04142",
+        "0xB0413A",
+        "0xB042B9",
+        "0xB04328"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 8
+    },
+    {
+      "seq": -1,
+      "offset": "17+Len_en+Len_host+Len_otp",
+      "length": "0",
+      "wire_type": "-",
+      "name": "（长度闭合）",
+      "meaning": "游标必须==报文末尾",
+      "purpose": "容量 0xE7=231=4+49+129+4+4+41",
+      "enum": null,
+      "evidence_va": [
+        "0xB04156",
+        "0xB0415A"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 9,
+      "is_closure": true
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0x1146（分发器 switch 选择子）",
+      "evidence_va": "0xB0417E"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB02C90`（模块 id 13）→ 之后逐字段读线",
+      "evidence_va": "0xB0406A"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "result：`u32`（线长 4）—— 大区（world）选择结果码",
+      "evidence_va": "0xB040AF"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "world_name_en：`bytes(NUL 串)`（线长 Len+1）—— 大区英文名",
+      "evidence_va": "0xB040D5"
+    },
+    {
+      "step": 5,
+      "kind": "read_scalar",
+      "detail": "loungesv_host：`bytes(NUL 串)`（线长 Len+1）—— 大厅服务器主机名/IP",
+      "evidence_va": "0xB040F8"
+    },
+    {
+      "step": 6,
+      "kind": "read_scalar",
+      "detail": "loungesv_port：`u32`（线长 4）—— 大厅服务器端口",
+      "evidence_va": "0xB04113"
+    },
+    {
+      "step": 7,
+      "kind": "read_scalar",
+      "detail": "userid：`u32`（线长 4）—— 分配给本会话的玩家 ID",
+      "evidence_va": "0xB0412E"
+    },
+    {
+      "step": 8,
+      "kind": "read_scalar",
+      "detail": "otp：`bytes(NUL 串)`（线长 Len+1）—— 一次性口令（OTP）",
+      "evidence_va": "0xB04142"
+    },
+    {
+      "step": 9,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jnz）",
+      "evidence_va": "0xB04156"
+    },
+    {
+      "step": 10,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x80]`，实参 6 个",
+      "evidence_va": "0xB04340"
+    },
+    {
+      "step": 11,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB040BD"
+    }
+  ],
+  "capabilities": [
+    "query",
+    "auth.worldlist"
+  ],
+  "capabilities_derived": [
+    "query"
+  ],
+  "db_effects": [],
+  "pair": "CS-0xA380-auth-worldlist_select",
+  "related": [
+    "SC-0x298E-auth-worldlist_get_r"
+  ],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:48",
+    "batch": 22,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 231,
+        "va": "0xB0407F",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB0407C",
+        "call_va": "0xB04084"
+      },
+      "field_window": {
+        "start_va": "0xB0406B",
+        "end_va": "0xB04340",
+        "guard": {
+          "va": "0xB0406A",
+          "func": "0xB02C90",
+          "module_id": 13,
+          "release_va": null
+        },
+        "closer_or_commit_va": "0xB04156",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "result",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB040AF",
+              "0xB040A8",
+              "0xB02DE9",
+              "0xB041D1",
+              "0xB0433D"
+            ]
+          },
+          {
+            "name": "world_name_en",
+            "wire_type": "bytes(NUL 串)",
+            "width": null,
+            "seq": 2,
+            "shape": "agg",
+            "evidence_va": [
+              "0xB040D5",
+              "0xB040C6",
+              "0xB02BEE",
+              "0xB041FE",
+              "0xB0433A"
+            ]
+          },
+          {
+            "name": "loungesv_host",
+            "wire_type": "bytes(NUL 串)",
+            "width": null,
+            "seq": 3,
+            "shape": "agg",
+            "evidence_va": [
+              "0xB040F8",
+              "0xB040E3",
+              "0xB04236",
+              "0xB04335"
+            ]
+          },
+          {
+            "name": "loungesv_port",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 4,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB04113",
+              "0xB0410C",
+              "0xB0426B",
+              "0xB04330"
+            ]
+          },
+          {
+            "name": "userid",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 5,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB0412E",
+              "0xB04127",
+              "0xB04295",
+              "0xB04329"
+            ]
+          },
+          {
+            "name": "otp",
+            "wire_type": "bytes(NUL 串)",
+            "width": null,
+            "seq": 6,
+            "shape": "agg",
+            "evidence_va": [
+              "0xB04142",
+              "0xB0413A",
+              "0xB042B9",
+              "0xB04328"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB040AF",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB040D5",
+            "kind": "read",
+            "width": null,
+            "wire_type": "str",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB040F8",
+            "kind": "read",
+            "width": null,
+            "wire_type": "str",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB04113",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0412E",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB04142",
+            "kind": "read",
+            "width": null,
+            "wire_type": "str",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB04193",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB041E1",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03580",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0427B",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03580",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB042A5",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03580",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB042F6",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03580",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0430A",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B036E0",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 3,
+        "checkable": 3,
+        "pairs": [
+          {
+            "field": "result",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB040AF",
+            "kind": "read"
+          },
+          {
+            "field": "loungesv_port",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB04113",
+            "kind": "read"
+          },
+          {
+            "field": "userid",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB0412E",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB040D5",
+            "kind": "read",
+            "width": null,
+            "wire_type": "str"
+          },
+          {
+            "va": "0xB040F8",
+            "kind": "read",
+            "width": null,
+            "wire_type": "str"
+          },
+          {
+            "va": "0xB04142",
+            "kind": "read",
+            "width": null,
+            "wire_type": "str"
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB0406B",
+          "0xB04340"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 12,
+          "capacity": 231,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB040D5",
+              "kind": "read",
+              "name": ""
+            },
+            {
+              "va": "0xB040F8",
+              "kind": "read",
+              "name": ""
+            },
+            {
+              "va": "0xB04142",
+              "kind": "read",
+              "name": ""
+            },
+            {
+              "va": "0xB04193",
+              "kind": "composite",
+              "name": "sub_B03020"
+            },
+            {
+              "va": "0xB041E1",
+              "kind": "composite",
+              "name": "sub_B03580"
+            },
+            {
+              "va": "0xB0427B",
+              "kind": "composite",
+              "name": "sub_B03580"
+            },
+            {
+              "va": "0xB042A5",
+              "kind": "composite",
+              "name": "sub_B03580"
+            },
+            {
+              "va": "0xB042F6",
+              "kind": "composite",
+              "name": "sub_B03580"
+            },
+            {
+              "va": "0xB0430A",
+              "kind": "composite",
+              "name": "sub_B036E0"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）12 / 容量 0xe7"
+        }
+      },
+      "closer": {
+        "va": "0xB04156",
+        "kind": "jnz",
+        "jcc_va": "0xB0415A",
+        "seq_va": "0xB04152",
+        "jcc_dst": "0xB040BB",
+        "cmp": "cmp     ebx, [esp+124h+var_108]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x80]",
+        "slot_value": 128,
+        "va": "0xB04340",
+        "mov_va": "0xB04322",
+        "host": "[edx+80h]",
+        "argc": 6,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "result=",
+        "world_name_en=\"",
+        "loungesv_host=\"",
+        "loungesv_port=",
+        "userid=",
+        "otp=\""
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0x1146-auth-worldlist_select_r.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [
+      "0xB040BD"
+    ],
+    "dispatcher": null,
+    "closure_field": "（长度闭合）",
+    "opcode_field_va": [
+      "0xB0417E"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "WorldlistSelectR",
+      "role": "response",
+      "wire_length": "17+Len_en+Len_host+Len_otp",
+      "members": [
+        {
+          "name": "Result",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "result"
+        },
+        {
+          "name": "WorldNameEn",
+          "wire_type": "bytes(NUL 串)",
+          "length": "Len+1",
+          "field_ref": "world_name_en"
+        },
+        {
+          "name": "LoungesvHost",
+          "wire_type": "bytes(NUL 串)",
+          "length": "Len+1",
+          "field_ref": "loungesv_host"
+        },
+        {
+          "name": "LoungesvPort",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "loungesv_port"
+        },
+        {
+          "name": "Userid",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "userid"
+        },
+        {
+          "name": "Otp",
+          "wire_type": "bytes(NUL 串)",
+          "length": "Len+1",
+          "field_ref": "otp"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "acb3fa5e308a8c21",
+  "check_fingerprint": "f1046193b33b89a1"
+}

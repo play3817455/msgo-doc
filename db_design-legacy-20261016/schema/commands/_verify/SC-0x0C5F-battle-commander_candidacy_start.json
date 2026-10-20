@@ -1,0 +1,127 @@
+{
+ "id": "SC-0x0C5F-battle-commander_candidacy_start",
+ "verified_at": "2026-09-30 15:25:46",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "block",
+ "block": [
+  "0xB0E708",
+  "0xB0E879"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 2,
+   "va": "0xB0E71D",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xB0E71A",
+   "call_va": "0xB0E71F"
+  },
+  "field_window": {
+   "start_va": "0xB0E709",
+   "end_va": "0xB0E78F",
+   "guard": {
+    "va": "0xB0E708",
+    "func": "0xB05DA0",
+    "module_id": null,
+    "release_va": "0xB05D90"
+   },
+   "closer_or_commit_va": "0xB0E784",
+   "within_model_block": true,
+   "range_from": "block"
+  },
+  "primitive_widths": {
+   "direction": "SC",
+   "expected": [
+    {
+     "name": "remain_sec",
+     "wire_type": "u16",
+     "width": 2,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB0E758",
+      "0xB0E749",
+      "0xB02E0B",
+      "0xB0E7FF",
+      "0xB0E84F",
+      "0xB0E85D"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB0E758",
+     "kind": "read",
+     "width": 2,
+     "wire_type": "u16",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 1,
+   "checkable": 1,
+   "pairs": [
+    {
+     "field": "remain_sec",
+     "width": 2,
+     "shape": "scalar",
+     "va": "0xB0E758",
+     "kind": "read"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB0E709",
+    "0xB0E78F"
+   ],
+   "scalar_match_verifiable": true,
+   "capacity_relation": {
+    "observed_min": 2,
+    "capacity": 2,
+    "relation": "exact",
+    "unknown_events": [],
+    "is_lower_bound": false,
+    "note": "观测线长（下界）2 / 容量 0x2"
+   }
+  },
+  "closer": {
+   "va": "0xB0E784",
+   "kind": "jnz",
+   "jcc_va": "0xB0E788",
+   "seq_va": "0xB0E780",
+   "jcc_dst": "0xB0E766",
+   "cmp": "cmp     ebx, [esp+1B3Ch+var_1B24]",
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x29C]",
+   "slot_value": 668,
+   "va": "0xB0E85D",
+   "mov_va": "0xB0E854",
+   "host": "[edx+29Ch]",
+   "argc": 1,
+   "form": "mov_then_call",
+   "error_slot": {
+    "slot": "vt[0x64]",
+    "va": "0xB0E772",
+    "argc": 2
+   }
+  },
+  "log_strings": [
+   "remain_sec="
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "remain_sec"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 15
+}

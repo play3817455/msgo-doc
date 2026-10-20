@@ -1,0 +1,30 @@
+{
+  "id": "SC-0x0E85-battle-commander_list_get_r",
+  "revision": 1,
+  "verified_at": "2026-09-22",
+  "verifier": "人工（IDA 汇编整函数扫描：元素读取器 + 元素打印器 + 数组预留步进三方对齐）",
+  "reason": "`array<u32 N>` 是记法问题：元素是标量 u32，规范成 `array<u32,N>`（4·N）。读取器为内联 u32 直读、循环步进 4（`0xB0ED0C`）。",
+  "evidence": [
+    {
+      "what": "元素读取器/打印器与预留步进三方对齐（见 schema/composites 对应文件）",
+      "va": [
+        "0xB0ECE3",
+        "0xB0ED00",
+        "0xB0ED0C"
+      ],
+      "detail": "本批共 26 行未建模数组字段，逐条进 IDA 扫描元素读取器整函数取线宽，再与元素打印器成员名/内存偏移、数组预留器槽步进交叉验证。"
+    }
+  ],
+  "patch": {
+    "commander_id": {
+      "wire_type": "array<u32,N>",
+      "length": "4·N",
+      "enum": "元素线长 4（标量 u32，非结构体）",
+      "evidence_va": [
+        "0xB0ECE3",
+        "0xB0ED00",
+        "0xB0ED0C"
+      ]
+    }
+  }
+}

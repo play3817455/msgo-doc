@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BGM 描述 · db_design</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <h1><a href="../index.html">db_design</a></h1>
+      <p class="header-note">唯一证据源：<code>protocol_analysis/</code></p>
+      <nav><a href="../index.html">首页</a>
+      <a href="../homing/index.html">归位库</a>
+      <a href="../tables/index.html" class="active">旧表留档</a>
+      <a href="../commands/index.html">命令</a>
+      <a href="../cfg/index.html">配置表79</a>
+      <a href="../srv/index.html">服务端配置</a>
+      <a href="../asm-audit/index.html">ASM 审计</a>
+      <a href="../oracle-audit/index.html">Oracle 审计</a>
+      <a href="../entities/index.html">协议实体</a>
+      <a href="../fields/index.html">字段索引</a>
+      <a href="../relations.html">表关系</a></nav>
+    </div>
+  </header>
+  <main class="wrap">
+
+    <nav class="breadcrumb"><a href="index.html">表设计</a> / <span><code>tbl_bgm_desc</code></span></nav>
+    <h2>BGM 描述 <span class="badge" style="background:#2e7d32">complete</span> <span class="badge" style="background:#2e7d32">ASM ✓</span></h2>
+    <p>EVENT 快照 bgm_desc 14B 线；5 成员终局/王牌/强制 BGM（sub_B07E00/sub_B0B320）</p>
+    <p class="muted">共 6 节点 · PERSIST 0 · TBD 0</p>
+    
+    <section class="asm-panel">
+      <h3>ASM 审计 <span class="badge" style="background:#2e7d32">ASM ✓</span> · memory <span class="badge" style="background:#2e7d32">ASM ✓</span></h3>
+      <dl class="asm-dl">
+        <dt>composite</dt><dd><code>bgm_desc</code></dd>
+        <dt>reader</dt><dd><code>sub_B07E00</code></dd>
+        <dt>线长</dt><dd>14 B
+           / 槽 20 B</dd>
+        <dt>wire_layout</dt><dd><code>i8+3×u32+i8</code></dd>
+        <dt>wire 字段</dt><dd>5 ok</dd>
+        <dt>memory 字段</dt><dd>5 audited · 5 ok</dd>
+        <dt>verified</dt><dd>wire 2026-09-20 · mem 2026-09-26</dd>
+      </dl>
+    </section>
+    <h3>证据命令</h3>
+    <ul><li><a href="../commands/SC-0x1365-battle-game_begin.html"><code>SC-0x1365-battle-game_begin</code></a> · <a href="../../../protocol_analysis/commands/SC-0x1365-battle-game_begin/README.md" target="_blank">protocol README</a></li><li><a href="../commands/SC-0xDC1E-battle-bgm_change.html"><code>SC-0xDC1E-battle-bgm_change</code></a> · <a href="../../../protocol_analysis/commands/SC-0xDC1E-battle-bgm_change/README.md" target="_blank">protocol README</a></li></ul>
+
+    <h3 id="columns">列树（按分组）</h3>
+    <div class="tree-legend">
+      <span>列名</span><span>线类型</span><span>disposition</span><span>含义</span><span>→ protocol 证据</span>
+    </div>
+    
+    <section class="col-group">
+      <h3>bgm_desc（14B 线 · 5 成员）</h3>
+      <ul class="field-tree root-tree"><li class="tree-branch">
+      <details open>
+        <summary><code class='fname'>bgm_desc</code> <code class='ftype'>struct</code> <span class='offset'></span> <span class="badge" style="background:#455a64">COMPOSITE</span> <span class="muted">← <code>bgm_desc</code></span></summary>
+        <div class="tree-body">
+          <div class="tree-detail">BGM 描述（日志 `bgm_desc=`；claim 20 / 线长 14）</div>
+          <div class="evidence-line"><code>SC-0x1365-battle-game_begin</code> struct <code>bgm_desc</code> @ §3 / §3.5 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x1365-battle-game_begin/README.md" target="_blank">📄 protocol</a></div><div class="evidence-line"><code>SC-0xDC1E-battle-bgm_change</code> struct <code>bgm_desc</code> @0 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xDC1E-battle-bgm_change/README.md" target="_blank">📄 protocol</a></div>
+          <ul class="field-tree"><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">is_final_phase</code>
+          <code class="ftype">i8</code>
+          <span class="offset">wire +0 1B</span>
+          <span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="B07E0E|B0B341">✓</span>
+        </div>
+        <div class="tree-meaning">是否最终阶段（打印器 movsx）</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x1365-battle-game_begin</code> struct <code>bgm_desc</code> @0 §3.5 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x1365-battle-game_begin/README.md" target="_blank">📄 protocol</a></div><div class="evidence-line"><code>SC-0xDC1E-battle-bgm_change</code> struct <code>bgm_desc</code> @0 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xDC1E-battle-bgm_change/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">field_bgm_id</code>
+          <code class="ftype">u32</code>
+          <span class="offset">wire +1 mem +4 4B</span>
+          <span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="B07E24|B0B368">✓</span>
+        </div>
+        <div class="tree-meaning">战场 BGM ID</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x1365-battle-game_begin</code> struct <code>bgm_desc</code> @1 §3.5 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x1365-battle-game_begin/README.md" target="_blank">📄 protocol</a></div><div class="evidence-line"><code>SC-0xDC1E-battle-bgm_change</code> struct <code>bgm_desc</code> @1 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xDC1E-battle-bgm_change/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">ace_bgm_id</code>
+          <code class="ftype">u32</code>
+          <span class="offset">wire +5 mem +8 4B</span>
+          <span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="B07E36|B0B38F">✓</span>
+        </div>
+        <div class="tree-meaning">王牌（ace）BGM ID</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x1365-battle-game_begin</code> struct <code>bgm_desc</code> @5 §3.5 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x1365-battle-game_begin/README.md" target="_blank">📄 protocol</a></div><div class="evidence-line"><code>SC-0xDC1E-battle-bgm_change</code> struct <code>bgm_desc</code> @5 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xDC1E-battle-bgm_change/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">force_bgm_id</code>
+          <code class="ftype">u32</code>
+          <span class="offset">wire +9 mem +12 4B</span>
+          <span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="B07E48|B0B3B6">✓</span>
+        </div>
+        <div class="tree-meaning">强制播放 BGM ID</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x1365-battle-game_begin</code> struct <code>bgm_desc</code> @9 §3.5 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x1365-battle-game_begin/README.md" target="_blank">📄 protocol</a></div><div class="evidence-line"><code>SC-0xDC1E-battle-bgm_change</code> struct <code>bgm_desc</code> @9 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xDC1E-battle-bgm_change/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">is_one_shot</code>
+          <code class="ftype">i8</code>
+          <span class="offset">wire +13 mem +16 1B</span>
+          <span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB07E63">✓</span>
+        </div>
+        <div class="tree-meaning">是否只播放一次（打印器 movsx）</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x1365-battle-game_begin</code> struct <code>bgm_desc</code> @13 §3.5 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x1365-battle-game_begin/README.md" target="_blank">📄 protocol</a></div><div class="evidence-line"><code>SC-0xDC1E-battle-bgm_change</code> struct <code>bgm_desc</code> @13 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xDC1E-battle-bgm_change/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li></ul>
+        </div>
+      </details>
+    </li></ul>
+    </section>
+
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">生成于 2026-10-12 · 改 JSON 后重跑 build_site.py · HTML 只读</div>
+  </footer>
+</body>
+</html>

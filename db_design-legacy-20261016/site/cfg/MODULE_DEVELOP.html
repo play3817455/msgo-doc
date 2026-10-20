@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MODULE_DEVELOP · db_design</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <h1><a href="../index.html">db_design</a></h1>
+      <p class="header-note">唯一证据源：<code>protocol_analysis/</code></p>
+      <nav><a href="../index.html">首页</a>
+      <a href="../homing/index.html">归位库</a>
+      <a href="../tables/index.html">旧表留档</a>
+      <a href="../commands/index.html">命令</a>
+      <a href="../cfg/index.html" class="active">配置表79</a>
+      <a href="../srv/index.html">服务端配置</a>
+      <a href="../asm-audit/index.html">ASM 审计</a>
+      <a href="../oracle-audit/index.html">Oracle 审计</a>
+      <a href="../entities/index.html">协议实体</a>
+      <a href="../fields/index.html">字段索引</a>
+      <a href="../relations.html">表关系</a></nav>
+    </div>
+  </header>
+  <main class="wrap">
+
+    <p class="breadcrumb"><a href="index.html">配置表79</a> / <code>MODULE_DEVELOP</code></p>
+    <h2><code>MODULE_DEVELOP</code> <span class="badge" style="background:#1565c0">DOWNLOAD</span> <span class="badge" style="background:#2e7d32">确证</span></h2>
+    <dl class="asm-dl">
+      <dt>CSV</dt><dd><code>module/module_develop.csv</code></dd>
+      <dt>用途</dt><dd>模块开发</dd>
+      <dt>读表函数</dt><dd><code>sub_5A2B90</code></dd>
+      <dt>表ID</dt><dd>51</dd>
+      <dt>下载序</dt><dd>51</dd>
+      <dt>类名</dt><dd><code>CModuleDevelopTable</code></dd>
+      <dt>列统计</dt><dd>9 列 · 确证 9 · 已映射 0 · 间隙 4</dd>
+      <dt>证据</dt><dd><a href="../../../datatables/01-列注释/51-51-MODULE_DEVELOP.md" target="_blank">datatables/01-列注释/51-51-MODULE_DEVELOP.md</a></dd>
+    </dl>
+    <section>
+      <h3>列定案</h3>
+      <p class="muted"><code>db_column</code> = PostgreSQL 列名（确证/有语义的 partial 用订案名；<code>unknown_*</code> 暂保留 colN）</p>
+      <table class="wide">
+        <thead>
+          <tr>
+            <th>CSV#</th><th>DB列</th><th>订案名</th><th>中文摘要</th><th>类型</th>
+            <th>状态</th><th>读表</th><th>偏移/VA</th><th>语义详情</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><code>0</code></td>
+      <td><code>develop_id</code></td>
+      <td><code>develop_id</code></td>
+      <td>主键；模块开发配方 ID</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5A2B90</code></td>
+      <td class="muted">csv 0 · +0 · 0x5a2ba7</td>
+      <td class="meaning-cell">主键；模块开发配方 ID</td>
+    </tr>
+    <tr>
+      <td><code>1</code></td>
+      <td><code>reserved_u32_1</code></td>
+      <td><code>reserved_u32_1</code></td>
+      <td>预留列 col1</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_5A2B90</code></td>
+      <td class="muted">csv 1</td>
+      <td class="meaning-cell">CSV col1 预留（sub_5A2B90 跳过；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>2</code></td>
+      <td><code>module_id</code></td>
+      <td><code>module_id</code></td>
+      <td>目标 MODULE.module_id（u32 @+28）</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5A2B90</code></td>
+      <td class="muted">csv 2 · +28 · 0x5a2bb1</td>
+      <td class="meaning-cell">目标 MODULE.module_id（u32 @+28）</td>
+    </tr>
+    <tr>
+      <td><code>3</code></td>
+      <td><code>develop_time_sec</code></td>
+      <td><code>develop_time_sec</code></td>
+      <td>开发耗时秒（u32 @+32）</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5A2B90</code></td>
+      <td class="muted">csv 3 · +32 · 0x5a2bc1</td>
+      <td class="meaning-cell">开发耗时秒（u32 @+32）</td>
+    </tr>
+    <tr>
+      <td><code>4</code></td>
+      <td><code>material_item_id</code></td>
+      <td><code>material_item_id</code></td>
+      <td>材料 ITEM ID（u32 @+4；配对循环第1组）</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5A2B90</code></td>
+      <td class="muted">csv 4 · +4 · 0x5a2bd2</td>
+      <td class="meaning-cell">材料 ITEM ID（u32 @+4；配对循环第1组）</td>
+    </tr>
+    <tr>
+      <td><code>5</code></td>
+      <td><code>col5</code></td>
+      <td><code>col5</code></td>
+      <td>CSV col5 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_5A2B90</code></td>
+      <td class="muted">csv 5</td>
+      <td class="meaning-cell">CSV col5 预留（sub_5A2B90 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>6</code></td>
+      <td><code>material_qty</code></td>
+      <td><code>material_qty</code></td>
+      <td>材料数量（u32 @+8）</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5A2B90</code></td>
+      <td class="muted">csv 6 · +8 · 0x5a2bdf</td>
+      <td class="meaning-cell">材料数量（u32 @+8）</td>
+    </tr>
+    <tr>
+      <td><code>7</code></td>
+      <td><code>material2_item_id</code></td>
+      <td><code>material2_item_id</code></td>
+      <td>材料2 ITEM ID</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5A2B90</code></td>
+      <td class="muted">csv 7 · +12</td>
+      <td class="meaning-cell">材料第 2 组 ITEM ID（u32 @+12；sub_5A2B90 配对循环第 2 组，与第 1 组 material_item_id/material_qty 同构）。原版数据缺失 ⇒ 本服占位 0（缺列时客户端 sub_456D90 越界返回 &quot;&quot; ⇒ atoi 0，行为等价）</td>
+    </tr>
+    <tr>
+      <td><code>8</code></td>
+      <td><code>reserved_u32_8</code></td>
+      <td><code>reserved_u32_8</code></td>
+      <td>CSV col8 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_5A2B90</code></td>
+      <td class="muted">csv 8</td>
+      <td class="meaning-cell">CSV col8 预留（sub_5A2B90 三组配对循环只取 (4,6)/(7,9)/(10,12)，本列不读；保持 CSV 列位对齐；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>9</code></td>
+      <td><code>material2_qty</code></td>
+      <td><code>material2_qty</code></td>
+      <td>材料2 数量</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5A2B90</code></td>
+      <td class="muted">csv 9 · +16</td>
+      <td class="meaning-cell">材料第 2 组数量（u32 @+16；sub_5A2B90 第 2 组配对收尾）。原版数据缺失 ⇒ 本服占位 0（缺列时客户端 sub_456D90 越界返回 &quot;&quot; ⇒ atoi 0，行为等价）</td>
+    </tr>
+    <tr>
+      <td><code>10</code></td>
+      <td><code>material3_item_id</code></td>
+      <td><code>material3_item_id</code></td>
+      <td>材料3 ITEM ID</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5A2B90</code></td>
+      <td class="muted">csv 10 · +20</td>
+      <td class="meaning-cell">材料第 3 组 ITEM ID（u32 @+20；sub_5A2B90 配对循环第 3 组）。原版数据缺失 ⇒ 本服占位 0（缺列时客户端 sub_456D90 越界返回 &quot;&quot; ⇒ atoi 0，行为等价）</td>
+    </tr>
+    <tr>
+      <td><code>11</code></td>
+      <td><code>reserved_u32_11</code></td>
+      <td><code>reserved_u32_11</code></td>
+      <td>CSV col11 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_5A2B90</code></td>
+      <td class="muted">csv 11</td>
+      <td class="meaning-cell">CSV col11 预留（sub_5A2B90 不读本列；保持 CSV 列位对齐；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>12</code></td>
+      <td><code>material3_qty</code></td>
+      <td><code>material3_qty</code></td>
+      <td>材料3 数量</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5A2B90</code></td>
+      <td class="muted">csv 12 · +24</td>
+      <td class="meaning-cell">材料第 3 组数量（u32 @+24；sub_5A2B90 第 3 组配对收尾，也是全表最大列号）。原版数据缺失 ⇒ 本服占位 0（缺列时客户端 sub_456D90 越界返回 &quot;&quot; ⇒ atoi 0，行为等价）</td>
+    </tr></tbody>
+      </table>
+    </section>
+
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">生成于 2026-10-12 · 改 JSON 后重跑 build_site.py · HTML 只读</div>
+  </footer>
+</body>
+</html>

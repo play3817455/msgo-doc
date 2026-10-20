@@ -1,0 +1,9 @@
+序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+0,-,2,u16,opcode,命令号,分发器 switch 选择子,0xA832,0xb70f01,确证
+1,0,303,struct<ms_lounge>,ms,机体数据块（线长 303B = 读取器 `sub_B43570` 整函数展开；结构跨度 312B；日志串 `ms=`）,经 `vt[0x238]` 交业务（7 实参）,-,B70CEC|B70CFB,确证
+2,var,4,u32,unlockw_num,解锁武器数量（上限 30）,"驱动 unlockw 数组循环（`cmp ebx,1Eh`）",0..30,B70D2D|B70D59,确证
+3,var,30·n₁,"array<struct,30>",unlockw,解锁武器列表（元素线长 30 / 槽步进 32）,经 `vt[0x238]` 交业务,-,B70D6B|B70D8B|B70D97,确证
+4,var,4,u32,equip_num,装备编成数量（上限 7）,"驱动 equip_set 数组循环（`cmp ebx,7`）",0..7,B70DBF|B70DD3,确证
+5,var,121·n₂,"array<struct,121>",equip_set,装备编成列表（元素线长 121 / 槽步进 128）,经 `vt[0x238]` 交业务,-,B70DE6|B70E0A|B70E16,确证
+6,var,4,u32,adop_num,采纳列表数量（上限 31）,"驱动 adop_list 数组循环（`cmp ebx,1Fh`）",0..31,B70E41|B70E55,确证
+7,var,13·n₃,"array<struct,13>",adop_list,采纳列表（元素线长 13 / 槽步进 16）,经 `vt[0x238]` 交业务,-,B70E68|B70E8A|B70E96,确证

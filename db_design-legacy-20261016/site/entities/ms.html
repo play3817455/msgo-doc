@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>机体 · db_design</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <h1><a href="../index.html">db_design</a></h1>
+      <p class="header-note">唯一证据源：<code>protocol_analysis/</code></p>
+      <nav><a href="../index.html">首页</a>
+      <a href="../homing/index.html">归位库</a>
+      <a href="../tables/index.html">旧表留档</a>
+      <a href="../commands/index.html">命令</a>
+      <a href="../cfg/index.html">配置表79</a>
+      <a href="../srv/index.html">服务端配置</a>
+      <a href="../asm-audit/index.html">ASM 审计</a>
+      <a href="../oracle-audit/index.html">Oracle 审计</a>
+      <a href="../entities/index.html" class="active">协议实体</a>
+      <a href="../fields/index.html">字段索引</a>
+      <a href="../relations.html">表关系</a></nav>
+    </div>
+  </header>
+  <main class="wrap">
+
+    <nav class="breadcrumb"><a href="index.html">协议实体</a> / <span>机体</span></nav>
+    <h2>机体 <code class="inline">ms</code></h2>
+    <p>MS 机体；battle 244B / lounge 303B 两种线形</p>
+    <p>关联提议表：<code>tbl_ms</code> · <a href="../tables/tbl_ms.html">查看表设计 →</a></p>
+
+    <h3>线宽形态</h3>
+    <table>
+      <thead><tr><th>名称</th><th>长度</th><th>结构</th><th>命令</th><th>证据</th></tr></thead>
+      <tbody><tr>
+      <td><code>battle</code></td>
+      <td>244 B</td>
+      <td><code></code></td>
+      <td><a href="../commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one.html"><code>SC-0x1E2F-battle-msma_spawn_list_get_r_one</code></a>, <a href="../commands/SC-0x717D-battle-entity_msma_appear.html"><code>SC-0x717D-battle-entity_msma_appear</code></a></td>
+      <td><a href="../../../protocol_analysis/commands/SC-0x717D-battle-entity_msma_appear/README.md" target="_blank">README</a></td>
+    </tr><tr>
+      <td><code>lounge</code></td>
+      <td>303 B</td>
+      <td><code></code></td>
+      <td><a href="../commands/SC-0xA832-lounge-msma_add.html"><code>SC-0xA832-lounge-msma_add</code></a></td>
+      <td><a href="../../../protocol_analysis/commands/SC-0xA832-lounge-msma_add/README.md" target="_blank">README</a></td>
+    </tr></tbody>
+    </table>
+
+    <h3>字段树</h3>
+    <ul class="field-tree root-tree"><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">uniqid</code>
+          <code class="ftype">u64</code>
+          <span class="offset">wire +0 8B</span>
+          <span class="badge" style="background:#c62828">EVENT</span>
+        </div>
+        <div class="tree-meaning">机体唯一 ID</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x1E2F-battle-msma_spawn_list_get_r_one</code> struct <code>ms</code> @0 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes"></div>
+      </div>
+    </li>
+<li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">msma_id</code>
+          <code class="ftype">u32</code>
+          <span class="offset">wire +8 4B</span>
+          <span class="badge" style="background:#c62828">EVENT</span>
+        </div>
+        <div class="tree-meaning">机体模板 ID</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x1E2F-battle-msma_spawn_list_get_r_one</code> struct <code>ms</code> @8 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes"></div>
+      </div>
+    </li>
+<li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">crew_msma_id</code>
+          <code class="ftype">u32</code>
+          <span class="offset">wire +12 4B</span>
+          <span class="badge" style="background:#c62828">EVENT</span>
+        </div>
+        <div class="tree-meaning">乘员机体 ID</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x1E2F-battle-msma_spawn_list_get_r_one</code> struct <code>ms</code> @12 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes"></div>
+      </div>
+    </li>
+<li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">decal</code>
+          <code class="ftype">u32</code>
+          <span class="offset">wire +16 4B</span>
+          <span class="badge" style="background:#c62828">EVENT</span>
+        </div>
+        <div class="tree-meaning">贴纸/标识</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x1E2F-battle-msma_spawn_list_get_r_one</code> struct <code>ms</code> @16 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes"></div>
+      </div>
+    </li>
+<li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">color</code>
+          <code class="ftype">u8</code>
+          <span class="offset">wire +20 1B</span>
+          <span class="badge" style="background:#c62828">EVENT</span>
+        </div>
+        <div class="tree-meaning">配色</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x1E2F-battle-msma_spawn_list_get_r_one</code> struct <code>ms</code> @20 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes"></div>
+      </div>
+    </li>
+<li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">deck_index</code>
+          <code class="ftype">u8</code>
+          <span class="offset">wire +21 1B</span>
+          <span class="badge" style="background:#c62828">EVENT</span>
+        </div>
+        <div class="tree-meaning">卡组索引</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x1E2F-battle-msma_spawn_list_get_r_one</code> struct <code>ms</code> @21 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes"></div>
+      </div>
+    </li>
+<li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">cost</code>
+          <code class="ftype">u32</code>
+          <span class="offset">wire +22 4B</span>
+          <span class="badge" style="background:#c62828">EVENT</span>
+        </div>
+        <div class="tree-meaning">机体 COST 值</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x1E2F-battle-msma_spawn_list_get_r_one</code> struct <code>ms</code> @22 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes"></div>
+      </div>
+    </li>
+<li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">is_costover</code>
+          <code class="ftype">u8</code>
+          <span class="offset">wire +26 1B</span>
+          <span class="badge" style="background:#c62828">EVENT</span>
+        </div>
+        <div class="tree-meaning">是否超 COST</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x1E2F-battle-msma_spawn_list_get_r_one</code> struct <code>ms</code> @26 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes"></div>
+      </div>
+    </li>
+<li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">energy_now</code>
+          <code class="ftype">u32</code>
+          <span class="offset">wire +27 4B</span>
+          <span class="badge" style="background:#c62828">EVENT</span>
+        </div>
+        <div class="tree-meaning">当前 EN</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x1E2F-battle-msma_spawn_list_get_r_one</code> struct <code>ms</code> @27 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes"></div>
+      </div>
+    </li>
+<li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">weight_balance</code>
+          <code class="ftype">u16</code>
+          <span class="offset">wire +31 2B</span>
+          <span class="badge" style="background:#c62828">EVENT</span>
+        </div>
+        <div class="tree-meaning">重量平衡</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x1E2F-battle-msma_spawn_list_get_r_one</code> struct <code>ms</code> @31 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes"></div>
+      </div>
+    </li>
+<li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">shield_weight</code>
+          <code class="ftype">u16</code>
+          <span class="offset">wire +33 2B</span>
+          <span class="badge" style="background:#c62828">EVENT</span>
+        </div>
+        <div class="tree-meaning">盾重</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x1E2F-battle-msma_spawn_list_get_r_one</code> struct <code>ms</code> @33 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes"></div>
+      </div>
+    </li>
+<li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">sp_parts</code>
+          <code class="ftype">u32</code>
+          <span class="offset">wire +35 4B</span>
+          <span class="badge" style="background:#c62828">EVENT</span>
+        </div>
+        <div class="tree-meaning">特殊部件</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x1E2F-battle-msma_spawn_list_get_r_one</code> struct <code>ms</code> @35 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes"></div>
+      </div>
+    </li>
+<li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">armor_up</code>
+          <code class="ftype">u16</code>
+          <span class="offset">wire +39 2B</span>
+          <span class="badge" style="background:#c62828">EVENT</span>
+        </div>
+        <div class="tree-meaning">装甲强化</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x1E2F-battle-msma_spawn_list_get_r_one</code> struct <code>ms</code> @39 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes"></div>
+      </div>
+    </li>
+<li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">warp_up</code>
+          <code class="ftype">u16</code>
+          <span class="offset">wire +41 2B</span>
+          <span class="badge" style="background:#c62828">EVENT</span>
+        </div>
+        <div class="tree-meaning">传送强化</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x1E2F-battle-msma_spawn_list_get_r_one</code> struct <code>ms</code> @41 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes"></div>
+      </div>
+    </li>
+<li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">boost_offset</code>
+          <code class="ftype">u16</code>
+          <span class="offset">wire +43 2B</span>
+          <span class="badge" style="background:#c62828">EVENT</span>
+        </div>
+        <div class="tree-meaning">推进偏移</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x1E2F-battle-msma_spawn_list_get_r_one</code> struct <code>ms</code> @43 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes"></div>
+      </div>
+    </li>
+<li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">boost_offset_ns</code>
+          <code class="ftype">u16</code>
+          <span class="offset">wire +45 2B</span>
+          <span class="badge" style="background:#c62828">EVENT</span>
+        </div>
+        <div class="tree-meaning">推进偏移（无盾）</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x1E2F-battle-msma_spawn_list_get_r_one</code> struct <code>ms</code> @45 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes"></div>
+      </div>
+    </li>
+<li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">over_custom_armor</code>
+          <code class="ftype">u16</code>
+          <span class="offset">wire +47 2B</span>
+          <span class="badge" style="background:#c62828">EVENT</span>
+        </div>
+        <div class="tree-meaning">超限自定义装甲</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x1E2F-battle-msma_spawn_list_get_r_one</code> struct <code>ms</code> @47 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes"></div>
+      </div>
+    </li>
+<li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">over_custom_warp</code>
+          <code class="ftype">u16</code>
+          <span class="offset">wire +49 2B</span>
+          <span class="badge" style="background:#c62828">EVENT</span>
+        </div>
+        <div class="tree-meaning">超限自定义传送</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x1E2F-battle-msma_spawn_list_get_r_one</code> struct <code>ms</code> @49 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes"></div>
+      </div>
+    </li>
+<li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">over_custom_level</code>
+          <code class="ftype">u16</code>
+          <span class="offset">wire +51 2B</span>
+          <span class="badge" style="background:#c62828">EVENT</span>
+        </div>
+        <div class="tree-meaning">超限自定义等级</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x1E2F-battle-msma_spawn_list_get_r_one</code> struct <code>ms</code> @51 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes"></div>
+      </div>
+    </li>
+<li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">witem_id</code>
+          <code class="ftype">u32[3]</code>
+          <span class="offset">wire +53 12B</span>
+          <span class="badge" style="background:#c62828">EVENT</span>
+        </div>
+        <div class="tree-meaning">武器道具 ID（3）</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x1E2F-battle-msma_spawn_list_get_r_one</code> struct <code>ms</code> @53 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes"></div>
+      </div>
+    </li>
+<li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">sitem_id</code>
+          <code class="ftype">u32</code>
+          <span class="offset">wire +65 4B</span>
+          <span class="badge" style="background:#c62828">EVENT</span>
+        </div>
+        <div class="tree-meaning">副武器道具 ID</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x1E2F-battle-msma_spawn_list_get_r_one</code> struct <code>ms</code> @65 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes"></div>
+      </div>
+    </li>
+<li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">spitem_id</code>
+          <code class="ftype">u32</code>
+          <span class="offset">wire +69 4B</span>
+          <span class="badge" style="background:#c62828">EVENT</span>
+        </div>
+        <div class="tree-meaning">特殊道具 ID</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x1E2F-battle-msma_spawn_list_get_r_one</code> struct <code>ms</code> @69 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes"></div>
+      </div>
+    </li>
+<li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">wbu_power</code>
+          <code class="ftype">u16[3]</code>
+          <span class="offset">wire +73 6B</span>
+          <span class="badge" style="background:#c62828">EVENT</span>
+        </div>
+        <div class="tree-meaning">武器 BU 威力（3）</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x1E2F-battle-msma_spawn_list_get_r_one</code> struct <code>ms</code> @73 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes"></div>
+      </div>
+    </li>
+<li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">wbu_stability</code>
+          <code class="ftype">u16[3]</code>
+          <span class="offset">wire +79 6B</span>
+          <span class="badge" style="background:#c62828">EVENT</span>
+        </div>
+        <div class="tree-meaning">武器 BU 稳定性（3）</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x1E2F-battle-msma_spawn_list_get_r_one</code> struct <code>ms</code> @79 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes"></div>
+      </div>
+    </li>
+<li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">wbu_rapid</code>
+          <code class="ftype">u16[3]</code>
+          <span class="offset">wire +85 6B</span>
+          <span class="badge" style="background:#c62828">EVENT</span>
+        </div>
+        <div class="tree-meaning">武器 BU 连射（3）</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x1E2F-battle-msma_spawn_list_get_r_one</code> struct <code>ms</code> @85 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes"></div>
+      </div>
+    </li>
+<li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">wbu_shot_range</code>
+          <code class="ftype">u16[3]</code>
+          <span class="offset">wire +91 6B</span>
+          <span class="badge" style="background:#c62828">EVENT</span>
+        </div>
+        <div class="tree-meaning">武器 BU 射程（3）</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x1E2F-battle-msma_spawn_list_get_r_one</code> struct <code>ms</code> @91 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes"></div>
+      </div>
+    </li>
+<li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">wbu_shield_hp</code>
+          <code class="ftype">u16[3]</code>
+          <span class="offset">wire +97 6B</span>
+          <span class="badge" style="background:#c62828">EVENT</span>
+        </div>
+        <div class="tree-meaning">武器 BU 盾 HP（3）</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x1E2F-battle-msma_spawn_list_get_r_one</code> struct <code>ms</code> @97 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes"></div>
+      </div>
+    </li>
+<li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">wbu_eff_time</code>
+          <code class="ftype">u16[3]</code>
+          <span class="offset">wire +103 6B</span>
+          <span class="badge" style="background:#c62828">EVENT</span>
+        </div>
+        <div class="tree-meaning">武器 BU 有效时间（3）</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x1E2F-battle-msma_spawn_list_get_r_one</code> struct <code>ms</code> @103 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes"></div>
+      </div>
+    </li>
+<li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">wbu_eff_range</code>
+          <code class="ftype">u16[3]</code>
+          <span class="offset">wire +109 6B</span>
+          <span class="badge" style="background:#c62828">EVENT</span>
+        </div>
+        <div class="tree-meaning">武器 BU 有效范围（3）</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x1E2F-battle-msma_spawn_list_get_r_one</code> struct <code>ms</code> @109 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes"></div>
+      </div>
+    </li>
+<li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">eq_modules</code>
+          <code class="ftype">u32[10]</code>
+          <span class="offset">wire +115 40B</span>
+          <span class="badge" style="background:#c62828">EVENT</span>
+        </div>
+        <div class="tree-meaning">装备模块（10）</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x1E2F-battle-msma_spawn_list_get_r_one</code> struct <code>ms</code> @115 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes"></div>
+      </div>
+    </li>
+<li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">eq_bonus_modules</code>
+          <code class="ftype">u32</code>
+          <span class="offset">wire +155 4B</span>
+          <span class="badge" style="background:#c62828">EVENT</span>
+        </div>
+        <div class="tree-meaning">装备奖励模块</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x1E2F-battle-msma_spawn_list_get_r_one</code> struct <code>ms</code> @155 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes"></div>
+      </div>
+    </li>
+<li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">eq_rental_modules</code>
+          <code class="ftype">u32</code>
+          <span class="offset">wire +159 4B</span>
+          <span class="badge" style="background:#c62828">EVENT</span>
+        </div>
+        <div class="tree-meaning">装备租用模块</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x1E2F-battle-msma_spawn_list_get_r_one</code> struct <code>ms</code> @159 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes"></div>
+      </div>
+    </li>
+<li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">adop_items_ms</code>
+          <code class="ftype">u32[4]</code>
+          <span class="offset">wire +163 16B</span>
+          <span class="badge" style="background:#c62828">EVENT</span>
+        </div>
+        <div class="tree-meaning">采纳项 MS（4）</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x1E2F-battle-msma_spawn_list_get_r_one</code> struct <code>ms</code> @163 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes"></div>
+      </div>
+    </li>
+<li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">adop_items_eq</code>
+          <code class="ftype">u32[12]</code>
+          <span class="offset">wire +179 48B</span>
+          <span class="badge" style="background:#c62828">EVENT</span>
+        </div>
+        <div class="tree-meaning">采纳项装备（12）</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x1E2F-battle-msma_spawn_list_get_r_one</code> struct <code>ms</code> @179 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes"></div>
+      </div>
+    </li>
+<li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">is_exdeck</code>
+          <code class="ftype">u8</code>
+          <span class="offset">wire +227 1B</span>
+          <span class="badge" style="background:#c62828">EVENT</span>
+        </div>
+        <div class="tree-meaning">是否扩展 deck</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x1E2F-battle-msma_spawn_list_get_r_one</code> struct <code>ms</code> @227 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes"></div>
+      </div>
+    </li>
+<li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">is_rokaku</code>
+          <code class="ftype">u8</code>
+          <span class="offset">wire +228 1B</span>
+          <span class="badge" style="background:#c62828">EVENT</span>
+        </div>
+        <div class="tree-meaning">是否络格</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x1E2F-battle-msma_spawn_list_get_r_one</code> struct <code>ms</code> @228 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes"></div>
+      </div>
+    </li>
+<li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">rokakums_limit_use</code>
+          <code class="ftype">u32</code>
+          <span class="offset">wire +229 4B</span>
+          <span class="badge" style="background:#c62828">EVENT</span>
+        </div>
+        <div class="tree-meaning">络格机体限制使用</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x1E2F-battle-msma_spawn_list_get_r_one</code> struct <code>ms</code> @229 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes"></div>
+      </div>
+    </li>
+<li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">respawn_wait_sec</code>
+          <code class="ftype">u16</code>
+          <span class="offset">wire +233 2B</span>
+          <span class="badge" style="background:#c62828">EVENT</span>
+        </div>
+        <div class="tree-meaning">重生等待秒数</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x1E2F-battle-msma_spawn_list_get_r_one</code> struct <code>ms</code> @233 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes"></div>
+      </div>
+    </li>
+<li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">respawn_wait_max</code>
+          <code class="ftype">u16</code>
+          <span class="offset">wire +235 2B</span>
+          <span class="badge" style="background:#c62828">EVENT</span>
+        </div>
+        <div class="tree-meaning">重生等待上限</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x1E2F-battle-msma_spawn_list_get_r_one</code> struct <code>ms</code> @235 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes"></div>
+      </div>
+    </li>
+<li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">is_reduce_respawn_wait</code>
+          <code class="ftype">u8</code>
+          <span class="offset">wire +237 1B</span>
+          <span class="badge" style="background:#c62828">EVENT</span>
+        </div>
+        <div class="tree-meaning">是否缩短重生等待</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x1E2F-battle-msma_spawn_list_get_r_one</code> struct <code>ms</code> @237 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes"></div>
+      </div>
+    </li>
+<li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">is_extrule_invalid</code>
+          <code class="ftype">u8</code>
+          <span class="offset">wire +238 1B</span>
+          <span class="badge" style="background:#c62828">EVENT</span>
+        </div>
+        <div class="tree-meaning">扩展规则无效标志</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x1E2F-battle-msma_spawn_list_get_r_one</code> struct <code>ms</code> @238 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes"></div>
+      </div>
+    </li>
+<li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">is_heroms</code>
+          <code class="ftype">u8</code>
+          <span class="offset">wire +239 1B</span>
+          <span class="badge" style="background:#c62828">EVENT</span>
+        </div>
+        <div class="tree-meaning">是否英雄机体</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x1E2F-battle-msma_spawn_list_get_r_one</code> struct <code>ms</code> @239 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes"></div>
+      </div>
+    </li>
+<li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">level_gauge_now_level</code>
+          <code class="ftype">u32</code>
+          <span class="offset">wire +240 4B</span>
+          <span class="badge" style="background:#c62828">EVENT</span>
+        </div>
+        <div class="tree-meaning">等级 gauge 当前等级</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x1E2F-battle-msma_spawn_list_get_r_one</code> struct <code>ms</code> @240 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes"></div>
+      </div>
+    </li></ul>
+    
+    <h3>相关命令（命令维度模型）</h3>
+    <ul class="cmd-refs"><li><a href="../commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one.html"><code>SC-0x1E2F-battle-msma_spawn_list_get_r_one</code></a></li><li><a href="../commands/SC-0x717D-battle-entity_msma_appear.html"><code>SC-0x717D-battle-entity_msma_appear</code></a></li><li><a href="../commands/SC-0xA832-lounge-msma_add.html"><code>SC-0xA832-lounge-msma_add</code></a></li></ul>
+    <p class="muted">命令页含逐字段解剖、包结构体、客户端行为与 DB 影响。</p>
+
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">生成于 2026-10-12 · 改 JSON 后重跑 build_site.py · HTML 只读</div>
+  </footer>
+</body>
+</html>

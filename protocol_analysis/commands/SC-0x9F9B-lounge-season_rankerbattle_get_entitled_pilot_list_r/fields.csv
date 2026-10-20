@@ -1,0 +1,6 @@
+序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+0,-,2,u16,opcode,命令号,分发器 switch 选择子,0x9F9B,0xb6f042,确证
+1,0,4,u32,result,结果码（日志串 `result=`）,经 `vt[0x5AC]` 交业务,-,B6EF1A|B6F098,确证
+2,4,10,struct,ranking_info,排行检索条件（日志串 `order=`；5 × u16，无线上计数）,经 `vt[0x5AC]` 交业务,-,B6EF4B|B6EF5A|B6F0C0,确证
+3,14,4,u32,ranking_cnt,"排行条目数（上界 `cmp ebx,0C8h` @`B6EF9C` ⇒ ≤200）",驱动元素循环,0..200,B6EF70,确证
+4,18,73N,"array<struct,N>",ranking,"排行列表（日志 `ranking={score,pilot_id,name,troops,...}`）",经 `vt[0x5AC]` 交业务,N ≤ 200,B6EFAE|B6EFCB|B6F0DD,确证

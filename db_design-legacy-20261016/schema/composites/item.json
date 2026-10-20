@@ -1,0 +1,245 @@
+{
+  "id": "item",
+  "title": "道具 item（22B）",
+  "length": 22,
+  "status": "complete",
+  "wire_layout": "8+4+4+4+2",
+  "reader": "sub_B434F0",
+  "printer": "sub_B49CF0",
+  "evidence": {
+    "primary_command": "SC-0xF72A-lounge-item_add",
+    "member_table_command": "SC-0x02EE-lounge-item_init_get_r",
+    "protocol_paths": [
+      "protocol_analysis/commands/SC-0xF72A-lounge-item_add/README.md",
+      "protocol_analysis/commands/SC-0x02EE-lounge-item_init_get_r/README.md"
+    ],
+    "note": "读取器 sub_B434F0 = u64 + 3×u32 + u16；成员名取自打印器 sub_B49CF0（IDA 字符串 uniqid=/item_id=/tm_sec=/tm_usec=/stack=）"
+  },
+  "members": [
+    {
+      "name": "uniqid",
+      "offset": 0,
+      "length": 8,
+      "wire_type": "u64",
+      "meaning": "该物品实例的唯一 ID",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x02EE-lounge-item_init_get_r",
+          "struct": "item",
+          "field_name": "uniqid",
+          "offset": 0,
+          "length": 8,
+          "wire_type": "u64",
+          "protocol_path": "protocol_analysis/commands/SC-0x02EE-lounge-item_init_get_r/README.md",
+          "section": "§3.1",
+          "reader": "sub_B434F0",
+          "evidence_va": "0xB4350D"
+        },
+        {
+          "command": "SC-0xF72A-lounge-item_add",
+          "struct": "item",
+          "field_name": "uniqid",
+          "offset": 0,
+          "length": 8,
+          "wire_type": "u64",
+          "protocol_path": "protocol_analysis/commands/SC-0xF72A-lounge-item_add/README.md",
+          "section": "§3",
+          "reader": "sub_B434F0",
+          "evidence_va": "0xb4350d"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB4350D",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 0
+    },
+    {
+      "name": "item_id",
+      "offset": 8,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "物品模板 ID",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x02EE-lounge-item_init_get_r",
+          "struct": "item",
+          "field_name": "item_id",
+          "offset": 8,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x02EE-lounge-item_init_get_r/README.md",
+          "section": "§3.1",
+          "reader": "sub_B434F0",
+          "evidence_va": "0xB4351F"
+        },
+        {
+          "command": "SC-0xF72A-lounge-item_add",
+          "struct": "item",
+          "field_name": "item_id",
+          "offset": 8,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0xF72A-lounge-item_add/README.md",
+          "section": "§3",
+          "reader": "sub_B434F0",
+          "evidence_va": "0xb4351f"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB4351F",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 8
+    },
+    {
+      "name": "tm_sec",
+      "offset": 12,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "获得/更新时刻（秒）",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x02EE-lounge-item_init_get_r",
+          "struct": "item",
+          "field_name": "tm_sec",
+          "offset": 12,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x02EE-lounge-item_init_get_r/README.md",
+          "section": "§3.1",
+          "reader": "sub_B434F0",
+          "evidence_va": "0xB43531"
+        },
+        {
+          "command": "SC-0xF72A-lounge-item_add",
+          "struct": "item",
+          "field_name": "tm_sec",
+          "offset": 12,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0xF72A-lounge-item_add/README.md",
+          "section": "§3",
+          "reader": "sub_B434F0",
+          "evidence_va": "0xb43531"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB43531",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 12
+    },
+    {
+      "name": "tm_usec",
+      "offset": 16,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "获得/更新时刻（微秒）",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x02EE-lounge-item_init_get_r",
+          "struct": "item",
+          "field_name": "tm_usec",
+          "offset": 16,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x02EE-lounge-item_init_get_r/README.md",
+          "section": "§3.1",
+          "reader": "sub_B434F0",
+          "evidence_va": "0xB43543"
+        },
+        {
+          "command": "SC-0xF72A-lounge-item_add",
+          "struct": "item",
+          "field_name": "tm_usec",
+          "offset": 16,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0xF72A-lounge-item_add/README.md",
+          "section": "§3",
+          "reader": "sub_B434F0",
+          "evidence_va": "0xb43543"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB43543",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 16
+    },
+    {
+      "name": "stack",
+      "offset": 20,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "堆叠数量",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x02EE-lounge-item_init_get_r",
+          "struct": "item",
+          "field_name": "stack",
+          "offset": 20,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0x02EE-lounge-item_init_get_r/README.md",
+          "section": "§3.1",
+          "reader": "sub_B02DF0",
+          "evidence_va": "0xB02E0B"
+        },
+        {
+          "command": "SC-0xF72A-lounge-item_add",
+          "struct": "item",
+          "field_name": "stack",
+          "offset": 20,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0xF72A-lounge-item_add/README.md",
+          "section": "§3",
+          "reader": "sub_B02DF0",
+          "evidence_va": "0xb4354b"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB02E0B",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 20
+    }
+  ],
+  "asm_audit": {
+    "verified": "2026-09-20",
+    "reader": "sub_B434F0",
+    "writer": null,
+    "total_bytes": 22,
+    "fields_ok": 5,
+    "fields_fail": 0,
+    "issues": [],
+    "status": "pass",
+    "memory": {
+      "verified": "2026-09-26",
+      "status": "pass",
+      "mem_fields": 5,
+      "fields_ok": 5,
+      "fields_fail": 0,
+      "issues": [],
+      "manual_batch": 1,
+      "wire_eq_mem_prefix": true,
+      "memory_claim": 22,
+      "note": "sub_B434F0 u64+3×u32+u16 wire==mem"
+    }
+  },
+  "oracle_audit": {
+    "date": "2026-09-23",
+    "tool": "emulab/oracle_fix.py",
+    "verdict_before": "GAP",
+    "verdict_after": "PASS",
+    "changes": [
+      "uniqid: memory_offset None -> 0",
+      "item_id: memory_offset None -> 8",
+      "tm_sec: memory_offset None -> 12",
+      "tm_usec: memory_offset None -> 16",
+      "stack: memory_offset None -> 20"
+    ]
+  }
+}

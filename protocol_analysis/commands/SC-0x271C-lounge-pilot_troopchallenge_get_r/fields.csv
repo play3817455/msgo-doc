@@ -1,0 +1,9 @@
+序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+0,-,2,u16,opcode,命令号,分发器 switch 选择子,0x271C,0xB59103,确证
+1,0,4,u32,result,查询结果码,经 `vt[0x178]`；日志 `result=`,-,0xB59010|0xB59159,确证
+2,4,13,struct{13/槽200},trchallenge_info,部队挑战信息结构（线上 13B；缓冲槽 200）,结构体经 `vt[0x178]`；日志 `trchallenge_info={…}`（打印器 `sub_B0A1A0`）,线上 13 / 槽 200,0xB59056(读取器 sub_B07540 消费 13)|0xB5903E(sub_B41400 预留 0xC8),确证
+3,+0,4,u32,trchallenge_info.id,条目 ID,结构成员；打印器 `id=`,-,sub_B0A1A0[+0],确证
+4,+4,4,u32,trchallenge_info.val,进度值,结构成员；打印器 `val=`,-,sub_B0A1A0[+4],确证
+5,+8,4,u32,trchallenge_info.sub_val,子进度值,结构成员；打印器 `sub_val=`,-,sub_B0A1A0[+8],确证
+6,+12,1,i8,trchallenge_info.is_clear,是否已通关,结构成员；打印器 `is_clear=`（`movsx`）,-,sub_B0A1A0(movsx [edi+0Ch]),确证
+7,17,40,u32[10],allclear_num,各关全清次数（固定 10 项 u32，无线上计数）,经 `vt[0x178]`；日志 `allclear_num={…}`,固定 10 项,"0xB59096(sub_B02DD0 循环读)|0xB59085(sub_B418C0 预留 0x28)|0xB5909C 区(cmp edi,0Ah)",确证

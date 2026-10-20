@@ -1,0 +1,211 @@
+{
+  "id": "fire_point",
+  "title": "弹着点元素 fire_point（6B 线 / 6B 槽）",
+  "domain": "battle",
+  "domain_votes": {
+    "battle": 2
+  },
+  "folded_composites": [
+    "fire_point"
+  ],
+  "anchored_by": "",
+  "legacy_table": "",
+  "row_key": [],
+  "views": [
+    {
+      "composite": "fire_point",
+      "length": 6,
+      "memory_claim": 6,
+      "reader": "sub_B07760",
+      "printer": "sub_B0A5D0",
+      "commands": [
+        "CS-0xFBC1-battle-weapon_fire__funnel",
+        "SC-0xA78D-battle-weapon_fire__funnel_r"
+      ]
+    }
+  ],
+  "members": [
+    {
+      "name": "x",
+      "wire_type": "u16",
+      "length": 2,
+      "meaning": "X 坐标",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "fire_point"
+        ]
+      },
+      "views": [
+        "fire_point"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB3A945",
+      "evidence_ref": {
+        "command": "CS-0xFBC1-battle-weapon_fire__funnel",
+        "struct": "fire_point",
+        "field": "x",
+        "reader": "sub_B06580",
+        "printer": "",
+        "protocol_path": "protocol_analysis/commands/CS-0xFBC1-battle-weapon_fire__funnel/README.md",
+        "section": "§3 字段 4"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "y",
+      "wire_type": "u16",
+      "length": 2,
+      "meaning": "Y 坐标",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "fire_point"
+        ]
+      },
+      "views": [
+        "fire_point"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB3A955",
+      "evidence_ref": {
+        "command": "CS-0xFBC1-battle-weapon_fire__funnel",
+        "struct": "fire_point",
+        "field": "y",
+        "reader": "sub_B06580",
+        "printer": "",
+        "protocol_path": "protocol_analysis/commands/CS-0xFBC1-battle-weapon_fire__funnel/README.md",
+        "section": "§3 字段 4"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "z",
+      "wire_type": "u16",
+      "length": 2,
+      "meaning": "Z 坐标",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "fire_point"
+        ]
+      },
+      "views": [
+        "fire_point"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB3A965",
+      "evidence_ref": {
+        "command": "CS-0xFBC1-battle-weapon_fire__funnel",
+        "struct": "fire_point",
+        "field": "z",
+        "reader": "sub_B06580",
+        "printer": "",
+        "protocol_path": "protocol_analysis/commands/CS-0xFBC1-battle-weapon_fire__funnel/README.md",
+        "section": "§3 字段 4"
+      },
+      "role": "attribute"
+    }
+  ],
+  "wire_body": "fire_point",
+  "writes": [
+    {
+      "command": "CS-0xFBC1-battle-weapon_fire__funnel",
+      "op": "update",
+      "via": "fire_point",
+      "verbs": [
+        "battle_action"
+      ]
+    }
+  ],
+  "reads": [
+    {
+      "command": "SC-0xA78D-battle-weapon_fire__funnel_r",
+      "op": "read",
+      "via": "fire_point"
+    }
+  ],
+  "db_effects": [],
+  "pk_members": [],
+  "pk_kind": "scope_only",
+  "is_root": true,
+  "identity": [],
+  "disposition_override": "EVENT",
+  "disposition_reason": "战斗 ephemeral，不是账号状态。① 唯一写方是战斗命令 CS-0xFBC1-battle-weapon_fire__funnel（`op=update`，via 元素复合体 `fire_point`），读方是同一轮战斗的 SC-0xA78D-…_r；② 成员只有 x/y/z 三个 u16 坐标，`multi=true`（`FirePointsNum` 个弹着点），行与行之间**除数组下标外没有任何可区分处**，旧库无此表、无锚点；③ 同族的伤害面 `pointdmg`（同一轮齐射的 3 点量表伤害）与战果面 `total_result_wave` 在模型里都是 `EVENT`，`fire_point` 的 `PERSIST` 是 `generate_all.py` 自动导入时随的默认值（它不在 `preserve_composites` 里，是自动产物）。改判 EVENT 后：不进 0003 DDL、不再算无身份根；战斗侧持久化按 docs/05 §4.C 留给 B6。",
+  "multi": true,
+  "array_parents": [],
+  "inline_parents": [],
+  "shape": "root",
+  "parent": "",
+  "parents": [],
+  "has_scope": false,
+  "disposition": "EVENT",
+  "table": "",
+  "no_table_reason": "disposition=EVENT（不建表）：战斗 ephemeral，不是账号状态。① 唯一写方是战斗命令 CS-0xFBC1-battle-weapon_fire__funnel（`op=update`，via 元素复合体 `fire_point`），读方是同一轮战斗的 SC-0xA78D-…_r；② 成员只有 x/y/z 三个 u16 坐标，`multi=true`（`FirePointsNum` 个弹着点），行与行之间**除数组下标外没有任何可区分处**，旧库无此表、无锚点；③ 同族的伤害面 `pointdmg`（同一轮齐射的 3 点量表伤害）与战果面 `total_result_wave` 在模型里都是 `EVENT`，`fire_point` 的 `PERSIST` 是 `generate_all.py` 自动导入时随的默认值（它不在 `preserve_composites` 里，是自动产物）。改判 EVENT 后：不进 0003 DDL、不再算无身份根；战斗侧持久化按 docs/05 §4.C 留给 B6。",
+  "columns_excluded": [],
+  "columns": [
+    {
+      "member": "x",
+      "column": "x",
+      "role": "attribute",
+      "wire_type": "u16",
+      "synthetic": false,
+      "meaning": "X 坐标",
+      "evidence_va": "0xB3A945",
+      "pk": false
+    },
+    {
+      "member": "y",
+      "column": "y",
+      "role": "attribute",
+      "wire_type": "u16",
+      "synthetic": false,
+      "meaning": "Y 坐标",
+      "evidence_va": "0xB3A955",
+      "pk": false
+    },
+    {
+      "member": "z",
+      "column": "z",
+      "role": "attribute",
+      "wire_type": "u16",
+      "synthetic": false,
+      "meaning": "Z 坐标",
+      "evidence_va": "0xB3A965",
+      "pk": false
+    }
+  ],
+  "columns_expected": 3,
+  "keys": {
+    "scope": [
+      "world_id",
+      "pilot_id"
+    ],
+    "own": [],
+    "inherited": [],
+    "primary_key": [
+      "world_id",
+      "pilot_id"
+    ],
+    "pk_kind": "scope_only",
+    "children": [],
+    "nested": [],
+    "child_key": [
+      "elem_index"
+    ]
+  },
+  "tables": [],
+  "links": []
+}

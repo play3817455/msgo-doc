@@ -1,0 +1,270 @@
+{
+  "id": "CS-0x045B-battle-msma_AI_ping",
+  "opcode": "0x045B",
+  "direction": "CS",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "msma_AI_ping",
+  "source_dir": "protocol_analysis/commands/CS-0x045B-battle-msma_AI_ping",
+  "meta": {
+    "opcode": "`0x045B`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`battle_client`",
+    "命令名": "`msma_AI_ping`",
+    "名字符串": "`)<-_proto_battle_client::send_msma_AI_ping( ` @ `0xee1234`",
+    "代码位置": "sub_B3CCB0 @ `0xb3ccb0`（`0xb3ccb0`..`0xb3ce5f`）",
+    "opcode 写入/分发证据": "`0xb3cd24`（opcode 写入指令）",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0x6`（6）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽 @`0x00B3CDED`）；`call vt[0x58](buf, 负载长度)`",
+    "配对命令（同 opcode 反向）": "（本批次内无同 opcode 反向命令）"
+  },
+  "handler": "sub_B3CCB0",
+  "handler_va": "0xb3ccb0",
+  "block": [
+    "0xB3CCB0",
+    "0xB3CE5F"
+  ],
+  "name_str": ")<-_proto_battle_client::send_msma_AI_ping(",
+  "name_str_va": "0xee1234",
+  "capacity": "0x6",
+  "capacity_va": null,
+  "closer_va": "0xB3CD92",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽 @`0x00B3CDED`）；`call vt[0x58](buf, 负载长度)`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": "0x00B3CDED",
+  "wire": {
+    "length_expr": "2",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x6（容量记账口径，非线长）",
+    "field_count": 1,
+    "length_source": "field_sum",
+    "readme_conclusion": "结论：单字段 + opcode：AI 机体位置心跳（u16 实体号）。",
+    "readme_close": "容量 0x6 ≥ 线长 4 ✓（保留 2B 余量，边界检查写作 lea ebx,[eax+2]）。"
+  },
+  "fields": [
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "AI_ent_id",
+      "meaning": "AI 机体实体 ID",
+      "purpose": "来源=入参 arg_0（`0xB3CD30 mov cx,word ptr [esp+arg_0]`），内联 `mov [eax],cx`；服务端据此刷新 AI 存活",
+      "enum": null,
+      "evidence_va": [
+        "0xB3CD35"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0x045B（分发器 switch 选择子）",
+      "evidence_va": "0xB3CD24"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0x6 B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xB3CCF6"
+    },
+    {
+      "step": 3,
+      "kind": "write_scalar",
+      "detail": "AI_ent_id：`u16`（线长 2）—— AI 机体实体 ID",
+      "evidence_va": "0xB3CD35"
+    },
+    {
+      "step": 4,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xB3CD92"
+    },
+    {
+      "step": 5,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xB3CDF6"
+    }
+  ],
+  "capabilities": [
+    "unclassified",
+    "battle.ai_ping"
+  ],
+  "capabilities_derived": [
+    "unclassified"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:46",
+    "batch": 14,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 6,
+        "va": "0xB3CCF6",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB3CCF3",
+        "call_va": "0xB3CCF8"
+      },
+      "field_window": {
+        "start_va": "0xB3CCB0",
+        "end_va": "0xB3CD92",
+        "guard": null,
+        "closer_or_commit_va": "0xB3CD92",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "AI_ent_id",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB3CD35"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB3CD24",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB3CD35",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB3CD68",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 1,
+        "checkable": 1,
+        "pairs": [
+          {
+            "field": "AI_ent_id",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB3CD24",
+            "kind": "inline_store"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB3CD35",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB3CCB0",
+          "0xB3CD92"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 4,
+          "capacity": 6,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB3CD68",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）4 / 容量 0x6"
+        }
+      },
+      "closer": {
+        "va": "0xB3CD92",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xB3CDF6",
+        "mov_va": "0xB3CDED",
+        "host": "[edx+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "AI_ent_id="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0x045B-battle-msma_AI_ping.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0xb3cd24",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": []
+  },
+  "structs": {
+    "request": {
+      "go_name": "MsmaAIPing",
+      "role": "request",
+      "wire_length": "2",
+      "members": [
+        {
+          "name": "AIEntId",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "AI_ent_id"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "809c76f4efe21c7e",
+  "check_fingerprint": "87202b93ef19f219"
+}

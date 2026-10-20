@@ -1,0 +1,479 @@
+{
+  "id": "CS-0x26F2-lounge-you9_cps_SCAN_response",
+  "opcode": "0x26F2",
+  "direction": "CS",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "you9_cps_SCAN_response",
+  "source_dir": "protocol_analysis/commands/CS-0x26F2-lounge-you9_cps_SCAN_response",
+  "meta": {
+    "opcode": "`0x26F2`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`you9_cps_SCAN_response`",
+    "名字符串": "`)<-_proto_lounge_client::send_you9_cps_SCAN_response(` @ `0xeed130`",
+    "代码位置": "sub_BA54D0 @ `0x00ba54d0`（`0x00ba54d0`..`0x00ba57c9`）",
+    "opcode 写入/分发证据": "`0xba5556`（opcode 写入指令）",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0x2336`（9014）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽 @`0xBA5753`）；`call vt[0x58](buf, 负载长度)`",
+    "配对命令（同 opcode 反向）": "（本批次内无同 opcode 反向命令）"
+  },
+  "handler": "sub_BA54D0",
+  "handler_va": "0x00ba54d0",
+  "block": [
+    "0xBA54D0",
+    "0xBA57C9"
+  ],
+  "name_str": ")<-_proto_lounge_client::send_you9_cps_SCAN_response(",
+  "name_str_va": "0xeed130",
+  "capacity": "0x2336",
+  "capacity_va": null,
+  "closer_va": "0xBA5645",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽 @`0xBA5753`）；`call vt[0x58](buf, 负载长度)`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": "0xBA5753",
+  "wire": {
+    "length_expr": "4 + 4 + 8192 + var",
+    "fixed": false,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x2336（容量记账口径，非线长）",
+    "field_count": 4,
+    "length_source": "field_sum",
+    "readme_conclusion": "结论：CPS 反外挂 SCAN 扫描结果上报（buffer + 病毒路径）。",
+    "readme_close": "2 + 4 + 4 + 8192 + 811 = **9013** ≤ 容量 0x2336=9014（上限场景，buffer_size ≤ 0x2000）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发给对应协议类的处理块（C→S 无 case 块）",
+      "enum": "0x26F2",
+      "evidence_va": [
+        "0xBA5556"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "2",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "cps_result",
+      "meaning": "CPS 检测结果码",
+      "purpose": "内联 `mov [游标], reg`；服务端据此决定放行/拦截；日志名 `cps_result=`",
+      "enum": null,
+      "evidence_va": [
+        "0xBA556F"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "6",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "buffer_size",
+      "meaning": "buffer 字节数",
+      "purpose": "经写原语 `sub_B02D80`；服务端据此解析随后的 buffer 数组；buffer 字节数，上限 0x2000（`cmp ebp,2000h; ja 失败`）；命名推定",
+      "enum": "0~8192（cmp ebp,2000h; ja 失败）",
+      "evidence_va": [
+        "0xBA5585"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "10",
+      "length": "8192",
+      "wire_type": "array<u8,8192>",
+      "name": "buffer",
+      "meaning": "CPS 扫描返回的字节缓冲",
+      "purpose": "内联 `mov [游标], reg`；服务端落盘/上报扫描内容；循环步进 +1（`mov [ecx],dl; add ecx,1`）；日志头 `buffer={`",
+      "enum": "逐字节拷贝，上限 8192（0x2000）",
+      "evidence_va": [
+        "0xBA55B5"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5,
+      "length_is_literal_count": 8192
+    },
+    {
+      "seq": 4,
+      "offset": "-",
+      "length": "var",
+      "wire_type": "str",
+      "name": "virus_path",
+      "meaning": "病毒/拦截项路径（NUL 结尾串）",
+      "purpose": "经写原语 `sub_B02B40`；服务端记录并推送；串槽预算 811（`push 32Bh`）",
+      "enum": "串槽预算 811",
+      "evidence_va": [
+        "0xBA55DB"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0x26F2（分发器 switch 选择子）",
+      "evidence_va": "0xBA5556"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0x2336 B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xBA5516"
+    },
+    {
+      "step": 3,
+      "kind": "write_scalar",
+      "detail": "cps_result：`u32`（线长 4）—— CPS 检测结果码",
+      "evidence_va": "0xBA556F"
+    },
+    {
+      "step": 4,
+      "kind": "write_count",
+      "detail": "buffer_size：`u32`（线长 4）—— buffer 字节数",
+      "evidence_va": "0xBA5585"
+    },
+    {
+      "step": 5,
+      "kind": "write_array",
+      "detail": "buffer：`array<u8,8192>`（线长 8192）—— CPS 扫描返回的字节缓冲；逐字节拷贝，上限 8192（0x2000）",
+      "evidence_va": "0xBA55B5"
+    },
+    {
+      "step": 6,
+      "kind": "write_string",
+      "detail": "virus_path：`str`（线长 var）—— 病毒/拦截项路径（NUL 结尾串）",
+      "evidence_va": "0xBA55DB"
+    },
+    {
+      "step": 7,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xBA5645"
+    },
+    {
+      "step": 8,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xBA575C"
+    }
+  ],
+  "capabilities": [
+    "unclassified",
+    "lounge.you9_cps"
+  ],
+  "capabilities_derived": [
+    "unclassified"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:43",
+    "batch": 5,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 9014,
+        "va": "0xBA5516",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xBA5513",
+        "call_va": "0xBA551B"
+      },
+      "field_window": {
+        "start_va": "0xBA54D0",
+        "end_va": "0xBA5645",
+        "guard": null,
+        "closer_or_commit_va": "0xBA5645",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "cps_result",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xBA556F"
+            ]
+          },
+          {
+            "name": "buffer_size",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xBA5585"
+            ]
+          },
+          {
+            "name": "buffer",
+            "wire_type": "array<u8,8192>",
+            "width": null,
+            "seq": 3,
+            "shape": "agg",
+            "evidence_va": [
+              "0xBA55B5"
+            ]
+          },
+          {
+            "name": "virus_path",
+            "wire_type": "str",
+            "width": null,
+            "seq": 4,
+            "shape": "str",
+            "evidence_va": [
+              "0xBA55DB"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xBA5556",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xBA556F",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xBA5585",
+            "kind": "write",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xBA55B5",
+            "kind": "inline_store",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xBA55DB",
+            "kind": "write",
+            "width": null,
+            "wire_type": "str",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xBA561B",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 3,
+        "checkable": 3,
+        "pairs": [
+          {
+            "field": "cps_result",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xBA556F",
+            "kind": "inline_store"
+          },
+          {
+            "field": "buffer_size",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xBA5585",
+            "kind": "write"
+          },
+          {
+            "field": "virus_path",
+            "width": null,
+            "shape": "str",
+            "va": "0xBA55DB",
+            "kind": "write"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xBA5556",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          },
+          {
+            "va": "0xBA55B5",
+            "kind": "inline_store",
+            "width": 1,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xBA54D0",
+          "0xBA5645"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 11,
+          "capacity": 9014,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xBA55DB",
+              "kind": "write",
+              "name": ""
+            },
+            {
+              "va": "0xBA561B",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）11 / 容量 0x2336"
+        }
+      },
+      "closer": {
+        "va": "0xBA5645",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xBA575C",
+        "mov_va": "0xBA5753",
+        "host": "[edx+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "cps_result=",
+        "buffer={",
+        "virus_path=\""
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0x26F2-lounge-you9_cps_SCAN_response.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0xba5556",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xBA5556"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "You9CpsSCANResponse",
+      "role": "request",
+      "wire_length": "4 + 4 + 8192 + var",
+      "members": [
+        {
+          "name": "CpsResult",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "cps_result"
+        },
+        {
+          "name": "BufferSize",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "buffer_size"
+        },
+        {
+          "name": "Buffer",
+          "wire_type": "array<u8,8192>",
+          "length": "8192",
+          "field_ref": "buffer",
+          "element": "u8",
+          "element_length": "1",
+          "cap": 8192,
+          "count_field": null,
+          "count_field_source": "fixed"
+        },
+        {
+          "name": "VirusPath",
+          "wire_type": "str",
+          "length": "var",
+          "field_ref": "virus_path",
+          "element": null,
+          "element_length": null,
+          "cap": null,
+          "count_field": "buffer_size",
+          "count_field_source": "nearest_scalar",
+          "note": "元素成员未建模（composites/ 无此结构），须以 IDA 复核补"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "93cfe79760a1d44e",
+  "check_fingerprint": "6d544a6fa7ad38e1",
+  "import_repairs": [
+    "literal_count_array:buffer(1 → 1×8192=8192；u8[8192])",
+    "wire_len_member_rows_folded:4 + 4 + 1 + var → 4 + 4 + 8192 + var"
+  ]
+}

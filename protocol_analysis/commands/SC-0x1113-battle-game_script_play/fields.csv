@@ -1,0 +1,6 @@
+序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+0,-,2,u16,opcode,命令号,battle 分发的 switch 选择子,0x1113,0xB0F22A,确证
+1,0,L+1,bytes(NUL 串),src,要播放的剧本（script）源串,"交 vt[0x10C] 第1实参=串首地址；日志 src=""",L=strlen<=64,0xB0F176|0xB0F158|0xB02BEE|0xB0F283|0xB0F341,确证
+2,L+1,1,u8,is_with_resume,是否从断点续播,交 vt[0x10C] 第2实参；日志 is_with_resume=,0/1（未交叉）,0xB0F1B3|0xB0F1A4|0xB06249|0xB0F2B6|0xB0F33A,确证
+3,L+2,1,u8,script_thread,剧本执行所用线程/流编号,交 vt[0x10C] 第3实参；日志 script_thread=,-,0xB0F1D7|0xB0F1C8|0xB0F2DB|0xB0F332,确证
+-,L+3,0,-,（长度闭合）,游标必须==报文末尾,容量 0x43=67=65(串槽)+1+1；线长 L+3<=67,-,0xB0F1E7|0xB0F1ED,确证

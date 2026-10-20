@@ -1,0 +1,213 @@
+{
+ "id": "SC-0xD9DB-lounge-msma_equip_weapon_change_r",
+ "verified_at": "2026-09-30 15:25:45",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "block",
+ "block": [
+  "0xB7F64E",
+  "0xB7F8E6"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 18,
+   "va": "0xB7F663",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xB7F660",
+   "call_va": "0xB7F665"
+  },
+  "field_window": {
+   "start_va": "0xB7F64F",
+   "end_va": "0xB7F761",
+   "guard": {
+    "va": "0xB7F64E",
+    "func": "0xB41120",
+    "module_id": null,
+    "release_va": "0xB41110"
+   },
+   "closer_or_commit_va": "0xB7F73A",
+   "within_model_block": true,
+   "range_from": "block"
+  },
+  "primitive_widths": {
+   "direction": "SC",
+   "expected": [
+    {
+     "name": "result",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xb7f69e",
+      "0xb7f7d9"
+     ]
+    },
+    {
+     "name": "uniqid_ms",
+     "wire_type": "u64",
+     "width": 8,
+     "seq": 2,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xb7f6de",
+      "0xb7f807"
+     ]
+    },
+    {
+     "name": "eq_slot",
+     "wire_type": "u16",
+     "width": 2,
+     "seq": 3,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xb7f702",
+      "0xb7f832"
+     ]
+    },
+    {
+     "name": "item_id",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 4,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xb7f726",
+      "0xb7f857"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB7F69E",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB7F6DE",
+     "kind": "read",
+     "width": 8,
+     "wire_type": "u64",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB7F702",
+     "kind": "read",
+     "width": 2,
+     "wire_type": "u16",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB7F726",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 4,
+   "checkable": 4,
+   "pairs": [
+    {
+     "field": "result",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB7F69E",
+     "kind": "read"
+    },
+    {
+     "field": "uniqid_ms",
+     "width": 8,
+     "shape": "scalar",
+     "va": "0xB7F6DE",
+     "kind": "read"
+    },
+    {
+     "field": "eq_slot",
+     "width": 2,
+     "shape": "scalar",
+     "va": "0xB7F702",
+     "kind": "read"
+    },
+    {
+     "field": "item_id",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB7F726",
+     "kind": "read"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB7F64F",
+    "0xB7F761"
+   ],
+   "scalar_match_verifiable": true,
+   "capacity_relation": {
+    "observed_min": 18,
+    "capacity": 18,
+    "relation": "exact",
+    "unknown_events": [],
+    "is_lower_bound": false,
+    "note": "观测线长（下界）18 / 容量 0x12"
+   }
+  },
+  "closer": {
+   "va": "0xB7F73A",
+   "kind": "jz",
+   "jcc_va": "0xB7F740",
+   "seq_va": "0xB7F736",
+   "jcc_dst": "0xB7F75C",
+   "cmp": "cmp     ebx, [esp+2C5Ch+var_2C40]",
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x254]",
+   "slot_value": 596,
+   "va": "0xB7F8CA",
+   "mov_va": "0xB7F8AB",
+   "host": "[edx+254h]",
+   "argc": 5,
+   "form": "mov_then_call",
+   "error_slot": {
+    "slot": "vt[0x64]",
+    "va": "0xB7F6B8",
+    "argc": 2
+   }
+  },
+  "log_strings": [
+   "result=",
+   "uniqid_ms=",
+   "eq_slot=",
+   "item_id="
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "eq_slot",
+  "item_id",
+  "result",
+  "uniqid_ms"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 12
+}

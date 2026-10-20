@@ -1,0 +1,347 @@
+{
+  "id": "SC-0x228A-lounge-announce",
+  "opcode": "0x228A",
+  "direction": "SC",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "announce",
+  "source_dir": "protocol_analysis/commands/SC-0x228A-lounge-announce",
+  "meta": {
+    "opcode": "`0x228A`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`announce`",
+    "处理函数": "`sub_B51930` @ `0xB51930`（lounge 分发器）",
+    "处理块范围": "`0xB5895E..0xB58B5D`",
+    "名字串引用点": "`0xB58A46`",
+    "声明容量（解码缓冲）": "`0xB7`（`0xB58977`）",
+    "长度闭合点": "`0xB58A03`",
+    "去向": "`vt[0x12C]` @ `0xB58B2F`（2 实参）"
+  },
+  "handler": "sub_B51930",
+  "handler_va": "0xB51930",
+  "block": [
+    "0xB5895E",
+    "0xB58B5D"
+  ],
+  "name_str": null,
+  "name_str_va": "0xB58A46",
+  "capacity": "0xB7",
+  "capacity_va": "0xB58977",
+  "closer_va": "0xB58A03",
+  "dispatch": "`vt[0x12C]` @ `0xB58B2F`（2 实参）",
+  "dispatch_slot": "vt[0x12C]",
+  "dispatch_va": "0xB58B2F",
+  "wire": {
+    "length_expr": "L+1 + 2",
+    "fixed": false,
+    "var_drivers": [
+      "L"
+    ],
+    "capacity_note": "声明容量 0xB7（容量记账口径，非线长）",
+    "field_count": 2,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体总长**：(L+1) + 2，串槽 181 ⇒ 上限 **183**（== 容量 0xB7）",
+    "readme_close": "(L+1) + 2，串槽 181 ⇒ 上限 **183**（== 容量 0xB7）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0x228A",
+      "evidence_va": [
+        "0xB58A46"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "L+1",
+      "wire_type": "str",
+      "name": "msg",
+      "meaning": "公告文本（NUL 结尾；槽预算 181）",
+      "purpose": "经 `vt[0x12C]`；日志 `msg=\"…\"`",
+      "enum": "槽 181（push 0B5h）",
+      "evidence_va": [
+        "0xB589B6(sub_B02BA0)",
+        "0xB58992(push 0B5h)",
+        "0xB58A9F"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "串之后",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "priority",
+      "meaning": "公告优先级",
+      "purpose": "经 `vt[0x12C]`；日志 `priority=`",
+      "enum": null,
+      "evidence_va": [
+        "0xB589F3",
+        "0xB58AD0"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0x228A（分发器 switch 选择子）",
+      "evidence_va": "0xB58A46"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB41120`（模块 id 88）→ 之后逐字段读线",
+      "evidence_va": "0xB58962"
+    },
+    {
+      "step": 3,
+      "kind": "read_string",
+      "detail": "msg：`str`（线长 L+1）—— 公告文本（NUL 结尾；槽预算 181）",
+      "evidence_va": "0xB589B6"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "priority：`u16`（线长 2）—— 公告优先级",
+      "evidence_va": "0xB589F3"
+    },
+    {
+      "step": 5,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB58A03"
+    },
+    {
+      "step": 6,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x12C]`，实参 2 个",
+      "evidence_va": "0xB58B2F"
+    },
+    {
+      "step": 7,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB589CD"
+    }
+  ],
+  "capabilities": [
+    "notify"
+  ],
+  "capabilities_derived": [
+    "unclassified"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:43",
+    "batch": 5,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 183,
+        "va": "0xB58977",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB58974",
+        "call_va": "0xB5897C"
+      },
+      "field_window": {
+        "start_va": "0xB58963",
+        "end_va": "0xB58A24",
+        "guard": {
+          "va": "0xB58962",
+          "func": "0xB41120",
+          "module_id": 88,
+          "release_va": "0xB41110"
+        },
+        "closer_or_commit_va": "0xB58A03",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "msg",
+            "wire_type": "str",
+            "width": null,
+            "seq": 1,
+            "shape": "str",
+            "evidence_va": [
+              "0xB589B6(sub_B02BA0)",
+              "0xB58992(push 0B5h)",
+              "0xB58A9F"
+            ]
+          },
+          {
+            "name": "priority",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB589F3",
+              "0xB58AD0"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB589B6",
+            "kind": "read",
+            "width": null,
+            "wire_type": "str",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB589F3",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 2,
+        "checkable": 2,
+        "pairs": [
+          {
+            "field": "msg",
+            "width": null,
+            "shape": "str",
+            "va": "0xB589B6",
+            "kind": "read"
+          },
+          {
+            "field": "priority",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB589F3",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB58963",
+          "0xB58A24"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 2,
+          "capacity": 183,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB589B6",
+              "kind": "read",
+              "name": ""
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）2 / 容量 0xb7"
+        }
+      },
+      "closer": {
+        "va": "0xB58A03",
+        "kind": "jz",
+        "jcc_va": "0xB58A09",
+        "seq_va": "0xB589FF",
+        "jcc_dst": "0xB58A22",
+        "cmp": "cmp     ebx, [esp+2C5Ch+var_2C40]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x12C]",
+        "slot_value": 300,
+        "va": "0xB58B2F",
+        "mov_va": "0xB58B26",
+        "host": "[eax+12Ch]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB589CD",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "msg=\"",
+        "priority="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0x228A-lounge-announce.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xB58A46"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "Announce",
+      "role": "response",
+      "wire_length": "L+1 + 2",
+      "members": [
+        {
+          "name": "Msg",
+          "wire_type": "str",
+          "length": "L+1",
+          "field_ref": "msg",
+          "element": null,
+          "element_length": null,
+          "cap": null,
+          "count_field": null,
+          "count_field_source": null,
+          "note": "元素成员未建模（composites/ 无此结构），须以 IDA 复核补"
+        },
+        {
+          "name": "Priority",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "priority"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "cf58f3fd3003180d",
+  "check_fingerprint": "f8f5ce9c573404da"
+}

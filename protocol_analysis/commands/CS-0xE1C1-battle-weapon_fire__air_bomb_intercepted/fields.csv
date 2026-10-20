@@ -1,0 +1,5 @@
+序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+0,0,2,u16,opcode,命令号,写入 `buf+0`，供服务端分发；无 case 块（C→S）,0xE1C1,`00B38ECC`,确证
+1,0,2,u16,ent_id,发射者实体 ID,"来源=入参 `arg_0`（`mov si,word ptr [esp+arg_0]` @`0xB38ED8`）→ 内联写 `[ecx],si`（@`0xB38EDD`）",-,`0xB38ED8`;`0xB38EDD`,确证
+2,2,4,u32,airbomb_id,空爆弹 ID,"来源=入参 `arg_4`（`mov eax,[esp+arg_4]` @`0xB38EEB`）→ 内联写 `[edx],eax`（@`0xB38EF7`）",-,`0xB38EEB`;`0xB38EF7`,确证
+3,6,4,u32,arms_id,兵装 ID,来源=入参 `arg_8` → 写原语 `sub_B02D80`（u32 @`0xB38EFF`）,-,`0xB38EFF`,确证

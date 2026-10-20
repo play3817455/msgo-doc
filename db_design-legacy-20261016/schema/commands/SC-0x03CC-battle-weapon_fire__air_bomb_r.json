@@ -1,0 +1,727 @@
+{
+  "id": "SC-0x03CC-battle-weapon_fire__air_bomb_r",
+  "opcode": "0x03CC",
+  "direction": "SC",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "weapon_fire__air_bomb_r",
+  "source_dir": "protocol_analysis/commands/SC-0x03CC-battle-weapon_fire__air_bomb_r",
+  "meta": {
+    "opcode": "`0x03CC`",
+    "方向": "SC（服务端 → 客户端（recv））",
+    "协议类": "`battle_client`",
+    "命令名": "`weapon_fire__air_bomb_r`（名字串里是双下划线 `__`）",
+    "名字符串": "`)->_proto_battle_client::recv_weapon_fire__air_bomb_r(` @ `0xEE0508`，xref `0xB0CF10`",
+    "处理函数": "`sub_B0CC20` @ `0xB0CC20`（battle 分发器）",
+    "处理块范围": "`0xB0CD3B` .. `0xB0D137`（块首 `0xB0CD3B call sub_B05DA0`；全部错误路径 `push 86h`，如 `0xB0CD9E`/`0xB0CED6` ⇒ 本 case 开关/错误码 `0x86`）",
+    "关联命令": "发出侧 `_proto_battle_client::send_weapon_fire__air_bomb`（C→S `0xC90D`，声明容量 `0x22`）→ `../CS-0xC90D-battle-weapon_fire__air_bomb/`；同族 `weapon_fire__air_bomb_intercepted`（C→S `0xE1C1`）"
+  },
+  "handler": "sub_B0CC20",
+  "handler_va": "0xB0CC20",
+  "block": [
+    "0xB0CD3B",
+    "0xB0D137"
+  ],
+  "name_str": ")->_proto_battle_client::recv_weapon_fire__air_bomb_r(",
+  "name_str_va": "0xEE0508",
+  "capacity": "0x12",
+  "capacity_va": "0xB0CD50",
+  "closer_va": "0xB0CEC7",
+  "dispatch": null,
+  "dispatch_slot": "vt[0x1C4]",
+  "dispatch_va": "0xB0D11B",
+  "wire": {
+    "length_expr": "18",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x12（容量记账口径，非线长）",
+    "field_count": 8,
+    "length_source": "closure_row",
+    "readme_conclusion": "**报文体总长：20 字节**（opcode 2 + 负载 18）。",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "battle 分发的 switch 选择子",
+      "enum": "0x03CC",
+      "evidence_va": [
+        "0xB0CF10"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "ent_id",
+      "meaning": "发射者实体 ID",
+      "purpose": "交 vt[0x1C4] 第 1 实参；日志 ent_id=",
+      "enum": null,
+      "evidence_va": [
+        "0xB0CD8B",
+        "0xB02E01",
+        "0xB02E0B",
+        "0xB0CF67"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "2",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "itemid",
+      "meaning": "武器（物品）ID",
+      "purpose": "交 vt[0x1C4] 第 2 实参；日志 itemid=",
+      "enum": null,
+      "evidence_va": [
+        "0xB0CDCB",
+        "0xB02DE1",
+        "0xB02DE9",
+        "0xB0CF91"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "6",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "airbomb_id",
+      "meaning": "空爆弹 ID",
+      "purpose": "交 vt[0x1C4] 第 3 实参；日志 airbomb_id=",
+      "enum": null,
+      "evidence_va": [
+        "0xB0CDEF",
+        "0xB02DE9",
+        "0xB0CFBB"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 4,
+      "offset": "10",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "target_x",
+      "meaning": "目标点 X 坐标",
+      "purpose": "交 vt[0x1C4] 第 4 实参；日志 target_x=",
+      "enum": null,
+      "evidence_va": [
+        "0xB0CE13",
+        "0xB02E0B",
+        "0xB0CFE6"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    },
+    {
+      "seq": 5,
+      "offset": "12",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "target_y",
+      "meaning": "目标点 Y 坐标",
+      "purpose": "交 vt[0x1C4] 第 5 实参；日志 target_y=",
+      "enum": null,
+      "evidence_va": [
+        "0xB0CE3B",
+        "0xB02E0B",
+        "0xB0D011"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 7
+    },
+    {
+      "seq": 6,
+      "offset": "14",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "target_z",
+      "meaning": "目标点 Z 坐标",
+      "purpose": "交 vt[0x1C4] 第 6 实参；日志 target_z=",
+      "enum": null,
+      "evidence_va": [
+        "0xB0CE63",
+        "0xB02E0B",
+        "0xB0D03C"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 8
+    },
+    {
+      "seq": 7,
+      "offset": "16",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "shot0_drop1_impact2",
+      "meaning": "炸弹阶段 0=发射 1=投下 2=命中",
+      "purpose": "交 vt[0x1C4] 第 7 实参；日志 shot0_drop1_impact2=",
+      "enum": "0/1/2(推测)",
+      "evidence_va": [
+        "0xB0CE8B",
+        "0xB06241",
+        "0xB06249",
+        "0xB0D064"
+      ],
+      "confidence": "类型确证/枚举推测",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 9
+    },
+    {
+      "seq": 8,
+      "offset": "17",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "fx_opt",
+      "meaning": "特效选项",
+      "purpose": "交 vt[0x1C4] 第 8 实参；日志 fx_opt=",
+      "enum": "?",
+      "evidence_va": [
+        "0xB0CEB3",
+        "0xB06241",
+        "0xB06249",
+        "0xB0D089"
+      ],
+      "confidence": "类型确证/含义推测",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 10
+    },
+    {
+      "seq": -1,
+      "offset": "18",
+      "length": "0",
+      "wire_type": "-",
+      "name": "（长度闭合）",
+      "meaning": "游标必须==末尾",
+      "purpose": "-",
+      "enum": null,
+      "evidence_va": [
+        "0xB0CEC3",
+        "0xB0CEC7",
+        "0xB0CECD"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 11,
+      "is_closure": true
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0x03CC（分发器 switch 选择子）",
+      "evidence_va": "0xB0CF10"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB05DA0`（模块 id None）→ 之后逐字段读线",
+      "evidence_va": "0xB0CD3B"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "ent_id：`u16`（线长 2）—— 发射者实体 ID",
+      "evidence_va": "0xB0CD8B"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "itemid：`u32`（线长 4）—— 武器（物品）ID",
+      "evidence_va": "0xB0CDCB"
+    },
+    {
+      "step": 5,
+      "kind": "read_scalar",
+      "detail": "airbomb_id：`u32`（线长 4）—— 空爆弹 ID",
+      "evidence_va": "0xB0CDEF"
+    },
+    {
+      "step": 6,
+      "kind": "read_scalar",
+      "detail": "target_x：`u16`（线长 2）—— 目标点 X 坐标",
+      "evidence_va": "0xB0CE13"
+    },
+    {
+      "step": 7,
+      "kind": "read_scalar",
+      "detail": "target_y：`u16`（线长 2）—— 目标点 Y 坐标",
+      "evidence_va": "0xB0CE3B"
+    },
+    {
+      "step": 8,
+      "kind": "read_scalar",
+      "detail": "target_z：`u16`（线长 2）—— 目标点 Z 坐标",
+      "evidence_va": "0xB0CE63"
+    },
+    {
+      "step": 9,
+      "kind": "read_scalar",
+      "detail": "shot0_drop1_impact2：`u8`（线长 1）—— 炸弹阶段 0=发射 1=投下 2=命中",
+      "evidence_va": "0xB0CE8B"
+    },
+    {
+      "step": 10,
+      "kind": "read_scalar",
+      "detail": "fx_opt：`u8`（线长 1）—— 特效选项",
+      "evidence_va": "0xB0CEB3"
+    },
+    {
+      "step": 11,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB0CEC7"
+    },
+    {
+      "step": 12,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x1C4]`，实参 8 个",
+      "evidence_va": "0xB0D11B"
+    },
+    {
+      "step": 13,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB0CDA5"
+    }
+  ],
+  "capabilities": [
+    "battle_action"
+  ],
+  "capabilities_derived": [
+    "battle"
+  ],
+  "db_effects": [],
+  "pair": "CS-0xC90D-battle-weapon_fire__air_bomb",
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:46",
+    "batch": 14,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 18,
+        "va": "0xB0CD50",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB0CD4D",
+        "call_va": "0xB0CD52"
+      },
+      "field_window": {
+        "start_va": "0xB0CD3C",
+        "end_va": "0xB0CEEE",
+        "guard": {
+          "va": "0xB0CD3B",
+          "func": "0xB05DA0",
+          "module_id": null,
+          "release_va": "0xB05D90"
+        },
+        "closer_or_commit_va": "0xB0CEC7",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "ent_id",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB0CD8B",
+              "0xB02E01",
+              "0xB02E0B",
+              "0xB0CF67"
+            ]
+          },
+          {
+            "name": "itemid",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB0CDCB",
+              "0xB02DE1",
+              "0xB02DE9",
+              "0xB0CF91"
+            ]
+          },
+          {
+            "name": "airbomb_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB0CDEF",
+              "0xB02DE9",
+              "0xB0CFBB"
+            ]
+          },
+          {
+            "name": "target_x",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 4,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB0CE13",
+              "0xB02E0B",
+              "0xB0CFE6"
+            ]
+          },
+          {
+            "name": "target_y",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 5,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB0CE3B",
+              "0xB02E0B",
+              "0xB0D011"
+            ]
+          },
+          {
+            "name": "target_z",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 6,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB0CE63",
+              "0xB02E0B",
+              "0xB0D03C"
+            ]
+          },
+          {
+            "name": "shot0_drop1_impact2",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 7,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB0CE8B",
+              "0xB06241",
+              "0xB06249",
+              "0xB0D064"
+            ]
+          },
+          {
+            "name": "fx_opt",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 8,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB0CEB3",
+              "0xB06241",
+              "0xB06249",
+              "0xB0D089"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB0CD8B",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0CDCB",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0CDEF",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0CE13",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0CE3B",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0CE63",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0CE8B",
+            "kind": "read",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0CEB3",
+            "kind": "read",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 8,
+        "checkable": 8,
+        "pairs": [
+          {
+            "field": "ent_id",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB0CD8B",
+            "kind": "read"
+          },
+          {
+            "field": "itemid",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB0CDCB",
+            "kind": "read"
+          },
+          {
+            "field": "airbomb_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB0CDEF",
+            "kind": "read"
+          },
+          {
+            "field": "target_x",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB0CE13",
+            "kind": "read"
+          },
+          {
+            "field": "target_y",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB0CE3B",
+            "kind": "read"
+          },
+          {
+            "field": "target_z",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB0CE63",
+            "kind": "read"
+          },
+          {
+            "field": "shot0_drop1_impact2",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB0CE8B",
+            "kind": "read"
+          },
+          {
+            "field": "fx_opt",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB0CEB3",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB0CD3C",
+          "0xB0CEEE"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 18,
+          "capacity": 18,
+          "relation": "exact",
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）18 / 容量 0x12"
+        }
+      },
+      "closer": {
+        "va": "0xB0CEC7",
+        "kind": "jz",
+        "jcc_va": "0xB0CECD",
+        "seq_va": "0xB0CEC3",
+        "jcc_dst": "0xB0CEE9",
+        "cmp": "cmp     ebx, [esp+1B3Ch+var_1B24]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x1C4]",
+        "slot_value": 452,
+        "va": "0xB0D11B",
+        "mov_va": "0xB0D0F8",
+        "host": "[edx+1C4h]",
+        "argc": 8,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB0CDA5",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "ent_id=",
+        "itemid=",
+        "airbomb_id=",
+        "target_x=",
+        "target_y=",
+        "target_z=",
+        "shot0_drop1_impact2=",
+        "fx_opt="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0x03CC-battle-weapon_fire__air_bomb_r.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": "（长度闭合）",
+    "opcode_field_va": [
+      "0xB0CF10"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "WeaponFireAirBombR",
+      "role": "response",
+      "wire_length": "18",
+      "members": [
+        {
+          "name": "EntId",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "ent_id"
+        },
+        {
+          "name": "Itemid",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "itemid"
+        },
+        {
+          "name": "AirbombId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "airbomb_id"
+        },
+        {
+          "name": "TargetX",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "target_x"
+        },
+        {
+          "name": "TargetY",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "target_y"
+        },
+        {
+          "name": "TargetZ",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "target_z"
+        },
+        {
+          "name": "Shot0Drop1Impact2",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "shot0_drop1_impact2"
+        },
+        {
+          "name": "FxOpt",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "fx_opt"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "d3fc4706cd47323e",
+  "check_fingerprint": "b9a7f5f827f87c27"
+}

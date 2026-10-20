@@ -1,0 +1,60 @@
+{
+  "id": "SC-0x1365-battle-game_begin",
+  "revision": 1,
+  "verified_at": "2026-09-22",
+  "verifier": "人工（IDA 汇编整函数扫描：元素读取器 + 元素打印器 + 数组预留步进三方对齐）",
+  "reason": "三个数组的元素名都是记法问题：`elem 58` / `elem 52` / `u32 N3` 只写了元素线宽没写元素结构。读取器 sub_B079A0（58B）与 sub_B07BD0（52B）已在 schema/composites/respawn_post_entry.json、mapgimmick_entry.json 建模；missionunit_set 是纯 u32 数组，线类型规范成 `array<u32,N3>`。",
+  "evidence": [
+    {
+      "what": "元素读取器/打印器与预留步进三方对齐（见 schema/composites 对应文件）",
+      "va": [
+        "0xB079A0",
+        "0xB07BD0",
+        "0xB0AA70",
+        "0xB0AEA0",
+        "0xB0FECF",
+        "0xB0FEEF",
+        "0xB0FF4C",
+        "0xB0FF6E",
+        "0xB0FFF8",
+        "0xB1001A",
+        "0xB10026"
+      ],
+      "detail": "本批共 26 行未建模数组字段，逐条进 IDA 扫描元素读取器整函数取线宽，再与元素打印器成员名/内存偏移、数组预留器槽步进交叉验证。"
+    }
+  ],
+  "patch": {
+    "respawn_posts": {
+      "wire_type": "array<respawn_post_entry,N1>",
+      "length": "58·N1",
+      "enum": "元素线长 58（16 成员）/ 槽 80",
+      "evidence_va": [
+        "0xB0FECF",
+        "0xB0FEEF",
+        "0xB079A0",
+        "0xB0AA70"
+      ]
+    },
+    "mapgimmicks": {
+      "wire_type": "array<mapgimmick_entry,N2>",
+      "length": "52·N2",
+      "enum": "元素线长 52（23 成员）/ 槽 188",
+      "evidence_va": [
+        "0xB0FF4C",
+        "0xB0FF6E",
+        "0xB07BD0",
+        "0xB0AEA0"
+      ]
+    },
+    "missionunit_set": {
+      "wire_type": "array<u32,N3>",
+      "length": "4·N3",
+      "enum": "元素线长 4（标量 u32，非结构体）",
+      "evidence_va": [
+        "0xB0FFF8",
+        "0xB1001A",
+        "0xB10026"
+      ]
+    }
+  }
+}

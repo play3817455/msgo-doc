@@ -1,0 +1,7 @@
+序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+0,-,2,u16,opcode,命令号,分发器 switch 选择子,0x7C8A,B68ADA,确证
+1,0,4,u32,is_revoked,名次是否被吊销（日志串 `is_revoked=`）,经 `vt[0x4A8]` 交业务,-,B68961|B68B30,确证
+2,4,4,u32,high_scores_count,高分列表计数（上限 7：`cmp ebx，7` @`0xB689BF`）,驱动循环（≤7）,-,B68993|B68B4B,确证
+3,8,2,"array<u16,N1>",high_scores,高分列表（日志串 `high_scores={`）,`vt[0x4A8]` 实参（指针）；元素 u16，槽步进 2（`sub_B05E40` @`0xB689CE`，读取 @`0xB689EB`）,-,B689CE|B68B4B,确证
+4,,4,u32,event_scores_count,活动分列表计数（上限 7：`cmp ebx，7` @`0xB68A33`）,驱动循环（≤7）,-,B68A1F|B68BC0,确证
+5,,2,"array<u16,N2>",event_scores,活动分列表（日志串 `event_scores={`）,`vt[0x4A8]` 实参（指针）；元素 u16，槽步进 2（`sub_B05E40` @`0xB68A46`，读取 @`0xB68A63`）,-,B68A46|B68BC0,确证

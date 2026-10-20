@@ -1,0 +1,194 @@
+{
+ "id": "SC-0x4632-lounge-replay_auth_get_downloadkey_r",
+ "verified_at": "2026-09-30 15:25:43",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "block",
+ "block": [
+  "0xB5E4E9",
+  "0xB5E72E"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 110,
+   "va": "0xB5E505",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xB5E502",
+   "call_va": "0xB5E507"
+  },
+  "field_window": {
+   "start_va": "0xB5E4F1",
+   "end_va": "0xB5E5CC",
+   "guard": {
+    "va": "0xB5E4F0",
+    "func": "0xB41120",
+    "module_id": 522,
+    "release_va": "0xB41110"
+   },
+   "closer_or_commit_va": "0xB5E5A5",
+   "within_model_block": true,
+   "range_from": "block"
+  },
+  "primitive_widths": {
+   "direction": "SC",
+   "expected": [
+    {
+     "name": "result",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB5E540",
+      "0xB5E644"
+     ]
+    },
+    {
+     "name": "download_key",
+     "wire_type": "str",
+     "width": null,
+     "seq": 2,
+     "shape": "str",
+     "evidence_va": [
+      "0xB5E581",
+      "0xB5E671"
+     ]
+    },
+    {
+     "name": "secret_key",
+     "wire_type": "str",
+     "width": null,
+     "seq": 3,
+     "shape": "str",
+     "evidence_va": [
+      "0xB5E595",
+      "0xB5E6A4"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB5E540",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB5E581",
+     "kind": "read",
+     "width": null,
+     "wire_type": "str",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB5E595",
+     "kind": "read",
+     "width": null,
+     "wire_type": "str",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 3,
+   "checkable": 3,
+   "pairs": [
+    {
+     "field": "result",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB5E540",
+     "kind": "read"
+    },
+    {
+     "field": "download_key",
+     "width": null,
+     "shape": "str",
+     "va": "0xB5E581",
+     "kind": "read"
+    },
+    {
+     "field": "secret_key",
+     "width": null,
+     "shape": "str",
+     "va": "0xB5E595",
+     "kind": "read"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB5E4F1",
+    "0xB5E5CC"
+   ],
+   "scalar_match_verifiable": true,
+   "capacity_relation": {
+    "observed_min": 4,
+    "capacity": 110,
+    "relation": "within",
+    "unknown_events": [
+     {
+      "va": "0xB5E581",
+      "kind": "read",
+      "name": ""
+     },
+     {
+      "va": "0xB5E595",
+      "kind": "read",
+      "name": ""
+     }
+    ],
+    "is_lower_bound": true,
+    "note": "观测线长（下界）4 / 容量 0x6e"
+   }
+  },
+  "closer": {
+   "va": "0xB5E5A5",
+   "kind": "jz",
+   "jcc_va": "0xB5E5AB",
+   "seq_va": "0xB5E5A1",
+   "jcc_dst": "0xB5E5C7",
+   "cmp": "cmp     ebx, [esp+2C5Ch+var_2C40]",
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x4E8]",
+   "slot_value": 1256,
+   "va": "0xB5E712",
+   "mov_va": "0xB5E701",
+   "host": "[edx+4E8h]",
+   "argc": 3,
+   "form": "mov_then_call",
+   "error_slot": {
+    "slot": "vt[0x64]",
+    "va": "0xB5E55A",
+    "argc": 2
+   }
+  },
+  "log_strings": [
+   "result=",
+   "download_key=\"",
+   "secret_key=\""
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "download_key",
+  "result",
+  "secret_key"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 7
+}

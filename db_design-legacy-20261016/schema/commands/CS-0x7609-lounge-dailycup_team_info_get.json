@@ -1,0 +1,289 @@
+{
+  "id": "CS-0x7609-lounge-dailycup_team_info_get",
+  "opcode": "0x7609",
+  "direction": "CS",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "dailycup_team_info_get",
+  "source_dir": "protocol_analysis/commands/CS-0x7609-lounge-dailycup_team_info_get",
+  "meta": {
+    "opcode": "`0x7609`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`dailycup_team_info_get`",
+    "名字符串": "`)<-_proto_lounge_client::send_dailycup_team_info_get(` @ `0xeed2c8`",
+    "代码位置": "sub_BA6550 @ `0xba6550`（`0xba6550`..`0xba66fd`）",
+    "opcode 写入证据": "`0xba65c4`",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0x6`（6）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)`",
+    "配对命令": "S→C `SC-0x8669-lounge-dailycup_team_info_get_r`"
+  },
+  "handler": "sub_BA6550",
+  "handler_va": "0xba6550",
+  "block": [
+    "0xBA6550",
+    "0xBA66FD"
+  ],
+  "name_str": ")<-_proto_lounge_client::send_dailycup_team_info_get(",
+  "name_str_va": "0xeed2c8",
+  "capacity": "0x6",
+  "capacity_va": null,
+  "closer_va": "0xBA6630",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": null,
+  "wire": {
+    "length_expr": "4",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x6（容量记账口径，非线长）",
+    "field_count": 1,
+    "length_source": "field_sum",
+    "readme_conclusion": "结论：请求每日杯赛（dailycup）队伍信息，指定队伍 id。",
+    "readme_close": "2 + 4 = 6 == 容量 0x6 = 6（精确相等）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "写入 buf+0，供服务端分发；无 case 块（C→S）",
+      "enum": "0x7609",
+      "evidence_va": [
+        "0xba65c4"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "2",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "team_id",
+      "meaning": "队伍 id",
+      "purpose": "来源=入参 arg_0；内联 `mov [eax],ecx`；服务端据此返回队伍信息",
+      "enum": null,
+      "evidence_va": [
+        "0xBA65D4"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0x7609（分发器 switch 选择子）",
+      "evidence_va": "0xBA65C4"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0x6 B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xBA6596"
+    },
+    {
+      "step": 3,
+      "kind": "write_scalar",
+      "detail": "team_id：`u32`（线长 4）—— 队伍 id",
+      "evidence_va": "0xBA65D4"
+    },
+    {
+      "step": 4,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xBA6630"
+    },
+    {
+      "step": 5,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xBA6694"
+    }
+  ],
+  "capabilities": [
+    "query",
+    "lounge.dailycup_team"
+  ],
+  "capabilities_derived": [
+    "query"
+  ],
+  "db_effects": [],
+  "pair": "SC-0x8669-lounge-dailycup_team_info_get_r",
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:44",
+    "batch": 8,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 6,
+        "va": "0xBA6596",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xBA6593",
+        "call_va": "0xBA6598"
+      },
+      "field_window": {
+        "start_va": "0xBA6550",
+        "end_va": "0xBA6630",
+        "guard": null,
+        "closer_or_commit_va": "0xBA6630",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "team_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xBA65D4"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xBA65C4",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xBA65D4",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xBA6606",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 1,
+        "checkable": 1,
+        "pairs": [
+          {
+            "field": "team_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xBA65D4",
+            "kind": "inline_store"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xBA65C4",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xBA6550",
+          "0xBA6630"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 6,
+          "capacity": 6,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xBA6606",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）6 / 容量 0x6"
+        }
+      },
+      "closer": {
+        "va": "0xBA6630",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xBA6694",
+        "mov_va": "0xBA668B",
+        "host": "[edx+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "team_id="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0x7609-lounge-dailycup_team_info_get.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0xba65c4",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xba65c4"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "DailycupTeamInfoGet",
+      "role": "request",
+      "wire_length": "4",
+      "members": [
+        {
+          "name": "TeamId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "team_id"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "4bcc0f2676b5890a",
+  "check_fingerprint": "d54d7ded612b5cee"
+}

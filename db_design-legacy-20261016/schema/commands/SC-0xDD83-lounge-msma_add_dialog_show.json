@@ -1,0 +1,312 @@
+{
+  "id": "SC-0xDD83-lounge-msma_add_dialog_show",
+  "opcode": "0xDD83",
+  "direction": "SC",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "msma_add_dialog_show",
+  "source_dir": "protocol_analysis/commands/SC-0xDD83-lounge-msma_add_dialog_show",
+  "meta": {
+    "opcode": "`0xDD83`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`msma_add_dialog_show`",
+    "处理块范围": "`0xb81441`..`0xb8162a`",
+    "名字串引用点": "`0xee6c48`",
+    "声明容量（解码缓冲）": "`0x6`（`B8145D`）",
+    "长度闭合点": "`B814E8`（`cmp`）→ `B814EE jz`",
+    "报错码": "`0xCC`（块内 `push 1; push 0CCh; vt[0x64]`）",
+    "去向": "`vt[0x23C]` @`B8160E`（2 实参）"
+  },
+  "handler": null,
+  "handler_va": null,
+  "block": [
+    "0xb81441",
+    "0xb8162a"
+  ],
+  "name_str": null,
+  "name_str_va": "0xee6c48",
+  "capacity": "0x6",
+  "capacity_va": "0xB8145D",
+  "closer_va": "0xB814E8",
+  "dispatch": "`vt[0x23C]` @`B8160E`（2 实参）",
+  "dispatch_slot": "vt[0x23C]",
+  "dispatch_va": "0xB8160E",
+  "wire": {
+    "length_expr": "4 + 2",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x6（容量记账口径，非线长）",
+    "field_count": 2,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：6",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "msma_id",
+      "meaning": "机体 ID（日志串 `msma_id=`）",
+      "purpose": "经 `vt[0x23C]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xb81498",
+        "0xb81587"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "stack",
+      "meaning": "叠加数量（日志串 `stack=`）",
+      "purpose": "经 `vt[0x23C]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xb814d8",
+        "0xb815ad"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0xDD83（分发器 switch 选择子）",
+      "evidence_va": "0x0000"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB41120`（模块 id 204）→ 之后逐字段读线",
+      "evidence_va": "0xB81448"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "msma_id：`u32`（线长 4）—— 机体 ID（日志串 `msma_id=`）",
+      "evidence_va": "0xB81498"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "stack：`u16`（线长 2）—— 叠加数量（日志串 `stack=`）",
+      "evidence_va": "0xB814D8"
+    },
+    {
+      "step": 5,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB814E8"
+    },
+    {
+      "step": 6,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x23C]`，实参 2 个",
+      "evidence_va": "0xB8160E"
+    },
+    {
+      "step": 7,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB814B2"
+    }
+  ],
+  "capabilities": [
+    "create"
+  ],
+  "capabilities_derived": [
+    "create"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:45",
+    "batch": 13,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 6,
+        "va": "0xB8145D",
+        "reg": "eax",
+        "host": "[edx+78h]",
+        "alloc_va": "0xB8145A",
+        "call_va": "0xB8145F"
+      },
+      "field_window": {
+        "start_va": "0xB81449",
+        "end_va": "0xB8150F",
+        "guard": {
+          "va": "0xB81448",
+          "func": "0xB41120",
+          "module_id": 204,
+          "release_va": "0xB41110"
+        },
+        "closer_or_commit_va": "0xB814E8",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "msma_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb81498",
+              "0xb81587"
+            ]
+          },
+          {
+            "name": "stack",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb814d8",
+              "0xb815ad"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB81498",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB814D8",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 2,
+        "checkable": 2,
+        "pairs": [
+          {
+            "field": "msma_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB81498",
+            "kind": "read"
+          },
+          {
+            "field": "stack",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB814D8",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB81449",
+          "0xB8150F"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 6,
+          "capacity": 6,
+          "relation": "exact",
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）6 / 容量 0x6"
+        }
+      },
+      "closer": {
+        "va": "0xB814E8",
+        "kind": "jz",
+        "jcc_va": "0xB814EE",
+        "seq_va": "0xB814E4",
+        "jcc_dst": "0xB8150A",
+        "cmp": "cmp     ebx, [esp+2C5Ch+var_2C40]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x23C]",
+        "slot_value": 572,
+        "va": "0xB8160E",
+        "mov_va": "0xB81602",
+        "host": "[edx+23Ch]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB814B2",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "msma_id=",
+        "stack="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0xDD83-lounge-msma_add_dialog_show.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": []
+  },
+  "structs": {
+    "response": {
+      "go_name": "MsmaAddDialogShow",
+      "role": "response",
+      "wire_length": "4 + 2",
+      "members": [
+        {
+          "name": "MsmaId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "msma_id"
+        },
+        {
+          "name": "Stack",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "stack"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "fc14935dae5156e6",
+  "check_fingerprint": "e66232aa0d3ca61f"
+}

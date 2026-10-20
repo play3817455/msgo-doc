@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>扭蛋奖品 prize（21B 线 / 24B 槽） · db_design</title>
+  <link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <h1><a href="../../index.html">db_design</a></h1>
+      <p class="header-note">唯一证据源：<code>protocol_analysis/</code></p>
+      <nav><a href="../../index.html">首页</a>
+      <a href="../../homing/index.html" class="active">归位库</a>
+      <a href="../../tables/index.html">旧表留档</a>
+      <a href="../../commands/index.html">命令</a>
+      <a href="../../cfg/index.html">配置表79</a>
+      <a href="../../srv/index.html">服务端配置</a>
+      <a href="../../asm-audit/index.html">ASM 审计</a>
+      <a href="../../oracle-audit/index.html">Oracle 审计</a>
+      <a href="../../entities/index.html">协议实体</a>
+      <a href="../../fields/index.html">字段索引</a>
+      <a href="../../relations.html">表关系</a></nav>
+    </div>
+  </header>
+  <main class="wrap">
+
+    <nav class="breadcrumb"><a href="../index.html">归位库</a> / <span><code>prize</code></span></nav>
+    <h2>扭蛋奖品 prize（21B 线 / 24B 槽） <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="badge" style="background:#9e9e9e">root</span></h2>
+    <section class="asm-panel"><dl class="asm-dl"><dt>对象</dt><dd><code>prize</code></dd><dt>形态</dt><dd>根表</dd><dt>L1 域</dt><dd>lounge <span class="muted">{&quot;lounge&quot;: 3}</span></dd><dt>生命周期</dt><dd><span class="badge" style="background:#2e7d32">PERSIST</span></dd><dt>旧表锚点</dt><dd><span class="muted">—</span></dd><dt>身份列</dt><dd><code>prize_id</code> </dd><dt>主键</dt><dd><code>world_id</code> <code>pilot_id</code> <code>prize_id</code> </dd><dt>主键类别</dt><dd><code>self_named</code></dd><dt>作用域</dt><dd><code>world_id</code> <code>pilot_id</code> </dd><dt>数组子表键</dt><dd><code>elem_index</code> </dd><dt>内嵌成员</dt><dd><span class="muted">—</span></dd><dt>父对象</dt><dd><span class="muted">—</span></dd><dt>线视图</dt><dd><code>prize</code> </dd><dt>宿主线体</dt><dd><code>prize</code></dd><dt>折叠线形</dt><dd><span class="muted">—</span></dd></dl></section>
+
+    <h3>线视图（同一对象在线上可能有多种形态）</h3>
+    <table>
+      <thead><tr><th>复合体</th><th>线长</th><th>槽宽</th><th>reader</th><th>printer</th><th>命令</th></tr></thead>
+      <tbody><tr><td><code>prize</code></td><td>21 B</td><td>24 B</td><td><code>sub_B46AF0</code></td><td><code>sub_B50360</code></td><td>3 · <a href="../../commands/SC-0x3AD4-lounge-gacha_prize_lineup_r.html"><code>SC-0x3AD4-lounge-gacha_prize_lineup_r</code></a> <a href="../../commands/SC-0x467F-lounge-gacha_exec_r.html"><code>SC-0x467F-lounge-gacha_exec_r</code></a> <a href="../../commands/SC-0xF66B-lounge-gacha_exec_w_buy_ticket_r.html"><code>SC-0xF66B-lounge-gacha_exec_w_buy_ticket_r</code></a> </td></tr></tbody>
+    </table>
+
+    <h3>落库</h3>
+    
+    <section class="col-group">
+      <h3><code>game.prize</code> 根表
+        </h3>
+      <p class="muted">自然键 <code>world_id, pilot_id, prize_id</code>
+        
+        
+         · 唯一索引 <code>uq_game_prize_world_pilot_prize_id</code> (world_id, pilot_id, prize_id)</p>
+      <table>
+        <thead><tr><th>列</th><th>DDL 类型</th><th>角色</th><th>线类型 / 长</th><th>含义</th><th>DDL 注释（出处）</th><th>归位出处</th></tr></thead>
+        <tbody><tr><td><code>csv_index</code></td><td><code>INTEGER</code></td><td><span class="badge" style="background:#455a64">attribute</span></td><td><code>u16</code> · 2B</td><td>CSV 索引</td><td class="muted">CSV 索引 [u16] SC-0x3AD4-lounge-gacha_prize_lineup_r@0xb46bdc</td><td><a href="../../commands/SC-0x3AD4-lounge-gacha_prize_lineup_r.html"><code>SC-0x3AD4-lounge-gacha_prize_lineup_r</code></a> <span class="muted">@0xb46bdc</span></td></tr><tr><td><code>id_type</code></td><td><code>BIGINT</code></td><td><span class="badge" style="background:#455a64">attribute</span></td><td><code>u32</code> · 4B</td><td>ID 类型</td><td class="muted">ID 类型 [u32] SC-0x3AD4-lounge-gacha_prize_lineup_r@0xb46b7e</td><td><a href="../../commands/SC-0x3AD4-lounge-gacha_prize_lineup_r.html"><code>SC-0x3AD4-lounge-gacha_prize_lineup_r</code></a> <span class="muted">@0xb46b7e</span></td></tr><tr><td><code>odds</code></td><td><code>BIGINT</code></td><td><span class="badge" style="background:#455a64">attribute</span></td><td><code>u32</code> · 4B</td><td>中奖概率</td><td class="muted">中奖概率 [u32] SC-0x3AD4-lounge-gacha_prize_lineup_r@0xb46bb9</td><td><a href="../../commands/SC-0x3AD4-lounge-gacha_prize_lineup_r.html"><code>SC-0x3AD4-lounge-gacha_prize_lineup_r</code></a> <span class="muted">@0xb46bb9</span></td></tr><tr><td><code>odds_max</code></td><td><code>BIGINT</code></td><td><span class="badge" style="background:#455a64">attribute</span></td><td><code>u32</code> · 4B</td><td>中奖概率上限</td><td class="muted">中奖概率上限 [u32] SC-0x3AD4-lounge-gacha_prize_lineup_r@0xb46bca</td><td><a href="../../commands/SC-0x3AD4-lounge-gacha_prize_lineup_r.html"><code>SC-0x3AD4-lounge-gacha_prize_lineup_r</code></a> <span class="muted">@0xb46bca</span></td></tr><tr><td><code>prize_id</code> <span class="muted">PK</span></td><td><code>BIGINT NOT NULL</code></td><td><span class="badge" style="background:#2e7d32">identity</span></td><td><code>u32</code> · 4B</td><td>奖品 ID</td><td class="muted">奖品 ID [u32] SC-0x3AD4-lounge-gacha_prize_lineup_r@0xb46b06</td><td><a href="../../commands/SC-0x3AD4-lounge-gacha_prize_lineup_r.html"><code>SC-0x3AD4-lounge-gacha_prize_lineup_r</code></a> <span class="muted">@0xb46b06</span></td></tr><tr><td><code>rare_type</code></td><td><code>SMALLINT</code></td><td><span class="badge" style="background:#455a64">attribute</span></td><td><code>i8</code> · 1B</td><td>稀有度类型</td><td class="muted">稀有度类型 [i8] SC-0x3AD4-lounge-gacha_prize_lineup_r@0xb46ba2</td><td><a href="../../commands/SC-0x3AD4-lounge-gacha_prize_lineup_r.html"><code>SC-0x3AD4-lounge-gacha_prize_lineup_r</code></a> <span class="muted">@0xb46ba2</span></td></tr><tr><td><code>stack</code></td><td><code>INTEGER</code></td><td><span class="badge" style="background:#455a64">attribute</span></td><td><code>u16</code> · 2B</td><td>堆叠/数量</td><td class="muted">堆叠/数量 [u16] SC-0x3AD4-lounge-gacha_prize_lineup_r@0xb46b8f</td><td><a href="../../commands/SC-0x3AD4-lounge-gacha_prize_lineup_r.html"><code>SC-0x3AD4-lounge-gacha_prize_lineup_r</code></a> <span class="muted">@0xb46b8f</span></td></tr></tbody>
+      </table>
+    </section>
+
+    <h3>子表链接</h3>
+    <table><thead><tr><th>成员</th><th>类别</th><th>子表 / 行所在表</th><th>元素数</th><th>元素线长</th><th>复合体</th><th>VA</th></tr></thead>
+      <tbody><tr><td colspan="7" class="muted">无</td></tr></tbody></table>
+    
+
+    <h3>外键（出向）</h3>
+    <table><thead><tr><th>本列</th><th>目标</th><th>类别</th><th>依据</th><th>VA</th></tr></thead>
+      <tbody><tr><td colspan="5" class="muted">无</td></tr></tbody></table>
+    
+    <h3>外键（入向：别人指向我）</h3>
+    <table><thead><tr><th>来源列</th><th>目标</th><th>类别</th><th>VA</th></tr></thead>
+      <tbody><tr><td colspan="4" class="muted">无</td></tr></tbody></table>
+    <h3>主数据引用（→ cfg.*）</h3>
+    <table><thead><tr><th>本列</th><th>目标</th><th>依据</th><th>VA</th></tr></thead>
+      <tbody><tr><td colspan="4" class="muted">无</td></tr></tbody></table>
+    <h3>未决引用</h3>
+    <table><thead><tr><th>本列</th><th>原因</th><th>VA</th></tr></thead>
+      <tbody><tr><td colspan="3" class="muted">无</td></tr></tbody></table>
+
+    <h3>不落库成员（0）</h3>
+    <p class="muted">EVENT/TBD 生命周期、<code>memory_only</code>、对齐补位：线上有、库里不建列，
+      理由在此显式登记（反向覆盖门）。</p>
+    <table><thead><tr><th>成员</th><th>角色</th><th>理由</th><th>线类型</th><th>VA</th></tr></thead>
+      <tbody><tr><td colspan="5" class="muted">无</td></tr></tbody></table>
+
+    <h3>命令归属（CS 写 / SC 读）</h3>
+    <table><thead><tr><th>写命令</th><th>op</th><th>via</th><th>verbs</th></tr></thead>
+      <tbody><tr><td colspan="4" class="muted">无</td></tr></tbody></table>
+    <table><thead><tr><th>读命令</th><th>op</th><th>via</th><th>verbs</th></tr></thead>
+      <tbody><tr><td><a href="../../commands/SC-0x3AD4-lounge-gacha_prize_lineup_r.html"><code>SC-0x3AD4-lounge-gacha_prize_lineup_r</code></a></td><td>read</td><td><code>prize</code></td><td></td></tr><tr><td><a href="../../commands/SC-0x467F-lounge-gacha_exec_r.html"><code>SC-0x467F-lounge-gacha_exec_r</code></a></td><td>read</td><td><code>prize</code></td><td></td></tr><tr><td><a href="../../commands/SC-0xF66B-lounge-gacha_exec_w_buy_ticket_r.html"><code>SC-0xF66B-lounge-gacha_exec_w_buy_ticket_r</code></a></td><td>read</td><td><code>prize</code></td><td></td></tr></tbody></table>
+    
+    <p class="muted">子表：—</p>
+    
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">生成于 2026-10-12 · 改 JSON 后重跑 build_site.py · HTML 只读</div>
+  </footer>
+</body>
+</html>

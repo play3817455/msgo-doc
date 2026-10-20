@@ -1,0 +1,7 @@
+序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+0,-,2,u16,opcode,命令号,分发器 switch 选择子,0x1908,0xB56A5B,确证
+1,0,4,u32,result,处理结果码,经 `vt[0x320]`；日志 `result=`,-,0xB569C2|0xB56AB1,确证
+2,4,12,struct{12},missionunit_set,任务编成单元（机体）数据块,经 `vt[0x320]`；日志 `missionunit_set={…}`（打印器 `sub_B4A970`）,成员见下,0xB56A02(读取器 sub_B43BE0 消费 12B)|0xB569F3(sub_B41460 预留 0x0C)|0xB56AD4,确证
+3,+0,2,u16,missionunit_set.deck_type,编成卡组类型,结构成员；打印器 `deck_type=`,-,0xB43BEE|sub_B4A970[+0],确证
+4,+2,2,u16,missionunit_set.deck_set,编成卡组套编号,结构成员；打印器 `deck_set=`,-,0xB43C06|sub_B4A970[+2],确证
+5,+4,8,u64,missionunit_set.missionunit_id,任务单元 ID（打印器成对打印低/高 32 位）,结构成员 `[+4]`/`[+8]`；打印器 `missionunit_id={…}`,-,0xB43C20/0xB43C22(2×u32 内联读)|sub_B4A970[+4][+8],确证

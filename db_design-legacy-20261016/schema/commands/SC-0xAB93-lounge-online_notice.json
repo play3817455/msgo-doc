@@ -1,0 +1,450 @@
+{
+  "id": "SC-0xAB93-lounge-online_notice",
+  "opcode": "0xAB93",
+  "direction": "SC",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "online_notice",
+  "source_dir": "protocol_analysis/commands/SC-0xAB93-lounge-online_notice",
+  "meta": {
+    "opcode": "`0xAB93`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`online_notice`",
+    "处理块范围": "`0xb71e50`..`0xb7210a`",
+    "名字串引用点": "`0xb71fa5`",
+    "声明容量（解码缓冲）": "`0x25`（`B71E69`）",
+    "长度闭合点": "`B71F5C`",
+    "报错码": "`0x157`（块内 `push 1; push <errcode>; vt[0x64]`）",
+    "去向": "`vt[0x364]` @`B720EE`（4 实参）"
+  },
+  "handler": null,
+  "handler_va": null,
+  "block": [
+    "0xb71e50",
+    "0xb7210a"
+  ],
+  "name_str": null,
+  "name_str_va": "0xb71fa5",
+  "capacity": "0x25",
+  "capacity_va": "0xB71E69",
+  "closer_va": "0xB71F5C",
+  "dispatch": "`vt[0x364]` @`B720EE`（4 实参）",
+  "dispatch_slot": "vt[0x364]",
+  "dispatch_va": "0xB720EE",
+  "wire": {
+    "length_expr": "4 + 变长(槽 25) + 4 + 4",
+    "fixed": false,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x25（容量记账口径，非线长）",
+    "field_count": 4,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：12 + len(pilot_name)。",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0xAB93",
+      "evidence_va": [
+        "0xb71fa5"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "pilot_id",
+      "meaning": "驾驶员 ID（日志串 `pilot_id=`）",
+      "purpose": "经 `vt[0x364]` 交业务（4 实参）",
+      "enum": null,
+      "evidence_va": [
+        "B71EA7"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "变长(槽 25)",
+      "wire_type": "bytes(NUL 串)",
+      "name": "pilot_name",
+      "meaning": "驾驶员名（日志串 `pilot_name=\"...\"`）",
+      "purpose": "经 `vt[0x364]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B71EE8",
+        "B71ED5"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "var",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "count",
+      "meaning": "在线人数（日志串 `count=`）",
+      "purpose": "经 `vt[0x364]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B71F28"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 4,
+      "offset": "var",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "type",
+      "meaning": "通知类型（日志串 `type=`）",
+      "purpose": "经 `vt[0x364]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B71F4C"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0xAB93（分发器 switch 选择子）",
+      "evidence_va": "0xB71FA5"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB41120`（模块 id 343）→ 之后逐字段读线",
+      "evidence_va": "0xB71E57"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "pilot_id：`u32`（线长 4）—— 驾驶员 ID（日志串 `pilot_id=`）",
+      "evidence_va": "0xB71EA7"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "pilot_name：`bytes(NUL 串)`（线长 变长(槽 25)）—— 驾驶员名（日志串 `pilot_name=\"...\"`）",
+      "evidence_va": "0xB71EE8"
+    },
+    {
+      "step": 5,
+      "kind": "read_scalar",
+      "detail": "count：`u32`（线长 4）—— 在线人数（日志串 `count=`）",
+      "evidence_va": "0xB71F28"
+    },
+    {
+      "step": 6,
+      "kind": "read_scalar",
+      "detail": "type：`u32`（线长 4）—— 通知类型（日志串 `type=`）",
+      "evidence_va": "0xB71F4C"
+    },
+    {
+      "step": 7,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB71F5C"
+    },
+    {
+      "step": 8,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x364]`，实参 4 个",
+      "evidence_va": "0xB720EE"
+    },
+    {
+      "step": 9,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB71EC1"
+    }
+  ],
+  "capabilities": [
+    "notify",
+    "lounge.online"
+  ],
+  "capabilities_derived": [
+    "notify"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:44",
+    "batch": 10,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 37,
+        "va": "0xB71E6C",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB71E69",
+        "call_va": "0xB71E6E"
+      },
+      "field_window": {
+        "start_va": "0xB71E58",
+        "end_va": "0xB71F83",
+        "guard": {
+          "va": "0xB71E57",
+          "func": "0xB41120",
+          "module_id": 343,
+          "release_va": "0xB41110"
+        },
+        "closer_or_commit_va": "0xB71F5C",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "pilot_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "B71EA7"
+            ]
+          },
+          {
+            "name": "pilot_name",
+            "wire_type": "bytes(NUL 串)",
+            "width": null,
+            "seq": 2,
+            "shape": "agg",
+            "evidence_va": [
+              "B71EE8",
+              "B71ED5"
+            ]
+          },
+          {
+            "name": "count",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "B71F28"
+            ]
+          },
+          {
+            "name": "type",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 4,
+            "shape": "scalar",
+            "evidence_va": [
+              "B71F4C"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB71EA7",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB71EE8",
+            "kind": "read",
+            "width": null,
+            "wire_type": "str",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB71F28",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB71F4C",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 3,
+        "checkable": 3,
+        "pairs": [
+          {
+            "field": "pilot_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB71EA7",
+            "kind": "read"
+          },
+          {
+            "field": "count",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB71F28",
+            "kind": "read"
+          },
+          {
+            "field": "type",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB71F4C",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB71EE8",
+            "kind": "read",
+            "width": null,
+            "wire_type": "str"
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB71E58",
+          "0xB71F83"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 12,
+          "capacity": 37,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB71EE8",
+              "kind": "read",
+              "name": ""
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）12 / 容量 0x25"
+        }
+      },
+      "closer": {
+        "va": "0xB71F5C",
+        "kind": "jz",
+        "jcc_va": "0xB71F62",
+        "seq_va": "0xB71F58",
+        "jcc_dst": "0xB71F7E",
+        "cmp": "cmp     ebx, [esp+2C5Ch+var_2C40]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x364]",
+        "slot_value": 868,
+        "va": "0xB720EE",
+        "mov_va": "0xB720E5",
+        "host": "[eax+364h]",
+        "argc": 4,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB71EC1",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "pilot_id=",
+        "pilot_name=\"",
+        "count=",
+        "type="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0xAB93-lounge-online_notice.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xb71fa5"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "OnlineNotice",
+      "role": "response",
+      "wire_length": "4 + 变长(槽 25) + 4 + 4",
+      "members": [
+        {
+          "name": "PilotId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "pilot_id"
+        },
+        {
+          "name": "PilotName",
+          "wire_type": "bytes(NUL 串)",
+          "length": "变长(槽 25)",
+          "field_ref": "pilot_name"
+        },
+        {
+          "name": "Count",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "count"
+        },
+        {
+          "name": "Type_",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "type"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "f84c9fb678dcb311",
+  "check_fingerprint": "1e6d83334d603c6e"
+}

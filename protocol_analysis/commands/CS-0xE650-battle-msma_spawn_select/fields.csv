@@ -1,0 +1,8 @@
+序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+0,0,2,u16,opcode,命令号,写入 `buf+0`，供服务端分发；无 case 块（C→S）,0xE650,`00B33FAC`,确证
+1,0,4,u32,ms_index,机体槽索引,"来源=入参 `arg_0`（`mov esi,[esp+arg_0]` @`0xB33FB8`）→ 内联写 `[eax],esi`（@`0xB33FBC`）",-,`0xB33FB8`;`0xB33FBC`,确证
+2,4,4,u32,post_index,投放点索引,"来源=入参 `arg_4`（`mov ecx,[esp+arg_4]` @`0xB33FCB`）→ 内联写 `[eax],ecx`（@`0xB33FD7`）",-,`0xB33FCB`;`0xB33FD7`,确证
+3,8,4,u32,spt_spot_index,支援点索引,来源=入参 `arg_8` → 写原语 `sub_B02D80`（u32 @`0xB33FDF`）,-,`0xB33FDF`,确证
+4,12,1,u8,is_btlship_ride,是否搭乘战舰,来源=入参 `arg_C` → 写原语 `sub_B061C0`（u8 @`0xB33FF9`）,0/1,`0xB33FF9`,确证
+5,13,1,u8,is_msma_ride,是否搭乘机体,来源=入参 `arg_10` → 写原语 `sub_B061C0`（u8 @`0xB34013`）,0/1,`0xB34013`,确证
+6,14,2,u16,respawn_ent_id,重生实体 ID,来源=入参 `arg_14` → 写原语 `sub_B02DA0`（u16 @`0xB3402D`）,-,`0xB3402D`,确证

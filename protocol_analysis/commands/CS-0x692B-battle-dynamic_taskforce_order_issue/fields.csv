@@ -1,0 +1,8 @@
+序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+0,"0","2","u16","opcode","命令号","分发给 battle 协议类处理块（C→S 无 case 块）","0x692B","0xB3F46F","确证"
+1,"2","1","u8","order_kind","指令种类","来源=入参 arg_0 的低字节（@0xB3F47F）；内联 `mov [ecx],dl`；经 `vt[0x58]` 发送","-","0xB3F483","确证"
+2,"3","4","u32","order_param","指令参数","来源=入参 arg_4（@0xB3F497）；内联 `mov [esi],eax`；经 `vt[0x58]` 发送","-","0xB3F49B","确证"
+3,"7","4","u32","select_members_num","成员数组元素数（**上限校验 ≤ 0x33=51**）","来源=入参 arg_C（@0xB3F490）；写线原语 `sub_B02D80`(u32)；上限 `cmp ebp,33h`@0xB3F494","0..51","0xB3F4B1","确证"
+4,"11","var","array<u8,N>","select_members","成员列表（N = `select_members_num`，N ≤ 51，每元素 u8）","来源=入参 arg_8 指向的字节数组（@0xB3F4C7 `mov ecx,[arg_8]`→`lea edx,[esi+ecx]`）；循环内 `sub_B061C0`(u8)；经 `vt[0x58]` 发送","元素 u8，逐个写入","0xB3F4D4","确证"
+5,"var","4","u32","select_npcs_num","NPC 数组元素数（**上限校验 ≤ 0x0C=12**）","来源=入参 arg_14（@0xB3F4EB）；写线原语 `sub_B02D80`(u32)；上限 `cmp ebx,0Ch`@0xB3F4EF","0..12","0xB3F502","确证"
+6,"var","var","array<u16,N>","select_npcs","NPC 列表（N = `select_npcs_num`，N ≤ 12，每元素 u16）","来源=入参 arg_10 指向的 u16 数组（@0xB3F518 `mov edx,[arg_10]`，步进 +2）；循环内 `sub_B02DA0`(u16)；经 `vt[0x58]` 发送","元素 u16，逐个写入","0xB3F52A","确证"

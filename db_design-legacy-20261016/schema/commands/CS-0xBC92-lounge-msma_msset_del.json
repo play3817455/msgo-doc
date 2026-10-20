@@ -1,0 +1,354 @@
+{
+  "id": "CS-0xBC92-lounge-msma_msset_del",
+  "opcode": "0xBC92",
+  "direction": "CS",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "msma_msset_del",
+  "source_dir": "protocol_analysis/commands/CS-0xBC92-lounge-msma_msset_del",
+  "meta": {
+    "opcode": "`0xBC92`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`msma_msset_del`",
+    "名字符串": "`)<-_proto_lounge_client::send_msma_msset_del(` @ `0xEEBC4C`",
+    "代码位置": "sub_B98AA0 @ `0xB98AA0`（`0xB98AA0`..`0xB98C8A`）",
+    "opcode 写入证据": "`0xB98B14`",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0x000A`（10）",
+    "容量申请证据": "`0xB98AE6`（`push 0x000A`）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)` @ `0xB98C18`",
+    "附加通知": "`[obj+79A8h]` 回调，模块 id `0x12B` @ `0xB98C33`",
+    "配对命令": "S→C `SC-0xBD77-lounge-msma_msset_del_r`（已 DONE）"
+  },
+  "handler": "sub_B98AA0",
+  "handler_va": "0xB98AA0",
+  "block": [
+    "0xB98AA0",
+    "0xB98C8A"
+  ],
+  "name_str": ")<-_proto_lounge_client::send_msma_msset_del(",
+  "name_str_va": "0xEEBC4C",
+  "capacity": "0xA",
+  "capacity_va": "0xB98AE6",
+  "closer_va": "0xB98B95",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)` @ `0xB98C18`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": "0xB98C18",
+  "wire": {
+    "length_expr": "2 + 2",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0xA（容量记账口径，非线长）",
+    "field_count": 2,
+    "length_source": "field_sum",
+    "readme_conclusion": "结论：删除指定卡组类型/槽位的机体套装。",
+    "readme_close": "2 + 2 + 2 = 6 ≤ 容量 0xA = 10（富余 4）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "写入 `buf+0`，供服务端分发；无 case 块（C→S）",
+      "enum": "0xBC92",
+      "evidence_va": [
+        "0xB98B14"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "2",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "deck_type",
+      "meaning": "卡组类型",
+      "purpose": "来源=入参 `arg_0`（`mov si,word ptr [esp+40h+arg_0]` → 内联 `mov [eax],si`）",
+      "enum": null,
+      "evidence_va": [
+        "0xB98B2A"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "slot",
+      "meaning": "套装槽位",
+      "purpose": "来源=入参 `arg_4`（`mov cx,word ptr [esp+40h+arg_4]` → 内联写 u16）",
+      "enum": null,
+      "evidence_va": [
+        "0xB98B38"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0xBC92（分发器 switch 选择子）",
+      "evidence_va": "0xB98B14"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0xA B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xB98AE6"
+    },
+    {
+      "step": 3,
+      "kind": "write_scalar",
+      "detail": "deck_type：`u16`（线长 2）—— 卡组类型",
+      "evidence_va": "0xB98B2A"
+    },
+    {
+      "step": 4,
+      "kind": "write_scalar",
+      "detail": "slot：`u16`（线长 2）—— 套装槽位",
+      "evidence_va": "0xB98B38"
+    },
+    {
+      "step": 5,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xB98B95"
+    },
+    {
+      "step": 6,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xB98C21"
+    },
+    {
+      "step": 7,
+      "kind": "notify",
+      "detail": "附加通知回调 `[obj+79A8h]`（模块 id，非字段）",
+      "evidence_va": "0xB98C33"
+    }
+  ],
+  "capabilities": [
+    "delete",
+    "lounge.msset"
+  ],
+  "capabilities_derived": [
+    "delete"
+  ],
+  "db_effects": [],
+  "pair": "SC-0xBD77-lounge-msma_msset_del_r",
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:42",
+    "batch": 4,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 10,
+        "va": "0xB98AE6",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB98AE3",
+        "call_va": "0xB98AE8"
+      },
+      "field_window": {
+        "start_va": "0xB98AA0",
+        "end_va": "0xB98B95",
+        "guard": null,
+        "closer_or_commit_va": "0xB98B95",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "deck_type",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB98B2A"
+            ]
+          },
+          {
+            "name": "slot",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB98B38"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB98B14",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB98B2A",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB98B38",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB98B6B",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 2,
+        "checkable": 2,
+        "pairs": [
+          {
+            "field": "deck_type",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB98B14",
+            "kind": "inline_store"
+          },
+          {
+            "field": "slot",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB98B2A",
+            "kind": "inline_store"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB98B38",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB98AA0",
+          "0xB98B95"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 6,
+          "capacity": 10,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB98B6B",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）6 / 容量 0xa"
+        }
+      },
+      "closer": {
+        "va": "0xB98B95",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xB98C21",
+        "mov_va": "0xB98C18",
+        "host": "[edx+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "deck_type=",
+        "slot="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0xBC92-lounge-msma_msset_del.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0xB98B14",
+    "notify_va": "0xB98C33",
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xB98B14"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "MsmaMssetDel",
+      "role": "request",
+      "wire_length": "2 + 2",
+      "members": [
+        {
+          "name": "DeckType",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "deck_type"
+        },
+        {
+          "name": "Slot",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "slot"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "ad1b5bdcf97c4283",
+  "check_fingerprint": "4c9568338923b940"
+}

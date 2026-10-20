@@ -1,0 +1,459 @@
+{
+  "id": "SC-0xBAE4-battle-entity_snapshot_splitdelta_compress",
+  "opcode": "0xBAE4",
+  "direction": "SC",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "entity_snapshot_splitdelta_compress",
+  "source_dir": "protocol_analysis/commands/SC-0xBAE4-battle-entity_snapshot_splitdelta_compress",
+  "meta": {
+    "opcode": "`0xBAE4`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`battle_client`",
+    "命令名": "`entity_snapshot_splitdelta_compress`",
+    "处理块范围": "`0xb29dc0`..`0xb2a0a0`",
+    "名字串引用点": "`0xb29f26`",
+    "声明容量（解码缓冲）": "`0x750C`（`B29DDA`）",
+    "长度闭合点": "`B29EE3`",
+    "报错码": "`0x63`（块内 `push 1; push <0x63>; vt[0x64]`）",
+    "去向": "`vt[0x188]` @`B2A084`（4 实参）"
+  },
+  "handler": null,
+  "handler_va": null,
+  "block": [
+    "0xb29dc0",
+    "0xb2a0a0"
+  ],
+  "name_str": null,
+  "name_str_va": "0xb29f26",
+  "capacity": "0x750C",
+  "capacity_va": "0xB29DDA",
+  "closer_va": "0xB29EE3",
+  "dispatch": "`vt[0x188]` @`B2A084`（4 实参）",
+  "dispatch_slot": "vt[0x188]",
+  "dispatch_va": "0xB2A084",
+  "wire": {
+    "length_expr": "4 + 4 + 4 + n",
+    "fixed": false,
+    "var_drivers": [
+      "n"
+    ],
+    "capacity_note": "声明容量 0x750C（容量记账口径，非线长）",
+    "field_count": 4,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：12 + n",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "frame_count",
+      "meaning": "快照帧号（日志串 `frame_count=`）",
+      "purpose": "经 `vt[0x188]`（4 实参）交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xb29e04",
+        "0xb29e13"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "remain_msec",
+      "meaning": "剩余毫秒（日志串 `remain_msec=`）",
+      "purpose": "经 `vt[0x188]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xb29e41",
+        "0xb29e50"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 3,
+      "offset": "8",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "zbuff_num",
+      "meaning": "压缩数据字节数（上限 30720）",
+      "purpose": "驱动 `zbuff` 数组循环（`cmp ebx,7500h`）",
+      "enum": "0..30720",
+      "evidence_va": [
+        "0xb29e66",
+        "0xb29e8f"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 4,
+      "offset": "12",
+      "length": "n",
+      "wire_type": "array<u8,30720>",
+      "name": "zbuff",
+      "meaning": "压缩快照字节串（日志串 `zbuff={` 逐字节打印）",
+      "purpose": "经 `vt[0x188]`（指针实参）交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xb29ea4",
+        "0xb29ebd"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0xBAE4（分发器 switch 选择子）",
+      "evidence_va": "0x0000"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB05DA0`（模块 id None）→ 之后逐字段读线",
+      "evidence_va": "0xB29DC0"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "frame_count：`u32`（线长 4）—— 快照帧号（日志串 `frame_count=`）",
+      "evidence_va": "0xB29E04"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "remain_msec：`u32`（线长 4）—— 剩余毫秒（日志串 `remain_msec=`）",
+      "evidence_va": "0xB29E41"
+    },
+    {
+      "step": 5,
+      "kind": "read_count",
+      "detail": "zbuff_num：`u32`（线长 4）—— 压缩数据字节数（上限 30720）",
+      "evidence_va": "0xB29E66"
+    },
+    {
+      "step": 6,
+      "kind": "read_array",
+      "detail": "zbuff：`array<u8,30720>`（线长 n）—— 压缩快照字节串（日志串 `zbuff={` 逐字节打印）",
+      "evidence_va": "0xB29EA4"
+    },
+    {
+      "step": 7,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB29EE3"
+    },
+    {
+      "step": 8,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x188]`，实参 4 个",
+      "evidence_va": "0xB2A084"
+    },
+    {
+      "step": 9,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB29E2A"
+    }
+  ],
+  "capabilities": [
+    "battle_action",
+    "battle.entity"
+  ],
+  "capabilities_derived": [
+    "battle"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:47",
+    "batch": 19,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 29964,
+        "va": "0xB29DD5",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB29DD2",
+        "call_va": "0xB29DDA"
+      },
+      "field_window": {
+        "start_va": "0xB29DC1",
+        "end_va": "0xB29F04",
+        "guard": {
+          "va": "0xB29DC0",
+          "func": "0xB05DA0",
+          "module_id": null,
+          "release_va": "0xB05D90"
+        },
+        "closer_or_commit_va": "0xB29EE3",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "frame_count",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb29e04",
+              "0xb29e13"
+            ]
+          },
+          {
+            "name": "remain_msec",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb29e41",
+              "0xb29e50"
+            ]
+          },
+          {
+            "name": "zbuff_num",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb29e66",
+              "0xb29e8f"
+            ]
+          },
+          {
+            "name": "zbuff",
+            "wire_type": "array<u8,30720>",
+            "width": null,
+            "seq": 4,
+            "shape": "agg",
+            "evidence_va": [
+              "0xb29ea4",
+              "0xb29ebd"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB29E13",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB29E50",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB29E66",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB29EA4",
+            "kind": "bounded",
+            "width": 1,
+            "wire_type": null,
+            "name": "sub_B05EA0",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB29EBD",
+            "kind": "read",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 3,
+        "checkable": 3,
+        "pairs": [
+          {
+            "field": "frame_count",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB29E13",
+            "kind": "read"
+          },
+          {
+            "field": "remain_msec",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB29E50",
+            "kind": "read"
+          },
+          {
+            "field": "zbuff_num",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB29E66",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB29EA4",
+            "kind": "bounded",
+            "width": 1,
+            "wire_type": null
+          },
+          {
+            "va": "0xB29EBD",
+            "kind": "read",
+            "width": 1,
+            "wire_type": "u8"
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB29DC1",
+          "0xB29F04"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 13,
+          "capacity": 29964,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB29EA4",
+              "kind": "bounded",
+              "name": "sub_B05EA0"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）13 / 容量 0x750c"
+        }
+      },
+      "closer": {
+        "va": "0xB29EE3",
+        "kind": "jz",
+        "jcc_va": "0xB29EE9",
+        "seq_va": "0xB29EDF",
+        "jcc_dst": "0xB29F02",
+        "cmp": "cmp     ecx, [esp+1B3Ch+var_1B24]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x188]",
+        "slot_value": 392,
+        "va": "0xB2A084",
+        "mov_va": "0xB2A070",
+        "host": "[edx+188h]",
+        "argc": 4,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB29E2A",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "frame_count=",
+        "remain_msec=",
+        "zbuff={"
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0xBAE4-battle-entity_snapshot_splitdelta_compress.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": []
+  },
+  "structs": {
+    "response": {
+      "go_name": "EntitySnapshotSplitdeltaCompress",
+      "role": "response",
+      "wire_length": "4 + 4 + 4 + n",
+      "members": [
+        {
+          "name": "FrameCount",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "frame_count"
+        },
+        {
+          "name": "RemainMsec",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "remain_msec"
+        },
+        {
+          "name": "ZbuffNum",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "zbuff_num"
+        },
+        {
+          "name": "Zbuff",
+          "wire_type": "array<u8,30720>",
+          "length": "n",
+          "field_ref": "zbuff",
+          "element": "u8",
+          "element_length": "1",
+          "cap": 30720,
+          "count_field": "zbuff_num",
+          "count_field_source": "heuristic"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "5dcc135c1a71ef55",
+  "check_fingerprint": "b9a0f9c1296b6a5a"
+}

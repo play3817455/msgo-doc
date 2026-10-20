@@ -1,0 +1,51 @@
+{
+  "id": "tbl_bracket_info",
+  "title": "对阵表信息",
+  "status": "complete",
+  "table_disposition": "PERSIST",
+  "purpose": "持久化 bracket_info 46B 线；11 成员杯赛对阵元数据（sub_B46D80/sub_B50840）",
+  "entity_ref": "bracket_info",
+  "evidence_commands": [
+    "SC-0xD784-lounge-cupteam_party_status_update"
+  ],
+  "column_groups": [
+    {
+      "name": "bracket_info（46B 线 · 11 成员）",
+      "columns": [
+        "bracket_info"
+      ]
+    }
+  ],
+  "columns": [
+    {
+      "name": "bracket_info",
+      "disposition": "COMPOSITE",
+      "composite_ref": "bracket_info",
+      "meaning": "对阵表信息（日志 `bracket=`；claim 52 / 线长 46）",
+      "wire_sources": [
+        {
+          "command": "SC-0xD784-lounge-cupteam_party_status_update",
+          "struct": "bracket_info",
+          "field_name": "bracket",
+          "offset": 21,
+          "length": 46,
+          "wire_type": "struct",
+          "protocol_path": "protocol_analysis/commands/SC-0xD784-lounge-cupteam_party_status_update/README.md",
+          "section": "§3",
+          "reader": "sub_B46D80",
+          "printer": "sub_B50840",
+          "evidence_va": "B7F2E9|B7F2F8|B7F422",
+          "notes": "字段 #4；sub_B419A0 预留 0x34=52 槽"
+        }
+      ],
+      "asm_verified": true
+    }
+  ],
+  "asm_audit": {
+    "composite_ref": "bracket_info",
+    "status": "pass",
+    "issues_count": 0,
+    "memory_status": "pass",
+    "memory_issues_count": 0
+  }
+}

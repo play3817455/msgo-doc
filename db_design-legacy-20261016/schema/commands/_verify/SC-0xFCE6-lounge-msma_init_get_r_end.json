@@ -1,0 +1,91 @@
+{
+ "id": "SC-0xFCE6-lounge-msma_init_get_r_end",
+ "verified_at": "2026-09-30 15:25:46",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "block",
+ "block": [
+  "0xB884CD",
+  "0xB8861D"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "absent": true,
+   "reason": "零负载命令：无字段 ⇒ 无容量/闭合点/去向"
+  },
+  "field_window": {
+   "start_va": "0xB884D5",
+   "end_va": "0xB88518",
+   "guard": {
+    "va": "0xB884D4",
+    "func": "0xB41120",
+    "module_id": 202,
+    "release_va": "0xB41110"
+   },
+   "closer_or_commit_va": "0xB884E5",
+   "within_model_block": true,
+   "range_from": "block"
+  },
+  "primitive_widths": {
+   "direction": "SC",
+   "expected": [],
+   "actual": [],
+   "matched": 0,
+   "checkable": 0,
+   "pairs": [],
+   "gaps": [],
+   "unmatched_actual": [],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB884D5",
+    "0xB88518"
+   ],
+   "scalar_match_verifiable": true,
+   "capacity_relation": {
+    "observed_min": 0,
+    "capacity": null,
+    "relation": null,
+    "unknown_events": [],
+    "is_lower_bound": false,
+    "note": "观测线长（下界）0 / 容量 ?"
+   },
+   "zero_load": true
+  },
+  "closer": {
+   "va": "0xB884E5",
+   "kind": "jz",
+   "jcc_va": "0xB884EB",
+   "seq_va": "0xB884E1",
+   "jcc_dst": "0xB88513",
+   "cmp": "cmp     ebx, [esp+2C5Ch+var_2C40]",
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x234]",
+   "slot_value": 564,
+   "va": "0xB885C7",
+   "mov_va": "0xB885BF",
+   "host": "[edx+234h]",
+   "argc": 0,
+   "form": "mov_then_call",
+   "error_slot": {
+    "slot": "vt[0x64]",
+    "va": "0xB884F9",
+    "argc": 2
+   }
+  },
+  "log_strings": [
+   ")->_proto_lounge_client::recv_msma_init_get_r_end( ",
+   " (id:",
+   "V",
+   "]byte",
+   " ) ["
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [],
+ "status": "ASM-VERIFIED",
+ "batch": 14
+}

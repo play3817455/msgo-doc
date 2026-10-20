@@ -1,0 +1,32 @@
+{
+  "id": "CS-0xFBC1-battle-weapon_fire__funnel",
+  "revision": 1,
+  "verified_at": "2026-09-22",
+  "verifier": "人工（IDA 汇编整函数扫描：元素读取器 + 元素打印器 + 数组预留步进三方对齐）",
+  "reason": "`array<fire_point,12>` 的 12 是**槽口径**（落地步进），元素线长是 6（3×u16）。写原语 sub_B06580（3 次 `mov [dst],si` 各 +2）、循环步进 `add …,6`、元素打印器 sub_B0A5D0（`x=`/`y=`/`z=` 全 movzx word）三方一致。元素归档为 fire_point。",
+  "evidence": [
+    {
+      "what": "元素读取器/打印器与预留步进三方对齐（见 schema/composites 对应文件）",
+      "va": [
+        "0xB06580",
+        "0xB0A5D0",
+        "0xB3A945",
+        "0xB3A955"
+      ],
+      "detail": "本批共 26 行未建模数组字段，逐条进 IDA 扫描元素读取器整函数取线宽，再与元素打印器成员名/内存偏移、数组预留器槽步进交叉验证。"
+    }
+  ],
+  "patch": {
+    "fire_points": {
+      "wire_type": "array<fire_point,N>",
+      "length": "6·N",
+      "enum": "元素线长 6（3×u16）/ 槽 12（草稿误记为元素线长）",
+      "evidence_va": [
+        "0xB3A945",
+        "0xB3A955",
+        "0xB06580",
+        "0xB0A5D0"
+      ]
+    }
+  }
+}

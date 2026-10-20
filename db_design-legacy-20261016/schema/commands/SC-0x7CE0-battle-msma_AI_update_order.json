@@ -1,0 +1,391 @@
+{
+  "id": "SC-0x7CE0-battle-msma_AI_update_order",
+  "opcode": "0x7CE0",
+  "direction": "SC",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "msma_AI_update_order",
+  "source_dir": "protocol_analysis/commands/SC-0x7CE0-battle-msma_AI_update_order",
+  "meta": {
+    "opcode": "`0x7CE0`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`battle_client`",
+    "命令名": "`msma_AI_update_order`",
+    "处理块范围": "`B20B28`..`B20D67`",
+    "名字串引用点": "`B20C3C`",
+    "声明容量（解码缓冲）": "`0x7`（`B20B44`）",
+    "长度闭合点": "`B20BF3`",
+    "收尾函数": "`sub_B05D90`（battle 口径）",
+    "去向": "`vt[0x264]` @ `B20D36`（3 实参）"
+  },
+  "handler": null,
+  "handler_va": null,
+  "block": [
+    "0xB20B28",
+    "0xB20D67"
+  ],
+  "name_str": null,
+  "name_str_va": "0xB20C3C",
+  "capacity": "0x7",
+  "capacity_va": "0xB20B44",
+  "closer_va": "0xB20BF3",
+  "dispatch": "`vt[0x264]` @ `B20D36`（3 实参）",
+  "dispatch_slot": "vt[0x264]",
+  "dispatch_va": "0xB20D36",
+  "wire": {
+    "length_expr": "2 + 1 + 4",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x7（容量记账口径，非线长）",
+    "field_count": 3,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：7。",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0x7CE0",
+      "evidence_va": [
+        "B20C3C"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "AI_ent_id",
+      "meaning": "AI 实体 ID（日志串 `AI_ent_id=`）",
+      "purpose": "经 `vt[0x264]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B20B7F",
+        "B20C93"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "2",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "kind",
+      "meaning": "指令种类（日志串 `kind=`）",
+      "purpose": "经 `vt[0x264]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B20BBF",
+        "B20CBB"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "3",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "param",
+      "meaning": "指令参数（日志串 `param=`）",
+      "purpose": "经 `vt[0x264]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B20BE3",
+        "B20CE2"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0x7CE0（分发器 switch 选择子）",
+      "evidence_va": "0xB20C3C"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB05DA0`（模块 id 195）→ 之后逐字段读线",
+      "evidence_va": "0xB20B2F"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "AI_ent_id：`u16`（线长 2）—— AI 实体 ID（日志串 `AI_ent_id=`）",
+      "evidence_va": "0xB20B7F"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "kind：`u8`（线长 1）—— 指令种类（日志串 `kind=`）",
+      "evidence_va": "0xB20BBF"
+    },
+    {
+      "step": 5,
+      "kind": "read_scalar",
+      "detail": "param：`u32`（线长 4）—— 指令参数（日志串 `param=`）",
+      "evidence_va": "0xB20BE3"
+    },
+    {
+      "step": 6,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB20BF3"
+    },
+    {
+      "step": 7,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x264]`，实参 3 个",
+      "evidence_va": "0xB20D4B"
+    },
+    {
+      "step": 8,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB20B99"
+    }
+  ],
+  "capabilities": [
+    "update",
+    "battle.ai"
+  ],
+  "capabilities_derived": [
+    "notify"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:47",
+    "batch": 18,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 7,
+        "va": "0xB20B44",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB20B41",
+        "call_va": "0xB20B46"
+      },
+      "field_window": {
+        "start_va": "0xB20B30",
+        "end_va": "0xB20C1A",
+        "guard": {
+          "va": "0xB20B2F",
+          "func": "0xB05DA0",
+          "module_id": 195,
+          "release_va": "0xB05D90"
+        },
+        "closer_or_commit_va": "0xB20BF3",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "AI_ent_id",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "B20B7F",
+              "B20C93"
+            ]
+          },
+          {
+            "name": "kind",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "B20BBF",
+              "B20CBB"
+            ]
+          },
+          {
+            "name": "param",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "B20BE3",
+              "B20CE2"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB20B7F",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB20BBF",
+            "kind": "read",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB20BE3",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 3,
+        "checkable": 3,
+        "pairs": [
+          {
+            "field": "AI_ent_id",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB20B7F",
+            "kind": "read"
+          },
+          {
+            "field": "kind",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB20BBF",
+            "kind": "read"
+          },
+          {
+            "field": "param",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB20BE3",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB20B30",
+          "0xB20C1A"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 7,
+          "capacity": 7,
+          "relation": "exact",
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）7 / 容量 0x7"
+        }
+      },
+      "closer": {
+        "va": "0xB20BF3",
+        "kind": "jz",
+        "jcc_va": "0xB20BF9",
+        "seq_va": "0xB20BEF",
+        "jcc_dst": "0xB20C15",
+        "cmp": "cmp     ebx, [esp+1B3Ch+var_1B24]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x264]",
+        "slot_value": 612,
+        "va": "0xB20D4B",
+        "mov_va": "0xB20D36",
+        "host": "[edx+264h]",
+        "argc": 3,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB20B99",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "AI_ent_id=",
+        "kind=",
+        "param="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0x7CE0-battle-msma_AI_update_order.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "B20C3C"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "MsmaAIUpdateOrder",
+      "role": "response",
+      "wire_length": "2 + 1 + 4",
+      "members": [
+        {
+          "name": "AIEntId",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "AI_ent_id"
+        },
+        {
+          "name": "Kind",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "kind"
+        },
+        {
+          "name": "Param",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "param"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "6ffb17d41a9ff3f1",
+  "check_fingerprint": "01aa7613a0f7b0db"
+}

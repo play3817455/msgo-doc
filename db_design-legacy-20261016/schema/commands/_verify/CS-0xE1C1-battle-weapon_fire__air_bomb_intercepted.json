@@ -1,0 +1,203 @@
+{
+ "id": "CS-0xE1C1-battle-weapon_fire__air_bomb_intercepted",
+ "verified_at": "2026-09-30 15:25:48",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "handler_func",
+ "block": [
+  "0xB38E50",
+  "0xB3908A"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 14,
+   "va": "0xB38E96",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xB38E93",
+   "call_va": "0xB38E98"
+  },
+  "field_window": {
+   "start_va": "0xB38E50",
+   "end_va": "0xB38F6D",
+   "guard": null,
+   "closer_or_commit_va": "0xB38F6D",
+   "within_model_block": true,
+   "range_from": "handler_func"
+  },
+  "primitive_widths": {
+   "direction": "CS",
+   "expected": [
+    {
+     "name": "ent_id",
+     "wire_type": "u16",
+     "width": 2,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "`0xB38ED8`;`0xB38EDD`"
+     ]
+    },
+    {
+     "name": "airbomb_id",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 2,
+     "shape": "scalar",
+     "evidence_va": [
+      "`0xB38EEB`;`0xB38EF7`"
+     ]
+    },
+    {
+     "name": "arms_id",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 3,
+     "shape": "scalar",
+     "evidence_va": [
+      "`0xB38EFF`"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB38ECC",
+     "kind": "inline_store",
+     "width": 2,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB38EDD",
+     "kind": "inline_store",
+     "width": 2,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB38EF7",
+     "kind": "inline_store",
+     "width": 4,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB38EFF",
+     "kind": "write",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB38F43",
+     "kind": "composite",
+     "width": null,
+     "wire_type": null,
+     "name": "sub_B03020",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 3,
+   "checkable": 3,
+   "pairs": [
+    {
+     "field": "ent_id",
+     "width": 2,
+     "shape": "scalar",
+     "va": "0xB38ECC",
+     "kind": "inline_store"
+    },
+    {
+     "field": "airbomb_id",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB38EF7",
+     "kind": "inline_store"
+    },
+    {
+     "field": "arms_id",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB38EFF",
+     "kind": "write"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [
+    {
+     "va": "0xB38EDD",
+     "kind": "inline_store",
+     "width": 2,
+     "wire_type": null
+    }
+   ],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB38E50",
+    "0xB38F6D"
+   ],
+   "scalar_match_verifiable": false,
+   "capacity_relation": {
+    "observed_min": 12,
+    "capacity": 14,
+    "relation": "within",
+    "unknown_events": [
+     {
+      "va": "0xB38F43",
+      "kind": "composite",
+      "name": "sub_B03020"
+     }
+    ],
+    "is_lower_bound": true,
+    "note": "观测线长（下界）12 / 容量 0xe"
+   }
+  },
+  "closer": {
+   "va": "0xB38F6D",
+   "kind": "commit",
+   "jcc_va": null,
+   "seq_va": null,
+   "cmp": null,
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x58]",
+   "slot_value": 88,
+   "va": "0xB39021",
+   "mov_va": "0xB39018",
+   "host": "[eax+58h]",
+   "argc": 2,
+   "form": "mov_then_call",
+   "error_slot": null
+  },
+  "log_strings": [
+   "ent_id=",
+   "airbomb_id=",
+   "arms_id="
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "airbomb_id",
+  "arms_id",
+  "ent_id"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 20
+}

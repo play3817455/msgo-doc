@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>断线扣分详情 · db_design</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <h1><a href="../index.html">db_design</a></h1>
+      <p class="header-note">唯一证据源：<code>protocol_analysis/</code></p>
+      <nav><a href="../index.html">首页</a>
+      <a href="../homing/index.html">归位库</a>
+      <a href="../tables/index.html" class="active">旧表留档</a>
+      <a href="../commands/index.html">命令</a>
+      <a href="../cfg/index.html">配置表79</a>
+      <a href="../srv/index.html">服务端配置</a>
+      <a href="../asm-audit/index.html">ASM 审计</a>
+      <a href="../oracle-audit/index.html">Oracle 审计</a>
+      <a href="../entities/index.html">协议实体</a>
+      <a href="../fields/index.html">字段索引</a>
+      <a href="../relations.html">表关系</a></nav>
+    </div>
+  </header>
+  <main class="wrap">
+
+    <nav class="breadcrumb"><a href="index.html">表设计</a> / <span><code>tbl_dcpoint_detail</code></span></nav>
+    <h2>断线扣分详情 <span class="badge" style="background:#2e7d32">complete</span> <span class="badge" style="background:#2e7d32">ASM ✓</span></h2>
+    <p>持久化 dcpoint_detail；布局同 dc_point（D5E6）</p>
+    <p class="muted">共 14 节点 · PERSIST 13 · TBD 0</p>
+    
+    <section class="asm-panel">
+      <h3>ASM 审计 <span class="badge" style="background:#2e7d32">ASM ✓</span> · memory <span class="badge" style="background:#2e7d32">ASM ✓</span></h3>
+      <dl class="asm-dl">
+        <dt>composite</dt><dd><code>dcpoint_detail</code></dd>
+        <dt>reader</dt><dd><code>sub_B47120</code></dd>
+        <dt>线长</dt><dd>41 B
+           / 槽 68 B</dd>
+        <dt>wire_layout</dt><dd><code>1+4+4+12+12+16+16（线 65；内存槽 0..68）</code></dd>
+        <dt>wire 字段</dt><dd>7 ok</dd>
+        <dt>memory 字段</dt><dd>7 audited · 7 ok</dd>
+        <dt>verified</dt><dd>wire 2026-09-20 · mem 2026-09-26</dd>
+      </dl>
+    </section>
+    <h3>证据命令</h3>
+    <ul><li><a href="../commands/SC-0xD5E6-lounge-result_info.html"><code>SC-0xD5E6-lounge-result_info</code></a> · <a href="../../../protocol_analysis/commands/SC-0xD5E6-lounge-result_info/README.md" target="_blank">protocol README</a></li></ul>
+
+    <h3 id="columns">列树（按分组）</h3>
+    <div class="tree-legend">
+      <span>列名</span><span>线类型</span><span>disposition</span><span>含义</span><span>→ protocol 证据</span>
+    </div>
+    
+    <section class="col-group">
+      <h3>dcpoint_detail（41B · 同 dc_point）</h3>
+      <ul class="field-tree root-tree"><li class="tree-branch">
+      <details open>
+        <summary><code class='fname'>dcpoint_detail</code> <code class='ftype'>struct</code> <span class='offset'></span> <span class="badge" style="background:#455a64">COMPOSITE</span> <span class="muted">← <code>dc_point</code></span></summary>
+        <div class="tree-body">
+          <div class="tree-detail">结算断线扣分（日志 dcpoint=；claim 68 / 线 41）</div>
+          <div class="evidence-line"><code>SC-0xD5E6-lounge-result_info</code> struct <code>dcpoint</code> @ §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xD5E6-lounge-result_info/README.md" target="_blank">📄 protocol</a></div>
+          <ul class="field-tree"><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">is_dc</code>
+          <code class="ftype">i8</code>
+          <span class="offset">wire +0 1B</span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="B47136|B50FA9">✓</span>
+        </div>
+        <div class="tree-meaning">本次是否掉线（DC）</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x2AAF-lounge-dailycup_get_point_r</code> struct <code>dc_point</code> @0 §3 / notes.md <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x2AAF-lounge-dailycup_get_point_r/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">bef_dcpoint</code>
+          <code class="ftype">u32</code>
+          <span class="offset">wire +1 mem +4 4B</span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="B47147|B50FD0">✓</span>
+        </div>
+        <div class="tree-meaning">掉线前积分</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x2AAF-lounge-dailycup_get_point_r</code> struct <code>dc_point</code> @1 §3 / notes.md <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x2AAF-lounge-dailycup_get_point_r/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">aft_dcpoint</code>
+          <code class="ftype">u32</code>
+          <span class="offset">wire +5 mem +8 4B</span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="B4715D|B50FF7">✓</span>
+        </div>
+        <div class="tree-meaning">掉线后积分</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x2AAF-lounge-dailycup_get_point_r</code> struct <code>dc_point</code> @5 §3 / notes.md <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x2AAF-lounge-dailycup_get_point_r/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-branch">
+      <details open>
+        <summary><code class='fname'>bef_next</code> <code class='ftype'>u32[3]</code> <span class='offset'>wire +9 mem +12 12B</span> <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="muted">← <code>special_a_next</code></span></summary>
+        <div class="tree-body">
+          <div class="tree-detail">下阶段奖励预览（掉线前）｜Oracle 实测：线上 3×u32（写记录流 3 次 4 字节写），并非仅内存成员</div>
+          <div class="evidence-line"><code>SC-0x2AAF-lounge-dailycup_get_point_r</code> struct <code>dc_point</code> @9 notes.md <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x2AAF-lounge-dailycup_get_point_r/README.md" target="_blank">📄 protocol</a></div>
+          <ul class="field-tree"><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">point</code>
+          <code class="ftype">u32</code>
+          <span class="offset">wire +0 4B</span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xb46ce6">✓</span>
+        </div>
+        <div class="tree-meaning">积分/点数</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x8D4F-lounge-get_special_a_info_r</code> struct <code>special_a_next</code> @0 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x8D4F-lounge-get_special_a_info_r/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">item_id</code>
+          <code class="ftype">u32</code>
+          <span class="offset">wire +4 4B</span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xb46cf9">✓</span>
+        </div>
+        <div class="tree-meaning">道具 ID</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x8D4F-lounge-get_special_a_info_r</code> struct <code>special_a_next</code> @4 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x8D4F-lounge-get_special_a_info_r/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">item_num</code>
+          <code class="ftype">u32</code>
+          <span class="offset">wire +8 4B</span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xb46d0b">✓</span>
+        </div>
+        <div class="tree-meaning">道具数量</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x8D4F-lounge-get_special_a_info_r</code> struct <code>special_a_next</code> @8 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x8D4F-lounge-get_special_a_info_r/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li></ul>
+        </div>
+      </details>
+    </li><li class="tree-branch">
+      <details open>
+        <summary><code class='fname'>aft_next</code> <code class='ftype'>u32[3]</code> <span class='offset'>wire +21 mem +24 12B</span> <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="muted">← <code>special_a_next</code></span></summary>
+        <div class="tree-body">
+          <div class="tree-detail">下阶段奖励预览（掉线后）｜Oracle 实测：线上 3×u32（写记录流 3 次 4 字节写），并非仅内存成员</div>
+          <div class="evidence-line"><code>SC-0x2AAF-lounge-dailycup_get_point_r</code> struct <code>dc_point</code> @21 notes.md <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x2AAF-lounge-dailycup_get_point_r/README.md" target="_blank">📄 protocol</a></div>
+          <ul class="field-tree"><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">point</code>
+          <code class="ftype">u32</code>
+          <span class="offset">wire +0 4B</span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xb46ce6">✓</span>
+        </div>
+        <div class="tree-meaning">积分/点数</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x8D4F-lounge-get_special_a_info_r</code> struct <code>special_a_next</code> @0 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x8D4F-lounge-get_special_a_info_r/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">item_id</code>
+          <code class="ftype">u32</code>
+          <span class="offset">wire +4 4B</span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xb46cf9">✓</span>
+        </div>
+        <div class="tree-meaning">道具 ID</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x8D4F-lounge-get_special_a_info_r</code> struct <code>special_a_next</code> @4 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x8D4F-lounge-get_special_a_info_r/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">item_num</code>
+          <code class="ftype">u32</code>
+          <span class="offset">wire +8 4B</span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xb46d0b">✓</span>
+        </div>
+        <div class="tree-meaning">道具数量</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x8D4F-lounge-get_special_a_info_r</code> struct <code>special_a_next</code> @8 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x8D4F-lounge-get_special_a_info_r/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li></ul>
+        </div>
+      </details>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">reward_item_ids</code>
+          <code class="ftype">u32[4]</code>
+          <span class="offset">wire +33 mem +36 16B</span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="B4719C|B5106B">✓</span>
+        </div>
+        <div class="tree-meaning">奖励道具 ID 列表（固定 4 项）</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x2AAF-lounge-dailycup_get_point_r</code> struct <code>dc_point</code> @33 §3 / notes.md <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x2AAF-lounge-dailycup_get_point_r/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">reward_item_nums</code>
+          <code class="ftype">u32[4]</code>
+          <span class="offset">wire +49 mem +52 16B</span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="B471BD|B510C8">✓</span>
+        </div>
+        <div class="tree-meaning">奖励道具数量列表（固定 4 项）</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x2AAF-lounge-dailycup_get_point_r</code> struct <code>dc_point</code> @49 §3 / notes.md <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x2AAF-lounge-dailycup_get_point_r/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li></ul>
+        </div>
+      </details>
+    </li></ul>
+    </section>
+
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">生成于 2026-10-12 · 改 JSON 后重跑 build_site.py · HTML 只读</div>
+  </footer>
+</body>
+</html>

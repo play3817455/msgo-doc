@@ -1,0 +1,79 @@
+{
+  "id": "tbl_order",
+  "title": "排序条件",
+  "status": "complete",
+  "table_disposition": "PERSIST",
+  "purpose": "持久化 order 10B 线格式；5 成员 u16×5（sub_B42060/sub_B46420/sub_B4F620）",
+  "entity_ref": "order",
+  "evidence_commands": [
+    "CS-0x3FAF-lounge-ranking_pilot_get_page",
+    "CS-0xD9AE-lounge-ranking_pilot_get",
+    "SC-0xB985-lounge-ranking_pilot_get_r",
+    "SC-0xC5A9-lounge-ranking_elite_pilot_get_page_r",
+    "SC-0xC664-lounge-ranking_elite_pilot_get_page_light_r"
+  ],
+  "column_groups": [
+    {
+      "name": "order（10B · 5 成员）",
+      "columns": [
+        "order"
+      ]
+    }
+  ],
+  "columns": [
+    {
+      "name": "order",
+      "disposition": "COMPOSITE",
+      "composite_ref": "order",
+      "meaning": "排序条件结构（5×u16=10B；日志 `order=`）",
+      "wire_sources": [
+        {
+          "command": "CS-0xD9AE-lounge-ranking_pilot_get",
+          "struct": "order",
+          "field_name": "order",
+          "offset": 0,
+          "length": 10,
+          "wire_type": "struct",
+          "protocol_path": "protocol_analysis/commands/CS-0xD9AE-lounge-ranking_pilot_get/README.md",
+          "section": "§3",
+          "writer": "sub_B42060",
+          "printer": "sub_B4F620",
+          "evidence_va": "0xBA36DA"
+        },
+        {
+          "command": "CS-0x3FAF-lounge-ranking_pilot_get_page",
+          "struct": "order",
+          "field_name": "order",
+          "offset": 2,
+          "length": 10,
+          "wire_type": "struct",
+          "protocol_path": "protocol_analysis/commands/CS-0x3FAF-lounge-ranking_pilot_get_page/README.md",
+          "section": "§3",
+          "writer": "sub_B42060",
+          "evidence_va": "0xBA38AB"
+        },
+        {
+          "command": "SC-0xB985-lounge-ranking_pilot_get_r",
+          "struct": "order",
+          "field_name": "order",
+          "offset": 8,
+          "length": 10,
+          "wire_type": "struct",
+          "protocol_path": "protocol_analysis/commands/SC-0xB985-lounge-ranking_pilot_get_r/README.md",
+          "section": "§3",
+          "reader": "sub_B46420",
+          "printer": "sub_B4F620",
+          "evidence_va": "0xB75C7A"
+        }
+      ],
+      "asm_verified": true
+    }
+  ],
+  "asm_audit": {
+    "composite_ref": "order",
+    "status": "pass",
+    "issues_count": 0,
+    "memory_status": "pass",
+    "memory_issues_count": 0
+  }
+}

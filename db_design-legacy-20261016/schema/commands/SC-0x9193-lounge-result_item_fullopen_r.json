@@ -1,0 +1,384 @@
+{
+  "id": "SC-0x9193-lounge-result_item_fullopen_r",
+  "opcode": "0x9193",
+  "direction": "SC",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "result_item_fullopen_r",
+  "source_dir": "protocol_analysis/commands/SC-0x9193-lounge-result_item_fullopen_r",
+  "meta": {
+    "opcode": "`0x9193`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`result_item_fullopen_r`",
+    "处理块范围": "`0xb6c8b8`..`0xb6ca83`",
+    "名字串引用点": "`0xb6c983`",
+    "声明容量（解码缓冲）": "`0x12C`（`B6C8CA`）",
+    "长度闭合点": "`B6C93A`",
+    "报错码": "`0x19E`（块内 `push 1; push <errcode>; vt[0x64]`）",
+    "去向": "`vt[0x3FC]` @`B6CA67`（1 实参）"
+  },
+  "handler": null,
+  "handler_va": null,
+  "block": [
+    "0xb6c8b8",
+    "0xb6ca83"
+  ],
+  "name_str": null,
+  "name_str_va": "0xb6c983",
+  "capacity": "0x12C",
+  "capacity_va": "0xB6C8CA",
+  "closer_va": "0xB6C93A",
+  "dispatch": "`vt[0x3FC]` @`B6CA67`（1 实参）",
+  "dispatch_slot": "vt[0x3FC]",
+  "dispatch_va": "0xB6CA67",
+  "wire": {
+    "length_expr": "8×15=120",
+    "fixed": false,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x12C（容量记账口径，非线长）",
+    "field_count": 1,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：**120**（= 15 × 8）。",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0x9193",
+      "evidence_va": [
+        "0xb6c983"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "8×15=120",
+      "wire_type": "array<item_info,15>",
+      "name": "item_list",
+      "meaning": "开启结果道具列表（15 元定长；日志 `ritem={id_type=,itemid=,is_itmbox=,amount=}`）",
+      "purpose": "逐元素经 `vt[0x3FC]` 交业务（1 实参：列表指针）",
+      "enum": null,
+      "evidence_va": [
+        "B6C8FC",
+        "B6C90D",
+        "B6C9CD"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3,
+      "element_composite_ref_source": "name",
+      "element_composite_ref": "item_info"
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0x9193（分发器 switch 选择子）",
+      "evidence_va": "0xB6C983"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB41120`（模块 id None）→ 之后逐字段读线",
+      "evidence_va": "0xB6C8B8"
+    },
+    {
+      "step": 3,
+      "kind": "read_array",
+      "detail": "item_list：`array<item_info,15>`（线长 8×15=120）—— 开启结果道具列表（15 元定长；日志 `ritem={id_type=,itemid=,is_itmbox=,amount=}`）",
+      "evidence_va": "0xB6C8FC"
+    },
+    {
+      "step": 4,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB6C93A"
+    },
+    {
+      "step": 5,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x3FC]`，实参 1 个",
+      "evidence_va": "0xB6CA67"
+    },
+    {
+      "step": 6,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB6C934"
+    }
+  ],
+  "capabilities": [
+    "settle"
+  ],
+  "capabilities_derived": [
+    "unclassified"
+  ],
+  "db_effects": [
+    {
+      "entity": "item_list",
+      "table_ref": "tbl_item_list",
+      "op": "update",
+      "fields": [
+        "item_list"
+      ],
+      "disposition": "COMPOSITE",
+      "evidence_va": "0xB45350"
+    },
+    {
+      "entity": "item_list",
+      "table_ref": "tbl_item_list",
+      "op": "update",
+      "fields": [
+        "result_fullopen"
+      ],
+      "disposition": "PERSIST",
+      "evidence_va": "0xB45350"
+    }
+  ],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:41",
+    "batch": 1,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 300,
+        "va": "0xB6C8CD",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB6C8CA",
+        "call_va": "0xB6C8D2"
+      },
+      "field_window": {
+        "start_va": "0xB6C8B9",
+        "end_va": "0xB6C961",
+        "guard": {
+          "va": "0xB6C8B8",
+          "func": "0xB41120",
+          "module_id": null,
+          "release_va": "0xB41110"
+        },
+        "closer_or_commit_va": "0xB6C93A",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "item_list",
+            "wire_type": "array<item_info,15>",
+            "width": null,
+            "seq": 1,
+            "shape": "agg",
+            "evidence_va": [
+              "B6C8FC",
+              "B6C90D",
+              "B6C9CD"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB4535E",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB45374",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB45386",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB45398",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB6C8FC",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B41760",
+            "consumed": 300,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB6C90D",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B45350",
+            "consumed": 8,
+            "consumed_effective": 8,
+            "nested_of": null
+          }
+        ],
+        "matched": 0,
+        "checkable": 0,
+        "pairs": [],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB6C8FC",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null
+          },
+          {
+            "va": "0xB6C90D",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null
+          },
+          {
+            "va": "0xB4535E",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null
+          },
+          {
+            "va": "0xB45374",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null
+          },
+          {
+            "va": "0xB45386",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null
+          },
+          {
+            "va": "0xB45398",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB6C8B9",
+          "0xB6C961"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 8,
+          "capacity": 300,
+          "relation": "within",
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）8 / 容量 0x12c"
+        },
+        "zero_load": true
+      },
+      "closer": {
+        "va": "0xB6C93A",
+        "kind": "jz",
+        "jcc_va": "0xB6C940",
+        "seq_va": "0xB6C936",
+        "jcc_dst": "0xB6C95C",
+        "cmp": "cmp     eax, [esp+2C5Ch+var_2C40]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x3FC]",
+        "slot_value": 1020,
+        "va": "0xB6CA67",
+        "mov_va": "0xB6CA5E",
+        "host": "[eax+3FCh]",
+        "argc": 1,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB6C934",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "ritem={"
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0x9193-lounge-result_item_fullopen_r.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xb6c983"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "ResultItemFullopenR",
+      "role": "response",
+      "wire_length": "8×15=120",
+      "members": [
+        {
+          "name": "ItemList",
+          "wire_type": "array<item_info,15>",
+          "length": "8×15=120",
+          "field_ref": "item_list",
+          "element": "item_info",
+          "element_composite_ref": "item_info",
+          "element_length": "8",
+          "cap": 15,
+          "count_field": null,
+          "count_field_source": null,
+          "note": "未找到计数字段（须以 IDA 复核确认）"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "e576859993a5c597",
+  "check_fingerprint": "4b59f1c85ebe334a"
+}

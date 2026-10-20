@@ -1,0 +1,149 @@
+{
+  "id": "srv",
+  "title": "服务端配置表 srv.*",
+  "kind": "server_config",
+  "ddl": [
+    "serverv/migrations/0012_srv_config.up.sql",
+    "serverv/migrations/0013_srv_lobby.up.sql",
+    "serverv/migrations/0018_srv_shop_lineup.up.sql",
+    "serverv/migrations/0024_deckcost_extend.up.sql",
+    "serverv/migrations/0027_chargepoint_url.up.sql",
+    "serverv/migrations/0030_xwar_booking_and_forcegauge.up.sql",
+    "serverv/migrations/0033_srv_shop_recycle_and_itemcode.up.sql",
+    "serverv/migrations/0035_srv_itembox_drop.up.sql"
+  ],
+  "generated_by": "db_design/tools/build_srv_docs.py",
+  "intro": [
+    "这些表既不是客户端 datafile 的投影（那是 <code>cfg.*</code>，由 cfgload 按 CSV 动态建表），也不是每机师持久化（那是 <code>game.*</code>，行键含 world_id/pilot_id）：它们是<strong>全服唯一的服务端策略参数 / 大区内容</strong>。",
+    "运行时来源就是这些表本身——<code>db_design</code> 的 JSON 只当文档（HTML 站点输入）。缺省值与降级在 <code>internal/lounge/srv_config.go</code>（<code>loadSrv*</code>，表没播种/读库失败时用缺省值 + 告警，不断链）。按请求读表 ⇒ 改表即热更。",
+    "每列的协议证据 VA 写在迁移 SQL 的 <code>COMMENT</code> 里，本页正文即由迁移反推（扫 <code>serverv/migrations/</code> 下所有含 <code>CREATE TABLE srv.</code> 的文件；每张表标出自己的迁移文件名，不写死版本号，免得新表静默漏进文档站）。"
+  ],
+  "tables": [
+    {
+      "id": "srv.inventory_box",
+      "slug": "inventory_box",
+      "title": "背包四栏容量",
+      "ddl": "serverv/migrations/0012_srv_config.up.sql",
+      "columns": 4,
+      "seed_rows": 4,
+      "purpose": "背包四栏容量（box 0=main 1=consume 2=trash 3=plan）；同时是 game.item.inv_place 的分区边界"
+    },
+    {
+      "id": "srv.msma_conf",
+      "slug": "msma_conf",
+      "title": "MSMA 初始化配置",
+      "ddl": "serverv/migrations/0012_srv_config.up.sql",
+      "columns": 8,
+      "seed_rows": 1,
+      "purpose": "MSMA 初始化配置（单行，id=1）；SC-0x2ACF msma_init_get_r_begin 的非时间字段来源"
+    },
+    {
+      "id": "srv.chargepoint_price",
+      "slug": "chargepoint_price",
+      "title": "充值价目表",
+      "ddl": "serverv/migrations/0012_srv_config.up.sql",
+      "columns": 15,
+      "seed_rows": 1,
+      "purpose": "充值价目表（单行，id=1）；SC-0x9397 chargepoint_price_list_get_r 的来源"
+    },
+    {
+      "id": "srv.channel",
+      "slug": "channel",
+      "title": "频道登记本",
+      "ddl": "serverv/migrations/0012_srv_config.up.sql",
+      "columns": 9,
+      "seed_rows": 1,
+      "purpose": "频道登记本；SC-0xF11C channel_list_get_r 的 list_chnl 来源（元素 54B，sub_B420E0）"
+    },
+    {
+      "id": "srv.item_rule",
+      "slug": "item_rule",
+      "title": "回购删除期限",
+      "ddl": "serverv/migrations/0013_srv_lobby.up.sql",
+      "columns": 3,
+      "seed_rows": 1,
+      "purpose": "道具规则（单行，id=1）；SC-0x994C item_buyback_delete_term_get_r 的 delete_term 来源"
+    },
+    {
+      "id": "srv.xwar_booking",
+      "slug": "xwar_booking",
+      "title": "XWar 匹配规则开关",
+      "ddl": "serverv/migrations/0013_srv_lobby.up.sql",
+      "columns": 4,
+      "seed_rows": 1,
+      "purpose": "XWar 预约匹配规则开关（单行，id=1）；SC-0xCCDF 的两个服务端侧标志来源"
+    },
+    {
+      "id": "srv.lobby_notice",
+      "slug": "lobby_notice",
+      "title": "大厅公告板",
+      "ddl": "serverv/migrations/0013_srv_lobby.up.sql",
+      "columns": 27,
+      "seed_rows": 1,
+      "purpose": "大厅公告板；SC-0x5A3D activity_notice 的 activity[] 来源（元素 = activity 复合体 356B）"
+    },
+    {
+      "id": "srv.shop_lineup",
+      "slug": "shop_lineup",
+      "title": "商店陈列",
+      "ddl": "serverv/migrations/0018_srv_shop_lineup.up.sql",
+      "columns": 13,
+      "seed_rows": 0,
+      "purpose": "商店陈列（客户端 datafile 无商店表，价目与库存只能服务端给）；SC-0x99A0 / SC-0xEA0F / SC-0xAB7B 的 item_list 来源"
+    },
+    {
+      "id": "srv.deckcost_extend",
+      "slug": "deckcost_extend",
+      "title": "编制费用上限延长的策略值",
+      "ddl": "serverv/migrations/0024_deckcost_extend.up.sql",
+      "columns": 6,
+      "seed_rows": 1,
+      "purpose": "编制费用上限延长的策略值（单行 id=1）：一次加多少上限、一次折多少 remain 单位、一单位多少小时、上限各多少"
+    },
+    {
+      "id": "srv.chargepoint_url",
+      "slug": "chargepoint_url",
+      "title": "充值 URL",
+      "ddl": "serverv/migrations/0027_chargepoint_url.up.sql",
+      "columns": 3,
+      "seed_rows": 1,
+      "purpose": "充值 URL（单行 id=1）：SC-0x4DA5 chargepoint_charge_url_get_r 的 url 来源；空串 = 本服没有支付入口"
+    },
+    {
+      "id": "srv.xwar_forcegauge",
+      "slug": "xwar_forcegauge",
+      "title": "战力槽（XWar）",
+      "ddl": "serverv/migrations/0030_xwar_booking_and_forcegauge.up.sql",
+      "columns": 8,
+      "seed_rows": 1,
+      "purpose": "XWar 战力槽（单行 id=1）：SC-0x0124 xwar_forcegauge_get_r 的六格来源；CS-0x4E88 是零负载读，本服没有写方 ⇒ 由运营/GM 维护"
+    },
+    {
+      "id": "srv.shop_recycle",
+      "slug": "shop_recycle",
+      "title": "回收价目（每道具模板一行）",
+      "ddl": "serverv/migrations/0033_srv_shop_recycle_and_itemcode.up.sql",
+      "columns": 5,
+      "seed_rows": 0,
+      "purpose": "道具回收价目（每道具模板一行）：CS-0xC9F9 shop_sell 的唯一价源 —— 服务端按 recycle_gp × num 给 GP；没有行或 enabled=false 则拒绝出售（客户端上报的 total_price 只进日志，与 shop_buy 同口径）"
+    },
+    {
+      "id": "srv.itemcode",
+      "slug": "itemcode",
+      "title": "兑换码目录",
+      "ddl": "serverv/migrations/0033_srv_shop_recycle_and_itemcode.up.sql",
+      "columns": 9,
+      "seed_rows": 0,
+      "purpose": "兑换码目录（每码一行）：CS-0x6389 itemcode_input 的码源 —— 命中 enabled 且未过期的码就把 id_type/item_id/amount 三组按序发货（≤5 组），并用 SC-0xC8AF 的 title 显示码名；\"同一机师用过一次\"由 game.itemcode_used 唯一索引挡"
+    },
+    {
+      "id": "srv.itembox_drop",
+      "slug": "itembox_drop",
+      "title": "itembox_drop",
+      "ddl": "serverv/migrations/0035_srv_itembox_drop.up.sql",
+      "columns": 7,
+      "seed_rows": 0,
+      "purpose": "物品箱掉落表（本服自定抽取口径）：CS-0x2D19 result_open_item / CS-0xA53B result_item_fullopen 的唯一数据源。加权抽 1 件；`weight = 0` = 永不掉落。客户端 datafile 不含掉落概率（cfg.\"ITEMPACK_INFO\" 只有形状没有算法）⇒ 见 0035 文件头"
+    }
+  ]
+}

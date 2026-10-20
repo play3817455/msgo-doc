@@ -1,0 +1,39 @@
+{
+  "id": "missionunit_set",
+  "title": "任务编成单元",
+  "description": "机体任务编成单元。线宽 12B；写入 sub_B41BF0 / 读取 sub_B43BE0 / 打印 sub_B4A970。",
+  "table_ref": "tbl_missionunit_set",
+  "disposition": "PERSIST",
+  "wire_forms": [
+    {
+      "name": "missionunit_store",
+      "length": 12,
+      "struct_type": "struct(missionunit_set)",
+      "commands": ["CS-0x33CC-lounge-msma_missionunit_store"],
+      "writer": "sub_B41BF0",
+      "protocol_path": "protocol_analysis/commands/CS-0x33CC-lounge-msma_missionunit_store/README.md"
+    },
+    {
+      "name": "missionunit_store_r",
+      "length": 12,
+      "struct_type": "struct{12}",
+      "commands": ["SC-0x1908-lounge-msma_missionunit_store_r"],
+      "reader": "sub_B43BE0",
+      "printer": "sub_B4A970",
+      "protocol_path": "protocol_analysis/commands/SC-0x1908-lounge-msma_missionunit_store_r/README.md"
+    },
+    {
+      "name": "missionunit_list_element",
+      "length": 12,
+      "struct_type": "array<missionunit>",
+      "commands": ["SC-0x36D9-lounge-msma_missionunit_get_list_r"],
+      "protocol_path": "protocol_analysis/commands/SC-0x36D9-lounge-msma_missionunit_get_list_r/README.md",
+      "notes": "最多 22 条；元素线长 12 / 槽步进 12"
+    }
+  ],
+  "fields": [
+    { "name": "deck_type", "offset": 0, "length": 2, "wire_type": "u16", "disposition": "PERSIST" },
+    { "name": "deck_set", "offset": 2, "length": 2, "wire_type": "u16", "disposition": "PERSIST" },
+    { "name": "missionunit_id", "offset": 4, "length": 8, "wire_type": "u64", "disposition": "PERSIST" }
+  ]
+}

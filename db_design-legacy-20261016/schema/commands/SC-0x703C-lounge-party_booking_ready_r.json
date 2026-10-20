@@ -1,0 +1,328 @@
+{
+  "id": "SC-0x703C-lounge-party_booking_ready_r",
+  "opcode": "0x703C",
+  "direction": "SC",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "party_booking_ready_r",
+  "source_dir": "protocol_analysis/commands/SC-0x703C-lounge-party_booking_ready_r",
+  "meta": {
+    "opcode": "`0x703C`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`party_booking_ready_r`",
+    "处理块范围": "`0xb65d08`..`0xb65ee9`",
+    "名字串引用点": "`0xb65df1`",
+    "声明容量（解码缓冲）": "`0x5`（`0xb65d1d`）",
+    "长度闭合点": "`0xb65dcf`",
+    "去向": "`vt[0x228]` @ `0xb65ecd`（2 实参）"
+  },
+  "handler": null,
+  "handler_va": null,
+  "block": [
+    "0xb65d08",
+    "0xb65ee9"
+  ],
+  "name_str": null,
+  "name_str_va": "0xb65df1",
+  "capacity": "0x5",
+  "capacity_va": "0xb65d1d",
+  "closer_va": "0xB65DA8",
+  "dispatch": "`vt[0x228]` @ `0xb65ecd`（2 实参）",
+  "dispatch_slot": "vt[0x228]",
+  "dispatch_va": "0xb65ecd",
+  "wire": {
+    "length_expr": "4 + 1",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x5（容量记账口径，非线长）",
+    "field_count": 2,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：5。",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0x703C",
+      "evidence_va": [
+        "`0xb65df1`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "result",
+      "meaning": "结果码（日志串 `result=`）",
+      "purpose": "`vt[0x228]` 第 1 实参（`mov edx,[ecx]` @`0xb65ec8`）",
+      "enum": null,
+      "evidence_va": [
+        "0xb65d58"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "ready_ok",
+      "meaning": "报名就绪标志（日志串 `ready_ok=`）",
+      "purpose": "`vt[0x228]` 第 2 实参（`movzx edx,byte ptr [ecx]` @`0xb65eb8`）",
+      "enum": null,
+      "evidence_va": [
+        "0xb65d98"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0x703C（分发器 switch 选择子）",
+      "evidence_va": "0xB65DF1"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB41120`（模块 id None）→ 之后逐字段读线",
+      "evidence_va": "0xB65D08"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "result：`u32`（线长 4）—— 结果码（日志串 `result=`）",
+      "evidence_va": "0xB65D58"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "ready_ok：`u8`（线长 1）—— 报名就绪标志（日志串 `ready_ok=`）",
+      "evidence_va": "0xB65D98"
+    },
+    {
+      "step": 5,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB65DA8"
+    },
+    {
+      "step": 6,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x228]`，实参 2 个",
+      "evidence_va": "0xB65ECD"
+    },
+    {
+      "step": 7,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB65D72"
+    }
+  ],
+  "capabilities": [
+    "flow",
+    "query",
+    "lounge.party_booking"
+  ],
+  "capabilities_derived": [
+    "flow"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:44",
+    "batch": 8,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 5,
+        "va": "0xB65D1D",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB65D1A",
+        "call_va": "0xB65D1F"
+      },
+      "field_window": {
+        "start_va": "0xB65D09",
+        "end_va": "0xB65DCF",
+        "guard": {
+          "va": "0xB65D08",
+          "func": "0xB41120",
+          "module_id": null,
+          "release_va": "0xB41110"
+        },
+        "closer_or_commit_va": "0xB65DA8",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "result",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb65d58"
+            ]
+          },
+          {
+            "name": "ready_ok",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb65d98"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB65D58",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB65D98",
+            "kind": "read",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 2,
+        "checkable": 2,
+        "pairs": [
+          {
+            "field": "result",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB65D58",
+            "kind": "read"
+          },
+          {
+            "field": "ready_ok",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB65D98",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB65D09",
+          "0xB65DCF"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 5,
+          "capacity": 5,
+          "relation": "exact",
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）5 / 容量 0x5"
+        }
+      },
+      "closer": {
+        "va": "0xB65DA8",
+        "kind": "jz",
+        "jcc_va": "0xB65DAE",
+        "seq_va": "0xB65DA4",
+        "jcc_dst": "0xB65DCA",
+        "cmp": "cmp     ebx, [esp+2C5Ch+var_2C40]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x228]",
+        "slot_value": 552,
+        "va": "0xB65ECD",
+        "mov_va": "0xB65EC1",
+        "host": "[eax+228h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB65D72",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "result=",
+        "ready_ok="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0x703C-lounge-party_booking_ready_r.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "`0xb65df1`"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "PartyBookingReadyR",
+      "role": "response",
+      "wire_length": "4 + 1",
+      "members": [
+        {
+          "name": "Result",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "result"
+        },
+        {
+          "name": "ReadyOk",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "ready_ok"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "a8539c4735360231",
+  "check_fingerprint": "2316a52740454647"
+}

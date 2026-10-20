@@ -1,0 +1,387 @@
+{
+  "id": "SC-0xA0BB-lounge-player_navi_unlock_r",
+  "opcode": "0xA0BB",
+  "direction": "SC",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "player_navi_unlock_r",
+  "source_dir": "protocol_analysis/commands/SC-0xA0BB-lounge-player_navi_unlock_r",
+  "meta": {
+    "opcode": "`0xA0BB`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`player_navi_unlock_r`",
+    "处理块范围": "`0xb6f57e`..`0xb6f78f`",
+    "名字串引用点": "`0xb6f66e`",
+    "声明容量（解码缓冲）": "`0xC`（`B6F597`）",
+    "长度闭合点": "`B6F625`",
+    "报错码": "`0x249`（块内 `push 1; push <errcode>; vt[0x64]`）",
+    "去向": "`vt[0x580]` @`B6F747`（2 实参）"
+  },
+  "handler": null,
+  "handler_va": null,
+  "block": [
+    "0xb6f57e",
+    "0xb6f78f"
+  ],
+  "name_str": null,
+  "name_str_va": "0xb6f66e",
+  "capacity": "0xC",
+  "capacity_va": "0xB6F597",
+  "closer_va": "0xB6F625",
+  "dispatch": "`vt[0x580]` @`B6F747`（2 实参）",
+  "dispatch_slot": "vt[0x580]",
+  "dispatch_va": "0xB6F747",
+  "wire": {
+    "length_expr": "4 + 8",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0xC（容量记账口径，非线长）",
+    "field_count": 2,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：**12**（全定长）。",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0xA0BB",
+      "evidence_va": [
+        "0xb6f66e"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "result",
+      "meaning": "结果码（日志串 `result=`）",
+      "purpose": "经 `vt[0x580]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B6F5D5",
+        "B6F6C4"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "8",
+      "wire_type": "struct",
+      "name": "unlocked_navi",
+      "meaning": "解锁的导航信息（日志串 `unlocked_navi=`；成员 `navi_id`、`status`）",
+      "purpose": "经 `vt[0x580]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B6F615",
+        "B6F6E7"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4,
+      "composite_ref": "unlocked_navi"
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0xA0BB（分发器 switch 选择子）",
+      "evidence_va": "0xB6F66E"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB41120`（模块 id 585）→ 之后逐字段读线",
+      "evidence_va": "0xB6F585"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "result：`u32`（线长 4）—— 结果码（日志串 `result=`）",
+      "evidence_va": "0xB6F5D5"
+    },
+    {
+      "step": 4,
+      "kind": "read_struct",
+      "detail": "unlocked_navi：`struct`（线长 8）—— 解锁的导航信息（日志串 `unlocked_navi=`；成员 `navi_id`、`status`）",
+      "evidence_va": "0xB6F615"
+    },
+    {
+      "step": 5,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB6F625"
+    },
+    {
+      "step": 6,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x580]`，实参 2 个",
+      "evidence_va": "0xB6F747"
+    },
+    {
+      "step": 7,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB6F5EF"
+    }
+  ],
+  "capabilities": [
+    "update",
+    "lounge.player_navi"
+  ],
+  "capabilities_derived": [
+    "update"
+  ],
+  "db_effects": [
+    {
+      "entity": "unlocked_navi",
+      "table_ref": "tbl_unlocked_navi",
+      "op": "update",
+      "fields": [
+        "unlocked_navi"
+      ],
+      "disposition": "COMPOSITE",
+      "evidence_va": "0xB6F615"
+    },
+    {
+      "entity": "unlocked_navi",
+      "table_ref": "tbl_unlocked_navi",
+      "op": "update",
+      "fields": [
+        "unlock_r"
+      ],
+      "disposition": "PERSIST",
+      "evidence_va": "?"
+    }
+  ],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:42",
+    "batch": 2,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 12,
+        "va": "0xB6F59A",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB6F597",
+        "call_va": "0xB6F59C"
+      },
+      "field_window": {
+        "start_va": "0xB6F586",
+        "end_va": "0xB6F64C",
+        "guard": {
+          "va": "0xB6F585",
+          "func": "0xB41120",
+          "module_id": 585,
+          "release_va": "0xB41110"
+        },
+        "closer_or_commit_va": "0xB6F625",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "result",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "B6F5D5",
+              "B6F6C4"
+            ]
+          },
+          {
+            "name": "unlocked_navi",
+            "wire_type": "struct",
+            "width": null,
+            "seq": 2,
+            "shape": "agg",
+            "evidence_va": [
+              "B6F615",
+              "B6F6E7"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB434BE",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB434D5",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB6F5D5",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB6F615",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B434B0",
+            "consumed": 8,
+            "consumed_effective": 8,
+            "nested_of": null
+          }
+        ],
+        "matched": 1,
+        "checkable": 1,
+        "pairs": [
+          {
+            "field": "result",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB6F5D5",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB6F615",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null
+          },
+          {
+            "va": "0xB434BE",
+            "kind": "nested_run",
+            "width": 8,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB6F586",
+          "0xB6F64C"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 12,
+          "capacity": 12,
+          "relation": "exact",
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）12 / 容量 0xc"
+        }
+      },
+      "closer": {
+        "va": "0xB6F625",
+        "kind": "jz",
+        "jcc_va": "0xB6F62B",
+        "seq_va": "0xB6F621",
+        "jcc_dst": "0xB6F647",
+        "cmp": "cmp     ebx, [esp+2C5Ch+var_2C40]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x580]",
+        "slot_value": 1408,
+        "va": "0xB6F747",
+        "mov_va": "0xB6F73E",
+        "host": "[eax+580h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB6F5EF",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "result=",
+        "unlocked_navi="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0xA0BB-lounge-player_navi_unlock_r.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xb6f66e"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "PlayerNaviUnlockR",
+      "role": "response",
+      "wire_length": "4 + 8",
+      "members": [
+        {
+          "name": "Result",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "result"
+        },
+        {
+          "name": "UnlockedNavi",
+          "wire_type": "struct",
+          "length": "8",
+          "field_ref": "unlocked_navi",
+          "element": null,
+          "element_length": "8",
+          "cap": null,
+          "composite_ref": "unlocked_navi",
+          "count_field": null,
+          "count_field_source": "fixed",
+          "members_source": "composite"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "da74942839f8aaff",
+  "check_fingerprint": "91b0a2d708b19de4"
+}

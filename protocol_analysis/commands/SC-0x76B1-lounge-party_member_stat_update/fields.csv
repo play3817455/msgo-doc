@@ -1,0 +1,4 @@
+序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+0,-,2,u16,opcode,命令号,分发器 switch 选择子,`0x76B1`,`0xb67f23`,确证
+1,0,4,u32,party_member_stats_count,"成员状态列表计数（上限 `cmp ebx,9` @`0xb67e80`）",驱动循环（≤9）,≤9,0xb67e54,确证
+2,4,31,"array<party_member_stat,N>",party_member_stats,队伍成员状态列表（日志串 `party_member_stats={`）,"`vt[0x21C]` 实参（指针）；元素由 `sub_B432C0` 读取，**元素线长 31 / 槽步进 40**（`sub_B05F90`；循环 `add …,28h` @`0xb67eb8`）",-,0xb67eac,确证

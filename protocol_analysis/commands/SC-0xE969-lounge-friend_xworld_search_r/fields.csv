@@ -1,0 +1,8 @@
+序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+0,-,2,u16,opcode,命令号,分发器 switch 选择子,0xE969,0xB84A14,确证
+1,0,4,u32,result,结果码（日志串 `result=`）,经 `vt[0x370]` 交业务,-,0xB84894|0xB84A6A,确证
+2,4,4,u32,pilot_id,飞行员 ID（日志串 `pilot_id=`）,经 `vt[0x370]` 交业务,-,0xB848D4|0xB84A94,确证
+3,8,4,u32,connet_world_num,连接世界数（日志串 `connet_world_num=`，原文拼写如此）,经 `vt[0x370]` 交业务,-,0xB848F8|0xB84ABE,确证
+4,12,4,u32,connet_world_id,连接世界 ID（日志串 `connet_world_id=`）,经 `vt[0x370]` 交业务,-,0xB8491C|0xB84AE8,确证
+5,16,4,u32,friend_detail_num,"好友明细条数（上限 50，`cmp ebx,32h`@`0xB84962`；日志未打标签，命名为推定 `?`）",经 `vt[0x370]` 交业务,-,0xB84936,确证
+6,20,113n (n≤50),"array<friend_detail,50>",friend_details,"好友明细数组（元素线长 **113**（`sub_B43100`）≠ 槽步进 **132**（`sub_B415D0`）；**条数 = `friend_detail_num`**（循环 `0xB849B1 cmp edi,ebx` / `0xB849B3 jb`，每次 `0xB849A6 add [dest],84h`），上限 50；日志串 `friend_details={`）",经 `vt[0x370]` 交业务,元素线长 113 / 条数 ≤50,0xB8499A|0xB849B1|0xB849CB|0xB84B03,确证

@@ -1,0 +1,3 @@
+序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+0,"0","2","u16","opcode","命令号","写入 buf+0，供服务端分发；无 case 块（C→S）","0x7916","0xb3abd4","确证"
+1,"2","10","struct<funnel_snapshot_entry>","snapshot","漏斗快照：**一个元素**（线长 10 / 落地槽 12）","来源=复合写入器 `sub_B06850(src, cursor)`（`0xB06850..0xB068AD`）；成员 `ent_id` u32（快照实体 id，`mov edx,[edi]; mov [ecx],edx`@0xB41C63）/`wslot_idx` i8（武器槽序号，`mov dl,[edi+4]`@0xB41C74，打印器 `sub_B0BF80` 用 `movsx` ⇒ 有符号）/`move_info` u8[5]（5 字节定长块，`[src+5..9]` 循环写 @0xB41C89..0xB41C9A）","复合体 `funnel_snapshot_entry`（线长 10 = u32+i8+u8[5]；元素读取器 `sub_B081C0`、打印器 `sub_B0BF80`），与 SC-0x1B67 的数组元素同构","0xB06850|0xB41C63|0xB081C0","确证"

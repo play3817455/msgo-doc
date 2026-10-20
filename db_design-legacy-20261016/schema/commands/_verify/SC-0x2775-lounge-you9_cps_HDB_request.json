@@ -1,0 +1,175 @@
+{
+ "id": "SC-0x2775-lounge-you9_cps_HDB_request",
+ "verified_at": "2026-09-30 15:25:43",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "block",
+ "block": [
+  "0xB5940B",
+  "0xB59650"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 102404,
+   "va": "0xB59427",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xB59424",
+   "call_va": "0xB5942C"
+  },
+  "field_window": {
+   "start_va": "0xB59413",
+   "end_va": "0xB594FC",
+   "guard": {
+    "va": "0xB59412",
+    "func": "0xB41120",
+    "module_id": 537,
+    "release_va": "0xB41110"
+   },
+   "closer_or_commit_va": "0xB594D5",
+   "within_model_block": true,
+   "range_from": "block"
+  },
+  "primitive_widths": {
+   "direction": "SC",
+   "expected": [
+    {
+     "name": "hdb_size",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB59457",
+      "0xB59483"
+     ]
+    },
+    {
+     "name": "hdbdat",
+     "wire_type": "u8[N]",
+     "width": null,
+     "seq": 2,
+     "shape": "agg",
+     "evidence_va": [
+      "0xB594AC(sub_B06230 循环读)",
+      "0xB59495(sub_B05EA0 1B/槽)",
+      "0xB594B8(循环步进 1)",
+      "0xB59568"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB59457",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB59495",
+     "kind": "bounded",
+     "width": 1,
+     "wire_type": null,
+     "name": "sub_B05EA0",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB594AC",
+     "kind": "read",
+     "width": 1,
+     "wire_type": "u8",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 1,
+   "checkable": 1,
+   "pairs": [
+    {
+     "field": "hdb_size",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB59457",
+     "kind": "read"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [
+    {
+     "va": "0xB59495",
+     "kind": "bounded",
+     "width": 1,
+     "wire_type": null
+    },
+    {
+     "va": "0xB594AC",
+     "kind": "read",
+     "width": 1,
+     "wire_type": "u8"
+    }
+   ],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB59413",
+    "0xB594FC"
+   ],
+   "scalar_match_verifiable": true,
+   "capacity_relation": {
+    "observed_min": 5,
+    "capacity": 102404,
+    "relation": "within",
+    "unknown_events": [
+     {
+      "va": "0xB59495",
+      "kind": "bounded",
+      "name": "sub_B05EA0"
+     }
+    ],
+    "is_lower_bound": true,
+    "note": "观测线长（下界）5 / 容量 0x19004"
+   }
+  },
+  "closer": {
+   "va": "0xB594D5",
+   "kind": "jz",
+   "jcc_va": "0xB594DB",
+   "seq_va": "0xB594D1",
+   "jcc_dst": "0xB594F7",
+   "cmp": "cmp     eax, [esp+2C5Ch+var_2C40]",
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x510]",
+   "slot_value": 1296,
+   "va": "0xB59617",
+   "mov_va": "0xB5960D",
+   "host": "[eax+510h]",
+   "argc": 2,
+   "form": "mov_then_call",
+   "error_slot": {
+    "slot": "vt[0x64]",
+    "va": "0xB59471",
+    "argc": 2
+   }
+  },
+  "log_strings": [
+   "hdbdat={"
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "hdbdat"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 5
+}

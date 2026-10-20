@@ -1,0 +1,20 @@
+序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+0,0,2,u16,opcode,命令号,写入 `buf+0`，供服务端分发；无 case 块（C→S）,0xA8FE,0xB39A1A,确证
+1,2,4,u32,frame_count,帧计数,"来源=入参 `arg_0`（内联 `mov [eax],esi`）",-,0xB39A29,确证
+2,6,4,u32,weapon_itemid,武器道具 id,"来源=入参 `arg_4`（内联 `mov [eax],ecx`）",-,0xB39A44,确证
+3,10,4,u32,fire_id,火线/弹道 id,来源=入参 `arg_8`；写线原语 `sub_B02D80`(u32),-,0xB39A4C,确证
+4,14,4,u32,ent_ids_count,命中实体数组计数,"来源=入参 `arg_10`；写线原语 `sub_B02D80`(u32)；上限 16（`cmp ebp,10h; ja 出错` @`0xB39A6D`）",0..16,0xB39A73,确证
+5,var,2N (N≤16),u16[N],ent_ids,命中实体 id 列表,来源=入参 `arg_C` 指向的 u16 数组（循环内写线原语 `sub_B02DA0`）；循环上限 = 计数,-,0xB39A96,确证
+6,var,4,u32,hit_pos_x_count,命中点 X 数组计数,来源=入参 `arg_18`；写线原语 `sub_B02D80`(u32)；上限 16,0..16,0xB39AC7,确证
+7,var,2N (N≤16),u16[N],hit_pos_x,命中点 X 坐标列表,来源=入参 `arg_14` 指向的 u16 数组；循环上限 = 计数,-,0xB39AE7,确证
+8,var,4,u32,hit_pos_y_count,命中点 Y 数组计数,来源=入参 `arg_20`；写线原语 `sub_B02D80`(u32)；上限 16,0..16,0xB39B18,确证
+9,var,2N (N≤16),u16[N],hit_pos_y,命中点 Y 坐标列表,来源=入参 `arg_1C` 指向的 u16 数组,-,0xB39B38,确证
+10,var,4,u32,hit_pos_z_count,命中点 Z 数组计数,来源=入参 `arg_28`；写线原语 `sub_B02D80`(u32)；上限 16,0..16,0xB39B6C,确证
+11,var,2N (N≤16),u16[N],hit_pos_z,命中点 Z 坐标列表,来源=入参 `arg_24` 指向的 u16 数组,-,0xB39B8C,确证
+12,var,4,u32,hit_dirs_count,命中方向数组计数,来源=入参 `arg_30`；写线原语 `sub_B02D80`(u32)；上限 16,0..16,0xB39BC3,确证
+13,var,2N (N≤16),u16[N],hit_dirs,命中方向列表,来源=入参 `arg_2C` 指向的 u16 数组,-,0xB39BE6,确证
+14,var,4,u32,hit_distance_count,命中距离数组计数,来源=入参 `arg_38`；写线原语 `sub_B02D80`(u32)；上限 16,0..16,0xB39C1D,确证
+15,var,2N (N≤16),u16[N],hit_distance,命中距离列表,来源=入参 `arg_34` 指向的 u16 数组,-,0xB39C46,确证
+16,var,4,u32,body_regions_count,命中部位数组计数,来源=入参 `arg_40`；写线原语 `sub_B02D80`(u32)；上限 16,0..16,0xB39C7D,确证
+17,var,2N (N≤16),u16[N],body_regions,命中部位列表,"来源=入参 `arg_3C` 指向的 u16 数组（循环内联 `mov di,[edi+eax*2]`）",-,0xB39CB3,确证
+18,var,2,u16,AI_ent_id,施放实体 id,"来源=入参 `arg_44`（`mov ax,word ptr [esp+50h+arg_44]` 后内联写下）",-,0xB39CDA,确证

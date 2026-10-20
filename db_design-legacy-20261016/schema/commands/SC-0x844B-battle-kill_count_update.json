@@ -1,0 +1,627 @@
+{
+  "id": "SC-0x844B-battle-kill_count_update",
+  "opcode": "0x844B",
+  "direction": "SC",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "kill_count_update",
+  "source_dir": "protocol_analysis/commands/SC-0x844B-battle-kill_count_update",
+  "meta": {
+    "opcode": "`0x844B`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`battle_client`",
+    "命令名": "`kill_count_update`",
+    "处理块范围": "`B21B83`..`B21F26`",
+    "名字串引用点": "`B21D37`",
+    "声明容量（解码缓冲）": "`0x17`（`B21B9F`）",
+    "长度闭合点": "`B21CEE`",
+    "收尾函数": "`sub_B05D90`（battle 口径）",
+    "去向": "`vt[0x220]` @ `B21EE1`（7 实参）"
+  },
+  "handler": null,
+  "handler_va": null,
+  "block": [
+    "0xB21B83",
+    "0xB21F26"
+  ],
+  "name_str": null,
+  "name_str_va": "0xB21D37",
+  "capacity": "0x17",
+  "capacity_va": "0xB21B9F",
+  "closer_va": "0xB21CEE",
+  "dispatch": "`vt[0x220]` @ `B21EE1`（7 实参）",
+  "dispatch_slot": "vt[0x220]",
+  "dispatch_va": "0xB21EE1",
+  "wire": {
+    "length_expr": "4 + 2 + 4 + 4 + 4 + 4 + 1",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x17（容量记账口径，非线长）",
+    "field_count": 7,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：23。",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0x844B",
+      "evidence_va": [
+        "B21D37"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "reason",
+      "meaning": "击杀原因（日志串 `reason=`）",
+      "purpose": "经 `vt[0x220]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B21BDA",
+        "B21D8D"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "ent_id_dead",
+      "meaning": "被击杀实体 ID（日志串 `ent_id_dead=`）",
+      "purpose": "经 `vt[0x220]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B21C1A",
+        "B21DB8"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "6",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "world_id_kill",
+      "meaning": "击杀方世界 ID（日志串 `world_id_kill=`）",
+      "purpose": "经 `vt[0x220]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B21C3E",
+        "B21DE2"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 4,
+      "offset": "10",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "pilot_id_kill",
+      "meaning": "击杀方飞行员 ID（日志串 `pilot_id_kill=`）",
+      "purpose": "经 `vt[0x220]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B21C62",
+        "B21E0C"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    },
+    {
+      "seq": 5,
+      "offset": "14",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "kill_streak",
+      "meaning": "连杀数（日志串 `kill_streak=`）",
+      "purpose": "经 `vt[0x220]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B21C8A",
+        "B21E36"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 7
+    },
+    {
+      "seq": 6,
+      "offset": "18",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "weapon_itemid",
+      "meaning": "武器道具 ID（日志串 `weapon_itemid=`）",
+      "purpose": "经 `vt[0x220]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B21CB2",
+        "B21E60"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 8
+    },
+    {
+      "seq": 7,
+      "offset": "22",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "is_extend_style_change_limit",
+      "meaning": "是否放宽风格切换限制（日志串 `is_extend_style_change_limit=`）",
+      "purpose": "经 `vt[0x220]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B21CDA",
+        "B21E83"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 9
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0x844B（分发器 switch 选择子）",
+      "evidence_va": "0xB21D37"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB05DA0`（模块 id 171）→ 之后逐字段读线",
+      "evidence_va": "0xB21B8A"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "reason：`u32`（线长 4）—— 击杀原因（日志串 `reason=`）",
+      "evidence_va": "0xB21BDA"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "ent_id_dead：`u16`（线长 2）—— 被击杀实体 ID（日志串 `ent_id_dead=`）",
+      "evidence_va": "0xB21C1A"
+    },
+    {
+      "step": 5,
+      "kind": "read_scalar",
+      "detail": "world_id_kill：`u32`（线长 4）—— 击杀方世界 ID（日志串 `world_id_kill=`）",
+      "evidence_va": "0xB21C3E"
+    },
+    {
+      "step": 6,
+      "kind": "read_scalar",
+      "detail": "pilot_id_kill：`u32`（线长 4）—— 击杀方飞行员 ID（日志串 `pilot_id_kill=`）",
+      "evidence_va": "0xB21C62"
+    },
+    {
+      "step": 7,
+      "kind": "read_scalar",
+      "detail": "kill_streak：`u32`（线长 4）—— 连杀数（日志串 `kill_streak=`）",
+      "evidence_va": "0xB21C8A"
+    },
+    {
+      "step": 8,
+      "kind": "read_scalar",
+      "detail": "weapon_itemid：`u32`（线长 4）—— 武器道具 ID（日志串 `weapon_itemid=`）",
+      "evidence_va": "0xB21CB2"
+    },
+    {
+      "step": 9,
+      "kind": "read_scalar",
+      "detail": "is_extend_style_change_limit：`u8`（线长 1）—— 是否放宽风格切换限制（日志串 `is_extend_style_change_limit=`）",
+      "evidence_va": "0xB21CDA"
+    },
+    {
+      "step": 10,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB21CEE"
+    },
+    {
+      "step": 11,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x220]`，实参 7 个",
+      "evidence_va": "0xB21F0A"
+    },
+    {
+      "step": 12,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB21BF4"
+    }
+  ],
+  "capabilities": [
+    "update",
+    "battle.kill_count"
+  ],
+  "capabilities_derived": [
+    "notify"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:47",
+    "batch": 18,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 23,
+        "va": "0xB21B9F",
+        "reg": "eax",
+        "host": "[edx+78h]",
+        "alloc_va": "0xB21B9C",
+        "call_va": "0xB21BA1"
+      },
+      "field_window": {
+        "start_va": "0xB21B8B",
+        "end_va": "0xB21D15",
+        "guard": {
+          "va": "0xB21B8A",
+          "func": "0xB05DA0",
+          "module_id": 171,
+          "release_va": "0xB05D90"
+        },
+        "closer_or_commit_va": "0xB21CEE",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "reason",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "B21BDA",
+              "B21D8D"
+            ]
+          },
+          {
+            "name": "ent_id_dead",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "B21C1A",
+              "B21DB8"
+            ]
+          },
+          {
+            "name": "world_id_kill",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "B21C3E",
+              "B21DE2"
+            ]
+          },
+          {
+            "name": "pilot_id_kill",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 4,
+            "shape": "scalar",
+            "evidence_va": [
+              "B21C62",
+              "B21E0C"
+            ]
+          },
+          {
+            "name": "kill_streak",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 5,
+            "shape": "scalar",
+            "evidence_va": [
+              "B21C8A",
+              "B21E36"
+            ]
+          },
+          {
+            "name": "weapon_itemid",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 6,
+            "shape": "scalar",
+            "evidence_va": [
+              "B21CB2",
+              "B21E60"
+            ]
+          },
+          {
+            "name": "is_extend_style_change_limit",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 7,
+            "shape": "scalar",
+            "evidence_va": [
+              "B21CDA",
+              "B21E83"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB21BDA",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB21C1A",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB21C3E",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB21C62",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB21C8A",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB21CB2",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB21CDA",
+            "kind": "read",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 7,
+        "checkable": 7,
+        "pairs": [
+          {
+            "field": "reason",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB21BDA",
+            "kind": "read"
+          },
+          {
+            "field": "ent_id_dead",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB21C1A",
+            "kind": "read"
+          },
+          {
+            "field": "world_id_kill",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB21C3E",
+            "kind": "read"
+          },
+          {
+            "field": "pilot_id_kill",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB21C62",
+            "kind": "read"
+          },
+          {
+            "field": "kill_streak",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB21C8A",
+            "kind": "read"
+          },
+          {
+            "field": "weapon_itemid",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB21CB2",
+            "kind": "read"
+          },
+          {
+            "field": "is_extend_style_change_limit",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB21CDA",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB21B8B",
+          "0xB21D15"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 23,
+          "capacity": 23,
+          "relation": "exact",
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）23 / 容量 0x17"
+        }
+      },
+      "closer": {
+        "va": "0xB21CEE",
+        "kind": "jz",
+        "jcc_va": "0xB21CF4",
+        "seq_va": "0xB21CEA",
+        "jcc_dst": "0xB21D10",
+        "cmp": "cmp     ebx, [esp+1B3Ch+var_1B24]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x220]",
+        "slot_value": 544,
+        "va": "0xB21F0A",
+        "mov_va": "0xB21EE1",
+        "host": "[edx+220h]",
+        "argc": 7,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB21BF4",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "reason=",
+        "ent_id_dead=",
+        "world_id_kill=",
+        "pilot_id_kill=",
+        "kill_streak=",
+        "weapon_itemid=",
+        "is_extend_style_change_limit="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0x844B-battle-kill_count_update.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "B21D37"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "KillCountUpdate",
+      "role": "response",
+      "wire_length": "4 + 2 + 4 + 4 + 4 + 4 + 1",
+      "members": [
+        {
+          "name": "Reason",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "reason"
+        },
+        {
+          "name": "EntIdDead",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "ent_id_dead"
+        },
+        {
+          "name": "WorldIdKill",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "world_id_kill"
+        },
+        {
+          "name": "PilotIdKill",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "pilot_id_kill"
+        },
+        {
+          "name": "KillStreak",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "kill_streak"
+        },
+        {
+          "name": "WeaponItemid",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "weapon_itemid"
+        },
+        {
+          "name": "IsExtendStyleChangeLimit",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "is_extend_style_change_limit"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "4844cce15b60964c",
+  "check_fingerprint": "2a16885606397700"
+}

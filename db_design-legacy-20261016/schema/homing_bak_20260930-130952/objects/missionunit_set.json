@@ -1,0 +1,354 @@
+{
+  "id": "missionunit_set",
+  "title": "任务编成 missionunit_set（12B）",
+  "domain": "lounge",
+  "domain_votes": {
+    "lounge": 3
+  },
+  "folded_composites": [
+    "missionunit",
+    "missionunit_set"
+  ],
+  "anchored_by": "tbl_missionunit_set",
+  "legacy_table": "tbl_missionunit_set",
+  "row_key": [
+    "deck_type",
+    "deck_set"
+  ],
+  "views": [
+    {
+      "composite": "missionunit",
+      "length": 12,
+      "memory_claim": 12,
+      "reader": "sub_B43BE0",
+      "printer": "sub_B4A970",
+      "commands": [
+        "SC-0x36D9-lounge-msma_missionunit_get_list_r"
+      ]
+    },
+    {
+      "composite": "missionunit_set",
+      "length": 12,
+      "memory_claim": null,
+      "reader": "sub_B43BE0",
+      "printer": "sub_B4A970",
+      "commands": [
+        "CS-0x33CC-lounge-msma_missionunit_store",
+        "SC-0x1908-lounge-msma_missionunit_store_r"
+      ]
+    }
+  ],
+  "members": [
+    {
+      "name": "deck_set",
+      "wire_type": "u16",
+      "length": 2,
+      "meaning": "编成卡组套编号",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "missionunit",
+          "missionunit_set"
+        ]
+      },
+      "views": [
+        "missionunit",
+        "missionunit_set"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB43C06",
+      "evidence_ref": {
+        "command": "CS-0x33CC-lounge-msma_missionunit_store",
+        "struct": "missionunit_set",
+        "field": "deck_set",
+        "reader": "",
+        "printer": "",
+        "protocol_path": "protocol_analysis/commands/CS-0x33CC-lounge-msma_missionunit_store/README.md",
+        "section": "§3"
+      },
+      "role": "slot"
+    },
+    {
+      "name": "deck_type",
+      "wire_type": "u16",
+      "length": 2,
+      "meaning": "编成卡组类型",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "missionunit",
+          "missionunit_set"
+        ]
+      },
+      "views": [
+        "missionunit",
+        "missionunit_set"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB43BEE",
+      "evidence_ref": {
+        "command": "CS-0x33CC-lounge-msma_missionunit_store",
+        "struct": "missionunit_set",
+        "field": "deck_type",
+        "reader": "",
+        "printer": "",
+        "protocol_path": "protocol_analysis/commands/CS-0x33CC-lounge-msma_missionunit_store/README.md",
+        "section": "§3"
+      },
+      "role": "identity"
+    },
+    {
+      "name": "missionunit_id",
+      "wire_type": "u64",
+      "length": 8,
+      "meaning": "任务单元唯一 ID（线上 2×u32 内联读/写；打印器分低/高 32 位）",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "missionunit",
+          "missionunit_set"
+        ]
+      },
+      "views": [
+        "missionunit",
+        "missionunit_set"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB43C20",
+      "evidence_ref": {
+        "command": "CS-0x33CC-lounge-msma_missionunit_store",
+        "struct": "missionunit_set",
+        "field": "missionunit_id",
+        "reader": "",
+        "printer": "",
+        "protocol_path": "protocol_analysis/commands/CS-0x33CC-lounge-msma_missionunit_store/README.md",
+        "section": "§3"
+      },
+      "role": "identity",
+      "ref_kind": "self",
+      "ref_basis": "自指：本对象自己的身份名"
+    }
+  ],
+  "wire_body": "missionunit_set",
+  "writes": [
+    {
+      "command": "CS-0x33CC-lounge-msma_missionunit_store",
+      "op": "update",
+      "via": "missionunit_set",
+      "verbs": [
+        "update"
+      ]
+    }
+  ],
+  "reads": [
+    {
+      "command": "SC-0x1908-lounge-msma_missionunit_store_r",
+      "op": "read",
+      "via": "missionunit_set"
+    },
+    {
+      "command": "SC-0x36D9-lounge-msma_missionunit_get_list_r",
+      "op": "read",
+      "via": "missionunit"
+    }
+  ],
+  "db_effects": [
+    {
+      "command": "CS-0x33CC-lounge-msma_missionunit_store",
+      "entity": "missionunit_set",
+      "op": "update",
+      "fields": [
+        "missionunit_set"
+      ],
+      "table_ref": "tbl_missionunit_set"
+    },
+    {
+      "command": "CS-0x33CC-lounge-msma_missionunit_store",
+      "entity": "missionunit_set",
+      "op": "update",
+      "fields": [
+        "missionunit_store"
+      ],
+      "table_ref": "tbl_missionunit_set"
+    },
+    {
+      "command": "SC-0x1908-lounge-msma_missionunit_store_r",
+      "entity": "missionunit_set",
+      "op": "update",
+      "fields": [
+        "missionunit_set"
+      ],
+      "table_ref": "tbl_missionunit_set"
+    },
+    {
+      "command": "SC-0x1908-lounge-msma_missionunit_store_r",
+      "entity": "missionunit_set",
+      "op": "update",
+      "fields": [
+        "missionunit_store_r"
+      ],
+      "table_ref": "tbl_missionunit_set"
+    },
+    {
+      "command": "SC-0x36D9-lounge-msma_missionunit_get_list_r",
+      "entity": "missionunit_set",
+      "op": "read",
+      "fields": [
+        "missionunit_list_element"
+      ],
+      "table_ref": "tbl_missionunit_set"
+    }
+  ],
+  "pk_members": [
+    "deck_type",
+    "deck_set"
+  ],
+  "pk_kind": "row_key",
+  "is_root": true,
+  "alternate_identity": [
+    "missionunit_id"
+  ],
+  "identity": [
+    "deck_type",
+    "deck_set"
+  ],
+  "multi": false,
+  "array_parents": [],
+  "inline_parents": [],
+  "shape": "root",
+  "parent": "",
+  "parents": [],
+  "has_scope": false,
+  "disposition": "PERSIST",
+  "table": "game.missionunit_set",
+  "columns_excluded": [],
+  "columns": [
+    {
+      "member": "deck_set",
+      "column": "deck_set",
+      "role": "slot",
+      "wire_type": "u16",
+      "synthetic": false,
+      "meaning": "编成卡组套编号",
+      "evidence_va": "0xB43C06",
+      "pk": true
+    },
+    {
+      "member": "deck_type",
+      "column": "deck_type",
+      "role": "identity",
+      "wire_type": "u16",
+      "synthetic": false,
+      "meaning": "编成卡组类型",
+      "evidence_va": "0xB43BEE",
+      "pk": true
+    },
+    {
+      "member": "missionunit_id",
+      "column": "missionunit_id",
+      "role": "identity",
+      "wire_type": "u64",
+      "synthetic": false,
+      "meaning": "任务单元唯一 ID（线上 2×u32 内联读/写；打印器分低/高 32 位）",
+      "evidence_va": "0xB43C20",
+      "pk": false
+    }
+  ],
+  "columns_expected": 3,
+  "keys": {
+    "scope": [
+      "world_id",
+      "pilot_id"
+    ],
+    "own": [
+      "deck_type",
+      "deck_set"
+    ],
+    "inherited": [],
+    "primary_key": [
+      "world_id",
+      "pilot_id",
+      "deck_type",
+      "deck_set"
+    ],
+    "pk_kind": "row_key",
+    "children": [],
+    "nested": [],
+    "child_key": [
+      "elem_index"
+    ]
+  },
+  "tables": [
+    {
+      "name": "game.missionunit_set",
+      "shape": "root",
+      "parent": "",
+      "parent_table": "",
+      "via_member": "",
+      "key_extra": [],
+      "scope": [
+        "world_id",
+        "pilot_id"
+      ],
+      "links": [],
+      "child_tables": [],
+      "columns": [
+        {
+          "member": "deck_set",
+          "column": "deck_set",
+          "role": "slot",
+          "wire_type": "u16",
+          "synthetic": false,
+          "meaning": "编成卡组套编号",
+          "evidence_va": "0xB43C06",
+          "pk": true
+        },
+        {
+          "member": "deck_type",
+          "column": "deck_type",
+          "role": "identity",
+          "wire_type": "u16",
+          "synthetic": false,
+          "meaning": "编成卡组类型",
+          "evidence_va": "0xB43BEE",
+          "pk": true
+        },
+        {
+          "member": "missionunit_id",
+          "column": "missionunit_id",
+          "role": "identity",
+          "wire_type": "u64",
+          "synthetic": false,
+          "meaning": "任务单元唯一 ID（线上 2×u32 内联读/写；打印器分低/高 32 位）",
+          "evidence_va": "0xB43C20",
+          "pk": false
+        }
+      ],
+      "key_members": [
+        "world_id",
+        "pilot_id",
+        "deck_type",
+        "deck_set"
+      ],
+      "primary_key": [
+        "world_id",
+        "pilot_id",
+        "deck_type",
+        "deck_set"
+      ]
+    }
+  ],
+  "links": []
+}

@@ -1,0 +1,94 @@
+{
+  "id": "recruits",
+  "title": "recruits",
+  "description": "协议实体 recruits；80B 线 / 84B 槽；9 成员（sub_B45400/sub_B4D840）",
+  "table_ref": "tbl_recruits",
+  "disposition": "PERSIST",
+  "wire_forms": [
+    {
+      "name": "recruits",
+      "length": 80,
+      "memory_claim": 84,
+      "commands": [
+        "SC-0xB43F-lounge-party_recruit_list_get_r"
+      ],
+      "protocol_path": "protocol_analysis/commands/SC-0xB43F-lounge-party_recruit_list_get_r/README.md",
+      "reader": "sub_B45400",
+      "printer": "sub_B4D840"
+    }
+  ],
+  "fields": [
+    {
+      "name": "channel_id",
+      "offset": 0,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "频道 ID",
+      "disposition": "PERSIST"
+    },
+    {
+      "name": "party_id",
+      "offset": 4,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "队伍 ID",
+      "disposition": "PERSIST"
+    },
+    {
+      "name": "troops",
+      "offset": 8,
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "部队/阵营",
+      "disposition": "PERSIST"
+    },
+    {
+      "name": "member_count",
+      "offset": 10,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "成员数量",
+      "disposition": "PERSIST"
+    },
+    {
+      "name": "comment",
+      "offset": 12,
+      "length": 61,
+      "wire_type": "char[61]",
+      "meaning": "招募说明（定长 61 字节）",
+      "disposition": "PERSIST"
+    },
+    {
+      "name": "pstat",
+      "offset": 73,
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "机师状态",
+      "disposition": "PERSIST"
+    },
+    {
+      "name": "is_lock",
+      "offset": 74,
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "是否锁定",
+      "disposition": "PERSIST"
+    },
+    {
+      "name": "remain_minutes",
+      "offset": 76,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "剩余分钟数",
+      "disposition": "PERSIST"
+    },
+    {
+      "name": "party_type",
+      "offset": 80,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "队伍类型",
+      "disposition": "PERSIST"
+    }
+  ]
+}

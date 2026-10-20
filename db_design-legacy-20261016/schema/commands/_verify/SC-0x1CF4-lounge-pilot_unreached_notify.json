@@ -1,0 +1,213 @@
+{
+ "id": "SC-0x1CF4-lounge-pilot_unreached_notify",
+ "verified_at": "2026-09-30 15:25:43",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "block",
+ "block": [
+  "0xB577DF",
+  "0xB57A74"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 16,
+   "va": "0xB577FB",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xB577F8",
+   "call_va": "0xB577FD"
+  },
+  "field_window": {
+   "start_va": "0xB577E7",
+   "end_va": "0xB578F9",
+   "guard": {
+    "va": "0xB577E6",
+    "func": "0xB41120",
+    "module_id": 550,
+    "release_va": "0xB41110"
+   },
+   "closer_or_commit_va": "0xB578D2",
+   "within_model_block": true,
+   "range_from": "block"
+  },
+  "primitive_widths": {
+   "direction": "SC",
+   "expected": [
+    {
+     "name": "notify_type",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB57836",
+      "0xB57971"
+     ]
+    },
+    {
+     "name": "data1",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 2,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB57876",
+      "0xB5799B"
+     ]
+    },
+    {
+     "name": "data2",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 3,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB5789A",
+      "0xB579C5"
+     ]
+    },
+    {
+     "name": "data3",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 4,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB578BE",
+      "0xB579EA"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB57836",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB57876",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB5789A",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB578BE",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 4,
+   "checkable": 4,
+   "pairs": [
+    {
+     "field": "notify_type",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB57836",
+     "kind": "read"
+    },
+    {
+     "field": "data1",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB57876",
+     "kind": "read"
+    },
+    {
+     "field": "data2",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB5789A",
+     "kind": "read"
+    },
+    {
+     "field": "data3",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB578BE",
+     "kind": "read"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB577E7",
+    "0xB578F9"
+   ],
+   "scalar_match_verifiable": true,
+   "capacity_relation": {
+    "observed_min": 16,
+    "capacity": 16,
+    "relation": "exact",
+    "unknown_events": [],
+    "is_lower_bound": false,
+    "note": "观测线长（下界）16 / 容量 0x10"
+   }
+  },
+  "closer": {
+   "va": "0xB578D2",
+   "kind": "jz",
+   "jcc_va": "0xB578D8",
+   "seq_va": "0xB578CE",
+   "jcc_dst": "0xB578F4",
+   "cmp": "cmp     ebx, [esp+2C5Ch+var_2C40]",
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x52C]",
+   "slot_value": 1324,
+   "va": "0xB57A58",
+   "mov_va": "0xB57A3E",
+   "host": "[edx+52Ch]",
+   "argc": 4,
+   "form": "mov_then_call",
+   "error_slot": {
+    "slot": "vt[0x64]",
+    "va": "0xB57850",
+    "argc": 2
+   }
+  },
+  "log_strings": [
+   "notify_type=",
+   "data1=",
+   "data2=",
+   "data3="
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "data1",
+  "data2",
+  "data3",
+  "notify_type"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 5
+}

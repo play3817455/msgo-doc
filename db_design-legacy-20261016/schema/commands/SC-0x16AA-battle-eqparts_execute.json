@@ -1,0 +1,559 @@
+{
+  "id": "SC-0x16AA-battle-eqparts_execute",
+  "opcode": "0x16AA",
+  "direction": "SC",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "eqparts_execute",
+  "source_dir": "protocol_analysis/commands/SC-0x16AA-battle-eqparts_execute",
+  "meta": {
+    "opcode": "`0x16AA`",
+    "方向": "SC（服务端 → 客户端（recv））",
+    "协议类": "`battle_client`",
+    "命令名": "`eqparts_execute`",
+    "名字字符串": "`)->_proto_battle_client::recv_eqparts_execute( `，引用点 `0xB107C8`（`push offset aProtoBattleCli_19`）",
+    "处理函数": "`sub_B0CC20` @ `0xB0CC20`（battle 分发器）",
+    "处理块范围": "`0xB10671` .. `0xB10912`",
+    "错误码": "`0xA3`（`0xB106D7`、`0xB10709`、`0xB10772`、`0xB1078E`）",
+    "关联命令": "装备/部件相关：`../SC-0x0876-lounge-msma_weapon_buildup_r/`（武器强化，同为「ID + 数量 + 结构数组」）；区域/属性施加 `../SC-0x1159-battle-game_mapgimmick_update/`（数组元素线长 ≠ 槽步进的同型样本）"
+  },
+  "handler": "sub_B0CC20",
+  "handler_va": "0xB0CC20",
+  "block": [
+    "0xB10671",
+    "0xB10912"
+  ],
+  "name_str": ")->_proto_battle_client::recv_eqparts_execute(",
+  "name_str_va": "0xB107C8",
+  "capacity": "0x2086",
+  "capacity_va": "0xB10686",
+  "closer_va": "0xB1077F",
+  "dispatch": null,
+  "dispatch_slot": "vt[0x20C]",
+  "dispatch_va": null,
+  "wire": {
+    "length_expr": "6+17N",
+    "fixed": false,
+    "var_drivers": [
+      "N"
+    ],
+    "capacity_note": "声明容量 0x2086（容量记账口径，非线长）",
+    "field_count": 3,
+    "length_source": "closure_row",
+    "readme_conclusion": "**报文体总长：2 + 4 + 17·N**（N = parts_exec 数量，0 ≤ N ≤ 416）。",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "battle 分发的 switch 选择子",
+      "enum": "0x16AA",
+      "evidence_va": [
+        "0xB107C8"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "ent_id",
+      "meaning": "施加部件效果的实体 ID",
+      "purpose": "交 vt[0x20C] 第1实参；日志 ent_id=",
+      "enum": null,
+      "evidence_va": [
+        "0xB106C4",
+        "0xB10816",
+        "0xB1081F",
+        "0xB108F3"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "2",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "parts_num",
+      "meaning": "部件效果条目数 N（= parts_exec 元素个数）",
+      "purpose": "上限检查 cmp 1A0h；驱动数组循环与打印循环；交 vt[0x20C] 第3实参",
+      "enum": "0..416",
+      "evidence_va": [
+        "0xB106F6",
+        "0xB10722",
+        "0xB10728",
+        "0xB108E8"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "6",
+      "length": "17·N",
+      "wire_type": "array<parts_exec_entry,N>",
+      "name": "parts_exec",
+      "meaning": "部件效果列表（N 个元素，每元素 17 字节；缓冲槽步进 20）",
+      "purpose": "数组基址交 vt[0x20C] 第2实参；日志 parts_exec={...}",
+      "enum": "元素线长 17 / 槽 20",
+      "evidence_va": [
+        "0xB10730",
+        "0xB06CF0",
+        "0xB09130"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5,
+      "override_verified": true,
+      "element_composite_ref_source": "name",
+      "element_composite_ref": "parts_exec_entry"
+    },
+    {
+      "seq": -1,
+      "offset": "6+17N",
+      "length": "0",
+      "wire_type": "-",
+      "name": "（长度闭合）",
+      "meaning": "游标必须==报文末尾",
+      "purpose": "容量 0x2086 == 2+4+416x20（上限场景；元素线长 17 ≠ 槽步进 20）",
+      "enum": null,
+      "evidence_va": [
+        "0xB1077F",
+        "0xB10785"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 12,
+      "is_closure": true
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0x16AA（分发器 switch 选择子）",
+      "evidence_va": "0xB107C8"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB05DA0`（模块 id None）→ 之后逐字段读线",
+      "evidence_va": "0xB10671"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "ent_id：`u16`（线长 2）—— 施加部件效果的实体 ID",
+      "evidence_va": "0xB106C4"
+    },
+    {
+      "step": 4,
+      "kind": "read_count",
+      "detail": "parts_num：`u32`（线长 4）—— 部件效果条目数 N（= parts_exec 元素个数）",
+      "evidence_va": "0xB106F6"
+    },
+    {
+      "step": 5,
+      "kind": "read_array",
+      "detail": "parts_exec：`array<parts_exec_entry,N>`（线长 17·N）—— 部件效果列表（N 个元素，每元素 17 字节；缓冲槽步进 20）",
+      "evidence_va": "0xB10730"
+    },
+    {
+      "step": 6,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB1077F"
+    },
+    {
+      "step": 7,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x20C]`，实参 3 个",
+      "evidence_va": "0xB108F6"
+    },
+    {
+      "step": 8,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB106DE"
+    }
+  ],
+  "capabilities": [
+    "unclassified",
+    "battle.eqparts_execute"
+  ],
+  "capabilities_derived": [
+    "unclassified"
+  ],
+  "db_effects": [],
+  "pair": "SC-0x0876-lounge-msma_weapon_buildup_r",
+  "related": [
+    "SC-0x1159-battle-game_mapgimmick_update"
+  ],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:46",
+    "batch": 15,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 8326,
+        "va": "0xB10686",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB10683",
+        "call_va": "0xB1068B"
+      },
+      "field_window": {
+        "start_va": "0xB10672",
+        "end_va": "0xB107A6",
+        "guard": {
+          "va": "0xB10671",
+          "func": "0xB05DA0",
+          "module_id": null,
+          "release_va": "0xB05D90"
+        },
+        "closer_or_commit_va": "0xB1077F",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "ent_id",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB106C4",
+              "0xB10816",
+              "0xB1081F",
+              "0xB108F3"
+            ]
+          },
+          {
+            "name": "parts_num",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB106F6",
+              "0xB10722",
+              "0xB10728",
+              "0xB108E8"
+            ]
+          },
+          {
+            "name": "parts_exec",
+            "wire_type": "array<parts_exec_entry,N>",
+            "width": null,
+            "seq": 3,
+            "shape": "agg",
+            "evidence_va": [
+              "0xB10730",
+              "0xB06CF0",
+              "0xB09130"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB06CFF",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB06D15",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB06D27",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB06D39",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB06D48",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB06D62",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB106C4",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB106F6",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB10734",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B06090",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB10751",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B06CF0",
+            "consumed": 17,
+            "consumed_effective": 17,
+            "nested_of": null
+          }
+        ],
+        "matched": 2,
+        "checkable": 2,
+        "pairs": [
+          {
+            "field": "ent_id",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB106C4",
+            "kind": "read"
+          },
+          {
+            "field": "parts_num",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB106F6",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB10751",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null
+          },
+          {
+            "va": "0xB06CFF",
+            "kind": "nested_run",
+            "width": 8,
+            "wire_type": null
+          },
+          {
+            "va": "0xB06D27",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null
+          },
+          {
+            "va": "0xB06D39",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null
+          },
+          {
+            "va": "0xB06D48",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null
+          },
+          {
+            "va": "0xB06D62",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB10672",
+          "0xB107A6"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 23,
+          "capacity": 8326,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB10734",
+              "kind": "opaque",
+              "name": "sub_B06090"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）23 / 容量 0x2086"
+        }
+      },
+      "closer": {
+        "va": "0xB1077F",
+        "kind": "jz",
+        "jcc_va": "0xB10785",
+        "seq_va": "0xB1077B",
+        "jcc_dst": "0xB107A1",
+        "cmp": "cmp     ecx, [esp+1B3Ch+var_1B24]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x20C]",
+        "slot_value": 524,
+        "va": "0xB108F6",
+        "mov_va": "0xB108ED",
+        "host": "[eax+20Ch]",
+        "argc": 3,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB106DE",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "ent_id=",
+        "parts_exec={"
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0x16AA-battle-eqparts_execute.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [
+      "0xB106D7",
+      "0xB10709",
+      "0xB10772",
+      "0xB1078E"
+    ],
+    "dispatcher": null,
+    "closure_field": "（长度闭合）",
+    "opcode_field_va": [
+      "0xB107C8"
+    ]
+  },
+  "field_override": {
+    "revision": 1,
+    "verified_at": "2026-09-22",
+    "reason": "`array<elem 17>` 只写了元素线长没写元素结构名。读取器 sub_B06CF0（4+4+1+2+4+2 = 17）与打印器 sub_B09130 已在 schema/composites/parts_exec_entry.json 建模；同批删掉 `parts_exec.*` 六行成员占位行。",
+    "evidence_file": "schema/commands/_overrides/SC-0x16AA-battle-eqparts_execute.json",
+    "meta_keys": [],
+    "notes": [
+      "override_drop:6",
+      "override_patch:1"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "EqpartsExecute",
+      "role": "response",
+      "wire_length": "6+17N",
+      "members": [
+        {
+          "name": "EntId",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "ent_id"
+        },
+        {
+          "name": "PartsNum",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "parts_num"
+        },
+        {
+          "name": "PartsExec",
+          "wire_type": "array<parts_exec_entry,N>",
+          "length": "17·N",
+          "field_ref": "parts_exec",
+          "element": "parts_exec_entry",
+          "element_composite_ref": "parts_exec_entry",
+          "element_length": "17",
+          "cap": null,
+          "count_field": "parts_num",
+          "count_field_source": "heuristic",
+          "count_var": "N",
+          "note": null
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "0c89aeac4c798bca",
+  "check_fingerprint": "2afc3b8112903d3f",
+  "import_repairs": [
+    "override_drop:6",
+    "override_patch:1"
+  ]
+}

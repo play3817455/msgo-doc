@@ -1,0 +1,2185 @@
+{
+  "id": "SC-0x7621-battle-entity_msma_appear_self",
+  "opcode": "0x7621",
+  "direction": "SC",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "entity_msma_appear_self",
+  "source_dir": "protocol_analysis/commands/SC-0x7621-battle-entity_msma_appear_self",
+  "meta": {
+    "opcode": "`0x7621`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`battle_client`",
+    "命令名": "`entity_msma_appear_self`",
+    "处理块范围": "`0xb20032`..`0xb204d2`",
+    "名字串引用点": "`0xb20255`",
+    "声明容量（解码缓冲）": "`0x154`（`0xb2004b`）",
+    "长度闭合点": "`0xb20212`",
+    "去向": "`vt[0x150]` @ `0xb204b6`（10 实参）"
+  },
+  "handler": null,
+  "handler_va": null,
+  "block": [
+    "0xb20032",
+    "0xb204d2"
+  ],
+  "name_str": null,
+  "name_str_va": "0xb20255",
+  "capacity": "0x154",
+  "capacity_va": "0xb2004b",
+  "closer_va": "0xB20212",
+  "dispatch": "`vt[0x150]` @ `0xb204b6`（10 实参）",
+  "dispatch_slot": "vt[0x150]",
+  "dispatch_va": "0xb204b6",
+  "wire": {
+    "length_expr": "1 + 1 + 244 + 39 + 10 + 4 + 4 + 4 + 4 + 2",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x154（容量记账口径，非线长）",
+    "field_count": 10,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：1 + 1 + 244 + 39 + 10 + 4×4 + 2。",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0x7621",
+      "evidence_va": [
+        "`0xb20255`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "team",
+      "meaning": "阵营（日志串 `team=`）",
+      "purpose": "`vt[0x150]` 实参（`movzx ecx,byte ptr [edx]` @`0xb204a2`）",
+      "enum": null,
+      "evidence_va": [
+        "0xb20089"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "1",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "troops",
+      "meaning": "部队类型（日志串 `troops=`）",
+      "purpose": "同上（`0xb204aa`）",
+      "enum": null,
+      "evidence_va": [
+        "0xb200c6"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "2",
+      "length": "244",
+      "wire_type": "struct<ms>",
+      "name": "ms",
+      "meaning": "机体状态结构（日志串 `ms=`；claim 264 / 线长 244）",
+      "purpose": "`vt[0x150]` 实参（指针，预留 `sub_B05FF0`）",
+      "enum": null,
+      "evidence_va": [
+        "0xb200ea"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5,
+      "composite_ref": "ms"
+    },
+    {
+      "seq": 4,
+      "offset": "246",
+      "length": "39",
+      "wire_type": "struct<snapshot>",
+      "name": "snapshot",
+      "meaning": "快照（日志串 `snapshot=`；claim 44 / 线长 39）",
+      "purpose": "`vt[0x150]` 实参（指针，预留 `sub_B06010`）",
+      "enum": null,
+      "evidence_va": [
+        "0xb2010e"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6,
+      "composite_ref": "snapshot"
+    },
+    {
+      "seq": 5,
+      "offset": "285",
+      "length": "10",
+      "wire_type": "struct<funnelss>",
+      "name": "funnelss",
+      "meaning": "浮游炮子机（日志串 `funnelss=`；claim 12 / 线长 10）",
+      "purpose": "`vt[0x150]` 实参（指针，预留 `sub_B41460`）",
+      "enum": null,
+      "evidence_va": [
+        "0xb20136"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 7,
+      "composite_ref": "funnelss"
+    },
+    {
+      "seq": 6,
+      "offset": "295",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "hp_now",
+      "meaning": "当前 HP（日志串 `hp_now=`）",
+      "purpose": "`vt[0x150]` 实参（`0xb2048c`）",
+      "enum": null,
+      "evidence_va": [
+        "0xb2015e"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 8
+    },
+    {
+      "seq": 7,
+      "offset": "299",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "hp_max",
+      "meaning": "最大 HP（日志串 `hp_max=`）",
+      "purpose": "同上（`0xb20483`）",
+      "enum": null,
+      "evidence_va": [
+        "0xb20186"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 9
+    },
+    {
+      "seq": 8,
+      "offset": "303",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "shield_hp_now",
+      "meaning": "当前护盾 HP（日志串 `shield_hp_now=`）",
+      "purpose": "同上（`0xb2047c`）",
+      "enum": null,
+      "evidence_va": [
+        "0xb201ae"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 10
+    },
+    {
+      "seq": 9,
+      "offset": "307",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "shield_hp_max",
+      "meaning": "最大护盾 HP（日志串 `shield_hp_max=`）",
+      "purpose": "同上（`0xb1db6d` 同型）",
+      "enum": null,
+      "evidence_va": [
+        "0xb201d6"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 11
+    },
+    {
+      "seq": 10,
+      "offset": "311",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "weapon_state_bits",
+      "meaning": "武器状态位（日志串 `weapon_state_bits=`）",
+      "purpose": "同上（`movzx word ptr` @`0xb2046d`）",
+      "enum": null,
+      "evidence_va": [
+        "0xb201fe"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 12
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0x7621（分发器 switch 选择子）",
+      "evidence_va": "0xB20255"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB05DA0`（模块 id 83）→ 之后逐字段读线",
+      "evidence_va": "0xB20036"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "team：`u8`（线长 1）—— 阵营（日志串 `team=`）",
+      "evidence_va": "0xB20089"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "troops：`u8`（线长 1）—— 部队类型（日志串 `troops=`）",
+      "evidence_va": "0xB200C6"
+    },
+    {
+      "step": 5,
+      "kind": "read_struct",
+      "detail": "ms：`struct<ms>`（线长 244）—— 机体状态结构（日志串 `ms=`；claim 264 / 线长 244）",
+      "evidence_va": "0xB200EA"
+    },
+    {
+      "step": 6,
+      "kind": "read_struct",
+      "detail": "snapshot：`struct<snapshot>`（线长 39）—— 快照（日志串 `snapshot=`；claim 44 / 线长 39）",
+      "evidence_va": "0xB2010E"
+    },
+    {
+      "step": 7,
+      "kind": "read_struct",
+      "detail": "funnelss：`struct<funnelss>`（线长 10）—— 浮游炮子机（日志串 `funnelss=`；claim 12 / 线长 10）",
+      "evidence_va": "0xB20136"
+    },
+    {
+      "step": 8,
+      "kind": "read_scalar",
+      "detail": "hp_now：`u32`（线长 4）—— 当前 HP（日志串 `hp_now=`）",
+      "evidence_va": "0xB2015E"
+    },
+    {
+      "step": 9,
+      "kind": "read_scalar",
+      "detail": "hp_max：`u32`（线长 4）—— 最大 HP（日志串 `hp_max=`）",
+      "evidence_va": "0xB20186"
+    },
+    {
+      "step": 10,
+      "kind": "read_scalar",
+      "detail": "shield_hp_now：`u32`（线长 4）—— 当前护盾 HP（日志串 `shield_hp_now=`）",
+      "evidence_va": "0xB201AE"
+    },
+    {
+      "step": 11,
+      "kind": "read_scalar",
+      "detail": "shield_hp_max：`u32`（线长 4）—— 最大护盾 HP（日志串 `shield_hp_max=`）",
+      "evidence_va": "0xB201D6"
+    },
+    {
+      "step": 12,
+      "kind": "read_scalar",
+      "detail": "weapon_state_bits：`u16`（线长 2）—— 武器状态位（日志串 `weapon_state_bits=`）",
+      "evidence_va": "0xB201FE"
+    },
+    {
+      "step": 13,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB20212"
+    },
+    {
+      "step": 14,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x150]`，实参 10 个",
+      "evidence_va": "0xB204B6"
+    },
+    {
+      "step": 15,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB200A0"
+    }
+  ],
+  "capabilities": [
+    "unclassified",
+    "battle.entity_appear"
+  ],
+  "capabilities_derived": [
+    "unclassified"
+  ],
+  "db_effects": [
+    {
+      "entity": "funnelss",
+      "table_ref": "tbl_funnelss",
+      "op": "none",
+      "fields": [
+        "funnelss"
+      ],
+      "disposition": "COMPOSITE",
+      "evidence_va": "0xB20136"
+    },
+    {
+      "entity": "snapshot",
+      "table_ref": "tbl_snapshot",
+      "op": "none",
+      "fields": [
+        "snapshot"
+      ],
+      "disposition": "COMPOSITE",
+      "evidence_va": "0xB2010E"
+    },
+    {
+      "entity": "snapshot",
+      "table_ref": "tbl_snapshot",
+      "op": "none",
+      "fields": [
+        "battle_entity"
+      ],
+      "disposition": "EVENT",
+      "evidence_va": "?"
+    }
+  ],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:41",
+    "batch": 1,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 340,
+        "va": "0xB2004B",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB20048",
+        "call_va": "0xB20050"
+      },
+      "field_window": {
+        "start_va": "0xB20037",
+        "end_va": "0xB20233",
+        "guard": {
+          "va": "0xB20036",
+          "func": "0xB05DA0",
+          "module_id": 83,
+          "release_va": "0xB05D90"
+        },
+        "closer_or_commit_va": "0xB20212",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "team",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb20089"
+            ]
+          },
+          {
+            "name": "troops",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb200c6"
+            ]
+          },
+          {
+            "name": "ms",
+            "wire_type": "struct<ms>",
+            "width": null,
+            "seq": 3,
+            "shape": "agg",
+            "evidence_va": [
+              "0xb200ea"
+            ]
+          },
+          {
+            "name": "snapshot",
+            "wire_type": "struct<snapshot>",
+            "width": null,
+            "seq": 4,
+            "shape": "agg",
+            "evidence_va": [
+              "0xb2010e"
+            ]
+          },
+          {
+            "name": "funnelss",
+            "wire_type": "struct<funnelss>",
+            "width": null,
+            "seq": 5,
+            "shape": "agg",
+            "evidence_va": [
+              "0xb20136"
+            ]
+          },
+          {
+            "name": "hp_now",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 6,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb2015e"
+            ]
+          },
+          {
+            "name": "hp_max",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 7,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb20186"
+            ]
+          },
+          {
+            "name": "shield_hp_now",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 8,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb201ae"
+            ]
+          },
+          {
+            "name": "shield_hp_max",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 9,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb201d6"
+            ]
+          },
+          {
+            "name": "weapon_state_bits",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 10,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb201fe"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB06D93",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB06D9C",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB06DB3",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB06DC9",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB06DDF",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB06DEC",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB06E01",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB06E16",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB06E2B",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB06E40",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB06E55",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB06E6A",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB06E7F",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB06E90",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB06EA1",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB06EB2",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB06EC3",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB06ED4",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB06EE5",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB06EF6",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB06F14",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB06F14",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB06F14",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB06F34",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB06F49",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB06F62",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB06F62",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB06F62",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB06F84",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB06F84",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB06F84",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB06FA6",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB06FA6",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB06FA6",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB06FC8",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB06FC8",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB06FC8",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB06FEA",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB06FEA",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB06FEA",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB07012",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB07012",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB07012",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB07040",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB07040",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB07040",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0706E",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0706E",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0706E",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0706E",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0706E",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0706E",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0706E",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0706E",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0706E",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0706E",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0709C",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB070CC",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB070FC",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB070FC",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB070FC",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB070FC",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0712C",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0712C",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0712C",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0712C",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0712C",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0712C",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0712C",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0712C",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0712C",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0712C",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0712C",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0712C",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB07155",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0716E",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB07187",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0719C",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB071B3",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB071CA",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB071DF",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB071F4",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB07209",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB075B3",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB075CF",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB075E7",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB075FF",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0760E",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB07623",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB07638",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0764D",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB07662",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB07677",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0768C",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB076A1",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB076B6",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB076C7",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB076D8",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB076E9",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB076FA",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0770B",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0771C",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0772D",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB07747",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB081CE",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB081E4",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB081F9",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB081F9",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB081F9",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB081F9",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB081F9",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB20089",
+            "kind": "read",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB200C6",
+            "kind": "read",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB200DB",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B05FF0",
+            "consumed": 0,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB200EA",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B06D80",
+            "consumed": null,
+            "consumed_effective": 244,
+            "nested_of": null
+          },
+          {
+            "va": "0xB200FF",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B06010",
+            "consumed": 0,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB2010E",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B075A0",
+            "consumed": 39,
+            "consumed_effective": 39,
+            "nested_of": null
+          },
+          {
+            "va": "0xB20127",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B41460",
+            "consumed": 0,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB20136",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B081C0",
+            "consumed": null,
+            "consumed_effective": 10,
+            "nested_of": null
+          },
+          {
+            "va": "0xB2015E",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB20186",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB201AE",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB201D6",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB201FE",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 7,
+        "checkable": 7,
+        "pairs": [
+          {
+            "field": "team",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB20089",
+            "kind": "read"
+          },
+          {
+            "field": "troops",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB200C6",
+            "kind": "read"
+          },
+          {
+            "field": "hp_now",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB06E16",
+            "kind": "nested"
+          },
+          {
+            "field": "hp_max",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB06E40",
+            "kind": "nested"
+          },
+          {
+            "field": "shield_hp_now",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB06E7F",
+            "kind": "nested"
+          },
+          {
+            "field": "shield_hp_max",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB07187",
+            "kind": "nested"
+          },
+          {
+            "field": "weapon_state_bits",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB076C7",
+            "kind": "nested"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB200DB",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null
+          },
+          {
+            "va": "0xB200EA",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null
+          },
+          {
+            "va": "0xB06D93",
+            "kind": "nested_run",
+            "width": 20,
+            "wire_type": null
+          },
+          {
+            "va": "0xB06DEC",
+            "kind": "nested_run",
+            "width": 2,
+            "wire_type": null
+          },
+          {
+            "va": "0xB06E2B",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null
+          },
+          {
+            "va": "0xB06E55",
+            "kind": "nested_run",
+            "width": 4,
+            "wire_type": null
+          },
+          {
+            "va": "0xB06E90",
+            "kind": "nested_run",
+            "width": 14,
+            "wire_type": null
+          },
+          {
+            "va": "0xB06F14",
+            "kind": "nested_run",
+            "width": 12,
+            "wire_type": null
+          },
+          {
+            "va": "0xB06F34",
+            "kind": "nested_run",
+            "width": 8,
+            "wire_type": null
+          },
+          {
+            "va": "0xB06F62",
+            "kind": "nested_run",
+            "width": 42,
+            "wire_type": null
+          },
+          {
+            "va": "0xB0706E",
+            "kind": "nested_run",
+            "width": 40,
+            "wire_type": null
+          },
+          {
+            "va": "0xB0709C",
+            "kind": "nested_run",
+            "width": 8,
+            "wire_type": null
+          },
+          {
+            "va": "0xB070FC",
+            "kind": "nested_run",
+            "width": 16,
+            "wire_type": null
+          },
+          {
+            "va": "0xB0712C",
+            "kind": "nested_run",
+            "width": 48,
+            "wire_type": null
+          },
+          {
+            "va": "0xB07155",
+            "kind": "nested_run",
+            "width": 2,
+            "wire_type": null
+          },
+          {
+            "va": "0xB0719C",
+            "kind": "nested_run",
+            "width": 4,
+            "wire_type": null
+          },
+          {
+            "va": "0xB071CA",
+            "kind": "nested_run",
+            "width": 3,
+            "wire_type": null
+          },
+          {
+            "va": "0xB07209",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null
+          },
+          {
+            "va": "0xB200FF",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null
+          },
+          {
+            "va": "0xB2010E",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null
+          },
+          {
+            "va": "0xB075B3",
+            "kind": "nested_run",
+            "width": 22,
+            "wire_type": null
+          },
+          {
+            "va": "0xB076A1",
+            "kind": "nested_run",
+            "width": 2,
+            "wire_type": null
+          },
+          {
+            "va": "0xB076D8",
+            "kind": "nested_run",
+            "width": 3,
+            "wire_type": null
+          },
+          {
+            "va": "0xB0770B",
+            "kind": "nested_run",
+            "width": 4,
+            "wire_type": null
+          },
+          {
+            "va": "0xB0772D",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null
+          },
+          {
+            "va": "0xB07747",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null
+          },
+          {
+            "va": "0xB20127",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null
+          },
+          {
+            "va": "0xB20136",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null
+          },
+          {
+            "va": "0xB081CE",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null
+          },
+          {
+            "va": "0xB081E4",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null
+          },
+          {
+            "va": "0xB081F9",
+            "kind": "nested_run",
+            "width": 5,
+            "wire_type": null
+          },
+          {
+            "va": "0xB2015E",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32"
+          },
+          {
+            "va": "0xB20186",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32"
+          },
+          {
+            "va": "0xB201AE",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32"
+          },
+          {
+            "va": "0xB201D6",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32"
+          },
+          {
+            "va": "0xB201FE",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16"
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB20037",
+          "0xB20233"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 59,
+          "capacity": 340,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB200EA",
+              "kind": "composite",
+              "name": "sub_B06D80"
+            },
+            {
+              "va": "0xB20136",
+              "kind": "opaque",
+              "name": "sub_B081C0"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）59 / 容量 0x154"
+        }
+      },
+      "closer": {
+        "va": "0xB20212",
+        "kind": "jz",
+        "jcc_va": "0xB20218",
+        "seq_va": "0xB2020E",
+        "jcc_dst": "0xB20231",
+        "cmp": "cmp     ebx, [esp+1B3Ch+var_1B24]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x150]",
+        "slot_value": 336,
+        "va": "0xB204B6",
+        "mov_va": "0xB204AD",
+        "host": "[eax+150h]",
+        "argc": 10,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB200A0",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "team=",
+        "troops=",
+        "ms=",
+        "snapshot=",
+        "funnelss=",
+        "hp_now=",
+        "hp_max=",
+        "shield_hp_now=",
+        "shield_hp_max=",
+        "weapon_state_bits="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0x7621-battle-entity_msma_appear_self.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "`0xb20255`"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "EntityMsmaAppearSelf",
+      "role": "response",
+      "wire_length": "1 + 1 + 244 + 39 + 10 + 4 + 4 + 4 + 4 + 2",
+      "members": [
+        {
+          "name": "Team",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "team"
+        },
+        {
+          "name": "Troops",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "troops"
+        },
+        {
+          "name": "Ms",
+          "wire_type": "struct<ms>",
+          "length": "244",
+          "field_ref": "ms",
+          "element": "ms",
+          "element_length": "244",
+          "cap": null,
+          "composite_ref": "ms",
+          "count_field": null,
+          "count_field_source": "fixed",
+          "members_source": "composite"
+        },
+        {
+          "name": "Snapshot",
+          "wire_type": "struct<snapshot>",
+          "length": "39",
+          "field_ref": "snapshot",
+          "element": "snapshot",
+          "element_length": "39",
+          "cap": null,
+          "composite_ref": "snapshot",
+          "count_field": null,
+          "count_field_source": "fixed",
+          "members_source": "composite"
+        },
+        {
+          "name": "Funnelss",
+          "wire_type": "struct<funnelss>",
+          "length": "10",
+          "field_ref": "funnelss",
+          "element": "funnelss",
+          "element_length": "10",
+          "cap": null,
+          "composite_ref": "funnelss",
+          "count_field": null,
+          "count_field_source": "fixed",
+          "members_source": "composite"
+        },
+        {
+          "name": "HpNow",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "hp_now"
+        },
+        {
+          "name": "HpMax",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "hp_max"
+        },
+        {
+          "name": "ShieldHpNow",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "shield_hp_now"
+        },
+        {
+          "name": "ShieldHpMax",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "shield_hp_max"
+        },
+        {
+          "name": "WeaponStateBits",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "weapon_state_bits"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "2114c6309cbf4276",
+  "check_fingerprint": "56da3353edecda6c"
+}

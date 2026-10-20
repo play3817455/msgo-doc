@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>等级判定履历 · db_design</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <h1><a href="../index.html">db_design</a></h1>
+      <p class="header-note">唯一证据源：<code>protocol_analysis/</code></p>
+      <nav><a href="../index.html">首页</a>
+      <a href="../homing/index.html">归位库</a>
+      <a href="../tables/index.html" class="active">旧表留档</a>
+      <a href="../commands/index.html">命令</a>
+      <a href="../cfg/index.html">配置表79</a>
+      <a href="../srv/index.html">服务端配置</a>
+      <a href="../asm-audit/index.html">ASM 审计</a>
+      <a href="../oracle-audit/index.html">Oracle 审计</a>
+      <a href="../entities/index.html">协议实体</a>
+      <a href="../fields/index.html">字段索引</a>
+      <a href="../relations.html">表关系</a></nav>
+    </div>
+  </header>
+  <main class="wrap">
+
+    <nav class="breadcrumb"><a href="index.html">表设计</a> / <span><code>tbl_lvjudge_hist</code></span></nav>
+    <h2>等级判定履历 <span class="badge" style="background:#2e7d32">complete</span> <span class="badge" style="background:#2e7d32">ASM ✓</span></h2>
+    <p>持久化 lvjudge_hist 369B；8 成员（sub_B44750/sub_B4BE80）</p>
+    <p class="muted">共 9 节点 · PERSIST 8 · TBD 0</p>
+    
+    <section class="asm-panel">
+      <h3>ASM 审计 <span class="badge" style="background:#2e7d32">ASM ✓</span> · memory <span class="badge" style="background:#2e7d32">ASM ✓</span></h3>
+      <dl class="asm-dl">
+        <dt>composite</dt><dd><code>lvjudge_hist</code></dd>
+        <dt>reader</dt><dd><code>sub_B44750</code></dd>
+        <dt>线长</dt><dd>369 B
+           / 槽 372 B</dd>
+        <dt>wire_layout</dt><dd><code>u32 + u32[24] + 2×u32 + u16[24] + u16[24] + u8[65] + u32[25]</code></dd>
+        <dt>wire 字段</dt><dd>8 ok</dd>
+        <dt>memory 字段</dt><dd>8 audited · 8 ok</dd>
+        <dt>verified</dt><dd>wire 2026-09-20 · mem 2026-09-26</dd>
+      </dl>
+    </section>
+    <h3>证据命令</h3>
+    <ul><li><a href="../commands/SC-0xDC47-lounge-pilot_record_get_r.html"><code>SC-0xDC47-lounge-pilot_record_get_r</code></a> · <a href="../../../protocol_analysis/commands/SC-0xDC47-lounge-pilot_record_get_r/README.md" target="_blank">protocol README</a></li></ul>
+
+    <h3 id="columns">列树（按分组）</h3>
+    <div class="tree-legend">
+      <span>列名</span><span>线类型</span><span>disposition</span><span>含义</span><span>→ protocol 证据</span>
+    </div>
+    
+    <section class="col-group">
+      <h3>lvjudge_hist（369B）</h3>
+      <ul class="field-tree root-tree"><li class="tree-branch">
+      <details open>
+        <summary><code class='fname'>lvjudge_hist</code> <code class='ftype'>struct</code> <span class='offset'></span> <span class="badge" style="background:#455a64">COMPOSITE</span> <span class="muted">← <code>lvjudge_hist</code></span></summary>
+        <div class="tree-body">
+          <div class="tree-detail">等级判定履历（日志 lvjudge_hist={；claim 372 / 线 369）</div>
+          <div class="evidence-line"><code>SC-0xDC47-lounge-pilot_record_get_r</code> struct <code>lvjudge_hist</code> @1454 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xDC47-lounge-pilot_record_get_r/README.md" target="_blank">📄 protocol</a></div>
+          <ul class="field-tree"><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">pilot_id</code>
+          <code class="ftype">u32</code>
+          <span class="offset">wire +0 4B</span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xB44769|B4BE80">✓</span>
+        </div>
+        <div class="tree-meaning">机师 ID</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0xDC47-lounge-pilot_record_get_r</code> struct <code>lvjudge_hist</code> @0 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xDC47-lounge-pilot_record_get_r/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">lv_history</code>
+          <code class="ftype">u32[24]</code>
+          <span class="offset">wire +4 96B</span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xB4478E|B4BE80">✓</span>
+        </div>
+        <div class="tree-meaning">等级历史（24 档）</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0xDC47-lounge-pilot_record_get_r</code> struct <code>lvjudge_hist</code> @4 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xDC47-lounge-pilot_record_get_r/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">lv_history_num</code>
+          <code class="ftype">u32</code>
+          <span class="offset">wire +100 4B</span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xB447AE|B4BE80">✓</span>
+        </div>
+        <div class="tree-meaning">等级历史有效条数</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0xDC47-lounge-pilot_record_get_r</code> struct <code>lvjudge_hist</code> @100 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xDC47-lounge-pilot_record_get_r/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">lv_history_max</code>
+          <code class="ftype">u32</code>
+          <span class="offset">wire +104 4B</span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xB447C4|B4BE80">✓</span>
+        </div>
+        <div class="tree-meaning">等级历史最大条数</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0xDC47-lounge-pilot_record_get_r</code> struct <code>lvjudge_hist</code> @104 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xDC47-lounge-pilot_record_get_r/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">xwarwin_history</code>
+          <code class="ftype">u16[24]</code>
+          <span class="offset">wire +108 48B</span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xB447E1|B4BE80">✓</span>
+        </div>
+        <div class="tree-meaning">大规模战胜场历史</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0xDC47-lounge-pilot_record_get_r</code> struct <code>lvjudge_hist</code> @108 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xDC47-lounge-pilot_record_get_r/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">xwarlose_history</code>
+          <code class="ftype">u16[24]</code>
+          <span class="offset">wire +156 48B</span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xB4480B|B4BE80">✓</span>
+        </div>
+        <div class="tree-meaning">大规模战败场历史</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0xDC47-lounge-pilot_record_get_r</code> struct <code>lvjudge_hist</code> @156 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xDC47-lounge-pilot_record_get_r/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">termstr_now</code>
+          <code class="ftype">u8[65]</code>
+          <span class="offset">wire +204 65B</span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xB4482C|B4BE80">✓</span>
+        </div>
+        <div class="tree-meaning">当前赛季串（C 串）</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0xDC47-lounge-pilot_record_get_r</code> struct <code>lvjudge_hist</code> @204 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xDC47-lounge-pilot_record_get_r/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">term_old</code>
+          <code class="ftype">u32[25]</code>
+          <span class="offset">wire +269 mem +272 100B</span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xB44852|B4BE80">✓</span>
+        </div>
+        <div class="tree-meaning">历史赛季 ID（25 个）</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0xDC47-lounge-pilot_record_get_r</code> struct <code>lvjudge_hist</code> @269 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xDC47-lounge-pilot_record_get_r/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li></ul>
+        </div>
+      </details>
+    </li></ul>
+    </section>
+
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">生成于 2026-10-12 · 改 JSON 后重跑 build_site.py · HTML 只读</div>
+  </footer>
+</body>
+</html>

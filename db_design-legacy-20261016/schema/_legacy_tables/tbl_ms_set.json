@@ -1,0 +1,60 @@
+{
+  "id": "tbl_ms_set",
+  "title": "机体套装",
+  "status": "complete",
+  "table_disposition": "PERSIST",
+  "purpose": "持久化 ms_set 95B 结构；证据 CS-0xA76E / SC-0xB8BB 跨方向互证",
+  "entity_ref": "ms_set",
+  "row_key": {
+    "columns": [
+      "deck_type",
+      "deck_slot"
+    ],
+    "reason": "一套卡组由「卡组类型 + 卡组槽位」共同定位：C→S `msma_msset_del`(0xBC92) 与 `msma_msset_apply`(0x7306) 都同时带 deck_type+slot，且客户端按这一对查记录（`sub_6183B0(deck_type, deck_slot)` @0x8266FF/0x826A0E）；95B 结构体里这两个成员本身就在（偏移 8/10）。S→C `msma_msset_get_r`(0x356F) 一次列 ≤20 套（`cmp ebx,14h` @0xB5BB57）。若只用 deck_slot 做行键，不同类型、同一槽位的两套卡组会互相 upsert 覆盖——与 missionunit_set(deck_type+deck_set) 同形。",
+    "evidence_va": "B98B2A|B98B38|B98D1A|B98D28|8266FF|826A0E|B5BB57",
+    "verified": "2026-09-21"
+  },
+  "evidence_commands": [
+    "CS-0xA76E-lounge-msma_msset_store",
+    "SC-0xB8BB-lounge-msma_msset_store_r",
+    "CS-0xBC92-lounge-msma_msset_del",
+    "CS-0x7306-lounge-msma_msset_apply",
+    "SC-0x356F-lounge-msma_msset_get_r"
+  ],
+  "column_groups": [
+    {
+      "name": "ms_set（95B）",
+      "columns": [
+        "ms_set"
+      ]
+    }
+  ],
+  "columns": [
+    {
+      "name": "ms_set",
+      "disposition": "COMPOSITE",
+      "composite_ref": "ms_set",
+      "meaning": "机体套装存储数据（95B）",
+      "wire_sources": [
+        {
+          "command": "CS-0xA76E-lounge-msma_msset_store",
+          "struct": "ms_set",
+          "offset": 2,
+          "length": 95,
+          "wire_type": "struct(ms_set)",
+          "protocol_path": "protocol_analysis/commands/CS-0xA76E-lounge-msma_msset_store/README.md",
+          "section": "§3",
+          "writer": "sub_B41B10"
+        }
+      ],
+      "asm_verified": true
+    }
+  ],
+  "asm_audit": {
+    "composite_ref": "ms_set",
+    "status": "pass",
+    "issues_count": 0,
+    "memory_status": "pass",
+    "memory_issues_count": 0
+  }
+}

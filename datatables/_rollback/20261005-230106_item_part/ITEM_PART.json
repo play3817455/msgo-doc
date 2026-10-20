@@ -1,0 +1,1284 @@
+{
+  "id": "ITEM_PART",
+  "note": "改前（21 列）记录；由 serverv/static/cfg_schema.json 抽出",
+  "columns": {
+    "item_part_id": {
+      "name": "item_part_id",
+      "display_name": "主键；装备零件 ID",
+      "type": "u32",
+      "status": "confirmed",
+      "csv_index": 0,
+      "meaning": "主键；装备零件 ID",
+      "asm_reader": "sub_5955A0",
+      "asm_va": "0x5955dd"
+    },
+    "col1": {
+      "name": "col1",
+      "display_name": "CSV col1 预留",
+      "type": "u32",
+      "status": "gap",
+      "csv_index": 1,
+      "meaning": "CSV col1 预留（sub_5955A0 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）",
+      "asm_reader": "sub_5955A0"
+    },
+    "linked_item_id": {
+      "name": "linked_item_id",
+      "display_name": "关联 ITEM 行 ID（u32 @+4）",
+      "type": "u32",
+      "status": "confirmed",
+      "csv_index": 2,
+      "meaning": "关联 ITEM 行 ID（u32 @+4）",
+      "asm_reader": "sub_5955A0",
+      "asm_va": "0x5955e7"
+    },
+    "part_group_id": {
+      "name": "part_group_id",
+      "display_name": "零件组 ID（u32 @+8）",
+      "type": "u32",
+      "status": "confirmed",
+      "csv_index": 3,
+      "meaning": "零件组 ID（u32 @+8）",
+      "asm_reader": "sub_5955A0",
+      "asm_va": "0x5955f2"
+    },
+    "target_category": {
+      "name": "target_category",
+      "display_name": "作用大类：MS/WEAPON/ARMOR/OTHER（sub_5954A0 @+12）",
+      "type": "enum",
+      "status": "confirmed",
+      "csv_index": 4,
+      "meaning": "作用大类：MS/WEAPON/ARMOR/OTHER（sub_5954A0 @+12）",
+      "enum_values": [
+        {
+          "name": "MS",
+          "value": 0,
+          "label_zh": "机体"
+        },
+        {
+          "name": "WEAPON",
+          "value": 1,
+          "label_zh": "武器"
+        },
+        {
+          "name": "ARMOR",
+          "value": 2,
+          "label_zh": "装甲"
+        },
+        {
+          "name": "OTHER",
+          "value": 3,
+          "label_zh": "其他"
+        }
+      ],
+      "enum_converter": "sub_5954A0",
+      "asm_reader": "sub_5955A0",
+      "asm_va": "0x595605"
+    },
+    "trigger_threshold_a": {
+      "name": "trigger_threshold_a",
+      "display_name": "触发条件阈值 A（float @+16；与 col10 触发类型配合）",
+      "type": "float",
+      "status": "confirmed",
+      "csv_index": 5,
+      "meaning": "触发条件阈值 A（float @+16；与 col10 触发类型配合）",
+      "asm_reader": "sub_5955A0",
+      "asm_va": "0x595618"
+    },
+    "trigger_threshold_b": {
+      "name": "trigger_threshold_b",
+      "display_name": "触发条件阈值 B（float @+20）",
+      "type": "float",
+      "status": "confirmed",
+      "csv_index": 6,
+      "meaning": "触发条件阈值 B（float @+20）",
+      "asm_reader": "sub_5955A0",
+      "asm_va": "0x595623"
+    },
+    "trigger_threshold_c": {
+      "name": "trigger_threshold_c",
+      "display_name": "触发条件阈值 C（float @+24）",
+      "type": "float",
+      "status": "confirmed",
+      "csv_index": 7,
+      "meaning": "触发条件阈值 C（float @+24）",
+      "asm_reader": "sub_5955A0",
+      "asm_va": "0x59562e"
+    },
+    "trigger_threshold_d": {
+      "name": "trigger_threshold_d",
+      "display_name": "触发条件阈值 D（float @+28）",
+      "type": "float",
+      "status": "confirmed",
+      "csv_index": 8,
+      "meaning": "触发条件阈值 D（float @+28）",
+      "asm_reader": "sub_5955A0",
+      "asm_va": "0x595639"
+    },
+    "trigger_threshold_e": {
+      "name": "trigger_threshold_e",
+      "display_name": "触发条件阈值 E（float @+32）",
+      "type": "float",
+      "status": "confirmed",
+      "csv_index": 9,
+      "meaning": "触发条件阈值 E（float @+32）",
+      "asm_reader": "sub_5955A0",
+      "asm_va": "0x595644"
+    },
+    "trigger_type_primary": {
+      "name": "trigger_type_primary",
+      "display_name": "主触发时机（sub_5951D0 @+36：SPAWN/KILL/ARMOR_RATE…）",
+      "type": "enum",
+      "status": "confirmed",
+      "csv_index": 10,
+      "meaning": "主触发时机（sub_5951D0 @+36：SPAWN/KILL/ARMOR_RATE…）",
+      "enum_values": [
+        {
+          "name": "ANYTIME",
+          "value": 1,
+          "label_zh": "随时"
+        },
+        {
+          "name": "SPAWN",
+          "value": 2,
+          "label_zh": "生成时"
+        },
+        {
+          "name": "DEATH",
+          "value": 3,
+          "label_zh": "死亡时"
+        },
+        {
+          "name": "ARMOR_REMAIN",
+          "value": 4,
+          "label_zh": "装甲·REMAIN"
+        },
+        {
+          "name": "KILL_STREAK",
+          "value": 5,
+          "label_zh": "击杀·STREAK"
+        },
+        {
+          "name": "DEATH_STREAK",
+          "value": 6,
+          "label_zh": "死亡时·STREAK"
+        },
+        {
+          "name": "DID_LOCKON",
+          "value": 7,
+          "label_zh": "Did·锁定"
+        },
+        {
+          "name": "GOT_LOCKON",
+          "value": 8,
+          "label_zh": "Got·锁定"
+        },
+        {
+          "name": "USER_READYTIME",
+          "value": 9,
+          "label_zh": "玩家·准备时间"
+        },
+        {
+          "name": "USER_KEYACTION",
+          "value": 10,
+          "label_zh": "玩家·按键动作"
+        },
+        {
+          "name": "ARMOR_RATE",
+          "value": 11,
+          "label_zh": "装甲·Rate"
+        },
+        {
+          "name": "WARP_AND_USER_KEYACTION",
+          "value": 12,
+          "label_zh": "传送·And·User·按键动作"
+        },
+        {
+          "name": "TAKEOVER_DAMAGE",
+          "value": 13,
+          "label_zh": "继承·DAMAGE"
+        },
+        {
+          "name": "KILL",
+          "value": 14,
+          "label_zh": "击杀"
+        },
+        {
+          "name": "LEVEL_GAUGE",
+          "value": 15,
+          "label_zh": "等级槽"
+        },
+        {
+          "name": "COMB_UK_SPAWN",
+          "value": 16,
+          "label_zh": "Comb·Uk·生成时"
+        },
+        {
+          "name": "USER_KEYACTION_ON",
+          "value": 17,
+          "label_zh": "玩家·按键动作·开启"
+        },
+        {
+          "name": "USER_KEYACTION_OFF",
+          "value": 18,
+          "label_zh": "玩家·按键动作·关闭"
+        },
+        {
+          "name": "USER_KEYACTION_RELEASE",
+          "value": 19,
+          "label_zh": "玩家·按键动作·释放"
+        },
+        {
+          "name": "WEAPON_HIT",
+          "value": 20,
+          "label_zh": "武器·Hit"
+        },
+        {
+          "name": "MODEL_ID",
+          "value": 21,
+          "label_zh": "模型ID"
+        },
+        {
+          "name": "REDUCE_ARMOR",
+          "value": 22,
+          "label_zh": "REDUCE·装甲"
+        },
+        {
+          "name": "COMB_STYLE_CHANGE_INITIAL_POINT",
+          "value": 23,
+          "label_zh": "组合·风格变更初始点"
+        }
+      ],
+      "enum_converter": "sub_5951D0",
+      "asm_reader": "sub_5955A0",
+      "asm_va": "0x59565c"
+    },
+    "effect_magnitude": {
+      "name": "effect_magnitude",
+      "display_name": "效果幅度（float @+40；写入机体/武器参数）",
+      "type": "float",
+      "status": "confirmed",
+      "csv_index": 11,
+      "meaning": "效果幅度（float @+40；写入机体/武器参数）",
+      "asm_reader": "sub_5955A0",
+      "asm_va": "0x59566b"
+    },
+    "trigger_type_secondary": {
+      "name": "trigger_type_secondary",
+      "display_name": "副触发时机（sub_5951D0 @+44）",
+      "type": "enum",
+      "status": "confirmed",
+      "csv_index": 12,
+      "meaning": "副触发时机（sub_5951D0 @+44）",
+      "enum_values": [
+        {
+          "name": "ANYTIME",
+          "value": 1,
+          "label_zh": "随时"
+        },
+        {
+          "name": "SPAWN",
+          "value": 2,
+          "label_zh": "生成时"
+        },
+        {
+          "name": "DEATH",
+          "value": 3,
+          "label_zh": "死亡时"
+        },
+        {
+          "name": "ARMOR_REMAIN",
+          "value": 4,
+          "label_zh": "装甲·REMAIN"
+        },
+        {
+          "name": "KILL_STREAK",
+          "value": 5,
+          "label_zh": "击杀·STREAK"
+        },
+        {
+          "name": "DEATH_STREAK",
+          "value": 6,
+          "label_zh": "死亡时·STREAK"
+        },
+        {
+          "name": "DID_LOCKON",
+          "value": 7,
+          "label_zh": "Did·锁定"
+        },
+        {
+          "name": "GOT_LOCKON",
+          "value": 8,
+          "label_zh": "Got·锁定"
+        },
+        {
+          "name": "USER_READYTIME",
+          "value": 9,
+          "label_zh": "玩家·准备时间"
+        },
+        {
+          "name": "USER_KEYACTION",
+          "value": 10,
+          "label_zh": "玩家·按键动作"
+        },
+        {
+          "name": "ARMOR_RATE",
+          "value": 11,
+          "label_zh": "装甲·Rate"
+        },
+        {
+          "name": "WARP_AND_USER_KEYACTION",
+          "value": 12,
+          "label_zh": "传送·And·User·按键动作"
+        },
+        {
+          "name": "TAKEOVER_DAMAGE",
+          "value": 13,
+          "label_zh": "继承·DAMAGE"
+        },
+        {
+          "name": "KILL",
+          "value": 14,
+          "label_zh": "击杀"
+        },
+        {
+          "name": "LEVEL_GAUGE",
+          "value": 15,
+          "label_zh": "等级槽"
+        },
+        {
+          "name": "COMB_UK_SPAWN",
+          "value": 16,
+          "label_zh": "Comb·Uk·生成时"
+        },
+        {
+          "name": "USER_KEYACTION_ON",
+          "value": 17,
+          "label_zh": "玩家·按键动作·开启"
+        },
+        {
+          "name": "USER_KEYACTION_OFF",
+          "value": 18,
+          "label_zh": "玩家·按键动作·关闭"
+        },
+        {
+          "name": "USER_KEYACTION_RELEASE",
+          "value": 19,
+          "label_zh": "玩家·按键动作·释放"
+        },
+        {
+          "name": "WEAPON_HIT",
+          "value": 20,
+          "label_zh": "武器·Hit"
+        },
+        {
+          "name": "MODEL_ID",
+          "value": 21,
+          "label_zh": "模型ID"
+        },
+        {
+          "name": "REDUCE_ARMOR",
+          "value": 22,
+          "label_zh": "REDUCE·装甲"
+        },
+        {
+          "name": "COMB_STYLE_CHANGE_INITIAL_POINT",
+          "value": 23,
+          "label_zh": "组合·风格变更初始点"
+        }
+      ],
+      "enum_converter": "sub_5951D0",
+      "asm_reader": "sub_5955A0"
+    },
+    "param_mod_value": {
+      "name": "param_mod_value",
+      "display_name": "参数修改值（float @+48；csv13 浮点读法，与 col16/17 成对）",
+      "type": "float",
+      "status": "confirmed",
+      "csv_index": 13,
+      "meaning": "参数修改值（float @+48；csv13 浮点读法，与 col16/17 成对）",
+      "asm_reader": "sub_5955A0",
+      "asm_va": "0x5956a2"
+    },
+    "param_mod_value_b": {
+      "name": "param_mod_value_b",
+      "display_name": "参数修改值 B（float @+52）",
+      "type": "float",
+      "status": "confirmed",
+      "csv_index": 14,
+      "meaning": "参数修改值 B（float @+52）",
+      "asm_reader": "sub_5955A0",
+      "asm_va": "0x5956ad"
+    },
+    "param_mod_value_c": {
+      "name": "param_mod_value_c",
+      "display_name": "参数修改值 C（float @+56）",
+      "type": "float",
+      "status": "confirmed",
+      "csv_index": 15,
+      "meaning": "参数修改值 C（float @+56）",
+      "asm_reader": "sub_5955A0",
+      "asm_va": "0x5956b8"
+    },
+    "effect_scope": {
+      "name": "effect_scope",
+      "display_name": "作用对象范围（sub_5952C0：MS/WEAPON_SLOT_MAIN…）",
+      "type": "enum",
+      "status": "confirmed",
+      "csv_index": 16,
+      "meaning": "作用对象范围（sub_5952C0：MS/WEAPON_SLOT_MAIN…）",
+      "enum_values": [
+        {
+          "name": "MS",
+          "value": 1,
+          "label_zh": "机体"
+        },
+        {
+          "name": "MS_EXAM",
+          "value": 2,
+          "label_zh": "机体·考试"
+        },
+        {
+          "name": "MS_TRANS",
+          "value": 3,
+          "label_zh": "机体·变形"
+        },
+        {
+          "name": "MS_HADES",
+          "value": 4,
+          "label_zh": "机体·Hades"
+        },
+        {
+          "name": "WEAPON_SLOT_MAIN",
+          "value": 11,
+          "label_zh": "武器·Slot·主武装"
+        },
+        {
+          "name": "WEAPON_SLOT_SUB",
+          "value": 12,
+          "label_zh": "武器·Slot·副武装"
+        },
+        {
+          "name": "WEAPON_SLOT_EX",
+          "value": 13,
+          "label_zh": "武器·Slot·EX武装"
+        },
+        {
+          "name": "WEAPON_SLOT_ALL_EXAM",
+          "value": 15,
+          "label_zh": "武器·Slot·All·Exam"
+        },
+        {
+          "name": "WEAPON_SLOT_ALL_HADES",
+          "value": 16,
+          "label_zh": "武器·Slot·All·HADES"
+        },
+        {
+          "name": "WEAPON_MACHINEGUN",
+          "value": 21,
+          "label_zh": "武器·机枪"
+        },
+        {
+          "name": "WEAPON_SHOTGUN",
+          "value": 22,
+          "label_zh": "武器·霰弹枪"
+        },
+        {
+          "name": "WEAPON_BAZOOKA",
+          "value": 23,
+          "label_zh": "武器·火箭筒"
+        },
+        {
+          "name": "WEAPON_GLAUNCHER",
+          "value": 24,
+          "label_zh": "武器·GLAUNCHER"
+        },
+        {
+          "name": "WEAPON_MISSILE",
+          "value": 25,
+          "label_zh": "武器·导弹"
+        },
+        {
+          "name": "WEAPON_BEAM",
+          "value": 26,
+          "label_zh": "武器·光束"
+        },
+        {
+          "name": "WEAPON_WRESTLE",
+          "value": 27,
+          "label_zh": "武器·格斗"
+        },
+        {
+          "name": "WEAPON_SNIPE",
+          "value": 28,
+          "label_zh": "武器·狙击"
+        },
+        {
+          "name": "WEAPON_TRENCH_MORTAR",
+          "value": 29,
+          "label_zh": "武器·TRENCH·MORTAR"
+        },
+        {
+          "name": "WEAPON_LANDMINE",
+          "value": 30,
+          "label_zh": "武器·地雷"
+        },
+        {
+          "name": "WEAPON_HAND_THROW",
+          "value": 31,
+          "label_zh": "武器·Hand·THROW"
+        },
+        {
+          "name": "WEAPON_SENTRYGUN",
+          "value": 32,
+          "label_zh": "武器·SENTRYGUN"
+        },
+        {
+          "name": "WEAPON_REPAIR",
+          "value": 33,
+          "label_zh": "武器·修理"
+        },
+        {
+          "name": "WEAPON_SHIELD",
+          "value": 34,
+          "label_zh": "武器·护盾/盾战"
+        },
+        {
+          "name": "WEAPON_RADAR",
+          "value": 35,
+          "label_zh": "武器·RADAR"
+        },
+        {
+          "name": "WEAPON_CAMERAGUN",
+          "value": 36,
+          "label_zh": "武器·摄像枪"
+        },
+        {
+          "name": "WEAPON_BULLET_PACK",
+          "value": 37,
+          "label_zh": "武器·BULLET·Pack"
+        },
+        {
+          "name": "WEAPON_AAG_POD",
+          "value": 38,
+          "label_zh": "武器·Aag·Pod"
+        },
+        {
+          "name": "WEAPON_REPAIR_PACK",
+          "value": 39,
+          "label_zh": "武器·修理·Pack"
+        },
+        {
+          "name": "WEAPON_RESURRECT",
+          "value": 40,
+          "label_zh": "武器·RESURRECT"
+        },
+        {
+          "name": "WEAPON_BAKUDOSAKU",
+          "value": 41,
+          "label_zh": "武器·BAKUDOSAKU"
+        },
+        {
+          "name": "WEAPON_FUNNEL",
+          "value": 42,
+          "label_zh": "武器·FUNNEL"
+        },
+        {
+          "name": "OTHER",
+          "value": 99,
+          "label_zh": "其他"
+        }
+      ],
+      "enum_converter": "sub_5952C0",
+      "asm_reader": "sub_5955A0",
+      "asm_va": "0x5956e8"
+    },
+    "stat_name": {
+      "name": "stat_name",
+      "display_name": "机体/武器参数名（sub_5953B0：MS_ARMOR/W_POWER…）",
+      "type": "enum",
+      "status": "confirmed",
+      "csv_index": 17,
+      "meaning": "机体/武器参数名（sub_5953B0：MS_ARMOR/W_POWER…）",
+      "enum_values": [
+        {
+          "name": "MS_ARMOR",
+          "value": 100,
+          "label_zh": "Ms·装甲"
+        },
+        {
+          "name": "MS_BOOST_SPEED",
+          "value": 102,
+          "label_zh": "机体·BOOST速度"
+        },
+        {
+          "name": "MS_BOOST_GAUGE",
+          "value": 103,
+          "label_zh": "机体·BOOST槽"
+        },
+        {
+          "name": "MS_BOOST_RECOVER",
+          "value": 104,
+          "label_zh": "机体·BOOST恢复"
+        },
+        {
+          "name": "MS_PAYLOAD",
+          "value": 105,
+          "label_zh": "机体·载荷"
+        },
+        {
+          "name": "MS_WARP",
+          "value": 106,
+          "label_zh": "机体·传送"
+        },
+        {
+          "name": "MS_ARMOR_PER",
+          "value": 101,
+          "label_zh": "Ms·装甲·Per"
+        },
+        {
+          "name": "MS_ARMOR_NOW",
+          "value": 107,
+          "label_zh": "Ms·装甲·Now"
+        },
+        {
+          "name": "MS_BOOST_GAUGE_RECOV",
+          "value": 109,
+          "label_zh": "机体·BOOST回复"
+        },
+        {
+          "name": "MS_DEF_SOLID",
+          "value": 110,
+          "label_zh": "Ms·Def·实弹"
+        },
+        {
+          "name": "MS_DEF_BEAM",
+          "value": 111,
+          "label_zh": "Ms·Def·光束"
+        },
+        {
+          "name": "MS_DEF_BLAST",
+          "value": 112,
+          "label_zh": "Ms·Def·爆炸"
+        },
+        {
+          "name": "MS_DEF_PLACE_GROUND",
+          "value": 120,
+          "label_zh": "Ms·Def·PLACE·地面"
+        },
+        {
+          "name": "MS_DEF_PLACE_WATAR",
+          "value": 121,
+          "label_zh": "机体·抗PLACE·WATAR"
+        },
+        {
+          "name": "MS_AI_PARAM",
+          "value": 122,
+          "label_zh": "机体·Ai参数"
+        },
+        {
+          "name": "MS_ZERO_BOOST",
+          "value": 141,
+          "label_zh": "机体·Zero·BOOST"
+        },
+        {
+          "name": "MS_EXTEND_BADSTAT",
+          "value": 143,
+          "label_zh": "机体·EXTEND·BADSTAT"
+        },
+        {
+          "name": "MS_SUPPLY_BULLET_PACK",
+          "value": 216,
+          "label_zh": "机体·SUPPLY·BULLET·包"
+        },
+        {
+          "name": "MS_PROPER_SPACE",
+          "value": 160,
+          "label_zh": "Ms·PROPER·宇宙"
+        },
+        {
+          "name": "MS_PROPER_WATER",
+          "value": 161,
+          "label_zh": "Ms·PROPER·水中"
+        },
+        {
+          "name": "MS_PROPER_GROUND",
+          "value": 162,
+          "label_zh": "Ms·PROPER·地面"
+        },
+        {
+          "name": "MS_NOT_BROKEN",
+          "value": 163,
+          "label_zh": "机体·Not·破损"
+        },
+        {
+          "name": "MS_NOT_BROKEN_SHIELD",
+          "value": 164,
+          "label_zh": "Ms·Not·BROKEN·护盾/盾战"
+        },
+        {
+          "name": "MS_DASH",
+          "value": 165,
+          "label_zh": "机体·Dash"
+        },
+        {
+          "name": "MS_JUMP",
+          "value": 166,
+          "label_zh": "机体·Jump"
+        },
+        {
+          "name": "MS_BOOST_REPAIR",
+          "value": 169,
+          "label_zh": "Ms·BOOST·修理"
+        },
+        {
+          "name": "MS_STALKING",
+          "value": 170,
+          "label_zh": "机体·STALKING"
+        },
+        {
+          "name": "MS_ZWARP_ASSIST",
+          "value": 171,
+          "label_zh": "机体·ZWARP·助攻"
+        },
+        {
+          "name": "MS_ANTI_WRESTLE",
+          "value": 172,
+          "label_zh": "Ms·Anti·格斗"
+        },
+        {
+          "name": "MS_WRESTLE",
+          "value": 173,
+          "label_zh": "Ms·格斗"
+        },
+        {
+          "name": "MS_QUICK_LOCKON",
+          "value": 174,
+          "label_zh": "机体·快速锁定"
+        },
+        {
+          "name": "MS_MISSILE_SCOPE",
+          "value": 175,
+          "label_zh": "Ms·导弹·SCOPE"
+        },
+        {
+          "name": "MS_WRESTLE_CONTROL",
+          "value": 176,
+          "label_zh": "Ms·格斗·CONTROL"
+        },
+        {
+          "name": "MS_CAMERAGUN",
+          "value": 177,
+          "label_zh": "Ms·摄像枪"
+        },
+        {
+          "name": "MS_SHIELD_BREAK",
+          "value": 178,
+          "label_zh": "Ms·护盾/盾战·BREAK"
+        },
+        {
+          "name": "MS_SHIELD_COATING",
+          "value": 183,
+          "label_zh": "Ms·护盾/盾战·COATING"
+        },
+        {
+          "name": "MS_QUICK_CHARGE",
+          "value": 179,
+          "label_zh": "机体·快速·CHARGE"
+        },
+        {
+          "name": "MS_REACTION",
+          "value": 180,
+          "label_zh": "机体·REACTION"
+        },
+        {
+          "name": "MS_INITATION_EXTENSION",
+          "value": 181,
+          "label_zh": "机体·INITATION·EXTENSION"
+        },
+        {
+          "name": "MS_SHIELD",
+          "value": 182,
+          "label_zh": "Ms·护盾/盾战"
+        },
+        {
+          "name": "MS_DEF_HEADSHOT",
+          "value": 184,
+          "label_zh": "机体·抗HEADSHOT"
+        },
+        {
+          "name": "MS_DEF_BACKSHOT",
+          "value": 185,
+          "label_zh": "机体·抗BACKSHOT"
+        },
+        {
+          "name": "MS_STAGGRY_PER",
+          "value": 186,
+          "label_zh": "机体·STAGGRY·百分比"
+        },
+        {
+          "name": "MS_TUMBLE_PER",
+          "value": 187,
+          "label_zh": "机体·滚·百分比"
+        },
+        {
+          "name": "MS_QUICK_GETUP",
+          "value": 188,
+          "label_zh": "机体·快速·GETUP"
+        },
+        {
+          "name": "MS_RAPID_GUNTURRET",
+          "value": 189,
+          "label_zh": "机体·RAPID·炮塔"
+        },
+        {
+          "name": "MS_SPACE_LEVITATION",
+          "value": 190,
+          "label_zh": "Ms·宇宙·LEVITATION"
+        },
+        {
+          "name": "MS_OVER_BOOST",
+          "value": 194,
+          "label_zh": "机体·Over·BOOST"
+        },
+        {
+          "name": "MS_DEFECTIVE_ENGINE",
+          "value": 195,
+          "label_zh": "机体·DEFECTIVE·ENGINE"
+        },
+        {
+          "name": "MS_LANDING_CONTROL",
+          "value": 199,
+          "label_zh": "机体·LANDING·CONTROL"
+        },
+        {
+          "name": "MS_RECOIL_CONTROL",
+          "value": 200,
+          "label_zh": "机体·RECOIL·CONTROL"
+        },
+        {
+          "name": "MS_REPAIR_EFFICIENCY",
+          "value": 201,
+          "label_zh": "Ms·修理·EFFICIENCY"
+        },
+        {
+          "name": "MS_ESTIMATE_LANDINGPOINT",
+          "value": 202,
+          "label_zh": "机体·ESTIMATE·着陆点"
+        },
+        {
+          "name": "MS_UKEMI_ENABLE",
+          "value": 203,
+          "label_zh": "机体·UKEMI·启用"
+        },
+        {
+          "name": "MS_ALLEVIATE_BLAZING1",
+          "value": 204,
+          "label_zh": "机体·ALLEVIATE·BLAZING1"
+        },
+        {
+          "name": "MS_ALLEVIATE_BLAZING2",
+          "value": 205,
+          "label_zh": "机体·ALLEVIATE·BLAZING2"
+        },
+        {
+          "name": "MS_WALK_SPEED",
+          "value": 206,
+          "label_zh": "机体·Walk·速度"
+        },
+        {
+          "name": "MS_REPAIR_SHIELD1",
+          "value": 207,
+          "label_zh": "Ms·修理·SHIELD1"
+        },
+        {
+          "name": "MS_REPAIR_SHIELD2",
+          "value": 208,
+          "label_zh": "Ms·修理·SHIELD2"
+        },
+        {
+          "name": "MS_OVERHEAT_WARNING",
+          "value": 209,
+          "label_zh": "机体·OVERHEAT·WARNING"
+        },
+        {
+          "name": "MS_SHIELD_SHOW",
+          "value": 210,
+          "label_zh": "Ms·护盾/盾战·Show"
+        },
+        {
+          "name": "MS_ALL_ARMOR_DEC_RATE",
+          "value": 212,
+          "label_zh": "Ms·All·装甲·Dec·Rate"
+        },
+        {
+          "name": "MS_OVERBOOST_ENERGY",
+          "value": 213,
+          "label_zh": "机体·OVERBOOST·ENERGY"
+        },
+        {
+          "name": "MS_MOVE_SPEED",
+          "value": 225,
+          "label_zh": "Ms·移动·SPEED"
+        },
+        {
+          "name": "MS_DASH_JUMP",
+          "value": 236,
+          "label_zh": "机体·Dash·Jump"
+        },
+        {
+          "name": "MS_DEF_DP",
+          "value": 242,
+          "label_zh": "机体·抗Dp"
+        },
+        {
+          "name": "MS_OFFENSIVE_HELP",
+          "value": 243,
+          "label_zh": "机体·OFFENSIVE·Help"
+        },
+        {
+          "name": "MS_TAKEOVER_DAMAGE",
+          "value": 244,
+          "label_zh": "机体·继承·DAMAGE"
+        },
+        {
+          "name": "MS_TAKEOVER_BEAM",
+          "value": 249,
+          "label_zh": "Ms·TAKEOVER·光束"
+        },
+        {
+          "name": "MS_TAKEOVER_DEF_BEAM",
+          "value": 257,
+          "label_zh": "Ms·TAKEOVER·Def·光束"
+        },
+        {
+          "name": "MS_TAKEOVER_NOT_ATTACK",
+          "value": 258,
+          "label_zh": "Ms·TAKEOVER·Not·攻击"
+        },
+        {
+          "name": "MS_TAKEOVER_WRESTLE_TIME_CUT",
+          "value": 259,
+          "label_zh": "Ms·TAKEOVER·格斗·Time·Cut"
+        },
+        {
+          "name": "MS_KEY_ACTION_GAUGE_TRIG_TAKED_DAMAGE",
+          "value": 260,
+          "label_zh": "机体·Key·ACTION·槽·Trig·TAKED·DAMAGE"
+        },
+        {
+          "name": "MS_SPECIAL_WEAPON",
+          "value": 261,
+          "label_zh": "Ms·特殊·武器"
+        },
+        {
+          "name": "MS_LOCKON_JAMMER",
+          "value": 263,
+          "label_zh": "机体·锁定·JAMMER"
+        },
+        {
+          "name": "MS_OVER_BOOST_DEF_DP",
+          "value": 250,
+          "label_zh": "机体·Over·BOOST·防御·Dp"
+        },
+        {
+          "name": "MS_KILL_QUICK_RELOAD",
+          "value": 245,
+          "label_zh": "Ms·击杀·QUICK·RELOAD"
+        },
+        {
+          "name": "MS_KILL_REPAIR_BOOST",
+          "value": 246,
+          "label_zh": "Ms·击杀·修理·BOOST"
+        },
+        {
+          "name": "MS_KILL_REPAIR_DP",
+          "value": 247,
+          "label_zh": "Ms·击杀·修理·Dp"
+        },
+        {
+          "name": "MS_FIRST_DASH",
+          "value": 248,
+          "label_zh": "机体·FIRST·Dash"
+        },
+        {
+          "name": "MS_WRESTLE_COUNTER",
+          "value": 307,
+          "label_zh": "Ms·格斗·COUNTER"
+        },
+        {
+          "name": "MS_WRESTLE_ACTION",
+          "value": 308,
+          "label_zh": "Ms·格斗·ACTION"
+        },
+        {
+          "name": "MS_WRESTLE_ACTION_LIMIT",
+          "value": 309,
+          "label_zh": "Ms·格斗·ACTION·LIMIT"
+        },
+        {
+          "name": "MS_QUICK_RELOAD_CHARGE_BEAM",
+          "value": 315,
+          "label_zh": "Ms·QUICK·RELOAD·CHARGE·光束"
+        },
+        {
+          "name": "MS_UNLIMITED_NTD",
+          "value": 344,
+          "label_zh": "机体·UNLIMITED·Ntd"
+        },
+        {
+          "name": "MS_QUICK_RELOAD_CHARGE_BAZOOKA",
+          "value": 353,
+          "label_zh": "Ms·QUICK·RELOAD·CHARGE·火箭筒"
+        },
+        {
+          "name": "MS_DODGE_DASH_EFFECT_ID",
+          "value": 354,
+          "label_zh": "机体·DODGE·Dash·EFFECT·ID"
+        },
+        {
+          "name": "W_BULLET_MGZ",
+          "value": 1000,
+          "label_zh": "W_BULLET_MGZ（武器·弹匣）"
+        },
+        {
+          "name": "W_BULLET_ALL",
+          "value": 1001,
+          "label_zh": "W·BULLET·全区"
+        },
+        {
+          "name": "W_POWER",
+          "value": 1002,
+          "label_zh": "W_POWER（武器·威力）"
+        },
+        {
+          "name": "W_STABILITY",
+          "value": 1009,
+          "label_zh": "W_STABILITY（武器·稳定性）"
+        },
+        {
+          "name": "W_RELOAD",
+          "value": 1011,
+          "label_zh": "W_RELOAD（武器·装填）"
+        },
+        {
+          "name": "W_RECOIL",
+          "value": 1012,
+          "label_zh": "W_RECOIL（武器·后坐力）"
+        },
+        {
+          "name": "W_SWITCH",
+          "value": 1013,
+          "label_zh": "W_SWITCH（武器·切换）"
+        },
+        {
+          "name": "W_SCOPE",
+          "value": 1015,
+          "label_zh": "W_SCOPE（武器·瞄具）"
+        },
+        {
+          "name": "W_RANGE_SHOT",
+          "value": 1016,
+          "label_zh": "W·RANGE·射击"
+        },
+        {
+          "name": "W_RANGE_BLAST",
+          "value": 1017,
+          "label_zh": "W·RANGE·爆炸"
+        },
+        {
+          "name": "W_RANGE_DOWN",
+          "value": 1018,
+          "label_zh": "W_RANGE_DOWN（武器·射程降低）"
+        },
+        {
+          "name": "W_RANGE_RADAR",
+          "value": 1019,
+          "label_zh": "W·RANGE·雷达"
+        },
+        {
+          "name": "W_SHIELD_DEFENCE",
+          "value": 1021,
+          "label_zh": "W·护盾/盾战·DEFENCE"
+        },
+        {
+          "name": "W_SHIELD_ARMOR",
+          "value": 1022,
+          "label_zh": "W·护盾/盾战·装甲"
+        },
+        {
+          "name": "W_WALK_COLLECT",
+          "value": 1023,
+          "label_zh": "W_WALK_COLLECT（武器·步行集气）"
+        },
+        {
+          "name": "W_DASH_COLLECT",
+          "value": 1024,
+          "label_zh": "W_DASH_COLLECT（武器·冲刺集气）"
+        },
+        {
+          "name": "W_JUMP_COLLECT",
+          "value": 1025,
+          "label_zh": "W_JUMP_COLLECT（武器·跳跃集气）"
+        },
+        {
+          "name": "W_POWER_PER_BATTLESHIP",
+          "value": 1026,
+          "label_zh": "W·POWER·百分比·BATTLESHIP"
+        },
+        {
+          "name": "W_POWER_PER_GUNTURRET",
+          "value": 1027,
+          "label_zh": "W·POWER·百分比·炮塔"
+        },
+        {
+          "name": "W_POWER_PER_BATTERY",
+          "value": 1028,
+          "label_zh": "W·POWER·百分比·BATTERY"
+        },
+        {
+          "name": "W_SPEED_PER_BULLET",
+          "value": 1029,
+          "label_zh": "W·速度·百分比·BULLET"
+        },
+        {
+          "name": "W_POWER_PER_BREAKABLE_OBJ",
+          "value": 1030,
+          "label_zh": "W·POWER·百分比·可破坏·对象"
+        },
+        {
+          "name": "W_POWER_PER_TUMBLE",
+          "value": 1031,
+          "label_zh": "W·POWER·百分比·滚"
+        },
+        {
+          "name": "W_POWER_PER_CHARGE",
+          "value": 1032,
+          "label_zh": "W·POWER·百分比·CHARGE"
+        },
+        {
+          "name": "W_SHIELD_DEFENCE_RATE",
+          "value": 1033,
+          "label_zh": "W·护盾/盾战·DEFENCE·Rate"
+        },
+        {
+          "name": "W_ALL_COLLECT",
+          "value": 1034,
+          "label_zh": "W·全区·COLLECT"
+        },
+        {
+          "name": "W_LEVEL_GAUGE_TRIG_KILL",
+          "value": 1090,
+          "label_zh": "W·LEVEL·GAUGE·Trig·击杀"
+        },
+        {
+          "name": "W_LEVEL_GAUGE_TRIG_HIT",
+          "value": 1091,
+          "label_zh": "W·等级·槽·Trig·命中"
+        },
+        {
+          "name": "W_POWER_PER",
+          "value": 1003,
+          "label_zh": "W·POWER·百分比"
+        },
+        {
+          "name": "W_POWER_PER_LOCKON",
+          "value": 1004,
+          "label_zh": "W·POWER·百分比·锁定"
+        },
+        {
+          "name": "W_POWER_PER_HEADSHOT",
+          "value": 1005,
+          "label_zh": "W·POWER·百分比·HEADSHOT"
+        },
+        {
+          "name": "W_POWER_PER_BACKSHOT",
+          "value": 1006,
+          "label_zh": "W·POWER·百分比·BACKSHOT"
+        },
+        {
+          "name": "W_POWER_PER_STHOLD",
+          "value": 1007,
+          "label_zh": "W·POWER·百分比·STHOLD"
+        },
+        {
+          "name": "W_POWER_PER_GIMMICK",
+          "value": 1008,
+          "label_zh": "W·POWER·百分比·GIMMICK"
+        },
+        {
+          "name": "W_RAPIDFIRE",
+          "value": 1010,
+          "label_zh": "W_RAPIDFIRE（武器·连射）"
+        },
+        {
+          "name": "W_LOCKON",
+          "value": 1014,
+          "label_zh": "W锁定"
+        },
+        {
+          "name": "W_WRESTLE",
+          "value": 1102,
+          "label_zh": "W·格斗"
+        },
+        {
+          "name": "W_WRESTLE_CONTROL",
+          "value": 1103,
+          "label_zh": "W·格斗·CONTROL"
+        },
+        {
+          "name": "W_QUICK_CHARGE",
+          "value": 1105,
+          "label_zh": "W·快速·CHARGE"
+        },
+        {
+          "name": "W_QUICK_LOCKON",
+          "value": 1106,
+          "label_zh": "W快速锁定"
+        },
+        {
+          "name": "W_MISSILE_SCOPE",
+          "value": 1107,
+          "label_zh": "W·导弹·SCOPE"
+        },
+        {
+          "name": "OTHER_CMDRSPT_RESPAWNTIME",
+          "value": 2000,
+          "label_zh": "其他·CMDRSPT·RESPAWNTIME"
+        }
+      ],
+      "enum_converter": "sub_5953B0",
+      "asm_reader": "sub_5955A0",
+      "asm_va": "0x595706"
+    },
+    "loop_param_value": {
+      "name": "loop_param_value",
+      "display_name": "循环参数值",
+      "type": "float",
+      "status": "confirmed",
+      "csv_index": 18,
+      "meaning": "循环参数值（float col18 → +80；8 组 effect_scope×stat 循环）",
+      "asm_reader": "sub_5955A0",
+      "asm_va": "0x59580e"
+    },
+    "priority": {
+      "name": "priority",
+      "display_name": "优先级（u32 @+64）",
+      "type": "u32",
+      "status": "confirmed",
+      "csv_index": 19,
+      "meaning": "优先级（u32 @+64）",
+      "asm_reader": "sub_5955A0",
+      "asm_va": "0x59582f"
+    },
+    "stack_rule": {
+      "name": "stack_rule",
+      "display_name": "叠加规则 ID（u32 @+60）",
+      "type": "u32",
+      "status": "confirmed",
+      "csv_index": 20,
+      "meaning": "叠加规则 ID（u32 @+60）",
+      "asm_reader": "sub_5955A0",
+      "asm_va": "0x59583c"
+    }
+  }
+}

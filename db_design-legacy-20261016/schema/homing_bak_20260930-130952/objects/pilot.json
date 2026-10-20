@@ -1,0 +1,3783 @@
+{
+  "id": "pilot",
+  "title": "机师 pilot（159B 线 / 176B 槽）",
+  "domain": "lounge",
+  "domain_votes": {
+    "lounge": 6,
+    "battle": 1
+  },
+  "folded_composites": [
+    "pcard",
+    "pilot",
+    "pilots_list"
+  ],
+  "anchored_by": "",
+  "legacy_table": "tbl_pilot",
+  "row_key": [],
+  "views": [
+    {
+      "composite": "pcard",
+      "length": 398,
+      "memory_claim": 424,
+      "reader": "sub_B42BB0",
+      "printer": "sub_B48C10",
+      "commands": [
+        "SC-0xB4B6-lounge-pilotcard_get_r"
+      ]
+    },
+    {
+      "composite": "pilot",
+      "length": 159,
+      "memory_claim": 176,
+      "reader": "sub_B06980",
+      "printer": "sub_B08AD0",
+      "commands": [
+        "CS-0xFD3E-lounge-pilot_create",
+        "SC-0x1D02-lounge-channellobby_members_get_r",
+        "SC-0x510F-lounge-party_member_add",
+        "SC-0xBDD6-battle-roomlobby_pilot_add",
+        "SC-0xC43C-lounge-pilot_create_r"
+      ]
+    },
+    {
+      "composite": "pilots_list",
+      "length": 398,
+      "memory_claim": 424,
+      "reader": "sub_B42BB0",
+      "printer": "sub_B48C10",
+      "commands": [
+        "SC-0xE13A-lounge-pilot_list_get_r"
+      ]
+    }
+  ],
+  "members": [
+    {
+      "name": "accum_point",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "累计点数",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pilot",
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pilot",
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "B8A18E|B08AD0|B06980",
+      "evidence_ref": {
+        "command": "CS-0xFD3E-lounge-pilot_create",
+        "struct": "pilot",
+        "field": "accum_point",
+        "reader": "",
+        "printer": "sub_B08AD0",
+        "protocol_path": "protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md",
+        "section": "§3.1"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "avatar",
+      "wire_type": "avatar",
+      "length": 18,
+      "meaning": "外观（18B 子结构）",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pilot",
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pilot",
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": "avatar",
+      "element_composite_ref": null,
+      "link_kind": "nested",
+      "link_composite": "avatar",
+      "memory_only": false,
+      "evidence_va": "B8A18E|B08AD0|B06980",
+      "evidence_ref": {
+        "command": "CS-0xFD3E-lounge-pilot_create",
+        "struct": "pilot",
+        "field": "avatar",
+        "reader": "",
+        "printer": "sub_B08AD0",
+        "protocol_path": "protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md",
+        "section": "§3.1"
+      },
+      "wire_variants": {
+        "pilot": {
+          "wire_type": "avatar(18B)",
+          "length": 18
+        }
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "base_accump",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "基础累计点",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pilot",
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pilot",
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "B8A18E|B08AD0|B06980",
+      "evidence_ref": {
+        "command": "CS-0xFD3E-lounge-pilot_create",
+        "struct": "pilot",
+        "field": "base_accump",
+        "reader": "",
+        "printer": "sub_B08AD0",
+        "protocol_path": "protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md",
+        "section": "§3.1"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "byword",
+      "wire_type": "u16",
+      "length": 2,
+      "meaning": "口头禅（byword 表 ID）",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pilot",
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pilot",
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "B8A18E|B08AD0|B06980",
+      "evidence_ref": {
+        "command": "CS-0xFD3E-lounge-pilot_create",
+        "struct": "pilot",
+        "field": "byword",
+        "reader": "",
+        "printer": "sub_B08AD0",
+        "protocol_path": "protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md",
+        "section": "§3.1"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "capture_bonus_limit",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "占点加成上限",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB430E3",
+      "evidence_ref": {
+        "command": "SC-0xB4B6-lounge-pilotcard_get_r",
+        "struct": "pcard",
+        "field": "capture_bonus_limit",
+        "reader": "sub_B42BB0",
+        "printer": "sub_B48C10",
+        "protocol_path": "protocol_analysis/commands/SC-0xB4B6-lounge-pilotcard_get_r/README.md",
+        "section": "§4.3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "capture_bonus_state",
+      "wire_type": "u8",
+      "length": 1,
+      "meaning": "占点加成状态",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB430C9",
+      "evidence_ref": {
+        "command": "SC-0xB4B6-lounge-pilotcard_get_r",
+        "struct": "pcard",
+        "field": "capture_bonus_state",
+        "reader": "sub_B42BB0",
+        "printer": "sub_B48C10",
+        "protocol_path": "protocol_analysis/commands/SC-0xB4B6-lounge-pilotcard_get_r/README.md",
+        "section": "§4.3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "channel_id",
+      "wire_type": "u8",
+      "length": 1,
+      "meaning": "频道 ID",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xb430b5",
+      "evidence_ref": {
+        "command": "SC-0xB4B6-lounge-pilotcard_get_r",
+        "struct": "pcard",
+        "field": "channel_id",
+        "reader": "sub_B42BB0",
+        "printer": "sub_B48C10",
+        "protocol_path": "protocol_analysis/commands/SC-0xB4B6-lounge-pilotcard_get_r/README.md",
+        "section": "§4.3"
+      },
+      "role": "ref",
+      "ref_kind": "fk",
+      "fk_target": "channel.channelid",
+      "ref_basis": "对象名命中 channel"
+    },
+    {
+      "name": "clan_emb_base",
+      "wire_type": "u8",
+      "length": 1,
+      "meaning": "部队徽章底图",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pilot",
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pilot",
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "B8A18E|B08AD0|B06980",
+      "evidence_ref": {
+        "command": "CS-0xFD3E-lounge-pilot_create",
+        "struct": "pilot",
+        "field": "clan_emb_base",
+        "reader": "",
+        "printer": "sub_B08AD0",
+        "protocol_path": "protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md",
+        "section": "§3.1"
+      },
+      "wire_variants": {
+        "pilot": {
+          "wire_type": "i8",
+          "length": 1
+        }
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "clan_emb_parts1",
+      "wire_type": "u8",
+      "length": 1,
+      "meaning": "部队徽章部件 1",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pilot",
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pilot",
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "B8A18E|B08AD0|B06980",
+      "evidence_ref": {
+        "command": "CS-0xFD3E-lounge-pilot_create",
+        "struct": "pilot",
+        "field": "clan_emb_parts1",
+        "reader": "",
+        "printer": "sub_B08AD0",
+        "protocol_path": "protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md",
+        "section": "§3.1"
+      },
+      "wire_variants": {
+        "pilot": {
+          "wire_type": "i8",
+          "length": 1
+        }
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "clan_emb_parts2",
+      "wire_type": "u8",
+      "length": 1,
+      "meaning": "部队徽章部件 2",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pilot",
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pilot",
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "B8A18E|B08AD0|B06980",
+      "evidence_ref": {
+        "command": "CS-0xFD3E-lounge-pilot_create",
+        "struct": "pilot",
+        "field": "clan_emb_parts2",
+        "reader": "",
+        "printer": "sub_B08AD0",
+        "protocol_path": "protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md",
+        "section": "§3.1"
+      },
+      "wire_variants": {
+        "pilot": {
+          "wire_type": "i8",
+          "length": 1
+        }
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "clan_id",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "所属部队 ID",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pilot",
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pilot",
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "B8A18E|B08AD0|B06980",
+      "evidence_ref": {
+        "command": "CS-0xFD3E-lounge-pilot_create",
+        "struct": "pilot",
+        "field": "clan_id",
+        "reader": "",
+        "printer": "sub_B08AD0",
+        "protocol_path": "protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md",
+        "section": "§3.1"
+      },
+      "role": "ref",
+      "ref_kind": "fk",
+      "fk_target": "clan.clan_id",
+      "ref_basis": "人工裁决·外键：战队根表已建（composites/clan.json + new_objects.clan，按世界一行 scope=[world_id]）：clan_id 是它的身份列，pilot/pcard/cinfo 一族的 clan_id 指过来。见 reviewed.batch_13_new_objects_clan_cupteam。"
+    },
+    {
+      "name": "clan_memb_exp",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "战队成员经验",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xb43019",
+      "evidence_ref": {
+        "command": "SC-0xB4B6-lounge-pilotcard_get_r",
+        "struct": "pcard",
+        "field": "clan_memb_exp",
+        "reader": "sub_B42BB0",
+        "printer": "sub_B48C10",
+        "protocol_path": "protocol_analysis/commands/SC-0xB4B6-lounge-pilotcard_get_r/README.md",
+        "section": "§4.3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "clan_name",
+      "wire_type": "char[31]",
+      "length": 31,
+      "meaning": "部队名（NUL 结尾，定长 31 槽）",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pilot",
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pilot",
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "B8A18E|B08AD0|B06980",
+      "evidence_ref": {
+        "command": "CS-0xFD3E-lounge-pilot_create",
+        "struct": "pilot",
+        "field": "clan_name",
+        "reader": "",
+        "printer": "sub_B08AD0",
+        "protocol_path": "protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md",
+        "section": "§3.1"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "cmdr_fame",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "指挥官功勋",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pilot",
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pilot",
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "B8A18E|B08AD0|B06980",
+      "evidence_ref": {
+        "command": "CS-0xFD3E-lounge-pilot_create",
+        "struct": "pilot",
+        "field": "cmdr_fame",
+        "reader": "",
+        "printer": "sub_B08AD0",
+        "protocol_path": "protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md",
+        "section": "§3.1"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "comment",
+      "wire_type": "char[116]",
+      "length": 116,
+      "meaning": "自我介绍/评论",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xb43039",
+      "evidence_ref": {
+        "command": "SC-0xB4B6-lounge-pilotcard_get_r",
+        "struct": "pcard",
+        "field": "comment",
+        "reader": "sub_B42BB0",
+        "printer": "sub_B48C10",
+        "protocol_path": "protocol_analysis/commands/SC-0xB4B6-lounge-pilotcard_get_r/README.md",
+        "section": "§4.3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "cupteam_id",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "杯赛队伍 ID",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pilot",
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pilot",
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "B8A18E|B08AD0|B06980",
+      "evidence_ref": {
+        "command": "CS-0xFD3E-lounge-pilot_create",
+        "struct": "pilot",
+        "field": "cupteam_id",
+        "reader": "",
+        "printer": "sub_B08AD0",
+        "protocol_path": "protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md",
+        "section": "§3.1"
+      },
+      "role": "ref",
+      "ref_kind": "fk",
+      "fk_target": "cupteam.cupteam_id",
+      "ref_basis": "人工裁决·外键：杯赛队伍根表已建（new_objects.cupteam）：pcard/pilot/pilot_detail/pilots_list 的 cupteam_id 指 cupteam.cupteam_id（id 载体见 SC-0x6B2C / SC-0x8669）。"
+    },
+    {
+      "name": "cupteam_name",
+      "wire_type": "char[31]",
+      "length": 31,
+      "meaning": "杯赛队伍名（NUL 结尾，定长 31 槽）",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pilot",
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pilot",
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "B8A18E|B08AD0|B06980",
+      "evidence_ref": {
+        "command": "CS-0xFD3E-lounge-pilot_create",
+        "struct": "pilot",
+        "field": "cupteam_name",
+        "reader": "",
+        "printer": "sub_B08AD0",
+        "protocol_path": "protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md",
+        "section": "§3.1"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "last_in",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "最后登录时间",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xb42c65",
+      "evidence_ref": {
+        "command": "SC-0xB4B6-lounge-pilotcard_get_r",
+        "struct": "pcard",
+        "field": "last_in",
+        "reader": "sub_B42BB0",
+        "printer": "sub_B48C10",
+        "protocol_path": "protocol_analysis/commands/SC-0xB4B6-lounge-pilotcard_get_r/README.md",
+        "section": "§4.3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "level",
+      "wire_type": "u8",
+      "length": 1,
+      "meaning": "等级",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pilot",
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pilot",
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "B8A18E|B08AD0|B06980",
+      "evidence_ref": {
+        "command": "CS-0xFD3E-lounge-pilot_create",
+        "struct": "pilot",
+        "field": "level",
+        "reader": "",
+        "printer": "sub_B08AD0",
+        "protocol_path": "protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md",
+        "section": "§3.1"
+      },
+      "wire_variants": {
+        "pilot": {
+          "wire_type": "i8",
+          "length": 1
+        }
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "level_point",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "等级点数",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pilot",
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pilot",
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "B8A18E|B08AD0|B06980",
+      "evidence_ref": {
+        "command": "CS-0xFD3E-lounge-pilot_create",
+        "struct": "pilot",
+        "field": "level_point",
+        "reader": "",
+        "printer": "sub_B08AD0",
+        "protocol_path": "protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md",
+        "section": "§3.1"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "mil_class",
+      "wire_type": "u8",
+      "length": 1,
+      "meaning": "军衔阶级",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pilot",
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pilot",
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "B8A18E|B08AD0|B06980",
+      "evidence_ref": {
+        "command": "CS-0xFD3E-lounge-pilot_create",
+        "struct": "pilot",
+        "field": "mil_class",
+        "reader": "",
+        "printer": "sub_B08AD0",
+        "protocol_path": "protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md",
+        "section": "§3.1"
+      },
+      "wire_variants": {
+        "pilot": {
+          "wire_type": "i8",
+          "length": 1
+        }
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "name",
+      "wire_type": "char[25]",
+      "length": 25,
+      "meaning": "驾驶员名（NUL 结尾，定长 25 槽）",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pilot",
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pilot",
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "B8A18E|B08AD0|B06980",
+      "evidence_ref": {
+        "command": "CS-0xFD3E-lounge-pilot_create",
+        "struct": "pilot",
+        "field": "name",
+        "reader": "",
+        "printer": "sub_B08AD0",
+        "protocol_path": "protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md",
+        "section": "§3.1"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "penalty",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "惩罚值",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pilot"
+        ]
+      },
+      "views": [
+        "pilot"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "B8A18E|B08AD0|B06980",
+      "evidence_ref": {
+        "command": "CS-0xFD3E-lounge-pilot_create",
+        "struct": "pilot",
+        "field": "penalty",
+        "reader": "",
+        "printer": "sub_B08AD0",
+        "protocol_path": "protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md",
+        "section": "§3.1"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "pilot_id",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "驾驶员 ID",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pilot",
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pilot",
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "B8A18E|B08AD0|B06980",
+      "evidence_ref": {
+        "command": "CS-0xFD3E-lounge-pilot_create",
+        "struct": "pilot",
+        "field": "pilot_id",
+        "reader": "",
+        "printer": "sub_B08AD0",
+        "protocol_path": "protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md",
+        "section": "§3.1"
+      },
+      "role": "scope"
+    },
+    {
+      "name": "rank",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "名次/顺位",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pilot",
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pilot",
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "B8A18E|B08AD0|B06980",
+      "evidence_ref": {
+        "command": "CS-0xFD3E-lounge-pilot_create",
+        "struct": "pilot",
+        "field": "rank",
+        "reader": "",
+        "printer": "sub_B08AD0",
+        "protocol_path": "protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md",
+        "section": "§3.1"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "rate_vslocal",
+      "wire_type": "u16",
+      "length": 2,
+      "meaning": "对本服胜率",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pilot",
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pilot",
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "B8A18E|B08AD0|B06980",
+      "evidence_ref": {
+        "command": "CS-0xFD3E-lounge-pilot_create",
+        "struct": "pilot",
+        "field": "rate_vslocal",
+        "reader": "",
+        "printer": "sub_B08AD0",
+        "protocol_path": "protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md",
+        "section": "§3.1"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "rate_vslocal_4ev",
+      "wire_type": "u16",
+      "length": 2,
+      "meaning": "对本服胜率（4 人战）",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pilot",
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pilot",
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "B8A18E|B08AD0|B06980",
+      "evidence_ref": {
+        "command": "CS-0xFD3E-lounge-pilot_create",
+        "struct": "pilot",
+        "field": "rate_vslocal_4ev",
+        "reader": "",
+        "printer": "sub_B08AD0",
+        "protocol_path": "protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md",
+        "section": "§3.1"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "rate_vslocal_clan",
+      "wire_type": "u16",
+      "length": 2,
+      "meaning": "对本服胜率（部队战）",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pilot",
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pilot",
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "B8A18E|B08AD0|B06980",
+      "evidence_ref": {
+        "command": "CS-0xFD3E-lounge-pilot_create",
+        "struct": "pilot",
+        "field": "rate_vslocal_clan",
+        "reader": "",
+        "printer": "sub_B08AD0",
+        "protocol_path": "protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md",
+        "section": "§3.1"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "rec_cmd",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "指挥战场次",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xb42e5d",
+      "evidence_ref": {
+        "command": "SC-0xB4B6-lounge-pilotcard_get_r",
+        "struct": "pcard",
+        "field": "rec_cmd",
+        "reader": "sub_B42BB0",
+        "printer": "sub_B48C10",
+        "protocol_path": "protocol_analysis/commands/SC-0xB4B6-lounge-pilotcard_get_r/README.md",
+        "section": "§4.3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "rec_cmd_last1",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "上一场指挥战场次",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xb42ea5",
+      "evidence_ref": {
+        "command": "SC-0xB4B6-lounge-pilotcard_get_r",
+        "struct": "pcard",
+        "field": "rec_cmd_last1",
+        "reader": "sub_B42BB0",
+        "printer": "sub_B48C10",
+        "protocol_path": "protocol_analysis/commands/SC-0xB4B6-lounge-pilotcard_get_r/README.md",
+        "section": "§4.3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "rec_cmd_lose",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "指挥战败场",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xb42e8d",
+      "evidence_ref": {
+        "command": "SC-0xB4B6-lounge-pilotcard_get_r",
+        "struct": "pcard",
+        "field": "rec_cmd_lose",
+        "reader": "sub_B42BB0",
+        "printer": "sub_B48C10",
+        "protocol_path": "protocol_analysis/commands/SC-0xB4B6-lounge-pilotcard_get_r/README.md",
+        "section": "§4.3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "rec_cmd_lose_last1",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "上一场指挥战败场",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xb42ecd",
+      "evidence_ref": {
+        "command": "SC-0xB4B6-lounge-pilotcard_get_r",
+        "struct": "pcard",
+        "field": "rec_cmd_lose_last1",
+        "reader": "sub_B42BB0",
+        "printer": "sub_B48C10",
+        "protocol_path": "protocol_analysis/commands/SC-0xB4B6-lounge-pilotcard_get_r/README.md",
+        "section": "§4.3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "rec_cmd_win",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "指挥战胜场",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xb42e75",
+      "evidence_ref": {
+        "command": "SC-0xB4B6-lounge-pilotcard_get_r",
+        "struct": "pcard",
+        "field": "rec_cmd_win",
+        "reader": "sub_B42BB0",
+        "printer": "sub_B48C10",
+        "protocol_path": "protocol_analysis/commands/SC-0xB4B6-lounge-pilotcard_get_r/README.md",
+        "section": "§4.3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "rec_cmd_win_last1",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "上一场指挥战胜场",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xb42eb9",
+      "evidence_ref": {
+        "command": "SC-0xB4B6-lounge-pilotcard_get_r",
+        "struct": "pcard",
+        "field": "rec_cmd_win_last1",
+        "reader": "sub_B42BB0",
+        "printer": "sub_B48C10",
+        "protocol_path": "protocol_analysis/commands/SC-0xB4B6-lounge-pilotcard_get_r/README.md",
+        "section": "§4.3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "rec_dc",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "断线战场次",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xb42ee1",
+      "evidence_ref": {
+        "command": "SC-0xB4B6-lounge-pilotcard_get_r",
+        "struct": "pcard",
+        "field": "rec_dc",
+        "reader": "sub_B42BB0",
+        "printer": "sub_B48C10",
+        "protocol_path": "protocol_analysis/commands/SC-0xB4B6-lounge-pilotcard_get_r/README.md",
+        "section": "§4.3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "rec_dc_lose",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "断线战败场",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xb42f09",
+      "evidence_ref": {
+        "command": "SC-0xB4B6-lounge-pilotcard_get_r",
+        "struct": "pcard",
+        "field": "rec_dc_lose",
+        "reader": "sub_B42BB0",
+        "printer": "sub_B48C10",
+        "protocol_path": "protocol_analysis/commands/SC-0xB4B6-lounge-pilotcard_get_r/README.md",
+        "section": "§4.3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "rec_dc_win",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "断线战胜场",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xb42ef5",
+      "evidence_ref": {
+        "command": "SC-0xB4B6-lounge-pilotcard_get_r",
+        "struct": "pcard",
+        "field": "rec_dc_win",
+        "reader": "sub_B42BB0",
+        "printer": "sub_B48C10",
+        "protocol_path": "protocol_analysis/commands/SC-0xB4B6-lounge-pilotcard_get_r/README.md",
+        "section": "§4.3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "rec_vs",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "对战场次",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xb42d22",
+      "evidence_ref": {
+        "command": "SC-0xB4B6-lounge-pilotcard_get_r",
+        "struct": "pcard",
+        "field": "rec_vs",
+        "reader": "sub_B42BB0",
+        "printer": "sub_B48C10",
+        "protocol_path": "protocol_analysis/commands/SC-0xB4B6-lounge-pilotcard_get_r/README.md",
+        "section": "§4.3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "rec_vs_lose",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "对战败场",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xb42d4c",
+      "evidence_ref": {
+        "command": "SC-0xB4B6-lounge-pilotcard_get_r",
+        "struct": "pcard",
+        "field": "rec_vs_lose",
+        "reader": "sub_B42BB0",
+        "printer": "sub_B48C10",
+        "protocol_path": "protocol_analysis/commands/SC-0xB4B6-lounge-pilotcard_get_r/README.md",
+        "section": "§4.3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "rec_vs_win",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "对战胜场",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xb42d37",
+      "evidence_ref": {
+        "command": "SC-0xB4B6-lounge-pilotcard_get_r",
+        "struct": "pcard",
+        "field": "rec_vs_win",
+        "reader": "sub_B42BB0",
+        "printer": "sub_B48C10",
+        "protocol_path": "protocol_analysis/commands/SC-0xB4B6-lounge-pilotcard_get_r/README.md",
+        "section": "§4.3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "rec_vsl_td",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "对战塔防场次",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xb42d61",
+      "evidence_ref": {
+        "command": "SC-0xB4B6-lounge-pilotcard_get_r",
+        "struct": "pcard",
+        "field": "rec_vsl_td",
+        "reader": "sub_B42BB0",
+        "printer": "sub_B48C10",
+        "protocol_path": "protocol_analysis/commands/SC-0xB4B6-lounge-pilotcard_get_r/README.md",
+        "section": "§4.3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "rec_vsl_td_lose",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "对战塔防败场",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xb42d8b",
+      "evidence_ref": {
+        "command": "SC-0xB4B6-lounge-pilotcard_get_r",
+        "struct": "pcard",
+        "field": "rec_vsl_td_lose",
+        "reader": "sub_B42BB0",
+        "printer": "sub_B48C10",
+        "protocol_path": "protocol_analysis/commands/SC-0xB4B6-lounge-pilotcard_get_r/README.md",
+        "section": "§4.3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "rec_vsl_td_win",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "对战塔防胜场",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xb42d76",
+      "evidence_ref": {
+        "command": "SC-0xB4B6-lounge-pilotcard_get_r",
+        "struct": "pcard",
+        "field": "rec_vsl_td_win",
+        "reader": "sub_B42BB0",
+        "printer": "sub_B48C10",
+        "protocol_path": "protocol_analysis/commands/SC-0xB4B6-lounge-pilotcard_get_r/README.md",
+        "section": "§4.3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "rec_xwar",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "大规模战场次",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xb42da0",
+      "evidence_ref": {
+        "command": "SC-0xB4B6-lounge-pilotcard_get_r",
+        "struct": "pcard",
+        "field": "rec_xwar",
+        "reader": "sub_B42BB0",
+        "printer": "sub_B48C10",
+        "protocol_path": "protocol_analysis/commands/SC-0xB4B6-lounge-pilotcard_get_r/README.md",
+        "section": "§4.3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "rec_xwar_last1",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "上一场大规模战场次",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xb42de5",
+      "evidence_ref": {
+        "command": "SC-0xB4B6-lounge-pilotcard_get_r",
+        "struct": "pcard",
+        "field": "rec_xwar_last1",
+        "reader": "sub_B42BB0",
+        "printer": "sub_B48C10",
+        "protocol_path": "protocol_analysis/commands/SC-0xB4B6-lounge-pilotcard_get_r/README.md",
+        "section": "§4.3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "rec_xwar_lose",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "大规模战败场",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xb42dcd",
+      "evidence_ref": {
+        "command": "SC-0xB4B6-lounge-pilotcard_get_r",
+        "struct": "pcard",
+        "field": "rec_xwar_lose",
+        "reader": "sub_B42BB0",
+        "printer": "sub_B48C10",
+        "protocol_path": "protocol_analysis/commands/SC-0xB4B6-lounge-pilotcard_get_r/README.md",
+        "section": "§4.3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "rec_xwar_lose_last1",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "上一场大规模战败场",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xb42e15",
+      "evidence_ref": {
+        "command": "SC-0xB4B6-lounge-pilotcard_get_r",
+        "struct": "pcard",
+        "field": "rec_xwar_lose_last1",
+        "reader": "sub_B42BB0",
+        "printer": "sub_B48C10",
+        "protocol_path": "protocol_analysis/commands/SC-0xB4B6-lounge-pilotcard_get_r/README.md",
+        "section": "§4.3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "rec_xwar_win",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "大规模战胜场",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xb42db5",
+      "evidence_ref": {
+        "command": "SC-0xB4B6-lounge-pilotcard_get_r",
+        "struct": "pcard",
+        "field": "rec_xwar_win",
+        "reader": "sub_B42BB0",
+        "printer": "sub_B48C10",
+        "protocol_path": "protocol_analysis/commands/SC-0xB4B6-lounge-pilotcard_get_r/README.md",
+        "section": "§4.3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "rec_xwar_win_last1",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "上一场大规模战胜场",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xb42dfd",
+      "evidence_ref": {
+        "command": "SC-0xB4B6-lounge-pilotcard_get_r",
+        "struct": "pcard",
+        "field": "rec_xwar_win_last1",
+        "reader": "sub_B42BB0",
+        "printer": "sub_B48C10",
+        "protocol_path": "protocol_analysis/commands/SC-0xB4B6-lounge-pilotcard_get_r/README.md",
+        "section": "§4.3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "rec_xwar_win_term",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "本届大规模战胜场",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xb42e2d",
+      "evidence_ref": {
+        "command": "SC-0xB4B6-lounge-pilotcard_get_r",
+        "struct": "pcard",
+        "field": "rec_xwar_win_term",
+        "reader": "sub_B42BB0",
+        "printer": "sub_B48C10",
+        "protocol_path": "protocol_analysis/commands/SC-0xB4B6-lounge-pilotcard_get_r/README.md",
+        "section": "§4.3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "rec_xwar_win_term_last1",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "上届大规模战胜场",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xb42e45",
+      "evidence_ref": {
+        "command": "SC-0xB4B6-lounge-pilotcard_get_r",
+        "struct": "pcard",
+        "field": "rec_xwar_win_term_last1",
+        "reader": "sub_B42BB0",
+        "printer": "sub_B48C10",
+        "protocol_path": "protocol_analysis/commands/SC-0xB4B6-lounge-pilotcard_get_r/README.md",
+        "section": "§4.3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "req_accump",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "所需累计点",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pilot",
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pilot",
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "B8A18E|B08AD0|B06980",
+      "evidence_ref": {
+        "command": "CS-0xFD3E-lounge-pilot_create",
+        "struct": "pilot",
+        "field": "req_accump",
+        "reader": "",
+        "printer": "sub_B08AD0",
+        "protocol_path": "protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md",
+        "section": "§3.1"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "score_assault_a",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "评分·强袭 A",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xb42f1d",
+      "evidence_ref": {
+        "command": "SC-0xB4B6-lounge-pilotcard_get_r",
+        "struct": "pcard",
+        "field": "score_assault_a",
+        "reader": "sub_B42BB0",
+        "printer": "sub_B48C10",
+        "protocol_path": "protocol_analysis/commands/SC-0xB4B6-lounge-pilotcard_get_r/README.md",
+        "section": "§4.3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "score_assault_b",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "评分·强袭 B",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xb42f5e",
+      "evidence_ref": {
+        "command": "SC-0xB4B6-lounge-pilotcard_get_r",
+        "struct": "pcard",
+        "field": "score_assault_b",
+        "reader": "sub_B42BB0",
+        "printer": "sub_B48C10",
+        "protocol_path": "protocol_analysis/commands/SC-0xB4B6-lounge-pilotcard_get_r/README.md",
+        "section": "§4.3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "score_cannon",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "评分·炮击",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xb42fe1",
+      "evidence_ref": {
+        "command": "SC-0xB4B6-lounge-pilotcard_get_r",
+        "struct": "pcard",
+        "field": "score_cannon",
+        "reader": "sub_B42BB0",
+        "printer": "sub_B48C10",
+        "protocol_path": "protocol_analysis/commands/SC-0xB4B6-lounge-pilotcard_get_r/README.md",
+        "section": "§4.3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "score_snipe",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "评分·狙击",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xb42f99",
+      "evidence_ref": {
+        "command": "SC-0xB4B6-lounge-pilotcard_get_r",
+        "struct": "pcard",
+        "field": "score_snipe",
+        "reader": "sub_B42BB0",
+        "printer": "sub_B48C10",
+        "protocol_path": "protocol_analysis/commands/SC-0xB4B6-lounge-pilotcard_get_r/README.md",
+        "section": "§4.3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "score_support",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "评分·支援",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xb42ff9",
+      "evidence_ref": {
+        "command": "SC-0xB4B6-lounge-pilotcard_get_r",
+        "struct": "pcard",
+        "field": "score_support",
+        "reader": "sub_B42BB0",
+        "printer": "sub_B48C10",
+        "protocol_path": "protocol_analysis/commands/SC-0xB4B6-lounge-pilotcard_get_r/README.md",
+        "section": "§4.3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "slot",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "驾驶员存放槽位序号",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": []
+      },
+      "views": [],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB8A1B3",
+      "evidence_ref": null,
+      "anchor_column": true,
+      "role": "slot"
+    },
+    {
+      "name": "state_bits",
+      "wire_type": "u8",
+      "length": 1,
+      "meaning": "状态位",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xb430b5",
+      "evidence_ref": {
+        "command": "SC-0xB4B6-lounge-pilotcard_get_r",
+        "struct": "pcard",
+        "field": "state_bits",
+        "reader": "sub_B42BB0",
+        "printer": "sub_B48C10",
+        "protocol_path": "protocol_analysis/commands/SC-0xB4B6-lounge-pilotcard_get_r/README.md",
+        "section": "§4.3"
+      },
+      "role": "flag"
+    },
+    {
+      "name": "troops",
+      "wire_type": "u8",
+      "length": 1,
+      "meaning": "所属阵营（0=秩序 / 1=抵抗）",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "pilot",
+          "pcard",
+          "pilots_list"
+        ]
+      },
+      "views": [
+        "pilot",
+        "pcard",
+        "pilots_list"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "B8A18E|B08AD0|B06980",
+      "evidence_ref": {
+        "command": "CS-0xFD3E-lounge-pilot_create",
+        "struct": "pilot",
+        "field": "troops",
+        "reader": "",
+        "printer": "sub_B08AD0",
+        "protocol_path": "protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md",
+        "section": "§3.1"
+      },
+      "wire_variants": {
+        "pilot": {
+          "wire_type": "i8",
+          "length": 1
+        }
+      },
+      "role": "attribute"
+    }
+  ],
+  "wire_body": "pcard",
+  "writes": [
+    {
+      "command": "CS-0x0038-lounge-clan_leave",
+      "op": "delete",
+      "via": "",
+      "verbs": [
+        "delete"
+      ],
+      "declared": true,
+      "declared_reason": "只针对 `pilot` 的**氏族副本四列**（`clan_name` / `clan_emb_base` / `clan_emb_parts1` / `clan_emb_parts2`）——不是整行写方（整行由 `pilot_create` 与 `pilot_rename` 一族管）。为什么必须刷：159B `pilot` 视图经 7 条 SC 下发给**别人看你的卡片**（`SC-0xB4B6-pilotcard_get_r` / `SC-0xE13A-pilot_list_get_r` / `SC-0x1D02-channellobby_members_get_r` / `SC-0x510F-party_member_add` / `SC-0x8669-dailycup_team_info_get_r` / `SC-0xBDD6-roomlobby_pilot_add` / `SC-0xC43C-pilot_create_r`），这些读路径手里没有 `clan` 行可 overlay ⇒ 不刷就是「族长换了徽章，别人的机师列表里自己还是旧徽章」。写侧证据：`clan_create` （`clan_name` @`0xB9F8CE`）、`clan_emblem_update`（`emb_base` @`0xBA076C` / `emb_parts1` @`0xBA078B` / `emb_parts2` @`0xBA078D`，一次 UPDATE 刷该 clan_id 的全部 `pilot` 行）、`clan_leave` @`0xB9FB5C` 与 `clan_kick_member` @`0xBA1499`（清成 0/空）。",
+      "evidence_va": "0xB9F8CE / 0xBA076C / 0xB9FB5C / 0xBA1499"
+    },
+    {
+      "command": "CS-0x979C-lounge-clan_emblem_update",
+      "op": "update",
+      "via": "",
+      "verbs": [
+        "update"
+      ],
+      "declared": true,
+      "declared_reason": "只针对 `pilot` 的**氏族副本四列**（`clan_name` / `clan_emb_base` / `clan_emb_parts1` / `clan_emb_parts2`）——不是整行写方（整行由 `pilot_create` 与 `pilot_rename` 一族管）。为什么必须刷：159B `pilot` 视图经 7 条 SC 下发给**别人看你的卡片**（`SC-0xB4B6-pilotcard_get_r` / `SC-0xE13A-pilot_list_get_r` / `SC-0x1D02-channellobby_members_get_r` / `SC-0x510F-party_member_add` / `SC-0x8669-dailycup_team_info_get_r` / `SC-0xBDD6-roomlobby_pilot_add` / `SC-0xC43C-pilot_create_r`），这些读路径手里没有 `clan` 行可 overlay ⇒ 不刷就是「族长换了徽章，别人的机师列表里自己还是旧徽章」。写侧证据：`clan_create` （`clan_name` @`0xB9F8CE`）、`clan_emblem_update`（`emb_base` @`0xBA076C` / `emb_parts1` @`0xBA078B` / `emb_parts2` @`0xBA078D`，一次 UPDATE 刷该 clan_id 的全部 `pilot` 行）、`clan_leave` @`0xB9FB5C` 与 `clan_kick_member` @`0xBA1499`（清成 0/空）。",
+      "evidence_va": "0xB9F8CE / 0xBA076C / 0xB9FB5C / 0xBA1499"
+    },
+    {
+      "command": "CS-0xA5BC-lounge-clan_create",
+      "op": "create",
+      "via": "",
+      "verbs": [
+        "create"
+      ],
+      "declared": true,
+      "declared_reason": "只针对 `pilot` 的**氏族副本四列**（`clan_name` / `clan_emb_base` / `clan_emb_parts1` / `clan_emb_parts2`）——不是整行写方（整行由 `pilot_create` 与 `pilot_rename` 一族管）。为什么必须刷：159B `pilot` 视图经 7 条 SC 下发给**别人看你的卡片**（`SC-0xB4B6-pilotcard_get_r` / `SC-0xE13A-pilot_list_get_r` / `SC-0x1D02-channellobby_members_get_r` / `SC-0x510F-party_member_add` / `SC-0x8669-dailycup_team_info_get_r` / `SC-0xBDD6-roomlobby_pilot_add` / `SC-0xC43C-pilot_create_r`），这些读路径手里没有 `clan` 行可 overlay ⇒ 不刷就是「族长换了徽章，别人的机师列表里自己还是旧徽章」。写侧证据：`clan_create` （`clan_name` @`0xB9F8CE`）、`clan_emblem_update`（`emb_base` @`0xBA076C` / `emb_parts1` @`0xBA078B` / `emb_parts2` @`0xBA078D`，一次 UPDATE 刷该 clan_id 的全部 `pilot` 行）、`clan_leave` @`0xB9FB5C` 与 `clan_kick_member` @`0xBA1499`（清成 0/空）。",
+      "evidence_va": "0xB9F8CE / 0xBA076C / 0xB9FB5C / 0xBA1499"
+    },
+    {
+      "command": "CS-0xE1DB-lounge-clan_kick_member",
+      "op": "delete",
+      "via": "",
+      "verbs": [
+        "delete"
+      ],
+      "declared": true,
+      "declared_reason": "只针对 `pilot` 的**氏族副本四列**（`clan_name` / `clan_emb_base` / `clan_emb_parts1` / `clan_emb_parts2`）——不是整行写方（整行由 `pilot_create` 与 `pilot_rename` 一族管）。为什么必须刷：159B `pilot` 视图经 7 条 SC 下发给**别人看你的卡片**（`SC-0xB4B6-pilotcard_get_r` / `SC-0xE13A-pilot_list_get_r` / `SC-0x1D02-channellobby_members_get_r` / `SC-0x510F-party_member_add` / `SC-0x8669-dailycup_team_info_get_r` / `SC-0xBDD6-roomlobby_pilot_add` / `SC-0xC43C-pilot_create_r`），这些读路径手里没有 `clan` 行可 overlay ⇒ 不刷就是「族长换了徽章，别人的机师列表里自己还是旧徽章」。写侧证据：`clan_create` （`clan_name` @`0xB9F8CE`）、`clan_emblem_update`（`emb_base` @`0xBA076C` / `emb_parts1` @`0xBA078B` / `emb_parts2` @`0xBA078D`，一次 UPDATE 刷该 clan_id 的全部 `pilot` 行）、`clan_leave` @`0xB9FB5C` 与 `clan_kick_member` @`0xBA1499`（清成 0/空）。",
+      "evidence_va": "0xB9F8CE / 0xBA076C / 0xB9FB5C / 0xBA1499"
+    },
+    {
+      "command": "CS-0xFD3E-lounge-pilot_create",
+      "op": "create",
+      "via": "pilot",
+      "verbs": [
+        "create"
+      ]
+    }
+  ],
+  "reads": [
+    {
+      "command": "SC-0x1D02-lounge-channellobby_members_get_r",
+      "op": "read",
+      "via": "pilot"
+    },
+    {
+      "command": "SC-0x510F-lounge-party_member_add",
+      "op": "read",
+      "via": "pilot"
+    },
+    {
+      "command": "SC-0xB4B6-lounge-pilotcard_get_r",
+      "op": "read",
+      "via": "pcard"
+    },
+    {
+      "command": "SC-0xBDD6-battle-roomlobby_pilot_add",
+      "op": "read",
+      "via": "pilot"
+    },
+    {
+      "command": "SC-0xC43C-lounge-pilot_create_r",
+      "op": "read",
+      "via": "pilot"
+    },
+    {
+      "command": "SC-0xE13A-lounge-pilot_list_get_r",
+      "op": "read",
+      "via": "pilots_list"
+    }
+  ],
+  "db_effects": [
+    {
+      "command": "CS-0xFD3E-lounge-pilot_create",
+      "entity": "pilot",
+      "op": "create",
+      "fields": [
+        "pilot_id"
+      ],
+      "table_ref": "tbl_pilot"
+    },
+    {
+      "command": "CS-0xFD3E-lounge-pilot_create",
+      "entity": "pilot",
+      "op": "create",
+      "fields": [
+        "name"
+      ],
+      "table_ref": "tbl_pilot"
+    },
+    {
+      "command": "CS-0xFD3E-lounge-pilot_create",
+      "entity": "pilot",
+      "op": "create",
+      "fields": [
+        "slot"
+      ],
+      "table_ref": "tbl_pilot"
+    },
+    {
+      "command": "CS-0xFD3E-lounge-pilot_create",
+      "entity": "pilot",
+      "op": "create",
+      "fields": [
+        "troops"
+      ],
+      "table_ref": "tbl_pilot"
+    },
+    {
+      "command": "CS-0xFD3E-lounge-pilot_create",
+      "entity": "pilot",
+      "op": "create",
+      "fields": [
+        "level"
+      ],
+      "table_ref": "tbl_pilot"
+    },
+    {
+      "command": "CS-0xFD3E-lounge-pilot_create",
+      "entity": "pilot",
+      "op": "create",
+      "fields": [
+        "mil_class"
+      ],
+      "table_ref": "tbl_pilot"
+    },
+    {
+      "command": "CS-0xFD3E-lounge-pilot_create",
+      "entity": "pilot",
+      "op": "create",
+      "fields": [
+        "byword"
+      ],
+      "table_ref": "tbl_pilot"
+    },
+    {
+      "command": "CS-0xFD3E-lounge-pilot_create",
+      "entity": "pilot",
+      "op": "create",
+      "fields": [
+        "cmdr_fame"
+      ],
+      "table_ref": "tbl_pilot"
+    },
+    {
+      "command": "CS-0xFD3E-lounge-pilot_create",
+      "entity": "pilot",
+      "op": "create",
+      "fields": [
+        "rate_vslocal"
+      ],
+      "table_ref": "tbl_pilot"
+    },
+    {
+      "command": "CS-0xFD3E-lounge-pilot_create",
+      "entity": "pilot",
+      "op": "create",
+      "fields": [
+        "rate_vslocal_4ev"
+      ],
+      "table_ref": "tbl_pilot"
+    },
+    {
+      "command": "CS-0xFD3E-lounge-pilot_create",
+      "entity": "pilot",
+      "op": "create",
+      "fields": [
+        "rate_vslocal_clan"
+      ],
+      "table_ref": "tbl_pilot"
+    },
+    {
+      "command": "CS-0xFD3E-lounge-pilot_create",
+      "entity": "pilot",
+      "op": "create",
+      "fields": [
+        "level_point"
+      ],
+      "table_ref": "tbl_pilot"
+    },
+    {
+      "command": "CS-0xFD3E-lounge-pilot_create",
+      "entity": "pilot",
+      "op": "create",
+      "fields": [
+        "avatar"
+      ],
+      "table_ref": "tbl_pilot"
+    },
+    {
+      "command": "CS-0xFD3E-lounge-pilot_create",
+      "entity": "pilot",
+      "op": "create",
+      "fields": [
+        "clan_id"
+      ],
+      "table_ref": "tbl_pilot"
+    },
+    {
+      "command": "CS-0xFD3E-lounge-pilot_create",
+      "entity": "pilot",
+      "op": "create",
+      "fields": [
+        "clan_name"
+      ],
+      "table_ref": "tbl_pilot"
+    },
+    {
+      "command": "CS-0xFD3E-lounge-pilot_create",
+      "entity": "pilot",
+      "op": "create",
+      "fields": [
+        "clan_emb_base"
+      ],
+      "table_ref": "tbl_pilot"
+    },
+    {
+      "command": "CS-0xFD3E-lounge-pilot_create",
+      "entity": "pilot",
+      "op": "create",
+      "fields": [
+        "clan_emb_parts1"
+      ],
+      "table_ref": "tbl_pilot"
+    },
+    {
+      "command": "CS-0xFD3E-lounge-pilot_create",
+      "entity": "pilot",
+      "op": "create",
+      "fields": [
+        "clan_emb_parts2"
+      ],
+      "table_ref": "tbl_pilot"
+    },
+    {
+      "command": "CS-0xFD3E-lounge-pilot_create",
+      "entity": "pilot",
+      "op": "create",
+      "fields": [
+        "cupteam_id"
+      ],
+      "table_ref": "tbl_pilot"
+    },
+    {
+      "command": "CS-0xFD3E-lounge-pilot_create",
+      "entity": "pilot",
+      "op": "create",
+      "fields": [
+        "cupteam_name"
+      ],
+      "table_ref": "tbl_pilot"
+    },
+    {
+      "command": "CS-0xFD3E-lounge-pilot_create",
+      "entity": "pilot",
+      "op": "create",
+      "fields": [
+        "accum_point"
+      ],
+      "table_ref": "tbl_pilot"
+    },
+    {
+      "command": "CS-0xFD3E-lounge-pilot_create",
+      "entity": "pilot",
+      "op": "create",
+      "fields": [
+        "rank"
+      ],
+      "table_ref": "tbl_pilot"
+    },
+    {
+      "command": "CS-0xFD3E-lounge-pilot_create",
+      "entity": "pilot",
+      "op": "create",
+      "fields": [
+        "base_accump"
+      ],
+      "table_ref": "tbl_pilot"
+    },
+    {
+      "command": "CS-0xFD3E-lounge-pilot_create",
+      "entity": "pilot",
+      "op": "create",
+      "fields": [
+        "req_accump"
+      ],
+      "table_ref": "tbl_pilot"
+    },
+    {
+      "command": "CS-0xFD3E-lounge-pilot_create",
+      "entity": "pilot",
+      "op": "create",
+      "fields": [
+        "penalty"
+      ],
+      "table_ref": "tbl_pilot"
+    },
+    {
+      "command": "CS-0xFD3E-lounge-pilot_create",
+      "entity": "pilot",
+      "op": "create",
+      "fields": [
+        "pilot_create"
+      ],
+      "table_ref": "tbl_pilot"
+    },
+    {
+      "command": "SC-0x063E-lounge-pilot_select_r",
+      "entity": "pilot",
+      "op": "read",
+      "fields": [
+        "pilot_detail"
+      ],
+      "table_ref": "tbl_pilot"
+    },
+    {
+      "command": "SC-0xB4B6-lounge-pilotcard_get_r",
+      "entity": "pcard",
+      "op": "read",
+      "fields": [
+        "pcard"
+      ],
+      "table_ref": "tbl_pcard"
+    },
+    {
+      "command": "SC-0xBDD6-battle-roomlobby_pilot_add",
+      "entity": "pilot",
+      "op": "create",
+      "fields": [
+        "pilot_response"
+      ],
+      "table_ref": "tbl_pilot"
+    },
+    {
+      "command": "SC-0xC43C-lounge-pilot_create_r",
+      "entity": "pilot",
+      "op": "create",
+      "fields": [
+        "pilot_response"
+      ],
+      "table_ref": "tbl_pilot"
+    },
+    {
+      "command": "SC-0xE13A-lounge-pilot_list_get_r",
+      "entity": "pilots_list",
+      "op": "read",
+      "fields": [
+        "pilots_eff"
+      ],
+      "table_ref": "tbl_pilots_list"
+    },
+    {
+      "command": "SC-0xE13A-lounge-pilot_list_get_r",
+      "entity": "pilot",
+      "op": "read",
+      "fields": [
+        "pilots_list"
+      ],
+      "table_ref": "tbl_pilot"
+    },
+    {
+      "command": "SC-0xE13A-lounge-pilot_list_get_r",
+      "entity": "pilots_list",
+      "op": "read",
+      "fields": [
+        "pilots_list"
+      ],
+      "table_ref": "tbl_pilots_list"
+    }
+  ],
+  "pk_members": [
+    "slot"
+  ],
+  "pk_kind": "slot",
+  "is_root": true,
+  "identity": [
+    "slot"
+  ],
+  "multi": false,
+  "array_parents": [],
+  "inline_parents": [],
+  "shape": "root",
+  "parent": "",
+  "parents": [],
+  "has_scope": true,
+  "disposition": "PERSIST",
+  "table": "game.pilot",
+  "columns_excluded": [],
+  "columns": [
+    {
+      "member": "accum_point",
+      "column": "accum_point",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "累计点数",
+      "evidence_va": "B8A18E|B08AD0|B06980",
+      "pk": false
+    },
+    {
+      "member": "base_accump",
+      "column": "base_accump",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "基础累计点",
+      "evidence_va": "B8A18E|B08AD0|B06980",
+      "pk": false
+    },
+    {
+      "member": "byword",
+      "column": "byword",
+      "role": "attribute",
+      "wire_type": "u16",
+      "synthetic": false,
+      "meaning": "口头禅（byword 表 ID）",
+      "evidence_va": "B8A18E|B08AD0|B06980",
+      "pk": false
+    },
+    {
+      "member": "capture_bonus_limit",
+      "column": "capture_bonus_limit",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "占点加成上限",
+      "evidence_va": "0xB430E3",
+      "pk": false
+    },
+    {
+      "member": "capture_bonus_state",
+      "column": "capture_bonus_state",
+      "role": "attribute",
+      "wire_type": "u8",
+      "synthetic": false,
+      "meaning": "占点加成状态",
+      "evidence_va": "0xB430C9",
+      "pk": false
+    },
+    {
+      "member": "channel_id",
+      "column": "channel_id",
+      "role": "ref",
+      "wire_type": "u8",
+      "synthetic": false,
+      "meaning": "频道 ID",
+      "evidence_va": "0xb430b5",
+      "pk": false
+    },
+    {
+      "member": "clan_emb_base",
+      "column": "clan_emb_base",
+      "role": "attribute",
+      "wire_type": "u8",
+      "synthetic": false,
+      "meaning": "部队徽章底图",
+      "evidence_va": "B8A18E|B08AD0|B06980",
+      "pk": false
+    },
+    {
+      "member": "clan_emb_parts1",
+      "column": "clan_emb_parts1",
+      "role": "attribute",
+      "wire_type": "u8",
+      "synthetic": false,
+      "meaning": "部队徽章部件 1",
+      "evidence_va": "B8A18E|B08AD0|B06980",
+      "pk": false
+    },
+    {
+      "member": "clan_emb_parts2",
+      "column": "clan_emb_parts2",
+      "role": "attribute",
+      "wire_type": "u8",
+      "synthetic": false,
+      "meaning": "部队徽章部件 2",
+      "evidence_va": "B8A18E|B08AD0|B06980",
+      "pk": false
+    },
+    {
+      "member": "clan_id",
+      "column": "clan_id",
+      "role": "ref",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "所属部队 ID",
+      "evidence_va": "B8A18E|B08AD0|B06980",
+      "pk": false
+    },
+    {
+      "member": "clan_memb_exp",
+      "column": "clan_memb_exp",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "战队成员经验",
+      "evidence_va": "0xb43019",
+      "pk": false
+    },
+    {
+      "member": "clan_name",
+      "column": "clan_name",
+      "role": "attribute",
+      "wire_type": "char[31]",
+      "synthetic": false,
+      "meaning": "部队名（NUL 结尾，定长 31 槽）",
+      "evidence_va": "B8A18E|B08AD0|B06980",
+      "pk": false
+    },
+    {
+      "member": "cmdr_fame",
+      "column": "cmdr_fame",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "指挥官功勋",
+      "evidence_va": "B8A18E|B08AD0|B06980",
+      "pk": false
+    },
+    {
+      "member": "comment",
+      "column": "comment",
+      "role": "attribute",
+      "wire_type": "char[116]",
+      "synthetic": false,
+      "meaning": "自我介绍/评论",
+      "evidence_va": "0xb43039",
+      "pk": false
+    },
+    {
+      "member": "cupteam_id",
+      "column": "cupteam_id",
+      "role": "ref",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "杯赛队伍 ID",
+      "evidence_va": "B8A18E|B08AD0|B06980",
+      "pk": false
+    },
+    {
+      "member": "cupteam_name",
+      "column": "cupteam_name",
+      "role": "attribute",
+      "wire_type": "char[31]",
+      "synthetic": false,
+      "meaning": "杯赛队伍名（NUL 结尾，定长 31 槽）",
+      "evidence_va": "B8A18E|B08AD0|B06980",
+      "pk": false
+    },
+    {
+      "member": "last_in",
+      "column": "last_in",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "最后登录时间",
+      "evidence_va": "0xb42c65",
+      "pk": false
+    },
+    {
+      "member": "level",
+      "column": "level",
+      "role": "attribute",
+      "wire_type": "u8",
+      "synthetic": false,
+      "meaning": "等级",
+      "evidence_va": "B8A18E|B08AD0|B06980",
+      "pk": false
+    },
+    {
+      "member": "level_point",
+      "column": "level_point",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "等级点数",
+      "evidence_va": "B8A18E|B08AD0|B06980",
+      "pk": false
+    },
+    {
+      "member": "mil_class",
+      "column": "mil_class",
+      "role": "attribute",
+      "wire_type": "u8",
+      "synthetic": false,
+      "meaning": "军衔阶级",
+      "evidence_va": "B8A18E|B08AD0|B06980",
+      "pk": false
+    },
+    {
+      "member": "name",
+      "column": "name",
+      "role": "attribute",
+      "wire_type": "char[25]",
+      "synthetic": false,
+      "meaning": "驾驶员名（NUL 结尾，定长 25 槽）",
+      "evidence_va": "B8A18E|B08AD0|B06980",
+      "pk": false
+    },
+    {
+      "member": "penalty",
+      "column": "penalty",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "惩罚值",
+      "evidence_va": "B8A18E|B08AD0|B06980",
+      "pk": false
+    },
+    {
+      "member": "pilot_id",
+      "column": "pilot_id",
+      "role": "scope",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "驾驶员 ID",
+      "evidence_va": "B8A18E|B08AD0|B06980",
+      "pk": true
+    },
+    {
+      "member": "rank",
+      "column": "rank",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "名次/顺位",
+      "evidence_va": "B8A18E|B08AD0|B06980",
+      "pk": false
+    },
+    {
+      "member": "rate_vslocal",
+      "column": "rate_vslocal",
+      "role": "attribute",
+      "wire_type": "u16",
+      "synthetic": false,
+      "meaning": "对本服胜率",
+      "evidence_va": "B8A18E|B08AD0|B06980",
+      "pk": false
+    },
+    {
+      "member": "rate_vslocal_4ev",
+      "column": "rate_vslocal_4ev",
+      "role": "attribute",
+      "wire_type": "u16",
+      "synthetic": false,
+      "meaning": "对本服胜率（4 人战）",
+      "evidence_va": "B8A18E|B08AD0|B06980",
+      "pk": false
+    },
+    {
+      "member": "rate_vslocal_clan",
+      "column": "rate_vslocal_clan",
+      "role": "attribute",
+      "wire_type": "u16",
+      "synthetic": false,
+      "meaning": "对本服胜率（部队战）",
+      "evidence_va": "B8A18E|B08AD0|B06980",
+      "pk": false
+    },
+    {
+      "member": "rec_cmd",
+      "column": "rec_cmd",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "指挥战场次",
+      "evidence_va": "0xb42e5d",
+      "pk": false
+    },
+    {
+      "member": "rec_cmd_last1",
+      "column": "rec_cmd_last1",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "上一场指挥战场次",
+      "evidence_va": "0xb42ea5",
+      "pk": false
+    },
+    {
+      "member": "rec_cmd_lose",
+      "column": "rec_cmd_lose",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "指挥战败场",
+      "evidence_va": "0xb42e8d",
+      "pk": false
+    },
+    {
+      "member": "rec_cmd_lose_last1",
+      "column": "rec_cmd_lose_last1",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "上一场指挥战败场",
+      "evidence_va": "0xb42ecd",
+      "pk": false
+    },
+    {
+      "member": "rec_cmd_win",
+      "column": "rec_cmd_win",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "指挥战胜场",
+      "evidence_va": "0xb42e75",
+      "pk": false
+    },
+    {
+      "member": "rec_cmd_win_last1",
+      "column": "rec_cmd_win_last1",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "上一场指挥战胜场",
+      "evidence_va": "0xb42eb9",
+      "pk": false
+    },
+    {
+      "member": "rec_dc",
+      "column": "rec_dc",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "断线战场次",
+      "evidence_va": "0xb42ee1",
+      "pk": false
+    },
+    {
+      "member": "rec_dc_lose",
+      "column": "rec_dc_lose",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "断线战败场",
+      "evidence_va": "0xb42f09",
+      "pk": false
+    },
+    {
+      "member": "rec_dc_win",
+      "column": "rec_dc_win",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "断线战胜场",
+      "evidence_va": "0xb42ef5",
+      "pk": false
+    },
+    {
+      "member": "rec_vs",
+      "column": "rec_vs",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "对战场次",
+      "evidence_va": "0xb42d22",
+      "pk": false
+    },
+    {
+      "member": "rec_vs_lose",
+      "column": "rec_vs_lose",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "对战败场",
+      "evidence_va": "0xb42d4c",
+      "pk": false
+    },
+    {
+      "member": "rec_vs_win",
+      "column": "rec_vs_win",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "对战胜场",
+      "evidence_va": "0xb42d37",
+      "pk": false
+    },
+    {
+      "member": "rec_vsl_td",
+      "column": "rec_vsl_td",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "对战塔防场次",
+      "evidence_va": "0xb42d61",
+      "pk": false
+    },
+    {
+      "member": "rec_vsl_td_lose",
+      "column": "rec_vsl_td_lose",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "对战塔防败场",
+      "evidence_va": "0xb42d8b",
+      "pk": false
+    },
+    {
+      "member": "rec_vsl_td_win",
+      "column": "rec_vsl_td_win",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "对战塔防胜场",
+      "evidence_va": "0xb42d76",
+      "pk": false
+    },
+    {
+      "member": "rec_xwar",
+      "column": "rec_xwar",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "大规模战场次",
+      "evidence_va": "0xb42da0",
+      "pk": false
+    },
+    {
+      "member": "rec_xwar_last1",
+      "column": "rec_xwar_last1",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "上一场大规模战场次",
+      "evidence_va": "0xb42de5",
+      "pk": false
+    },
+    {
+      "member": "rec_xwar_lose",
+      "column": "rec_xwar_lose",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "大规模战败场",
+      "evidence_va": "0xb42dcd",
+      "pk": false
+    },
+    {
+      "member": "rec_xwar_lose_last1",
+      "column": "rec_xwar_lose_last1",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "上一场大规模战败场",
+      "evidence_va": "0xb42e15",
+      "pk": false
+    },
+    {
+      "member": "rec_xwar_win",
+      "column": "rec_xwar_win",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "大规模战胜场",
+      "evidence_va": "0xb42db5",
+      "pk": false
+    },
+    {
+      "member": "rec_xwar_win_last1",
+      "column": "rec_xwar_win_last1",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "上一场大规模战胜场",
+      "evidence_va": "0xb42dfd",
+      "pk": false
+    },
+    {
+      "member": "rec_xwar_win_term",
+      "column": "rec_xwar_win_term",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "本届大规模战胜场",
+      "evidence_va": "0xb42e2d",
+      "pk": false
+    },
+    {
+      "member": "rec_xwar_win_term_last1",
+      "column": "rec_xwar_win_term_last1",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "上届大规模战胜场",
+      "evidence_va": "0xb42e45",
+      "pk": false
+    },
+    {
+      "member": "req_accump",
+      "column": "req_accump",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "所需累计点",
+      "evidence_va": "B8A18E|B08AD0|B06980",
+      "pk": false
+    },
+    {
+      "member": "score_assault_a",
+      "column": "score_assault_a",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "评分·强袭 A",
+      "evidence_va": "0xb42f1d",
+      "pk": false
+    },
+    {
+      "member": "score_assault_b",
+      "column": "score_assault_b",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "评分·强袭 B",
+      "evidence_va": "0xb42f5e",
+      "pk": false
+    },
+    {
+      "member": "score_cannon",
+      "column": "score_cannon",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "评分·炮击",
+      "evidence_va": "0xb42fe1",
+      "pk": false
+    },
+    {
+      "member": "score_snipe",
+      "column": "score_snipe",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "评分·狙击",
+      "evidence_va": "0xb42f99",
+      "pk": false
+    },
+    {
+      "member": "score_support",
+      "column": "score_support",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "评分·支援",
+      "evidence_va": "0xb42ff9",
+      "pk": false
+    },
+    {
+      "member": "slot",
+      "column": "slot",
+      "role": "slot",
+      "wire_type": "u32",
+      "synthetic": true,
+      "meaning": "驾驶员存放槽位序号",
+      "evidence_va": "0xB8A1B3",
+      "pk": true
+    },
+    {
+      "member": "state_bits",
+      "column": "state_bits",
+      "role": "flag",
+      "wire_type": "u8",
+      "synthetic": false,
+      "meaning": "状态位",
+      "evidence_va": "0xb430b5",
+      "pk": false
+    },
+    {
+      "member": "troops",
+      "column": "troops",
+      "role": "attribute",
+      "wire_type": "u8",
+      "synthetic": false,
+      "meaning": "所属阵营（0=秩序 / 1=抵抗）",
+      "evidence_va": "B8A18E|B08AD0|B06980",
+      "pk": false
+    }
+  ],
+  "columns_expected": 59,
+  "keys": {
+    "scope": [
+      "world_id",
+      "pilot_id"
+    ],
+    "own": [
+      "slot"
+    ],
+    "inherited": [],
+    "primary_key": [
+      "world_id",
+      "pilot_id",
+      "slot"
+    ],
+    "pk_kind": "slot",
+    "children": [],
+    "nested": [
+      "avatar"
+    ],
+    "child_key": [
+      "elem_index"
+    ]
+  },
+  "tables": [
+    {
+      "name": "game.pilot",
+      "shape": "root",
+      "parent": "",
+      "parent_table": "",
+      "via_member": "",
+      "key_extra": [],
+      "scope": [
+        "world_id",
+        "pilot_id"
+      ],
+      "links": [
+        {
+          "member": "avatar",
+          "column": "avatar",
+          "kind": "nested",
+          "composite": "avatar",
+          "child_object": "avatar",
+          "child_table": "game.pilot__avatar",
+          "count": 0,
+          "length": 18,
+          "evidence_va": "B8A18E|B08AD0|B06980"
+        }
+      ],
+      "child_tables": [
+        "game.pilot__avatar"
+      ],
+      "columns": [
+        {
+          "member": "accum_point",
+          "column": "accum_point",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "累计点数",
+          "evidence_va": "B8A18E|B08AD0|B06980",
+          "pk": false
+        },
+        {
+          "member": "base_accump",
+          "column": "base_accump",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "基础累计点",
+          "evidence_va": "B8A18E|B08AD0|B06980",
+          "pk": false
+        },
+        {
+          "member": "byword",
+          "column": "byword",
+          "role": "attribute",
+          "wire_type": "u16",
+          "synthetic": false,
+          "meaning": "口头禅（byword 表 ID）",
+          "evidence_va": "B8A18E|B08AD0|B06980",
+          "pk": false
+        },
+        {
+          "member": "capture_bonus_limit",
+          "column": "capture_bonus_limit",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "占点加成上限",
+          "evidence_va": "0xB430E3",
+          "pk": false
+        },
+        {
+          "member": "capture_bonus_state",
+          "column": "capture_bonus_state",
+          "role": "attribute",
+          "wire_type": "u8",
+          "synthetic": false,
+          "meaning": "占点加成状态",
+          "evidence_va": "0xB430C9",
+          "pk": false
+        },
+        {
+          "member": "channel_id",
+          "column": "channel_id",
+          "role": "ref",
+          "wire_type": "u8",
+          "synthetic": false,
+          "meaning": "频道 ID",
+          "evidence_va": "0xb430b5",
+          "pk": false
+        },
+        {
+          "member": "clan_emb_base",
+          "column": "clan_emb_base",
+          "role": "attribute",
+          "wire_type": "u8",
+          "synthetic": false,
+          "meaning": "部队徽章底图",
+          "evidence_va": "B8A18E|B08AD0|B06980",
+          "pk": false
+        },
+        {
+          "member": "clan_emb_parts1",
+          "column": "clan_emb_parts1",
+          "role": "attribute",
+          "wire_type": "u8",
+          "synthetic": false,
+          "meaning": "部队徽章部件 1",
+          "evidence_va": "B8A18E|B08AD0|B06980",
+          "pk": false
+        },
+        {
+          "member": "clan_emb_parts2",
+          "column": "clan_emb_parts2",
+          "role": "attribute",
+          "wire_type": "u8",
+          "synthetic": false,
+          "meaning": "部队徽章部件 2",
+          "evidence_va": "B8A18E|B08AD0|B06980",
+          "pk": false
+        },
+        {
+          "member": "clan_id",
+          "column": "clan_id",
+          "role": "ref",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "所属部队 ID",
+          "evidence_va": "B8A18E|B08AD0|B06980",
+          "pk": false
+        },
+        {
+          "member": "clan_memb_exp",
+          "column": "clan_memb_exp",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "战队成员经验",
+          "evidence_va": "0xb43019",
+          "pk": false
+        },
+        {
+          "member": "clan_name",
+          "column": "clan_name",
+          "role": "attribute",
+          "wire_type": "char[31]",
+          "synthetic": false,
+          "meaning": "部队名（NUL 结尾，定长 31 槽）",
+          "evidence_va": "B8A18E|B08AD0|B06980",
+          "pk": false
+        },
+        {
+          "member": "cmdr_fame",
+          "column": "cmdr_fame",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "指挥官功勋",
+          "evidence_va": "B8A18E|B08AD0|B06980",
+          "pk": false
+        },
+        {
+          "member": "comment",
+          "column": "comment",
+          "role": "attribute",
+          "wire_type": "char[116]",
+          "synthetic": false,
+          "meaning": "自我介绍/评论",
+          "evidence_va": "0xb43039",
+          "pk": false
+        },
+        {
+          "member": "cupteam_id",
+          "column": "cupteam_id",
+          "role": "ref",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "杯赛队伍 ID",
+          "evidence_va": "B8A18E|B08AD0|B06980",
+          "pk": false
+        },
+        {
+          "member": "cupteam_name",
+          "column": "cupteam_name",
+          "role": "attribute",
+          "wire_type": "char[31]",
+          "synthetic": false,
+          "meaning": "杯赛队伍名（NUL 结尾，定长 31 槽）",
+          "evidence_va": "B8A18E|B08AD0|B06980",
+          "pk": false
+        },
+        {
+          "member": "last_in",
+          "column": "last_in",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "最后登录时间",
+          "evidence_va": "0xb42c65",
+          "pk": false
+        },
+        {
+          "member": "level",
+          "column": "level",
+          "role": "attribute",
+          "wire_type": "u8",
+          "synthetic": false,
+          "meaning": "等级",
+          "evidence_va": "B8A18E|B08AD0|B06980",
+          "pk": false
+        },
+        {
+          "member": "level_point",
+          "column": "level_point",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "等级点数",
+          "evidence_va": "B8A18E|B08AD0|B06980",
+          "pk": false
+        },
+        {
+          "member": "mil_class",
+          "column": "mil_class",
+          "role": "attribute",
+          "wire_type": "u8",
+          "synthetic": false,
+          "meaning": "军衔阶级",
+          "evidence_va": "B8A18E|B08AD0|B06980",
+          "pk": false
+        },
+        {
+          "member": "name",
+          "column": "name",
+          "role": "attribute",
+          "wire_type": "char[25]",
+          "synthetic": false,
+          "meaning": "驾驶员名（NUL 结尾，定长 25 槽）",
+          "evidence_va": "B8A18E|B08AD0|B06980",
+          "pk": false
+        },
+        {
+          "member": "penalty",
+          "column": "penalty",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "惩罚值",
+          "evidence_va": "B8A18E|B08AD0|B06980",
+          "pk": false
+        },
+        {
+          "member": "pilot_id",
+          "column": "pilot_pilot_id",
+          "role": "scope",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "驾驶员 ID",
+          "evidence_va": "B8A18E|B08AD0|B06980",
+          "pk": true,
+          "renamed_from": "pilot_id"
+        },
+        {
+          "member": "rank",
+          "column": "rank",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "名次/顺位",
+          "evidence_va": "B8A18E|B08AD0|B06980",
+          "pk": false
+        },
+        {
+          "member": "rate_vslocal",
+          "column": "rate_vslocal",
+          "role": "attribute",
+          "wire_type": "u16",
+          "synthetic": false,
+          "meaning": "对本服胜率",
+          "evidence_va": "B8A18E|B08AD0|B06980",
+          "pk": false
+        },
+        {
+          "member": "rate_vslocal_4ev",
+          "column": "rate_vslocal_4ev",
+          "role": "attribute",
+          "wire_type": "u16",
+          "synthetic": false,
+          "meaning": "对本服胜率（4 人战）",
+          "evidence_va": "B8A18E|B08AD0|B06980",
+          "pk": false
+        },
+        {
+          "member": "rate_vslocal_clan",
+          "column": "rate_vslocal_clan",
+          "role": "attribute",
+          "wire_type": "u16",
+          "synthetic": false,
+          "meaning": "对本服胜率（部队战）",
+          "evidence_va": "B8A18E|B08AD0|B06980",
+          "pk": false
+        },
+        {
+          "member": "rec_cmd",
+          "column": "rec_cmd",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "指挥战场次",
+          "evidence_va": "0xb42e5d",
+          "pk": false
+        },
+        {
+          "member": "rec_cmd_last1",
+          "column": "rec_cmd_last1",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "上一场指挥战场次",
+          "evidence_va": "0xb42ea5",
+          "pk": false
+        },
+        {
+          "member": "rec_cmd_lose",
+          "column": "rec_cmd_lose",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "指挥战败场",
+          "evidence_va": "0xb42e8d",
+          "pk": false
+        },
+        {
+          "member": "rec_cmd_lose_last1",
+          "column": "rec_cmd_lose_last1",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "上一场指挥战败场",
+          "evidence_va": "0xb42ecd",
+          "pk": false
+        },
+        {
+          "member": "rec_cmd_win",
+          "column": "rec_cmd_win",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "指挥战胜场",
+          "evidence_va": "0xb42e75",
+          "pk": false
+        },
+        {
+          "member": "rec_cmd_win_last1",
+          "column": "rec_cmd_win_last1",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "上一场指挥战胜场",
+          "evidence_va": "0xb42eb9",
+          "pk": false
+        },
+        {
+          "member": "rec_dc",
+          "column": "rec_dc",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "断线战场次",
+          "evidence_va": "0xb42ee1",
+          "pk": false
+        },
+        {
+          "member": "rec_dc_lose",
+          "column": "rec_dc_lose",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "断线战败场",
+          "evidence_va": "0xb42f09",
+          "pk": false
+        },
+        {
+          "member": "rec_dc_win",
+          "column": "rec_dc_win",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "断线战胜场",
+          "evidence_va": "0xb42ef5",
+          "pk": false
+        },
+        {
+          "member": "rec_vs",
+          "column": "rec_vs",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "对战场次",
+          "evidence_va": "0xb42d22",
+          "pk": false
+        },
+        {
+          "member": "rec_vs_lose",
+          "column": "rec_vs_lose",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "对战败场",
+          "evidence_va": "0xb42d4c",
+          "pk": false
+        },
+        {
+          "member": "rec_vs_win",
+          "column": "rec_vs_win",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "对战胜场",
+          "evidence_va": "0xb42d37",
+          "pk": false
+        },
+        {
+          "member": "rec_vsl_td",
+          "column": "rec_vsl_td",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "对战塔防场次",
+          "evidence_va": "0xb42d61",
+          "pk": false
+        },
+        {
+          "member": "rec_vsl_td_lose",
+          "column": "rec_vsl_td_lose",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "对战塔防败场",
+          "evidence_va": "0xb42d8b",
+          "pk": false
+        },
+        {
+          "member": "rec_vsl_td_win",
+          "column": "rec_vsl_td_win",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "对战塔防胜场",
+          "evidence_va": "0xb42d76",
+          "pk": false
+        },
+        {
+          "member": "rec_xwar",
+          "column": "rec_xwar",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "大规模战场次",
+          "evidence_va": "0xb42da0",
+          "pk": false
+        },
+        {
+          "member": "rec_xwar_last1",
+          "column": "rec_xwar_last1",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "上一场大规模战场次",
+          "evidence_va": "0xb42de5",
+          "pk": false
+        },
+        {
+          "member": "rec_xwar_lose",
+          "column": "rec_xwar_lose",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "大规模战败场",
+          "evidence_va": "0xb42dcd",
+          "pk": false
+        },
+        {
+          "member": "rec_xwar_lose_last1",
+          "column": "rec_xwar_lose_last1",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "上一场大规模战败场",
+          "evidence_va": "0xb42e15",
+          "pk": false
+        },
+        {
+          "member": "rec_xwar_win",
+          "column": "rec_xwar_win",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "大规模战胜场",
+          "evidence_va": "0xb42db5",
+          "pk": false
+        },
+        {
+          "member": "rec_xwar_win_last1",
+          "column": "rec_xwar_win_last1",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "上一场大规模战胜场",
+          "evidence_va": "0xb42dfd",
+          "pk": false
+        },
+        {
+          "member": "rec_xwar_win_term",
+          "column": "rec_xwar_win_term",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "本届大规模战胜场",
+          "evidence_va": "0xb42e2d",
+          "pk": false
+        },
+        {
+          "member": "rec_xwar_win_term_last1",
+          "column": "rec_xwar_win_term_last1",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "上届大规模战胜场",
+          "evidence_va": "0xb42e45",
+          "pk": false
+        },
+        {
+          "member": "req_accump",
+          "column": "req_accump",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "所需累计点",
+          "evidence_va": "B8A18E|B08AD0|B06980",
+          "pk": false
+        },
+        {
+          "member": "score_assault_a",
+          "column": "score_assault_a",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "评分·强袭 A",
+          "evidence_va": "0xb42f1d",
+          "pk": false
+        },
+        {
+          "member": "score_assault_b",
+          "column": "score_assault_b",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "评分·强袭 B",
+          "evidence_va": "0xb42f5e",
+          "pk": false
+        },
+        {
+          "member": "score_cannon",
+          "column": "score_cannon",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "评分·炮击",
+          "evidence_va": "0xb42fe1",
+          "pk": false
+        },
+        {
+          "member": "score_snipe",
+          "column": "score_snipe",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "评分·狙击",
+          "evidence_va": "0xb42f99",
+          "pk": false
+        },
+        {
+          "member": "score_support",
+          "column": "score_support",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "评分·支援",
+          "evidence_va": "0xb42ff9",
+          "pk": false
+        },
+        {
+          "member": "slot",
+          "column": "slot",
+          "role": "slot",
+          "wire_type": "u32",
+          "synthetic": true,
+          "meaning": "驾驶员存放槽位序号",
+          "evidence_va": "0xB8A1B3",
+          "pk": true
+        },
+        {
+          "member": "state_bits",
+          "column": "state_bits",
+          "role": "flag",
+          "wire_type": "u8",
+          "synthetic": false,
+          "meaning": "状态位",
+          "evidence_va": "0xb430b5",
+          "pk": false
+        },
+        {
+          "member": "troops",
+          "column": "troops",
+          "role": "attribute",
+          "wire_type": "u8",
+          "synthetic": false,
+          "meaning": "所属阵营（0=秩序 / 1=抵抗）",
+          "evidence_va": "B8A18E|B08AD0|B06980",
+          "pk": false
+        }
+      ],
+      "key_members": [
+        "world_id",
+        "pilot_id",
+        "slot"
+      ],
+      "primary_key": [
+        "world_id",
+        "pilot_id",
+        "slot"
+      ]
+    }
+  ],
+  "links": [
+    {
+      "member": "avatar",
+      "column": "avatar",
+      "kind": "nested",
+      "composite": "avatar",
+      "child_object": "avatar",
+      "child_table": "game.pilot__avatar",
+      "count": 0,
+      "length": 18,
+      "evidence_va": "B8A18E|B08AD0|B06980"
+    }
+  ]
+}

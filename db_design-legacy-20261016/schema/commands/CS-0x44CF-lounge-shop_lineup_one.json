@@ -1,0 +1,346 @@
+{
+  "id": "CS-0x44CF-lounge-shop_lineup_one",
+  "opcode": "0x44CF",
+  "direction": "CS",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "shop_lineup_one",
+  "source_dir": "protocol_analysis/commands/CS-0x44CF-lounge-shop_lineup_one",
+  "meta": {
+    "opcode": "`0x44CF`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`shop_lineup_one`",
+    "名字符串": "`)<-_proto_lounge_client::send_shop_lineup_one(` @ `0xeec320`",
+    "代码位置": "sub_B9CB80 @ `0xb9cb80`（`0xb9cb80`..`0xb9cd68`）",
+    "opcode 写入证据": "`0xb9cbf4`",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0xA`（10）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)`",
+    "配对命令（同 opcode 反向）": "见 §4.3 与其他命令的关联 / INDEX 反向表"
+  },
+  "handler": "sub_B9CB80",
+  "handler_va": "0xb9cb80",
+  "block": [
+    "0xB9CB80",
+    "0xB9CD68"
+  ],
+  "name_str": ")<-_proto_lounge_client::send_shop_lineup_one(",
+  "name_str_va": "0xeec320",
+  "capacity": "0xA",
+  "capacity_va": null,
+  "closer_va": "0xB9CC71",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": null,
+  "wire": {
+    "length_expr": "1 + 4",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0xA（容量记账口径，非线长）",
+    "field_count": 2,
+    "length_source": "field_sum",
+    "readme_conclusion": "结论：请求商城某个分页下的单个陈列项。",
+    "readme_close": "2 + 1 + 4 = 7 ≤ 容量 0xA=10（富余 3）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发给 lounge 协议类处理块（C→S 无 case 块）",
+      "enum": "0x44CF",
+      "evidence_va": [
+        "0xB9CBF4"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "2",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "tab_type",
+      "meaning": "商城页签类型",
+      "purpose": "来源=入参 arg_0 的低字节（@0xB9CC00 `mov dl,[arg_0]`）；内联 `mov [ecx],dl` 写线；经 `vt[0x58]` 发送",
+      "enum": null,
+      "evidence_va": [
+        "0xB9CC09"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "3",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "shopitem_id",
+      "meaning": "商品 id",
+      "purpose": "来源=入参 arg_4（@0xB9CC11）；内联 `mov [edi],eax` 写线；经 `vt[0x58]` 发送",
+      "enum": null,
+      "evidence_va": [
+        "0xB9CC15"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0x44CF（分发器 switch 选择子）",
+      "evidence_va": "0xB9CBF4"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0xA B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xB9CBC6"
+    },
+    {
+      "step": 3,
+      "kind": "write_scalar",
+      "detail": "tab_type：`u8`（线长 1）—— 商城页签类型",
+      "evidence_va": "0xB9CC09"
+    },
+    {
+      "step": 4,
+      "kind": "write_scalar",
+      "detail": "shopitem_id：`u32`（线长 4）—— 商品 id",
+      "evidence_va": "0xB9CC15"
+    },
+    {
+      "step": 5,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xB9CC71"
+    },
+    {
+      "step": 6,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xB9CCFF"
+    }
+  ],
+  "capabilities": [
+    "unclassified",
+    "lounge.shop_lineup"
+  ],
+  "capabilities_derived": [
+    "unclassified"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:43",
+    "batch": 6,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 10,
+        "va": "0xB9CBC6",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB9CBC3",
+        "call_va": "0xB9CBC8"
+      },
+      "field_window": {
+        "start_va": "0xB9CB80",
+        "end_va": "0xB9CC71",
+        "guard": null,
+        "closer_or_commit_va": "0xB9CC71",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "tab_type",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB9CC09"
+            ]
+          },
+          {
+            "name": "shopitem_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB9CC15"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB9CBF4",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB9CC09",
+            "kind": "inline_store",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB9CC15",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB9CC47",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 2,
+        "checkable": 2,
+        "pairs": [
+          {
+            "field": "tab_type",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB9CC09",
+            "kind": "inline_store"
+          },
+          {
+            "field": "shopitem_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB9CC15",
+            "kind": "inline_store"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB9CBF4",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB9CB80",
+          "0xB9CC71"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 7,
+          "capacity": 10,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB9CC47",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）7 / 容量 0xa"
+        }
+      },
+      "closer": {
+        "va": "0xB9CC71",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xB9CCFF",
+        "mov_va": "0xB9CCF6",
+        "host": "[eax+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "tab_type=",
+        "shopitem_id="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0x44CF-lounge-shop_lineup_one.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0xb9cbf4",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xB9CBF4"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "ShopLineupOne",
+      "role": "request",
+      "wire_length": "1 + 4",
+      "members": [
+        {
+          "name": "TabType",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "tab_type"
+        },
+        {
+          "name": "ShopitemId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "shopitem_id"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "15f450fe7edf5bd1",
+  "check_fingerprint": "f219d9d17f61e174"
+}

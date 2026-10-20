@@ -1,0 +1,213 @@
+{
+ "id": "SC-0x7998-lounge-msma_over_custom_use_capsule_r",
+ "verified_at": "2026-09-30 15:25:44",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "block",
+ "block": [
+  "0xB68402",
+  "0xB686B3"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 20,
+   "va": "0xB6841E",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xB6841B",
+   "call_va": "0xB68420"
+  },
+  "field_window": {
+   "start_va": "0xB6840A",
+   "end_va": "0xB68534",
+   "guard": {
+    "va": "0xB68409",
+    "func": "0xB41120",
+    "module_id": 610,
+    "release_va": "0xB41110"
+   },
+   "closer_or_commit_va": "0xB6850D",
+   "within_model_block": true,
+   "range_from": "block"
+  },
+  "primitive_widths": {
+   "direction": "SC",
+   "expected": [
+    {
+     "name": "result",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "B68459",
+      "B685AC"
+     ]
+    },
+    {
+     "name": "uniq_msid",
+     "wire_type": "u64",
+     "width": 8,
+     "seq": 2,
+     "shape": "scalar",
+     "evidence_va": [
+      "B68499",
+      "B685D6"
+     ]
+    },
+    {
+     "name": "item_id",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 3,
+     "shape": "scalar",
+     "evidence_va": [
+      "B684D9",
+      "B68600"
+     ]
+    },
+    {
+     "name": "exp",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 4,
+     "shape": "scalar",
+     "evidence_va": [
+      "B684FD",
+      "B68625"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB68459",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB68499",
+     "kind": "read",
+     "width": 8,
+     "wire_type": "u64",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB684D9",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB684FD",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 4,
+   "checkable": 4,
+   "pairs": [
+    {
+     "field": "result",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB68459",
+     "kind": "read"
+    },
+    {
+     "field": "uniq_msid",
+     "width": 8,
+     "shape": "scalar",
+     "va": "0xB68499",
+     "kind": "read"
+    },
+    {
+     "field": "item_id",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB684D9",
+     "kind": "read"
+    },
+    {
+     "field": "exp",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB684FD",
+     "kind": "read"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB6840A",
+    "0xB68534"
+   ],
+   "scalar_match_verifiable": true,
+   "capacity_relation": {
+    "observed_min": 20,
+    "capacity": 20,
+    "relation": "exact",
+    "unknown_events": [],
+    "is_lower_bound": false,
+    "note": "观测线长（下界）20 / 容量 0x14"
+   }
+  },
+  "closer": {
+   "va": "0xB6850D",
+   "kind": "jz",
+   "jcc_va": "0xB68513",
+   "seq_va": "0xB68509",
+   "jcc_dst": "0xB6852F",
+   "cmp": "cmp     eax, [esp+2C5Ch+var_2C40]",
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x5C0]",
+   "slot_value": 1472,
+   "va": "0xB68697",
+   "mov_va": "0xB6867D",
+   "host": "[edx+5C0h]",
+   "argc": 5,
+   "form": "mov_then_call",
+   "error_slot": {
+    "slot": "vt[0x64]",
+    "va": "0xB68473",
+    "argc": 2
+   }
+  },
+  "log_strings": [
+   "result=",
+   "uniq_msid=",
+   "item_id=",
+   "exp="
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "exp",
+  "item_id",
+  "result",
+  "uniq_msid"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 8
+}

@@ -1,0 +1,769 @@
+{
+  "id": "SC-0xD6E5-lounge-season_rankerbattle_team_info_get_r",
+  "opcode": "0xD6E5",
+  "direction": "SC",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "season_rankerbattle_team_info_get_r",
+  "source_dir": "protocol_analysis/commands/SC-0xD6E5-lounge-season_rankerbattle_team_info_get_r",
+  "meta": {
+    "opcode": "`0xD6E5`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`season_rankerbattle_team_info_get_r`",
+    "处理块范围": "`0xb7e89d`..`0xb7eba7`",
+    "名字串引用点": "`0xee6750`",
+    "声明容量（解码缓冲）": "`0x320C`（`B7E8B2`）",
+    "长度闭合点": "`B7E9D8`（`cmp`）→ `B7E9DE jz`",
+    "报错码": "`0x26A`（块内 4 处 `push 1; push 26Ah; vt[0x64]`）",
+    "去向": "`vt[0x5D8]` @`B7EB8B`（4 实参）"
+  },
+  "handler": null,
+  "handler_va": null,
+  "block": [
+    "0xb7e89d",
+    "0xb7eba7"
+  ],
+  "name_str": null,
+  "name_str_va": "0xee6750",
+  "capacity": "0x320C",
+  "capacity_va": "0xB7E8B2",
+  "closer_va": "0xB7E9D8",
+  "dispatch": "`vt[0x5D8]` @`B7EB8B`（4 实参）",
+  "dispatch_slot": "vt[0x5D8]",
+  "dispatch_va": "0xB7EB8B",
+  "wire": {
+    "length_expr": "4 + 4 + 4 + 55n",
+    "fixed": false,
+    "var_drivers": [
+      "n"
+    ],
+    "capacity_note": "声明容量 0x320C（容量记账口径，非线长）",
+    "field_count": 4,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：12 + 55n",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "result",
+      "meaning": "取得结果码（日志串 `result=`）",
+      "purpose": "经 `vt[0x5D8]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xb7e8f0",
+        "0xb7ea77"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "troops",
+      "meaning": "编队 ID/部队号（日志串 `troops=`）",
+      "purpose": "经 `vt[0x5D8]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xb7e930",
+        "0xb7eaa1"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 3,
+      "offset": "8",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "pilots_num",
+      "meaning": "队员条数（上限 200；无独立日志名，按 `pilots={` 计数，命名推定）",
+      "purpose": "驱动 `pilots` 数组循环（`cmp edi，ebx`@`B7E9BE`）",
+      "enum": "0..200",
+      "evidence_va": [
+        "0xb7e946",
+        "0xb7e972",
+        "0xb7e9be"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 4,
+      "offset": "12",
+      "length": "55n",
+      "wire_type": "array<team_pilot,n>",
+      "name": "pilots",
+      "meaning": "队员列表（日志串 `pilots={`；成员打印器 `sub_B51310`）",
+      "purpose": "经 `vt[0x5D8]` 交业务；槽步进 64 = `sub_B41AC0`（`add dword ptr [edx]，40h`）",
+      "enum": null,
+      "evidence_va": [
+        "0xb7e984",
+        "0xb7e9aa",
+        "0xb7eabc"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5,
+      "wire_type_draft": "array<team_pilot,200>",
+      "element_composite_ref_source": "name",
+      "element_composite_ref": "team_pilot"
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0xD6E5（分发器 switch 选择子）",
+      "evidence_va": "0x0000"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB41120`（模块 id None）→ 之后逐字段读线",
+      "evidence_va": "0xB7E89D"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "result：`u32`（线长 4）—— 取得结果码（日志串 `result=`）",
+      "evidence_va": "0xB7E8F0"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "troops：`u32`（线长 4）—— 编队 ID/部队号（日志串 `troops=`）",
+      "evidence_va": "0xB7E930"
+    },
+    {
+      "step": 5,
+      "kind": "read_count",
+      "detail": "pilots_num：`u32`（线长 4）—— 队员条数（上限 200；无独立日志名，按 `pilots={` 计数，命名推定）",
+      "evidence_va": "0xB7E946"
+    },
+    {
+      "step": 6,
+      "kind": "read_array",
+      "detail": "pilots：`array<team_pilot,n>`（线长 55n）—— 队员列表（日志串 `pilots={`；成员打印器 `sub_B51310`）",
+      "evidence_va": "0xB7E984"
+    },
+    {
+      "step": 7,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB7E9D8"
+    },
+    {
+      "step": 8,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x5D8]`，实参 4 个",
+      "evidence_va": "0xB7EB8B"
+    },
+    {
+      "step": 9,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB7E90A"
+    }
+  ],
+  "capabilities": [
+    "query",
+    "lounge.season_rankerbattle"
+  ],
+  "capabilities_derived": [
+    "query"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:45",
+    "batch": 12,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 12812,
+        "va": "0xB7E8B2",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB7E8AF",
+        "call_va": "0xB7E8B7"
+      },
+      "field_window": {
+        "start_va": "0xB7E89E",
+        "end_va": "0xB7E9FF",
+        "guard": {
+          "va": "0xB7E89D",
+          "func": "0xB41120",
+          "module_id": null,
+          "release_va": "0xB41110"
+        },
+        "closer_or_commit_va": "0xB7E9D8",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "result",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb7e8f0",
+              "0xb7ea77"
+            ]
+          },
+          {
+            "name": "troops",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb7e930",
+              "0xb7eaa1"
+            ]
+          },
+          {
+            "name": "pilots_num",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb7e946",
+              "0xb7e972",
+              "0xb7e9be"
+            ]
+          },
+          {
+            "name": "pilots",
+            "wire_type": "array<team_pilot,n>",
+            "width": null,
+            "seq": 4,
+            "shape": "agg",
+            "evidence_va": [
+              "0xb7e984",
+              "0xb7e9aa",
+              "0xb7eabc"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB472CE",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB472EA",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB472EA",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB472EA",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB472EA",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB472EA",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB472EA",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB472EA",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB472EA",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB472EA",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB472EA",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB472EA",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB472EA",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB472EA",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB472EA",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB472EA",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB472EA",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB472EA",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB472EA",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB472EA",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB472EA",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB472EA",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB472EA",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB472EA",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB472EA",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB472EA",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB47305",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB47317",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB7E8F0",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB7E930",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB7E946",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB7E984",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B41AC0",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB7E9AA",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B472C0",
+            "consumed": null,
+            "consumed_effective": 37,
+            "nested_of": null
+          }
+        ],
+        "matched": 3,
+        "checkable": 3,
+        "pairs": [
+          {
+            "field": "result",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB7E8F0",
+            "kind": "read"
+          },
+          {
+            "field": "troops",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB7E930",
+            "kind": "read"
+          },
+          {
+            "field": "pilots_num",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB7E946",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB7E9AA",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null
+          },
+          {
+            "va": "0xB472CE",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null
+          },
+          {
+            "va": "0xB472EA",
+            "kind": "nested_run",
+            "width": 25,
+            "wire_type": null
+          },
+          {
+            "va": "0xB47305",
+            "kind": "nested_run",
+            "width": 8,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB7E89E",
+          "0xB7E9FF"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 12,
+          "capacity": 12812,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB7E984",
+              "kind": "opaque",
+              "name": "sub_B41AC0"
+            },
+            {
+              "va": "0xB7E9AA",
+              "kind": "composite",
+              "name": "sub_B472C0"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）12 / 容量 0x320c"
+        }
+      },
+      "closer": {
+        "va": "0xB7E9D8",
+        "kind": "jz",
+        "jcc_va": "0xB7E9DE",
+        "seq_va": "0xB7E9D4",
+        "jcc_dst": "0xB7E9FA",
+        "cmp": "cmp     ecx, [esp+2C5Ch+var_2C40]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x5D8]",
+        "slot_value": 1496,
+        "va": "0xB7EB8B",
+        "mov_va": "0xB7EB77",
+        "host": "[edx+5D8h]",
+        "argc": 4,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB7E90A",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "result=",
+        "troops=",
+        "pilots={"
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0xD6E5-lounge-season_rankerbattle_team_info_get_r.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": []
+  },
+  "structs": {
+    "response": {
+      "go_name": "SeasonRankerbattleTeamInfoGetR",
+      "role": "response",
+      "wire_length": "4 + 4 + 4 + 55n",
+      "members": [
+        {
+          "name": "Result",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "result"
+        },
+        {
+          "name": "Troops",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "troops"
+        },
+        {
+          "name": "PilotsNum",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "pilots_num"
+        },
+        {
+          "name": "Pilots",
+          "wire_type": "array<team_pilot,n>",
+          "length": "55n",
+          "field_ref": "pilots",
+          "element": "team_pilot",
+          "element_composite_ref": "team_pilot",
+          "element_length": null,
+          "cap": null,
+          "count_field": "pilots_num",
+          "count_field_source": "heuristic",
+          "count_var": "n",
+          "note": null
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "99c0d0be47c7945e",
+  "check_fingerprint": "75699e7cab127209",
+  "import_repairs": [
+    "elem_wt_normalized:pilots(array<team_pilot,200> → array<team_pilot,n>)"
+  ]
+}

@@ -1,0 +1,332 @@
+{
+  "id": "SC-0x4B2F-lounge-pilot_rating_update",
+  "opcode": "0x4B2F",
+  "direction": "SC",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "pilot_rating_update",
+  "source_dir": "protocol_analysis/commands/SC-0x4B2F-lounge-pilot_rating_update",
+  "meta": {
+    "opcode": "`0x4B2F`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`pilot_rating_update`",
+    "处理函数": "`sub_B51930` @ `0xB51930`（lounge 分发器）",
+    "处理块范围": "`0xB5EA0E`..`0xB5EBE9`",
+    "名字串引用点": "`0xB5EAEE`",
+    "声明容量（解码缓冲）": "`0x4`（`0xB5EA23`）",
+    "长度闭合点": "`0xB5EACC`",
+    "去向": "`vt[0xBC]` @ `0xB5EBCD`（2 实参）"
+  },
+  "handler": "sub_B51930",
+  "handler_va": "0xB51930",
+  "block": [
+    "0xB5EA0E",
+    "0xB5EBE9"
+  ],
+  "name_str": null,
+  "name_str_va": "0xB5EAEE",
+  "capacity": "0x4",
+  "capacity_va": "0xB5EA23",
+  "closer_va": "0xB5EAAB",
+  "dispatch": "`vt[0xBC]` @ `0xB5EBCD`（2 实参）",
+  "dispatch_slot": "vt[0xBC]",
+  "dispatch_va": "0xB5EBCD",
+  "wire": {
+    "length_expr": "2 + 2",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x4（容量记账口径，非线长）",
+    "field_count": 2,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体总长**：**4** 字节（== 容量 0x4）。",
+    "readme_close": "容量 0x4 与线长的关系：**相等**（全定长）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0x4B2F",
+      "evidence_va": [
+        "0xB5EAEE"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "rate_vslocal",
+      "meaning": "本地对战评级",
+      "purpose": "经 `vt[0xBC]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB5EA5E",
+        "0xB5EB45"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "2",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "rate_vslocal_4ev",
+      "meaning": "本地对战评级（4ev）",
+      "purpose": "经 `vt[0xBC]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB5EA9B",
+        "0xB5EB6B"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0x4B2F（分发器 switch 选择子）",
+      "evidence_va": "0xB5EAEE"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB41120`（模块 id None）→ 之后逐字段读线",
+      "evidence_va": "0xB5EA0E"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "rate_vslocal：`u16`（线长 2）—— 本地对战评级",
+      "evidence_va": "0xB5EA5E"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "rate_vslocal_4ev：`u16`（线长 2）—— 本地对战评级（4ev）",
+      "evidence_va": "0xB5EA9B"
+    },
+    {
+      "step": 5,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB5EAAB"
+    },
+    {
+      "step": 6,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0xBC]`，实参 2 个",
+      "evidence_va": "0xB5EBCD"
+    },
+    {
+      "step": 7,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB5EA75"
+    }
+  ],
+  "capabilities": [
+    "update",
+    "lounge.pilot_rating"
+  ],
+  "capabilities_derived": [
+    "notify"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:43",
+    "batch": 7,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 4,
+        "va": "0xB5EA23",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB5EA20",
+        "call_va": "0xB5EA25"
+      },
+      "field_window": {
+        "start_va": "0xB5EA0F",
+        "end_va": "0xB5EACC",
+        "guard": {
+          "va": "0xB5EA0E",
+          "func": "0xB41120",
+          "module_id": null,
+          "release_va": "0xB41110"
+        },
+        "closer_or_commit_va": "0xB5EAAB",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "rate_vslocal",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB5EA5E",
+              "0xB5EB45"
+            ]
+          },
+          {
+            "name": "rate_vslocal_4ev",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB5EA9B",
+              "0xB5EB6B"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB5EA5E",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB5EA9B",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 2,
+        "checkable": 2,
+        "pairs": [
+          {
+            "field": "rate_vslocal",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB5EA5E",
+            "kind": "read"
+          },
+          {
+            "field": "rate_vslocal_4ev",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB5EA9B",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB5EA0F",
+          "0xB5EACC"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 4,
+          "capacity": 4,
+          "relation": "exact",
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）4 / 容量 0x4"
+        }
+      },
+      "closer": {
+        "va": "0xB5EAAB",
+        "kind": "jz",
+        "jcc_va": "0xB5EAB1",
+        "seq_va": "0xB5EAA7",
+        "jcc_dst": "0xB5EACA",
+        "cmp": "cmp     ebx, [esp+2C5Ch+var_2C40]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0xBC]",
+        "slot_value": 188,
+        "va": "0xB5EBCD",
+        "mov_va": "0xB5EBC0",
+        "host": "[edx+0BCh]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB5EA75",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "rate_vslocal=",
+        "rate_vslocal_4ev="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0x4B2F-lounge-pilot_rating_update.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xB5EAEE"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "PilotRatingUpdate",
+      "role": "response",
+      "wire_length": "2 + 2",
+      "members": [
+        {
+          "name": "RateVslocal",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "rate_vslocal"
+        },
+        {
+          "name": "RateVslocal4ev",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "rate_vslocal_4ev"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "c8bbaf83f20399e8",
+  "check_fingerprint": "4865965330239b6a"
+}

@@ -1,0 +1,283 @@
+{
+ "id": "SC-0xE4DB-battle-entity_msma_show_hp",
+ "verified_at": "2026-09-30 15:25:48",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "block",
+ "block": [
+  "0xB2E8C8",
+  "0xB2EC5A"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 108,
+   "va": "0xB2E8DD",
+   "reg": "eax",
+   "host": "[edx+78h]",
+   "alloc_va": "0xB2E8DA",
+   "call_va": "0xB2E8DF"
+  },
+  "field_window": {
+   "start_va": "0xB2E8C9",
+   "end_va": "0xB2EA6E",
+   "guard": {
+    "va": "0xB2E8C8",
+    "func": "0xB05DA0",
+    "module_id": null,
+    "release_va": "0xB05D90"
+   },
+   "closer_or_commit_va": "0xB2EA4D",
+   "within_model_block": true,
+   "range_from": "block"
+  },
+  "primitive_widths": {
+   "direction": "SC",
+   "expected": [
+    {
+     "name": "ent_id_num",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB2E90A",
+      "0xB2E97E"
+     ]
+    },
+    {
+     "name": "ent_id",
+     "wire_type": "u16[N]",
+     "width": null,
+     "seq": 2,
+     "shape": "agg",
+     "evidence_va": [
+      "0xB2E96A",
+      "0xB2E976",
+      "0xB2E991"
+     ]
+    },
+    {
+     "name": "hp_max_num",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 3,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB2E99B",
+      "0xB2EA0E"
+     ]
+    },
+    {
+     "name": "hp_max",
+     "wire_type": "u32[N]",
+     "width": null,
+     "seq": 4,
+     "shape": "agg",
+     "evidence_va": [
+      "0xB2E9FA",
+      "0xB2EA06",
+      "0xB2EA21"
+     ]
+    },
+    {
+     "name": "gauge_max",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 5,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB2EA39",
+      "0xB2EBCA"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB2E90A",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB2E945",
+     "kind": "bounded",
+     "width": 2,
+     "wire_type": null,
+     "name": "sub_B05E40",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB2E96A",
+     "kind": "read",
+     "width": 2,
+     "wire_type": "u16",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB2E99B",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB2E9D6",
+     "kind": "bounded",
+     "width": 4,
+     "wire_type": null,
+     "name": "sub_B41850",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB2E9FA",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB2EA39",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 3,
+   "checkable": 3,
+   "pairs": [
+    {
+     "field": "ent_id_num",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB2E90A",
+     "kind": "read"
+    },
+    {
+     "field": "hp_max_num",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB2E99B",
+     "kind": "read"
+    },
+    {
+     "field": "gauge_max",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB2E9D6",
+     "kind": "bounded"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [
+    {
+     "va": "0xB2E945",
+     "kind": "bounded",
+     "width": 2,
+     "wire_type": null
+    },
+    {
+     "va": "0xB2E96A",
+     "kind": "read",
+     "width": 2,
+     "wire_type": "u16"
+    },
+    {
+     "va": "0xB2E9FA",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32"
+    },
+    {
+     "va": "0xB2EA39",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32"
+    }
+   ],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB2E8C9",
+    "0xB2EA6E"
+   ],
+   "scalar_match_verifiable": true,
+   "capacity_relation": {
+    "observed_min": 18,
+    "capacity": 108,
+    "relation": "within",
+    "unknown_events": [
+     {
+      "va": "0xB2E945",
+      "kind": "bounded",
+      "name": "sub_B05E40"
+     },
+     {
+      "va": "0xB2E9D6",
+      "kind": "bounded",
+      "name": "sub_B41850"
+     }
+    ],
+    "is_lower_bound": true,
+    "note": "观测线长（下界）18 / 容量 0x6c"
+   }
+  },
+  "closer": {
+   "va": "0xB2EA4D",
+   "kind": "jz",
+   "jcc_va": "0xB2EA53",
+   "seq_va": "0xB2EA49",
+   "jcc_dst": "0xB2EA6C",
+   "cmp": "cmp     ecx, [esp+1B3Ch+var_1B24]",
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x178]",
+   "slot_value": 376,
+   "va": "0xB2EC3E",
+   "mov_va": "0xB2EC26",
+   "host": "[edx+178h]",
+   "argc": 5,
+   "form": "mov_then_call",
+   "error_slot": {
+    "slot": "vt[0x64]",
+    "va": "0xB2E921",
+    "argc": 2
+   }
+  },
+  "log_strings": [
+   "ent_id={",
+   "hp_max={",
+   "gauge_max="
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "ent_id",
+  "gauge_max",
+  "hp_max"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 20
+}

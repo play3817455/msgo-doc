@@ -1,0 +1,154 @@
+{
+  "id": "MSMA_BREAKUP",
+  "title": "MSMA_BREAKUP",
+  "csv_path": "msma/msma_breakup.csv",
+  "purpose": "机体拆解",
+  "table_id": "54",
+  "download_order": "62",
+  "class_name": "CMsmaBreakupTable",
+  "disposition": "DOWNLOAD",
+  "source_md": "datatables/01-列注释/62-54-MSMA_BREAKUP.md",
+  "asm_reader": "sub_57BF00",
+  "asm_status": "complete",
+  "columns": [
+    {
+      "read_order": 1,
+      "csv_index": 0,
+      "db_column": "breakup_id",
+      "type": "u32",
+      "memory_offset": 0,
+      "asm_reader": "sub_57BF00",
+      "asm_va": "0x57bf2f",
+      "meaning": "拆解配置ID（主键；通常=机体ID）",
+      "confidence": "★确证",
+      "status": "confirmed",
+      "name": "breakup_id",
+      "display_name": "拆解配置ID（主键；通常=机体ID）"
+    },
+    {
+      "read_order": 2,
+      "csv_index": 1,
+      "db_column": "faction",
+      "type": "enum",
+      "memory_offset": 4,
+      "asm_reader": "sub_57BF00",
+      "asm_va": "0x57bf4b",
+      "meaning": "阵营（enum col1 sub_40CE20：EFF=0 / ZEON=1 / 其它=-1 → +4）",
+      "confidence": "★确证",
+      "status": "confirmed",
+      "name": "faction",
+      "display_name": "阵营",
+      "enum_converter": "sub_40CE20",
+      "enum_doc": "reverse-login-chain/formats/枚举表.md",
+      "enum_values": [
+        {
+          "name": "EFF",
+          "value": 0
+        },
+        {
+          "name": "ZEON",
+          "value": 1
+        },
+        {
+          "name": "INVALID",
+          "value": -1
+        }
+      ]
+    },
+    {
+      "read_order": 3,
+      "csv_index": 2,
+      "db_column": "battle_detail_ref",
+      "type": "enum",
+      "memory_offset": 8,
+      "asm_reader": "sub_57BF00",
+      "asm_va": "0x57bfac",
+      "meaning": "战斗明细引用（enum col2 sub_5812E0 查 MSMA_BATTLE_DETAIL 属性名 → +8）",
+      "confidence": "★确证",
+      "status": "confirmed",
+      "name": "battle_detail_ref",
+      "display_name": "战斗明细引用",
+      "enum_converter": "sub_5812E0",
+      "enum_doc": "reverse-login-chain/formats/枚举表.md"
+    },
+    {
+      "read_order": 4,
+      "csv_index": 3,
+      "db_column": "breakup_type",
+      "type": "enum",
+      "memory_offset": 12,
+      "asm_reader": "sub_57BF00",
+      "asm_va": "0x57c027",
+      "meaning": "拆解产物等级（enum col3 sub_57BDE0：SILVER=0/GOLD=1/PLATINUM=2 → +12）",
+      "confidence": "★确证",
+      "status": "confirmed",
+      "name": "breakup_type",
+      "display_name": "拆解产物等级",
+      "enum_converter": "sub_57BDE0",
+      "enum_doc": "reverse-login-chain/formats/枚举表.md",
+      "enum_values": [
+        {
+          "name": "SILVER",
+          "value": 0
+        },
+        {
+          "name": "GOLD",
+          "value": 1
+        },
+        {
+          "name": "PLATINUM",
+          "value": 2
+        }
+      ]
+    },
+    {
+      "read_order": 5,
+      "csv_index": 4,
+      "db_column": "breakup_param_a",
+      "type": "u32",
+      "memory_offset": 16,
+      "asm_reader": "sub_57BF00",
+      "asm_va": "0x57c077",
+      "meaning": "拆解参数 A（u32 col4 → +16）",
+      "confidence": "○ASM确证",
+      "status": "confirmed",
+      "name": "breakup_param_a",
+      "display_name": "拆解参数 A"
+    },
+    {
+      "read_order": 6,
+      "csv_index": 5,
+      "db_column": "reserved_u32_5",
+      "type": "u32",
+      "memory_offset": null,
+      "asm_reader": "sub_57BF00",
+      "asm_va": null,
+      "meaning": "CSV col5 预留（sub_57BF00 跳过；默认 0）",
+      "confidence": "",
+      "status": "gap",
+      "name": "reserved_u32_5",
+      "display_name": "预留列 col5"
+    },
+    {
+      "read_order": 7,
+      "csv_index": 6,
+      "db_column": "breakup_param_b",
+      "type": "u32",
+      "memory_offset": 20,
+      "asm_reader": "sub_57BF00",
+      "asm_va": "0x57c07a",
+      "meaning": "拆解参数 B（u32 col6 → +20；跳过 col5 空列）",
+      "confidence": "○ASM确证",
+      "status": "confirmed",
+      "name": "breakup_param_b",
+      "display_name": "拆解参数 B"
+    }
+  ],
+  "column_defined": 7,
+  "column_confirmed": 6,
+  "column_partial": 0,
+  "column_pending": 0,
+  "column_gap": 1,
+  "column_count": 6,
+  "column_gap_note": "CSV 行含 col0..col6，读表跳过未映射列见 gap 标记"
+}

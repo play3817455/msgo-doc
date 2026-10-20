@@ -1,0 +1,246 @@
+{
+ "id": "SC-0x30A9-battle-roomlobby_ban_vote_result",
+ "verified_at": "2026-09-30 15:25:46",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "block",
+ "block": [
+  "0xB139AF",
+  "0xB13CE2"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 48,
+   "va": "0xB139C8",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xB139C5",
+   "call_va": "0xB139CA"
+  },
+  "field_window": {
+   "start_va": "0xB139B4",
+   "end_va": "0xB13AF9",
+   "guard": {
+    "va": "0xB139B3",
+    "func": "0xB05DA0",
+    "module_id": 32,
+    "release_va": "0xB05D90"
+   },
+   "closer_or_commit_va": "0xB13AD8",
+   "within_model_block": true,
+   "range_from": "block"
+  },
+  "primitive_widths": {
+   "direction": "SC",
+   "expected": [
+    {
+     "name": "state",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB13A03",
+      "0xB13B71"
+     ]
+    },
+    {
+     "name": "vote_count",
+     "wire_type": "u32[5]",
+     "width": 20,
+     "seq": 2,
+     "shape": "fixed_arr",
+     "evidence_va": [
+      "0xB13A46",
+      "0xB13B8C"
+     ]
+    },
+    {
+     "name": "ban_msma_id",
+     "wire_type": "u32[5]",
+     "width": 20,
+     "seq": 3,
+     "shape": "fixed_arr",
+     "evidence_va": [
+      "0xB13A86",
+      "0xB13BEE"
+     ]
+    },
+    {
+     "name": "member_count",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 4,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB13AC4",
+      "0xB13C58"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB13A03",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB13A31",
+     "kind": "opaque",
+     "width": null,
+     "wire_type": null,
+     "name": "sub_B41740",
+     "consumed": 0,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB13A46",
+     "kind": "read",
+     "width": 20,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB13A75",
+     "kind": "opaque",
+     "width": null,
+     "wire_type": null,
+     "name": "sub_B41740",
+     "consumed": 0,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB13A86",
+     "kind": "read",
+     "width": 20,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB13AC4",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 4,
+   "checkable": 4,
+   "pairs": [
+    {
+     "field": "state",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB13A03",
+     "kind": "read"
+    },
+    {
+     "field": "vote_count",
+     "width": 20,
+     "shape": "fixed_arr",
+     "va": "0xB13A46",
+     "kind": "read"
+    },
+    {
+     "field": "ban_msma_id",
+     "width": 20,
+     "shape": "fixed_arr",
+     "va": "0xB13A86",
+     "kind": "read"
+    },
+    {
+     "field": "member_count",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB13AC4",
+     "kind": "read"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [
+    {
+     "va": "0xB13A31",
+     "kind": "opaque",
+     "width": null,
+     "wire_type": null
+    },
+    {
+     "va": "0xB13A75",
+     "kind": "opaque",
+     "width": null,
+     "wire_type": null
+    }
+   ],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB139B4",
+    "0xB13AF9"
+   ],
+   "scalar_match_verifiable": true,
+   "capacity_relation": {
+    "observed_min": 48,
+    "capacity": 48,
+    "relation": "exact",
+    "unknown_events": [],
+    "is_lower_bound": false,
+    "note": "观测线长（下界）48 / 容量 0x30"
+   }
+  },
+  "closer": {
+   "va": "0xB13AD8",
+   "kind": "jz",
+   "jcc_va": "0xB13ADE",
+   "seq_va": "0xB13AD4",
+   "jcc_dst": "0xB13AF7",
+   "cmp": "cmp     ecx, [esp+1B3Ch+var_1B24]",
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0xC0]",
+   "slot_value": 192,
+   "va": "0xB13CC6",
+   "mov_va": "0xB13CB0",
+   "host": "[eax+0C0h]",
+   "argc": 4,
+   "form": "mov_then_call",
+   "error_slot": {
+    "slot": "vt[0x64]",
+    "va": "0xB13A1A",
+    "argc": 2
+   }
+  },
+  "log_strings": [
+   "state=",
+   "vote_count={",
+   "ban_msma_id={",
+   "member_count="
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "ban_msma_id",
+  "member_count",
+  "state",
+  "vote_count"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 15
+}

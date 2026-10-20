@@ -1,0 +1,641 @@
+{
+  "id": "SC-0x1E0F-battle-preset_voice_down",
+  "opcode": "0x1E0F",
+  "direction": "SC",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "preset_voice_down",
+  "source_dir": "protocol_analysis/commands/SC-0x1E0F-battle-preset_voice_down",
+  "meta": {
+    "opcode": "`0x1E0F`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`battle_client`",
+    "命令名": "`preset_voice_down`",
+    "处理函数": "`sub_B0CC20` @ `0xB0CC20`（battle 分发器）",
+    "处理块范围": "`0xB11F02..0xB1229E`",
+    "名字串引用点": "`0xB120A0`",
+    "声明容量（解码缓冲）": "`0xBF`（`0xB11F1B`）",
+    "长度闭合点": "`0xB12076`",
+    "去向": "`vt[0x18C]` @ `0xB12282`（7 实参）"
+  },
+  "handler": "sub_B0CC20",
+  "handler_va": "0xB0CC20",
+  "block": [
+    "0xB11F02",
+    "0xB1229E"
+  ],
+  "name_str": null,
+  "name_str_va": "0xB120A0",
+  "capacity": "0xBF",
+  "capacity_va": "0xB11F1B",
+  "closer_va": "0xB12076",
+  "dispatch": "`vt[0x18C]` @ `0xB12282`（7 实参）",
+  "dispatch_slot": "vt[0x18C]",
+  "dispatch_va": "0xB12282",
+  "wire": {
+    "length_expr": "2 + 4 + 1 + 1 + 1 + 1 + L+1",
+    "fixed": false,
+    "var_drivers": [
+      "L"
+    ],
+    "capacity_note": "声明容量 0xBF（容量记账口径，非线长）",
+    "field_count": 7,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体总长**：2+4+1×4+(L+1)，串槽 181 ⇒ 上限 **191**（== 容量 0xBF）",
+    "readme_close": "2+4+1×4+(L+1)，串槽 181 ⇒ 上限 **191**（== 容量 0xBF）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0x1E0F",
+      "evidence_va": [
+        "0xB120A0"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "ent_id",
+      "meaning": "语音实体 ID",
+      "purpose": "经 `vt[0x18C]`；日志 `ent_id=`",
+      "enum": null,
+      "evidence_va": [
+        "0xB11F59",
+        "0xB120F7"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "2",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "voice_id",
+      "meaning": "预置语音 ID",
+      "purpose": "经 `vt[0x18C]`；日志 `voice_id=`",
+      "enum": null,
+      "evidence_va": [
+        "0xB11F96",
+        "0xB12121"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "6",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "voice_volume",
+      "meaning": "语音音量",
+      "purpose": "经 `vt[0x18C]`；日志 `voice_volume=`",
+      "enum": null,
+      "evidence_va": [
+        "0xB11FBA",
+        "0xB12149"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 4,
+      "offset": "7",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "is_cutin",
+      "meaning": "是否过场插播",
+      "purpose": "经 `vt[0x18C]`；日志 `is_cutin=`",
+      "enum": null,
+      "evidence_va": [
+        "0xB11FDE",
+        "0xB12173"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    },
+    {
+      "seq": 5,
+      "offset": "8",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "is_party",
+      "meaning": "是否队伍相关",
+      "purpose": "经 `vt[0x18C]`；日志 `is_party=`",
+      "enum": null,
+      "evidence_va": [
+        "0xB12006",
+        "0xB1219D"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 7
+    },
+    {
+      "seq": 6,
+      "offset": "9",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "is_use_textmsg",
+      "meaning": "是否用文本消息替代语音",
+      "purpose": "经 `vt[0x18C]`；日志 `is_use_textmsg=`",
+      "enum": null,
+      "evidence_va": [
+        "0xB1202E",
+        "0xB121C7"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 8
+    },
+    {
+      "seq": 7,
+      "offset": "10",
+      "length": "L+1",
+      "wire_type": "str",
+      "name": "textmsg",
+      "meaning": "文本消息（NUL 结尾；槽预算 181）",
+      "purpose": "经 `vt[0x18C]`；日志 `textmsg=\"…\"`",
+      "enum": "槽 181（push 0B5h）",
+      "evidence_va": [
+        "0xB1204D(sub_B02BA0)",
+        "0xB11F0F 区(push 0B5h)"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 9
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0x1E0F（分发器 switch 选择子）",
+      "evidence_va": "0xB120A0"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB05DA0`（模块 id 101）→ 之后逐字段读线",
+      "evidence_va": "0xB11F06"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "ent_id：`u16`（线长 2）—— 语音实体 ID",
+      "evidence_va": "0xB11F59"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "voice_id：`u32`（线长 4）—— 预置语音 ID",
+      "evidence_va": "0xB11F96"
+    },
+    {
+      "step": 5,
+      "kind": "read_scalar",
+      "detail": "voice_volume：`u8`（线长 1）—— 语音音量",
+      "evidence_va": "0xB11FBA"
+    },
+    {
+      "step": 6,
+      "kind": "read_scalar",
+      "detail": "is_cutin：`u8`（线长 1）—— 是否过场插播",
+      "evidence_va": "0xB11FDE"
+    },
+    {
+      "step": 7,
+      "kind": "read_scalar",
+      "detail": "is_party：`u8`（线长 1）—— 是否队伍相关",
+      "evidence_va": "0xB12006"
+    },
+    {
+      "step": 8,
+      "kind": "read_count",
+      "detail": "is_use_textmsg：`u8`（线长 1）—— 是否用文本消息替代语音",
+      "evidence_va": "0xB1202E"
+    },
+    {
+      "step": 9,
+      "kind": "read_string",
+      "detail": "textmsg：`str`（线长 L+1）—— 文本消息（NUL 结尾；槽预算 181）",
+      "evidence_va": "0xB1204D"
+    },
+    {
+      "step": 10,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jnz）",
+      "evidence_va": "0xB12076"
+    },
+    {
+      "step": 11,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x18C]`，实参 7 个",
+      "evidence_va": "0xB12282"
+    },
+    {
+      "step": 12,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB11F70"
+    }
+  ],
+  "capabilities": [
+    "unclassified",
+    "battle.preset_voice"
+  ],
+  "capabilities_derived": [
+    "unclassified"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:46",
+    "batch": 15,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 191,
+        "va": "0xB11F1B",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB11F18",
+        "call_va": "0xB11F20"
+      },
+      "field_window": {
+        "start_va": "0xB11F07",
+        "end_va": "0xB1207E",
+        "guard": {
+          "va": "0xB11F06",
+          "func": "0xB05DA0",
+          "module_id": 101,
+          "release_va": "0xB05D90"
+        },
+        "closer_or_commit_va": "0xB12076",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "ent_id",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB11F59",
+              "0xB120F7"
+            ]
+          },
+          {
+            "name": "voice_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB11F96",
+              "0xB12121"
+            ]
+          },
+          {
+            "name": "voice_volume",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB11FBA",
+              "0xB12149"
+            ]
+          },
+          {
+            "name": "is_cutin",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 4,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB11FDE",
+              "0xB12173"
+            ]
+          },
+          {
+            "name": "is_party",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 5,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB12006",
+              "0xB1219D"
+            ]
+          },
+          {
+            "name": "is_use_textmsg",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 6,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB1202E",
+              "0xB121C7"
+            ]
+          },
+          {
+            "name": "textmsg",
+            "wire_type": "str",
+            "width": null,
+            "seq": 7,
+            "shape": "str",
+            "evidence_va": [
+              "0xB1204D(sub_B02BA0)",
+              "0xB11F0F 区(push 0B5h)"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB11F59",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB11F96",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB11FBA",
+            "kind": "read",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB11FDE",
+            "kind": "read",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB12006",
+            "kind": "read",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB1202E",
+            "kind": "read",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB1204D",
+            "kind": "read",
+            "width": null,
+            "wire_type": "str",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 7,
+        "checkable": 7,
+        "pairs": [
+          {
+            "field": "ent_id",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB11F59",
+            "kind": "read"
+          },
+          {
+            "field": "voice_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB11F96",
+            "kind": "read"
+          },
+          {
+            "field": "voice_volume",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB11FBA",
+            "kind": "read"
+          },
+          {
+            "field": "is_cutin",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB11FDE",
+            "kind": "read"
+          },
+          {
+            "field": "is_party",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB12006",
+            "kind": "read"
+          },
+          {
+            "field": "is_use_textmsg",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB1202E",
+            "kind": "read"
+          },
+          {
+            "field": "textmsg",
+            "width": null,
+            "shape": "str",
+            "va": "0xB1204D",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB11F07",
+          "0xB1207E"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 10,
+          "capacity": 191,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB1204D",
+              "kind": "read",
+              "name": ""
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）10 / 容量 0xbf"
+        }
+      },
+      "closer": {
+        "va": "0xB12076",
+        "kind": "jnz",
+        "jcc_va": "0xB1207A",
+        "seq_va": "0xB12072",
+        "jcc_dst": "0xB1205B",
+        "cmp": "cmp     ebx, [esp+1B3Ch+var_1B24]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x18C]",
+        "slot_value": 396,
+        "va": "0xB12282",
+        "mov_va": "0xB1225E",
+        "host": "[edx+18Ch]",
+        "argc": 7,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB11F70",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "ent_id=",
+        "voice_id=",
+        "voice_volume=",
+        "is_cutin=",
+        "is_party=",
+        "is_use_textmsg=",
+        "textmsg=\""
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0x1E0F-battle-preset_voice_down.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xB120A0"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "PresetVoiceDown",
+      "role": "response",
+      "wire_length": "2 + 4 + 1 + 1 + 1 + 1 + L+1",
+      "members": [
+        {
+          "name": "EntId",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "ent_id"
+        },
+        {
+          "name": "VoiceId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "voice_id"
+        },
+        {
+          "name": "VoiceVolume",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "voice_volume"
+        },
+        {
+          "name": "IsCutin",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "is_cutin"
+        },
+        {
+          "name": "IsParty",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "is_party"
+        },
+        {
+          "name": "IsUseTextmsg",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "is_use_textmsg"
+        },
+        {
+          "name": "Textmsg",
+          "wire_type": "str",
+          "length": "L+1",
+          "field_ref": "textmsg",
+          "element": null,
+          "element_length": null,
+          "cap": null,
+          "count_field": "is_use_textmsg",
+          "count_field_source": "nearest_scalar",
+          "note": "元素成员未建模（composites/ 无此结构），须以 IDA 复核补"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "2926870d7737515e",
+  "check_fingerprint": "eb4a1eb5335bb1c8"
+}

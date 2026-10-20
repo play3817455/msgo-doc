@@ -1,0 +1,273 @@
+{
+  "id": "SC-0x80DC-lounge-second_chance_free_play_update",
+  "opcode": "0x80DC",
+  "direction": "SC",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "second_chance_free_play_update",
+  "source_dir": "protocol_analysis/commands/SC-0x80DC-lounge-second_chance_free_play_update",
+  "meta": {
+    "opcode": "`0x80DC`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`second_chance_free_play_update`",
+    "处理块范围": "`B6935D`..`B69522`",
+    "名字串引用点": "`B6940D`",
+    "声明容量（解码缓冲）": "`0x1`（`B69379`）",
+    "长度闭合点": "`B693E0`",
+    "收尾函数": "`sub_B41110`（lounge 口径）",
+    "去向": "`vt[0x4C8]` @ `B694AF`（1 实参）"
+  },
+  "handler": null,
+  "handler_va": null,
+  "block": [
+    "0xB6935D",
+    "0xB69522"
+  ],
+  "name_str": null,
+  "name_str_va": "0xB6940D",
+  "capacity": "0x1",
+  "capacity_va": "0xB69379",
+  "closer_va": "0xB693E0",
+  "dispatch": "`vt[0x4C8]` @ `B694AF`（1 实参）",
+  "dispatch_slot": "vt[0x4C8]",
+  "dispatch_va": "0xB694AF",
+  "wire": {
+    "length_expr": "1",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x1（容量记账口径，非线长）",
+    "field_count": 1,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：1。",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0x80DC",
+      "evidence_va": [
+        "B6940D"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "remain",
+      "meaning": "剩余免费游玩次数（日志串 `remain=`）",
+      "purpose": "经 `vt[0x4C8]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B693B4",
+        "B6945C"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0x80DC（分发器 switch 选择子）",
+      "evidence_va": "0xB6940D"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB41120`（模块 id 511）→ 之后逐字段读线",
+      "evidence_va": "0xB69364"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "remain：`u8`（线长 1）—— 剩余免费游玩次数（日志串 `remain=`）",
+      "evidence_va": "0xB693B4"
+    },
+    {
+      "step": 4,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jnz）",
+      "evidence_va": "0xB693E0"
+    },
+    {
+      "step": 5,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x4C8]`，实参 1 个",
+      "evidence_va": "0xB694B8"
+    },
+    {
+      "step": 6,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB693CE"
+    }
+  ],
+  "capabilities": [
+    "update",
+    "lounge.second_chance"
+  ],
+  "capabilities_derived": [
+    "notify"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:44",
+    "batch": 9,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 1,
+        "va": "0xB69379",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB69376",
+        "call_va": "0xB6937B"
+      },
+      "field_window": {
+        "start_va": "0xB69365",
+        "end_va": "0xB693EB",
+        "guard": {
+          "va": "0xB69364",
+          "func": "0xB41120",
+          "module_id": 511,
+          "release_va": "0xB41110"
+        },
+        "closer_or_commit_va": "0xB693E0",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "remain",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "B693B4",
+              "B6945C"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB693B4",
+            "kind": "read",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 1,
+        "checkable": 1,
+        "pairs": [
+          {
+            "field": "remain",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB693B4",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB69365",
+          "0xB693EB"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 1,
+          "capacity": 1,
+          "relation": "exact",
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）1 / 容量 0x1"
+        }
+      },
+      "closer": {
+        "va": "0xB693E0",
+        "kind": "jnz",
+        "jcc_va": "0xB693E4",
+        "seq_va": "0xB693DC",
+        "jcc_dst": "0xB693C2",
+        "cmp": "cmp     ebx, [esp+2C5Ch+var_2C40]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x4C8]",
+        "slot_value": 1224,
+        "va": "0xB694B8",
+        "mov_va": "0xB694AF",
+        "host": "[edx+4C8h]",
+        "argc": 1,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB693CE",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "remain="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0x80DC-lounge-second_chance_free_play_update.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "B6940D"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "SecondChanceFreePlayUpdate",
+      "role": "response",
+      "wire_length": "1",
+      "members": [
+        {
+          "name": "Remain",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "remain"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "36304b22d3495413",
+  "check_fingerprint": "750fb38f33f793c1"
+}

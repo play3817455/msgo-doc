@@ -1,0 +1,354 @@
+{
+  "id": "CS-0x9CC6-lounge-you9_cps_ICV_response",
+  "opcode": "0x9CC6",
+  "direction": "CS",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "you9_cps_ICV_response",
+  "source_dir": "protocol_analysis/commands/CS-0x9CC6-lounge-you9_cps_ICV_response",
+  "meta": {
+    "opcode": "`0x9CC6`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`you9_cps_ICV_response`",
+    "名字符串": "`)<-_proto_lounge_client::send_you9_cps_ICV_response(` @ `0xEED088`",
+    "代码位置": "sub_BA4F40 @ `0xBA4F40`（`0xBA4F40`..`0xBA5126`）",
+    "opcode 写入证据": "`0xBA4FB4`",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0x000A`（10）",
+    "容量申请证据": "`0xBA4F86`（`push 0x000A`）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)` @ `0xBA50B4`",
+    "附加通知": "`[obj+79A8h]` 回调，模块 id `0x218` @ `0xBA50CF`",
+    "配对命令": "S→C `SC-0xF0B1-lounge-you9_cps_ICV_request`（已 DONE）"
+  },
+  "handler": "sub_BA4F40",
+  "handler_va": "0xBA4F40",
+  "block": [
+    "0xBA4F40",
+    "0xBA5126"
+  ],
+  "name_str": ")<-_proto_lounge_client::send_you9_cps_ICV_response(",
+  "name_str_va": "0xEED088",
+  "capacity": "0xA",
+  "capacity_va": "0xBA4F86",
+  "closer_va": "0xBA5031",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)` @ `0xBA50B4`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": "0xBA50B4",
+  "wire": {
+    "length_expr": "4 + 4",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0xA（容量记账口径，非线长）",
+    "field_count": 2,
+    "length_source": "field_sum",
+    "readme_conclusion": "结论：上报反外挂 CPS 的 ICV 校验结果。",
+    "readme_close": "2 + 4 + 4 = 10 == 容量 0xA = 10（精确相等）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "写入 `buf+0`，供服务端分发；无 case 块（C→S）",
+      "enum": "0x9CC6",
+      "evidence_va": [
+        "0xBA4FB4"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "2",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "factor",
+      "meaning": "CPS 校验系数",
+      "purpose": "来源=入参 `arg_0`（`mov esi,[esp+40h+arg_0]` → 内联 `mov [eax],esi`）；服务端据此复原校验算式",
+      "enum": null,
+      "evidence_va": [
+        "0xBA4FC9"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "6",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "cps_result",
+      "meaning": "CPS 校验结果",
+      "purpose": "来源=入参 `arg_4`（`mov ecx,[esp+40h+arg_4]` → 内联 `mov [edx],ecx`）；服务端据此判定客户端是否可信",
+      "enum": "取值域 {0,1}（0=通过 / 1=异常；包装 sub_B00BB0 的唯一调用点 @0xAF745A 在 SEH 反外挂桩内、值来自寄存器 ⇒ 仅「0/非 0」口径确证）",
+      "evidence_va": [
+        "0xBA4FD5"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0x9CC6（分发器 switch 选择子）",
+      "evidence_va": "0xBA4FB4"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0xA B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xBA4F86"
+    },
+    {
+      "step": 3,
+      "kind": "write_scalar",
+      "detail": "factor：`u32`（线长 4）—— CPS 校验系数",
+      "evidence_va": "0xBA4FC9"
+    },
+    {
+      "step": 4,
+      "kind": "write_scalar",
+      "detail": "cps_result：`u32`（线长 4）—— CPS 校验结果",
+      "evidence_va": "0xBA4FD5"
+    },
+    {
+      "step": 5,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xBA5031"
+    },
+    {
+      "step": 6,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xBA50BD"
+    },
+    {
+      "step": 7,
+      "kind": "notify",
+      "detail": "附加通知回调 `[obj+79A8h]`（模块 id，非字段）",
+      "evidence_va": "0xBA50CF"
+    }
+  ],
+  "capabilities": [
+    "unclassified",
+    "lounge.you9_cps"
+  ],
+  "capabilities_derived": [
+    "unclassified"
+  ],
+  "db_effects": [],
+  "pair": "SC-0xF0B1-lounge-you9_cps_ICV_request",
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:44",
+    "batch": 10,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 10,
+        "va": "0xBA4F86",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xBA4F83",
+        "call_va": "0xBA4F88"
+      },
+      "field_window": {
+        "start_va": "0xBA4F40",
+        "end_va": "0xBA5031",
+        "guard": null,
+        "closer_or_commit_va": "0xBA5031",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "factor",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xBA4FC9"
+            ]
+          },
+          {
+            "name": "cps_result",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xBA4FD5"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xBA4FB4",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xBA4FC9",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xBA4FD5",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xBA5007",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 2,
+        "checkable": 2,
+        "pairs": [
+          {
+            "field": "factor",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xBA4FC9",
+            "kind": "inline_store"
+          },
+          {
+            "field": "cps_result",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xBA4FD5",
+            "kind": "inline_store"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xBA4FB4",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xBA4F40",
+          "0xBA5031"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 10,
+          "capacity": 10,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xBA5007",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）10 / 容量 0xa"
+        }
+      },
+      "closer": {
+        "va": "0xBA5031",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xBA50BD",
+        "mov_va": "0xBA50B4",
+        "host": "[edx+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "factor=",
+        "cps_result="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0x9CC6-lounge-you9_cps_ICV_response.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0xBA4FB4",
+    "notify_va": "0xBA50CF",
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xBA4FB4"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "You9CpsICVResponse",
+      "role": "request",
+      "wire_length": "4 + 4",
+      "members": [
+        {
+          "name": "Factor",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "factor"
+        },
+        {
+          "name": "CpsResult",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "cps_result"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "178e3402e7153ae3",
+  "check_fingerprint": "b40a74f55cdd9b9a"
+}

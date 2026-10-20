@@ -1,0 +1,559 @@
+{
+  "id": "MSMA_WEAPONSET",
+  "title": "MSMA_WEAPONSET",
+  "csv_path": "msma/msma_weapon_set.csv",
+  "purpose": "★**机体武器组**——\"某武器组下挂哪些武器、各属于哪个槽位\"。一行 = **一把武器**；",
+  "table_id": "1",
+  "download_order": "1",
+  "class_name": "CMSMAWeaponSetTable",
+  "disposition": "DOWNLOAD",
+  "source_md": "datatables/01-列注释/01-1-MSMA_WEAPONSET.md",
+  "asm_reader": "sub_587160",
+  "asm_status": "complete",
+  "columns": [
+    {
+      "read_order": 1,
+      "csv_index": 0,
+      "db_column": "weapon_group_id",
+      "type": "u32",
+      "memory_offset": 0,
+      "asm_reader": "sub_587160",
+      "asm_va": "0x5871b2",
+      "meaning": "武器组ID（主键）；消费方 sub_581690 以机体+372 查组，最多收集 3 把启用武器",
+      "confidence": "★确证",
+      "status": "confirmed",
+      "name": "weapon_group_id",
+      "display_name": "武器组ID（主键）；消费方 sub_581690 以机体+372 查组，最多收集 3 把启用武器"
+    },
+    {
+      "read_order": 2,
+      "csv_index": 1,
+      "db_column": "col1",
+      "type": "u32",
+      "memory_offset": null,
+      "asm_reader": "sub_587160",
+      "asm_va": null,
+      "meaning": "CSV 列存在但 IDA 读表未单独取证（默认 0）",
+      "confidence": "",
+      "status": "gap",
+      "name": "reserved_u32_1",
+      "display_name": "CSV 列存在但 IDA 读表未单独取证（默认 0）"
+    },
+    {
+      "read_order": 3,
+      "csv_index": 2,
+      "db_column": "weapon_item_id",
+      "type": "u32",
+      "memory_offset": 4,
+      "asm_reader": "sub_587160",
+      "asm_va": "0x5871be",
+      "meaning": "武器物品ID → ITEM 表（dword_11E3F08）；无效 ID 静默跳过",
+      "confidence": "★确证",
+      "status": "confirmed",
+      "name": "weapon_item_id",
+      "display_name": "武器物品ID → ITEM 表（dword_11E3F08）；无效 ID 静默跳过"
+    },
+    {
+      "read_order": 4,
+      "csv_index": 3,
+      "db_column": "col3",
+      "type": "u32",
+      "memory_offset": null,
+      "asm_reader": "sub_587160",
+      "asm_va": null,
+      "meaning": "CSV 列存在但 IDA 读表未单独取证（默认 0）",
+      "confidence": "",
+      "status": "gap",
+      "name": "reserved_u32_3",
+      "display_name": "CSV 列存在但 IDA 读表未单独取证（默认 0）"
+    },
+    {
+      "read_order": 5,
+      "csv_index": 4,
+      "db_column": "slot_category",
+      "type": "enum",
+      "memory_offset": 24,
+      "asm_reader": "sub_587160",
+      "asm_va": "0x5871cc",
+      "meaning": "槽位类别：MAIN 主武装 / EX 副武装 / SUB 副槽 / 0 占位（sub_586450 @0x5871cc）",
+      "confidence": "★确证",
+      "status": "confirmed",
+      "name": "slot_category",
+      "display_name": "槽位类别：MAIN 主武装 / EX 副武装 / SUB 副槽 / 0 占位",
+      "enum_converter": "sub_586450",
+      "enum_values": [
+        {
+          "name": "MAIN",
+          "value": 0
+        },
+        {
+          "name": "EX",
+          "value": 1
+        },
+        {
+          "name": "SUB",
+          "value": 2
+        },
+        {
+          "name": "0",
+          "value": 3
+        }
+      ],
+      "enum_doc": "reverse-login-chain/formats/枚举表.md"
+    },
+    {
+      "read_order": 6,
+      "csv_index": 5,
+      "db_column": "weapon_category",
+      "type": "enum",
+      "memory_offset": 8,
+      "asm_reader": "sub_587160",
+      "asm_va": "0x5871e8",
+      "meaning": "武器类别（28 值，sub_585FD0）；写错名 ⇒ 0=MACHINEGUN",
+      "confidence": "★确证",
+      "status": "confirmed",
+      "name": "weapon_category",
+      "display_name": "武器类别（28 值，sub_585FD0）；写错名 ⇒ 0=MACHINEGUN",
+      "enum_converter": "sub_585FD0",
+      "enum_values": [
+        {
+          "name": "MACHINEGUN",
+          "value": 0
+        },
+        {
+          "name": "MACHINEGUN2",
+          "value": 1
+        },
+        {
+          "name": "MACHINEGUN3",
+          "value": 2
+        },
+        {
+          "name": "SUBMACHINEGUN",
+          "value": 3
+        },
+        {
+          "name": "SHOTGUN",
+          "value": 4
+        },
+        {
+          "name": "BEAM_RIFLE",
+          "value": 5
+        },
+        {
+          "name": "BEAM_SPRAYGUN",
+          "value": 6
+        },
+        {
+          "name": "WRESTLE",
+          "value": 7
+        },
+        {
+          "name": "CHARGE_RIFLE",
+          "value": 8
+        },
+        {
+          "name": "CHARGE_BAZOOKA",
+          "value": 9
+        },
+        {
+          "name": "SNIPER_RIFLE",
+          "value": 10
+        },
+        {
+          "name": "BEAM_SNIPE",
+          "value": 11
+        },
+        {
+          "name": "TRENCH_MORTAR",
+          "value": 12
+        },
+        {
+          "name": "REPAIR",
+          "value": 13
+        },
+        {
+          "name": "SHIELD",
+          "value": 14
+        },
+        {
+          "name": "BAZOOKA",
+          "value": 15
+        },
+        {
+          "name": "MISSILE",
+          "value": 16
+        },
+        {
+          "name": "HOWITZER",
+          "value": 17
+        },
+        {
+          "name": "LANDMINE",
+          "value": 18
+        },
+        {
+          "name": "HAND_THROW",
+          "value": 19
+        },
+        {
+          "name": "HAND_THROW2",
+          "value": 20
+        },
+        {
+          "name": "RADARPOD",
+          "value": 21
+        },
+        {
+          "name": "REPAIRPOD",
+          "value": 22
+        },
+        {
+          "name": "CAMERAGUN",
+          "value": 23
+        },
+        {
+          "name": "BULLET_PACK",
+          "value": 24
+        },
+        {
+          "name": "AAGPOD",
+          "value": 25
+        },
+        {
+          "name": "REPAIR_PACK",
+          "value": 26
+        },
+        {
+          "name": "-",
+          "value": 27,
+          "label_zh": "-（无效/未匹配；sub_585FD0 空串或未知名 ⇒ 27）"
+        }
+      ],
+      "enum_doc": "reverse-login-chain/formats/枚举表.md"
+    },
+    {
+      "read_order": 7,
+      "csv_index": 6,
+      "db_column": "enabled",
+      "type": "bool",
+      "memory_offset": 20,
+      "asm_reader": "sub_587160",
+      "asm_va": "0x587230",
+      "meaning": "启用开关（+20）；sub_581690 只收集为真的行到机体+376/+380/+384",
+      "confidence": "★确证",
+      "status": "confirmed",
+      "name": "enabled",
+      "display_name": "启用开关（+20）；sub_581690 只收集为真的行到机体+376/+380/+384"
+    },
+    {
+      "read_order": 8,
+      "csv_index": 7,
+      "db_column": "sort_priority",
+      "type": "u32",
+      "memory_offset": 12,
+      "asm_reader": "sub_587160",
+      "asm_va": "0x58723c",
+      "meaning": "组内排序权重 u32（+12；sub_58723c 读入 88B 行；sub_586050 持久化）",
+      "confidence": "★确证",
+      "status": "confirmed",
+      "name": "sort_priority",
+      "display_name": "组内排序权重 u32"
+    },
+    {
+      "read_order": 9,
+      "csv_index": 8,
+      "db_column": "cost_a_slot0",
+      "type": "u32",
+      "memory_offset": 28,
+      "asm_reader": "sub_587160",
+      "asm_va": "0x587252",
+      "meaning": "成本组 A 槽0（csv8→+28；col8–16 三组循环 @0x587249）",
+      "confidence": "★确证",
+      "status": "confirmed",
+      "name": "cost_a_slot0",
+      "display_name": "成本组 A 槽0"
+    },
+    {
+      "read_order": 10,
+      "csv_index": 9,
+      "db_column": "cost_a_slot1",
+      "type": "u32",
+      "memory_offset": 32,
+      "asm_reader": "sub_587160",
+      "asm_va": "0x587260",
+      "meaning": "成本组 A 槽1（csv9→+32；col8–16 三组循环 @0x587249）",
+      "confidence": "★确证",
+      "status": "confirmed",
+      "name": "cost_a_slot1",
+      "display_name": "成本组 A 槽1"
+    },
+    {
+      "read_order": 11,
+      "csv_index": 10,
+      "db_column": "cost_a_slot2",
+      "type": "u32",
+      "memory_offset": 36,
+      "asm_reader": "sub_587160",
+      "asm_va": "0x587276",
+      "meaning": "成本组 A 槽2（csv10→+36；col8–16 三组循环 @0x587249）",
+      "confidence": "★确证",
+      "status": "confirmed",
+      "name": "cost_a_slot2",
+      "display_name": "成本组 A 槽2"
+    },
+    {
+      "read_order": 12,
+      "csv_index": 11,
+      "db_column": "cost_b_slot0",
+      "type": "u32",
+      "memory_offset": 40,
+      "asm_reader": "sub_587160",
+      "asm_va": "0x587252",
+      "meaning": "成本组 B 槽0（csv11→+40；col8–16 三组循环 @0x587249）",
+      "confidence": "★确证",
+      "status": "confirmed",
+      "name": "cost_b_slot0",
+      "display_name": "成本组 B 槽0"
+    },
+    {
+      "read_order": 13,
+      "csv_index": 12,
+      "db_column": "cost_b_slot1",
+      "type": "u32",
+      "memory_offset": 44,
+      "asm_reader": "sub_587160",
+      "asm_va": "0x587260",
+      "meaning": "成本组 B 槽1（csv12→+44；col8–16 三组循环 @0x587249）",
+      "confidence": "★确证",
+      "status": "confirmed",
+      "name": "cost_b_slot1",
+      "display_name": "成本组 B 槽1"
+    },
+    {
+      "read_order": 14,
+      "csv_index": 13,
+      "db_column": "cost_b_slot2",
+      "type": "u32",
+      "memory_offset": 48,
+      "asm_reader": "sub_587160",
+      "asm_va": "0x587260",
+      "meaning": "成本组 B 槽2（csv13→+48；col8–16 三组循环 @0x587249）",
+      "confidence": "★确证",
+      "status": "confirmed",
+      "name": "cost_b_slot2",
+      "display_name": "成本组 B 槽2"
+    },
+    {
+      "read_order": 15,
+      "csv_index": 14,
+      "db_column": "cost_c_slot0",
+      "type": "u32",
+      "memory_offset": 52,
+      "asm_reader": "sub_587160",
+      "asm_va": "0x587252",
+      "meaning": "成本组 C 槽0（csv14→+52；col8–16 三组循环 @0x587249）",
+      "confidence": "★确证",
+      "status": "confirmed",
+      "name": "cost_c_slot0",
+      "display_name": "成本组 C 槽0"
+    },
+    {
+      "read_order": 16,
+      "csv_index": 15,
+      "db_column": "cost_c_slot1",
+      "type": "u32",
+      "memory_offset": 56,
+      "asm_reader": "sub_587160",
+      "asm_va": "0x587260",
+      "meaning": "成本组 C 槽1（csv15→+56；col8–16 三组循环 @0x587249）",
+      "confidence": "★确证",
+      "status": "confirmed",
+      "name": "cost_c_slot1",
+      "display_name": "成本组 C 槽1"
+    },
+    {
+      "read_order": 17,
+      "csv_index": 16,
+      "db_column": "cost_c_slot2",
+      "type": "u32",
+      "memory_offset": 60,
+      "asm_reader": "sub_587160",
+      "asm_va": "0x587276",
+      "meaning": "成本组 C 槽2（csv16→+60；col8–16 三组循环 @0x587249）",
+      "confidence": "★确证",
+      "status": "confirmed",
+      "name": "cost_c_slot2",
+      "display_name": "成本组 C 槽2"
+    },
+    {
+      "csv_index": 17,
+      "type": "u32",
+      "asm_reader": "sub_587160",
+      "status": "gap",
+      "read_order": 18,
+      "memory_offset": null,
+      "asm_va": null,
+      "name": "reserved_u32_17",
+      "db_column": "reserved_u32_17",
+      "meaning": "成本组与上限段间预留（读表跳至 col19 limit_trigger；默认 0）",
+      "display_name": "预留列 col17"
+    },
+    {
+      "csv_index": 18,
+      "type": "u32",
+      "asm_reader": "sub_587160",
+      "status": "gap",
+      "read_order": 19,
+      "memory_offset": null,
+      "asm_va": null,
+      "name": "reserved_u32_18",
+      "db_column": "reserved_u32_18",
+      "meaning": "成本组与上限段间预留（读表跳至 col19 limit_trigger；默认 0）",
+      "display_name": "预留列 col18"
+    },
+    {
+      "read_order": 20,
+      "csv_index": 19,
+      "db_column": "limit_trigger",
+      "type": "u32",
+      "memory_offset": 68,
+      "asm_reader": "sub_587160",
+      "asm_va": "0x587297",
+      "meaning": "上限触发（csv19→+68）；>0 且 col21/22/23 全≤0 时 col23 强制 9999",
+      "confidence": "★确证",
+      "status": "confirmed",
+      "name": "limit_trigger",
+      "display_name": "上限触发"
+    },
+    {
+      "csv_index": 20,
+      "type": "u32",
+      "asm_reader": "sub_587160",
+      "status": "gap",
+      "read_order": 21,
+      "memory_offset": null,
+      "asm_va": null,
+      "name": "reserved_u32_20",
+      "db_column": "reserved_u32_20",
+      "meaning": "上限段内预留（读表跳至 col21 limit_param_a；默认 0）",
+      "display_name": "预留列 col20"
+    },
+    {
+      "read_order": 22,
+      "csv_index": 21,
+      "db_column": "limit_param_a",
+      "type": "u32",
+      "memory_offset": 72,
+      "asm_reader": "sub_587160",
+      "asm_va": "0x5872aa",
+      "meaning": "上限中间参数 A（csv21→+72；参与 9999 联动 @0x5872f4）",
+      "confidence": "★确证",
+      "status": "confirmed",
+      "name": "limit_param_a",
+      "display_name": "上限中间参数 A"
+    },
+    {
+      "read_order": 23,
+      "csv_index": 22,
+      "db_column": "limit_param_b",
+      "type": "u32",
+      "memory_offset": 76,
+      "asm_reader": "sub_587160",
+      "asm_va": "0x5872bd",
+      "meaning": "上限中间参数 B（csv22→+76；参与 9999 联动 @0x5872f4）",
+      "confidence": "★确证",
+      "status": "confirmed",
+      "name": "limit_param_b",
+      "display_name": "上限中间参数 B"
+    },
+    {
+      "read_order": 24,
+      "csv_index": 23,
+      "db_column": "limit_cap",
+      "type": "u32",
+      "memory_offset": 80,
+      "asm_reader": "sub_587160",
+      "asm_va": "0x5872ce",
+      "meaning": "数量上限（csv23→+80）；col19>0 且 col21/22/23 全≤0 ⇒ 9999",
+      "confidence": "★确证",
+      "status": "confirmed",
+      "name": "limit_cap",
+      "display_name": "数量上限"
+    },
+    {
+      "read_order": 25,
+      "csv_index": 24,
+      "db_column": "extra_param",
+      "type": "u32",
+      "memory_offset": 84,
+      "asm_reader": "sub_587160",
+      "asm_va": "0x587315",
+      "meaning": "武器生成附加参（csv24→+84；sub_622A20 传入 sub_60D460）",
+      "confidence": "★确证",
+      "status": "confirmed",
+      "name": "extra_param",
+      "display_name": "武器生成附加参"
+    },
+    {
+      "read_order": 26,
+      "csv_index": 25,
+      "db_column": "region_gate",
+      "type": "str",
+      "memory_offset": null,
+      "asm_reader": "sub_587160",
+      "asm_va": "0x58731c",
+      "meaning": "地区开关（csv25）：JAPAN 整行丢弃；CHINA/其他保留",
+      "confidence": "★确证",
+      "status": "confirmed",
+      "name": "region_gate",
+      "display_name": "地区开关"
+    },
+    {
+      "csv_index": 26,
+      "type": "u32",
+      "asm_reader": "sub_587160",
+      "status": "gap",
+      "read_order": 27,
+      "memory_offset": null,
+      "asm_va": null,
+      "name": "reserved_u32_26",
+      "db_column": "reserved_u32_26",
+      "meaning": "尾部预留（读表止于 col25 region_gate；默认 0）",
+      "display_name": "预留列 col26"
+    },
+    {
+      "csv_index": 27,
+      "type": "u32",
+      "asm_reader": "sub_587160",
+      "status": "gap",
+      "read_order": 28,
+      "memory_offset": null,
+      "asm_va": null,
+      "name": "reserved_u32_27",
+      "db_column": "reserved_u32_27",
+      "meaning": "尾部预留（读表止于 col25 region_gate；默认 0）",
+      "display_name": "预留列 col27"
+    },
+    {
+      "csv_index": 28,
+      "type": "u32",
+      "asm_reader": "sub_587160",
+      "status": "gap",
+      "read_order": 29,
+      "memory_offset": null,
+      "asm_va": null,
+      "name": "reserved_u32_28",
+      "db_column": "reserved_u32_28",
+      "meaning": "尾部预留（读表止于 col25 region_gate；默认 0）",
+      "display_name": "预留列 col28"
+    }
+  ],
+  "column_defined": 29,
+  "column_confirmed": 21,
+  "column_partial": 0,
+  "column_pending": 0,
+  "column_gap": 8,
+  "column_count": 21,
+  "column_gap_note": "CSV 行含 col0..col28，读表跳过未映射列见 gap 标记"
+}

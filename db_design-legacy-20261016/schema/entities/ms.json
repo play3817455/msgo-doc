@@ -1,0 +1,1063 @@
+{
+  "id": "ms",
+  "title": "机体",
+  "description": "MS 机体；battle 244B / lounge 303B 两种线形",
+  "table_ref": "tbl_ms",
+  "disposition": "EVENT",
+  "wire_forms": [
+    {
+      "name": "battle",
+      "length": 244,
+      "memory_claim": 264,
+      "commands": [
+        "SC-0x1E2F-battle-msma_spawn_list_get_r_one",
+        "SC-0x717D-battle-entity_msma_appear"
+      ],
+      "protocol_path": "protocol_analysis/commands/SC-0x717D-battle-entity_msma_appear/README.md"
+    },
+    {
+      "name": "lounge",
+      "length": 303,
+      "memory_claim": 312,
+      "commands": [
+        "SC-0xA832-lounge-msma_add"
+      ],
+      "protocol_path": "protocol_analysis/commands/SC-0xA832-lounge-msma_add/README.md",
+      "note": "299B 是早期口径，已作废：整函数展开实算 303B（与 48A4 络格线形 401 = 303 + 3×30 + 8 交叉校验一致）；成员见 composites/ms_lounge.json"
+    }
+  ],
+  "fields": [
+    {
+      "name": "uniqid",
+      "offset": 0,
+      "length": 8,
+      "wire_type": "u64",
+      "meaning": "机体唯一 ID",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1E2F-battle-msma_spawn_list_get_r_one",
+          "struct": "ms",
+          "field_name": "uniqid",
+          "offset": 0,
+          "length": 8,
+          "wire_type": "u64",
+          "protocol_path": "protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md",
+          "section": "§3",
+          "reader": "sub_B06D80",
+          "printer": "sub_B09240",
+          "wire_form": "battle_244",
+          "layout_ref": "protocol_analysis/commands/SC-0x717D-battle-entity_msma_appear/README.md notes.md"
+        }
+      ]
+    },
+    {
+      "name": "msma_id",
+      "offset": 8,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "机体模板 ID",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1E2F-battle-msma_spawn_list_get_r_one",
+          "struct": "ms",
+          "field_name": "msma_id",
+          "offset": 8,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md",
+          "section": "§3",
+          "reader": "sub_B06D80",
+          "printer": "sub_B09240",
+          "wire_form": "battle_244",
+          "layout_ref": "protocol_analysis/commands/SC-0x717D-battle-entity_msma_appear/README.md notes.md"
+        }
+      ]
+    },
+    {
+      "name": "crew_msma_id",
+      "offset": 12,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "乘员机体 ID",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1E2F-battle-msma_spawn_list_get_r_one",
+          "struct": "ms",
+          "field_name": "crew_msma_id",
+          "offset": 12,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md",
+          "section": "§3",
+          "reader": "sub_B06D80",
+          "printer": "sub_B09240",
+          "wire_form": "battle_244",
+          "layout_ref": "protocol_analysis/commands/SC-0x717D-battle-entity_msma_appear/README.md notes.md"
+        }
+      ]
+    },
+    {
+      "name": "decal",
+      "offset": 16,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "贴纸/标识",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1E2F-battle-msma_spawn_list_get_r_one",
+          "struct": "ms",
+          "field_name": "decal",
+          "offset": 16,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md",
+          "section": "§3",
+          "reader": "sub_B06D80",
+          "printer": "sub_B09240",
+          "wire_form": "battle_244",
+          "layout_ref": "protocol_analysis/commands/SC-0x717D-battle-entity_msma_appear/README.md notes.md"
+        }
+      ]
+    },
+    {
+      "name": "color",
+      "offset": 20,
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "配色",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1E2F-battle-msma_spawn_list_get_r_one",
+          "struct": "ms",
+          "field_name": "color",
+          "offset": 20,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md",
+          "section": "§3",
+          "reader": "sub_B06D80",
+          "printer": "sub_B09240",
+          "wire_form": "battle_244",
+          "layout_ref": "protocol_analysis/commands/SC-0x717D-battle-entity_msma_appear/README.md notes.md"
+        }
+      ]
+    },
+    {
+      "name": "deck_index",
+      "offset": 21,
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "卡组索引",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1E2F-battle-msma_spawn_list_get_r_one",
+          "struct": "ms",
+          "field_name": "deck_index",
+          "offset": 21,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md",
+          "section": "§3",
+          "reader": "sub_B06D80",
+          "printer": "sub_B09240",
+          "wire_form": "battle_244",
+          "layout_ref": "protocol_analysis/commands/SC-0x717D-battle-entity_msma_appear/README.md notes.md"
+        }
+      ]
+    },
+    {
+      "name": "cost",
+      "offset": 22,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "机体 COST 值",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1E2F-battle-msma_spawn_list_get_r_one",
+          "struct": "ms",
+          "field_name": "cost",
+          "offset": 22,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md",
+          "section": "§3",
+          "reader": "sub_B06D80",
+          "printer": "sub_B09240",
+          "wire_form": "battle_244",
+          "layout_ref": "protocol_analysis/commands/SC-0x717D-battle-entity_msma_appear/README.md notes.md"
+        }
+      ]
+    },
+    {
+      "name": "is_costover",
+      "offset": 26,
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "是否超 COST",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1E2F-battle-msma_spawn_list_get_r_one",
+          "struct": "ms",
+          "field_name": "is_costover",
+          "offset": 26,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md",
+          "section": "§3",
+          "reader": "sub_B06D80",
+          "printer": "sub_B09240",
+          "wire_form": "battle_244",
+          "layout_ref": "protocol_analysis/commands/SC-0x717D-battle-entity_msma_appear/README.md notes.md"
+        }
+      ]
+    },
+    {
+      "name": "energy_now",
+      "offset": 27,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "当前 EN",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1E2F-battle-msma_spawn_list_get_r_one",
+          "struct": "ms",
+          "field_name": "energy_now",
+          "offset": 27,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md",
+          "section": "§3",
+          "reader": "sub_B06D80",
+          "printer": "sub_B09240",
+          "wire_form": "battle_244",
+          "layout_ref": "protocol_analysis/commands/SC-0x717D-battle-entity_msma_appear/README.md notes.md"
+        }
+      ]
+    },
+    {
+      "name": "weight_balance",
+      "offset": 31,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "重量平衡",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1E2F-battle-msma_spawn_list_get_r_one",
+          "struct": "ms",
+          "field_name": "weight_balance",
+          "offset": 31,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md",
+          "section": "§3",
+          "reader": "sub_B06D80",
+          "printer": "sub_B09240",
+          "wire_form": "battle_244",
+          "layout_ref": "protocol_analysis/commands/SC-0x717D-battle-entity_msma_appear/README.md notes.md"
+        }
+      ]
+    },
+    {
+      "name": "shield_weight",
+      "offset": 33,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "盾重",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1E2F-battle-msma_spawn_list_get_r_one",
+          "struct": "ms",
+          "field_name": "shield_weight",
+          "offset": 33,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md",
+          "section": "§3",
+          "reader": "sub_B06D80",
+          "printer": "sub_B09240",
+          "wire_form": "battle_244",
+          "layout_ref": "protocol_analysis/commands/SC-0x717D-battle-entity_msma_appear/README.md notes.md"
+        }
+      ]
+    },
+    {
+      "name": "sp_parts",
+      "offset": 35,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "特殊部件",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1E2F-battle-msma_spawn_list_get_r_one",
+          "struct": "ms",
+          "field_name": "sp_parts",
+          "offset": 35,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md",
+          "section": "§3",
+          "reader": "sub_B06D80",
+          "printer": "sub_B09240",
+          "wire_form": "battle_244",
+          "layout_ref": "protocol_analysis/commands/SC-0x717D-battle-entity_msma_appear/README.md notes.md"
+        }
+      ]
+    },
+    {
+      "name": "armor_up",
+      "offset": 39,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "装甲强化",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1E2F-battle-msma_spawn_list_get_r_one",
+          "struct": "ms",
+          "field_name": "armor_up",
+          "offset": 39,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md",
+          "section": "§3",
+          "reader": "sub_B06D80",
+          "printer": "sub_B09240",
+          "wire_form": "battle_244",
+          "layout_ref": "protocol_analysis/commands/SC-0x717D-battle-entity_msma_appear/README.md notes.md"
+        }
+      ]
+    },
+    {
+      "name": "warp_up",
+      "offset": 41,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "传送强化",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1E2F-battle-msma_spawn_list_get_r_one",
+          "struct": "ms",
+          "field_name": "warp_up",
+          "offset": 41,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md",
+          "section": "§3",
+          "reader": "sub_B06D80",
+          "printer": "sub_B09240",
+          "wire_form": "battle_244",
+          "layout_ref": "protocol_analysis/commands/SC-0x717D-battle-entity_msma_appear/README.md notes.md"
+        }
+      ]
+    },
+    {
+      "name": "boost_offset",
+      "offset": 43,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "推进偏移",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1E2F-battle-msma_spawn_list_get_r_one",
+          "struct": "ms",
+          "field_name": "boost_offset",
+          "offset": 43,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md",
+          "section": "§3",
+          "reader": "sub_B06D80",
+          "printer": "sub_B09240",
+          "wire_form": "battle_244",
+          "layout_ref": "protocol_analysis/commands/SC-0x717D-battle-entity_msma_appear/README.md notes.md"
+        }
+      ]
+    },
+    {
+      "name": "boost_offset_ns",
+      "offset": 45,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "推进偏移（无盾）",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1E2F-battle-msma_spawn_list_get_r_one",
+          "struct": "ms",
+          "field_name": "boost_offset_ns",
+          "offset": 45,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md",
+          "section": "§3",
+          "reader": "sub_B06D80",
+          "printer": "sub_B09240",
+          "wire_form": "battle_244",
+          "layout_ref": "protocol_analysis/commands/SC-0x717D-battle-entity_msma_appear/README.md notes.md"
+        }
+      ]
+    },
+    {
+      "name": "over_custom_armor",
+      "offset": 47,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "超限自定义装甲",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1E2F-battle-msma_spawn_list_get_r_one",
+          "struct": "ms",
+          "field_name": "over_custom_armor",
+          "offset": 47,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md",
+          "section": "§3",
+          "reader": "sub_B06D80",
+          "printer": "sub_B09240",
+          "wire_form": "battle_244",
+          "layout_ref": "protocol_analysis/commands/SC-0x717D-battle-entity_msma_appear/README.md notes.md"
+        }
+      ]
+    },
+    {
+      "name": "over_custom_warp",
+      "offset": 49,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "超限自定义传送",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1E2F-battle-msma_spawn_list_get_r_one",
+          "struct": "ms",
+          "field_name": "over_custom_warp",
+          "offset": 49,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md",
+          "section": "§3",
+          "reader": "sub_B06D80",
+          "printer": "sub_B09240",
+          "wire_form": "battle_244",
+          "layout_ref": "protocol_analysis/commands/SC-0x717D-battle-entity_msma_appear/README.md notes.md"
+        }
+      ]
+    },
+    {
+      "name": "over_custom_level",
+      "offset": 51,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "超限自定义等级",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1E2F-battle-msma_spawn_list_get_r_one",
+          "struct": "ms",
+          "field_name": "over_custom_level",
+          "offset": 51,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md",
+          "section": "§3",
+          "reader": "sub_B06D80",
+          "printer": "sub_B09240",
+          "wire_form": "battle_244",
+          "layout_ref": "protocol_analysis/commands/SC-0x717D-battle-entity_msma_appear/README.md notes.md"
+        }
+      ]
+    },
+    {
+      "name": "witem_id",
+      "offset": 53,
+      "length": 12,
+      "wire_type": "u32[3]",
+      "meaning": "武器道具 ID（3）",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1E2F-battle-msma_spawn_list_get_r_one",
+          "struct": "ms",
+          "field_name": "witem_id",
+          "offset": 53,
+          "length": 12,
+          "wire_type": "u32[3]",
+          "protocol_path": "protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md",
+          "section": "§3",
+          "reader": "sub_B06D80",
+          "printer": "sub_B09240",
+          "wire_form": "battle_244",
+          "layout_ref": "protocol_analysis/commands/SC-0x717D-battle-entity_msma_appear/README.md notes.md"
+        }
+      ]
+    },
+    {
+      "name": "sitem_id",
+      "offset": 65,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "副武器道具 ID",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1E2F-battle-msma_spawn_list_get_r_one",
+          "struct": "ms",
+          "field_name": "sitem_id",
+          "offset": 65,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md",
+          "section": "§3",
+          "reader": "sub_B06D80",
+          "printer": "sub_B09240",
+          "wire_form": "battle_244",
+          "layout_ref": "protocol_analysis/commands/SC-0x717D-battle-entity_msma_appear/README.md notes.md"
+        }
+      ]
+    },
+    {
+      "name": "spitem_id",
+      "offset": 69,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "特殊道具 ID",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1E2F-battle-msma_spawn_list_get_r_one",
+          "struct": "ms",
+          "field_name": "spitem_id",
+          "offset": 69,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md",
+          "section": "§3",
+          "reader": "sub_B06D80",
+          "printer": "sub_B09240",
+          "wire_form": "battle_244",
+          "layout_ref": "protocol_analysis/commands/SC-0x717D-battle-entity_msma_appear/README.md notes.md"
+        }
+      ]
+    },
+    {
+      "name": "wbu_power",
+      "offset": 73,
+      "length": 6,
+      "wire_type": "u16[3]",
+      "meaning": "武器 BU 威力（3）",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1E2F-battle-msma_spawn_list_get_r_one",
+          "struct": "ms",
+          "field_name": "wbu_power",
+          "offset": 73,
+          "length": 6,
+          "wire_type": "u16[3]",
+          "protocol_path": "protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md",
+          "section": "§3",
+          "reader": "sub_B06D80",
+          "printer": "sub_B09240",
+          "wire_form": "battle_244",
+          "layout_ref": "protocol_analysis/commands/SC-0x717D-battle-entity_msma_appear/README.md notes.md"
+        }
+      ]
+    },
+    {
+      "name": "wbu_stability",
+      "offset": 79,
+      "length": 6,
+      "wire_type": "u16[3]",
+      "meaning": "武器 BU 稳定性（3）",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1E2F-battle-msma_spawn_list_get_r_one",
+          "struct": "ms",
+          "field_name": "wbu_stability",
+          "offset": 79,
+          "length": 6,
+          "wire_type": "u16[3]",
+          "protocol_path": "protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md",
+          "section": "§3",
+          "reader": "sub_B06D80",
+          "printer": "sub_B09240",
+          "wire_form": "battle_244",
+          "layout_ref": "protocol_analysis/commands/SC-0x717D-battle-entity_msma_appear/README.md notes.md"
+        }
+      ]
+    },
+    {
+      "name": "wbu_rapid",
+      "offset": 85,
+      "length": 6,
+      "wire_type": "u16[3]",
+      "meaning": "武器 BU 连射（3）",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1E2F-battle-msma_spawn_list_get_r_one",
+          "struct": "ms",
+          "field_name": "wbu_rapid",
+          "offset": 85,
+          "length": 6,
+          "wire_type": "u16[3]",
+          "protocol_path": "protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md",
+          "section": "§3",
+          "reader": "sub_B06D80",
+          "printer": "sub_B09240",
+          "wire_form": "battle_244",
+          "layout_ref": "protocol_analysis/commands/SC-0x717D-battle-entity_msma_appear/README.md notes.md"
+        }
+      ]
+    },
+    {
+      "name": "wbu_shot_range",
+      "offset": 91,
+      "length": 6,
+      "wire_type": "u16[3]",
+      "meaning": "武器 BU 射程（3）",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1E2F-battle-msma_spawn_list_get_r_one",
+          "struct": "ms",
+          "field_name": "wbu_shot_range",
+          "offset": 91,
+          "length": 6,
+          "wire_type": "u16[3]",
+          "protocol_path": "protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md",
+          "section": "§3",
+          "reader": "sub_B06D80",
+          "printer": "sub_B09240",
+          "wire_form": "battle_244",
+          "layout_ref": "protocol_analysis/commands/SC-0x717D-battle-entity_msma_appear/README.md notes.md"
+        }
+      ]
+    },
+    {
+      "name": "wbu_shield_hp",
+      "offset": 97,
+      "length": 6,
+      "wire_type": "u16[3]",
+      "meaning": "武器 BU 盾 HP（3）",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1E2F-battle-msma_spawn_list_get_r_one",
+          "struct": "ms",
+          "field_name": "wbu_shield_hp",
+          "offset": 97,
+          "length": 6,
+          "wire_type": "u16[3]",
+          "protocol_path": "protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md",
+          "section": "§3",
+          "reader": "sub_B06D80",
+          "printer": "sub_B09240",
+          "wire_form": "battle_244",
+          "layout_ref": "protocol_analysis/commands/SC-0x717D-battle-entity_msma_appear/README.md notes.md"
+        }
+      ]
+    },
+    {
+      "name": "wbu_eff_time",
+      "offset": 103,
+      "length": 6,
+      "wire_type": "u16[3]",
+      "meaning": "武器 BU 有效时间（3）",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1E2F-battle-msma_spawn_list_get_r_one",
+          "struct": "ms",
+          "field_name": "wbu_eff_time",
+          "offset": 103,
+          "length": 6,
+          "wire_type": "u16[3]",
+          "protocol_path": "protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md",
+          "section": "§3",
+          "reader": "sub_B06D80",
+          "printer": "sub_B09240",
+          "wire_form": "battle_244",
+          "layout_ref": "protocol_analysis/commands/SC-0x717D-battle-entity_msma_appear/README.md notes.md"
+        }
+      ]
+    },
+    {
+      "name": "wbu_eff_range",
+      "offset": 109,
+      "length": 6,
+      "wire_type": "u16[3]",
+      "meaning": "武器 BU 有效范围（3）",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1E2F-battle-msma_spawn_list_get_r_one",
+          "struct": "ms",
+          "field_name": "wbu_eff_range",
+          "offset": 109,
+          "length": 6,
+          "wire_type": "u16[3]",
+          "protocol_path": "protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md",
+          "section": "§3",
+          "reader": "sub_B06D80",
+          "printer": "sub_B09240",
+          "wire_form": "battle_244",
+          "layout_ref": "protocol_analysis/commands/SC-0x717D-battle-entity_msma_appear/README.md notes.md"
+        }
+      ]
+    },
+    {
+      "name": "eq_modules",
+      "offset": 115,
+      "length": 40,
+      "wire_type": "u32[10]",
+      "meaning": "装备模块（10）",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1E2F-battle-msma_spawn_list_get_r_one",
+          "struct": "ms",
+          "field_name": "eq_modules",
+          "offset": 115,
+          "length": 40,
+          "wire_type": "u32[10]",
+          "protocol_path": "protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md",
+          "section": "§3",
+          "reader": "sub_B06D80",
+          "printer": "sub_B09240",
+          "wire_form": "battle_244",
+          "layout_ref": "protocol_analysis/commands/SC-0x717D-battle-entity_msma_appear/README.md notes.md"
+        }
+      ]
+    },
+    {
+      "name": "eq_bonus_modules",
+      "offset": 155,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "装备奖励模块",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1E2F-battle-msma_spawn_list_get_r_one",
+          "struct": "ms",
+          "field_name": "eq_bonus_modules",
+          "offset": 155,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md",
+          "section": "§3",
+          "reader": "sub_B06D80",
+          "printer": "sub_B09240",
+          "wire_form": "battle_244",
+          "layout_ref": "protocol_analysis/commands/SC-0x717D-battle-entity_msma_appear/README.md notes.md"
+        }
+      ]
+    },
+    {
+      "name": "eq_rental_modules",
+      "offset": 159,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "装备租用模块",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1E2F-battle-msma_spawn_list_get_r_one",
+          "struct": "ms",
+          "field_name": "eq_rental_modules",
+          "offset": 159,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md",
+          "section": "§3",
+          "reader": "sub_B06D80",
+          "printer": "sub_B09240",
+          "wire_form": "battle_244",
+          "layout_ref": "protocol_analysis/commands/SC-0x717D-battle-entity_msma_appear/README.md notes.md"
+        }
+      ]
+    },
+    {
+      "name": "adop_items_ms",
+      "offset": 163,
+      "length": 16,
+      "wire_type": "u32[4]",
+      "meaning": "采纳项 MS（4）",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1E2F-battle-msma_spawn_list_get_r_one",
+          "struct": "ms",
+          "field_name": "adop_items_ms",
+          "offset": 163,
+          "length": 16,
+          "wire_type": "u32[4]",
+          "protocol_path": "protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md",
+          "section": "§3",
+          "reader": "sub_B06D80",
+          "printer": "sub_B09240",
+          "wire_form": "battle_244",
+          "layout_ref": "protocol_analysis/commands/SC-0x717D-battle-entity_msma_appear/README.md notes.md"
+        }
+      ]
+    },
+    {
+      "name": "adop_items_eq",
+      "offset": 179,
+      "length": 48,
+      "wire_type": "u32[12]",
+      "meaning": "采纳项装备（12）",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1E2F-battle-msma_spawn_list_get_r_one",
+          "struct": "ms",
+          "field_name": "adop_items_eq",
+          "offset": 179,
+          "length": 48,
+          "wire_type": "u32[12]",
+          "protocol_path": "protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md",
+          "section": "§3",
+          "reader": "sub_B06D80",
+          "printer": "sub_B09240",
+          "wire_form": "battle_244",
+          "layout_ref": "protocol_analysis/commands/SC-0x717D-battle-entity_msma_appear/README.md notes.md"
+        }
+      ]
+    },
+    {
+      "name": "is_exdeck",
+      "offset": 227,
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "是否扩展 deck",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1E2F-battle-msma_spawn_list_get_r_one",
+          "struct": "ms",
+          "field_name": "is_exdeck",
+          "offset": 227,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md",
+          "section": "§3",
+          "reader": "sub_B06D80",
+          "printer": "sub_B09240",
+          "wire_form": "battle_244",
+          "layout_ref": "protocol_analysis/commands/SC-0x717D-battle-entity_msma_appear/README.md notes.md"
+        }
+      ]
+    },
+    {
+      "name": "is_rokaku",
+      "offset": 228,
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "是否络格",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1E2F-battle-msma_spawn_list_get_r_one",
+          "struct": "ms",
+          "field_name": "is_rokaku",
+          "offset": 228,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md",
+          "section": "§3",
+          "reader": "sub_B06D80",
+          "printer": "sub_B09240",
+          "wire_form": "battle_244",
+          "layout_ref": "protocol_analysis/commands/SC-0x717D-battle-entity_msma_appear/README.md notes.md"
+        }
+      ]
+    },
+    {
+      "name": "rokakums_limit_use",
+      "offset": 229,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "络格机体限制使用",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1E2F-battle-msma_spawn_list_get_r_one",
+          "struct": "ms",
+          "field_name": "rokakums_limit_use",
+          "offset": 229,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md",
+          "section": "§3",
+          "reader": "sub_B06D80",
+          "printer": "sub_B09240",
+          "wire_form": "battle_244",
+          "layout_ref": "protocol_analysis/commands/SC-0x717D-battle-entity_msma_appear/README.md notes.md"
+        }
+      ]
+    },
+    {
+      "name": "respawn_wait_sec",
+      "offset": 233,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "重生等待秒数",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1E2F-battle-msma_spawn_list_get_r_one",
+          "struct": "ms",
+          "field_name": "respawn_wait_sec",
+          "offset": 233,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md",
+          "section": "§3",
+          "reader": "sub_B06D80",
+          "printer": "sub_B09240",
+          "wire_form": "battle_244",
+          "layout_ref": "protocol_analysis/commands/SC-0x717D-battle-entity_msma_appear/README.md notes.md"
+        }
+      ]
+    },
+    {
+      "name": "respawn_wait_max",
+      "offset": 235,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "重生等待上限",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1E2F-battle-msma_spawn_list_get_r_one",
+          "struct": "ms",
+          "field_name": "respawn_wait_max",
+          "offset": 235,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md",
+          "section": "§3",
+          "reader": "sub_B06D80",
+          "printer": "sub_B09240",
+          "wire_form": "battle_244",
+          "layout_ref": "protocol_analysis/commands/SC-0x717D-battle-entity_msma_appear/README.md notes.md"
+        }
+      ]
+    },
+    {
+      "name": "is_reduce_respawn_wait",
+      "offset": 237,
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "是否缩短重生等待",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1E2F-battle-msma_spawn_list_get_r_one",
+          "struct": "ms",
+          "field_name": "is_reduce_respawn_wait",
+          "offset": 237,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md",
+          "section": "§3",
+          "reader": "sub_B06D80",
+          "printer": "sub_B09240",
+          "wire_form": "battle_244",
+          "layout_ref": "protocol_analysis/commands/SC-0x717D-battle-entity_msma_appear/README.md notes.md"
+        }
+      ]
+    },
+    {
+      "name": "is_extrule_invalid",
+      "offset": 238,
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "扩展规则无效标志",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1E2F-battle-msma_spawn_list_get_r_one",
+          "struct": "ms",
+          "field_name": "is_extrule_invalid",
+          "offset": 238,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md",
+          "section": "§3",
+          "reader": "sub_B06D80",
+          "printer": "sub_B09240",
+          "wire_form": "battle_244",
+          "layout_ref": "protocol_analysis/commands/SC-0x717D-battle-entity_msma_appear/README.md notes.md"
+        }
+      ]
+    },
+    {
+      "name": "is_heroms",
+      "offset": 239,
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "是否英雄机体",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1E2F-battle-msma_spawn_list_get_r_one",
+          "struct": "ms",
+          "field_name": "is_heroms",
+          "offset": 239,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md",
+          "section": "§3",
+          "reader": "sub_B06D80",
+          "printer": "sub_B09240",
+          "wire_form": "battle_244",
+          "layout_ref": "protocol_analysis/commands/SC-0x717D-battle-entity_msma_appear/README.md notes.md"
+        }
+      ]
+    },
+    {
+      "name": "level_gauge_now_level",
+      "offset": 240,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "等级 gauge 当前等级",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1E2F-battle-msma_spawn_list_get_r_one",
+          "struct": "ms",
+          "field_name": "level_gauge_now_level",
+          "offset": 240,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md",
+          "section": "§3",
+          "reader": "sub_B06D80",
+          "printer": "sub_B09240",
+          "wire_form": "battle_244",
+          "layout_ref": "protocol_analysis/commands/SC-0x717D-battle-entity_msma_appear/README.md notes.md"
+        }
+      ]
+    }
+  ]
+}

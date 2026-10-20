@@ -1,0 +1,10 @@
+序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+0,-,2,u16,opcode,命令号,分发器 switch 选择子,0x3AD4,0xB5CBD1,确证
+1,0,4,u32,result,结果码,经 `vt[0x3DC]` 交业务,-,0xB5CA09|0xB5CC27,确证
+2,4,4,u32,gacha_id,扭蛋 ID,经 `vt[0x3DC]` 交业务,-,0xB5CA49|0xB5CC51,确证
+3,8,4,u32,prize_count,"奖品条数（上限 `0x12C`=300，`cmp ebx,12Ch`@`0xB5CA8B`）",经 `vt[0x3DC]` 交业务,-,0xB5CA5F|0xB5CC6C,确证
+4,12,21,array<prize>,prize[],奖品数组（元素线长 21 / 槽步进 `0x18`=24，`sub_B416C0`）,经 `vt[0x3DC]` 交业务,-,0xB5CABA|0xB5CC6C,确证
+5,7212,4,u32,act_date,活动日期,经 `vt[0x3DC]` 交业务,-,0xB5CAED|0xB5CCF3,确证
+6,7216,2,u16,act_num,活动编号,经 `vt[0x3DC]` 交业务,-,0xB5CB15|0xB5CD1E,确证
+7,7218,1,u8,bEnableDiscount,是否启用折扣,经 `vt[0x3DC]` 交业务,-,0xB5CB3D|0xB5CD46,确证
+8,7219,4,u32,servicePoint,服务点数,经 `vt[0x3DC]` 交业务,-,0xB5CB65|0xB5CD6D,确证

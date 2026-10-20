@@ -1,0 +1,196 @@
+{
+ "id": "SC-0xD698-lounge-chat_whisper_down",
+ "verified_at": "2026-09-30 15:25:45",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "block",
+ "block": [
+  "0xB7E610",
+  "0xB7E89D"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 210,
+   "va": "0xB7E629",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xB7E626",
+   "call_va": "0xB7E62E"
+  },
+  "field_window": {
+   "start_va": "0xB7E615",
+   "end_va": "0xB7E6ED",
+   "guard": {
+    "va": "0xB7E614",
+    "func": "0xB41120",
+    "module_id": 83,
+    "release_va": "0xB41110"
+   },
+   "closer_or_commit_va": "0xB7E6CC",
+   "within_model_block": true,
+   "range_from": "block"
+  },
+  "primitive_widths": {
+   "direction": "SC",
+   "expected": [
+    {
+     "name": "from_pilot_id",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xb7e667",
+      "0xb7e765"
+     ]
+    },
+    {
+     "name": "from_pilot_name",
+     "wire_type": "str",
+     "width": null,
+     "seq": 2,
+     "shape": "str",
+     "evidence_va": [
+      "0xb7e6a5",
+      "0xb7e692",
+      "0xb7e792"
+     ]
+    },
+    {
+     "name": "msg",
+     "wire_type": "str",
+     "width": null,
+     "seq": 3,
+     "shape": "str",
+     "evidence_va": [
+      "0xb7e6bc",
+      "0xb7e6b1",
+      "0xb7e7c5"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB7E667",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB7E6A5",
+     "kind": "read",
+     "width": null,
+     "wire_type": "str",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB7E6BC",
+     "kind": "read",
+     "width": null,
+     "wire_type": "str",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 3,
+   "checkable": 3,
+   "pairs": [
+    {
+     "field": "from_pilot_id",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB7E667",
+     "kind": "read"
+    },
+    {
+     "field": "from_pilot_name",
+     "width": null,
+     "shape": "str",
+     "va": "0xB7E6A5",
+     "kind": "read"
+    },
+    {
+     "field": "msg",
+     "width": null,
+     "shape": "str",
+     "va": "0xB7E6BC",
+     "kind": "read"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB7E615",
+    "0xB7E6ED"
+   ],
+   "scalar_match_verifiable": true,
+   "capacity_relation": {
+    "observed_min": 4,
+    "capacity": 210,
+    "relation": "within",
+    "unknown_events": [
+     {
+      "va": "0xB7E6A5",
+      "kind": "read",
+      "name": ""
+     },
+     {
+      "va": "0xB7E6BC",
+      "kind": "read",
+      "name": ""
+     }
+    ],
+    "is_lower_bound": true,
+    "note": "观测线长（下界）4 / 容量 0xd2"
+   }
+  },
+  "closer": {
+   "va": "0xB7E6CC",
+   "kind": "jz",
+   "jcc_va": "0xB7E6D2",
+   "seq_va": "0xB7E6C8",
+   "jcc_dst": "0xB7E6EB",
+   "cmp": "cmp     ebx, [esp+2C5Ch+var_2C40]",
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x120]",
+   "slot_value": 288,
+   "va": "0xB7E833",
+   "mov_va": "0xB7E822",
+   "host": "[edx+120h]",
+   "argc": 3,
+   "form": "mov_then_call",
+   "error_slot": {
+    "slot": "vt[0x64]",
+    "va": "0xB7E67E",
+    "argc": 2
+   }
+  },
+  "log_strings": [
+   "from_pilot_id=",
+   "from_pilot_name=\"",
+   "msg=\""
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "from_pilot_id",
+  "from_pilot_name",
+  "msg"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 12
+}

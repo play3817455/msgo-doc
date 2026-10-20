@@ -1,0 +1,7 @@
+序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+0,-,2,u16,opcode,命令号,分发器 switch 选择子,0x1E49,0xB57BED,确证
+1,0,4,u32,result,入队结果码,经 `vt[0x204]`；日志 `result=`,-,0xB57ACB|0xB57C43,确证
+2,4,1,u8,is_recruiting,是否正在招募,经 `vt[0x204]`；日志 `is_recruiting=`,-,0xB57B0B|0xB57C6B,确证
+3,5,L+1,str,comment,招募/队伍留言（NUL 结尾；槽预算 61）,经 `vt[0x204]`；日志 `comment="…"`,槽 61（`push 3Dh`）,0xB57B30(sub_B02BA0)|0xB57B1D(push 3Dh)|0xB57C9A,确证
+4,串之后,2,u16,remain_minutes,剩余有效时间（分钟）,经 `vt[0x204]`；日志 `remain_minutes=`,-,0xB57B70|0xB57CD0,确证
+5,串之后,4,u32,party_type,队伍类型,经 `vt[0x204]`；日志 `party_type=`,-,0xB57B94|0xB57CF5,确证

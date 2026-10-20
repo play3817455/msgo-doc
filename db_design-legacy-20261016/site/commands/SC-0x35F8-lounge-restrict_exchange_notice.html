@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SC-0x35F8-lounge-restrict_exchange_notice · db_design</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <h1><a href="../index.html">db_design</a></h1>
+      <p class="header-note">唯一证据源：<code>protocol_analysis/</code></p>
+      <nav><a href="../index.html">首页</a>
+      <a href="../homing/index.html">归位库</a>
+      <a href="../tables/index.html">旧表留档</a>
+      <a href="../commands/index.html" class="active">命令</a>
+      <a href="../cfg/index.html">配置表79</a>
+      <a href="../srv/index.html">服务端配置</a>
+      <a href="../asm-audit/index.html">ASM 审计</a>
+      <a href="../oracle-audit/index.html">Oracle 审计</a>
+      <a href="../entities/index.html">协议实体</a>
+      <a href="../fields/index.html">字段索引</a>
+      <a href="../relations.html">表关系</a></nav>
+    </div>
+  </header>
+  <main class="wrap">
+
+    <nav class="breadcrumb"><a href="index.html">命令</a> / <span><code>SC-0x35F8-lounge-restrict_exchange_notice</code></span></nav>
+    <h2>SC-0x35F8-lounge-restrict_exchange_notice
+      <span class="badge" style="background:#455a64">SC</span>
+      <span class="badge" style="background:#1565c0">lounge</span>
+      <span class="badge" style="background:#1565c0">BEHAVIOR-DONE</span></h2>
+    
+      <dl class="asm-dl">
+        <dt>opcode</dt><dd><code>0x35F8</code> · SC · lounge</dd>
+        <dt>协议类</dt><dd><code>lounge_client</code></dd>
+        <dt>处理函数</dt><dd><code>sub_B51930</code> <code>0xB51930</code></dd>
+        <dt>处理块</dt><dd>0xB5BE9B .. 0xB5C0C4</dd>
+        <dt>名字串</dt><dd><code>—</code> <code>0xB5BF6C</code></dd>
+        <dt>声明容量</dt><dd>0x64 <code>0xB5BEB7</code>
+          <span class="muted">（缓冲 claim，非线长）</span></dd>
+        <dt>长度闭合点</dt><dd><code>0xB5BF23</code></dd>
+        <dt>去向槽</dt><dd><code>vt[0x4D8]</code> <code>0xB5C05A</code></dd>
+        <dt>配对 / 同族</dt><dd><span class="muted">—</span></dd>
+        <dt>证据目录</dt><dd><a href="../../../protocol_analysis/commands/SC-0x35F8-lounge-restrict_exchange_notice/README.md" target="_blank">README.md</a> · <a href="../../../protocol_analysis/commands/SC-0x35F8-lounge-restrict_exchange_notice/fields.csv" target="_blank">fields.csv</a> · <a href="../../../protocol_analysis/commands/SC-0x35F8-lounge-restrict_exchange_notice/asm.md" target="_blank">asm.md</a> · <a href="../../../protocol_analysis/commands/SC-0x35F8-lounge-restrict_exchange_notice/notes.md" target="_blank">notes.md</a></dd>
+      </dl>
+    
+
+    <section>
+      <h3>线长</h3>
+      <dl class="asm-dl">
+        <dt>报文体线长</dt><dd><code>100</code>
+          <span class="badge" style="background:#455a64">定长</span>
+          <span class="muted">来源 field_sum</span></dd>
+        <dt>变长驱动</dt><dd><span class="muted">—</span></dd>
+        <dt>负载字段数</dt><dd>1</dd>
+        <dt>容量口径</dt><dd class="muted">声明容量 0x64（容量记账口径，非线长）</dd>
+        <dt>README 结论</dt><dd class="muted">**报文体总长**：**100** 字节（== 容量 0x64）。</dd>
+        <dt>README 闭合</dt><dd class="muted">容量 0x64 与线长的关系：**相等**（全定长）</dd>
+        
+      </dl>
+    </section>
+
+    <section>
+      <h3>包结构体</h3>
+      <p class="muted">由 <code>fields[]</code> 归并而成；线序即字段行序，可复用的聚合体只在
+        <code>element</code> 里引用 <code>schema/composites/</code>。</p>
+      
+      <div class="struct-block">
+        <h4><code>RestrictExchangeNotice</code> <span class="muted">(response · 角色 response)</span>
+          <span class="muted">线长 100</span></h4>
+        <table class="srv-table">
+          <thead><tr><th>Go 成员</th><th>线类型</th><th>线长</th><th>字段引用</th><th>元素 / 计数</th></tr></thead>
+          <tbody><tr>
+          <td><code class="fname">Exchanges</code></td>
+          <td><code>u16[50]</code></td>
+          <td><code>100</code></td>
+          <td>exchanges</td>
+          <td class="muted">元素 <code>u16</code> <span class="muted">(未建模)</span></td>
+        </tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h3>字段解剖</h3>
+      <table class="wide">
+        <thead><tr>
+          <th>序</th><th>偏移</th><th>线长</th><th>线类型</th><th>字段名</th>
+          <th>含义</th><th>用途（来源/去向）</th><th>取值/枚举</th><th>去向</th><th>证据 VA</th><th>置信度</th>
+        </tr></thead>
+        <tbody><tr>
+          <td>0</td>
+          <td><code>-</code></td>
+          <td><code>2</code></td>
+          <td><code>u16</code></td>
+          <td><code class="fname">opcode</code></td>
+          <td>命令号</td>
+          <td>分发器 switch 选择子</td>
+          <td class="muted">0x35F8</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB5BF6C</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>1</td>
+          <td><code>0</code></td>
+          <td><code>100</code></td>
+          <td><code>u16[50]</code></td>
+          <td><code class="fname">exchanges</code></td>
+          <td>交换限制表（固定 50×u16，无线上计数；`cmp edi,32h`@`0xB5BF08`）</td>
+          <td>经 `vt[0x4D8]` 交业务</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB5BEF6</code> <code>0xB5BFB6</code></td>
+          <td class="muted">确证</td>
+        </tr></tbody>
+      </table>
+    </section>
+
+    <section>
+      <h3>客户端行为</h3>
+      <table class="srv-table">
+        <thead><tr><th>步</th><th>类别</th><th>动作</th><th>证据 VA</th></tr></thead>
+        <tbody><tr>
+          <td>1</td>
+          <td><code>read_scalar</code></td>
+          <td>opcode 0x35F8（分发器 switch 选择子）</td>
+          <td><code>0xB5BF6C</code></td>
+        </tr><tr>
+          <td>2</td>
+          <td><code>guard</code></td>
+          <td>进入解码窗口：守卫 `0xB41120`（模块 id 516）→ 之后逐字段读线</td>
+          <td><code>0xB5BEA2</code></td>
+        </tr><tr>
+          <td>3</td>
+          <td><code>read_array</code></td>
+          <td>exchanges：`u16[50]`（线长 100）—— 交换限制表（固定 50×u16，无线上计数；`cmp edi,32h`@`0xB5BF08`）</td>
+          <td><code>0xB5BEF6</code></td>
+        </tr><tr>
+          <td>4</td>
+          <td><code>close_check</code></td>
+          <td>闭合校验：读游标 == 报文末尾（jz）</td>
+          <td><code>0xB5BF23</code></td>
+        </tr><tr>
+          <td>5</td>
+          <td><code>dispatch</code></td>
+          <td>交业务 `vt[0x4D8]`，实参 1 个</td>
+          <td><code>0xB5C05A</code></td>
+        </tr><tr>
+          <td>6</td>
+          <td><code>error_path</code></td>
+          <td>失败路径 `vt[0x64](1, 错误码)`（不是业务去向）</td>
+          <td><code>0xB5BF1D</code></td>
+        </tr></tbody>
+      </table>
+    </section>
+
+    <section>
+      <h3>能力</h3>
+      <span class="cap-chip">settle</span><span class="cap-chip">notify</span><span class="cap-chip">lounge.restrict</span><div class="muted">命名学推断（非证据）：<span class="cap-chip cap-derived">notify</span></div>
+    </section>
+
+    <section>
+      <h3>DB 影响</h3>
+      <p class="muted">未补。CS 的 op 需服务端语义确认；SC 的 op 由去向槽 <code>vt[0xNNN]</code> 的实参决定。</p>
+    </section>
+
+    
+
+    <section>
+      <h3>汇编复核（IDA asm 为唯一权威）</h3>
+      
+      <dl class="asm-dl">
+        <dt>状态</dt><dd><span class="badge" style="background:#1565c0">BEHAVIOR-DONE</span></dd>
+        <dt>复核批次</dt><dd>6</dd>
+        <dt>复核时间</dt><dd>2026-09-30 15:25:43</dd>
+        <dt>提取器</dt><dd><code>tools/verify_commands_ida.py</code></dd>
+      </dl>
+      <table class="srv-table">
+        <thead><tr><th>检查项</th><th>键</th><th>结果</th></tr></thead>
+        <tbody><tr><td>容量指纹</td><td><code>capacity</code></td><td><code>{&quot;value&quot;: 100, &quot;va&quot;: &quot;0xB5BEB7&quot;, &quot;reg&quot;: &quot;edx&quot;, &quot;host&quot;: &quot;[eax+78h]&quot;, &quot;alloc_va&quot;: &quot;0xB5BEB4&quot;, &quot;call_va&quot;: &quot;0xB5BEB9&quot;}</code></td></tr><tr><td>字段窗口</td><td><code>field_window</code></td><td><code>{&quot;start_va&quot;: &quot;0xB5BEA3&quot;, &quot;end_va&quot;: &quot;0xB5BF4A&quot;, &quot;guard&quot;: {&quot;va&quot;: &quot;0xB5BEA2&quot;, &quot;func&quot;: &quot;0xB41120&quot;, &quot;module_id&quot;: 516, &quot;release_va&quot;: &quot;0xB41110&quot;}, &quot;closer_or_commit_va&quot;: &quot;0xB5BF23&quot;, &quot;within_model_block&quot;: true, &quot;range_from&quot;: &quot;block&quot;}</code></td></tr><tr><td>原语宽度</td><td><code>primitive_widths</code></td><td><code>{&quot;direction&quot;: &quot;SC&quot;, &quot;expected&quot;: [{&quot;name&quot;: &quot;exchanges&quot;, &quot;wire_type&quot;: &quot;u16[50]&quot;, &quot;width&quot;: 100, &quot;seq&quot;: 1, &quot;shape&quot;: &quot;fixed_arr&quot;, &quot;evidence_va&quot;: [&quot;0xB5BEF6&quot;, &quot;0xB5BFB6&quot;]}], &quot;actual&quot;: [{&quot;va&quot;: &quot;0xB5BEE3&quot;, &quot;kind&quot;: &quot;opaque&quot;, &quot;width&quot;: null, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;sub_B41930&quot;, &quot;consumed&quot;: 100, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB5BEF6&quot;, &quot;kind&quot;: &quot;read&quot;, &quot;width&quot;: 100, &quot;wire_type&quot;: &quot;u16&quot;, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: null, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}], &quot;matched&quot;: 1, &quot;checkable&quot;: 1, &quot;pairs&quot;: [{&quot;field&quot;: &quot;exchanges&quot;, &quot;width&quot;: 100, &quot;shape&quot;: &quot;fixed_arr&quot;, &quot;va&quot;: &quot;0xB5BEE3&quot;, &quot;kind&quot;: &quot;opaque&quot;}], &quot;gaps&quot;: [], &quot;unmatched_actual&quot;: [{&quot;va&quot;: &quot;0xB5BEF6&quot;, &quot;kind&quot;: &quot;read&quot;, &quot;width&quot;: 100, &quot;wire_type&quot;: &quot;u16&quot;}], &quot;nested_unmatchable&quot;: [], &quot;window&quot;: [&quot;0xB5BEA3&quot;, &quot;0xB5BF4A&quot;], &quot;scalar_match_verifiable&quot;: true, &quot;capacity_relation&quot;: {&quot;observed_min&quot;: 100, &quot;capacity&quot;: 100, &quot;relation&quot;: &quot;exact&quot;, &quot;unknown_events&quot;: [], &quot;is_lower_bound&quot;: false, &quot;note&quot;: &quot;观测线长（下界）100 / 容量 0x64&quot;}}</code></td></tr><tr><td>闭合点</td><td><code>closer</code></td><td><code>{&quot;va&quot;: &quot;0xB5BF23&quot;, &quot;kind&quot;: &quot;jz&quot;, &quot;jcc_va&quot;: &quot;0xB5BF29&quot;, &quot;seq_va&quot;: &quot;0xB5BF1F&quot;, &quot;jcc_dst&quot;: &quot;0xB5BF45&quot;, &quot;cmp&quot;: &quot;cmp     eax, [esp+2C5Ch+var_2C40]&quot;, &quot;va_convention&quot;: &quot;cmp&quot;}</code></td></tr><tr><td>去向槽+实参</td><td><code>dispatch_slot</code></td><td><code>{&quot;slot&quot;: &quot;vt[0x4D8]&quot;, &quot;slot_value&quot;: 1240, &quot;va&quot;: &quot;0xB5C05A&quot;, &quot;mov_va&quot;: &quot;0xB5C051&quot;, &quot;host&quot;: &quot;[edx+4D8h]&quot;, &quot;argc&quot;: 1, &quot;form&quot;: &quot;mov_then_call&quot;, &quot;error_slot&quot;: {&quot;slot&quot;: &quot;vt[0x64]&quot;, &quot;va&quot;: &quot;0xB5BF1D&quot;, &quot;argc&quot;: 2}}</code></td></tr><tr><td>日志串</td><td><code>log_strings</code></td><td><code>[&quot;exchanges={&quot;]</code></td></tr></tbody>
+      </table>
+      <p>无差异。</p>
+      <p>原始证据切片：<a href="../../../db_design/schema/commands/_verify/SC-0x35F8-lounge-restrict_exchange_notice.json" target="_blank"><code>commands/_verify/SC-0x35F8-lounge-restrict_exchange_notice.json</code></a></p>
+    </section>
+
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">生成于 2026-10-12 · 改 JSON 后重跑 build_site.py · HTML 只读</div>
+  </footer>
+</body>
+</html>

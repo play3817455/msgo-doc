@@ -1,0 +1,597 @@
+{
+  "id": "clan_member_card",
+  "title": "战队成员卡片 clan_member_card（= lpcard 113B）",
+  "length": 113,
+  "status": "complete",
+  "layout_same_as": "lpcard",
+  "reader": "sub_B43100",
+  "printer": "sub_B49580",
+  "memory_claim": 132,
+  "wire_layout": "4+25+4+1+1+1+2+18+4+31+1+1+1+4+4+1+1+4+4+1",
+  "evidence": {
+    "commands": [
+      "SC-0x5800-lounge-clan_info_get_other_r"
+    ],
+    "protocol_paths": [
+      "protocol_analysis/commands/SC-0x5800-lounge-clan_info_get_other_r/README.md"
+    ],
+    "note": "5800 的 `leader[]`/`subleader[]` 元素线长 113 / 槽步进 0x84=132（预留 sub_B41780 槽步进 0x288=648 内含 1+4 个卡片），元素读取器 sub_B43100 与 lpcard/好友卡片同一函数 → 同构别名；`cinfo` 内部的 52B `leaders` 是另一种线形（勿混用）"
+  },
+  "members": [
+    {
+      "name": "pilot_id",
+      "offset": 0,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "机师 ID",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x7051-lounge-clan_memberlist_get_r",
+          "struct": "lpcard",
+          "field_name": "pilot_id",
+          "offset": 0,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x7051-lounge-clan_memberlist_get_r/README.md",
+          "section": "§3 / notes.md",
+          "reader": "sub_B43100",
+          "printer": "sub_B49580",
+          "evidence_va": "0xb4311c"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xb4311c",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 0
+    },
+    {
+      "name": "name",
+      "offset": 4,
+      "length": 25,
+      "wire_type": "char[25]",
+      "meaning": "名称",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x7051-lounge-clan_memberlist_get_r",
+          "struct": "lpcard",
+          "field_name": "name",
+          "offset": 4,
+          "length": 25,
+          "wire_type": "char[25]",
+          "protocol_path": "protocol_analysis/commands/SC-0x7051-lounge-clan_memberlist_get_r/README.md",
+          "section": "§3 / notes.md",
+          "reader": "sub_B43100",
+          "printer": "sub_B49580",
+          "evidence_va": "0xb43135"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xb43135",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 4
+    },
+    {
+      "name": "last_in",
+      "offset": 29,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "最后登录时间",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x7051-lounge-clan_memberlist_get_r",
+          "struct": "lpcard",
+          "field_name": "last_in",
+          "offset": 29,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x7051-lounge-clan_memberlist_get_r/README.md",
+          "section": "§3 / notes.md",
+          "reader": "sub_B43100",
+          "printer": "sub_B49580",
+          "evidence_va": "0xb431b5"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xb431b5",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 32
+    },
+    {
+      "name": "troops",
+      "offset": 33,
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "势力/阵营",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x7051-lounge-clan_memberlist_get_r",
+          "struct": "lpcard",
+          "field_name": "troops",
+          "offset": 33,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0x7051-lounge-clan_memberlist_get_r/README.md",
+          "section": "§3 / notes.md",
+          "reader": "sub_B43100",
+          "printer": "sub_B49580",
+          "evidence_va": "0xb431b5"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xb431b5",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 36
+    },
+    {
+      "name": "level",
+      "offset": 34,
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "等级",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x7051-lounge-clan_memberlist_get_r",
+          "struct": "lpcard",
+          "field_name": "level",
+          "offset": 34,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0x7051-lounge-clan_memberlist_get_r/README.md",
+          "section": "§3 / notes.md",
+          "reader": "sub_B43100",
+          "printer": "sub_B49580",
+          "evidence_va": "0xb431b5"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xb431b5",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 37
+    },
+    {
+      "name": "mil_class",
+      "offset": 35,
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "军衔",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x7051-lounge-clan_memberlist_get_r",
+          "struct": "lpcard",
+          "field_name": "mil_class",
+          "offset": 35,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0x7051-lounge-clan_memberlist_get_r/README.md",
+          "section": "§3 / notes.md",
+          "reader": "sub_B43100",
+          "printer": "sub_B49580",
+          "evidence_va": "0xb431b5"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xb431b5",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 38
+    },
+    {
+      "name": "byword",
+      "offset": 36,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "座右铭 ID",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x7051-lounge-clan_memberlist_get_r",
+          "struct": "lpcard",
+          "field_name": "byword",
+          "offset": 36,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0x7051-lounge-clan_memberlist_get_r/README.md",
+          "section": "§3 / notes.md",
+          "reader": "sub_B43100",
+          "printer": "sub_B49580",
+          "evidence_va": "0xb431b5"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xb431b5",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 40
+    },
+    {
+      "name": "avatar",
+      "offset": 38,
+      "length": 18,
+      "wire_type": "avatar",
+      "meaning": "外观（18B 子结构）",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x7051-lounge-clan_memberlist_get_r",
+          "struct": "lpcard",
+          "field_name": "avatar",
+          "offset": 38,
+          "length": 18,
+          "wire_type": "avatar",
+          "protocol_path": "protocol_analysis/commands/SC-0x7051-lounge-clan_memberlist_get_r/README.md",
+          "section": "§3 / notes.md",
+          "reader": "sub_B43100",
+          "printer": "sub_B49580",
+          "evidence_va": "0xb431ca"
+        }
+      ],
+      "composite_ref": "avatar",
+      "asm_verified": true,
+      "asm_evidence_va": "0xb431ca",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 44
+    },
+    {
+      "name": "clan_id",
+      "offset": 56,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "战队 ID",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x7051-lounge-clan_memberlist_get_r",
+          "struct": "lpcard",
+          "field_name": "clan_id",
+          "offset": 56,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x7051-lounge-clan_memberlist_get_r/README.md",
+          "section": "§3 / notes.md",
+          "reader": "sub_B43100",
+          "printer": "sub_B49580",
+          "evidence_va": "0xb43280"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xb43280",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 68
+    },
+    {
+      "name": "clan_name",
+      "offset": 60,
+      "length": 31,
+      "wire_type": "char[31]",
+      "meaning": "战队名称",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x7051-lounge-clan_memberlist_get_r",
+          "struct": "lpcard",
+          "field_name": "clan_name",
+          "offset": 60,
+          "length": 31,
+          "wire_type": "char[31]",
+          "protocol_path": "protocol_analysis/commands/SC-0x7051-lounge-clan_memberlist_get_r/README.md",
+          "section": "§3 / notes.md",
+          "reader": "sub_B43100",
+          "printer": "sub_B49580",
+          "evidence_va": "0xb43291"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xb43291",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 72
+    },
+    {
+      "name": "clan_emb_base",
+      "offset": 91,
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "战队徽章底",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x7051-lounge-clan_memberlist_get_r",
+          "struct": "lpcard",
+          "field_name": "clan_emb_base",
+          "offset": 91,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0x7051-lounge-clan_memberlist_get_r/README.md",
+          "section": "§3 / notes.md",
+          "reader": "sub_B43100",
+          "printer": "sub_B49580",
+          "evidence_va": "0xB43213"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB43213",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 103
+    },
+    {
+      "name": "clan_emb_parts1",
+      "offset": 92,
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "战队徽章部件1",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x7051-lounge-clan_memberlist_get_r",
+          "struct": "lpcard",
+          "field_name": "clan_emb_parts1",
+          "offset": 92,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0x7051-lounge-clan_memberlist_get_r/README.md",
+          "section": "§3 / notes.md",
+          "reader": "sub_B43100",
+          "printer": "sub_B49580",
+          "evidence_va": "0xB4321A"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB4321A",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 104
+    },
+    {
+      "name": "clan_emb_parts2",
+      "offset": 93,
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "战队徽章部件2",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x7051-lounge-clan_memberlist_get_r",
+          "struct": "lpcard",
+          "field_name": "clan_emb_parts2",
+          "offset": 93,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0x7051-lounge-clan_memberlist_get_r/README.md",
+          "section": "§3 / notes.md",
+          "reader": "sub_B43100",
+          "printer": "sub_B49580",
+          "evidence_va": "0xB4322B"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB4322B",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 105
+    },
+    {
+      "name": "clan_memb_exp",
+      "offset": 94,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "战队成员经验",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x7051-lounge-clan_memberlist_get_r",
+          "struct": "lpcard",
+          "field_name": "clan_memb_exp",
+          "offset": 94,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x7051-lounge-clan_memberlist_get_r/README.md",
+          "section": "§3 / notes.md",
+          "reader": "sub_B43100",
+          "printer": "sub_B49580",
+          "evidence_va": "0xB4323C"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB4323C",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 108
+    },
+    {
+      "name": "clan_memb_exp_use",
+      "offset": 98,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "战队成员经验使用量",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x7051-lounge-clan_memberlist_get_r",
+          "struct": "lpcard",
+          "field_name": "clan_memb_exp_use",
+          "offset": 98,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x7051-lounge-clan_memberlist_get_r/README.md",
+          "section": "§3 / notes.md",
+          "reader": "sub_B43100",
+          "printer": "sub_B49580",
+          "evidence_va": "0xB4324D"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB4324D",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 112
+    },
+    {
+      "name": "channel_id",
+      "offset": 102,
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "频道 ID",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x7051-lounge-clan_memberlist_get_r",
+          "struct": "lpcard",
+          "field_name": "channel_id",
+          "offset": 102,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0x7051-lounge-clan_memberlist_get_r/README.md",
+          "section": "§3 / notes.md",
+          "reader": "sub_B43100",
+          "printer": "sub_B49580",
+          "evidence_va": "0xB4325E"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB4325E",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 116
+    },
+    {
+      "name": "capture_bonus_state",
+      "offset": 103,
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "占点加成状态",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x7051-lounge-clan_memberlist_get_r",
+          "struct": "lpcard",
+          "field_name": "capture_bonus_state",
+          "offset": 103,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0x7051-lounge-clan_memberlist_get_r/README.md",
+          "section": "§3 / notes.md",
+          "reader": "sub_B43100",
+          "printer": "sub_B49580",
+          "evidence_va": "0xB4326F"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB4326F",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 117
+    },
+    {
+      "name": "capture_bonus_limit",
+      "offset": 104,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "占点加成上限",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x7051-lounge-clan_memberlist_get_r",
+          "struct": "lpcard",
+          "field_name": "capture_bonus_limit",
+          "offset": 104,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x7051-lounge-clan_memberlist_get_r/README.md",
+          "section": "§3 / notes.md",
+          "reader": "sub_B43100",
+          "printer": "sub_B49580",
+          "evidence_va": "0xB43280"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB43280",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 120
+    },
+    {
+      "name": "rokaku_pt_use",
+      "offset": 108,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "络格点数使用",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x7051-lounge-clan_memberlist_get_r",
+          "struct": "lpcard",
+          "field_name": "rokaku_pt_use",
+          "offset": 108,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x7051-lounge-clan_memberlist_get_r/README.md",
+          "section": "§3 / notes.md",
+          "reader": "sub_B43100",
+          "printer": "sub_B49580",
+          "evidence_va": "0xB43291"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB43291",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 124
+    },
+    {
+      "name": "state_bits",
+      "offset": 112,
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "状态位",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x7051-lounge-clan_memberlist_get_r",
+          "struct": "lpcard",
+          "field_name": "state_bits",
+          "offset": 112,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0x7051-lounge-clan_memberlist_get_r/README.md",
+          "section": "§3 / notes.md",
+          "reader": "sub_B43100",
+          "printer": "sub_B49580",
+          "evidence_va": "0xB432AE"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB432AE",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 128
+    }
+  ],
+  "_audit_members_from": "lpcard",
+  "asm_audit": {
+    "verified": "2026-09-21",
+    "reader": "sub_B43100",
+    "writer": null,
+    "total_bytes": 113,
+    "fields_ok": 20,
+    "fields_fail": 0,
+    "issues": [],
+    "status": "pass",
+    "memory": {
+      "verified": "2026-09-26",
+      "status": "pass",
+      "mem_fields": 20,
+      "fields_ok": 20,
+      "fields_fail": 0,
+      "issues": [],
+      "manual_batch": 6,
+      "note": "layout_same_as lpcard；sub_B43100 claim 132"
+    }
+  },
+  "members_source": "alias:layout:lpcard",
+  "members_materialized_at": "2026-09-22",
+  "members_materialized_note": "整份同 `lpcard`；成员已就地摊平（口径：结构体不写「见 XXX」）。别名键保留作出处：基座改了要重跑本工具 --check 对漂移。",
+  "oracle_audit": {
+    "date": "2026-09-23",
+    "tool": "emulab/oracle_fix.py",
+    "verdict_before": "GAP",
+    "verdict_after": "PASS",
+    "changes": [
+      "pilot_id: memory_offset None -> 0",
+      "name: memory_offset None -> 4"
+    ]
+  }
+}

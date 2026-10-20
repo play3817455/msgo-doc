@@ -1,0 +1,391 @@
+{
+  "id": "SC-0x1A39-lounge-pilot_tutorial_step_get_r",
+  "opcode": "0x1A39",
+  "direction": "SC",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "pilot_tutorial_step_get_r",
+  "source_dir": "protocol_analysis/commands/SC-0x1A39-lounge-pilot_tutorial_step_get_r",
+  "meta": {
+    "opcode": "`0x1A39`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`pilot_tutorial_step_get_r`",
+    "处理函数": "`sub_B51930` @ `0xB51930`（lounge 分发器）",
+    "处理块范围": "`0xB56CCC..0xB56F00`",
+    "名字串引用点": "`0xB56DD0`",
+    "声明容量（解码缓冲）": "`0x10`（`0xB56CE1`）",
+    "长度闭合点": "`0xB56D8D`",
+    "去向": "`vt[0xA0]` @ `0xB56EE4`（4 实参：`tuto_flags` 拆 2）"
+  },
+  "handler": "sub_B51930",
+  "handler_va": "0xB51930",
+  "block": [
+    "0xB56CCC",
+    "0xB56F00"
+  ],
+  "name_str": null,
+  "name_str_va": "0xB56DD0",
+  "capacity": "0x10",
+  "capacity_va": "0xB56CE1",
+  "closer_va": "0xB56D8D",
+  "dispatch": "`vt[0xA0]` @ `0xB56EE4`（4 实参：`tuto_flags` 拆 2）",
+  "dispatch_slot": "vt[0xA0]",
+  "dispatch_va": "0xB56EE4",
+  "wire": {
+    "length_expr": "4 + 8 + 4",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x10（容量记账口径，非线长）",
+    "field_count": 3,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体总长**：4 + 8 + 4 = **16**（== 容量 0x10）",
+    "readme_close": "4 + 8 + 4 = **16**（== 容量 0x10）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0x1A39",
+      "evidence_va": [
+        "0xB56DD0"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "tuto_step",
+      "meaning": "教学当前步骤",
+      "purpose": "经 `vt[0xA0]`；日志 `tuto_step=`",
+      "enum": null,
+      "evidence_va": [
+        "0xB56D1C",
+        "0xB56E26"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "8",
+      "wire_type": "u64",
+      "name": "tuto_flags",
+      "meaning": "教学进度标志位（64 位位域）",
+      "purpose": "经 `vt[0xA0]`（拆低/高）；日志 `tuto_flags=`",
+      "enum": null,
+      "evidence_va": [
+        "0xB56D59",
+        "0xB56E54"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "12",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "tuto_missionid",
+      "meaning": "教学任务 ID",
+      "purpose": "经 `vt[0xA0]`；日志 `tuto_missionid=`",
+      "enum": null,
+      "evidence_va": [
+        "0xB56D7D",
+        "0xB56E79"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0x1A39（分发器 switch 选择子）",
+      "evidence_va": "0xB56DD0"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB41120`（模块 id None）→ 之后逐字段读线",
+      "evidence_va": "0xB56CCC"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "tuto_step：`u32`（线长 4）—— 教学当前步骤",
+      "evidence_va": "0xB56D1C"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "tuto_flags：`u64`（线长 8）—— 教学进度标志位（64 位位域）",
+      "evidence_va": "0xB56D59"
+    },
+    {
+      "step": 5,
+      "kind": "read_scalar",
+      "detail": "tuto_missionid：`u32`（线长 4）—— 教学任务 ID",
+      "evidence_va": "0xB56D7D"
+    },
+    {
+      "step": 6,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB56D8D"
+    },
+    {
+      "step": 7,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0xA0]`，实参 4 个",
+      "evidence_va": "0xB56EE4"
+    },
+    {
+      "step": 8,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB56D33"
+    }
+  ],
+  "capabilities": [
+    "query",
+    "lounge.pilot_tutorial"
+  ],
+  "capabilities_derived": [
+    "query"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:43",
+    "batch": 5,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 16,
+        "va": "0xB56CE1",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB56CDE",
+        "call_va": "0xB56CE3"
+      },
+      "field_window": {
+        "start_va": "0xB56CCD",
+        "end_va": "0xB56DAE",
+        "guard": {
+          "va": "0xB56CCC",
+          "func": "0xB41120",
+          "module_id": null,
+          "release_va": "0xB41110"
+        },
+        "closer_or_commit_va": "0xB56D8D",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "tuto_step",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB56D1C",
+              "0xB56E26"
+            ]
+          },
+          {
+            "name": "tuto_flags",
+            "wire_type": "u64",
+            "width": 8,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB56D59",
+              "0xB56E54"
+            ]
+          },
+          {
+            "name": "tuto_missionid",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB56D7D",
+              "0xB56E79"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB56D1C",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB56D59",
+            "kind": "read",
+            "width": 8,
+            "wire_type": "u64",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB56D7D",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 3,
+        "checkable": 3,
+        "pairs": [
+          {
+            "field": "tuto_step",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB56D1C",
+            "kind": "read"
+          },
+          {
+            "field": "tuto_flags",
+            "width": 8,
+            "shape": "scalar",
+            "va": "0xB56D59",
+            "kind": "read"
+          },
+          {
+            "field": "tuto_missionid",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB56D7D",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB56CCD",
+          "0xB56DAE"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 16,
+          "capacity": 16,
+          "relation": "exact",
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）16 / 容量 0x10"
+        }
+      },
+      "closer": {
+        "va": "0xB56D8D",
+        "kind": "jz",
+        "jcc_va": "0xB56D93",
+        "seq_va": "0xB56D89",
+        "jcc_dst": "0xB56DAC",
+        "cmp": "cmp     ebx, [esp+2C5Ch+var_2C40]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0xA0]",
+        "slot_value": 160,
+        "va": "0xB56EE4",
+        "mov_va": "0xB56ECD",
+        "host": "[edx+0A0h]",
+        "argc": 4,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB56D33",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "tuto_step=",
+        "tuto_flags=",
+        "tuto_missionid="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0x1A39-lounge-pilot_tutorial_step_get_r.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xB56DD0"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "PilotTutorialStepGetR",
+      "role": "response",
+      "wire_length": "4 + 8 + 4",
+      "members": [
+        {
+          "name": "TutoStep",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "tuto_step"
+        },
+        {
+          "name": "TutoFlags",
+          "wire_type": "u64",
+          "length": "8",
+          "field_ref": "tuto_flags"
+        },
+        {
+          "name": "TutoMissionid",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "tuto_missionid"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "34ea32b80933ba36",
+  "check_fingerprint": "89edeee07df153ac"
+}

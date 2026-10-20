@@ -1,0 +1,123 @@
+{
+ "id": "SC-0x7A47-lounge-pilot_earlyexit_penalty",
+ "verified_at": "2026-09-30 15:25:44",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "block",
+ "block": [
+  "0xB68299",
+  "0xB68402"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 4,
+   "va": "0xB682AE",
+   "reg": "eax",
+   "host": "[edx+78h]",
+   "alloc_va": "0xB682AB",
+   "call_va": "0xB682B0"
+  },
+  "field_window": {
+   "start_va": "0xB6829A",
+   "end_va": "0xB6831A",
+   "guard": {
+    "va": "0xB68299",
+    "func": "0xB41120",
+    "module_id": null,
+    "release_va": "0xB41110"
+   },
+   "closer_or_commit_va": "0xB68312",
+   "within_model_block": true,
+   "range_from": "block"
+  },
+  "primitive_widths": {
+   "direction": "SC",
+   "expected": [
+    {
+     "name": "penalty_sec",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "B682E9",
+      "B6838D"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB682E9",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 1,
+   "checkable": 1,
+   "pairs": [
+    {
+     "field": "penalty_sec",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB682E9",
+     "kind": "read"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB6829A",
+    "0xB6831A"
+   ],
+   "scalar_match_verifiable": true,
+   "capacity_relation": {
+    "observed_min": 4,
+    "capacity": 4,
+    "relation": "exact",
+    "unknown_events": [],
+    "is_lower_bound": false,
+    "note": "观测线长（下界）4 / 容量 0x4"
+   }
+  },
+  "closer": {
+   "va": "0xB68312",
+   "kind": "jnz",
+   "jcc_va": "0xB68316",
+   "seq_va": "0xB6830E",
+   "jcc_dst": "0xB682F7",
+   "cmp": "cmp     ebx, [esp+2C5Ch+var_2C40]",
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0xD8]",
+   "slot_value": 216,
+   "va": "0xB683E6",
+   "mov_va": "0xB683DD",
+   "host": "[edx+0D8h]",
+   "argc": 1,
+   "form": "mov_then_call",
+   "error_slot": {
+    "slot": "vt[0x64]",
+    "va": "0xB68300",
+    "argc": 2
+   }
+  },
+  "log_strings": [
+   "penalty_sec="
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "penalty_sec"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 8
+}

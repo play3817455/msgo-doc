@@ -1,0 +1,130 @@
+{
+  "id": "adop_list",
+  "title": "采纳列表项 adop_list（13B 线 / 16B 槽）",
+  "length": 13,
+  "status": "complete",
+  "reader": "sub_B43D90",
+  "printer": "sub_B4AC50",
+  "memory_claim": 16,
+  "wire_layout": "1+4+4×2",
+  "evidence": {
+    "commands": [
+      "SC-0xA832-lounge-msma_add"
+    ],
+    "protocol_paths": [
+      "protocol_analysis/commands/SC-0xA832-lounge-msma_add/README.md"
+    ],
+    "note": "A832 adop_list 数组元素；上限 31 条"
+  },
+  "members": [
+    {
+      "name": "db_index",
+      "offset": 0,
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "数据库索引",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0xA832-lounge-msma_add",
+          "struct": "adop_list",
+          "field_name": "db_index",
+          "offset": 0,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0xA832-lounge-msma_add/README.md",
+          "section": "§3 / §4.3",
+          "reader": "sub_B43D90",
+          "printer": "sub_B4AC50",
+          "evidence_va": "0xb43da6"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xb43da6",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 0
+    },
+    {
+      "name": "equip_wid",
+      "offset": 1,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "装备 wide ID",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0xA832-lounge-msma_add",
+          "struct": "adop_list",
+          "field_name": "equip_wid",
+          "offset": 1,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0xA832-lounge-msma_add/README.md",
+          "section": "§3 / §4.3",
+          "reader": "sub_B43D90",
+          "printer": "sub_B4AC50",
+          "evidence_va": "0xb43db9"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xb43db9",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 4
+    },
+    {
+      "name": "adop_set",
+      "offset": 5,
+      "length": 8,
+      "wire_type": "u16[4]",
+      "meaning": "采纳集合（4×u16）",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0xA832-lounge-msma_add",
+          "struct": "adop_list",
+          "field_name": "adop_set",
+          "offset": 5,
+          "length": 8,
+          "wire_type": "u16[4]",
+          "protocol_path": "protocol_analysis/commands/SC-0xA832-lounge-msma_add/README.md",
+          "section": "§3 / §4.3",
+          "reader": "sub_B43D90",
+          "printer": "sub_B4AC50",
+          "evidence_va": "0xb43dd2"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xb43dd2",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 8
+    }
+  ],
+  "asm_audit": {
+    "verified": "2026-09-20",
+    "reader": "sub_B43D90",
+    "writer": null,
+    "total_bytes": 13,
+    "fields_ok": 3,
+    "fields_fail": 0,
+    "issues": [],
+    "status": "pass",
+    "memory": {
+      "verified": "2026-09-26",
+      "status": "pass",
+      "mem_fields": 3,
+      "fields_ok": 3,
+      "fields_fail": 0,
+      "issues": []
+    }
+  },
+  "wire_memory_remediated": "2026-09-20",
+  "oracle_audit": {
+    "date": "2026-09-23",
+    "tool": "emulab/oracle_fix.py",
+    "verdict_before": "GAP",
+    "verdict_after": "PASS",
+    "changes": [
+      "db_index: memory_offset None -> 0"
+    ]
+  }
+}

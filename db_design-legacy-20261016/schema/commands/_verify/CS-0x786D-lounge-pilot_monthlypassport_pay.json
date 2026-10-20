@@ -1,0 +1,145 @@
+{
+ "id": "CS-0x786D-lounge-pilot_monthlypassport_pay",
+ "verified_at": "2026-09-30 15:25:44",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "handler_func",
+ "block": [
+  "0xB8F4D0",
+  "0xB8F67E"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 6,
+   "va": "0xB8F516",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xB8F513",
+   "call_va": "0xB8F518"
+  },
+  "field_window": {
+   "start_va": "0xB8F4D0",
+   "end_va": "0xB8F5AF",
+   "guard": null,
+   "closer_or_commit_va": "0xB8F5AF",
+   "within_model_block": true,
+   "range_from": "handler_func"
+  },
+  "primitive_widths": {
+   "direction": "CS",
+   "expected": [
+    {
+     "name": "period_path",
+     "wire_type": "u8",
+     "width": 1,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB8F553"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB8F544",
+     "kind": "inline_store",
+     "width": 2,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB8F553",
+     "kind": "inline_store",
+     "width": 1,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB8F585",
+     "kind": "composite",
+     "width": null,
+     "wire_type": null,
+     "name": "sub_B03020",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 1,
+   "checkable": 1,
+   "pairs": [
+    {
+     "field": "period_path",
+     "width": 1,
+     "shape": "scalar",
+     "va": "0xB8F553",
+     "kind": "inline_store"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [
+    {
+     "va": "0xB8F544",
+     "kind": "inline_store",
+     "width": 2,
+     "wire_type": null
+    }
+   ],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB8F4D0",
+    "0xB8F5AF"
+   ],
+   "scalar_match_verifiable": false,
+   "capacity_relation": {
+    "observed_min": 3,
+    "capacity": 6,
+    "relation": "within",
+    "unknown_events": [
+     {
+      "va": "0xB8F585",
+      "kind": "composite",
+      "name": "sub_B03020"
+     }
+    ],
+    "is_lower_bound": true,
+    "note": "观测线长（下界）3 / 容量 0x6"
+   }
+  },
+  "closer": {
+   "va": "0xB8F5AF",
+   "kind": "commit",
+   "jcc_va": null,
+   "seq_va": null,
+   "cmp": null,
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x58]",
+   "slot_value": 88,
+   "va": "0xB8F615",
+   "mov_va": "0xB8F60C",
+   "host": "[edx+58h]",
+   "argc": 2,
+   "form": "mov_then_call",
+   "error_slot": null
+  },
+  "log_strings": [
+   "period_path="
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "period_path"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 8
+}

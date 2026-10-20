@@ -1,0 +1,869 @@
+====================================================================================================
+### sub_BBB370  (atoi → int)  ea=0xbbb370
+====================================================================================================
+int __cdecl sub_BBB370(int a1, unsigned int a2)
+{
+  int v2; // eax
+  int v3; // eax
+  int v4; // eax
+  int v5; // esi
+  _BYTE v7[4]; // [esp+4h] [ebp-1Ch] BYREF
+  LPVOID lpMem; // [esp+8h] [ebp-18h]
+  unsigned int v9; // [esp+1Ch] [ebp-4h]
+
+  v2 = *(_DWORD *)(a1 + 112);
+  if ( !v2 || a2 >= (*(_DWORD *)(a1 + 116) - v2) / 28 )
+    return 0;
+  v3 = sub_456D90(v7, a2);
+  if ( *(_DWORD *)(v3 + 24) < 8u )
+    v4 = v3 + 4;
+  else
+    v4 = *(_DWORD *)(v3 + 4);
+  v5 = sub_CC6876(v4);
+  if ( v9 >= 8 )
+    sub_CC529D(lpMem);
+  return v5;
+}
+
+
+====================================================================================================
+### sub_BBB3F0  (? → 64bit (edx:eax))  ea=0xbbb3f0
+====================================================================================================
+int __cdecl sub_BBB3F0(_DWORD *a1, unsigned int a2)
+{
+  int v2; // eax
+  int v3; // eax
+  int v4; // eax
+  int v5; // esi
+  _BYTE v7[4]; // [esp+4h] [ebp-1Ch] BYREF
+  LPVOID lpMem; // [esp+8h] [ebp-18h]
+  unsigned int v9; // [esp+1Ch] [ebp-4h]
+
+  v2 = a1[28];
+  if ( !v2 || a2 >= (a1[29] - v2) / 28 )
+    return 0;
+  v3 = sub_456D90(a1, (int)v7, a2);
+  if ( *(_DWORD *)(v3 + 24) < 8u )
+    v4 = v3 + 4;
+  else
+    v4 = *(_DWORD *)(v3 + 4);
+  v5 = sub_CC687B(v4);
+  if ( v9 >= 8 )
+    sub_CC529D(lpMem);
+  return v5;
+}
+
+
+====================================================================================================
+### sub_BBB470  (atof → float)  ea=0xbbb470
+====================================================================================================
+double __cdecl sub_BBB470(_DWORD *a1, unsigned int a2)
+{
+  int v2; // eax
+  int v3; // eax
+  int v4; // eax
+  _BYTE v6[4]; // [esp+4h] [ebp-1Ch] BYREF
+  LPVOID lpMem; // [esp+8h] [ebp-18h]
+  unsigned int v8; // [esp+1Ch] [ebp-4h]
+  float v9; // [esp+24h] [ebp+4h]
+
+  v2 = a1[28];
+  if ( !v2 || a2 >= (a1[29] - v2) / 28 )
+    return 0.0;
+  v3 = sub_456D90(a1, (int)v6, a2);
+  if ( *(_DWORD *)(v3 + 24) < 8u )
+    v4 = v3 + 4;
+  else
+    v4 = *(_DWORD *)(v3 + 4);
+  v9 = sub_CC74E9(v4);
+  if ( v8 >= 8 )
+    sub_CC529D(lpMem);
+  return v9;
+}
+
+
+====================================================================================================
+### sub_BBB4F0  (raw wstring)  ea=0xbbb4f0
+====================================================================================================
+int __cdecl sub_BBB4F0(int a1, int a2, unsigned int a3)
+{
+  int v3; // eax
+  int v4; // eax
+  int result; // eax
+  _BYTE v6[4]; // [esp+10h] [ebp-28h] BYREF
+  LPVOID lpMem; // [esp+14h] [ebp-24h]
+  unsigned int v8; // [esp+28h] [ebp-10h]
+  int v9; // [esp+34h] [ebp-4h]
+
+  v3 = *(_DWORD *)(a2 + 112);
+  if ( v3 && a3 < (*(_DWORD *)(a2 + 116) - v3) / 28 )
+  {
+    v4 = sub_456D90(v6, a3);
+    v9 = 0;
+    sub_BBB250(a1, v4, 0);
+    if ( v8 >= 8 )
+      sub_CC529D(lpMem);
+    return a1;
+  }
+  else
+  {
+    result = a1;
+    *(_DWORD *)(a1 + 24) = 15;
+    *(_DWORD *)(a1 + 20) = 0;
+    *(_BYTE *)(a1 + 4) = 0;
+  }
+  return result;
+}
+
+
+====================================================================================================
+### sub_BBB920  (? (used for wstring + parse))  ea=0xbbb920
+====================================================================================================
+int __cdecl sub_BBB920(int a1, _DWORD *a2, unsigned int a3)
+{
+  int v3; // eax
+  int v4; // eax
+  int result; // eax
+  _BYTE v6[4]; // [esp+10h] [ebp-28h] BYREF
+  LPVOID lpMem; // [esp+14h] [ebp-24h]
+  unsigned int v8; // [esp+28h] [ebp-10h]
+  int v9; // [esp+34h] [ebp-4h]
+
+  v3 = a2[28];
+  if ( v3 && a3 < (a2[29] - v3) / 28 )
+  {
+    v4 = sub_456D90(a2, (int)v6, a3);
+    v9 = 0;
+    sub_BBB5B0(a1, v4);
+    if ( v8 >= 8 )
+      sub_CC529D(lpMem);
+    return a1;
+  }
+  else
+  {
+    result = a1;
+    *(_DWORD *)(a1 + 24) = 7;
+    *(_DWORD *)(a1 + 20) = 0;
+    *(_WORD *)(a1 + 4) = 0;
+  }
+  return result;
+}
+
+
+====================================================================================================
+### sub_456D90  (thiscall: 取字段指针)  ea=0x456d90
+====================================================================================================
+int __thiscall sub_456D90(_DWORD *this, int a2, unsigned int a3)
+{
+  char v3; // bl
+  int v4; // eax
+  char *v5; // eax
+  char v7; // [esp+14h] [ebp-28h] BYREF
+  LPVOID lpMem; // [esp+18h] [ebp-24h]
+  int v9; // [esp+28h] [ebp-14h]
+  unsigned int v10; // [esp+2Ch] [ebp-10h]
+  int v11; // [esp+38h] [ebp-4h]
+
+  v3 = 0;
+  v4 = this[28];
+  if ( v4 && a3 < (this[29] - v4) / 28 )
+  {
+    v5 = (char *)(this[28] + 28 * a3);
+  }
+  else
+  {
+    v10 = 7;
+    v9 = 0;
+    LOWORD(lpMem) = 0;
+    sub_402AD0(&String, 0);
+    v3 = 1;
+    v5 = &v7;
+    v11 = 0;
+  }
+  *(_DWORD *)(a2 + 24) = 7;
+  *(_DWORD *)(a2 + 20) = 0;
+  *(_WORD *)(a2 + 4) = 0;
+  sub_4029E0((_DWORD *)a2, v5, 0, 0xFFFFFFFF);
+  if ( (v3 & 1) != 0 && v10 >= 8 )
+    sub_CC529D(lpMem);
+  return a2;
+}
+
+
+====================================================================================================
+### sub_483020  (parent lookup?)  ea=0x483020
+====================================================================================================
+int **__thiscall sub_483020(_DWORD *this, int **a2, _DWORD *a3)
+{
+  int *v3; // edx
+  int *v4; // eax
+  int **result; // eax
+
+  v3 = (int *)this[1];
+  v4 = (int *)v3[1];
+  while ( !*((_BYTE *)v4 + 2625) )
+  {
+    if ( v4[4] >= *a3 )
+    {
+      v3 = v4;
+      v4 = (int *)*v4;
+    }
+    else
+    {
+      v4 = (int *)v4[2];
+    }
+  }
+  if ( v3 == (int *)this[1] || *a3 < v3[4] )
+  {
+    result = a2;
+    *a2 = (int *)this[1];
+  }
+  else
+  {
+    result = a2;
+    *a2 = v3;
+  }
+  return result;
+}
+
+
+====================================================================================================
+### sub_42CD60  (unused)  ea=0xffffffffffffffff
+====================================================================================================
+  NOT FOUND
+
+====================================================================================================
+### sub_596100  (? (after sub_596B70))  ea=0x596100
+====================================================================================================
+int __cdecl sub_596100(int a1)
+{
+  int result; // eax
+
+  switch ( a1 )
+  {
+    case 0:
+      result = 21;
+      break;
+    case 1:
+      result = 22;
+      break;
+    case 2:
+      result = 23;
+      break;
+    case 3:
+      result = 24;
+      break;
+    case 4:
+      result = 25;
+      break;
+    case 5:
+    case 47:
+    case 52:
+      result = 26;
+      break;
+    case 6:
+    case 32:
+    case 43:
+      result = 27;
+      break;
+    case 7:
+      result = 28;
+      break;
+    case 8:
+      result = 29;
+      break;
+    case 9:
+    case 51:
+      result = 30;
+      break;
+    case 10:
+    case 21:
+    case 34:
+    case 39:
+    case 44:
+    case 53:
+      result = 31;
+      break;
+    case 11:
+      result = 32;
+      break;
+    case 12:
+      result = 33;
+      break;
+    case 13:
+      result = 34;
+      break;
+    case 14:
+    case 37:
+      result = 35;
+      break;
+    case 15:
+      result = 36;
+      break;
+    case 24:
+      result = 37;
+      break;
+    case 25:
+      result = 38;
+      break;
+    case 36:
+      result = 39;
+      break;
+    case 38:
+      result = 40;
+      break;
+    case 40:
+      result = 41;
+      break;
+    case 41:
+      result = 42;
+      break;
+    case 42:
+      result = 44;
+      break;
+    case 48:
+      result = 43;
+      break;
+    case 50:
+      result = 45;
+      break;
+    default:
+      result = 0;
+      break;
+  }
+  return result;
+}
+
+
+====================================================================================================
+### sub_56F550  (wstring → enum)  ea=0x56f550
+====================================================================================================
+int __usercall sub_56F550@<eax>(int a1@<edx>, int a2, int a3)
+{
+  int v3; // edx
+
+  *(_DWORD *)(a2 + 24) = 7;
+  *(_DWORD *)(a2 + 20) = 0;
+  *(_WORD *)(a2 + 4) = 0;
+  sub_402AD0((_DWORD *)a2, a1, (unsigned int)&String, 0);
+  if ( *(_DWORD *)(a3 + 20) )
+  {
+    sub_402AD0((_DWORD *)a2, v3, (unsigned int)aFx, 3u);
+    sub_40ADC0(a3, 0, -1);
+  }
+  return a2;
+}
+
+
+====================================================================================================
+### sub_5968A0  (wstring → int (range str))  ea=0x5968a0
+====================================================================================================
+int __cdecl sub_5968A0(int a1, LPVOID *lpMem, int a3, int a4, int a5, unsigned int a6, unsigned int a7)
+{
+  unsigned int v7; // ebx
+  int v8; // ebp
+  int v9; // eax
+  const char *v10; // edi
+  unsigned int v11; // eax
+  unsigned int v12; // esi
+  unsigned int v13; // ecx
+  LPVOID *p_lpMem; // eax
+  int v15; // eax
+  int v17; // esi
+
+  v7 = a6;
+  v8 = 0;
+  v9 = 0;
+  while ( 1 )
+  {
+    v10 = (&off_D7E0D8)[v9];
+    v11 = strlen(v10);
+    v12 = v11;
+    v13 = v7;
+    if ( v7 >= v11 )
+      v13 = v11;
+    p_lpMem = lpMem;
+    if ( a7 < 0x10 )
+      p_lpMem = (LPVOID *)&lpMem;
+    v15 = sub_40CD90(p_lpMem, v10, v13);
+    if ( !v15 && v7 >= v12 )
+    {
+      LOBYTE(v15) = v7 != v12;
+      if ( !v15 )
+        break;
+    }
+    ++v8;
+    v9 = 2 * v8;
+    if ( !dword_D7E0DC[2 * v8] )
+    {
+      if ( a7 >= 0x10 )
+        sub_CC529D(lpMem);
+      return 0;
+    }
+  }
+  v17 = dword_D7E0DC[2 * v8];
+  if ( a7 >= 0x10 )
+    sub_CC529D(lpMem);
+  return v17;
+}
+
+
+====================================================================================================
+### sub_596990  (wstring → int)  ea=0x596990
+====================================================================================================
+int __cdecl sub_596990(int a1, LPVOID *lpMem, int a3, int a4, int a5, unsigned int a6, unsigned int a7)
+{
+  unsigned int v7; // ebx
+  int v8; // ebp
+  int v9; // eax
+  const char *v10; // edi
+  unsigned int v11; // eax
+  unsigned int v12; // esi
+  unsigned int v13; // ecx
+  LPVOID *p_lpMem; // eax
+  int v15; // eax
+  int v17; // esi
+
+  v7 = a6;
+  v8 = 0;
+  v9 = 0;
+  while ( 1 )
+  {
+    v10 = (&off_D7E160)[v9];
+    v11 = strlen(v10);
+    v12 = v11;
+    v13 = v7;
+    if ( v7 >= v11 )
+      v13 = v11;
+    p_lpMem = lpMem;
+    if ( a7 < 0x10 )
+      p_lpMem = (LPVOID *)&lpMem;
+    v15 = sub_40CD90(p_lpMem, v10, v13);
+    if ( !v15 && v7 >= v12 )
+    {
+      LOBYTE(v15) = v7 != v12;
+      if ( !v15 )
+        break;
+    }
+    ++v8;
+    v9 = 2 * v8;
+    if ( dword_D7E164[2 * v8] == -1 )
+    {
+      if ( a7 >= 0x10 )
+        sub_CC529D(lpMem);
+      return -1;
+    }
+  }
+  v17 = dword_D7E164[2 * v8];
+  if ( a7 >= 0x10 )
+    sub_CC529D(lpMem);
+  return v17;
+}
+
+
+====================================================================================================
+### sub_596A80  (wstring → int)  ea=0x596a80
+====================================================================================================
+int __cdecl sub_596A80(int a1, LPVOID lpMem, int a3, int a4, int a5, unsigned int a6, unsigned int a7)
+{
+  int v7; // edi
+  int v8; // eax
+  int v10; // edi
+
+  if ( sub_40CE20(&a1, 0, a6, (int)&unk_F5DF18, 0) )
+  {
+    v7 = 0;
+    v8 = 0;
+    while ( sub_40CE20(&a1, 0, a6, (int)(&off_D7E298)[v8], strlen((&off_D7E298)[v8])) )
+    {
+      ++v7;
+      v8 = 2 * v7;
+      if ( dword_D7E29C[2 * v7] == -1 )
+        goto LABEL_5;
+    }
+    v10 = dword_D7E29C[2 * v7];
+    if ( a7 >= 0x10 )
+      sub_CC529D(lpMem);
+    return v10;
+  }
+  else
+  {
+LABEL_5:
+    if ( a7 >= 0x10 )
+      sub_CC529D(lpMem);
+    return -1;
+  }
+}
+
+
+====================================================================================================
+### sub_596B70  (wstring → enum fire_mode)  ea=0x596b70
+====================================================================================================
+int __cdecl sub_596B70(int a1, LPVOID *lpMem, int a3, int a4, int a5, unsigned int a6, unsigned int a7)
+{
+  unsigned int v7; // ebx
+  int v8; // ebp
+  int v9; // eax
+  const char *v10; // edi
+  unsigned int v11; // eax
+  unsigned int v12; // esi
+  unsigned int v13; // ecx
+  LPVOID *p_lpMem; // eax
+  int v15; // eax
+  int v17; // esi
+
+  v7 = a6;
+  v8 = 0;
+  v9 = 0;
+  while ( 1 )
+  {
+    v10 = (&off_D7E308)[v9];
+    v11 = strlen(v10);
+    v12 = v11;
+    v13 = v7;
+    if ( v7 >= v11 )
+      v13 = v11;
+    p_lpMem = lpMem;
+    if ( a7 < 0x10 )
+      p_lpMem = (LPVOID *)&lpMem;
+    v15 = sub_40CD90(p_lpMem, v10, v13);
+    if ( !v15 && v7 >= v12 )
+    {
+      LOBYTE(v15) = v7 != v12;
+      if ( !v15 )
+        break;
+    }
+    ++v8;
+    v9 = 2 * v8;
+    if ( dword_D7E30C[2 * v8] == -1 )
+    {
+      if ( a7 >= 0x10 )
+        sub_CC529D(lpMem);
+      return -1;
+    }
+  }
+  v17 = dword_D7E30C[2 * v8];
+  if ( a7 >= 0x10 )
+    sub_CC529D(lpMem);
+  return v17;
+}
+
+
+====================================================================================================
+### sub_596510  (wstring → enum)  ea=0x596510
+====================================================================================================
+int __cdecl sub_596510(_DWORD *a1)
+{
+  int result; // eax
+
+  result = sub_40CE20(a1, 0, a1[5], (int)aNormal, 6u);
+  if ( result )
+  {
+    if ( sub_40CE20(a1, 0, a1[5], (int)aScatters, 8u) )
+    {
+      if ( sub_40CE20(a1, 0, a1[5], (int)aVerticalWay, 0xCu) )
+      {
+        if ( sub_47A920(a1, aSideWay) )
+        {
+          if ( sub_47A920(a1, aSideWay2) )
+          {
+            if ( sub_47A920(a1, aSpBeam) )
+            {
+              if ( sub_47A920(a1, aTrenchMortar) )
+                return sub_47A920(a1, aParallel) != 0 ? 0 : 7;
+              else
+                return 5;
+            }
+            else
+            {
+              return 6;
+            }
+          }
+          else
+          {
+            return 4;
+          }
+        }
+        else
+        {
+          return 3;
+        }
+      }
+      else
+      {
+        return 2;
+      }
+    }
+    else
+    {
+      return 1;
+    }
+  }
+  return result;
+}
+
+
+====================================================================================================
+### sub_5965F0  (wstring → enum)  ea=0x5965f0
+====================================================================================================
+int __cdecl sub_5965F0(_DWORD *a1)
+{
+  int result; // eax
+
+  result = sub_40CE20(a1, 0, a1[5], (int)aNone_0, 4u);
+  if ( result )
+  {
+    if ( sub_40CE20(a1, 0, a1[5], (int)aLockon, 6u) )
+    {
+      if ( sub_40CE20(a1, 0, a1[5], (int)aScope, 5u) )
+      {
+        if ( sub_47A920(a1, aLockonHoming) )
+        {
+          if ( sub_47A920(a1, aLockonBoomeran) )
+          {
+            if ( sub_47A920(a1, aFunnel) )
+            {
+              if ( sub_47A920(a1, aIncom) )
+              {
+                if ( sub_47A920(a1, aFunnelMk2) )
+                {
+                  if ( sub_47A920(a1, aSensingScope) )
+                    return sub_47A920(a1, (const char *)&off_D7E070) != 0 ? 0 : 9;
+                  else
+                    return 8;
+                }
+                else
+                {
+                  return 7;
+                }
+              }
+              else
+              {
+                return 6;
+              }
+            }
+            else
+            {
+              return 5;
+            }
+          }
+          else
+          {
+            return 4;
+          }
+        }
+        else
+        {
+          return 3;
+        }
+      }
+      else
+      {
+        return 2;
+      }
+    }
+    else
+    {
+      return 1;
+    }
+  }
+  return result;
+}
+
+
+====================================================================================================
+### sub_5964A0  (wstring → enum)  ea=0x5964a0
+====================================================================================================
+int __cdecl sub_5964A0(int a1)
+{
+  const char *v1; // esi
+  int v2; // edi
+
+  v1 = off_D7DFE8;
+  v2 = 0;
+  if ( !off_D7DFE8 )
+    return 0;
+  while ( strcmp(v1, (const char *)sub_401DC0(a1)) )
+  {
+    v1 = (&off_D7DFF0)[2 * v2++];
+    if ( !v1 )
+      return 0;
+  }
+  return dword_D7DFEC[2 * v2];
+}
+
+
+====================================================================================================
+### sub_596C60  (wstring → int)  ea=0x596c60
+====================================================================================================
+int __cdecl sub_596C60(int a1, LPVOID *lpMem, int a3, int a4, int a5, unsigned int a6, unsigned int a7)
+{
+  const char *v7; // edx
+  unsigned int v8; // ebp
+  int v9; // ebx
+  unsigned int v10; // edi
+  unsigned int v11; // eax
+  unsigned int v12; // esi
+  unsigned int v13; // ecx
+  LPVOID *p_lpMem; // eax
+  int v15; // eax
+  int v17; // esi
+
+  v7 = off_D7E630;
+  v8 = a7;
+  v9 = 0;
+  if ( off_D7E630 )
+  {
+    v10 = a6;
+    while ( 1 )
+    {
+      v11 = strlen(v7);
+      v12 = v11;
+      v13 = v10;
+      if ( v10 >= v11 )
+        v13 = v11;
+      p_lpMem = lpMem;
+      if ( v8 < 0x10 )
+        p_lpMem = (LPVOID *)&lpMem;
+      v15 = sub_40CD90(p_lpMem, v7, v13);
+      if ( !v15 && v10 >= v12 )
+      {
+        LOBYTE(v15) = v10 != v12;
+        if ( !v15 )
+          break;
+      }
+      v7 = (&off_D7E638)[2 * v9++];
+      if ( !v7 )
+        goto LABEL_11;
+    }
+    v17 = dword_D7E634[2 * v9];
+    if ( v8 >= 0x10 )
+      sub_CC529D(lpMem);
+    return v17;
+  }
+  else
+  {
+LABEL_11:
+    if ( v8 >= 0x10 )
+      sub_CC529D(lpMem);
+    return 0;
+  }
+}
+
+
+====================================================================================================
+### sub_596D50  (wstring → int)  ea=0x596d50
+====================================================================================================
+int __cdecl sub_596D50(int a1, LPVOID *lpMem, int a3, int a4, int a5, unsigned int a6, unsigned int a7)
+{
+  const char *v7; // edx
+  unsigned int v8; // ebp
+  int v9; // ebx
+  unsigned int v10; // edi
+  unsigned int v11; // eax
+  unsigned int v12; // esi
+  unsigned int v13; // ecx
+  LPVOID *p_lpMem; // eax
+  int v15; // eax
+  int v17; // esi
+
+  v7 = off_D7E7F0;
+  v8 = a7;
+  v9 = 0;
+  if ( off_D7E7F0 )
+  {
+    v10 = a6;
+    while ( 1 )
+    {
+      v11 = strlen(v7);
+      v12 = v11;
+      v13 = v10;
+      if ( v10 >= v11 )
+        v13 = v11;
+      p_lpMem = lpMem;
+      if ( v8 < 0x10 )
+        p_lpMem = (LPVOID *)&lpMem;
+      v15 = sub_40CD90(p_lpMem, v7, v13);
+      if ( !v15 && v10 >= v12 )
+      {
+        LOBYTE(v15) = v10 != v12;
+        if ( !v15 )
+          break;
+      }
+      v7 = (&off_D7E7F8)[2 * v9++];
+      if ( !v7 )
+        goto LABEL_11;
+    }
+    v17 = dword_D7E7F4[2 * v9];
+    if ( v8 >= 0x10 )
+      sub_CC529D(lpMem);
+    return v17;
+  }
+  else
+  {
+LABEL_11:
+    if ( v8 >= 0x10 )
+      sub_CC529D(lpMem);
+    return 0;
+  }
+}
+
+
+====================================================================================================
+### sub_596E40  (wstring → int)  ea=0x596e40
+====================================================================================================
+int __cdecl sub_596E40(int a1, LPVOID *lpMem, int a3, int a4, int a5, unsigned int a6, unsigned int a7)
+{
+  const char *v7; // edx
+  unsigned int v8; // ebp
+  int v9; // ebx
+  unsigned int v10; // edi
+  unsigned int v11; // eax
+  unsigned int v12; // esi
+  unsigned int v13; // ecx
+  LPVOID *p_lpMem; // eax
+  int v15; // eax
+  int v17; // esi
+
+  v7 = off_D7E930;
+  v8 = a7;
+  v9 = 0;
+  if ( off_D7E930 )
+  {
+    v10 = a6;
+    while ( 1 )
+    {
+      v11 = strlen(v7);
+      v12 = v11;
+      v13 = v10;
+      if ( v10 >= v11 )
+        v13 = v11;
+      p_lpMem = lpMem;
+      if ( v8 < 0x10 )
+        p_lpMem = (LPVOID *)&lpMem;
+      v15 = sub_40CD90(p_lpMem, v7, v13);
+      if ( !v15 && v10 >= v12 )
+      {
+        LOBYTE(v15) = v10 != v12;
+        if ( !v15 )
+          break;
+      }
+      v7 = (&off_D7E938)[2 * v9++];
+      if ( !v7 )
+        goto LABEL_11;
+    }
+    v17 = dword_D7E934[2 * v9];
+    if ( v8 >= 0x10 )
+      sub_CC529D(lpMem);
+    return v17;
+  }
+  else
+  {
+LABEL_11:
+    if ( v8 >= 0x10 )
+      sub_CC529D(lpMem);
+    return 0;
+  }
+}
+
+

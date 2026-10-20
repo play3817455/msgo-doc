@@ -1,0 +1,411 @@
+{
+  "id": "CS-0x3C13-lounge-mail_delete",
+  "opcode": "0x3C13",
+  "direction": "CS",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "mail_delete",
+  "source_dir": "protocol_analysis/commands/CS-0x3C13-lounge-mail_delete",
+  "meta": {
+    "opcode": "`0x3C13`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`mail_delete`",
+    "名字符串": "`)<-_proto_lounge_client::send_mail_delete(` @ `0xeec1c8`",
+    "代码位置": "sub_B9BC80 @ `0x00b9bc80`（`0x00b9bc80`..`0x00b9bf14`）",
+    "opcode 写入/分发证据": "`0xb9bd04`（opcode 写入指令）",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0x19A`（410）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽 @`0xB9BEA2`）；`call vt[0x58](buf, 负载长度)`",
+    "配对命令（同 opcode 反向）": "（本批次内无同 opcode 反向命令）"
+  },
+  "handler": "sub_B9BC80",
+  "handler_va": "0x00b9bc80",
+  "block": [
+    "0xB9BC80",
+    "0xB9BF14"
+  ],
+  "name_str": ")<-_proto_lounge_client::send_mail_delete(",
+  "name_str_va": "0xeec1c8",
+  "capacity": "0x19A",
+  "capacity_va": null,
+  "closer_va": "0xB9BDCC",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽 @`0xB9BEA2`）；`call vt[0x58](buf, 负载长度)`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": "0xB9BEA2",
+  "wire": {
+    "length_expr": "4 + 4 + 400",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x19A（容量记账口径，非线长）",
+    "field_count": 3,
+    "length_source": "field_sum",
+    "readme_conclusion": "结论：删除邮件（箱类别 + 邮件 ID 数组）。",
+    "readme_close": "2 + 4 + 4 + 50×8 = **410** == 容量 0x19A（上限场景精确相等，mail_num ≤ 50）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发给对应协议类的处理块（C→S 无 case 块）",
+      "enum": "0x3C13",
+      "evidence_va": [
+        "0xB9BD04"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "2",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "box_type",
+      "meaning": "邮件箱类别",
+      "purpose": "内联 `mov [游标], reg`；服务端按类别读写邮件箱；日志名 `box_type=`",
+      "enum": null,
+      "evidence_va": [
+        "0xB9BD1A"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "6",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "mail_num",
+      "meaning": "邮件 ID 个数",
+      "purpose": "经写原语 `sub_B02D80`；服务端据此解析随后的邮件 ID 数组；邮件 ID 个数，上限 50（`cmp ebp,32h; ja 失败`）；日志未打标签（命名推定）",
+      "enum": "0~50（cmp ebp,32h; ja 失败）",
+      "evidence_va": [
+        "0xB9BD30"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "10",
+      "length": "400",
+      "wire_type": "array<u64,50>",
+      "name": "mailids",
+      "meaning": "邮件 ID 列表（u64 数组）",
+      "purpose": "经写原语 `sub_B06190`（循环调用）；服务端按列表批量删除邮件；元素 u64（8B），循环步进 `add [esp+arg_8],8`；日志头 `mailids={`",
+      "enum": "元素 8B，循环步进 +8；上限 50",
+      "evidence_va": [
+        "0xB9BD56"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5,
+      "length_is_literal_count": 50
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0x3C13（分发器 switch 选择子）",
+      "evidence_va": "0xB9BD04"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0x19A B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xB9BCC8"
+    },
+    {
+      "step": 3,
+      "kind": "write_scalar",
+      "detail": "box_type：`u32`（线长 4）—— 邮件箱类别",
+      "evidence_va": "0xB9BD1A"
+    },
+    {
+      "step": 4,
+      "kind": "write_scalar",
+      "detail": "mail_num：`u32`（线长 4）—— 邮件 ID 个数",
+      "evidence_va": "0xB9BD30"
+    },
+    {
+      "step": 5,
+      "kind": "write_array",
+      "detail": "mailids：`array<u64,50>`（线长 400）—— 邮件 ID 列表（u64 数组）；元素 8B，循环步进 +8；上限 50",
+      "evidence_va": "0xB9BD56"
+    },
+    {
+      "step": 6,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xB9BDCC"
+    },
+    {
+      "step": 7,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xB9BEAB"
+    }
+  ],
+  "capabilities": [
+    "delete",
+    "lounge.mail"
+  ],
+  "capabilities_derived": [
+    "delete"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:43",
+    "batch": 6,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 410,
+        "va": "0xB9BCC8",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB9BCC5",
+        "call_va": "0xB9BCCD"
+      },
+      "field_window": {
+        "start_va": "0xB9BC80",
+        "end_va": "0xB9BDCC",
+        "guard": null,
+        "closer_or_commit_va": "0xB9BDCC",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "box_type",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB9BD1A"
+            ]
+          },
+          {
+            "name": "mail_num",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB9BD30"
+            ]
+          },
+          {
+            "name": "mailids",
+            "wire_type": "array<u64,50>",
+            "width": null,
+            "seq": 3,
+            "shape": "agg",
+            "evidence_va": [
+              "0xB9BD56"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB9BD04",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB9BD1A",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB9BD30",
+            "kind": "write",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB9BD56",
+            "kind": "write",
+            "width": 8,
+            "wire_type": "u64",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB9BDA2",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 2,
+        "checkable": 2,
+        "pairs": [
+          {
+            "field": "box_type",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB9BD1A",
+            "kind": "inline_store"
+          },
+          {
+            "field": "mail_num",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB9BD30",
+            "kind": "write"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB9BD04",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          },
+          {
+            "va": "0xB9BD56",
+            "kind": "write",
+            "width": 8,
+            "wire_type": "u64"
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB9BC80",
+          "0xB9BDCC"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 18,
+          "capacity": 410,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB9BDA2",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）18 / 容量 0x19a"
+        }
+      },
+      "closer": {
+        "va": "0xB9BDCC",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xB9BEAB",
+        "mov_va": "0xB9BEA2",
+        "host": "[edx+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "box_type=",
+        "mailids={"
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0x3C13-lounge-mail_delete.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0xb9bd04",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xB9BD04"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "MailDelete",
+      "role": "request",
+      "wire_length": "4 + 4 + 400",
+      "members": [
+        {
+          "name": "BoxType",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "box_type"
+        },
+        {
+          "name": "MailNum",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "mail_num"
+        },
+        {
+          "name": "Mailids",
+          "wire_type": "array<u64,50>",
+          "length": "400",
+          "field_ref": "mailids",
+          "element": "u64",
+          "element_length": "8",
+          "cap": 50,
+          "count_field": null,
+          "count_field_source": "fixed"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "372ca1b62de49c47",
+  "check_fingerprint": "f96fa5d815c75e45",
+  "import_repairs": [
+    "literal_count_array:mailids(8 → 8×50=400；u64[50])",
+    "wire_len_member_rows_folded:4 + 4 + 8 → 4 + 4 + 400"
+  ]
+}

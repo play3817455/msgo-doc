@@ -1,0 +1,472 @@
+{
+  "id": "CS-0xD12D-lounge-btlroom_quick_start",
+  "opcode": "0xD12D",
+  "direction": "CS",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "btlroom_quick_start",
+  "source_dir": "protocol_analysis/commands/CS-0xD12D-lounge-btlroom_quick_start",
+  "meta": {
+    "opcode": "`0xD12D`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`btlroom_quick_start`",
+    "名字符串": "`)<-_proto_lounge_client::send_btlroom_quick_start(` @ `0xEEAD84`",
+    "代码位置": "`0xB8F830`（`0xB8F830`..`0xB8FABE`）",
+    "opcode 写入证据": "`0xB8F8AC`",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0x005A`（90）",
+    "容量申请证据": "`0xB8F876`（分配器 `[obj+0Ch]` 的 `vt[0x78]`）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)` @ `0xB8FA4C`",
+    "提交": "`sub_B02FF0` @ `0xB8F969`",
+    "配对命令": "S→C `0xC887-lounge-btlroom_quick_start_r`（已 DONE）"
+  },
+  "handler": null,
+  "handler_va": "0xB8F830",
+  "block": [
+    "0xB8F830",
+    "0xB8FABE"
+  ],
+  "name_str": ")<-_proto_lounge_client::send_btlroom_quick_start(",
+  "name_str_va": "0xEEAD84",
+  "capacity": "0x5A",
+  "capacity_va": "0xB8F876",
+  "closer_va": "0xB8F969",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)` @ `0xB8FA4C`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": "0xB8FA4C",
+  "wire": {
+    "length_expr": "4 + 4 + 4 + 可变",
+    "fixed": false,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x5A（容量记账口径，非线长）",
+    "field_count": 4,
+    "length_source": "field_sum",
+    "readme_conclusion": "字段数：**5**（含 opcode 第 0 项）",
+    "readme_close": "2+4+4+4+73 = 87 ≤ 容量 0x5A = 90（富余 3）。"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "写入 `buf+0`，供服务端分发；无 case 块（C→S）",
+      "enum": "0xD12D",
+      "evidence_va": [
+        "`0xB8F8AC`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "matching_type",
+      "meaning": "匹配类型",
+      "purpose": "来源=入参 `arg_0`（写线指令见证据列）→ `vt[0x58](buf,len)` 发送至服务端",
+      "enum": null,
+      "evidence_va": [
+        "`0xB8F8BC`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "is_coop",
+      "meaning": "是否协作战（coop）",
+      "purpose": "来源=入参 `arg_4`（写线指令见证据列）→ `vt[0x58](buf,len)` 发送至服务端",
+      "enum": null,
+      "evidence_va": [
+        "`0xB8F8D7`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "8",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "mission_id",
+      "meaning": "任务ID",
+      "purpose": "来源=入参 `arg_8`（写线指令见证据列）→ `vt[0x58](buf,len)` 发送至服务端",
+      "enum": null,
+      "evidence_va": [
+        "`0xB8F8DF`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 4,
+      "offset": "12",
+      "length": "可变",
+      "wire_type": "bytes",
+      "name": "room_name_new",
+      "meaning": "房间新名（NUL 结尾串，槽预算 0x49=73）",
+      "purpose": "来源=入参 `arg_C`（`sub_B02B40(src,cursor,maxlen)`，maxlen = 串槽预算）→ `vt[0x58](buf,len)` 发送至服务端",
+      "enum": null,
+      "evidence_va": [
+        "`0xB8F8FB`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0xD12D（分发器 switch 选择子）",
+      "evidence_va": "0xB8F8AC"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0x5A B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xB8F876"
+    },
+    {
+      "step": 3,
+      "kind": "write_scalar",
+      "detail": "matching_type：`u32`（线长 4）—— 匹配类型",
+      "evidence_va": "0xB8F8BC"
+    },
+    {
+      "step": 4,
+      "kind": "write_scalar",
+      "detail": "is_coop：`u32`（线长 4）—— 是否协作战（coop）",
+      "evidence_va": "0xB8F8D7"
+    },
+    {
+      "step": 5,
+      "kind": "write_count",
+      "detail": "mission_id：`u32`（线长 4）—— 任务ID",
+      "evidence_va": "0xB8F8DF"
+    },
+    {
+      "step": 6,
+      "kind": "write_scalar",
+      "detail": "room_name_new：`bytes`（线长 可变）—— 房间新名（NUL 结尾串，槽预算 0x49=73）",
+      "evidence_va": "0xB8F8FB"
+    },
+    {
+      "step": 7,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xB8F969"
+    },
+    {
+      "step": 8,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xB8FA55"
+    }
+  ],
+  "capabilities": [
+    "flow",
+    "lounge.btlroom_quick"
+  ],
+  "capabilities_derived": [
+    "flow"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:45",
+    "batch": 12,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 90,
+        "va": "0xB8F876",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB8F873",
+        "call_va": "0xB8F878"
+      },
+      "field_window": {
+        "start_va": "0xB8F830",
+        "end_va": "0xB8F969",
+        "guard": null,
+        "closer_or_commit_va": "0xB8F969",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "matching_type",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "`0xB8F8BC`"
+            ]
+          },
+          {
+            "name": "is_coop",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "`0xB8F8D7`"
+            ]
+          },
+          {
+            "name": "mission_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "`0xB8F8DF`"
+            ]
+          },
+          {
+            "name": "room_name_new",
+            "wire_type": "bytes",
+            "width": null,
+            "seq": 4,
+            "shape": "agg",
+            "evidence_va": [
+              "`0xB8F8FB`"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB8F8AC",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB8F8BC",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB8F8D7",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB8F8DF",
+            "kind": "write",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB8F8FB",
+            "kind": "write",
+            "width": null,
+            "wire_type": "str",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB8F93F",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 3,
+        "checkable": 3,
+        "pairs": [
+          {
+            "field": "matching_type",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB8F8BC",
+            "kind": "inline_store"
+          },
+          {
+            "field": "is_coop",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB8F8D7",
+            "kind": "inline_store"
+          },
+          {
+            "field": "mission_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB8F8DF",
+            "kind": "write"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB8F8AC",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          },
+          {
+            "va": "0xB8F8FB",
+            "kind": "write",
+            "width": null,
+            "wire_type": "str"
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB8F830",
+          "0xB8F969"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 14,
+          "capacity": 90,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB8F8FB",
+              "kind": "write",
+              "name": ""
+            },
+            {
+              "va": "0xB8F93F",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）14 / 容量 0x5a"
+        }
+      },
+      "closer": {
+        "va": "0xB8F969",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xB8FA55",
+        "mov_va": "0xB8FA4C",
+        "host": "[edx+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "matching_type=",
+        "is_coop=",
+        "mission_id=",
+        "room_name_new=\""
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0xD12D-lounge-btlroom_quick_start.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0xB8F8AC",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "`0xB8F8AC`"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "BtlroomQuickStart",
+      "role": "request",
+      "wire_length": "4 + 4 + 4 + 可变",
+      "members": [
+        {
+          "name": "MatchingType",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "matching_type"
+        },
+        {
+          "name": "IsCoop",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "is_coop"
+        },
+        {
+          "name": "MissionId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "mission_id"
+        },
+        {
+          "name": "RoomNameNew",
+          "wire_type": "bytes",
+          "length": "可变",
+          "field_ref": "room_name_new",
+          "element": null,
+          "element_length": null,
+          "cap": null,
+          "count_field": "mission_id",
+          "count_field_source": "nearest_scalar",
+          "note": "元素成员未建模（composites/ 无此结构），须以 IDA 复核补"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "c778f15c601afdca",
+  "check_fingerprint": "042534fce366ae6c"
+}

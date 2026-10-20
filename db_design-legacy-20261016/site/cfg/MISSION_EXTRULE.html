@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MISSION_EXTRULE · db_design</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <h1><a href="../index.html">db_design</a></h1>
+      <p class="header-note">唯一证据源：<code>protocol_analysis/</code></p>
+      <nav><a href="../index.html">首页</a>
+      <a href="../homing/index.html">归位库</a>
+      <a href="../tables/index.html">旧表留档</a>
+      <a href="../commands/index.html">命令</a>
+      <a href="../cfg/index.html" class="active">配置表79</a>
+      <a href="../srv/index.html">服务端配置</a>
+      <a href="../asm-audit/index.html">ASM 审计</a>
+      <a href="../oracle-audit/index.html">Oracle 审计</a>
+      <a href="../entities/index.html">协议实体</a>
+      <a href="../fields/index.html">字段索引</a>
+      <a href="../relations.html">表关系</a></nav>
+    </div>
+  </header>
+  <main class="wrap">
+
+    <p class="breadcrumb"><a href="index.html">配置表79</a> / <code>MISSION_EXTRULE</code></p>
+    <h2><code>MISSION_EXTRULE</code> <span class="badge" style="background:#1565c0">DOWNLOAD</span> <span class="badge" style="background:#2e7d32">确证</span></h2>
+    <dl class="asm-dl">
+      <dt>CSV</dt><dd><code>mission/mission_ext_rule.csv</code></dd>
+      <dt>用途</dt><dd>任务附加规则</dd>
+      <dt>读表函数</dt><dd><code>sub_59E170</code></dd>
+      <dt>表ID</dt><dd>23</dd>
+      <dt>下载序</dt><dd>23</dd>
+      <dt>类名</dt><dd><code>CMissionExtRuleTable</code></dd>
+      <dt>列统计</dt><dd>13 列 · 确证 13 · 已映射 0 · 间隙 1</dd>
+      <dt>证据</dt><dd><a href="../../../datatables/01-列注释/23-23-MISSION_EXTRULE.md" target="_blank">datatables/01-列注释/23-23-MISSION_EXTRULE.md</a></dd>
+    </dl>
+    <section>
+      <h3>列定案</h3>
+      <p class="muted"><code>db_column</code> = PostgreSQL 列名（确证/有语义的 partial 用订案名；<code>unknown_*</code> 暂保留 colN）</p>
+      <table class="wide">
+        <thead>
+          <tr>
+            <th>CSV#</th><th>DB列</th><th>订案名</th><th>中文摘要</th><th>类型</th>
+            <th>状态</th><th>读表</th><th>偏移/VA</th><th>语义详情</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><code>0</code></td>
+      <td><code>rule_id</code></td>
+      <td><code>rule_id</code></td>
+      <td>主键；附加规则 ID</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_59E170</code></td>
+      <td class="muted">csv 0 · 0x59e19f</td>
+      <td class="meaning-cell">主键；附加规则 ID</td>
+    </tr>
+    <tr>
+      <td><code>1</code></td>
+      <td><code>rule_label</code></td>
+      <td><code>rule_label</code></td>
+      <td>规则说明文本（col1 预留；读表未写入内存，默认空）</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_59E170</code></td>
+      <td class="muted">csv 1</td>
+      <td class="meaning-cell">CSV col1：客户端 reader（sub_59E170）跳过、不落内存 ⇒ 仅本服备注/标签列（gm/modules_spec.go 用它作 NameCols 展示名；改它不影响客户端）</td>
+    </tr>
+    <tr>
+      <td><code>2</code></td>
+      <td><code>rule_type</code></td>
+      <td><code>rule_type</code></td>
+      <td>规则类型：LIMIT_MS_SET/NEWBIE_LIMIT_MS/NEWBIE_VS_XWAR/BAN_PICK</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_59E170</code></td>
+      <td class="muted">csv 2 · +4 · 0x59e1b2</td>
+      <td class="meaning-cell">规则类型：LIMIT_MS_SET/NEWBIE_LIMIT_MS/NEWBIE_VS_XWAR/BAN_PICK<div class="enum-vals"><a class="enum-chip" href="enums/sub_59e070.html#v-LIMIT_MS_SET" title="限制机体集"><code>LIMIT_MS_SET</code>=0<span class="enum-zh">限制机体集</span></a> <a class="enum-chip" href="enums/sub_59e070.html#v-NEWBIE_LIMIT_MS" title="新手限制机体"><code>NEWBIE_LIMIT_MS</code>=1<span class="enum-zh">新手限制机体</span></a> <a class="enum-chip" href="enums/sub_59e070.html#v-NEWBIE_VS_XWAR" title="新手大规模战"><code>NEWBIE_VS_XWAR</code>=2<span class="enum-zh">新手大规模战</span></a> <a class="enum-chip" href="enums/sub_59e070.html#v-BAN_PICK" title="BAN_PICK（Ban/Pick 选人）"><code>BAN_PICK</code>=3<span class="enum-zh">BAN_PICK（Ban/Pick 选人）</span></a> <a class="enum-conv-link" href="enums/sub_59e070.html" title="任务扩展规则类型">↗ sub_59E070</a></div></td>
+    </tr>
+    <tr>
+      <td><code>3</code></td>
+      <td><code>param_a</code></td>
+      <td><code>param_a</code></td>
+      <td>限制项 A：MS_COST/BTLTYPE_ENABLE/BTLTYPE_DISABLE/MS_TROOPS</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_59E170</code></td>
+      <td class="muted">csv 3 · +8 · 0x59e1f2</td>
+      <td class="meaning-cell">限制项 A：MS_COST/BTLTYPE_ENABLE/BTLTYPE_DISABLE/MS_TROOPS<div class="enum-vals"><a class="enum-chip" href="enums/sub_59e0f0.html#v-MS_COST" title="机体COST"><code>MS_COST</code>=0<span class="enum-zh">机体COST</span></a> <a class="enum-chip" href="enums/sub_59e0f0.html#v-BTLTYPE_ENABLE" title="启用战斗类型"><code>BTLTYPE_ENABLE</code>=1<span class="enum-zh">启用战斗类型</span></a> <a class="enum-chip" href="enums/sub_59e0f0.html#v-BTLTYPE_DISABLE" title="禁用战斗类型"><code>BTLTYPE_DISABLE</code>=2<span class="enum-zh">禁用战斗类型</span></a> <a class="enum-chip" href="enums/sub_59e0f0.html#v-MS_TROOPS" title="机体·TROOPS"><code>MS_TROOPS</code>=3<span class="enum-zh">机体·TROOPS</span></a> <a class="enum-conv-link" href="enums/sub_59e0f0.html" title="任务扩展参数 A">↗ sub_59E0F0</a></div></td>
+    </tr>
+    <tr>
+      <td><code>4</code></td>
+      <td><code>param_b</code></td>
+      <td><code>param_b</code></td>
+      <td>限制项 B（与 param_a 同枚举域 sub_59E0F0）</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_59E170</code></td>
+      <td class="muted">csv 4 · +12 · 0x59e22a</td>
+      <td class="meaning-cell">限制项 B（与 param_a 同枚举域 sub_59E0F0）<div class="enum-vals"><a class="enum-chip" href="enums/sub_59e0f0.html#v-MS_COST" title="机体COST"><code>MS_COST</code>=0<span class="enum-zh">机体COST</span></a> <a class="enum-chip" href="enums/sub_59e0f0.html#v-BTLTYPE_ENABLE" title="启用战斗类型"><code>BTLTYPE_ENABLE</code>=1<span class="enum-zh">启用战斗类型</span></a> <a class="enum-chip" href="enums/sub_59e0f0.html#v-BTLTYPE_DISABLE" title="禁用战斗类型"><code>BTLTYPE_DISABLE</code>=2<span class="enum-zh">禁用战斗类型</span></a> <a class="enum-chip" href="enums/sub_59e0f0.html#v-MS_TROOPS" title="机体·TROOPS"><code>MS_TROOPS</code>=3<span class="enum-zh">机体·TROOPS</span></a> <a class="enum-conv-link" href="enums/sub_59e0f0.html" title="任务扩展参数 A">↗ sub_59E0F0</a></div></td>
+    </tr>
+    <tr>
+      <td><code>5</code></td>
+      <td><code>param_value</code></td>
+      <td><code>param_value</code></td>
+      <td>限制数值（u32 @+12；如机体 cost 上限/禁机体 ID）</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_59E170</code></td>
+      <td class="muted">csv 5 · +16 · 0x59e272</td>
+      <td class="meaning-cell">限制数值（u32 @+12；如机体 cost 上限/禁机体 ID）</td>
+    </tr>
+    <tr>
+      <td><code>6</code></td>
+      <td><code>unknown_u32_6</code></td>
+      <td><code>unknown_u32_6</code></td>
+      <td>u32 col6（语义未定，占位 0）</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_59E170</code></td>
+      <td class="muted">csv 6 · +20</td>
+      <td class="meaning-cell">客户端 sub_59E170 外层 2×内层 4 循环取 csv6 → u32 @+20（结构体 a3[5]）；本函数未再引用，语义未定。原版数据缺失 ⇒ 本服占位 0（缺列时客户端 sub_456D90 越界返回 &quot;&quot; ⇒ atoi 0，行为等价）</td>
+    </tr>
+    <tr>
+      <td><code>7</code></td>
+      <td><code>unknown_u32_7</code></td>
+      <td><code>unknown_u32_7</code></td>
+      <td>u32 col7（语义未定，占位 0）</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_59E170</code></td>
+      <td class="muted">csv 7 · +24</td>
+      <td class="meaning-cell">同一循环取 csv7 → u32 @+24（a3[6]）；未再引用，语义未定。原版数据缺失 ⇒ 本服占位 0（缺列时客户端 sub_456D90 越界返回 &quot;&quot; ⇒ atoi 0，行为等价）</td>
+    </tr>
+    <tr>
+      <td><code>8</code></td>
+      <td><code>unknown_u32_8</code></td>
+      <td><code>unknown_u32_8</code></td>
+      <td>u32 col8（语义未定，占位 0）</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_59E170</code></td>
+      <td class="muted">csv 8 · +28</td>
+      <td class="meaning-cell">同一循环取 csv8 → u32 @+28（a3[7]）；未再引用，语义未定。原版数据缺失 ⇒ 本服占位 0（缺列时客户端 sub_456D90 越界返回 &quot;&quot; ⇒ atoi 0，行为等价）</td>
+    </tr>
+    <tr>
+      <td><code>9</code></td>
+      <td><code>unknown_u32_9</code></td>
+      <td><code>unknown_u32_9</code></td>
+      <td>u32 col9（语义未定，占位 0）</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_59E170</code></td>
+      <td class="muted">csv 9 · +32</td>
+      <td class="meaning-cell">同一循环取 csv9 → u32 @+32（a3[8]，第 1 组收尾）；未再引用，语义未定。原版数据缺失 ⇒ 本服占位 0（缺列时客户端 sub_456D90 越界返回 &quot;&quot; ⇒ atoi 0，行为等价）</td>
+    </tr>
+    <tr>
+      <td><code>10</code></td>
+      <td><code>unknown_u32_10</code></td>
+      <td><code>unknown_u32_10</code></td>
+      <td>u32 col10（语义未定，占位 0）</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_59E170</code></td>
+      <td class="muted">csv 10 · +36</td>
+      <td class="meaning-cell">同一循环取 csv10 → u32 @+36（a3[9]，第 2 组起始）；未再引用，语义未定。原版数据缺失 ⇒ 本服占位 0（缺列时客户端 sub_456D90 越界返回 &quot;&quot; ⇒ atoi 0，行为等价）</td>
+    </tr>
+    <tr>
+      <td><code>11</code></td>
+      <td><code>unknown_u32_11</code></td>
+      <td><code>unknown_u32_11</code></td>
+      <td>u32 col11（语义未定，占位 0）</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_59E170</code></td>
+      <td class="muted">csv 11 · +40</td>
+      <td class="meaning-cell">同一循环取 csv11 → u32 @+40（a3[10]）；未再引用，语义未定。原版数据缺失 ⇒ 本服占位 0（缺列时客户端 sub_456D90 越界返回 &quot;&quot; ⇒ atoi 0，行为等价）</td>
+    </tr>
+    <tr>
+      <td><code>12</code></td>
+      <td><code>unknown_u32_12</code></td>
+      <td><code>unknown_u32_12</code></td>
+      <td>u32 col12（语义未定，占位 0）</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_59E170</code></td>
+      <td class="muted">csv 12 · +44</td>
+      <td class="meaning-cell">同一循环取 csv12 → u32 @+44（a3[11]）；未再引用，语义未定。原版数据缺失 ⇒ 本服占位 0（缺列时客户端 sub_456D90 越界返回 &quot;&quot; ⇒ atoi 0，行为等价）</td>
+    </tr>
+    <tr>
+      <td><code>13</code></td>
+      <td><code>unknown_u32_13</code></td>
+      <td><code>unknown_u32_13</code></td>
+      <td>u32 col13（语义未定，占位 0）</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_59E170</code></td>
+      <td class="muted">csv 13 · +48</td>
+      <td class="meaning-cell">同一循环取 csv13 → u32 @+48（a3[12]，全表最大列号）；未再引用，语义未定。原版数据缺失 ⇒ 本服占位 0（缺列时客户端 sub_456D90 越界返回 &quot;&quot; ⇒ atoi 0，行为等价）</td>
+    </tr></tbody>
+      </table>
+    </section>
+
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">生成于 2026-10-12 · 改 JSON 后重跑 build_site.py · HTML 只读</div>
+  </footer>
+</body>
+</html>

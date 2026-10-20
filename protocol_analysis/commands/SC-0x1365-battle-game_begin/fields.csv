@@ -1,0 +1,26 @@
+﻿序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+0,-,2,u16,opcode,命令号,battle 分发的 switch 选择子,0x1365,0xB100B2,确证
+1,0,4,u32,snapshot_int_msec,快照发送间隔（毫秒）,交 vt[0xEC] 第1实参；日志 snapshot_int_msec=,-,0xB0FC37|0xB1010B|0xB10624,确证
+2,4,4,u32,snapshot_res_msec,快照重发/保留间隔（毫秒）,交 vt[0xEC] 第2实参；日志 snapshot_res_msec=,-,0xB0FC7A|0xB10138|0xB10621,确证
+3,8,4,u32,pos_factor,坐标换算系数,交 vt[0xEC] 第3实参；日志 pos_factor=,-,0xB0FC9E|0xB10162|0xB10617,确证
+4,12,4,u32,map_id,地图 ID,交 vt[0xEC] 第4实参；日志 map_id=,-,0xB0FCC2|0xB1018C|0xB1060D,确证
+5,16,4,u32,btlfield,战场/战域 ID,交 vt[0xEC] 第5实参；日志 btlfield=,-,0xB0FCEA|0xB101B6|0xB10603,确证
+6,20,4,u32,clear_remain_msec,关卡剩余时间（毫秒）,交 vt[0xEC] 第6实参；日志 clear_remain_msec=,-,0xB0FD12|0xB101E0|0xB105F9,确证
+7,24,1,u8,is_disable_conq_sp,是否禁用征服/据点 SP,交 vt[0xEC] 第7实参（movzx 零扩展）；日志 is_disable_conq_sp=,?（0/1）,0xB0FD3A|0xB10208|0xB105D2|0xB105E9,确证（宽度）/枚举待定
+8,25,1,u8,is_room_suspend,房间是否暂停(suspend),交 vt[0xEC] 第8实参（movzx）；日志 is_room_suspend=,?（0/1）,0xB0FD62|0xB10232|0xB105D2|0xB105DC,确证
+9,26,4,u32,mission_id,任务（关卡）ID,交 vt[0xEC] 第9实参；日志 mission_id=,-,0xB0FD8A|0xB1025E|0xB105D1,确证
+10,30,4,u32,sudden_type,突发事件类型,交 vt[0xEC] 第10实参；日志 sudden_type=,?（类型枚举未交叉）,0xB0FDB2|0xB10288|0xB105C7,确证（宽度）/枚举待定
+11,34,4,u32,sudden_bonus_target,突发事件奖励目标,交 vt[0xEC] 第11实参；日志 sudden_bonus_target=,-,0xB0FDDA|0xB102B2|0xB105BD,确证
+12,38,4,u32,exp_min,本局经验下限,交 vt[0xEC] 第12实参；日志 exp_min=,-,0xB0FE02|0xB102DC|0xB105B6,确证
+13,42,4,u32,exp_max,本局经验上限,交 vt[0xEC] 第13实参；日志 exp_max=,-,0xB0FE2A|0xB10306|0xB105AF,确证
+14,46,34,struct config,config,对战配置(A/B 兵力点数/回合/dotdamage),结构指针交第14实参；日志 config=（打印器 sub_B0A670）,成员见 README §3.1（10 成员）；claim 0x28=40≠线长34,0xB0FE43|0xB0FE52|0xB1032E|0xB10346|0xB0A670,确证
+15,80,46,struct progress,progress,战况进度(据点/量表/规则计时/dot伤害),结构指针交第15实参；日志 progress=（打印器 sub_B0A820）,成员见 README §3.2（14 成员）；claim 0x40=64≠线长46,0xB0FE6B|0xB0FE7A|0xB10358|0xB10370|0xB0A820,确证
+16,126,4,u32,respawn_posts_num,重生点条目数 N1,上限 cmp 32h；驱动数组与打印循环；交第17实参,0..50,0xB0FE94|0xB0FEBD|0xB0FEC0|0xB1059D,确证
+17,130,58N1,"array<respawn_post_entry,N>",respawn_posts,重生点列表（元素线长 58；缓冲槽步进 0x50=80）,数组基址交第16实参；日志 respawn_posts={...,成员见 README §3.3（16 成员）,0xB0FECF|0xB0FEEF|0xB0FEFB|0xB10390|0xB0AA70,确证
+18,130+58N1,4,u32,mapgimmicks_num,地图机关条目数 N2,上限 cmp 20h；驱动数组与打印循环；交第19实参,0..32,0xB0FF20|0xB0FF30|0xB0FF35|0xB10589,确证
+19,134+58N1,52N2,"array<mapgimmick_entry,N>",mapgimmicks,地图机关列表（元素线长 52；缓冲槽步进 0xBC=188）,数组基址交第18实参；日志 mapgimmicks={...,成员见 README §3.4（24 成员）,0xB0FF4C|0xB0FF6E|0xB0FF7A|0xB1040A|0xB0AEA0,确证
+20,134+58N1+52N2,14,struct bgm_desc,bgm_desc,背景音乐描述,BGM 描述结构指针交第20实参；日志 bgm_desc=（打印器 sub_B0B320）,成员见 README §3.5（5 成员）；claim 0x14=20≠线长14,0xB0FFA3|0xB0FFB2|0xB1047B|0xB10493|0xB0B320,确证
+21,148+58N1+52N2,4,u32,missionunit_num,任务机体编成条目数 N3,上限 cmp 0Bh；驱动数组与打印循环；交第22实参,0..11,0xB0FFCC|0xB0FFDC|0xB0FFE1|0xB10577,确证
+22,152+58N1+52N2,4N3,array<u32 N3>,missionunit_set,任务机体 ID 集合（元素 4 字节）,数组基址交第21实参；日志 missionunit_set={...,元素线长 4 / 槽步进 4,0xB0FFF8|0xB1001A|0xB10026|0xB104B9|0xB104EB,确证
+23,156+58N1+52N2+4N3,4,u32,mission_phase,任务阶段(phase),交第23实参；日志 mission_phase=,-,0xB1005B|0xB1051C|0xB10572,确证
+-,156+58N1+52N2+4N3,0,-,（长度闭合）,游标必须==报文末尾,容量 0x2806 = 46+40+64+4+50x80+4+32x188+20+4+11x4+4,-,0xB1006F|0xB10075,确证

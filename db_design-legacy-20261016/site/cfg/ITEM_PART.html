@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ITEM_PART · db_design</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <h1><a href="../index.html">db_design</a></h1>
+      <p class="header-note">唯一证据源：<code>protocol_analysis/</code></p>
+      <nav><a href="../index.html">首页</a>
+      <a href="../homing/index.html">归位库</a>
+      <a href="../tables/index.html">旧表留档</a>
+      <a href="../commands/index.html">命令</a>
+      <a href="../cfg/index.html" class="active">配置表79</a>
+      <a href="../srv/index.html">服务端配置</a>
+      <a href="../asm-audit/index.html">ASM 审计</a>
+      <a href="../oracle-audit/index.html">Oracle 审计</a>
+      <a href="../entities/index.html">协议实体</a>
+      <a href="../fields/index.html">字段索引</a>
+      <a href="../relations.html">表关系</a></nav>
+    </div>
+  </header>
+  <main class="wrap">
+
+    <p class="breadcrumb"><a href="index.html">配置表79</a> / <code>ITEM_PART</code></p>
+    <h2><code>ITEM_PART</code> <span class="badge" style="background:#1565c0">DOWNLOAD</span> <span class="badge" style="background:#2e7d32">确证</span></h2>
+    <dl class="asm-dl">
+      <dt>CSV</dt><dd><code>item/equip_parts.csv</code></dd>
+      <dt>用途</dt><dd>装备零件（部件）</dd>
+      <dt>读表函数</dt><dd><code>sub_5955A0</code></dd>
+      <dt>表ID</dt><dd>7</dd>
+      <dt>下载序</dt><dd>7</dd>
+      <dt>类名</dt><dd><code>CPartTable</code></dd>
+      <dt>列统计</dt><dd>50 列 · 确证 49 · 已映射 0 · 间隙 1</dd>
+      <dt>证据</dt><dd><a href="../../../datatables/01-列注释/07-7-ITEM_PART.md" target="_blank">datatables/01-列注释/07-7-ITEM_PART.md</a></dd>
+    </dl>
+    <section>
+      <h3>列定案</h3>
+      <p class="muted"><code>db_column</code> = PostgreSQL 列名（确证/有语义的 partial 用订案名；<code>unknown_*</code> 暂保留 colN）</p>
+      <table class="wide">
+        <thead>
+          <tr>
+            <th>CSV#</th><th>DB列</th><th>订案名</th><th>中文摘要</th><th>类型</th>
+            <th>状态</th><th>读表</th><th>偏移/VA</th><th>语义详情</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><code>0</code></td>
+      <td><code>item_part_id</code></td>
+      <td><code>item_part_id</code></td>
+      <td>零件 ID</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5955A0</code></td>
+      <td class="muted">csv 0 · +0</td>
+      <td class="meaning-cell">主键；装备零件（部件）ID</td>
+    </tr>
+    <tr>
+      <td><code>1</code></td>
+      <td><code>col1</code></td>
+      <td><code>col1</code></td>
+      <td>占位 col1</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code></code></td>
+      <td class="muted">csv 1</td>
+      <td class="meaning-cell">★gap：`sub_5955A0` 全函数不读（`sub_BBB370(1)` 不存在）⇒ 纯占位列</td>
+    </tr>
+    <tr>
+      <td><code>2</code></td>
+      <td><code>linked_item_id</code></td>
+      <td><code>linked_item_id</code></td>
+      <td>关联 ITEM ID</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5955A0</code></td>
+      <td class="muted">csv 2 · +4</td>
+      <td class="meaning-cell">关联 ITEM 行 ID（`sub_BBB370(2)` → +4）</td>
+    </tr>
+    <tr>
+      <td><code>3</code></td>
+      <td><code>part_group_id</code></td>
+      <td><code>part_group_id</code></td>
+      <td>零件组 ID</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5955A0</code></td>
+      <td class="muted">csv 3 · +8</td>
+      <td class="meaning-cell">零件组 ID（→ +8）</td>
+    </tr>
+    <tr>
+      <td><code>4</code></td>
+      <td><code>target_category</code></td>
+      <td><code>target_category</code></td>
+      <td>作用大类</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5955A0</code></td>
+      <td class="muted">csv 4 · +12</td>
+      <td class="meaning-cell">作用大类：MS=0 / WEAPON=1 / ARMOR=2 / 其他=3（`sub_5954A0` → +12）<div class="enum-vals"><a class="enum-chip" href="enums/sub_5954a0.html#v-MS" title="机体"><code>MS</code>=0<span class="enum-zh">机体</span></a> <a class="enum-chip" href="enums/sub_5954a0.html#v-WEAPON" title="武器"><code>WEAPON</code>=1<span class="enum-zh">武器</span></a> <a class="enum-chip" href="enums/sub_5954a0.html#v-ARMOR" title="装甲"><code>ARMOR</code>=2<span class="enum-zh">装甲</span></a> <a class="enum-chip" href="enums/sub_5954a0.html#v-OTHER" title="其他"><code>OTHER</code>=3<span class="enum-zh">其他</span></a> <a class="enum-conv-link" href="enums/sub_5954a0.html" title="配置对象大类">↗ sub_5954A0</a></div></td>
+    </tr>
+    <tr>
+      <td><code>5</code></td>
+      <td><code>trigger_threshold_a</code></td>
+      <td><code>trigger_threshold_a</code></td>
+      <td>触发阈值 A</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5955A0</code></td>
+      <td class="muted">csv 5 · +16</td>
+      <td class="meaning-cell">触发阈值 A（`atof` → +16；与 `trigger_type_primary` 配合）</td>
+    </tr>
+    <tr>
+      <td><code>6</code></td>
+      <td><code>trigger_threshold_b</code></td>
+      <td><code>trigger_threshold_b</code></td>
+      <td>触发阈值 B</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5955A0</code></td>
+      <td class="muted">csv 6 · +20</td>
+      <td class="meaning-cell">触发阈值 B（→ +20）</td>
+    </tr>
+    <tr>
+      <td><code>7</code></td>
+      <td><code>trigger_threshold_c</code></td>
+      <td><code>trigger_threshold_c</code></td>
+      <td>触发阈值 C</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5955A0</code></td>
+      <td class="muted">csv 7 · +24</td>
+      <td class="meaning-cell">触发阈值 C（→ +24）</td>
+    </tr>
+    <tr>
+      <td><code>8</code></td>
+      <td><code>trigger_threshold_d</code></td>
+      <td><code>trigger_threshold_d</code></td>
+      <td>触发阈值 D</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5955A0</code></td>
+      <td class="muted">csv 8 · +28</td>
+      <td class="meaning-cell">触发阈值 D（→ +28）</td>
+    </tr>
+    <tr>
+      <td><code>9</code></td>
+      <td><code>trigger_threshold_e</code></td>
+      <td><code>trigger_threshold_e</code></td>
+      <td>触发阈值 E</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5955A0</code></td>
+      <td class="muted">csv 9 · +32</td>
+      <td class="meaning-cell">触发阈值 E（→ +32）</td>
+    </tr>
+    <tr>
+      <td><code>10</code></td>
+      <td><code>trigger_type_primary</code></td>
+      <td><code>trigger_type_primary</code></td>
+      <td>主触发时机</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5955A0</code></td>
+      <td class="muted">csv 10 · +36</td>
+      <td class="meaning-cell">主触发时机（`sub_5951D0` → +36）<div class="enum-vals"><a class="enum-chip" href="enums/sub_5951d0.html#v-ANYTIME" title="随时"><code>ANYTIME</code>=1<span class="enum-zh">随时</span></a> <a class="enum-chip" href="enums/sub_5951d0.html#v-SPAWN" title="生成时"><code>SPAWN</code>=2<span class="enum-zh">生成时</span></a> <a class="enum-chip" href="enums/sub_5951d0.html#v-DEATH" title="死亡时"><code>DEATH</code>=3<span class="enum-zh">死亡时</span></a> <a class="enum-chip" href="enums/sub_5951d0.html#v-ARMOR_REMAIN" title="装甲·REMAIN"><code>ARMOR_REMAIN</code>=4<span class="enum-zh">装甲·REMAIN</span></a> <a class="enum-chip" href="enums/sub_5951d0.html#v-KILL_STREAK" title="击杀·STREAK"><code>KILL_STREAK</code>=5<span class="enum-zh">击杀·STREAK</span></a> <a class="enum-chip" href="enums/sub_5951d0.html#v-DEATH_STREAK" title="死亡时·STREAK"><code>DEATH_STREAK</code>=6<span class="enum-zh">死亡时·STREAK</span></a> <a class="enum-chip" href="enums/sub_5951d0.html#v-DID_LOCKON" title="Did·锁定"><code>DID_LOCKON</code>=7<span class="enum-zh">Did·锁定</span></a> <a class="enum-chip" href="enums/sub_5951d0.html#v-GOT_LOCKON" title="Got·锁定"><code>GOT_LOCKON</code>=8<span class="enum-zh">Got·锁定</span></a> <a class="enum-chip" href="enums/sub_5951d0.html#v-USER_READYTIME" title="玩家·准备时间"><code>USER_READYTIME</code>=9<span class="enum-zh">玩家·准备时间</span></a> <a class="enum-chip" href="enums/sub_5951d0.html#v-USER_KEYACTION" title="玩家·按键动作"><code>USER_KEYACTION</code>=10<span class="enum-zh">玩家·按键动作</span></a> <a class="enum-chip" href="enums/sub_5951d0.html#v-ARMOR_RATE" title="装甲·Rate"><code>ARMOR_RATE</code>=11<span class="enum-zh">装甲·Rate</span></a> <a class="enum-chip" href="enums/sub_5951d0.html#v-WARP_AND_USER_KEYACTION" title="传送·And·User·按键动作"><code>WARP_AND_USER_KEYACTION</code>=12<span class="enum-zh">传送·And·User·按键动作</span></a> <a class="enum-conv-link" href="enums/sub_5951d0.html" title="装备触发时机">↗ sub_5951D0</a> <span class="muted">…共 23 项</span></div></td>
+    </tr>
+    <tr>
+      <td><code>11</code></td>
+      <td><code>effect_magnitude</code></td>
+      <td><code>effect_magnitude</code></td>
+      <td>效果幅度</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5955A0</code></td>
+      <td class="muted">csv 11 · +40</td>
+      <td class="meaning-cell">效果幅度（→ +40）</td>
+    </tr>
+    <tr>
+      <td><code>12</code></td>
+      <td><code>trigger_type_secondary</code></td>
+      <td><code>trigger_type_secondary</code></td>
+      <td>副触发时机</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5955A0</code></td>
+      <td class="muted">csv 12 · +44</td>
+      <td class="meaning-cell">副触发时机（`sub_5951D0` → +44）<div class="enum-vals"><a class="enum-chip" href="enums/sub_5951d0.html#v-ANYTIME" title="随时"><code>ANYTIME</code>=1<span class="enum-zh">随时</span></a> <a class="enum-chip" href="enums/sub_5951d0.html#v-SPAWN" title="生成时"><code>SPAWN</code>=2<span class="enum-zh">生成时</span></a> <a class="enum-chip" href="enums/sub_5951d0.html#v-DEATH" title="死亡时"><code>DEATH</code>=3<span class="enum-zh">死亡时</span></a> <a class="enum-chip" href="enums/sub_5951d0.html#v-ARMOR_REMAIN" title="装甲·REMAIN"><code>ARMOR_REMAIN</code>=4<span class="enum-zh">装甲·REMAIN</span></a> <a class="enum-chip" href="enums/sub_5951d0.html#v-KILL_STREAK" title="击杀·STREAK"><code>KILL_STREAK</code>=5<span class="enum-zh">击杀·STREAK</span></a> <a class="enum-chip" href="enums/sub_5951d0.html#v-DEATH_STREAK" title="死亡时·STREAK"><code>DEATH_STREAK</code>=6<span class="enum-zh">死亡时·STREAK</span></a> <a class="enum-chip" href="enums/sub_5951d0.html#v-DID_LOCKON" title="Did·锁定"><code>DID_LOCKON</code>=7<span class="enum-zh">Did·锁定</span></a> <a class="enum-chip" href="enums/sub_5951d0.html#v-GOT_LOCKON" title="Got·锁定"><code>GOT_LOCKON</code>=8<span class="enum-zh">Got·锁定</span></a> <a class="enum-chip" href="enums/sub_5951d0.html#v-USER_READYTIME" title="玩家·准备时间"><code>USER_READYTIME</code>=9<span class="enum-zh">玩家·准备时间</span></a> <a class="enum-chip" href="enums/sub_5951d0.html#v-USER_KEYACTION" title="玩家·按键动作"><code>USER_KEYACTION</code>=10<span class="enum-zh">玩家·按键动作</span></a> <a class="enum-chip" href="enums/sub_5951d0.html#v-ARMOR_RATE" title="装甲·Rate"><code>ARMOR_RATE</code>=11<span class="enum-zh">装甲·Rate</span></a> <a class="enum-chip" href="enums/sub_5951d0.html#v-WARP_AND_USER_KEYACTION" title="传送·And·User·按键动作"><code>WARP_AND_USER_KEYACTION</code>=12<span class="enum-zh">传送·And·User·按键动作</span></a> <a class="enum-conv-link" href="enums/sub_5951d0.html" title="装备触发时机">↗ sub_5951D0</a> <span class="muted">…共 23 项</span></div></td>
+    </tr>
+    <tr>
+      <td><code>13</code></td>
+      <td><code>param_mod_value</code></td>
+      <td><code>param_mod_value</code></td>
+      <td>参数修改值</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5955A0</code></td>
+      <td class="muted">csv 13 · +48</td>
+      <td class="meaning-cell">★同一列双读：float → +48，u32 另存 +68（`sub_BBB370(col13)`）</td>
+    </tr>
+    <tr>
+      <td><code>14</code></td>
+      <td><code>param_mod_value_b</code></td>
+      <td><code>param_mod_value_b</code></td>
+      <td>参数修改值 B</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5955A0</code></td>
+      <td class="muted">csv 14 · +52</td>
+      <td class="meaning-cell">参数修改值 B（→ +52）</td>
+    </tr>
+    <tr>
+      <td><code>15</code></td>
+      <td><code>param_mod_value_c</code></td>
+      <td><code>param_mod_value_c</code></td>
+      <td>参数修改值 C</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5955A0</code></td>
+      <td class="muted">csv 15 · +56</td>
+      <td class="meaning-cell">参数修改值 C（→ +56）</td>
+    </tr>
+    <tr>
+      <td><code>16</code></td>
+      <td><code>group1_scope</code></td>
+      <td><code>group1_scope</code></td>
+      <td>第1组作用对象</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5955A0</code></td>
+      <td class="muted">csv 16 · +72</td>
+      <td class="meaning-cell">第 1 组作用对象（枚举 `sub_5952C0` → +72）。★8 组循环按「作用对象/参数名/参数值」顺序消费 CSV ⇒ 本列按常态布局（组组 3 列）命名；若前行某组为 `MS_BOOST_GAUGE_RECOV` 则整体后移，含义随行变。<div class="enum-vals"><a class="enum-chip" href="enums/sub_5952c0.html#v-MS" title="机体"><code>MS</code>=1<span class="enum-zh">机体</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-MS_EXAM" title="机体·考试"><code>MS_EXAM</code>=2<span class="enum-zh">机体·考试</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-MS_TRANS" title="机体·变形"><code>MS_TRANS</code>=3<span class="enum-zh">机体·变形</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-MS_HADES" title="机体·Hades"><code>MS_HADES</code>=4<span class="enum-zh">机体·Hades</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_SLOT_MAIN" title="武器·Slot·主武装"><code>WEAPON_SLOT_MAIN</code>=11<span class="enum-zh">武器·Slot·主武装</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_SLOT_SUB" title="武器·Slot·副武装"><code>WEAPON_SLOT_SUB</code>=12<span class="enum-zh">武器·Slot·副武装</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_SLOT_EX" title="武器·Slot·EX武装"><code>WEAPON_SLOT_EX</code>=13<span class="enum-zh">武器·Slot·EX武装</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_SLOT_ALL_EXAM" title="武器·Slot·All·Exam"><code>WEAPON_SLOT_ALL_EXAM</code>=15<span class="enum-zh">武器·Slot·All·Exam</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_SLOT_ALL_HADES" title="武器·Slot·All·HADES"><code>WEAPON_SLOT_ALL_HADES</code>=16<span class="enum-zh">武器·Slot·All·HADES</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_MACHINEGUN" title="武器·机枪"><code>WEAPON_MACHINEGUN</code>=21<span class="enum-zh">武器·机枪</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_SHOTGUN" title="武器·霰弹枪"><code>WEAPON_SHOTGUN</code>=22<span class="enum-zh">武器·霰弹枪</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_BAZOOKA" title="武器·火箭筒"><code>WEAPON_BAZOOKA</code>=23<span class="enum-zh">武器·火箭筒</span></a> <a class="enum-conv-link" href="enums/sub_5952c0.html" title="装备作用范围">↗ sub_5952C0</a> <span class="muted">…共 32 项</span></div></td>
+    </tr>
+    <tr>
+      <td><code>17</code></td>
+      <td><code>group1_stat</code></td>
+      <td><code>group1_stat</code></td>
+      <td>第1组参数名</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5955A0</code></td>
+      <td class="muted">csv 17 · +76</td>
+      <td class="meaning-cell">第 1 组参数名（枚举 `sub_5953B0` → +76）。★8 组循环按「作用对象/参数名/参数值」顺序消费 CSV ⇒ 本列按常态布局（组组 3 列）命名；若前行某组为 `MS_BOOST_GAUGE_RECOV` 则整体后移，含义随行变。<div class="enum-vals"><a class="enum-chip" href="enums/sub_5953b0.html#v-MS_ARMOR" title="Ms·装甲"><code>MS_ARMOR</code>=100<span class="enum-zh">Ms·装甲</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_BOOST_SPEED" title="机体·BOOST速度"><code>MS_BOOST_SPEED</code>=102<span class="enum-zh">机体·BOOST速度</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_BOOST_GAUGE" title="机体·BOOST槽"><code>MS_BOOST_GAUGE</code>=103<span class="enum-zh">机体·BOOST槽</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_BOOST_RECOVER" title="机体·BOOST恢复"><code>MS_BOOST_RECOVER</code>=104<span class="enum-zh">机体·BOOST恢复</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_PAYLOAD" title="机体·载荷"><code>MS_PAYLOAD</code>=105<span class="enum-zh">机体·载荷</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_WARP" title="机体·传送"><code>MS_WARP</code>=106<span class="enum-zh">机体·传送</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_ARMOR_PER" title="Ms·装甲·Per"><code>MS_ARMOR_PER</code>=101<span class="enum-zh">Ms·装甲·Per</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_ARMOR_NOW" title="Ms·装甲·Now"><code>MS_ARMOR_NOW</code>=107<span class="enum-zh">Ms·装甲·Now</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_BOOST_GAUGE_RECOV" title="机体·BOOST回复"><code>MS_BOOST_GAUGE_RECOV</code>=109<span class="enum-zh">机体·BOOST回复</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_DEF_SOLID" title="Ms·Def·实弹"><code>MS_DEF_SOLID</code>=110<span class="enum-zh">Ms·Def·实弹</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_DEF_BEAM" title="Ms·Def·光束"><code>MS_DEF_BEAM</code>=111<span class="enum-zh">Ms·Def·光束</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_DEF_BLAST" title="Ms·Def·爆炸"><code>MS_DEF_BLAST</code>=112<span class="enum-zh">Ms·Def·爆炸</span></a> <a class="enum-conv-link" href="enums/sub_5953b0.html" title="装备/道具效果名">↗ sub_5953B0</a> <span class="muted">…共 129 项</span></div></td>
+    </tr>
+    <tr>
+      <td><code>18</code></td>
+      <td><code>group1_value</code></td>
+      <td><code>group1_value</code></td>
+      <td>第1组参数值</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5955A0</code></td>
+      <td class="muted">csv 18 · +80</td>
+      <td class="meaning-cell">第 1 组参数值（`atof` → +80）；★若本组参数名为 `MS_BOOST_GAUGE_RECOV`(109) 则值为 `atoi(A)+64atoi(B)` 并多占 1 列。★8 组循环按「作用对象/参数名/参数值」顺序消费 CSV ⇒ 本列按常态布局（组组 3 列）命名；若前行某组为 `MS_BOOST_GAUGE_RECOV` 则整体后移，含义随行变。</td>
+    </tr>
+    <tr>
+      <td><code>19</code></td>
+      <td><code>group2_scope</code></td>
+      <td><code>group2_scope</code></td>
+      <td>第2组作用对象</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5955A0</code></td>
+      <td class="muted">csv 19 · +84</td>
+      <td class="meaning-cell">第 2 组作用对象（枚举 `sub_5952C0` → +84）。★8 组循环按「作用对象/参数名/参数值」顺序消费 CSV ⇒ 本列按常态布局（组组 3 列）命名；若前行某组为 `MS_BOOST_GAUGE_RECOV` 则整体后移，含义随行变。<div class="enum-vals"><a class="enum-chip" href="enums/sub_5952c0.html#v-MS" title="机体"><code>MS</code>=1<span class="enum-zh">机体</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-MS_EXAM" title="机体·考试"><code>MS_EXAM</code>=2<span class="enum-zh">机体·考试</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-MS_TRANS" title="机体·变形"><code>MS_TRANS</code>=3<span class="enum-zh">机体·变形</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-MS_HADES" title="机体·Hades"><code>MS_HADES</code>=4<span class="enum-zh">机体·Hades</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_SLOT_MAIN" title="武器·Slot·主武装"><code>WEAPON_SLOT_MAIN</code>=11<span class="enum-zh">武器·Slot·主武装</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_SLOT_SUB" title="武器·Slot·副武装"><code>WEAPON_SLOT_SUB</code>=12<span class="enum-zh">武器·Slot·副武装</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_SLOT_EX" title="武器·Slot·EX武装"><code>WEAPON_SLOT_EX</code>=13<span class="enum-zh">武器·Slot·EX武装</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_SLOT_ALL_EXAM" title="武器·Slot·All·Exam"><code>WEAPON_SLOT_ALL_EXAM</code>=15<span class="enum-zh">武器·Slot·All·Exam</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_SLOT_ALL_HADES" title="武器·Slot·All·HADES"><code>WEAPON_SLOT_ALL_HADES</code>=16<span class="enum-zh">武器·Slot·All·HADES</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_MACHINEGUN" title="武器·机枪"><code>WEAPON_MACHINEGUN</code>=21<span class="enum-zh">武器·机枪</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_SHOTGUN" title="武器·霰弹枪"><code>WEAPON_SHOTGUN</code>=22<span class="enum-zh">武器·霰弹枪</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_BAZOOKA" title="武器·火箭筒"><code>WEAPON_BAZOOKA</code>=23<span class="enum-zh">武器·火箭筒</span></a> <a class="enum-conv-link" href="enums/sub_5952c0.html" title="装备作用范围">↗ sub_5952C0</a> <span class="muted">…共 32 项</span></div></td>
+    </tr>
+    <tr>
+      <td><code>20</code></td>
+      <td><code>group2_stat</code></td>
+      <td><code>group2_stat</code></td>
+      <td>第2组参数名</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5955A0</code></td>
+      <td class="muted">csv 20 · +88</td>
+      <td class="meaning-cell">第 2 组参数名（枚举 `sub_5953B0` → +88）。★8 组循环按「作用对象/参数名/参数值」顺序消费 CSV ⇒ 本列按常态布局（组组 3 列）命名；若前行某组为 `MS_BOOST_GAUGE_RECOV` 则整体后移，含义随行变。<div class="enum-vals"><a class="enum-chip" href="enums/sub_5953b0.html#v-MS_ARMOR" title="Ms·装甲"><code>MS_ARMOR</code>=100<span class="enum-zh">Ms·装甲</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_BOOST_SPEED" title="机体·BOOST速度"><code>MS_BOOST_SPEED</code>=102<span class="enum-zh">机体·BOOST速度</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_BOOST_GAUGE" title="机体·BOOST槽"><code>MS_BOOST_GAUGE</code>=103<span class="enum-zh">机体·BOOST槽</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_BOOST_RECOVER" title="机体·BOOST恢复"><code>MS_BOOST_RECOVER</code>=104<span class="enum-zh">机体·BOOST恢复</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_PAYLOAD" title="机体·载荷"><code>MS_PAYLOAD</code>=105<span class="enum-zh">机体·载荷</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_WARP" title="机体·传送"><code>MS_WARP</code>=106<span class="enum-zh">机体·传送</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_ARMOR_PER" title="Ms·装甲·Per"><code>MS_ARMOR_PER</code>=101<span class="enum-zh">Ms·装甲·Per</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_ARMOR_NOW" title="Ms·装甲·Now"><code>MS_ARMOR_NOW</code>=107<span class="enum-zh">Ms·装甲·Now</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_BOOST_GAUGE_RECOV" title="机体·BOOST回复"><code>MS_BOOST_GAUGE_RECOV</code>=109<span class="enum-zh">机体·BOOST回复</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_DEF_SOLID" title="Ms·Def·实弹"><code>MS_DEF_SOLID</code>=110<span class="enum-zh">Ms·Def·实弹</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_DEF_BEAM" title="Ms·Def·光束"><code>MS_DEF_BEAM</code>=111<span class="enum-zh">Ms·Def·光束</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_DEF_BLAST" title="Ms·Def·爆炸"><code>MS_DEF_BLAST</code>=112<span class="enum-zh">Ms·Def·爆炸</span></a> <a class="enum-conv-link" href="enums/sub_5953b0.html" title="装备/道具效果名">↗ sub_5953B0</a> <span class="muted">…共 129 项</span></div></td>
+    </tr>
+    <tr>
+      <td><code>21</code></td>
+      <td><code>group2_value</code></td>
+      <td><code>group2_value</code></td>
+      <td>第2组参数值</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5955A0</code></td>
+      <td class="muted">csv 21 · +92</td>
+      <td class="meaning-cell">第 2 组参数值（`atof` → +92）；★若本组参数名为 `MS_BOOST_GAUGE_RECOV`(109) 则值为 `atoi(A)+64atoi(B)` 并多占 1 列。★8 组循环按「作用对象/参数名/参数值」顺序消费 CSV ⇒ 本列按常态布局（组组 3 列）命名；若前行某组为 `MS_BOOST_GAUGE_RECOV` 则整体后移，含义随行变。</td>
+    </tr>
+    <tr>
+      <td><code>22</code></td>
+      <td><code>group3_scope</code></td>
+      <td><code>group3_scope</code></td>
+      <td>第3组作用对象</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5955A0</code></td>
+      <td class="muted">csv 22 · +96</td>
+      <td class="meaning-cell">第 3 组作用对象（枚举 `sub_5952C0` → +96）。★8 组循环按「作用对象/参数名/参数值」顺序消费 CSV ⇒ 本列按常态布局（组组 3 列）命名；若前行某组为 `MS_BOOST_GAUGE_RECOV` 则整体后移，含义随行变。<div class="enum-vals"><a class="enum-chip" href="enums/sub_5952c0.html#v-MS" title="机体"><code>MS</code>=1<span class="enum-zh">机体</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-MS_EXAM" title="机体·考试"><code>MS_EXAM</code>=2<span class="enum-zh">机体·考试</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-MS_TRANS" title="机体·变形"><code>MS_TRANS</code>=3<span class="enum-zh">机体·变形</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-MS_HADES" title="机体·Hades"><code>MS_HADES</code>=4<span class="enum-zh">机体·Hades</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_SLOT_MAIN" title="武器·Slot·主武装"><code>WEAPON_SLOT_MAIN</code>=11<span class="enum-zh">武器·Slot·主武装</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_SLOT_SUB" title="武器·Slot·副武装"><code>WEAPON_SLOT_SUB</code>=12<span class="enum-zh">武器·Slot·副武装</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_SLOT_EX" title="武器·Slot·EX武装"><code>WEAPON_SLOT_EX</code>=13<span class="enum-zh">武器·Slot·EX武装</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_SLOT_ALL_EXAM" title="武器·Slot·All·Exam"><code>WEAPON_SLOT_ALL_EXAM</code>=15<span class="enum-zh">武器·Slot·All·Exam</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_SLOT_ALL_HADES" title="武器·Slot·All·HADES"><code>WEAPON_SLOT_ALL_HADES</code>=16<span class="enum-zh">武器·Slot·All·HADES</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_MACHINEGUN" title="武器·机枪"><code>WEAPON_MACHINEGUN</code>=21<span class="enum-zh">武器·机枪</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_SHOTGUN" title="武器·霰弹枪"><code>WEAPON_SHOTGUN</code>=22<span class="enum-zh">武器·霰弹枪</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_BAZOOKA" title="武器·火箭筒"><code>WEAPON_BAZOOKA</code>=23<span class="enum-zh">武器·火箭筒</span></a> <a class="enum-conv-link" href="enums/sub_5952c0.html" title="装备作用范围">↗ sub_5952C0</a> <span class="muted">…共 32 项</span></div></td>
+    </tr>
+    <tr>
+      <td><code>23</code></td>
+      <td><code>group3_stat</code></td>
+      <td><code>group3_stat</code></td>
+      <td>第3组参数名</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5955A0</code></td>
+      <td class="muted">csv 23 · +100</td>
+      <td class="meaning-cell">第 3 组参数名（枚举 `sub_5953B0` → +100）。★8 组循环按「作用对象/参数名/参数值」顺序消费 CSV ⇒ 本列按常态布局（组组 3 列）命名；若前行某组为 `MS_BOOST_GAUGE_RECOV` 则整体后移，含义随行变。<div class="enum-vals"><a class="enum-chip" href="enums/sub_5953b0.html#v-MS_ARMOR" title="Ms·装甲"><code>MS_ARMOR</code>=100<span class="enum-zh">Ms·装甲</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_BOOST_SPEED" title="机体·BOOST速度"><code>MS_BOOST_SPEED</code>=102<span class="enum-zh">机体·BOOST速度</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_BOOST_GAUGE" title="机体·BOOST槽"><code>MS_BOOST_GAUGE</code>=103<span class="enum-zh">机体·BOOST槽</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_BOOST_RECOVER" title="机体·BOOST恢复"><code>MS_BOOST_RECOVER</code>=104<span class="enum-zh">机体·BOOST恢复</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_PAYLOAD" title="机体·载荷"><code>MS_PAYLOAD</code>=105<span class="enum-zh">机体·载荷</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_WARP" title="机体·传送"><code>MS_WARP</code>=106<span class="enum-zh">机体·传送</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_ARMOR_PER" title="Ms·装甲·Per"><code>MS_ARMOR_PER</code>=101<span class="enum-zh">Ms·装甲·Per</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_ARMOR_NOW" title="Ms·装甲·Now"><code>MS_ARMOR_NOW</code>=107<span class="enum-zh">Ms·装甲·Now</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_BOOST_GAUGE_RECOV" title="机体·BOOST回复"><code>MS_BOOST_GAUGE_RECOV</code>=109<span class="enum-zh">机体·BOOST回复</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_DEF_SOLID" title="Ms·Def·实弹"><code>MS_DEF_SOLID</code>=110<span class="enum-zh">Ms·Def·实弹</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_DEF_BEAM" title="Ms·Def·光束"><code>MS_DEF_BEAM</code>=111<span class="enum-zh">Ms·Def·光束</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_DEF_BLAST" title="Ms·Def·爆炸"><code>MS_DEF_BLAST</code>=112<span class="enum-zh">Ms·Def·爆炸</span></a> <a class="enum-conv-link" href="enums/sub_5953b0.html" title="装备/道具效果名">↗ sub_5953B0</a> <span class="muted">…共 129 项</span></div></td>
+    </tr>
+    <tr>
+      <td><code>24</code></td>
+      <td><code>group3_value</code></td>
+      <td><code>group3_value</code></td>
+      <td>第3组参数值</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5955A0</code></td>
+      <td class="muted">csv 24 · +104</td>
+      <td class="meaning-cell">第 3 组参数值（`atof` → +104）；★若本组参数名为 `MS_BOOST_GAUGE_RECOV`(109) 则值为 `atoi(A)+64atoi(B)` 并多占 1 列。★8 组循环按「作用对象/参数名/参数值」顺序消费 CSV ⇒ 本列按常态布局（组组 3 列）命名；若前行某组为 `MS_BOOST_GAUGE_RECOV` 则整体后移，含义随行变。</td>
+    </tr>
+    <tr>
+      <td><code>25</code></td>
+      <td><code>group4_scope</code></td>
+      <td><code>group4_scope</code></td>
+      <td>第4组作用对象</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5955A0</code></td>
+      <td class="muted">csv 25 · +108</td>
+      <td class="meaning-cell">第 4 组作用对象（枚举 `sub_5952C0` → +108）。★8 组循环按「作用对象/参数名/参数值」顺序消费 CSV ⇒ 本列按常态布局（组组 3 列）命名；若前行某组为 `MS_BOOST_GAUGE_RECOV` 则整体后移，含义随行变。<div class="enum-vals"><a class="enum-chip" href="enums/sub_5952c0.html#v-MS" title="机体"><code>MS</code>=1<span class="enum-zh">机体</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-MS_EXAM" title="机体·考试"><code>MS_EXAM</code>=2<span class="enum-zh">机体·考试</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-MS_TRANS" title="机体·变形"><code>MS_TRANS</code>=3<span class="enum-zh">机体·变形</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-MS_HADES" title="机体·Hades"><code>MS_HADES</code>=4<span class="enum-zh">机体·Hades</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_SLOT_MAIN" title="武器·Slot·主武装"><code>WEAPON_SLOT_MAIN</code>=11<span class="enum-zh">武器·Slot·主武装</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_SLOT_SUB" title="武器·Slot·副武装"><code>WEAPON_SLOT_SUB</code>=12<span class="enum-zh">武器·Slot·副武装</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_SLOT_EX" title="武器·Slot·EX武装"><code>WEAPON_SLOT_EX</code>=13<span class="enum-zh">武器·Slot·EX武装</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_SLOT_ALL_EXAM" title="武器·Slot·All·Exam"><code>WEAPON_SLOT_ALL_EXAM</code>=15<span class="enum-zh">武器·Slot·All·Exam</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_SLOT_ALL_HADES" title="武器·Slot·All·HADES"><code>WEAPON_SLOT_ALL_HADES</code>=16<span class="enum-zh">武器·Slot·All·HADES</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_MACHINEGUN" title="武器·机枪"><code>WEAPON_MACHINEGUN</code>=21<span class="enum-zh">武器·机枪</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_SHOTGUN" title="武器·霰弹枪"><code>WEAPON_SHOTGUN</code>=22<span class="enum-zh">武器·霰弹枪</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_BAZOOKA" title="武器·火箭筒"><code>WEAPON_BAZOOKA</code>=23<span class="enum-zh">武器·火箭筒</span></a> <a class="enum-conv-link" href="enums/sub_5952c0.html" title="装备作用范围">↗ sub_5952C0</a> <span class="muted">…共 32 项</span></div></td>
+    </tr>
+    <tr>
+      <td><code>26</code></td>
+      <td><code>group4_stat</code></td>
+      <td><code>group4_stat</code></td>
+      <td>第4组参数名</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5955A0</code></td>
+      <td class="muted">csv 26 · +112</td>
+      <td class="meaning-cell">第 4 组参数名（枚举 `sub_5953B0` → +112）。★8 组循环按「作用对象/参数名/参数值」顺序消费 CSV ⇒ 本列按常态布局（组组 3 列）命名；若前行某组为 `MS_BOOST_GAUGE_RECOV` 则整体后移，含义随行变。<div class="enum-vals"><a class="enum-chip" href="enums/sub_5953b0.html#v-MS_ARMOR" title="Ms·装甲"><code>MS_ARMOR</code>=100<span class="enum-zh">Ms·装甲</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_BOOST_SPEED" title="机体·BOOST速度"><code>MS_BOOST_SPEED</code>=102<span class="enum-zh">机体·BOOST速度</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_BOOST_GAUGE" title="机体·BOOST槽"><code>MS_BOOST_GAUGE</code>=103<span class="enum-zh">机体·BOOST槽</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_BOOST_RECOVER" title="机体·BOOST恢复"><code>MS_BOOST_RECOVER</code>=104<span class="enum-zh">机体·BOOST恢复</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_PAYLOAD" title="机体·载荷"><code>MS_PAYLOAD</code>=105<span class="enum-zh">机体·载荷</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_WARP" title="机体·传送"><code>MS_WARP</code>=106<span class="enum-zh">机体·传送</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_ARMOR_PER" title="Ms·装甲·Per"><code>MS_ARMOR_PER</code>=101<span class="enum-zh">Ms·装甲·Per</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_ARMOR_NOW" title="Ms·装甲·Now"><code>MS_ARMOR_NOW</code>=107<span class="enum-zh">Ms·装甲·Now</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_BOOST_GAUGE_RECOV" title="机体·BOOST回复"><code>MS_BOOST_GAUGE_RECOV</code>=109<span class="enum-zh">机体·BOOST回复</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_DEF_SOLID" title="Ms·Def·实弹"><code>MS_DEF_SOLID</code>=110<span class="enum-zh">Ms·Def·实弹</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_DEF_BEAM" title="Ms·Def·光束"><code>MS_DEF_BEAM</code>=111<span class="enum-zh">Ms·Def·光束</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_DEF_BLAST" title="Ms·Def·爆炸"><code>MS_DEF_BLAST</code>=112<span class="enum-zh">Ms·Def·爆炸</span></a> <a class="enum-conv-link" href="enums/sub_5953b0.html" title="装备/道具效果名">↗ sub_5953B0</a> <span class="muted">…共 129 项</span></div></td>
+    </tr>
+    <tr>
+      <td><code>27</code></td>
+      <td><code>group4_value</code></td>
+      <td><code>group4_value</code></td>
+      <td>第4组参数值</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5955A0</code></td>
+      <td class="muted">csv 27 · +116</td>
+      <td class="meaning-cell">第 4 组参数值（`atof` → +116）；★若本组参数名为 `MS_BOOST_GAUGE_RECOV`(109) 则值为 `atoi(A)+64atoi(B)` 并多占 1 列。★8 组循环按「作用对象/参数名/参数值」顺序消费 CSV ⇒ 本列按常态布局（组组 3 列）命名；若前行某组为 `MS_BOOST_GAUGE_RECOV` 则整体后移，含义随行变。</td>
+    </tr>
+    <tr>
+      <td><code>28</code></td>
+      <td><code>group5_scope</code></td>
+      <td><code>group5_scope</code></td>
+      <td>第5组作用对象</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5955A0</code></td>
+      <td class="muted">csv 28 · +120</td>
+      <td class="meaning-cell">第 5 组作用对象（枚举 `sub_5952C0` → +120）。★8 组循环按「作用对象/参数名/参数值」顺序消费 CSV ⇒ 本列按常态布局（组组 3 列）命名；若前行某组为 `MS_BOOST_GAUGE_RECOV` 则整体后移，含义随行变。<div class="enum-vals"><a class="enum-chip" href="enums/sub_5952c0.html#v-MS" title="机体"><code>MS</code>=1<span class="enum-zh">机体</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-MS_EXAM" title="机体·考试"><code>MS_EXAM</code>=2<span class="enum-zh">机体·考试</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-MS_TRANS" title="机体·变形"><code>MS_TRANS</code>=3<span class="enum-zh">机体·变形</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-MS_HADES" title="机体·Hades"><code>MS_HADES</code>=4<span class="enum-zh">机体·Hades</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_SLOT_MAIN" title="武器·Slot·主武装"><code>WEAPON_SLOT_MAIN</code>=11<span class="enum-zh">武器·Slot·主武装</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_SLOT_SUB" title="武器·Slot·副武装"><code>WEAPON_SLOT_SUB</code>=12<span class="enum-zh">武器·Slot·副武装</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_SLOT_EX" title="武器·Slot·EX武装"><code>WEAPON_SLOT_EX</code>=13<span class="enum-zh">武器·Slot·EX武装</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_SLOT_ALL_EXAM" title="武器·Slot·All·Exam"><code>WEAPON_SLOT_ALL_EXAM</code>=15<span class="enum-zh">武器·Slot·All·Exam</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_SLOT_ALL_HADES" title="武器·Slot·All·HADES"><code>WEAPON_SLOT_ALL_HADES</code>=16<span class="enum-zh">武器·Slot·All·HADES</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_MACHINEGUN" title="武器·机枪"><code>WEAPON_MACHINEGUN</code>=21<span class="enum-zh">武器·机枪</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_SHOTGUN" title="武器·霰弹枪"><code>WEAPON_SHOTGUN</code>=22<span class="enum-zh">武器·霰弹枪</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_BAZOOKA" title="武器·火箭筒"><code>WEAPON_BAZOOKA</code>=23<span class="enum-zh">武器·火箭筒</span></a> <a class="enum-conv-link" href="enums/sub_5952c0.html" title="装备作用范围">↗ sub_5952C0</a> <span class="muted">…共 32 项</span></div></td>
+    </tr>
+    <tr>
+      <td><code>29</code></td>
+      <td><code>group5_stat</code></td>
+      <td><code>group5_stat</code></td>
+      <td>第5组参数名</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5955A0</code></td>
+      <td class="muted">csv 29 · +124</td>
+      <td class="meaning-cell">第 5 组参数名（枚举 `sub_5953B0` → +124）。★8 组循环按「作用对象/参数名/参数值」顺序消费 CSV ⇒ 本列按常态布局（组组 3 列）命名；若前行某组为 `MS_BOOST_GAUGE_RECOV` 则整体后移，含义随行变。<div class="enum-vals"><a class="enum-chip" href="enums/sub_5953b0.html#v-MS_ARMOR" title="Ms·装甲"><code>MS_ARMOR</code>=100<span class="enum-zh">Ms·装甲</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_BOOST_SPEED" title="机体·BOOST速度"><code>MS_BOOST_SPEED</code>=102<span class="enum-zh">机体·BOOST速度</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_BOOST_GAUGE" title="机体·BOOST槽"><code>MS_BOOST_GAUGE</code>=103<span class="enum-zh">机体·BOOST槽</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_BOOST_RECOVER" title="机体·BOOST恢复"><code>MS_BOOST_RECOVER</code>=104<span class="enum-zh">机体·BOOST恢复</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_PAYLOAD" title="机体·载荷"><code>MS_PAYLOAD</code>=105<span class="enum-zh">机体·载荷</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_WARP" title="机体·传送"><code>MS_WARP</code>=106<span class="enum-zh">机体·传送</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_ARMOR_PER" title="Ms·装甲·Per"><code>MS_ARMOR_PER</code>=101<span class="enum-zh">Ms·装甲·Per</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_ARMOR_NOW" title="Ms·装甲·Now"><code>MS_ARMOR_NOW</code>=107<span class="enum-zh">Ms·装甲·Now</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_BOOST_GAUGE_RECOV" title="机体·BOOST回复"><code>MS_BOOST_GAUGE_RECOV</code>=109<span class="enum-zh">机体·BOOST回复</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_DEF_SOLID" title="Ms·Def·实弹"><code>MS_DEF_SOLID</code>=110<span class="enum-zh">Ms·Def·实弹</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_DEF_BEAM" title="Ms·Def·光束"><code>MS_DEF_BEAM</code>=111<span class="enum-zh">Ms·Def·光束</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_DEF_BLAST" title="Ms·Def·爆炸"><code>MS_DEF_BLAST</code>=112<span class="enum-zh">Ms·Def·爆炸</span></a> <a class="enum-conv-link" href="enums/sub_5953b0.html" title="装备/道具效果名">↗ sub_5953B0</a> <span class="muted">…共 129 项</span></div></td>
+    </tr>
+    <tr>
+      <td><code>30</code></td>
+      <td><code>group5_value</code></td>
+      <td><code>group5_value</code></td>
+      <td>第5组参数值</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5955A0</code></td>
+      <td class="muted">csv 30 · +128</td>
+      <td class="meaning-cell">第 5 组参数值（`atof` → +128）；★若本组参数名为 `MS_BOOST_GAUGE_RECOV`(109) 则值为 `atoi(A)+64atoi(B)` 并多占 1 列。★8 组循环按「作用对象/参数名/参数值」顺序消费 CSV ⇒ 本列按常态布局（组组 3 列）命名；若前行某组为 `MS_BOOST_GAUGE_RECOV` 则整体后移，含义随行变。</td>
+    </tr>
+    <tr>
+      <td><code>31</code></td>
+      <td><code>group6_scope</code></td>
+      <td><code>group6_scope</code></td>
+      <td>第6组作用对象</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5955A0</code></td>
+      <td class="muted">csv 31 · +132</td>
+      <td class="meaning-cell">第 6 组作用对象（枚举 `sub_5952C0` → +132）。★8 组循环按「作用对象/参数名/参数值」顺序消费 CSV ⇒ 本列按常态布局（组组 3 列）命名；若前行某组为 `MS_BOOST_GAUGE_RECOV` 则整体后移，含义随行变。<div class="enum-vals"><a class="enum-chip" href="enums/sub_5952c0.html#v-MS" title="机体"><code>MS</code>=1<span class="enum-zh">机体</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-MS_EXAM" title="机体·考试"><code>MS_EXAM</code>=2<span class="enum-zh">机体·考试</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-MS_TRANS" title="机体·变形"><code>MS_TRANS</code>=3<span class="enum-zh">机体·变形</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-MS_HADES" title="机体·Hades"><code>MS_HADES</code>=4<span class="enum-zh">机体·Hades</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_SLOT_MAIN" title="武器·Slot·主武装"><code>WEAPON_SLOT_MAIN</code>=11<span class="enum-zh">武器·Slot·主武装</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_SLOT_SUB" title="武器·Slot·副武装"><code>WEAPON_SLOT_SUB</code>=12<span class="enum-zh">武器·Slot·副武装</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_SLOT_EX" title="武器·Slot·EX武装"><code>WEAPON_SLOT_EX</code>=13<span class="enum-zh">武器·Slot·EX武装</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_SLOT_ALL_EXAM" title="武器·Slot·All·Exam"><code>WEAPON_SLOT_ALL_EXAM</code>=15<span class="enum-zh">武器·Slot·All·Exam</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_SLOT_ALL_HADES" title="武器·Slot·All·HADES"><code>WEAPON_SLOT_ALL_HADES</code>=16<span class="enum-zh">武器·Slot·All·HADES</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_MACHINEGUN" title="武器·机枪"><code>WEAPON_MACHINEGUN</code>=21<span class="enum-zh">武器·机枪</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_SHOTGUN" title="武器·霰弹枪"><code>WEAPON_SHOTGUN</code>=22<span class="enum-zh">武器·霰弹枪</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_BAZOOKA" title="武器·火箭筒"><code>WEAPON_BAZOOKA</code>=23<span class="enum-zh">武器·火箭筒</span></a> <a class="enum-conv-link" href="enums/sub_5952c0.html" title="装备作用范围">↗ sub_5952C0</a> <span class="muted">…共 32 项</span></div></td>
+    </tr>
+    <tr>
+      <td><code>32</code></td>
+      <td><code>group6_stat</code></td>
+      <td><code>group6_stat</code></td>
+      <td>第6组参数名</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5955A0</code></td>
+      <td class="muted">csv 32 · +136</td>
+      <td class="meaning-cell">第 6 组参数名（枚举 `sub_5953B0` → +136）。★8 组循环按「作用对象/参数名/参数值」顺序消费 CSV ⇒ 本列按常态布局（组组 3 列）命名；若前行某组为 `MS_BOOST_GAUGE_RECOV` 则整体后移，含义随行变。<div class="enum-vals"><a class="enum-chip" href="enums/sub_5953b0.html#v-MS_ARMOR" title="Ms·装甲"><code>MS_ARMOR</code>=100<span class="enum-zh">Ms·装甲</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_BOOST_SPEED" title="机体·BOOST速度"><code>MS_BOOST_SPEED</code>=102<span class="enum-zh">机体·BOOST速度</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_BOOST_GAUGE" title="机体·BOOST槽"><code>MS_BOOST_GAUGE</code>=103<span class="enum-zh">机体·BOOST槽</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_BOOST_RECOVER" title="机体·BOOST恢复"><code>MS_BOOST_RECOVER</code>=104<span class="enum-zh">机体·BOOST恢复</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_PAYLOAD" title="机体·载荷"><code>MS_PAYLOAD</code>=105<span class="enum-zh">机体·载荷</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_WARP" title="机体·传送"><code>MS_WARP</code>=106<span class="enum-zh">机体·传送</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_ARMOR_PER" title="Ms·装甲·Per"><code>MS_ARMOR_PER</code>=101<span class="enum-zh">Ms·装甲·Per</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_ARMOR_NOW" title="Ms·装甲·Now"><code>MS_ARMOR_NOW</code>=107<span class="enum-zh">Ms·装甲·Now</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_BOOST_GAUGE_RECOV" title="机体·BOOST回复"><code>MS_BOOST_GAUGE_RECOV</code>=109<span class="enum-zh">机体·BOOST回复</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_DEF_SOLID" title="Ms·Def·实弹"><code>MS_DEF_SOLID</code>=110<span class="enum-zh">Ms·Def·实弹</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_DEF_BEAM" title="Ms·Def·光束"><code>MS_DEF_BEAM</code>=111<span class="enum-zh">Ms·Def·光束</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_DEF_BLAST" title="Ms·Def·爆炸"><code>MS_DEF_BLAST</code>=112<span class="enum-zh">Ms·Def·爆炸</span></a> <a class="enum-conv-link" href="enums/sub_5953b0.html" title="装备/道具效果名">↗ sub_5953B0</a> <span class="muted">…共 129 项</span></div></td>
+    </tr>
+    <tr>
+      <td><code>33</code></td>
+      <td><code>group6_value</code></td>
+      <td><code>group6_value</code></td>
+      <td>第6组参数值</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5955A0</code></td>
+      <td class="muted">csv 33 · +140</td>
+      <td class="meaning-cell">第 6 组参数值（`atof` → +140）；★若本组参数名为 `MS_BOOST_GAUGE_RECOV`(109) 则值为 `atoi(A)+64atoi(B)` 并多占 1 列。★8 组循环按「作用对象/参数名/参数值」顺序消费 CSV ⇒ 本列按常态布局（组组 3 列）命名；若前行某组为 `MS_BOOST_GAUGE_RECOV` 则整体后移，含义随行变。</td>
+    </tr>
+    <tr>
+      <td><code>34</code></td>
+      <td><code>group7_scope</code></td>
+      <td><code>group7_scope</code></td>
+      <td>第7组作用对象</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5955A0</code></td>
+      <td class="muted">csv 34 · +144</td>
+      <td class="meaning-cell">第 7 组作用对象（枚举 `sub_5952C0` → +144）。★8 组循环按「作用对象/参数名/参数值」顺序消费 CSV ⇒ 本列按常态布局（组组 3 列）命名；若前行某组为 `MS_BOOST_GAUGE_RECOV` 则整体后移，含义随行变。<div class="enum-vals"><a class="enum-chip" href="enums/sub_5952c0.html#v-MS" title="机体"><code>MS</code>=1<span class="enum-zh">机体</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-MS_EXAM" title="机体·考试"><code>MS_EXAM</code>=2<span class="enum-zh">机体·考试</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-MS_TRANS" title="机体·变形"><code>MS_TRANS</code>=3<span class="enum-zh">机体·变形</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-MS_HADES" title="机体·Hades"><code>MS_HADES</code>=4<span class="enum-zh">机体·Hades</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_SLOT_MAIN" title="武器·Slot·主武装"><code>WEAPON_SLOT_MAIN</code>=11<span class="enum-zh">武器·Slot·主武装</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_SLOT_SUB" title="武器·Slot·副武装"><code>WEAPON_SLOT_SUB</code>=12<span class="enum-zh">武器·Slot·副武装</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_SLOT_EX" title="武器·Slot·EX武装"><code>WEAPON_SLOT_EX</code>=13<span class="enum-zh">武器·Slot·EX武装</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_SLOT_ALL_EXAM" title="武器·Slot·All·Exam"><code>WEAPON_SLOT_ALL_EXAM</code>=15<span class="enum-zh">武器·Slot·All·Exam</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_SLOT_ALL_HADES" title="武器·Slot·All·HADES"><code>WEAPON_SLOT_ALL_HADES</code>=16<span class="enum-zh">武器·Slot·All·HADES</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_MACHINEGUN" title="武器·机枪"><code>WEAPON_MACHINEGUN</code>=21<span class="enum-zh">武器·机枪</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_SHOTGUN" title="武器·霰弹枪"><code>WEAPON_SHOTGUN</code>=22<span class="enum-zh">武器·霰弹枪</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_BAZOOKA" title="武器·火箭筒"><code>WEAPON_BAZOOKA</code>=23<span class="enum-zh">武器·火箭筒</span></a> <a class="enum-conv-link" href="enums/sub_5952c0.html" title="装备作用范围">↗ sub_5952C0</a> <span class="muted">…共 32 项</span></div></td>
+    </tr>
+    <tr>
+      <td><code>35</code></td>
+      <td><code>group7_stat</code></td>
+      <td><code>group7_stat</code></td>
+      <td>第7组参数名</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5955A0</code></td>
+      <td class="muted">csv 35 · +148</td>
+      <td class="meaning-cell">第 7 组参数名（枚举 `sub_5953B0` → +148）。★8 组循环按「作用对象/参数名/参数值」顺序消费 CSV ⇒ 本列按常态布局（组组 3 列）命名；若前行某组为 `MS_BOOST_GAUGE_RECOV` 则整体后移，含义随行变。<div class="enum-vals"><a class="enum-chip" href="enums/sub_5953b0.html#v-MS_ARMOR" title="Ms·装甲"><code>MS_ARMOR</code>=100<span class="enum-zh">Ms·装甲</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_BOOST_SPEED" title="机体·BOOST速度"><code>MS_BOOST_SPEED</code>=102<span class="enum-zh">机体·BOOST速度</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_BOOST_GAUGE" title="机体·BOOST槽"><code>MS_BOOST_GAUGE</code>=103<span class="enum-zh">机体·BOOST槽</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_BOOST_RECOVER" title="机体·BOOST恢复"><code>MS_BOOST_RECOVER</code>=104<span class="enum-zh">机体·BOOST恢复</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_PAYLOAD" title="机体·载荷"><code>MS_PAYLOAD</code>=105<span class="enum-zh">机体·载荷</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_WARP" title="机体·传送"><code>MS_WARP</code>=106<span class="enum-zh">机体·传送</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_ARMOR_PER" title="Ms·装甲·Per"><code>MS_ARMOR_PER</code>=101<span class="enum-zh">Ms·装甲·Per</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_ARMOR_NOW" title="Ms·装甲·Now"><code>MS_ARMOR_NOW</code>=107<span class="enum-zh">Ms·装甲·Now</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_BOOST_GAUGE_RECOV" title="机体·BOOST回复"><code>MS_BOOST_GAUGE_RECOV</code>=109<span class="enum-zh">机体·BOOST回复</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_DEF_SOLID" title="Ms·Def·实弹"><code>MS_DEF_SOLID</code>=110<span class="enum-zh">Ms·Def·实弹</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_DEF_BEAM" title="Ms·Def·光束"><code>MS_DEF_BEAM</code>=111<span class="enum-zh">Ms·Def·光束</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_DEF_BLAST" title="Ms·Def·爆炸"><code>MS_DEF_BLAST</code>=112<span class="enum-zh">Ms·Def·爆炸</span></a> <a class="enum-conv-link" href="enums/sub_5953b0.html" title="装备/道具效果名">↗ sub_5953B0</a> <span class="muted">…共 129 项</span></div></td>
+    </tr>
+    <tr>
+      <td><code>36</code></td>
+      <td><code>group7_value</code></td>
+      <td><code>group7_value</code></td>
+      <td>第7组参数值</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5955A0</code></td>
+      <td class="muted">csv 36 · +152</td>
+      <td class="meaning-cell">第 7 组参数值（`atof` → +152）；★若本组参数名为 `MS_BOOST_GAUGE_RECOV`(109) 则值为 `atoi(A)+64atoi(B)` 并多占 1 列。★8 组循环按「作用对象/参数名/参数值」顺序消费 CSV ⇒ 本列按常态布局（组组 3 列）命名；若前行某组为 `MS_BOOST_GAUGE_RECOV` 则整体后移，含义随行变。</td>
+    </tr>
+    <tr>
+      <td><code>37</code></td>
+      <td><code>group8_scope</code></td>
+      <td><code>group8_scope</code></td>
+      <td>第8组作用对象</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5955A0</code></td>
+      <td class="muted">csv 37 · +156</td>
+      <td class="meaning-cell">第 8 组作用对象（枚举 `sub_5952C0` → +156）。★8 组循环按「作用对象/参数名/参数值」顺序消费 CSV ⇒ 本列按常态布局（组组 3 列）命名；若前行某组为 `MS_BOOST_GAUGE_RECOV` 则整体后移，含义随行变。<div class="enum-vals"><a class="enum-chip" href="enums/sub_5952c0.html#v-MS" title="机体"><code>MS</code>=1<span class="enum-zh">机体</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-MS_EXAM" title="机体·考试"><code>MS_EXAM</code>=2<span class="enum-zh">机体·考试</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-MS_TRANS" title="机体·变形"><code>MS_TRANS</code>=3<span class="enum-zh">机体·变形</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-MS_HADES" title="机体·Hades"><code>MS_HADES</code>=4<span class="enum-zh">机体·Hades</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_SLOT_MAIN" title="武器·Slot·主武装"><code>WEAPON_SLOT_MAIN</code>=11<span class="enum-zh">武器·Slot·主武装</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_SLOT_SUB" title="武器·Slot·副武装"><code>WEAPON_SLOT_SUB</code>=12<span class="enum-zh">武器·Slot·副武装</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_SLOT_EX" title="武器·Slot·EX武装"><code>WEAPON_SLOT_EX</code>=13<span class="enum-zh">武器·Slot·EX武装</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_SLOT_ALL_EXAM" title="武器·Slot·All·Exam"><code>WEAPON_SLOT_ALL_EXAM</code>=15<span class="enum-zh">武器·Slot·All·Exam</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_SLOT_ALL_HADES" title="武器·Slot·All·HADES"><code>WEAPON_SLOT_ALL_HADES</code>=16<span class="enum-zh">武器·Slot·All·HADES</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_MACHINEGUN" title="武器·机枪"><code>WEAPON_MACHINEGUN</code>=21<span class="enum-zh">武器·机枪</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_SHOTGUN" title="武器·霰弹枪"><code>WEAPON_SHOTGUN</code>=22<span class="enum-zh">武器·霰弹枪</span></a> <a class="enum-chip" href="enums/sub_5952c0.html#v-WEAPON_BAZOOKA" title="武器·火箭筒"><code>WEAPON_BAZOOKA</code>=23<span class="enum-zh">武器·火箭筒</span></a> <a class="enum-conv-link" href="enums/sub_5952c0.html" title="装备作用范围">↗ sub_5952C0</a> <span class="muted">…共 32 项</span></div></td>
+    </tr>
+    <tr>
+      <td><code>38</code></td>
+      <td><code>group8_stat</code></td>
+      <td><code>group8_stat</code></td>
+      <td>第8组参数名</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5955A0</code></td>
+      <td class="muted">csv 38 · +160</td>
+      <td class="meaning-cell">第 8 组参数名（枚举 `sub_5953B0` → +160）。★8 组循环按「作用对象/参数名/参数值」顺序消费 CSV ⇒ 本列按常态布局（组组 3 列）命名；若前行某组为 `MS_BOOST_GAUGE_RECOV` 则整体后移，含义随行变。<div class="enum-vals"><a class="enum-chip" href="enums/sub_5953b0.html#v-MS_ARMOR" title="Ms·装甲"><code>MS_ARMOR</code>=100<span class="enum-zh">Ms·装甲</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_BOOST_SPEED" title="机体·BOOST速度"><code>MS_BOOST_SPEED</code>=102<span class="enum-zh">机体·BOOST速度</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_BOOST_GAUGE" title="机体·BOOST槽"><code>MS_BOOST_GAUGE</code>=103<span class="enum-zh">机体·BOOST槽</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_BOOST_RECOVER" title="机体·BOOST恢复"><code>MS_BOOST_RECOVER</code>=104<span class="enum-zh">机体·BOOST恢复</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_PAYLOAD" title="机体·载荷"><code>MS_PAYLOAD</code>=105<span class="enum-zh">机体·载荷</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_WARP" title="机体·传送"><code>MS_WARP</code>=106<span class="enum-zh">机体·传送</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_ARMOR_PER" title="Ms·装甲·Per"><code>MS_ARMOR_PER</code>=101<span class="enum-zh">Ms·装甲·Per</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_ARMOR_NOW" title="Ms·装甲·Now"><code>MS_ARMOR_NOW</code>=107<span class="enum-zh">Ms·装甲·Now</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_BOOST_GAUGE_RECOV" title="机体·BOOST回复"><code>MS_BOOST_GAUGE_RECOV</code>=109<span class="enum-zh">机体·BOOST回复</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_DEF_SOLID" title="Ms·Def·实弹"><code>MS_DEF_SOLID</code>=110<span class="enum-zh">Ms·Def·实弹</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_DEF_BEAM" title="Ms·Def·光束"><code>MS_DEF_BEAM</code>=111<span class="enum-zh">Ms·Def·光束</span></a> <a class="enum-chip" href="enums/sub_5953b0.html#v-MS_DEF_BLAST" title="Ms·Def·爆炸"><code>MS_DEF_BLAST</code>=112<span class="enum-zh">Ms·Def·爆炸</span></a> <a class="enum-conv-link" href="enums/sub_5953b0.html" title="装备/道具效果名">↗ sub_5953B0</a> <span class="muted">…共 129 项</span></div></td>
+    </tr>
+    <tr>
+      <td><code>39</code></td>
+      <td><code>group8_value</code></td>
+      <td><code>group8_value</code></td>
+      <td>第8组参数值</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5955A0</code></td>
+      <td class="muted">csv 39 · +164</td>
+      <td class="meaning-cell">第 8 组参数值（`atof` → +164）；★若本组参数名为 `MS_BOOST_GAUGE_RECOV`(109) 则值为 `atoi(A)+64atoi(B)` 并多占 1 列。★8 组循环按「作用对象/参数名/参数值」顺序消费 CSV ⇒ 本列按常态布局（组组 3 列）命名；若前行某组为 `MS_BOOST_GAUGE_RECOV` 则整体后移，含义随行变。</td>
+    </tr>
+    <tr>
+      <td><code>40</code></td>
+      <td><code>tail_u32_60</code></td>
+      <td><code>tail_u32_60</code></td>
+      <td>尾列 u32 @+60</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5955A0</code></td>
+      <td class="muted">csv 40 · +60</td>
+      <td class="meaning-cell">尾部第 1 个 u32（→ +60）；★CSV 位置 = 8 组消费完后的光标处（常态布局落在 csv40；有 `MS_BOOST_GAUGE_RECOV` 组时随之后移）</td>
+    </tr>
+    <tr>
+      <td><code>41</code></td>
+      <td><code>tail_u32_64</code></td>
+      <td><code>tail_u32_64</code></td>
+      <td>尾列 u32 @+64</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5955A0</code></td>
+      <td class="muted">csv 41 · +64</td>
+      <td class="meaning-cell">尾部第 2 个 u32（→ +64）；★CSV 位置 = 8 组消费完后的光标处（常态布局落在 csv41；有 `MS_BOOST_GAUGE_RECOV` 组时随之后移）</td>
+    </tr>
+    <tr>
+      <td><code>42</code></td>
+      <td><code>overflow_slot_42</code></td>
+      <td><code>overflow_slot_42</code></td>
+      <td>余量槽位（109 组用）</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5955A0</code></td>
+      <td class="muted">csv 42</td>
+      <td class="meaning-cell">★余量槽位：8 组中每出现一次 `MS_BOOST_GAUGE_RECOV`(109) 组，该组就多占 1 列（最多 8 列 / 可读到 csv49）⇒ 这 8 列只在含该参数名的行里被消费；本表当前数据（64 行全空）走常态布局读不到，保留是为了承载真实数据的这类行、避免静默截断</td>
+    </tr>
+    <tr>
+      <td><code>43</code></td>
+      <td><code>overflow_slot_43</code></td>
+      <td><code>overflow_slot_43</code></td>
+      <td>余量槽位（109 组用）</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5955A0</code></td>
+      <td class="muted">csv 43</td>
+      <td class="meaning-cell">★余量槽位：8 组中每出现一次 `MS_BOOST_GAUGE_RECOV`(109) 组，该组就多占 1 列（最多 8 列 / 可读到 csv49）⇒ 这 8 列只在含该参数名的行里被消费；本表当前数据（64 行全空）走常态布局读不到，保留是为了承载真实数据的这类行、避免静默截断</td>
+    </tr>
+    <tr>
+      <td><code>44</code></td>
+      <td><code>overflow_slot_44</code></td>
+      <td><code>overflow_slot_44</code></td>
+      <td>余量槽位（109 组用）</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5955A0</code></td>
+      <td class="muted">csv 44</td>
+      <td class="meaning-cell">★余量槽位：8 组中每出现一次 `MS_BOOST_GAUGE_RECOV`(109) 组，该组就多占 1 列（最多 8 列 / 可读到 csv49）⇒ 这 8 列只在含该参数名的行里被消费；本表当前数据（64 行全空）走常态布局读不到，保留是为了承载真实数据的这类行、避免静默截断</td>
+    </tr>
+    <tr>
+      <td><code>45</code></td>
+      <td><code>overflow_slot_45</code></td>
+      <td><code>overflow_slot_45</code></td>
+      <td>余量槽位（109 组用）</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5955A0</code></td>
+      <td class="muted">csv 45</td>
+      <td class="meaning-cell">★余量槽位：8 组中每出现一次 `MS_BOOST_GAUGE_RECOV`(109) 组，该组就多占 1 列（最多 8 列 / 可读到 csv49）⇒ 这 8 列只在含该参数名的行里被消费；本表当前数据（64 行全空）走常态布局读不到，保留是为了承载真实数据的这类行、避免静默截断</td>
+    </tr>
+    <tr>
+      <td><code>46</code></td>
+      <td><code>overflow_slot_46</code></td>
+      <td><code>overflow_slot_46</code></td>
+      <td>余量槽位（109 组用）</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5955A0</code></td>
+      <td class="muted">csv 46</td>
+      <td class="meaning-cell">★余量槽位：8 组中每出现一次 `MS_BOOST_GAUGE_RECOV`(109) 组，该组就多占 1 列（最多 8 列 / 可读到 csv49）⇒ 这 8 列只在含该参数名的行里被消费；本表当前数据（64 行全空）走常态布局读不到，保留是为了承载真实数据的这类行、避免静默截断</td>
+    </tr>
+    <tr>
+      <td><code>47</code></td>
+      <td><code>overflow_slot_47</code></td>
+      <td><code>overflow_slot_47</code></td>
+      <td>余量槽位（109 组用）</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5955A0</code></td>
+      <td class="muted">csv 47</td>
+      <td class="meaning-cell">★余量槽位：8 组中每出现一次 `MS_BOOST_GAUGE_RECOV`(109) 组，该组就多占 1 列（最多 8 列 / 可读到 csv49）⇒ 这 8 列只在含该参数名的行里被消费；本表当前数据（64 行全空）走常态布局读不到，保留是为了承载真实数据的这类行、避免静默截断</td>
+    </tr>
+    <tr>
+      <td><code>48</code></td>
+      <td><code>overflow_slot_48</code></td>
+      <td><code>overflow_slot_48</code></td>
+      <td>余量槽位（109 组用）</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5955A0</code></td>
+      <td class="muted">csv 48</td>
+      <td class="meaning-cell">★余量槽位：8 组中每出现一次 `MS_BOOST_GAUGE_RECOV`(109) 组，该组就多占 1 列（最多 8 列 / 可读到 csv49）⇒ 这 8 列只在含该参数名的行里被消费；本表当前数据（64 行全空）走常态布局读不到，保留是为了承载真实数据的这类行、避免静默截断</td>
+    </tr>
+    <tr>
+      <td><code>49</code></td>
+      <td><code>overflow_slot_49</code></td>
+      <td><code>overflow_slot_49</code></td>
+      <td>余量槽位（109 组用）</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5955A0</code></td>
+      <td class="muted">csv 49</td>
+      <td class="meaning-cell">★余量槽位：8 组中每出现一次 `MS_BOOST_GAUGE_RECOV`(109) 组，该组就多占 1 列（最多 8 列 / 可读到 csv49）⇒ 这 8 列只在含该参数名的行里被消费；本表当前数据（64 行全空）走常态布局读不到，保留是为了承载真实数据的这类行、避免静默截断</td>
+    </tr></tbody>
+      </table>
+    </section>
+
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">生成于 2026-10-12 · 改 JSON 后重跑 build_site.py · HTML 只读</div>
+  </footer>
+</body>
+</html>

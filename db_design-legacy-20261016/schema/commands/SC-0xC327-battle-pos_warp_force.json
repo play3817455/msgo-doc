@@ -1,0 +1,549 @@
+{
+  "id": "SC-0xC327-battle-pos_warp_force",
+  "opcode": "0xC327",
+  "direction": "SC",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "pos_warp_force",
+  "source_dir": "protocol_analysis/commands/SC-0xC327-battle-pos_warp_force",
+  "meta": {
+    "opcode": "`0xC327`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`battle_client`",
+    "命令名": "`pos_warp_force`",
+    "处理块范围": "`0xb2aceb`..`0xb2b05b`",
+    "名字串引用点": "`0xb2ae6b`",
+    "声明容量（解码缓冲）": "`0xC`（`B2AD06`）",
+    "长度闭合点": "`B2AE28`",
+    "报错码": "`0x6A`（块内 `push 1; push <0x6A>; vt[0x64]`）",
+    "去向": "`vt[0x194]` @`B2B016`（6 实参）"
+  },
+  "handler": null,
+  "handler_va": null,
+  "block": [
+    "0xb2aceb",
+    "0xb2b05b"
+  ],
+  "name_str": null,
+  "name_str_va": "0xb2ae6b",
+  "capacity": "0xC",
+  "capacity_va": "0xB2AD06",
+  "closer_va": "0xB2AE28",
+  "dispatch": "`vt[0x194]` @`B2B016`（6 实参）",
+  "dispatch_slot": "vt[0x194]",
+  "dispatch_va": "0xB2B016",
+  "wire": {
+    "length_expr": "2 + 2 + 2 + 2 + 2 + 2",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0xC（容量记账口径，非线长）",
+    "field_count": 6,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：12",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "ent_id",
+      "meaning": "实体 ID（日志串 `ent_id=`）",
+      "purpose": "经 `vt[0x194]`（6 实参）交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xb2ad30",
+        "0xb2ad3f"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 2,
+      "offset": "2",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "pos_x",
+      "meaning": "X 坐标（日志串 `pos_x=`）",
+      "purpose": "同上",
+      "enum": null,
+      "evidence_va": [
+        "0xb2ad6d",
+        "0xb2ad7c"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 3,
+      "offset": "4",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "pos_y",
+      "meaning": "Y 坐标（日志串 `pos_y=`）",
+      "purpose": "同上",
+      "enum": null,
+      "evidence_va": [
+        "0xb2ad91",
+        "0xb2ada0"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 4,
+      "offset": "6",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "pos_z",
+      "meaning": "Z 坐标（日志串 `pos_z=`）",
+      "purpose": "同上",
+      "enum": null,
+      "evidence_va": [
+        "0xb2adb5",
+        "0xb2adc4"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 5,
+      "offset": "8",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "dir",
+      "meaning": "朝向（日志串 `dir=`）",
+      "purpose": "同上",
+      "enum": null,
+      "evidence_va": [
+        "0xb2addd",
+        "0xb2adec"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    },
+    {
+      "seq": 6,
+      "offset": "10",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "reason",
+      "meaning": "强制传送原因（日志串 `reason=`）",
+      "purpose": "同上",
+      "enum": null,
+      "evidence_va": [
+        "0xb2ae05",
+        "0xb2ae14"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 7
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0xC327（分发器 switch 选择子）",
+      "evidence_va": "0x0000"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB05DA0`（模块 id 106）→ 之后逐字段读线",
+      "evidence_va": "0xB2ACEF"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "ent_id：`u16`（线长 2）—— 实体 ID（日志串 `ent_id=`）",
+      "evidence_va": "0xB2AD30"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "pos_x：`u16`（线长 2）—— X 坐标（日志串 `pos_x=`）",
+      "evidence_va": "0xB2AD6D"
+    },
+    {
+      "step": 5,
+      "kind": "read_scalar",
+      "detail": "pos_y：`u16`（线长 2）—— Y 坐标（日志串 `pos_y=`）",
+      "evidence_va": "0xB2AD91"
+    },
+    {
+      "step": 6,
+      "kind": "read_scalar",
+      "detail": "pos_z：`u16`（线长 2）—— Z 坐标（日志串 `pos_z=`）",
+      "evidence_va": "0xB2ADB5"
+    },
+    {
+      "step": 7,
+      "kind": "read_scalar",
+      "detail": "dir：`u16`（线长 2）—— 朝向（日志串 `dir=`）",
+      "evidence_va": "0xB2ADDD"
+    },
+    {
+      "step": 8,
+      "kind": "read_scalar",
+      "detail": "reason：`u16`（线长 2）—— 强制传送原因（日志串 `reason=`）",
+      "evidence_va": "0xB2AE05"
+    },
+    {
+      "step": 9,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB2AE28"
+    },
+    {
+      "step": 10,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x194]`，实参 6 个",
+      "evidence_va": "0xB2B016"
+    },
+    {
+      "step": 11,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB2AD56"
+    }
+  ],
+  "capabilities": [
+    "unclassified",
+    "battle.pos_warp"
+  ],
+  "capabilities_derived": [
+    "unclassified"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:47",
+    "batch": 19,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 12,
+        "va": "0xB2AD04",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB2AD01",
+        "call_va": "0xB2AD06"
+      },
+      "field_window": {
+        "start_va": "0xB2ACF0",
+        "end_va": "0xB2AE49",
+        "guard": {
+          "va": "0xB2ACEF",
+          "func": "0xB05DA0",
+          "module_id": 106,
+          "release_va": "0xB05D90"
+        },
+        "closer_or_commit_va": "0xB2AE28",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "ent_id",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb2ad30",
+              "0xb2ad3f"
+            ]
+          },
+          {
+            "name": "pos_x",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb2ad6d",
+              "0xb2ad7c"
+            ]
+          },
+          {
+            "name": "pos_y",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb2ad91",
+              "0xb2ada0"
+            ]
+          },
+          {
+            "name": "pos_z",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 4,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb2adb5",
+              "0xb2adc4"
+            ]
+          },
+          {
+            "name": "dir",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 5,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb2addd",
+              "0xb2adec"
+            ]
+          },
+          {
+            "name": "reason",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 6,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb2ae05",
+              "0xb2ae14"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB2AD3F",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB2AD7C",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB2ADA0",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB2ADC4",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB2ADEC",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB2AE14",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 6,
+        "checkable": 6,
+        "pairs": [
+          {
+            "field": "ent_id",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB2AD3F",
+            "kind": "read"
+          },
+          {
+            "field": "pos_x",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB2AD7C",
+            "kind": "read"
+          },
+          {
+            "field": "pos_y",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB2ADA0",
+            "kind": "read"
+          },
+          {
+            "field": "pos_z",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB2ADC4",
+            "kind": "read"
+          },
+          {
+            "field": "dir",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB2ADEC",
+            "kind": "read"
+          },
+          {
+            "field": "reason",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB2AE14",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB2ACF0",
+          "0xB2AE49"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 12,
+          "capacity": 12,
+          "relation": "exact",
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）12 / 容量 0xc"
+        }
+      },
+      "closer": {
+        "va": "0xB2AE28",
+        "kind": "jz",
+        "jcc_va": "0xB2AE2E",
+        "seq_va": "0xB2AE24",
+        "jcc_dst": "0xB2AE47",
+        "cmp": "cmp     ebx, [esp+1B3Ch+var_1B24]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x194]",
+        "slot_value": 404,
+        "va": "0xB2B016",
+        "mov_va": "0xB2AFF1",
+        "host": "[eax+194h]",
+        "argc": 6,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB2AD56",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "ent_id=",
+        "pos_x=",
+        "pos_y=",
+        "pos_z=",
+        "dir=",
+        "reason="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0xC327-battle-pos_warp_force.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": []
+  },
+  "structs": {
+    "response": {
+      "go_name": "PosWarpForce",
+      "role": "response",
+      "wire_length": "2 + 2 + 2 + 2 + 2 + 2",
+      "members": [
+        {
+          "name": "EntId",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "ent_id"
+        },
+        {
+          "name": "PosX",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "pos_x"
+        },
+        {
+          "name": "PosY",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "pos_y"
+        },
+        {
+          "name": "PosZ",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "pos_z"
+        },
+        {
+          "name": "Dir",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "dir"
+        },
+        {
+          "name": "Reason",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "reason"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "beeaeb4e60f5e3b6",
+  "check_fingerprint": "7c4d4ccd8a6c19c1"
+}

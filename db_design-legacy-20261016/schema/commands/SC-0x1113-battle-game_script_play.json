@@ -1,0 +1,435 @@
+{
+  "id": "SC-0x1113-battle-game_script_play",
+  "opcode": "0x1113",
+  "direction": "SC",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "game_script_play",
+  "source_dir": "protocol_analysis/commands/SC-0x1113-battle-game_script_play",
+  "meta": {
+    "opcode": "`0x1113`",
+    "方向": "SC（服务端 → 客户端（recv））",
+    "协议类": "`battle_client`",
+    "命令名": "`game_script_play`",
+    "名字字符串": "`)->_proto_battle_client::recv_game_script_play( `，引用点 `0xB0F22A`（`push offset aProtoBattleCli_13`）",
+    "处理函数": "`sub_B0CC20` @ `0xB0CC20`（battle 分发器）",
+    "处理块范围": "`0xB0F127` .. `0xB0F360`（块首即 `push 3Dh`，错误码 `0x3D`）",
+    "错误码": "`0x3D`（`0xB0F189 push 3Dh` → `vt[0x64](1, 0x3D)`）",
+    "关联命令": "同族 `../SC-0x611B-battle-game_script_play_also_replay/`（`0x611B`）；**无严格配对请求**（服务端下发剧本播放指令）"
+  },
+  "handler": "sub_B0CC20",
+  "handler_va": "0xB0CC20",
+  "block": [
+    "0xB0F127",
+    "0xB0F360"
+  ],
+  "name_str": ")->_proto_battle_client::recv_game_script_play(",
+  "name_str_va": "0xB0F22A",
+  "capacity": "0x43",
+  "capacity_va": "0xB0F140",
+  "closer_va": "0xB0F1E7",
+  "dispatch": null,
+  "dispatch_slot": "vt[0x10C]",
+  "dispatch_va": "0xB0F344",
+  "wire": {
+    "length_expr": "L+3",
+    "fixed": false,
+    "var_drivers": [
+      "L"
+    ],
+    "capacity_note": "声明容量 0x43（容量记账口径，非线长）",
+    "field_count": 3,
+    "length_source": "closure_row",
+    "readme_conclusion": "**报文体总长：变长 = L + 3**（NUL 串 src（L ≤ 64）+ u8 is_with_resume + u8 script_thread）。",
+    "readme_close": "(L+1) + 1 + 1 = L+3；闭合点 0xB0F1E7/0xB0F1ED 要求「游标 == 末尾」✓"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "battle 分发的 switch 选择子",
+      "enum": "0x1113",
+      "evidence_va": [
+        "0xB0F22A"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "L+1",
+      "wire_type": "bytes(NUL 串)",
+      "name": "src",
+      "meaning": "要播放的剧本（script）源串",
+      "purpose": "交 vt[0x10C] 第1实参=串首地址；日志 src=\"",
+      "enum": "L=strlen<=64",
+      "evidence_va": [
+        "0xB0F176",
+        "0xB0F158",
+        "0xB02BEE",
+        "0xB0F283",
+        "0xB0F341"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "L+1",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "is_with_resume",
+      "meaning": "是否从断点续播",
+      "purpose": "交 vt[0x10C] 第2实参；日志 is_with_resume=",
+      "enum": "0/1（未交叉）",
+      "evidence_va": [
+        "0xB0F1B3",
+        "0xB0F1A4",
+        "0xB06249",
+        "0xB0F2B6",
+        "0xB0F33A"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "L+2",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "script_thread",
+      "meaning": "剧本执行所用线程/流编号",
+      "purpose": "交 vt[0x10C] 第3实参；日志 script_thread=",
+      "enum": null,
+      "evidence_va": [
+        "0xB0F1D7",
+        "0xB0F1C8",
+        "0xB0F2DB",
+        "0xB0F332"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": -1,
+      "offset": "L+3",
+      "length": "0",
+      "wire_type": "-",
+      "name": "（长度闭合）",
+      "meaning": "游标必须==报文末尾",
+      "purpose": "容量 0x43=67=65(串槽)+1+1；线长 L+3<=67",
+      "enum": null,
+      "evidence_va": [
+        "0xB0F1E7",
+        "0xB0F1ED"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6,
+      "is_closure": true
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0x1113（分发器 switch 选择子）",
+      "evidence_va": "0xB0F22A"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB05DA0`（模块 id 61）→ 之后逐字段读线",
+      "evidence_va": "0xB0F12B"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "src：`bytes(NUL 串)`（线长 L+1）—— 要播放的剧本（script）源串",
+      "evidence_va": "0xB0F176"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "is_with_resume：`u8`（线长 1）—— 是否从断点续播",
+      "evidence_va": "0xB0F1B3"
+    },
+    {
+      "step": 5,
+      "kind": "read_scalar",
+      "detail": "script_thread：`u8`（线长 1）—— 剧本执行所用线程/流编号",
+      "evidence_va": "0xB0F1D7"
+    },
+    {
+      "step": 6,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB0F1E7"
+    },
+    {
+      "step": 7,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x10C]`，实参 3 个",
+      "evidence_va": "0xB0F344"
+    },
+    {
+      "step": 8,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB0F18D"
+    }
+  ],
+  "capabilities": [
+    "unclassified",
+    "battle.game_script"
+  ],
+  "capabilities_derived": [
+    "unclassified"
+  ],
+  "db_effects": [],
+  "pair": "SC-0x611B-battle-game_script_play_also_replay",
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:48",
+    "batch": 22,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 67,
+        "va": "0xB0F140",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB0F13D",
+        "call_va": "0xB0F142"
+      },
+      "field_window": {
+        "start_va": "0xB0F12C",
+        "end_va": "0xB0F208",
+        "guard": {
+          "va": "0xB0F12B",
+          "func": "0xB05DA0",
+          "module_id": 61,
+          "release_va": "0xB05D90"
+        },
+        "closer_or_commit_va": "0xB0F1E7",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "src",
+            "wire_type": "bytes(NUL 串)",
+            "width": null,
+            "seq": 1,
+            "shape": "agg",
+            "evidence_va": [
+              "0xB0F176",
+              "0xB0F158",
+              "0xB02BEE",
+              "0xB0F283",
+              "0xB0F341"
+            ]
+          },
+          {
+            "name": "is_with_resume",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB0F1B3",
+              "0xB0F1A4",
+              "0xB06249",
+              "0xB0F2B6",
+              "0xB0F33A"
+            ]
+          },
+          {
+            "name": "script_thread",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB0F1D7",
+              "0xB0F1C8",
+              "0xB0F2DB",
+              "0xB0F332"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB0F176",
+            "kind": "read",
+            "width": null,
+            "wire_type": "str",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0F1B3",
+            "kind": "read",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0F1D7",
+            "kind": "read",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 2,
+        "checkable": 2,
+        "pairs": [
+          {
+            "field": "is_with_resume",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB0F1B3",
+            "kind": "read"
+          },
+          {
+            "field": "script_thread",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB0F1D7",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB0F176",
+            "kind": "read",
+            "width": null,
+            "wire_type": "str"
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB0F12C",
+          "0xB0F208"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 2,
+          "capacity": 67,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB0F176",
+              "kind": "read",
+              "name": ""
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）2 / 容量 0x43"
+        }
+      },
+      "closer": {
+        "va": "0xB0F1E7",
+        "kind": "jz",
+        "jcc_va": "0xB0F1ED",
+        "seq_va": "0xB0F1E3",
+        "jcc_dst": "0xB0F206",
+        "cmp": "cmp     ebx, [esp+1B3Ch+var_1B24]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x10C]",
+        "slot_value": 268,
+        "va": "0xB0F344",
+        "mov_va": "0xB0F33B",
+        "host": "[eax+10Ch]",
+        "argc": 3,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB0F18D",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "src=\"",
+        "is_with_resume=",
+        "script_thread="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0x1113-battle-game_script_play.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [
+      "0xB0F189"
+    ],
+    "dispatcher": null,
+    "closure_field": "（长度闭合）",
+    "opcode_field_va": [
+      "0xB0F22A"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "GameScriptPlay",
+      "role": "response",
+      "wire_length": "L+3",
+      "members": [
+        {
+          "name": "Src",
+          "wire_type": "bytes(NUL 串)",
+          "length": "L+1",
+          "field_ref": "src"
+        },
+        {
+          "name": "IsWithResume",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "is_with_resume"
+        },
+        {
+          "name": "ScriptThread",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "script_thread"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "044d89443663c25c",
+  "check_fingerprint": "f6299197ed0729fe"
+}

@@ -1,0 +1,114 @@
+{
+  "id": "srv.msma_conf",
+  "slug": "msma_conf",
+  "title": "MSMA 初始化配置",
+  "kind": "server_config",
+  "status": "complete",
+  "ddl": "serverv/migrations/0012_srv_config.up.sql",
+  "generated_by": "db_design/tools/build_srv_docs.py",
+  "note": "本文件由 db_design/tools/build_srv_docs.py 从 serverv/migrations/0012_srv_config.up.sql 生成，勿手改：改 srv.* 请改迁移再重跑生成器",
+  "purpose": "MSMA 初始化配置（单行，id=1）；SC-0x2ACF msma_init_get_r_begin 的非时间字段来源",
+  "primary_key": [
+    "id"
+  ],
+  "columns": [
+    {
+      "name": "id",
+      "sql_type": "SMALLINT",
+      "not_null": true,
+      "default": "1",
+      "checks": [
+        "id = 1"
+      ],
+      "meaning": "单行哨兵（恒为 1）"
+    },
+    {
+      "name": "default_slot_num",
+      "sql_type": "INTEGER",
+      "not_null": true,
+      "default": "100",
+      "checks": [
+        "default_slot_num BETWEEN 0 AND 65535"
+      ],
+      "meaning": "机体槽位容量缺省值 [u16] SC-0x2ACF@0xB5A007；每机师实际值待扩容域落 game.*"
+    },
+    {
+      "name": "conf_payload_boost_penalty",
+      "sql_type": "INTEGER",
+      "not_null": true,
+      "default": "0",
+      "checks": [
+        "conf_payload_boost_penalty BETWEEN 0 AND 65535"
+      ],
+      "meaning": "负载强化扣除 [u16] SC-0x2ACF@0xB5A077"
+    },
+    {
+      "name": "conf_payload_boost_bonus",
+      "sql_type": "INTEGER",
+      "not_null": true,
+      "default": "0",
+      "checks": [
+        "conf_payload_boost_bonus BETWEEN 0 AND 65535"
+      ],
+      "meaning": "负载强化加成 [u16] SC-0x2ACF@0xB5A09F"
+    },
+    {
+      "name": "conf_payload_body_balance_max",
+      "sql_type": "INTEGER",
+      "not_null": true,
+      "default": "100",
+      "checks": [
+        "conf_payload_body_balance_max BETWEEN 0 AND 65535"
+      ],
+      "meaning": "机体平衡上限 [u16] SC-0x2ACF@0xB5A0C7"
+    },
+    {
+      "name": "msma_sort_type",
+      "sql_type": "BIGINT",
+      "not_null": true,
+      "default": "1",
+      "checks": [
+        "msma_sort_type BETWEEN 1 AND 13"
+      ],
+      "meaning": "机体排序类型 [u32] SC-0x2ACF@0xB5A0EF；客户端合法域 [1,13]（`sub_64A130`：`(unsigned)(a1-1) > 0xC`，越界含 0 会让机体一览 AV@0x7F26A6）"
+    },
+    {
+      "name": "msma_sort_order",
+      "sql_type": "BIGINT",
+      "not_null": true,
+      "default": "0",
+      "checks": [
+        "msma_sort_order BETWEEN 0 AND 1"
+      ],
+      "meaning": "机体排序方向 [u32] SC-0x2ACF@0xB5A117；客户端合法域 [0,1]（`sub_64A130`：`a2 > 1`）"
+    },
+    {
+      "name": "updated_at",
+      "sql_type": "TIMESTAMPTZ",
+      "not_null": true,
+      "default": "now()",
+      "checks": [],
+      "meaning": "本行最后修改时间（GM 改配置时更新）"
+    }
+  ],
+  "seed_columns": [
+    "id",
+    "default_slot_num",
+    "conf_payload_boost_penalty",
+    "conf_payload_boost_bonus",
+    "conf_payload_body_balance_max",
+    "msma_sort_type",
+    "msma_sort_order"
+  ],
+  "seed_rows": [
+    {
+      "id": "1",
+      "default_slot_num": "100",
+      "conf_payload_boost_penalty": "0",
+      "conf_payload_boost_bonus": "0",
+      "conf_payload_body_balance_max": "100",
+      "msma_sort_type": "1",
+      "msma_sort_order": "0"
+    }
+  ]
+}

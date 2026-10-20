@@ -1,0 +1,12 @@
+[PLAY_BONUS_REWARD] 新增 1 列 csv[9] ⇒ 定义 10 列（confirmed 9 / gap 1），列号 0..9
+[PLAYER_NAVI] 新增 2 列 csv[17, 18] ⇒ 定义 19 列（confirmed 18 / gap 1），列号 0..18
+[BUFF] 订正 csv3（duration_sec）：{'meaning': '效果持续秒数（sub_570750 col3；读入后参与 +36 标志合成）', 'memory_offset': None} → {'meaning': '效果持续秒数（sub_570750 push 3）——★反汇编订正：取值被**读后丢弃**（0x5707eb 起为 movzx/mov [esi+24h]，写回 +36 原值），值不落结构体 ⇒ 本服改此列对客户端无影响', 'memory_offset': None}
+[BUFF] 订正 csv4（stack_limit）：{'meaning': '同类别 buff 最大叠加层（sub_570750 col4）', 'memory_offset': None} → {'meaning': '堆叠上限（sub_570750 push 4）——★读后丢弃（同上，+36 写回原值），改此列无客户端影响', 'memory_offset': None}
+[BUFF] 订正 csv5（priority）：{'meaning': '冲突时优先级（sub_570750 col5；高优先级覆盖低）', 'memory_offset': None} → {'meaning': '优先级（sub_570750 push 5）——★读后丢弃（同上，+36 写回原值），改此列无客户端影响', 'memory_offset': None}
+[BUFF] 订正 csv6（icon_index）：{'meaning': 'UI 图标索引（sub_570750 col6）', 'memory_offset': None} → {'meaning': 'UI 图标索引（sub_570750 push 6）——★读后丢弃（同上，+36 写回原值），改此列无客户端影响', 'memory_offset': None}
+[BUFF] 新增 3 列 csv[9, 10, 11] ⇒ 定义 12 列（confirmed 12 / gap 0），列号 0..11
+[MODULE_DEVELOP] 新增 6 列 csv[7, 8, 9, 10, 11, 12] ⇒ 定义 13 列（confirmed 9 / gap 4），列号 0..12
+[MISSION_EXTRULE] 订正 csv4（param_b）：{'memory_offset': None} → {'memory_offset': 12}
+[MISSION_EXTRULE] 订正 csv5（param_value）：{'memory_offset': 12} → {'memory_offset': 16}
+[MISSION_EXTRULE] 订正 csv1（rule_label）：{'status': 'confirmed', 'confidence': '★确证', 'memory_offset': None, 'asm_va': None, 'meaning': '规则说明文本（col1 预留；读表未写入内存，默认空）'} → {'status': 'gap', 'confidence': '○ASM确证', 'memory_offset': None, 'asm_va': None, 'meaning': 'CSV col1：客户端 reader（sub_59E170）跳过、不落内存 ⇒ 仅本服备注/标签列（gm/modules_spec.go 用它作 NameCols 展示名；改它不影响客户端）'}
+[MISSION_EXTRULE] 新增 8 列 csv[6, 7, 8, 9, 10, 11, 12, 13] ⇒ 定义 14 列（confirmed 13 / gap 1），列号 0..13

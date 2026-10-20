@@ -1,0 +1,47 @@
+{
+  "id": "SC-0x1CF0-lounge-ranking_clan_get_r",
+  "revision": 1,
+  "verified_at": "2026-09-22",
+  "verifier": "人工（IDA 汇编整函数扫描：元素读取器 + 元素打印器 + 数组预留步进三方对齐）",
+  "reason": "元素线长草稿记 77 是**漏算尾部**：读取器 sub_B46690 整函数还继续读 `score`（u32 @+0x50，sub_B02DD0）与 `avatar`（18B @+0x54，sub_B068B0），两者都在线上，元素线长应为 99（打印器 sub_B4FB00 同样列到 `score=` / `avatar=`，共 13 个成员）。元素结构归档为 schema/composites/clan_ranking_entry.json；`elem 77` 的元素名也一并规范成 `clan_ranking_entry`。",
+  "evidence": [
+    {
+      "what": "元素读取器/打印器与预留步进三方对齐（见 schema/composites 对应文件）",
+      "va": [
+        "0xB46690",
+        "0xB4678E",
+        "0xB467A8",
+        "0xB4FB00",
+        "0xB5707C",
+        "0xB570FA"
+      ],
+      "detail": "本批共 26 行未建模数组字段，逐条进 IDA 扫描元素读取器整函数取线宽，再与元素打印器成员名/内存偏移、数组预留器槽步进交叉验证。"
+    }
+  ],
+  "patch": {
+    "ranking": {
+      "wire_type": "array<clan_ranking_entry,N>",
+      "length": "99·N",
+      "enum": "元素线长 99 / 槽步进 108",
+      "evidence_va": [
+        "0xB5707C",
+        "0xB46690",
+        "0xB4678E",
+        "0xB467A8",
+        "0xB4FB00"
+      ],
+      "meaning": "战队排行榜（N ≤ 100；元素线上 99B / 槽步进 108B）"
+    },
+    "topclans": {
+      "wire_type": "array<clan_ranking_entry,M>",
+      "length": "99·M",
+      "enum": "元素线长 99 / 槽步进 108（与 ranking 同 reader）",
+      "evidence_va": [
+        "0xB570FA",
+        "0xB46690",
+        "0xB4FB00"
+      ],
+      "meaning": "顶尖战队列表（M ≤ 3；元素线上 99B / 槽步进 108B）"
+    }
+  }
+}

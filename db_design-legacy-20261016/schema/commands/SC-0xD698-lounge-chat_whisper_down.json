@@ -1,0 +1,401 @@
+{
+  "id": "SC-0xD698-lounge-chat_whisper_down",
+  "opcode": "0xD698",
+  "direction": "SC",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "chat_whisper_down",
+  "source_dir": "protocol_analysis/commands/SC-0xD698-lounge-chat_whisper_down",
+  "meta": {
+    "opcode": "`0xD698`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`chat_whisper_down`",
+    "处理块范围": "`0xb7e610`..`0xb7e89d`",
+    "名字串引用点": "`0xee66bc`",
+    "声明容量（解码缓冲）": "`0xD2`（`B7E629`）",
+    "长度闭合点": "`B7E6CC`（`cmp`）→ `B7E6D2 jz`",
+    "报错码": "`0x53`（块内 `push 1; push 53h; vt[0x64]`）",
+    "去向": "`vt[0x120]` @`B7E833`（3 实参）"
+  },
+  "handler": null,
+  "handler_va": null,
+  "block": [
+    "0xb7e610",
+    "0xb7e89d"
+  ],
+  "name_str": null,
+  "name_str_va": "0xee66bc",
+  "capacity": "0xD2",
+  "capacity_va": "0xB7E629",
+  "closer_va": "0xB7E6CC",
+  "dispatch": "`vt[0x120]` @`B7E833`（3 实参）",
+  "dispatch_slot": "vt[0x120]",
+  "dispatch_va": "0xB7E833",
+  "wire": {
+    "length_expr": "4 + L+1 + L+1",
+    "fixed": false,
+    "var_drivers": [
+      "L"
+    ],
+    "capacity_note": "声明容量 0xD2（容量记账口径，非线长）",
+    "field_count": 3,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：4 + (strlen(name)+1) + (strlen(msg)+1)",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "from_pilot_id",
+      "meaning": "私聊发送者飞行员 ID（日志串 `from_pilot_id=`）",
+      "purpose": "经 `vt[0x120]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xb7e667",
+        "0xb7e765"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "L+1",
+      "wire_type": "str",
+      "name": "from_pilot_name",
+      "meaning": "私聊发送者名（NUL 串；日志串 `from_pilot_name=\"`）",
+      "purpose": "经 `vt[0x120]` 交业务；槽预算 25（`push 19h`@`B7E692`）",
+      "enum": null,
+      "evidence_va": [
+        "0xb7e6a5",
+        "0xb7e692",
+        "0xb7e792"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 3,
+      "offset": "var",
+      "length": "L+1",
+      "wire_type": "str",
+      "name": "msg",
+      "meaning": "私聊正文（NUL 串；日志串 `msg=\"`）",
+      "purpose": "经 `vt[0x120]` 交业务；槽预算 181（`push 0B5h`@`B7E6B1`）",
+      "enum": null,
+      "evidence_va": [
+        "0xb7e6bc",
+        "0xb7e6b1",
+        "0xb7e7c5"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0xD698（分发器 switch 选择子）",
+      "evidence_va": "0x0000"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB41120`（模块 id 83）→ 之后逐字段读线",
+      "evidence_va": "0xB7E614"
+    },
+    {
+      "step": 3,
+      "kind": "read_count",
+      "detail": "from_pilot_id：`u32`（线长 4）—— 私聊发送者飞行员 ID（日志串 `from_pilot_id=`）",
+      "evidence_va": "0xB7E667"
+    },
+    {
+      "step": 4,
+      "kind": "read_string",
+      "detail": "from_pilot_name：`str`（线长 L+1）—— 私聊发送者名（NUL 串；日志串 `from_pilot_name=\"`）",
+      "evidence_va": "0xB7E6A5"
+    },
+    {
+      "step": 5,
+      "kind": "read_string",
+      "detail": "msg：`str`（线长 L+1）—— 私聊正文（NUL 串；日志串 `msg=\"`）",
+      "evidence_va": "0xB7E6BC"
+    },
+    {
+      "step": 6,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB7E6CC"
+    },
+    {
+      "step": 7,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x120]`，实参 3 个",
+      "evidence_va": "0xB7E833"
+    },
+    {
+      "step": 8,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB7E67E"
+    }
+  ],
+  "capabilities": [
+    "unclassified",
+    "lounge.chat_whisper"
+  ],
+  "capabilities_derived": [
+    "unclassified"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:45",
+    "batch": 12,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 210,
+        "va": "0xB7E629",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB7E626",
+        "call_va": "0xB7E62E"
+      },
+      "field_window": {
+        "start_va": "0xB7E615",
+        "end_va": "0xB7E6ED",
+        "guard": {
+          "va": "0xB7E614",
+          "func": "0xB41120",
+          "module_id": 83,
+          "release_va": "0xB41110"
+        },
+        "closer_or_commit_va": "0xB7E6CC",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "from_pilot_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb7e667",
+              "0xb7e765"
+            ]
+          },
+          {
+            "name": "from_pilot_name",
+            "wire_type": "str",
+            "width": null,
+            "seq": 2,
+            "shape": "str",
+            "evidence_va": [
+              "0xb7e6a5",
+              "0xb7e692",
+              "0xb7e792"
+            ]
+          },
+          {
+            "name": "msg",
+            "wire_type": "str",
+            "width": null,
+            "seq": 3,
+            "shape": "str",
+            "evidence_va": [
+              "0xb7e6bc",
+              "0xb7e6b1",
+              "0xb7e7c5"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB7E667",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB7E6A5",
+            "kind": "read",
+            "width": null,
+            "wire_type": "str",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB7E6BC",
+            "kind": "read",
+            "width": null,
+            "wire_type": "str",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 3,
+        "checkable": 3,
+        "pairs": [
+          {
+            "field": "from_pilot_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB7E667",
+            "kind": "read"
+          },
+          {
+            "field": "from_pilot_name",
+            "width": null,
+            "shape": "str",
+            "va": "0xB7E6A5",
+            "kind": "read"
+          },
+          {
+            "field": "msg",
+            "width": null,
+            "shape": "str",
+            "va": "0xB7E6BC",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB7E615",
+          "0xB7E6ED"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 4,
+          "capacity": 210,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB7E6A5",
+              "kind": "read",
+              "name": ""
+            },
+            {
+              "va": "0xB7E6BC",
+              "kind": "read",
+              "name": ""
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）4 / 容量 0xd2"
+        }
+      },
+      "closer": {
+        "va": "0xB7E6CC",
+        "kind": "jz",
+        "jcc_va": "0xB7E6D2",
+        "seq_va": "0xB7E6C8",
+        "jcc_dst": "0xB7E6EB",
+        "cmp": "cmp     ebx, [esp+2C5Ch+var_2C40]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x120]",
+        "slot_value": 288,
+        "va": "0xB7E833",
+        "mov_va": "0xB7E822",
+        "host": "[edx+120h]",
+        "argc": 3,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB7E67E",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "from_pilot_id=",
+        "from_pilot_name=\"",
+        "msg=\""
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0xD698-lounge-chat_whisper_down.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": []
+  },
+  "structs": {
+    "response": {
+      "go_name": "ChatWhisperDown",
+      "role": "response",
+      "wire_length": "4 + L+1 + L+1",
+      "members": [
+        {
+          "name": "FromPilotId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "from_pilot_id"
+        },
+        {
+          "name": "FromPilotName",
+          "wire_type": "str",
+          "length": "L+1",
+          "field_ref": "from_pilot_name",
+          "element": null,
+          "element_length": null,
+          "cap": null,
+          "count_field": "from_pilot_id",
+          "count_field_source": "nearest_scalar",
+          "note": "元素成员未建模（composites/ 无此结构），须以 IDA 复核补"
+        },
+        {
+          "name": "Msg",
+          "wire_type": "str",
+          "length": "L+1",
+          "field_ref": "msg",
+          "element": null,
+          "element_length": null,
+          "cap": null,
+          "count_field": "from_pilot_id",
+          "count_field_source": "nearest_scalar",
+          "note": "元素成员未建模（composites/ 无此结构），须以 IDA 复核补"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "37f4b12525c6b265",
+  "check_fingerprint": "91d2177a0df12fd5"
+}

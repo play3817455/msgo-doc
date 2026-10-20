@@ -1,0 +1,6 @@
+序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+0,-,2,u16,opcode,命令号,battle 分发的 switch 选择子,0x0E85,0xB0ED77,确证
+1,0,4,u32,result,指挥官列表查询结果码,交 vt[0x290] 第1实参；日志 result=,?,0xB0EC76|0xB0EC67|0xB02DE9|0xB0EDCD|0xB0EE9E,类型确证/枚举待定
+2,4,4,u32,count,指挥官 ID 列表元素个数,上限检查 cmp 4；交 vt[0x290] 第3实参；驱动数组循环,0..4,0xB0ECA8|0xB0ECD4|0xB0ECD7|0xB0EE9A,确证
+3,8,4N,array<u32 N>,commander_id,可选指挥官 ID 列表,交 vt[0x290] 第2实参=数组基址；日志 commander_id={...},-,0xB0ECE3|0xB0ED00|0xB0ED0C|0xB0ED14|0xB0EE9B,确证
+-,8+4N,0,-,（长度闭合）,游标必须==报文末尾,容量 0x18=24 为 N=4 的上限场景线长,-,0xB0ED2E|0xB0ED34,确证

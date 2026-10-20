@@ -1,0 +1,2263 @@
+{
+  "id": "COMMANDER_NPC",
+  "title": "COMMANDER_NPC",
+  "csv_path": "command/commander_npc.csv",
+  "purpose": "指挥官 NPC 定义",
+  "table_id": "28",
+  "download_order": "28",
+  "class_name": "CCommanderNpcTable",
+  "column_count": 50,
+  "disposition": "DOWNLOAD",
+  "source_md": "datatables/01-列注释/28-28-COMMANDER_NPC.md",
+  "columns": [
+    {
+      "read_order": 1,
+      "csv_index": 0,
+      "db_column": "commander_id",
+      "name": "commander_id",
+      "type": "u32",
+      "memory_offset": 0,
+      "meaning": "主键；指挥官 ID（u32 @+0；★**本表索引键** = vtable[5] `sub_A564D0` 读的就是 csv0）",
+      "display_name": "指挥官 ID",
+      "status": "confirmed",
+      "confidence": "★确证",
+      "asm_reader": "sub_572EE0",
+      "asm_va": "0x572f0e"
+    },
+    {
+      "read_order": 2,
+      "csv_index": 1,
+      "db_column": "npc_model_id",
+      "name": "npc_model_id",
+      "type": "u32",
+      "memory_offset": 4,
+      "meaning": "NPC 模型 ID（u32 @+4；关联 chara 资源）",
+      "display_name": "NPC 模型 ID",
+      "status": "confirmed",
+      "confidence": "○ASM确证",
+      "asm_reader": "sub_572EE0",
+      "asm_va": "0x572f1c"
+    },
+    {
+      "read_order": 3,
+      "csv_index": 2,
+      "db_column": "portrait_id",
+      "name": "portrait_id",
+      "type": "u32",
+      "memory_offset": 8,
+      "meaning": "头像/立绘 ID（u32 @+8）",
+      "display_name": "头像 ID",
+      "status": "confirmed",
+      "confidence": "○ASM确证",
+      "asm_reader": "sub_572EE0",
+      "asm_va": "0x572f27"
+    },
+    {
+      "read_order": 4,
+      "csv_index": 3,
+      "db_column": "commander_name",
+      "name": "commander_name",
+      "type": "str",
+      "memory_offset": 12,
+      "meaning": "指挥官名称（wstring @+12；`sub_456D90` 取列）",
+      "display_name": "指挥官名",
+      "status": "confirmed",
+      "confidence": "○ASM确证",
+      "asm_reader": "sub_572EE0",
+      "asm_va": "0x572f3b"
+    },
+    {
+      "read_order": 5,
+      "csv_index": 4,
+      "db_column": "description",
+      "name": "description",
+      "type": "str",
+      "memory_offset": 40,
+      "meaning": "指挥官说明（wstring @+40；`sub_456D90` 取列）",
+      "display_name": "说明",
+      "status": "confirmed",
+      "confidence": "○ASM确证",
+      "asm_reader": "sub_572EE0",
+      "asm_va": "0x572f7c"
+    },
+    {
+      "read_order": 6,
+      "csv_index": 5,
+      "db_column": "faction",
+      "name": "faction",
+      "type": "enum",
+      "memory_offset": 68,
+      "meaning": "势力（@+68；`sub_572C30` 窄串→枚举，名表 `0xD78084`）",
+      "display_name": "势力",
+      "status": "confirmed",
+      "confidence": "★确证",
+      "asm_reader": "sub_572EE0",
+      "asm_va": "0x572fb4",
+      "enum_converter": "sub_572C30",
+      "enum_values": [
+        {
+          "name": "NEUTRAL",
+          "value": -1
+        },
+        {
+          "name": "EFF",
+          "value": 0
+        },
+        {
+          "name": "ZEON",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "read_order": 7,
+      "csv_index": 6,
+      "db_column": "voice_group_id",
+      "name": "voice_group_id",
+      "type": "u32",
+      "memory_offset": 72,
+      "meaning": "语音组 ID（u32 @+72；cutin_voice_*_commander.csv）",
+      "display_name": "语音组 ID",
+      "status": "confirmed",
+      "confidence": "○ASM确证",
+      "asm_reader": "sub_572EE0",
+      "asm_va": "0x572fe8"
+    },
+    {
+      "read_order": 8,
+      "csv_index": 7,
+      "db_column": "col7",
+      "name": "col7",
+      "type": "u32",
+      "memory_offset": null,
+      "meaning": "★gap：`sub_572EE0` 全函数不读 csv7（槽组间 1 列缝 / 组内 1 列缝）⇒ 纯占位列",
+      "display_name": "占位 col7",
+      "status": "gap",
+      "confidence": "",
+      "asm_reader": null,
+      "asm_va": null
+    },
+    {
+      "read_order": 9,
+      "csv_index": 8,
+      "db_column": "col8",
+      "name": "col8",
+      "type": "u32",
+      "memory_offset": null,
+      "meaning": "★gap：`sub_572EE0` 全函数不读 csv8（槽组间 1 列缝 / 组内 1 列缝）⇒ 纯占位列",
+      "display_name": "占位 col8",
+      "status": "gap",
+      "confidence": "",
+      "asm_reader": null,
+      "asm_va": null
+    },
+    {
+      "read_order": 10,
+      "csv_index": 9,
+      "db_column": "col9",
+      "name": "col9",
+      "type": "u32",
+      "memory_offset": null,
+      "meaning": "★gap：`sub_572EE0` 全函数不读 csv9（槽组间 1 列缝 / 组内 1 列缝）⇒ 纯占位列",
+      "display_name": "占位 col9",
+      "status": "gap",
+      "confidence": "",
+      "asm_reader": null,
+      "asm_va": null
+    },
+    {
+      "read_order": 11,
+      "csv_index": 10,
+      "db_column": "col10",
+      "name": "col10",
+      "type": "u32",
+      "memory_offset": null,
+      "meaning": "★gap：`sub_572EE0` 全函数不读 csv10（槽组间 1 列缝 / 组内 1 列缝）⇒ 纯占位列",
+      "display_name": "占位 col10",
+      "status": "gap",
+      "confidence": "",
+      "asm_reader": null,
+      "asm_va": null
+    },
+    {
+      "read_order": 12,
+      "csv_index": 11,
+      "db_column": "col11",
+      "name": "col11",
+      "type": "u32",
+      "memory_offset": null,
+      "meaning": "★gap：`sub_572EE0` 全函数不读 csv11（槽组间 1 列缝 / 组内 1 列缝）⇒ 纯占位列",
+      "display_name": "占位 col11",
+      "status": "gap",
+      "confidence": "",
+      "asm_reader": null,
+      "asm_va": null
+    },
+    {
+      "read_order": 13,
+      "csv_index": 12,
+      "db_column": "slot1_cost",
+      "name": "slot1_cost",
+      "type": "u16",
+      "memory_offset": 88,
+      "meaning": "支援槽 1 消耗（u16 @+88；列步长 5 的第 1 槽）",
+      "display_name": "槽1 消耗",
+      "status": "confirmed",
+      "confidence": "○ASM确证",
+      "asm_reader": "sub_572EE0",
+      "asm_va": "0x573000"
+    },
+    {
+      "read_order": 14,
+      "csv_index": 13,
+      "db_column": "slot2_cost",
+      "name": "slot2_cost",
+      "type": "u16",
+      "memory_offset": 92,
+      "meaning": "支援槽 2 消耗（u16 @+92）",
+      "display_name": "槽2 消耗",
+      "status": "confirmed",
+      "confidence": "○ASM确证",
+      "asm_reader": "sub_572EE0",
+      "asm_va": "0x573027"
+    },
+    {
+      "read_order": 15,
+      "csv_index": 14,
+      "db_column": "slot1_cooldown",
+      "name": "slot1_cooldown",
+      "type": "u32",
+      "memory_offset": 220,
+      "meaning": "支援槽 1 冷却（u32 @+220；循环第 1 轮第 2 项）",
+      "display_name": "槽1 冷却",
+      "status": "confirmed",
+      "confidence": "○ASM确证",
+      "asm_reader": "sub_572EE0",
+      "asm_va": "0x573034"
+    },
+    {
+      "read_order": 16,
+      "csv_index": 15,
+      "db_column": "col15",
+      "name": "col15",
+      "type": "u32",
+      "memory_offset": null,
+      "meaning": "★gap：`sub_572EE0` 全函数不读 csv15（槽组间 1 列缝 / 组内 1 列缝）⇒ 纯占位列",
+      "display_name": "占位 col15",
+      "status": "gap",
+      "confidence": "",
+      "asm_reader": null,
+      "asm_va": null
+    },
+    {
+      "read_order": 17,
+      "csv_index": 16,
+      "db_column": "col16",
+      "name": "col16",
+      "type": "u32",
+      "memory_offset": null,
+      "meaning": "★gap：`sub_572EE0` 全函数不读 csv16（槽组间 1 列缝 / 组内 1 列缝）⇒ 纯占位列",
+      "display_name": "占位 col16",
+      "status": "gap",
+      "confidence": "",
+      "asm_reader": null,
+      "asm_va": null
+    },
+    {
+      "read_order": 18,
+      "csv_index": 17,
+      "db_column": "slot3_cost",
+      "name": "slot3_cost",
+      "type": "u16",
+      "memory_offset": 94,
+      "meaning": "支援槽 3 消耗（u16 @+94）",
+      "display_name": "槽3 消耗",
+      "status": "confirmed",
+      "confidence": "○ASM确证",
+      "asm_reader": "sub_572EE0",
+      "asm_va": "0x573027"
+    },
+    {
+      "read_order": 19,
+      "csv_index": 18,
+      "db_column": "slot2_cooldown",
+      "name": "slot2_cooldown",
+      "type": "u32",
+      "memory_offset": 224,
+      "meaning": "支援槽 2 冷却（u32 @+224）",
+      "display_name": "槽2 冷却",
+      "status": "confirmed",
+      "confidence": "○ASM确证",
+      "asm_reader": "sub_572EE0",
+      "asm_va": "0x573034"
+    },
+    {
+      "read_order": 20,
+      "csv_index": 19,
+      "db_column": "col19",
+      "name": "col19",
+      "type": "u32",
+      "memory_offset": null,
+      "meaning": "★gap：`sub_572EE0` 全函数不读 csv19（槽组间 1 列缝 / 组内 1 列缝）⇒ 纯占位列",
+      "display_name": "占位 col19",
+      "status": "gap",
+      "confidence": "",
+      "asm_reader": null,
+      "asm_va": null
+    },
+    {
+      "read_order": 21,
+      "csv_index": 20,
+      "db_column": "col20",
+      "name": "col20",
+      "type": "u32",
+      "memory_offset": null,
+      "meaning": "★gap：`sub_572EE0` 全函数不读 csv20（槽组间 1 列缝 / 组内 1 列缝）⇒ 纯占位列",
+      "display_name": "占位 col20",
+      "status": "gap",
+      "confidence": "",
+      "asm_reader": null,
+      "asm_va": null
+    },
+    {
+      "read_order": 22,
+      "csv_index": 21,
+      "db_column": "slot4_cost",
+      "name": "slot4_cost",
+      "type": "u16",
+      "memory_offset": 96,
+      "meaning": "支援槽 4 消耗（u16 @+96；★只有 3 个冷却，本槽无冷却列）",
+      "display_name": "槽4 消耗",
+      "status": "confirmed",
+      "confidence": "○ASM确证",
+      "asm_reader": "sub_572EE0",
+      "asm_va": "0x573027"
+    },
+    {
+      "read_order": 23,
+      "csv_index": 22,
+      "db_column": "slot3_cooldown",
+      "name": "slot3_cooldown",
+      "type": "u32",
+      "memory_offset": 228,
+      "meaning": "支援槽 3 冷却（u32 @+228）",
+      "display_name": "槽3 冷却",
+      "status": "confirmed",
+      "confidence": "○ASM确证",
+      "asm_reader": "sub_572EE0",
+      "asm_va": "0x573034"
+    },
+    {
+      "read_order": 24,
+      "csv_index": 23,
+      "db_column": "col23",
+      "name": "col23",
+      "type": "u32",
+      "memory_offset": null,
+      "meaning": "★gap：`sub_572EE0` 全函数不读 csv23（槽组间 1 列缝 / 组内 1 列缝）⇒ 纯占位列",
+      "display_name": "占位 col23",
+      "status": "gap",
+      "confidence": "",
+      "asm_reader": null,
+      "asm_va": null
+    },
+    {
+      "read_order": 25,
+      "csv_index": 24,
+      "db_column": "col24",
+      "name": "col24",
+      "type": "u32",
+      "memory_offset": null,
+      "meaning": "★gap：`sub_572EE0` 全函数不读 csv24（槽组间 1 列缝 / 组内 1 列缝）⇒ 纯占位列",
+      "display_name": "占位 col24",
+      "status": "gap",
+      "confidence": "",
+      "asm_reader": null,
+      "asm_va": null
+    },
+    {
+      "read_order": 26,
+      "csv_index": 25,
+      "db_column": "support1_value",
+      "name": "support1_value",
+      "type": "u32",
+      "memory_offset": 256,
+      "meaning": "支援槽 1 原始整数值（u32 @+256；`sub_BBB370` = atoi；语义未取证）",
+      "display_name": "槽1 值",
+      "status": "confirmed",
+      "confidence": "○ASM确证",
+      "asm_reader": "sub_572EE0",
+      "asm_va": "0x573066"
+    },
+    {
+      "read_order": 27,
+      "csv_index": 26,
+      "db_column": "support1_type",
+      "name": "support1_type",
+      "type": "enum",
+      "memory_offset": 304,
+      "meaning": "支援槽 1 类型（@+304；`sub_572CD0` 窄串→枚举；12 个值随后按 switch 折成 31 位掩码写 @+76）",
+      "display_name": "槽1 类型",
+      "status": "confirmed",
+      "confidence": "★确证",
+      "asm_reader": "sub_572EE0",
+      "asm_va": "0x573078",
+      "enum_converter": "sub_572CD0",
+      "enum_values": [
+        {
+          "name": "BOMB",
+          "value": 0
+        },
+        {
+          "name": "CARPET_BOMB",
+          "value": 1
+        },
+        {
+          "name": "TENDER",
+          "value": 2
+        },
+        {
+          "name": "SEARCH",
+          "value": 3
+        },
+        {
+          "name": "MINOVSKY",
+          "value": 4
+        },
+        {
+          "name": "SOLAR_RAY",
+          "value": 5
+        },
+        {
+          "name": "SUMMON_MA",
+          "value": 6
+        },
+        {
+          "name": "SUMMON_ACE",
+          "value": 7
+        },
+        {
+          "name": "BATTLE_SHIP",
+          "value": 8
+        },
+        {
+          "name": "ASSAULT_SHIP",
+          "value": 9
+        },
+        {
+          "name": "ORATION",
+          "value": 10
+        },
+        {
+          "name": "PATROL_AIRCRAFT",
+          "value": 11
+        },
+        {
+          "name": "AAG",
+          "value": 12
+        },
+        {
+          "name": "GUNTURRET",
+          "value": 13
+        },
+        {
+          "name": "EQPARTS_EXEC_A",
+          "value": 14
+        },
+        {
+          "name": "EQPARTS_EXEC_B",
+          "value": 15
+        },
+        {
+          "name": "EQPARTS_EXEC_C",
+          "value": 16
+        },
+        {
+          "name": "EQPARTS_EXEC_D",
+          "value": 17
+        },
+        {
+          "name": "EQPARTS_EXEC_E",
+          "value": 18
+        },
+        {
+          "name": "GRENADE_NET",
+          "value": 19
+        },
+        {
+          "name": "GRENADE_TUMBLE",
+          "value": 20
+        },
+        {
+          "name": "WALL",
+          "value": 21
+        },
+        {
+          "name": "DUMMY_BEACON",
+          "value": 22
+        },
+        {
+          "name": "TRANSPORT_SHIP",
+          "value": 23
+        },
+        {
+          "name": "STGARMS_OLD",
+          "value": 24
+        },
+        {
+          "name": "STGARMS1",
+          "value": 25
+        },
+        {
+          "name": "STGARMS2",
+          "value": 26
+        },
+        {
+          "name": "SUBFLIGHT",
+          "value": 27
+        },
+        {
+          "name": "ASSAULT_STGHOLD",
+          "value": 28
+        },
+        {
+          "name": "RIDE_ACE",
+          "value": 29
+        },
+        {
+          "name": "JAMMING",
+          "value": 30
+        }
+      ]
+    },
+    {
+      "read_order": 28,
+      "csv_index": 27,
+      "db_column": "support2_value",
+      "name": "support2_value",
+      "type": "u32",
+      "memory_offset": 260,
+      "meaning": "支援槽 2 原始整数值（u32 @+260；`sub_BBB370` = atoi；语义未取证）",
+      "display_name": "槽2 值",
+      "status": "confirmed",
+      "confidence": "○ASM确证",
+      "asm_reader": "sub_572EE0",
+      "asm_va": "0x573066"
+    },
+    {
+      "read_order": 29,
+      "csv_index": 28,
+      "db_column": "support2_type",
+      "name": "support2_type",
+      "type": "enum",
+      "memory_offset": 308,
+      "meaning": "支援槽 2 类型（@+308；`sub_572CD0` 窄串→枚举；12 个值随后按 switch 折成 31 位掩码写 @+76）",
+      "display_name": "槽2 类型",
+      "status": "confirmed",
+      "confidence": "★确证",
+      "asm_reader": "sub_572EE0",
+      "asm_va": "0x573078",
+      "enum_converter": "sub_572CD0",
+      "enum_values": [
+        {
+          "name": "BOMB",
+          "value": 0
+        },
+        {
+          "name": "CARPET_BOMB",
+          "value": 1
+        },
+        {
+          "name": "TENDER",
+          "value": 2
+        },
+        {
+          "name": "SEARCH",
+          "value": 3
+        },
+        {
+          "name": "MINOVSKY",
+          "value": 4
+        },
+        {
+          "name": "SOLAR_RAY",
+          "value": 5
+        },
+        {
+          "name": "SUMMON_MA",
+          "value": 6
+        },
+        {
+          "name": "SUMMON_ACE",
+          "value": 7
+        },
+        {
+          "name": "BATTLE_SHIP",
+          "value": 8
+        },
+        {
+          "name": "ASSAULT_SHIP",
+          "value": 9
+        },
+        {
+          "name": "ORATION",
+          "value": 10
+        },
+        {
+          "name": "PATROL_AIRCRAFT",
+          "value": 11
+        },
+        {
+          "name": "AAG",
+          "value": 12
+        },
+        {
+          "name": "GUNTURRET",
+          "value": 13
+        },
+        {
+          "name": "EQPARTS_EXEC_A",
+          "value": 14
+        },
+        {
+          "name": "EQPARTS_EXEC_B",
+          "value": 15
+        },
+        {
+          "name": "EQPARTS_EXEC_C",
+          "value": 16
+        },
+        {
+          "name": "EQPARTS_EXEC_D",
+          "value": 17
+        },
+        {
+          "name": "EQPARTS_EXEC_E",
+          "value": 18
+        },
+        {
+          "name": "GRENADE_NET",
+          "value": 19
+        },
+        {
+          "name": "GRENADE_TUMBLE",
+          "value": 20
+        },
+        {
+          "name": "WALL",
+          "value": 21
+        },
+        {
+          "name": "DUMMY_BEACON",
+          "value": 22
+        },
+        {
+          "name": "TRANSPORT_SHIP",
+          "value": 23
+        },
+        {
+          "name": "STGARMS_OLD",
+          "value": 24
+        },
+        {
+          "name": "STGARMS1",
+          "value": 25
+        },
+        {
+          "name": "STGARMS2",
+          "value": 26
+        },
+        {
+          "name": "SUBFLIGHT",
+          "value": 27
+        },
+        {
+          "name": "ASSAULT_STGHOLD",
+          "value": 28
+        },
+        {
+          "name": "RIDE_ACE",
+          "value": 29
+        },
+        {
+          "name": "JAMMING",
+          "value": 30
+        }
+      ]
+    },
+    {
+      "read_order": 30,
+      "csv_index": 29,
+      "db_column": "support3_value",
+      "name": "support3_value",
+      "type": "u32",
+      "memory_offset": 264,
+      "meaning": "支援槽 3 原始整数值（u32 @+264；`sub_BBB370` = atoi；语义未取证）",
+      "display_name": "槽3 值",
+      "status": "confirmed",
+      "confidence": "○ASM确证",
+      "asm_reader": "sub_572EE0",
+      "asm_va": "0x573066"
+    },
+    {
+      "read_order": 31,
+      "csv_index": 30,
+      "db_column": "support3_type",
+      "name": "support3_type",
+      "type": "enum",
+      "memory_offset": 312,
+      "meaning": "支援槽 3 类型（@+312；`sub_572CD0` 窄串→枚举；12 个值随后按 switch 折成 31 位掩码写 @+76）",
+      "display_name": "槽3 类型",
+      "status": "confirmed",
+      "confidence": "★确证",
+      "asm_reader": "sub_572EE0",
+      "asm_va": "0x573078",
+      "enum_converter": "sub_572CD0",
+      "enum_values": [
+        {
+          "name": "BOMB",
+          "value": 0
+        },
+        {
+          "name": "CARPET_BOMB",
+          "value": 1
+        },
+        {
+          "name": "TENDER",
+          "value": 2
+        },
+        {
+          "name": "SEARCH",
+          "value": 3
+        },
+        {
+          "name": "MINOVSKY",
+          "value": 4
+        },
+        {
+          "name": "SOLAR_RAY",
+          "value": 5
+        },
+        {
+          "name": "SUMMON_MA",
+          "value": 6
+        },
+        {
+          "name": "SUMMON_ACE",
+          "value": 7
+        },
+        {
+          "name": "BATTLE_SHIP",
+          "value": 8
+        },
+        {
+          "name": "ASSAULT_SHIP",
+          "value": 9
+        },
+        {
+          "name": "ORATION",
+          "value": 10
+        },
+        {
+          "name": "PATROL_AIRCRAFT",
+          "value": 11
+        },
+        {
+          "name": "AAG",
+          "value": 12
+        },
+        {
+          "name": "GUNTURRET",
+          "value": 13
+        },
+        {
+          "name": "EQPARTS_EXEC_A",
+          "value": 14
+        },
+        {
+          "name": "EQPARTS_EXEC_B",
+          "value": 15
+        },
+        {
+          "name": "EQPARTS_EXEC_C",
+          "value": 16
+        },
+        {
+          "name": "EQPARTS_EXEC_D",
+          "value": 17
+        },
+        {
+          "name": "EQPARTS_EXEC_E",
+          "value": 18
+        },
+        {
+          "name": "GRENADE_NET",
+          "value": 19
+        },
+        {
+          "name": "GRENADE_TUMBLE",
+          "value": 20
+        },
+        {
+          "name": "WALL",
+          "value": 21
+        },
+        {
+          "name": "DUMMY_BEACON",
+          "value": 22
+        },
+        {
+          "name": "TRANSPORT_SHIP",
+          "value": 23
+        },
+        {
+          "name": "STGARMS_OLD",
+          "value": 24
+        },
+        {
+          "name": "STGARMS1",
+          "value": 25
+        },
+        {
+          "name": "STGARMS2",
+          "value": 26
+        },
+        {
+          "name": "SUBFLIGHT",
+          "value": 27
+        },
+        {
+          "name": "ASSAULT_STGHOLD",
+          "value": 28
+        },
+        {
+          "name": "RIDE_ACE",
+          "value": 29
+        },
+        {
+          "name": "JAMMING",
+          "value": 30
+        }
+      ]
+    },
+    {
+      "read_order": 32,
+      "csv_index": 31,
+      "db_column": "support4_value",
+      "name": "support4_value",
+      "type": "u32",
+      "memory_offset": 268,
+      "meaning": "支援槽 4 原始整数值（u32 @+268；`sub_BBB370` = atoi；语义未取证）",
+      "display_name": "槽4 值",
+      "status": "confirmed",
+      "confidence": "○ASM确证",
+      "asm_reader": "sub_572EE0",
+      "asm_va": "0x573066"
+    },
+    {
+      "read_order": 33,
+      "csv_index": 32,
+      "db_column": "support4_type",
+      "name": "support4_type",
+      "type": "enum",
+      "memory_offset": 316,
+      "meaning": "支援槽 4 类型（@+316；`sub_572CD0` 窄串→枚举；12 个值随后按 switch 折成 31 位掩码写 @+76）",
+      "display_name": "槽4 类型",
+      "status": "confirmed",
+      "confidence": "★确证",
+      "asm_reader": "sub_572EE0",
+      "asm_va": "0x573078",
+      "enum_converter": "sub_572CD0",
+      "enum_values": [
+        {
+          "name": "BOMB",
+          "value": 0
+        },
+        {
+          "name": "CARPET_BOMB",
+          "value": 1
+        },
+        {
+          "name": "TENDER",
+          "value": 2
+        },
+        {
+          "name": "SEARCH",
+          "value": 3
+        },
+        {
+          "name": "MINOVSKY",
+          "value": 4
+        },
+        {
+          "name": "SOLAR_RAY",
+          "value": 5
+        },
+        {
+          "name": "SUMMON_MA",
+          "value": 6
+        },
+        {
+          "name": "SUMMON_ACE",
+          "value": 7
+        },
+        {
+          "name": "BATTLE_SHIP",
+          "value": 8
+        },
+        {
+          "name": "ASSAULT_SHIP",
+          "value": 9
+        },
+        {
+          "name": "ORATION",
+          "value": 10
+        },
+        {
+          "name": "PATROL_AIRCRAFT",
+          "value": 11
+        },
+        {
+          "name": "AAG",
+          "value": 12
+        },
+        {
+          "name": "GUNTURRET",
+          "value": 13
+        },
+        {
+          "name": "EQPARTS_EXEC_A",
+          "value": 14
+        },
+        {
+          "name": "EQPARTS_EXEC_B",
+          "value": 15
+        },
+        {
+          "name": "EQPARTS_EXEC_C",
+          "value": 16
+        },
+        {
+          "name": "EQPARTS_EXEC_D",
+          "value": 17
+        },
+        {
+          "name": "EQPARTS_EXEC_E",
+          "value": 18
+        },
+        {
+          "name": "GRENADE_NET",
+          "value": 19
+        },
+        {
+          "name": "GRENADE_TUMBLE",
+          "value": 20
+        },
+        {
+          "name": "WALL",
+          "value": 21
+        },
+        {
+          "name": "DUMMY_BEACON",
+          "value": 22
+        },
+        {
+          "name": "TRANSPORT_SHIP",
+          "value": 23
+        },
+        {
+          "name": "STGARMS_OLD",
+          "value": 24
+        },
+        {
+          "name": "STGARMS1",
+          "value": 25
+        },
+        {
+          "name": "STGARMS2",
+          "value": 26
+        },
+        {
+          "name": "SUBFLIGHT",
+          "value": 27
+        },
+        {
+          "name": "ASSAULT_STGHOLD",
+          "value": 28
+        },
+        {
+          "name": "RIDE_ACE",
+          "value": 29
+        },
+        {
+          "name": "JAMMING",
+          "value": 30
+        }
+      ]
+    },
+    {
+      "read_order": 34,
+      "csv_index": 33,
+      "db_column": "support5_value",
+      "name": "support5_value",
+      "type": "u32",
+      "memory_offset": 272,
+      "meaning": "支援槽 5 原始整数值（u32 @+272；`sub_BBB370` = atoi；语义未取证）",
+      "display_name": "槽5 值",
+      "status": "confirmed",
+      "confidence": "○ASM确证",
+      "asm_reader": "sub_572EE0",
+      "asm_va": "0x573066"
+    },
+    {
+      "read_order": 35,
+      "csv_index": 34,
+      "db_column": "support5_type",
+      "name": "support5_type",
+      "type": "enum",
+      "memory_offset": 320,
+      "meaning": "支援槽 5 类型（@+320；`sub_572CD0` 窄串→枚举；12 个值随后按 switch 折成 31 位掩码写 @+76）",
+      "display_name": "槽5 类型",
+      "status": "confirmed",
+      "confidence": "★确证",
+      "asm_reader": "sub_572EE0",
+      "asm_va": "0x573078",
+      "enum_converter": "sub_572CD0",
+      "enum_values": [
+        {
+          "name": "BOMB",
+          "value": 0
+        },
+        {
+          "name": "CARPET_BOMB",
+          "value": 1
+        },
+        {
+          "name": "TENDER",
+          "value": 2
+        },
+        {
+          "name": "SEARCH",
+          "value": 3
+        },
+        {
+          "name": "MINOVSKY",
+          "value": 4
+        },
+        {
+          "name": "SOLAR_RAY",
+          "value": 5
+        },
+        {
+          "name": "SUMMON_MA",
+          "value": 6
+        },
+        {
+          "name": "SUMMON_ACE",
+          "value": 7
+        },
+        {
+          "name": "BATTLE_SHIP",
+          "value": 8
+        },
+        {
+          "name": "ASSAULT_SHIP",
+          "value": 9
+        },
+        {
+          "name": "ORATION",
+          "value": 10
+        },
+        {
+          "name": "PATROL_AIRCRAFT",
+          "value": 11
+        },
+        {
+          "name": "AAG",
+          "value": 12
+        },
+        {
+          "name": "GUNTURRET",
+          "value": 13
+        },
+        {
+          "name": "EQPARTS_EXEC_A",
+          "value": 14
+        },
+        {
+          "name": "EQPARTS_EXEC_B",
+          "value": 15
+        },
+        {
+          "name": "EQPARTS_EXEC_C",
+          "value": 16
+        },
+        {
+          "name": "EQPARTS_EXEC_D",
+          "value": 17
+        },
+        {
+          "name": "EQPARTS_EXEC_E",
+          "value": 18
+        },
+        {
+          "name": "GRENADE_NET",
+          "value": 19
+        },
+        {
+          "name": "GRENADE_TUMBLE",
+          "value": 20
+        },
+        {
+          "name": "WALL",
+          "value": 21
+        },
+        {
+          "name": "DUMMY_BEACON",
+          "value": 22
+        },
+        {
+          "name": "TRANSPORT_SHIP",
+          "value": 23
+        },
+        {
+          "name": "STGARMS_OLD",
+          "value": 24
+        },
+        {
+          "name": "STGARMS1",
+          "value": 25
+        },
+        {
+          "name": "STGARMS2",
+          "value": 26
+        },
+        {
+          "name": "SUBFLIGHT",
+          "value": 27
+        },
+        {
+          "name": "ASSAULT_STGHOLD",
+          "value": 28
+        },
+        {
+          "name": "RIDE_ACE",
+          "value": 29
+        },
+        {
+          "name": "JAMMING",
+          "value": 30
+        }
+      ]
+    },
+    {
+      "read_order": 36,
+      "csv_index": 35,
+      "db_column": "support6_value",
+      "name": "support6_value",
+      "type": "u32",
+      "memory_offset": 276,
+      "meaning": "支援槽 6 原始整数值（u32 @+276；`sub_BBB370` = atoi；语义未取证）",
+      "display_name": "槽6 值",
+      "status": "confirmed",
+      "confidence": "○ASM确证",
+      "asm_reader": "sub_572EE0",
+      "asm_va": "0x573066"
+    },
+    {
+      "read_order": 37,
+      "csv_index": 36,
+      "db_column": "support6_type",
+      "name": "support6_type",
+      "type": "enum",
+      "memory_offset": 324,
+      "meaning": "支援槽 6 类型（@+324；`sub_572CD0` 窄串→枚举；12 个值随后按 switch 折成 31 位掩码写 @+76）",
+      "display_name": "槽6 类型",
+      "status": "confirmed",
+      "confidence": "★确证",
+      "asm_reader": "sub_572EE0",
+      "asm_va": "0x573078",
+      "enum_converter": "sub_572CD0",
+      "enum_values": [
+        {
+          "name": "BOMB",
+          "value": 0
+        },
+        {
+          "name": "CARPET_BOMB",
+          "value": 1
+        },
+        {
+          "name": "TENDER",
+          "value": 2
+        },
+        {
+          "name": "SEARCH",
+          "value": 3
+        },
+        {
+          "name": "MINOVSKY",
+          "value": 4
+        },
+        {
+          "name": "SOLAR_RAY",
+          "value": 5
+        },
+        {
+          "name": "SUMMON_MA",
+          "value": 6
+        },
+        {
+          "name": "SUMMON_ACE",
+          "value": 7
+        },
+        {
+          "name": "BATTLE_SHIP",
+          "value": 8
+        },
+        {
+          "name": "ASSAULT_SHIP",
+          "value": 9
+        },
+        {
+          "name": "ORATION",
+          "value": 10
+        },
+        {
+          "name": "PATROL_AIRCRAFT",
+          "value": 11
+        },
+        {
+          "name": "AAG",
+          "value": 12
+        },
+        {
+          "name": "GUNTURRET",
+          "value": 13
+        },
+        {
+          "name": "EQPARTS_EXEC_A",
+          "value": 14
+        },
+        {
+          "name": "EQPARTS_EXEC_B",
+          "value": 15
+        },
+        {
+          "name": "EQPARTS_EXEC_C",
+          "value": 16
+        },
+        {
+          "name": "EQPARTS_EXEC_D",
+          "value": 17
+        },
+        {
+          "name": "EQPARTS_EXEC_E",
+          "value": 18
+        },
+        {
+          "name": "GRENADE_NET",
+          "value": 19
+        },
+        {
+          "name": "GRENADE_TUMBLE",
+          "value": 20
+        },
+        {
+          "name": "WALL",
+          "value": 21
+        },
+        {
+          "name": "DUMMY_BEACON",
+          "value": 22
+        },
+        {
+          "name": "TRANSPORT_SHIP",
+          "value": 23
+        },
+        {
+          "name": "STGARMS_OLD",
+          "value": 24
+        },
+        {
+          "name": "STGARMS1",
+          "value": 25
+        },
+        {
+          "name": "STGARMS2",
+          "value": 26
+        },
+        {
+          "name": "SUBFLIGHT",
+          "value": 27
+        },
+        {
+          "name": "ASSAULT_STGHOLD",
+          "value": 28
+        },
+        {
+          "name": "RIDE_ACE",
+          "value": 29
+        },
+        {
+          "name": "JAMMING",
+          "value": 30
+        }
+      ]
+    },
+    {
+      "read_order": 38,
+      "csv_index": 37,
+      "db_column": "support7_value",
+      "name": "support7_value",
+      "type": "u32",
+      "memory_offset": 280,
+      "meaning": "支援槽 7 原始整数值（u32 @+280；`sub_BBB370` = atoi；语义未取证）",
+      "display_name": "槽7 值",
+      "status": "confirmed",
+      "confidence": "○ASM确证",
+      "asm_reader": "sub_572EE0",
+      "asm_va": "0x573066"
+    },
+    {
+      "read_order": 39,
+      "csv_index": 38,
+      "db_column": "support7_type",
+      "name": "support7_type",
+      "type": "enum",
+      "memory_offset": 328,
+      "meaning": "支援槽 7 类型（@+328；`sub_572CD0` 窄串→枚举；12 个值随后按 switch 折成 31 位掩码写 @+76）",
+      "display_name": "槽7 类型",
+      "status": "confirmed",
+      "confidence": "★确证",
+      "asm_reader": "sub_572EE0",
+      "asm_va": "0x573078",
+      "enum_converter": "sub_572CD0",
+      "enum_values": [
+        {
+          "name": "BOMB",
+          "value": 0
+        },
+        {
+          "name": "CARPET_BOMB",
+          "value": 1
+        },
+        {
+          "name": "TENDER",
+          "value": 2
+        },
+        {
+          "name": "SEARCH",
+          "value": 3
+        },
+        {
+          "name": "MINOVSKY",
+          "value": 4
+        },
+        {
+          "name": "SOLAR_RAY",
+          "value": 5
+        },
+        {
+          "name": "SUMMON_MA",
+          "value": 6
+        },
+        {
+          "name": "SUMMON_ACE",
+          "value": 7
+        },
+        {
+          "name": "BATTLE_SHIP",
+          "value": 8
+        },
+        {
+          "name": "ASSAULT_SHIP",
+          "value": 9
+        },
+        {
+          "name": "ORATION",
+          "value": 10
+        },
+        {
+          "name": "PATROL_AIRCRAFT",
+          "value": 11
+        },
+        {
+          "name": "AAG",
+          "value": 12
+        },
+        {
+          "name": "GUNTURRET",
+          "value": 13
+        },
+        {
+          "name": "EQPARTS_EXEC_A",
+          "value": 14
+        },
+        {
+          "name": "EQPARTS_EXEC_B",
+          "value": 15
+        },
+        {
+          "name": "EQPARTS_EXEC_C",
+          "value": 16
+        },
+        {
+          "name": "EQPARTS_EXEC_D",
+          "value": 17
+        },
+        {
+          "name": "EQPARTS_EXEC_E",
+          "value": 18
+        },
+        {
+          "name": "GRENADE_NET",
+          "value": 19
+        },
+        {
+          "name": "GRENADE_TUMBLE",
+          "value": 20
+        },
+        {
+          "name": "WALL",
+          "value": 21
+        },
+        {
+          "name": "DUMMY_BEACON",
+          "value": 22
+        },
+        {
+          "name": "TRANSPORT_SHIP",
+          "value": 23
+        },
+        {
+          "name": "STGARMS_OLD",
+          "value": 24
+        },
+        {
+          "name": "STGARMS1",
+          "value": 25
+        },
+        {
+          "name": "STGARMS2",
+          "value": 26
+        },
+        {
+          "name": "SUBFLIGHT",
+          "value": 27
+        },
+        {
+          "name": "ASSAULT_STGHOLD",
+          "value": 28
+        },
+        {
+          "name": "RIDE_ACE",
+          "value": 29
+        },
+        {
+          "name": "JAMMING",
+          "value": 30
+        }
+      ]
+    },
+    {
+      "read_order": 40,
+      "csv_index": 39,
+      "db_column": "support8_value",
+      "name": "support8_value",
+      "type": "u32",
+      "memory_offset": 284,
+      "meaning": "支援槽 8 原始整数值（u32 @+284；`sub_BBB370` = atoi；语义未取证）",
+      "display_name": "槽8 值",
+      "status": "confirmed",
+      "confidence": "○ASM确证",
+      "asm_reader": "sub_572EE0",
+      "asm_va": "0x573066"
+    },
+    {
+      "read_order": 41,
+      "csv_index": 40,
+      "db_column": "support8_type",
+      "name": "support8_type",
+      "type": "enum",
+      "memory_offset": 332,
+      "meaning": "支援槽 8 类型（@+332；`sub_572CD0` 窄串→枚举；12 个值随后按 switch 折成 31 位掩码写 @+76）",
+      "display_name": "槽8 类型",
+      "status": "confirmed",
+      "confidence": "★确证",
+      "asm_reader": "sub_572EE0",
+      "asm_va": "0x573078",
+      "enum_converter": "sub_572CD0",
+      "enum_values": [
+        {
+          "name": "BOMB",
+          "value": 0
+        },
+        {
+          "name": "CARPET_BOMB",
+          "value": 1
+        },
+        {
+          "name": "TENDER",
+          "value": 2
+        },
+        {
+          "name": "SEARCH",
+          "value": 3
+        },
+        {
+          "name": "MINOVSKY",
+          "value": 4
+        },
+        {
+          "name": "SOLAR_RAY",
+          "value": 5
+        },
+        {
+          "name": "SUMMON_MA",
+          "value": 6
+        },
+        {
+          "name": "SUMMON_ACE",
+          "value": 7
+        },
+        {
+          "name": "BATTLE_SHIP",
+          "value": 8
+        },
+        {
+          "name": "ASSAULT_SHIP",
+          "value": 9
+        },
+        {
+          "name": "ORATION",
+          "value": 10
+        },
+        {
+          "name": "PATROL_AIRCRAFT",
+          "value": 11
+        },
+        {
+          "name": "AAG",
+          "value": 12
+        },
+        {
+          "name": "GUNTURRET",
+          "value": 13
+        },
+        {
+          "name": "EQPARTS_EXEC_A",
+          "value": 14
+        },
+        {
+          "name": "EQPARTS_EXEC_B",
+          "value": 15
+        },
+        {
+          "name": "EQPARTS_EXEC_C",
+          "value": 16
+        },
+        {
+          "name": "EQPARTS_EXEC_D",
+          "value": 17
+        },
+        {
+          "name": "EQPARTS_EXEC_E",
+          "value": 18
+        },
+        {
+          "name": "GRENADE_NET",
+          "value": 19
+        },
+        {
+          "name": "GRENADE_TUMBLE",
+          "value": 20
+        },
+        {
+          "name": "WALL",
+          "value": 21
+        },
+        {
+          "name": "DUMMY_BEACON",
+          "value": 22
+        },
+        {
+          "name": "TRANSPORT_SHIP",
+          "value": 23
+        },
+        {
+          "name": "STGARMS_OLD",
+          "value": 24
+        },
+        {
+          "name": "STGARMS1",
+          "value": 25
+        },
+        {
+          "name": "STGARMS2",
+          "value": 26
+        },
+        {
+          "name": "SUBFLIGHT",
+          "value": 27
+        },
+        {
+          "name": "ASSAULT_STGHOLD",
+          "value": 28
+        },
+        {
+          "name": "RIDE_ACE",
+          "value": 29
+        },
+        {
+          "name": "JAMMING",
+          "value": 30
+        }
+      ]
+    },
+    {
+      "read_order": 42,
+      "csv_index": 41,
+      "db_column": "support9_value",
+      "name": "support9_value",
+      "type": "u32",
+      "memory_offset": 288,
+      "meaning": "支援槽 9 原始整数值（u32 @+288；`sub_BBB370` = atoi；语义未取证）",
+      "display_name": "槽9 值",
+      "status": "confirmed",
+      "confidence": "○ASM确证",
+      "asm_reader": "sub_572EE0",
+      "asm_va": "0x573066"
+    },
+    {
+      "read_order": 43,
+      "csv_index": 42,
+      "db_column": "support9_type",
+      "name": "support9_type",
+      "type": "enum",
+      "memory_offset": 336,
+      "meaning": "支援槽 9 类型（@+336；`sub_572CD0` 窄串→枚举；12 个值随后按 switch 折成 31 位掩码写 @+76）",
+      "display_name": "槽9 类型",
+      "status": "confirmed",
+      "confidence": "★确证",
+      "asm_reader": "sub_572EE0",
+      "asm_va": "0x573078",
+      "enum_converter": "sub_572CD0",
+      "enum_values": [
+        {
+          "name": "BOMB",
+          "value": 0
+        },
+        {
+          "name": "CARPET_BOMB",
+          "value": 1
+        },
+        {
+          "name": "TENDER",
+          "value": 2
+        },
+        {
+          "name": "SEARCH",
+          "value": 3
+        },
+        {
+          "name": "MINOVSKY",
+          "value": 4
+        },
+        {
+          "name": "SOLAR_RAY",
+          "value": 5
+        },
+        {
+          "name": "SUMMON_MA",
+          "value": 6
+        },
+        {
+          "name": "SUMMON_ACE",
+          "value": 7
+        },
+        {
+          "name": "BATTLE_SHIP",
+          "value": 8
+        },
+        {
+          "name": "ASSAULT_SHIP",
+          "value": 9
+        },
+        {
+          "name": "ORATION",
+          "value": 10
+        },
+        {
+          "name": "PATROL_AIRCRAFT",
+          "value": 11
+        },
+        {
+          "name": "AAG",
+          "value": 12
+        },
+        {
+          "name": "GUNTURRET",
+          "value": 13
+        },
+        {
+          "name": "EQPARTS_EXEC_A",
+          "value": 14
+        },
+        {
+          "name": "EQPARTS_EXEC_B",
+          "value": 15
+        },
+        {
+          "name": "EQPARTS_EXEC_C",
+          "value": 16
+        },
+        {
+          "name": "EQPARTS_EXEC_D",
+          "value": 17
+        },
+        {
+          "name": "EQPARTS_EXEC_E",
+          "value": 18
+        },
+        {
+          "name": "GRENADE_NET",
+          "value": 19
+        },
+        {
+          "name": "GRENADE_TUMBLE",
+          "value": 20
+        },
+        {
+          "name": "WALL",
+          "value": 21
+        },
+        {
+          "name": "DUMMY_BEACON",
+          "value": 22
+        },
+        {
+          "name": "TRANSPORT_SHIP",
+          "value": 23
+        },
+        {
+          "name": "STGARMS_OLD",
+          "value": 24
+        },
+        {
+          "name": "STGARMS1",
+          "value": 25
+        },
+        {
+          "name": "STGARMS2",
+          "value": 26
+        },
+        {
+          "name": "SUBFLIGHT",
+          "value": 27
+        },
+        {
+          "name": "ASSAULT_STGHOLD",
+          "value": 28
+        },
+        {
+          "name": "RIDE_ACE",
+          "value": 29
+        },
+        {
+          "name": "JAMMING",
+          "value": 30
+        }
+      ]
+    },
+    {
+      "read_order": 44,
+      "csv_index": 43,
+      "db_column": "support10_value",
+      "name": "support10_value",
+      "type": "u32",
+      "memory_offset": 292,
+      "meaning": "支援槽 10 原始整数值（u32 @+292；`sub_BBB370` = atoi；语义未取证）",
+      "display_name": "槽10 值",
+      "status": "confirmed",
+      "confidence": "○ASM确证",
+      "asm_reader": "sub_572EE0",
+      "asm_va": "0x573066"
+    },
+    {
+      "read_order": 45,
+      "csv_index": 44,
+      "db_column": "support10_type",
+      "name": "support10_type",
+      "type": "enum",
+      "memory_offset": 340,
+      "meaning": "支援槽 10 类型（@+340；`sub_572CD0` 窄串→枚举；12 个值随后按 switch 折成 31 位掩码写 @+76）",
+      "display_name": "槽10 类型",
+      "status": "confirmed",
+      "confidence": "★确证",
+      "asm_reader": "sub_572EE0",
+      "asm_va": "0x573078",
+      "enum_converter": "sub_572CD0",
+      "enum_values": [
+        {
+          "name": "BOMB",
+          "value": 0
+        },
+        {
+          "name": "CARPET_BOMB",
+          "value": 1
+        },
+        {
+          "name": "TENDER",
+          "value": 2
+        },
+        {
+          "name": "SEARCH",
+          "value": 3
+        },
+        {
+          "name": "MINOVSKY",
+          "value": 4
+        },
+        {
+          "name": "SOLAR_RAY",
+          "value": 5
+        },
+        {
+          "name": "SUMMON_MA",
+          "value": 6
+        },
+        {
+          "name": "SUMMON_ACE",
+          "value": 7
+        },
+        {
+          "name": "BATTLE_SHIP",
+          "value": 8
+        },
+        {
+          "name": "ASSAULT_SHIP",
+          "value": 9
+        },
+        {
+          "name": "ORATION",
+          "value": 10
+        },
+        {
+          "name": "PATROL_AIRCRAFT",
+          "value": 11
+        },
+        {
+          "name": "AAG",
+          "value": 12
+        },
+        {
+          "name": "GUNTURRET",
+          "value": 13
+        },
+        {
+          "name": "EQPARTS_EXEC_A",
+          "value": 14
+        },
+        {
+          "name": "EQPARTS_EXEC_B",
+          "value": 15
+        },
+        {
+          "name": "EQPARTS_EXEC_C",
+          "value": 16
+        },
+        {
+          "name": "EQPARTS_EXEC_D",
+          "value": 17
+        },
+        {
+          "name": "EQPARTS_EXEC_E",
+          "value": 18
+        },
+        {
+          "name": "GRENADE_NET",
+          "value": 19
+        },
+        {
+          "name": "GRENADE_TUMBLE",
+          "value": 20
+        },
+        {
+          "name": "WALL",
+          "value": 21
+        },
+        {
+          "name": "DUMMY_BEACON",
+          "value": 22
+        },
+        {
+          "name": "TRANSPORT_SHIP",
+          "value": 23
+        },
+        {
+          "name": "STGARMS_OLD",
+          "value": 24
+        },
+        {
+          "name": "STGARMS1",
+          "value": 25
+        },
+        {
+          "name": "STGARMS2",
+          "value": 26
+        },
+        {
+          "name": "SUBFLIGHT",
+          "value": 27
+        },
+        {
+          "name": "ASSAULT_STGHOLD",
+          "value": 28
+        },
+        {
+          "name": "RIDE_ACE",
+          "value": 29
+        },
+        {
+          "name": "JAMMING",
+          "value": 30
+        }
+      ]
+    },
+    {
+      "read_order": 46,
+      "csv_index": 45,
+      "db_column": "support11_value",
+      "name": "support11_value",
+      "type": "u32",
+      "memory_offset": 296,
+      "meaning": "支援槽 11 原始整数值（u32 @+296；`sub_BBB370` = atoi；语义未取证）",
+      "display_name": "槽11 值",
+      "status": "confirmed",
+      "confidence": "○ASM确证",
+      "asm_reader": "sub_572EE0",
+      "asm_va": "0x573066"
+    },
+    {
+      "read_order": 47,
+      "csv_index": 46,
+      "db_column": "support11_type",
+      "name": "support11_type",
+      "type": "enum",
+      "memory_offset": 344,
+      "meaning": "支援槽 11 类型（@+344；`sub_572CD0` 窄串→枚举；12 个值随后按 switch 折成 31 位掩码写 @+76）",
+      "display_name": "槽11 类型",
+      "status": "confirmed",
+      "confidence": "★确证",
+      "asm_reader": "sub_572EE0",
+      "asm_va": "0x573078",
+      "enum_converter": "sub_572CD0",
+      "enum_values": [
+        {
+          "name": "BOMB",
+          "value": 0
+        },
+        {
+          "name": "CARPET_BOMB",
+          "value": 1
+        },
+        {
+          "name": "TENDER",
+          "value": 2
+        },
+        {
+          "name": "SEARCH",
+          "value": 3
+        },
+        {
+          "name": "MINOVSKY",
+          "value": 4
+        },
+        {
+          "name": "SOLAR_RAY",
+          "value": 5
+        },
+        {
+          "name": "SUMMON_MA",
+          "value": 6
+        },
+        {
+          "name": "SUMMON_ACE",
+          "value": 7
+        },
+        {
+          "name": "BATTLE_SHIP",
+          "value": 8
+        },
+        {
+          "name": "ASSAULT_SHIP",
+          "value": 9
+        },
+        {
+          "name": "ORATION",
+          "value": 10
+        },
+        {
+          "name": "PATROL_AIRCRAFT",
+          "value": 11
+        },
+        {
+          "name": "AAG",
+          "value": 12
+        },
+        {
+          "name": "GUNTURRET",
+          "value": 13
+        },
+        {
+          "name": "EQPARTS_EXEC_A",
+          "value": 14
+        },
+        {
+          "name": "EQPARTS_EXEC_B",
+          "value": 15
+        },
+        {
+          "name": "EQPARTS_EXEC_C",
+          "value": 16
+        },
+        {
+          "name": "EQPARTS_EXEC_D",
+          "value": 17
+        },
+        {
+          "name": "EQPARTS_EXEC_E",
+          "value": 18
+        },
+        {
+          "name": "GRENADE_NET",
+          "value": 19
+        },
+        {
+          "name": "GRENADE_TUMBLE",
+          "value": 20
+        },
+        {
+          "name": "WALL",
+          "value": 21
+        },
+        {
+          "name": "DUMMY_BEACON",
+          "value": 22
+        },
+        {
+          "name": "TRANSPORT_SHIP",
+          "value": 23
+        },
+        {
+          "name": "STGARMS_OLD",
+          "value": 24
+        },
+        {
+          "name": "STGARMS1",
+          "value": 25
+        },
+        {
+          "name": "STGARMS2",
+          "value": 26
+        },
+        {
+          "name": "SUBFLIGHT",
+          "value": 27
+        },
+        {
+          "name": "ASSAULT_STGHOLD",
+          "value": 28
+        },
+        {
+          "name": "RIDE_ACE",
+          "value": 29
+        },
+        {
+          "name": "JAMMING",
+          "value": 30
+        }
+      ]
+    },
+    {
+      "read_order": 48,
+      "csv_index": 47,
+      "db_column": "support12_value",
+      "name": "support12_value",
+      "type": "u32",
+      "memory_offset": 300,
+      "meaning": "支援槽 12 原始整数值（u32 @+300；`sub_BBB370` = atoi；语义未取证）",
+      "display_name": "槽12 值",
+      "status": "confirmed",
+      "confidence": "○ASM确证",
+      "asm_reader": "sub_572EE0",
+      "asm_va": "0x573066"
+    },
+    {
+      "read_order": 49,
+      "csv_index": 48,
+      "db_column": "support12_type",
+      "name": "support12_type",
+      "type": "enum",
+      "memory_offset": 348,
+      "meaning": "支援槽 12 类型（@+348；`sub_572CD0` 窄串→枚举；12 个值随后按 switch 折成 31 位掩码写 @+76）",
+      "display_name": "槽12 类型",
+      "status": "confirmed",
+      "confidence": "★确证",
+      "asm_reader": "sub_572EE0",
+      "asm_va": "0x573078",
+      "enum_converter": "sub_572CD0",
+      "enum_values": [
+        {
+          "name": "BOMB",
+          "value": 0
+        },
+        {
+          "name": "CARPET_BOMB",
+          "value": 1
+        },
+        {
+          "name": "TENDER",
+          "value": 2
+        },
+        {
+          "name": "SEARCH",
+          "value": 3
+        },
+        {
+          "name": "MINOVSKY",
+          "value": 4
+        },
+        {
+          "name": "SOLAR_RAY",
+          "value": 5
+        },
+        {
+          "name": "SUMMON_MA",
+          "value": 6
+        },
+        {
+          "name": "SUMMON_ACE",
+          "value": 7
+        },
+        {
+          "name": "BATTLE_SHIP",
+          "value": 8
+        },
+        {
+          "name": "ASSAULT_SHIP",
+          "value": 9
+        },
+        {
+          "name": "ORATION",
+          "value": 10
+        },
+        {
+          "name": "PATROL_AIRCRAFT",
+          "value": 11
+        },
+        {
+          "name": "AAG",
+          "value": 12
+        },
+        {
+          "name": "GUNTURRET",
+          "value": 13
+        },
+        {
+          "name": "EQPARTS_EXEC_A",
+          "value": 14
+        },
+        {
+          "name": "EQPARTS_EXEC_B",
+          "value": 15
+        },
+        {
+          "name": "EQPARTS_EXEC_C",
+          "value": 16
+        },
+        {
+          "name": "EQPARTS_EXEC_D",
+          "value": 17
+        },
+        {
+          "name": "EQPARTS_EXEC_E",
+          "value": 18
+        },
+        {
+          "name": "GRENADE_NET",
+          "value": 19
+        },
+        {
+          "name": "GRENADE_TUMBLE",
+          "value": 20
+        },
+        {
+          "name": "WALL",
+          "value": 21
+        },
+        {
+          "name": "DUMMY_BEACON",
+          "value": 22
+        },
+        {
+          "name": "TRANSPORT_SHIP",
+          "value": 23
+        },
+        {
+          "name": "STGARMS_OLD",
+          "value": 24
+        },
+        {
+          "name": "STGARMS1",
+          "value": 25
+        },
+        {
+          "name": "STGARMS2",
+          "value": 26
+        },
+        {
+          "name": "SUBFLIGHT",
+          "value": 27
+        },
+        {
+          "name": "ASSAULT_STGHOLD",
+          "value": 28
+        },
+        {
+          "name": "RIDE_ACE",
+          "value": 29
+        },
+        {
+          "name": "JAMMING",
+          "value": 30
+        }
+      ]
+    },
+    {
+      "read_order": 50,
+      "csv_index": 49,
+      "db_column": "unlock_mission_id",
+      "name": "unlock_mission_id",
+      "type": "u32",
+      "memory_offset": 80,
+      "meaning": "解锁任务 ID（u32 @+80；12 组循环后紧接读取）",
+      "display_name": "解锁任务 ID",
+      "status": "confirmed",
+      "confidence": "○ASM确证",
+      "asm_reader": "sub_572EE0",
+      "asm_va": "0x5730dc"
+    }
+  ],
+  "column_defined": 50,
+  "column_pending": 0,
+  "column_confirmed": 39,
+  "column_partial": 0,
+  "asm_status": "complete",
+  "asm_reader": "sub_572EE0",
+  "column_gap": 11,
+  "column_gap_note": "CSV 行含 col0..col49；csv 7, 8, 9, 10, 11, 15, 16, 19, 20, 23, 24 reader 不读（占位）：前导 7 列后的 5 列、槽组间 1 列（15/16、19/20）、12 组前的 2 列（23/24）",
+  "reader_max_csv_index": 49,
+  "columns_note": "★2026-10-05 补列宽（第 7 批）：旧 schema 只声明 13 列且 csv_index 与真读列不符，`sub_572EE0` 实为「7 前导 + 4 槽消耗 + 3 槽冷却 + 12 组 ×{原始值,类型名} + 1 尾列」（含 4 组空列缝）⇒ 声明到 **csv49（50 列）**；列号/偏移逐条来自静态反汇编。"
+}

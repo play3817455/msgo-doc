@@ -1,0 +1,50 @@
+{
+  "id": "tbl_special_a_info",
+  "title": "特殊 A 信息",
+  "status": "complete",
+  "table_disposition": "PERSIST",
+  "purpose": "持久化 special_a_info 40B；布局同 rankself（sub_B464A0/sub_B4F710）",
+  "entity_ref": "special_a_info",
+  "evidence_commands": [
+    "SC-0x8D4F-lounge-get_special_a_info_r"
+  ],
+  "column_groups": [
+    {
+      "name": "special_a_info（40B · 同 rankself）",
+      "columns": [
+        "special_a_info"
+      ]
+    }
+  ],
+  "columns": [
+    {
+      "name": "special_a_info",
+      "disposition": "COMPOSITE",
+      "composite_ref": "rankself",
+      "meaning": "特殊 A 信息（日志串 `info=`；打印器 sub_B4F710）",
+      "wire_sources": [
+        {
+          "command": "SC-0x8D4F-lounge-get_special_a_info_r",
+          "struct": "special_a_info",
+          "field_name": "info",
+          "offset": 4,
+          "length": 40,
+          "wire_type": "struct",
+          "protocol_path": "protocol_analysis/commands/SC-0x8D4F-lounge-get_special_a_info_r/README.md",
+          "section": "§3",
+          "reader": "sub_B464A0",
+          "printer": "sub_B4F710",
+          "evidence_va": "B6B958|B6BA7B"
+        }
+      ],
+      "asm_verified": true
+    }
+  ],
+  "asm_audit": {
+    "composite_ref": "special_a_info",
+    "status": "pass",
+    "issues_count": 0,
+    "memory_status": "pass",
+    "memory_issues_count": 0
+  }
+}

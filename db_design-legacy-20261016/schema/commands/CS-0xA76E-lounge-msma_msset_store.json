@@ -1,0 +1,648 @@
+{
+  "id": "CS-0xA76E-lounge-msma_msset_store",
+  "opcode": "0xA76E",
+  "direction": "CS",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "msma_msset_store",
+  "source_dir": "protocol_analysis/commands/CS-0xA76E-lounge-msma_msset_store",
+  "meta": {
+    "opcode": "`0xA76E`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`msma_msset_store`",
+    "名字符串": "`)<-_proto_lounge_client::send_msma_msset_store(` @ `0xEEBC18`",
+    "代码位置": "sub_B988D0 @ `0xB988D0`（`0xB988D0`..`0xB98A99`）",
+    "opcode 写入证据": "`0xB98951`",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0x0062`（98）",
+    "容量申请证据": "`0xB98916`（`push 0x0062`）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)` @ `0xB98A25`",
+    "附加通知": "`[obj+79A8h]` 回调，模块 id `0x129` @ `0xB98A42`",
+    "配对命令": "S→C `SC-0xB8BB-lounge-msma_msset_store_r`（已 DONE，`ms_set` 95B / 槽 96 —— **与本次 C→S 写入器独立算出同值**）"
+  },
+  "handler": "sub_B988D0",
+  "handler_va": "0xB988D0",
+  "block": [
+    "0xB988D0",
+    "0xB98A99"
+  ],
+  "name_str": ")<-_proto_lounge_client::send_msma_msset_store(",
+  "name_str_va": "0xEEBC18",
+  "capacity": "0x62",
+  "capacity_va": "0xB98916",
+  "closer_va": "0xB989C8",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)` @ `0xB98A25`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": "0xB98A25",
+  "wire": {
+    "length_expr": "95",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x62（容量记账口径，非线长）",
+    "field_count": 7,
+    "length_source": "field_sum",
+    "readme_conclusion": "结论：保存机体套装（ms_set：机体唯一 id + 卡组槽 + 套装名 + 4 个机体 id + 4 个装备槽位）。",
+    "readme_close": "2 + 95(结构体) = 97 ≤ 容量 0x62 = 98（富余 1）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "写入 `buf+0`，供服务端分发；无 case 块（C→S）",
+      "enum": "0xA76E",
+      "evidence_va": [
+        "0xB98951"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "2",
+      "length": "95",
+      "wire_type": "struct<ms_set>",
+      "name": "ms_set",
+      "meaning": "机体套装（复合写入器 `sub_B41B10` 整块写出 95B；打印器 `sub_B4A7E0`）",
+      "purpose": "保存机体套装（服务端据此 update；与 S→C `SC-0xB8BB` 的 `ms_set` 线长 95 互证）",
+      "enum": null,
+      "evidence_va": [
+        "0xB41B10",
+        "0xB4A7E0"
+      ],
+      "confidence": "确证",
+      "disposition": "PERSIST",
+      "entity_ref": null,
+      "csv_line": null,
+      "override_verified": true,
+      "before": "ms_set.uniq_id",
+      "composite_ref": "ms_set"
+    },
+    {
+      "seq": 2,
+      "offset": "2",
+      "length": "8",
+      "wire_type": "u64",
+      "name": "ms_set.uniq_id",
+      "meaning": "套装记录唯一 id",
+      "purpose": "来源=入参 `arg_0` 指向的源结构 `[src+0]`/`[src+4]`（复合写入器 `sub_B41B10` 两次内联 `mov [ecx],edx` / `mov [ecx+4],edx`，低 32 位在前）",
+      "enum": null,
+      "evidence_va": [
+        "0xB41B27, 0xB41B2B"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3,
+      "is_member_row": "ms_set"
+    },
+    {
+      "seq": 3,
+      "offset": "10",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "ms_set.deck_type",
+      "meaning": "卡组类型",
+      "purpose": "复合写入器 `sub_B41B10`：`mov dx,[edi+8]` → `mov [ecx],dx`",
+      "enum": null,
+      "evidence_va": [
+        "0xB41B42"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4,
+      "is_member_row": "ms_set"
+    },
+    {
+      "seq": 4,
+      "offset": "12",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "ms_set.deck_slot",
+      "meaning": "套装槽位",
+      "purpose": "复合写入器 `sub_B41B10`：`mov dx,[edi+0Ah]` → `mov [ecx],dx`",
+      "enum": null,
+      "evidence_va": [
+        "0xB41B5A"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5,
+      "is_member_row": "ms_set"
+    },
+    {
+      "seq": 5,
+      "offset": "14",
+      "length": "43",
+      "wire_type": "u8[43]",
+      "name": "ms_set.setname",
+      "meaning": "套装名（定长 43 字节）",
+      "purpose": "复合写入器 `sub_B41B10`：`mov dl,[ecx+edi+0Ch]` 循环 `cmp ecx,2Bh`（43 次）",
+      "enum": null,
+      "evidence_va": [
+        "0xB41B71"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6,
+      "is_member_row": "ms_set"
+    },
+    {
+      "seq": 6,
+      "offset": "57",
+      "length": "32",
+      "wire_type": "u64[4]",
+      "name": "ms_set.msma_uniq_ids",
+      "meaning": "四个机体的唯一 id",
+      "purpose": "复合写入器 `sub_B41B10`：`mov ebx,[ecx]`/`[ecx+4]` 循环 4 次（源 `[edi+38h]` 起，步进 8）",
+      "enum": null,
+      "evidence_va": [
+        "0xB41B92, 0xB41B96"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 7,
+      "is_member_row": "ms_set"
+    },
+    {
+      "seq": 7,
+      "offset": "89",
+      "length": "8",
+      "wire_type": "u16[4]",
+      "name": "ms_set.equip_set_slots",
+      "meaning": "四个装备槽位",
+      "purpose": "复合写入器 `sub_B41B10`：`mov di,[edx]` 循环 4 次（源 `[edi+58h]` 起，步进 2）",
+      "enum": null,
+      "evidence_va": [
+        "0xB41BBA"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 8,
+      "is_member_row": "ms_set"
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0xA76E（分发器 switch 选择子）",
+      "evidence_va": "0xB98951"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0x62 B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xB98916"
+    },
+    {
+      "step": 3,
+      "kind": "write_struct",
+      "detail": "ms_set：`struct<ms_set>`（线长 95）—— 机体套装（复合写入器 `sub_B41B10` 整块写出 95B；打印器 `sub_B4A7E0`）",
+      "evidence_va": "0xB41B10"
+    },
+    {
+      "step": 4,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xB989C8"
+    },
+    {
+      "step": 5,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xB98A30"
+    },
+    {
+      "step": 6,
+      "kind": "notify",
+      "detail": "附加通知回调 `[obj+79A8h]`（模块 id，非字段）",
+      "evidence_va": "0xB98A42"
+    }
+  ],
+  "capabilities": [
+    "update",
+    "lounge.msset"
+  ],
+  "capabilities_derived": [
+    "update"
+  ],
+  "db_effects": [
+    {
+      "entity": "ms_set",
+      "table_ref": "tbl_ms_set",
+      "op": "update",
+      "fields": [
+        "ms_set"
+      ],
+      "disposition": "COMPOSITE",
+      "evidence_va": "?"
+    }
+  ],
+  "pair": "SC-0xB8BB-lounge-msma_msset_store_r",
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:42",
+    "batch": 4,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 98,
+        "va": "0xB98916",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB98913",
+        "call_va": "0xB98918"
+      },
+      "field_window": {
+        "start_va": "0xB988D0",
+        "end_va": "0xB989C8",
+        "guard": null,
+        "closer_or_commit_va": "0xB989C8",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "ms_set",
+            "wire_type": "struct<ms_set>",
+            "width": null,
+            "seq": 1,
+            "shape": "agg",
+            "evidence_va": [
+              "0xB41B10",
+              "0xB4A7E0"
+            ]
+          },
+          {
+            "name": "ms_set.uniq_id",
+            "wire_type": "u64",
+            "width": 8,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB41B27, 0xB41B2B"
+            ]
+          },
+          {
+            "name": "ms_set.deck_type",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB41B42"
+            ]
+          },
+          {
+            "name": "ms_set.deck_slot",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 4,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB41B5A"
+            ]
+          },
+          {
+            "name": "ms_set.setname",
+            "wire_type": "u8[43]",
+            "width": 43,
+            "seq": 5,
+            "shape": "fixed_arr",
+            "evidence_va": [
+              "0xB41B71"
+            ]
+          },
+          {
+            "name": "ms_set.msma_uniq_ids",
+            "wire_type": "u64[4]",
+            "width": 32,
+            "seq": 6,
+            "shape": "fixed_arr",
+            "evidence_va": [
+              "0xB41B92, 0xB41B96"
+            ]
+          },
+          {
+            "name": "ms_set.equip_set_slots",
+            "wire_type": "u16[4]",
+            "width": 8,
+            "seq": 7,
+            "shape": "fixed_arr",
+            "evidence_va": [
+              "0xB41BBA"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB41B92",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB41B92",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB41B92",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB41B92",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB41B96",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB41B96",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB41B96",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB41B96",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB41BBA",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB41BBA",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB41BBA",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB41BBA",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB98951",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB9895A",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B41B10",
+            "consumed": null,
+            "consumed_effective": 40,
+            "nested_of": null
+          },
+          {
+            "va": "0xB9899E",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 0,
+        "checkable": 6,
+        "pairs": [],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB98951",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          },
+          {
+            "va": "0xB9895A",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null
+          },
+          {
+            "va": "0xB41B92",
+            "kind": "nested_run",
+            "width": 32,
+            "wire_type": null
+          },
+          {
+            "va": "0xB41BBA",
+            "kind": "nested_run",
+            "width": 8,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [
+          {
+            "parent": "ms_set",
+            "reason": "找不到该成员组的父读取器调用点（父聚合未对位，且之前无已对位的聚合字段）"
+          }
+        ],
+        "window": [
+          "0xB988D0",
+          "0xB989C8"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 2,
+          "capacity": 98,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB9895A",
+              "kind": "opaque",
+              "name": "sub_B41B10"
+            },
+            {
+              "va": "0xB9899E",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）2 / 容量 0x62"
+        }
+      },
+      "closer": {
+        "va": "0xB989C8",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xB98A30",
+        "mov_va": "0xB98A25",
+        "host": "[edx+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "ms_set="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0xA76E-lounge-msma_msset_store.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0xB98951",
+    "notify_va": "0xB98A42",
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xB98951"
+    ]
+  },
+  "field_override": {
+    "revision": 1,
+    "verified_at": "2026-09-22",
+    "reason": "fields.csv 把 95B 的 `ms_set` 摊成 6 行成员（`ms_set.uniq_id` … `ms_set.equip_set_slots`）却没有父行 —— 与 `CS-0x9527` 同形。补父行 `ms_set`（`struct<ms_set>`，95B，偏移 2，插在 `ms_set.uniq_id` 之前），成员由 `composites/ms_set.json` 承载（成员名取自打印器 `sub_B4A7E0`）。父行出现后那 6 行成为成员占位行，不再参与线长求和：线长仍是 `95`，与 README 的 `2 + 95 + 1 = 98` 容量吻合。",
+    "evidence_file": "schema/commands/_overrides/CS-0xA76E-lounge-msma_msset_store.json",
+    "meta_keys": [],
+    "notes": [
+      "override_add:1"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "MsmaMssetStore",
+      "role": "request",
+      "wire_length": "95",
+      "members": [
+        {
+          "name": "MsSet",
+          "wire_type": "struct<ms_set>",
+          "length": "95",
+          "field_ref": "ms_set",
+          "element": "ms_set",
+          "element_length": "95",
+          "cap": null,
+          "composite_ref": "ms_set",
+          "count_field": null,
+          "count_field_source": "fixed",
+          "members_source": "composite"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "248e9fda5dc0c33d",
+  "check_fingerprint": "8de76bd821e1adbe",
+  "import_repairs": [
+    "override_add:1",
+    "member_row_folded:ms_set.uniq_id(父 ms_set = ms_set，成员已由 composite 展开)",
+    "member_row_folded:ms_set.deck_type(父 ms_set = ms_set，成员已由 composite 展开)",
+    "member_row_folded:ms_set.deck_slot(父 ms_set = ms_set，成员已由 composite 展开)",
+    "member_row_folded:ms_set.setname(父 ms_set = ms_set，成员已由 composite 展开)",
+    "member_row_folded:ms_set.msma_uniq_ids(父 ms_set = ms_set，成员已由 composite 展开)",
+    "member_row_folded:ms_set.equip_set_slots(父 ms_set = ms_set，成员已由 composite 展开)",
+    "wire_len_member_rows_folded:8 + 2 + 2 + 43 + 32 + 8 → 95"
+  ]
+}

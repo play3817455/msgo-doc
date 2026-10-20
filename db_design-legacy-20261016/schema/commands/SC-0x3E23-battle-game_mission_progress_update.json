@@ -1,0 +1,482 @@
+{
+  "id": "SC-0x3E23-battle-game_mission_progress_update",
+  "opcode": "0x3E23",
+  "direction": "SC",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "game_mission_progress_update",
+  "source_dir": "protocol_analysis/commands/SC-0x3E23-battle-game_mission_progress_update",
+  "meta": {
+    "opcode": "`0x3E23`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`battle_client`",
+    "命令名": "`game_mission_progress_update`",
+    "处理函数": "`sub_B0CC20` @ `0xB0CC20`（battle 分发器）",
+    "处理块范围": "`0xB14DE4`..`0xB14F4B`",
+    "名字串引用点": "`0xB14E87`",
+    "声明容量（解码缓冲）": "`0x40`（`0xB14DF9`）",
+    "长度闭合点": "`0xB14E65`",
+    "去向": "`vt[0x114]` @ `0xB14F2F`（1 实参）"
+  },
+  "handler": "sub_B0CC20",
+  "handler_va": "0xB0CC20",
+  "block": [
+    "0xB14DE4",
+    "0xB14F4B"
+  ],
+  "name_str": null,
+  "name_str_va": "0xB14E87",
+  "capacity": "0x40",
+  "capacity_va": "0xB14DF9",
+  "closer_va": "0xB14E5D",
+  "dispatch": "`vt[0x114]` @ `0xB14F2F`（1 实参）",
+  "dispatch_slot": "vt[0x114]",
+  "dispatch_va": "0xB14F2F",
+  "wire": {
+    "length_expr": "46",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x40（容量记账口径，非线长）",
+    "field_count": 1,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体总长**：**64** 字节（== 容量 0x40）。",
+    "readme_close": "容量 0x40 与线长的关系：**相等**（全定长）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0x3E23",
+      "evidence_va": [
+        "0xB14E87"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "46",
+      "wire_type": "struct",
+      "name": "mprogress",
+      "meaning": "任务进度结构（claim `0x40`=64 / 线长 46，读取器 `sub_B07880`）",
+      "purpose": "经 `vt[0x114]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB14E34",
+        "0xB14ED6"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3,
+      "composite_ref": "mprogress"
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0x3E23（分发器 switch 选择子）",
+      "evidence_va": "0xB14E87"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB05DA0`（模块 id None）→ 之后逐字段读线",
+      "evidence_va": "0xB14DE4"
+    },
+    {
+      "step": 3,
+      "kind": "read_struct",
+      "detail": "mprogress：`struct`（线长 46）—— 任务进度结构（claim `0x40`=64 / 线长 46，读取器 `sub_B07880`）",
+      "evidence_va": "0xB14E34"
+    },
+    {
+      "step": 4,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jnz）",
+      "evidence_va": "0xB14E5D"
+    },
+    {
+      "step": 5,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x114]`，实参 1 个",
+      "evidence_va": "0xB14F2F"
+    },
+    {
+      "step": 6,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB14E4B"
+    }
+  ],
+  "capabilities": [
+    "update",
+    "battle.game_mission"
+  ],
+  "capabilities_derived": [
+    "notify"
+  ],
+  "db_effects": [
+    {
+      "entity": "mprogress",
+      "table_ref": "tbl_mprogress",
+      "op": "update",
+      "fields": [
+        "mprogress"
+      ],
+      "disposition": "COMPOSITE",
+      "evidence_va": "0xB14E34"
+    },
+    {
+      "entity": "mprogress",
+      "table_ref": "tbl_mprogress",
+      "op": "update",
+      "fields": [
+        "mission_progress"
+      ],
+      "disposition": "EVENT",
+      "evidence_va": "0xB07880"
+    }
+  ],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:42",
+    "batch": 2,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 64,
+        "va": "0xB14DF9",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB14DF6",
+        "call_va": "0xB14DFB"
+      },
+      "field_window": {
+        "start_va": "0xB14DE5",
+        "end_va": "0xB14E65",
+        "guard": {
+          "va": "0xB14DE4",
+          "func": "0xB05DA0",
+          "module_id": null,
+          "release_va": "0xB05D90"
+        },
+        "closer_or_commit_va": "0xB14E5D",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "mprogress",
+            "wire_type": "struct",
+            "width": null,
+            "seq": 1,
+            "shape": "agg",
+            "evidence_va": [
+              "0xB14E34",
+              "0xB14ED6"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB07893",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB078AD",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB078C3",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB078D9",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB078E6",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB078FB",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0790C",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0791D",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0792E",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0793F",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB07950",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB07961",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB07972",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0798C",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB14E25",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B05ED0",
+            "consumed": 0,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB14E34",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B07880",
+            "consumed": 46,
+            "consumed_effective": 46,
+            "nested_of": null
+          }
+        ],
+        "matched": 0,
+        "checkable": 0,
+        "pairs": [],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB14E25",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null
+          },
+          {
+            "va": "0xB14E34",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null
+          },
+          {
+            "va": "0xB07893",
+            "kind": "nested_run",
+            "width": 16,
+            "wire_type": null
+          },
+          {
+            "va": "0xB078E6",
+            "kind": "nested_run",
+            "width": 4,
+            "wire_type": null
+          },
+          {
+            "va": "0xB0790C",
+            "kind": "nested_run",
+            "width": 2,
+            "wire_type": null
+          },
+          {
+            "va": "0xB0792E",
+            "kind": "nested_run",
+            "width": 24,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB14DE5",
+          "0xB14E65"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 46,
+          "capacity": 64,
+          "relation": "within",
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）46 / 容量 0x40"
+        },
+        "zero_load": true
+      },
+      "closer": {
+        "va": "0xB14E5D",
+        "kind": "jnz",
+        "jcc_va": "0xB14E61",
+        "seq_va": "0xB14E59",
+        "jcc_dst": "0xB14E42",
+        "cmp": "cmp     ebx, [esp+1B3Ch+var_1B24]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x114]",
+        "slot_value": 276,
+        "va": "0xB14F2F",
+        "mov_va": "0xB14F26",
+        "host": "[edx+114h]",
+        "argc": 1,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB14E4B",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "mprogress="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0x3E23-battle-game_mission_progress_update.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xB14E87"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "GameMissionProgressUpdate",
+      "role": "response",
+      "wire_length": "46",
+      "members": [
+        {
+          "name": "Mprogress",
+          "wire_type": "struct",
+          "length": "46",
+          "field_ref": "mprogress",
+          "element": null,
+          "element_length": "46",
+          "cap": null,
+          "composite_ref": "mprogress",
+          "count_field": null,
+          "count_field_source": "fixed",
+          "members_source": "composite"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "f691f90b633979a5",
+  "check_fingerprint": "96dd2cb0b27df543"
+}

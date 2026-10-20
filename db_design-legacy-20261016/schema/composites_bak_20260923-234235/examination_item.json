@@ -1,0 +1,103 @@
+{
+  "id": "examination_item",
+  "title": "考核结果元素 examination_item（8B 线 / 8B 槽）",
+  "length": 8,
+  "status": "complete",
+  "reader": null,
+  "printer": null,
+  "memory_claim": 8,
+  "wire_layout": "4+4",
+  "evidence": {
+    "commands": [
+      "SC-0xD5E6-lounge-result_info"
+    ],
+    "protocol_paths": [
+      "protocol_analysis/commands/SC-0xD5E6-lounge-result_info/README.md"
+    ],
+    "note": "字段 `examination_list` 为**固定 5 元**、元素 8B（`sub_B418C0` 整块推进 0x28=40）；成员名见 fields.csv 用途"
+  },
+  "members": [
+    {
+      "name": "id",
+      "offset": 0,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "考核项 ID",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0xD5E6-lounge-result_info",
+          "struct": "examination_item",
+          "field_name": "id",
+          "offset": 0,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0xD5E6-lounge-result_info/README.md",
+          "section": "§3",
+          "reader": "sub_B418C0",
+          "printer": null,
+          "evidence_va": null
+        }
+      ],
+      "asm_verified": true,
+      "asm_audit_date": "2026-09-21"
+    },
+    {
+      "name": "gain_val",
+      "offset": 4,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "获得的考核值",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0xD5E6-lounge-result_info",
+          "struct": "examination_item",
+          "field_name": "gain_val",
+          "offset": 4,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0xD5E6-lounge-result_info/README.md",
+          "section": "§3",
+          "reader": "sub_B418C0",
+          "printer": null,
+          "evidence_va": null
+        }
+      ],
+      "asm_verified": true,
+      "asm_audit_date": "2026-09-21"
+    }
+  ],
+  "asm_audit": {
+    "verified": "2026-09-21",
+    "reader": "sub_B418C0",
+    "writer": null,
+    "total_bytes": 8,
+    "fields_ok": 2,
+    "fields_fail": 0,
+    "issues": [],
+    "status": "pass",
+    "memory": {
+      "verified": "2026-09-21",
+      "status": "pass",
+      "memory_claim": 8,
+      "mem_fields": 2,
+      "fields_ok": 2,
+      "fields_fail": 0,
+      "issues": []
+    }
+  },
+  "array_reader": "sub_B418C0",
+  "array_elements": 5,
+  "array_wire_bytes": 40,
+  "array_note": "sub_B418C0 是固定 5 元素数组的读取器（整块推进 0x28 = 40B，与元素定义一致）。该读取器在模拟环境下写入未映射地址（UC_ERR_WRITE_UNMAPPED），本元素布局**未获执行级验证**，需其它证据源。",
+  "oracle_audit": {
+    "date": "2026-09-23",
+    "tool": "emulab/oracle_repair.py",
+    "verdict_before": "ERROR",
+    "verdict_after": "SKIP",
+    "changes": [
+      "reader sub_B418C0 -> null (it is the enclosing array reader, not the element reader)"
+    ]
+  }
+}

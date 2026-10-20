@@ -1,0 +1,236 @@
+{
+ "id": "CS-0xD12D-lounge-btlroom_quick_start",
+ "verified_at": "2026-09-30 15:25:45",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "handler_func",
+ "block": [
+  "0xB8F830",
+  "0xB8FABE"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 90,
+   "va": "0xB8F876",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xB8F873",
+   "call_va": "0xB8F878"
+  },
+  "field_window": {
+   "start_va": "0xB8F830",
+   "end_va": "0xB8F969",
+   "guard": null,
+   "closer_or_commit_va": "0xB8F969",
+   "within_model_block": true,
+   "range_from": "handler_func"
+  },
+  "primitive_widths": {
+   "direction": "CS",
+   "expected": [
+    {
+     "name": "matching_type",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "`0xB8F8BC`"
+     ]
+    },
+    {
+     "name": "is_coop",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 2,
+     "shape": "scalar",
+     "evidence_va": [
+      "`0xB8F8D7`"
+     ]
+    },
+    {
+     "name": "mission_id",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 3,
+     "shape": "scalar",
+     "evidence_va": [
+      "`0xB8F8DF`"
+     ]
+    },
+    {
+     "name": "room_name_new",
+     "wire_type": "bytes",
+     "width": null,
+     "seq": 4,
+     "shape": "agg",
+     "evidence_va": [
+      "`0xB8F8FB`"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB8F8AC",
+     "kind": "inline_store",
+     "width": 2,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB8F8BC",
+     "kind": "inline_store",
+     "width": 4,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB8F8D7",
+     "kind": "inline_store",
+     "width": 4,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB8F8DF",
+     "kind": "write",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB8F8FB",
+     "kind": "write",
+     "width": null,
+     "wire_type": "str",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB8F93F",
+     "kind": "composite",
+     "width": null,
+     "wire_type": null,
+     "name": "sub_B03020",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 3,
+   "checkable": 3,
+   "pairs": [
+    {
+     "field": "matching_type",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB8F8BC",
+     "kind": "inline_store"
+    },
+    {
+     "field": "is_coop",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB8F8D7",
+     "kind": "inline_store"
+    },
+    {
+     "field": "mission_id",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB8F8DF",
+     "kind": "write"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [
+    {
+     "va": "0xB8F8AC",
+     "kind": "inline_store",
+     "width": 2,
+     "wire_type": null
+    },
+    {
+     "va": "0xB8F8FB",
+     "kind": "write",
+     "width": null,
+     "wire_type": "str"
+    }
+   ],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB8F830",
+    "0xB8F969"
+   ],
+   "scalar_match_verifiable": false,
+   "capacity_relation": {
+    "observed_min": 14,
+    "capacity": 90,
+    "relation": "within",
+    "unknown_events": [
+     {
+      "va": "0xB8F8FB",
+      "kind": "write",
+      "name": ""
+     },
+     {
+      "va": "0xB8F93F",
+      "kind": "composite",
+      "name": "sub_B03020"
+     }
+    ],
+    "is_lower_bound": true,
+    "note": "观测线长（下界）14 / 容量 0x5a"
+   }
+  },
+  "closer": {
+   "va": "0xB8F969",
+   "kind": "commit",
+   "jcc_va": null,
+   "seq_va": null,
+   "cmp": null,
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x58]",
+   "slot_value": 88,
+   "va": "0xB8FA55",
+   "mov_va": "0xB8FA4C",
+   "host": "[edx+58h]",
+   "argc": 2,
+   "form": "mov_then_call",
+   "error_slot": null
+  },
+  "log_strings": [
+   "matching_type=",
+   "is_coop=",
+   "mission_id=",
+   "room_name_new=\""
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "is_coop",
+  "matching_type",
+  "mission_id",
+  "room_name_new"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 12
+}

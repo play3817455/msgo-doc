@@ -1,0 +1,168 @@
+{
+  "id": "MSMA_MISSIONUNIT",
+  "title": "MSMA_MISSIONUNIT",
+  "csv_path": "msma/msma_missionunit.csv",
+  "purpose": "任务出击单位",
+  "table_id": "56",
+  "download_order": "64",
+  "class_name": "CMsmaMissionUnitTable",
+  "disposition": "DOWNLOAD",
+  "source_md": "datatables/01-列注释/64-56-MSMA_MISSIONUNIT.md",
+  "asm_reader": "sub_57E3F0",
+  "asm_status": "complete",
+  "columns": [
+    {
+      "read_order": 1,
+      "csv_index": 0,
+      "db_column": "unit_id",
+      "type": "u32",
+      "memory_offset": 0,
+      "asm_reader": "sub_57E3F0",
+      "asm_va": "0x57e42b",
+      "meaning": "任务单位ID（主键）",
+      "confidence": "★确证",
+      "status": "confirmed",
+      "name": "unit_id",
+      "display_name": "任务单位ID（主键）"
+    },
+    {
+      "read_order": 2,
+      "csv_index": 1,
+      "db_column": "msma_id",
+      "type": "u32",
+      "memory_offset": 4,
+      "asm_reader": "sub_57E3F0",
+      "asm_va": "0x57e434",
+      "meaning": "关联机体 ID（u32 col1 → +4；→ CHARA_PARAM）",
+      "confidence": "○ASM确证",
+      "status": "confirmed",
+      "name": "msma_id",
+      "display_name": "机体 ID"
+    },
+    {
+      "read_order": 3,
+      "csv_index": 2,
+      "db_column": "reserved_u32_2",
+      "type": "u32",
+      "memory_offset": null,
+      "asm_reader": "sub_57E3F0",
+      "asm_va": null,
+      "meaning": "CSV col2 预留（sub_57E3F0 跳过；默认 0）",
+      "confidence": "",
+      "status": "gap",
+      "name": "reserved_u32_2",
+      "display_name": "预留列 col2"
+    },
+    {
+      "read_order": 4,
+      "csv_index": 3,
+      "db_column": "unit_role",
+      "type": "enum",
+      "memory_offset": 8,
+      "asm_reader": "sub_57E3F0",
+      "asm_va": "0x57e43d",
+      "meaning": "单位职能（sub_57E1D0）：ATTACK/DEFENSE/MOVE/SPECIAL",
+      "confidence": "★确证",
+      "status": "confirmed",
+      "name": "unit_role",
+      "display_name": "单位职能（sub_57E1D0）：ATTACK/DEFENSE/MOVE/SPECIAL",
+      "enum_converter": "sub_57E1D0",
+      "enum_values": [
+        {
+          "name": "ATTACK",
+          "value": 0
+        },
+        {
+          "name": "DEFENSE",
+          "value": 1
+        },
+        {
+          "name": "MOVE",
+          "value": 2
+        },
+        {
+          "name": "SPECIAL",
+          "value": 3
+        }
+      ],
+      "enum_doc": "reverse-login-chain/formats/枚举表.md"
+    },
+    {
+      "read_order": 5,
+      "csv_index": 4,
+      "db_column": "spawn_order",
+      "type": "u32",
+      "memory_offset": 12,
+      "asm_reader": "sub_57E3F0",
+      "asm_va": "0x57e492",
+      "meaning": "出击顺序（+12）；读表时更新全局最小值 this[4]",
+      "confidence": "○ASM确证",
+      "status": "confirmed",
+      "name": "spawn_order",
+      "display_name": "出击顺序"
+    },
+    {
+      "read_order": 6,
+      "csv_index": 5,
+      "db_column": "mission_param_a",
+      "type": "u32",
+      "memory_offset": 16,
+      "asm_reader": "sub_57E3F0",
+      "asm_va": "0x57e49d",
+      "meaning": "任务参数 u32（+16）",
+      "confidence": "○ASM确证",
+      "status": "confirmed",
+      "name": "mission_param_a",
+      "display_name": "任务参数 A"
+    },
+    {
+      "read_order": 7,
+      "csv_index": 6,
+      "db_column": "mission_param_b",
+      "type": "u32",
+      "memory_offset": 20,
+      "asm_reader": "sub_57E3F0",
+      "asm_va": "0x57e4a8",
+      "meaning": "任务参数 u32（+20）",
+      "confidence": "○ASM确证",
+      "status": "confirmed",
+      "name": "mission_param_b",
+      "display_name": "任务参数 B"
+    },
+    {
+      "read_order": 8,
+      "csv_index": 7,
+      "db_column": "reserved_u32_7",
+      "type": "u32",
+      "memory_offset": null,
+      "asm_reader": "sub_57E3F0",
+      "asm_va": null,
+      "meaning": "CSV col7 预留（sub_57E3F0 跳过；默认 0）",
+      "confidence": "",
+      "status": "gap",
+      "name": "reserved_u32_7",
+      "display_name": "预留列 col7"
+    },
+    {
+      "read_order": 9,
+      "csv_index": 8,
+      "db_column": "mission_param_c",
+      "type": "u32",
+      "memory_offset": 24,
+      "asm_reader": "sub_57E3F0",
+      "asm_va": "0x57e4ab",
+      "meaning": "任务参数 u32（+24）",
+      "confidence": "○ASM确证",
+      "status": "confirmed",
+      "name": "mission_param_c",
+      "display_name": "任务参数 C"
+    }
+  ],
+  "column_defined": 9,
+  "column_confirmed": 7,
+  "column_partial": 0,
+  "column_pending": 0,
+  "column_gap": 2,
+  "column_count": 7,
+  "column_gap_note": "CSV 行含 col0..col8，读表跳过未映射列见 gap 标记"
+}

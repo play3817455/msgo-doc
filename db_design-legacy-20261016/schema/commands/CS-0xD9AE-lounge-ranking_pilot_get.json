@@ -1,0 +1,308 @@
+{
+  "id": "CS-0xD9AE-lounge-ranking_pilot_get",
+  "opcode": "0xD9AE",
+  "direction": "CS",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "ranking_pilot_get",
+  "source_dir": "protocol_analysis/commands/CS-0xD9AE-lounge-ranking_pilot_get",
+  "meta": {
+    "opcode": "`0xD9AE`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`ranking_pilot_get`",
+    "名字符串": "`)<-_proto_lounge_client::send_ranking_pilot_get(` @ `0xEECDF4`",
+    "代码位置": "`0xBA3650`（`0xBA3650`..`0xBA3819`）",
+    "opcode 写入证据": "`0xBA36D1`",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0x000E`（14）",
+    "容量申请证据": "`0xBA3696`（分配器 `[obj+0Ch]` 的 `vt[0x78]`）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)` @ `0xBA37A5`",
+    "提交": "`sub_B02FF0` @ `0xBA3748`",
+    "配对命令": "S→C `0xB985-lounge-ranking_pilot_get_r`（已 DONE）"
+  },
+  "handler": null,
+  "handler_va": "0xBA3650",
+  "block": [
+    "0xBA3650",
+    "0xBA3819"
+  ],
+  "name_str": ")<-_proto_lounge_client::send_ranking_pilot_get(",
+  "name_str_va": "0xEECDF4",
+  "capacity": "0xE",
+  "capacity_va": "0xBA3696",
+  "closer_va": "0xBA3748",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)` @ `0xBA37A5`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": "0xBA37A5",
+  "wire": {
+    "length_expr": "10",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0xE（容量记账口径，非线长）",
+    "field_count": 1,
+    "length_source": "field_sum",
+    "readme_conclusion": "字段数：**2**（含 opcode 第 0 项）",
+    "readme_close": "2+10 = 12 ≤ 容量 0xE = 14（富余 2）。"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "写入 `buf+0`，供服务端分发；无 case 块（C→S）",
+      "enum": "0xD9AE",
+      "evidence_va": [
+        "`0xBA36D1`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "10",
+      "wire_type": "struct",
+      "name": "order",
+      "meaning": "排序条件（内嵌 order 结构，5×u16；写入器 `sub_B42060`）",
+      "purpose": "来源=入参 `arg_0` 指向的结构体（由复合写入器一次写入）→ `vt[0x58](buf,len)` 发送至服务端",
+      "enum": null,
+      "evidence_va": [
+        "`0xBA36DA`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3,
+      "composite_ref": "order"
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0xD9AE（分发器 switch 选择子）",
+      "evidence_va": "0xBA36D1"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0xE B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xBA3696"
+    },
+    {
+      "step": 3,
+      "kind": "write_struct",
+      "detail": "order：`struct`（线长 10）—— 排序条件（内嵌 order 结构，5×u16；写入器 `sub_B42060`）",
+      "evidence_va": "0xBA36DA"
+    },
+    {
+      "step": 4,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xBA3748"
+    },
+    {
+      "step": 5,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xBA37B0"
+    }
+  ],
+  "capabilities": [
+    "settle",
+    "query"
+  ],
+  "capabilities_derived": [
+    "query"
+  ],
+  "db_effects": [
+    {
+      "entity": "order",
+      "table_ref": "tbl_order",
+      "op": "update",
+      "fields": [
+        "order"
+      ],
+      "disposition": "COMPOSITE",
+      "evidence_va": "0xBA36DA"
+    }
+  ],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:41",
+    "batch": 1,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 14,
+        "va": "0xBA3696",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xBA3693",
+        "call_va": "0xBA3698"
+      },
+      "field_window": {
+        "start_va": "0xBA3650",
+        "end_va": "0xBA3748",
+        "guard": null,
+        "closer_or_commit_va": "0xBA3748",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "order",
+            "wire_type": "struct",
+            "width": null,
+            "seq": 1,
+            "shape": "agg",
+            "evidence_va": [
+              "`0xBA36DA`"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xBA36D1",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xBA36DA",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B42060",
+            "consumed": 10,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xBA371E",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 0,
+        "checkable": 0,
+        "pairs": [],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xBA36D1",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          },
+          {
+            "va": "0xBA36DA",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xBA3650",
+          "0xBA3748"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 12,
+          "capacity": 14,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xBA371E",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）12 / 容量 0xe"
+        }
+      },
+      "closer": {
+        "va": "0xBA3748",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xBA37B0",
+        "mov_va": "0xBA37A5",
+        "host": "[edx+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "order="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0xD9AE-lounge-ranking_pilot_get.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0xBA36D1",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "`0xBA36D1`"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "RankingPilotGet",
+      "role": "request",
+      "wire_length": "10",
+      "members": [
+        {
+          "name": "Order",
+          "wire_type": "struct",
+          "length": "10",
+          "field_ref": "order",
+          "element": null,
+          "element_length": "10",
+          "cap": null,
+          "composite_ref": "order",
+          "count_field": null,
+          "count_field_source": "fixed",
+          "members_source": "composite"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "99c8468148c7bfc9",
+  "check_fingerprint": "ce38c7353c02b5bf"
+}

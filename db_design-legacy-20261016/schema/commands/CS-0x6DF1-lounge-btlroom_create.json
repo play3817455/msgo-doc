@@ -1,0 +1,708 @@
+{
+  "id": "CS-0x6DF1-lounge-btlroom_create",
+  "opcode": "0x6DF1",
+  "direction": "CS",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "btlroom_create",
+  "source_dir": "protocol_analysis/commands/CS-0x6DF1-lounge-btlroom_create",
+  "meta": {
+    "opcode": "`0x6DF1`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`btlroom_create`",
+    "名字符串": "`)<-_proto_lounge_client::send_btlroom_create(` @ `0xeeadb8`",
+    "代码位置": "sub_B8FAC0 @ `0xb8fac0`（`0xb8fac0`..`0xb8fe7b`）",
+    "opcode 写入证据": "`0xb8fb42`",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0x82`（130）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)`",
+    "配对命令（同 opcode 反向）": "见 §4.3 与其他命令的关联 / INDEX 反向表"
+  },
+  "handler": "sub_B8FAC0",
+  "handler_va": "0xb8fac0",
+  "block": [
+    "0xB8FAC0",
+    "0xB8FE7B"
+  ],
+  "name_str": ")<-_proto_lounge_client::send_btlroom_create(",
+  "name_str_va": "0xeeadb8",
+  "capacity": "0x82",
+  "capacity_va": null,
+  "closer_va": "0xB8FC70",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": null,
+  "wire": {
+    "length_expr": "4 + var + var + 4 + 4 + 1 + 1 + 1",
+    "fixed": false,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x82（容量记账口径，非线长）",
+    "field_count": 8,
+    "length_source": "field_sum",
+    "readme_conclusion": "结论：创建对战房间：匹配类型 + 房名 + 房密码 + 任务 id + 扩展规则 id + 三个开关位。",
+    "readme_close": "2 + 4 + 73 + 25 + 4 + 4 + 1 + 1 + 1 = 115 ≤ 容量 0x82=130（富余 15）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发给 lounge 协议类处理块（C→S 无 case 块）",
+      "enum": "0x6DF1",
+      "evidence_va": [
+        "0xB8FB42"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "2",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "matching_type",
+      "meaning": "匹配类型",
+      "purpose": "来源=入参 arg_0（@0xB8FB4E）；内联 `mov [eax],ecx`；经 `vt[0x58]` 发送",
+      "enum": null,
+      "evidence_va": [
+        "0xB8FB5C"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "6",
+      "length": "var",
+      "wire_type": "bytes",
+      "name": "room_name",
+      "meaning": "房间名（NUL 结尾）",
+      "purpose": "来源=入参 arg_4（@0xB8FB5E）；写线原语 `sub_B02B40`；服务端据此建立房间",
+      "enum": "slot 预算 73（push 0x49@0xB8FB56）",
+      "evidence_va": [
+        "0xB8FB64"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "var",
+      "length": "var",
+      "wire_type": "bytes",
+      "name": "room_pw",
+      "meaning": "房间密码（NUL 结尾）",
+      "purpose": "来源=入参 arg_8（@0xB8FB74）；写线原语 `sub_B02B40`；服务端据此设置入房密码",
+      "enum": "slot 预算 25（push 0x19@0xB8FB78）",
+      "evidence_va": [
+        "0xB8FB80"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 4,
+      "offset": "var",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "mission_id",
+      "meaning": "任务（地图）id",
+      "purpose": "来源=入参 arg_C（@0xB8FB95）；写线原语 `sub_B02D80`(u32)；经 `vt[0x58]` 发送",
+      "enum": null,
+      "evidence_va": [
+        "0xB8FB9A"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    },
+    {
+      "seq": 5,
+      "offset": "var",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "extrule_id",
+      "meaning": "扩展规则 id",
+      "purpose": "来源=入参 arg_10（@0xB8FBAF）；写线原语 `sub_B02D80`(u32)；经 `vt[0x58]` 发送",
+      "enum": null,
+      "evidence_va": [
+        "0xB8FBB4"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 7
+    },
+    {
+      "seq": 6,
+      "offset": "var",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "is_lock",
+      "meaning": "是否上锁（需密码）",
+      "purpose": "来源=入参 arg_14（@0xB8FBC9）；写线原语 `sub_B061C0`(u8)；经 `vt[0x58]` 发送",
+      "enum": "0/1",
+      "evidence_va": [
+        "0xB8FBCE"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 8
+    },
+    {
+      "seq": 7,
+      "offset": "var",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "is_vsclan",
+      "meaning": "是否部队对战",
+      "purpose": "来源=入参 arg_18（@0xB8FBE3）；写线原语 `sub_B061C0`(u8)；经 `vt[0x58]` 发送",
+      "enum": "0/1",
+      "evidence_va": [
+        "0xB8FBE8"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 9
+    },
+    {
+      "seq": 8,
+      "offset": "var",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "is_ev_caravan",
+      "meaning": "是否活动商队房",
+      "purpose": "来源=入参 arg_1C（@0xB8FBFD）；写线原语 `sub_B061C0`(u8)；经 `vt[0x58]` 发送",
+      "enum": "0/1",
+      "evidence_va": [
+        "0xB8FC02"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 10
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0x6DF1（分发器 switch 选择子）",
+      "evidence_va": "0xB8FB42"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0x82 B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xB8FB06"
+    },
+    {
+      "step": 3,
+      "kind": "write_count",
+      "detail": "matching_type：`u32`（线长 4）—— 匹配类型",
+      "evidence_va": "0xB8FB5C"
+    },
+    {
+      "step": 4,
+      "kind": "write_scalar",
+      "detail": "room_name：`bytes`（线长 var）—— 房间名（NUL 结尾）",
+      "evidence_va": "0xB8FB64"
+    },
+    {
+      "step": 5,
+      "kind": "write_scalar",
+      "detail": "room_pw：`bytes`（线长 var）—— 房间密码（NUL 结尾）",
+      "evidence_va": "0xB8FB80"
+    },
+    {
+      "step": 6,
+      "kind": "write_scalar",
+      "detail": "mission_id：`u32`（线长 4）—— 任务（地图）id",
+      "evidence_va": "0xB8FB9A"
+    },
+    {
+      "step": 7,
+      "kind": "write_scalar",
+      "detail": "extrule_id：`u32`（线长 4）—— 扩展规则 id",
+      "evidence_va": "0xB8FBB4"
+    },
+    {
+      "step": 8,
+      "kind": "write_scalar",
+      "detail": "is_lock：`u8`（线长 1）—— 是否上锁（需密码）",
+      "evidence_va": "0xB8FBCE"
+    },
+    {
+      "step": 9,
+      "kind": "write_scalar",
+      "detail": "is_vsclan：`u8`（线长 1）—— 是否部队对战",
+      "evidence_va": "0xB8FBE8"
+    },
+    {
+      "step": 10,
+      "kind": "write_scalar",
+      "detail": "is_ev_caravan：`u8`（线长 1）—— 是否活动商队房",
+      "evidence_va": "0xB8FC02"
+    },
+    {
+      "step": 11,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xB8FC70"
+    },
+    {
+      "step": 12,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xB8FE12"
+    }
+  ],
+  "capabilities": [
+    "create",
+    "lounge.btlroom"
+  ],
+  "capabilities_derived": [
+    "create"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:44",
+    "batch": 8,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 130,
+        "va": "0xB8FB06",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB8FB03",
+        "call_va": "0xB8FB0B"
+      },
+      "field_window": {
+        "start_va": "0xB8FAC0",
+        "end_va": "0xB8FC70",
+        "guard": null,
+        "closer_or_commit_va": "0xB8FC70",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "matching_type",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB8FB5C"
+            ]
+          },
+          {
+            "name": "room_name",
+            "wire_type": "bytes",
+            "width": null,
+            "seq": 2,
+            "shape": "agg",
+            "evidence_va": [
+              "0xB8FB64"
+            ]
+          },
+          {
+            "name": "room_pw",
+            "wire_type": "bytes",
+            "width": null,
+            "seq": 3,
+            "shape": "agg",
+            "evidence_va": [
+              "0xB8FB80"
+            ]
+          },
+          {
+            "name": "mission_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 4,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB8FB9A"
+            ]
+          },
+          {
+            "name": "extrule_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 5,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB8FBB4"
+            ]
+          },
+          {
+            "name": "is_lock",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 6,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB8FBCE"
+            ]
+          },
+          {
+            "name": "is_vsclan",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 7,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB8FBE8"
+            ]
+          },
+          {
+            "name": "is_ev_caravan",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 8,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB8FC02"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB8FB42",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB8FB5C",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB8FB64",
+            "kind": "write",
+            "width": null,
+            "wire_type": "str",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB8FB80",
+            "kind": "write",
+            "width": null,
+            "wire_type": "str",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB8FB9A",
+            "kind": "write",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB8FBB4",
+            "kind": "write",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB8FBCE",
+            "kind": "write",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB8FBE8",
+            "kind": "write",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB8FC02",
+            "kind": "write",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB8FC46",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 6,
+        "checkable": 6,
+        "pairs": [
+          {
+            "field": "matching_type",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB8FB5C",
+            "kind": "inline_store"
+          },
+          {
+            "field": "mission_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB8FB9A",
+            "kind": "write"
+          },
+          {
+            "field": "extrule_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB8FBB4",
+            "kind": "write"
+          },
+          {
+            "field": "is_lock",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB8FBCE",
+            "kind": "write"
+          },
+          {
+            "field": "is_vsclan",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB8FBE8",
+            "kind": "write"
+          },
+          {
+            "field": "is_ev_caravan",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB8FC02",
+            "kind": "write"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB8FB42",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          },
+          {
+            "va": "0xB8FB64",
+            "kind": "write",
+            "width": null,
+            "wire_type": "str"
+          },
+          {
+            "va": "0xB8FB80",
+            "kind": "write",
+            "width": null,
+            "wire_type": "str"
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB8FAC0",
+          "0xB8FC70"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 17,
+          "capacity": 130,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB8FB64",
+              "kind": "write",
+              "name": ""
+            },
+            {
+              "va": "0xB8FB80",
+              "kind": "write",
+              "name": ""
+            },
+            {
+              "va": "0xB8FC46",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）17 / 容量 0x82"
+        }
+      },
+      "closer": {
+        "va": "0xB8FC70",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xB8FE12",
+        "mov_va": "0xB8FE09",
+        "host": "[eax+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "matching_type=",
+        "room_name=\"",
+        "room_pw=\"",
+        "mission_id=",
+        "extrule_id=",
+        "is_lock=",
+        "is_vsclan=",
+        "is_ev_caravan="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0x6DF1-lounge-btlroom_create.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0xb8fb42",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xB8FB42"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "BtlroomCreate",
+      "role": "request",
+      "wire_length": "4 + var + var + 4 + 4 + 1 + 1 + 1",
+      "members": [
+        {
+          "name": "MatchingType",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "matching_type"
+        },
+        {
+          "name": "RoomName",
+          "wire_type": "bytes",
+          "length": "var",
+          "field_ref": "room_name",
+          "element": null,
+          "element_length": null,
+          "cap": null,
+          "count_field": "matching_type",
+          "count_field_source": "nearest_scalar",
+          "note": "元素成员未建模（composites/ 无此结构），须以 IDA 复核补"
+        },
+        {
+          "name": "RoomPw",
+          "wire_type": "bytes",
+          "length": "var",
+          "field_ref": "room_pw",
+          "element": null,
+          "element_length": null,
+          "cap": null,
+          "count_field": "matching_type",
+          "count_field_source": "nearest_scalar",
+          "note": "元素成员未建模（composites/ 无此结构），须以 IDA 复核补"
+        },
+        {
+          "name": "MissionId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "mission_id"
+        },
+        {
+          "name": "ExtruleId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "extrule_id"
+        },
+        {
+          "name": "IsLock",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "is_lock"
+        },
+        {
+          "name": "IsVsclan",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "is_vsclan"
+        },
+        {
+          "name": "IsEvCaravan",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "is_ev_caravan"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "716d9f4416f55649",
+  "check_fingerprint": "4224d146ce6ef842"
+}

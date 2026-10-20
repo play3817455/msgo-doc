@@ -1,0 +1,13 @@
+序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+0,-,2,u16,opcode,命令号,分发器 switch 选择子,0xB985,0xb75e8f,确证
+1,0,4,u32,result,结果码（日志串 `result=`）,经 `vt[0x4AC]` 交业务（11 实参）,-,B75C25,确证
+2,4,4,u32,is_revoke,是否撤销（日志串 `is_revoke=`）,经 `vt[0x4AC]` 交业务,-,B75C65,确证
+3,8,10,struct,order,排序方式（跨度 10B = 线长 10B；日志串 `order=`）,经 `vt[0x4AC]` 交业务,-,B75C7A|B75C89,确证
+4,18,40,struct,rankself,我的排名信息（跨度 40B = 线长 40B；日志串 `rankself=`）,经 `vt[0x4AC]` 交业务,-,B75C9E|B75CAD,确证
+5,58,4,u32,page_now,当前页（日志串 `page_now=`）,经 `vt[0x4AC]` 交业务,-,B75CD5,确证
+6,62,4,u32,page_max,最大页（日志串 `page_max=`）,经 `vt[0x4AC]` 交业务,-,B75CFD,确证
+7,66,4,u32,ranking_num,排行条目数（上限 100）,"驱动 ranking 数组循环（`cmp ebx,64h`）",0..100,B75D17|B75D43,确证
+8,70,95·n₁,"array<struct,104>",ranking,驾驶员排行列表（元素线长 95 / 槽步进 104；日志串 `ranking={...}`）,经 `vt[0x4AC]` 交业务,-,B75D52|B75D7A|B75D86,确证
+9,var,4,u32,toppilot_num,榜首条目数（上限 3）,"驱动 toppilots 数组循环（`cmp [var_2C2C],3`）",0..3,B75DAE|B75DBE,确证
+10,var,95·n₂,"array<struct,104>",toppilots,榜首驾驶员列表（元素线长 95 / 槽步进 104；日志串 `toppilots={...}`）,经 `vt[0x4AC]` 交业务,-,B75DD7|B75DFA|B75E06,确证
+11,var,变长(槽 65),bytes(NUL 串),term_str,"赛季/期间名称串（日志串 `term_str=""...""`）",经 `vt[0x4AC]` 交业务,-,B75E32|B75E2A,确证

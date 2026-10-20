@@ -1,0 +1,372 @@
+{
+  "id": "SC-0xCADA-lounge-msma_equip_bonus_modules_update_r",
+  "opcode": "0xCADA",
+  "direction": "SC",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "msma_equip_bonus_modules_update_r",
+  "source_dir": "protocol_analysis/commands/SC-0xCADA-lounge-msma_equip_bonus_modules_update_r",
+  "meta": {
+    "opcode": "`0xCADA`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`msma_equip_bonus_modules_update_r`",
+    "处理块范围": "`0xb7a837`..`0xb7ab17`",
+    "名字串引用点": "`0xb7a96c`",
+    "声明容量（解码缓冲）": "`0x10`（`B7A855`）",
+    "长度闭合点": "`B7A923`",
+    "报错码": "`0xDF`（块内 `push 1; push <0xDF>; vt[0x64]`）",
+    "去向": "`vt[0x268]` @`B7AA89`（4 实参）"
+  },
+  "handler": null,
+  "handler_va": null,
+  "block": [
+    "0xb7a837",
+    "0xb7ab17"
+  ],
+  "name_str": null,
+  "name_str_va": "0xb7a96c",
+  "capacity": "0x10",
+  "capacity_va": "0xB7A855",
+  "closer_va": "0xB7A923",
+  "dispatch": "`vt[0x268]` @`B7AA89`（4 实参）",
+  "dispatch_slot": "vt[0x268]",
+  "dispatch_va": "0xB7AA89",
+  "wire": {
+    "length_expr": "4 + 8 + 4",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x10（容量记账口径，非线长）",
+    "field_count": 3,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：16",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "result",
+      "meaning": "结果码（日志串 `result=`）",
+      "purpose": "经 `vt[0x268]`（4 实参）交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xb7a87f",
+        "0xb7a88e"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "8",
+      "wire_type": "u64",
+      "name": "uniqid_ms",
+      "meaning": "机体唯一 ID（日志串 `uniqid_ms=`）",
+      "purpose": "同上（拆低/高 32 位）",
+      "enum": null,
+      "evidence_va": [
+        "0xb7a8bf",
+        "0xb7a8ce"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 3,
+      "offset": "12",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "eq_bonus_modules",
+      "meaning": "装备奖励模块（固定 1 个 `cmp edi,1`@`B7A908`；日志串 `eq_bonus_modules={`）",
+      "purpose": "同上",
+      "enum": null,
+      "evidence_va": [
+        "0xb7a8e3",
+        "0xb7a8f6"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0xCADA（分发器 switch 选择子）",
+      "evidence_va": "0x0000"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB41120`（模块 id 223）→ 之后逐字段读线",
+      "evidence_va": "0xB7A83E"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "result：`u32`（线长 4）—— 结果码（日志串 `result=`）",
+      "evidence_va": "0xB7A87F"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "uniqid_ms：`u64`（线长 8）—— 机体唯一 ID（日志串 `uniqid_ms=`）",
+      "evidence_va": "0xB7A8BF"
+    },
+    {
+      "step": 5,
+      "kind": "read_scalar",
+      "detail": "eq_bonus_modules：`u32`（线长 4）—— 装备奖励模块（固定 1 个 `cmp edi,1`@`B7A908`；日志串 `eq_bonus_modules={`）",
+      "evidence_va": "0xB7A8E3"
+    },
+    {
+      "step": 6,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB7A923"
+    },
+    {
+      "step": 7,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x268]`，实参 4 个",
+      "evidence_va": "0xB7AA89"
+    },
+    {
+      "step": 8,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB7A8A8"
+    }
+  ],
+  "capabilities": [
+    "update"
+  ],
+  "capabilities_derived": [
+    "notify",
+    "update"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:45",
+    "batch": 12,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 16,
+        "va": "0xB7A853",
+        "reg": "eax",
+        "host": "[edx+78h]",
+        "alloc_va": "0xB7A850",
+        "call_va": "0xB7A855"
+      },
+      "field_window": {
+        "start_va": "0xB7A83F",
+        "end_va": "0xB7A94A",
+        "guard": {
+          "va": "0xB7A83E",
+          "func": "0xB41120",
+          "module_id": 223,
+          "release_va": "0xB41110"
+        },
+        "closer_or_commit_va": "0xB7A923",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "result",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb7a87f",
+              "0xb7a88e"
+            ]
+          },
+          {
+            "name": "uniqid_ms",
+            "wire_type": "u64",
+            "width": 8,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb7a8bf",
+              "0xb7a8ce"
+            ]
+          },
+          {
+            "name": "eq_bonus_modules",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb7a8e3",
+              "0xb7a8f6"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB7A88E",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB7A8CE",
+            "kind": "read",
+            "width": 8,
+            "wire_type": "u64",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB7A8F6",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 3,
+        "checkable": 3,
+        "pairs": [
+          {
+            "field": "result",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB7A88E",
+            "kind": "read"
+          },
+          {
+            "field": "uniqid_ms",
+            "width": 8,
+            "shape": "scalar",
+            "va": "0xB7A8CE",
+            "kind": "read"
+          },
+          {
+            "field": "eq_bonus_modules",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB7A8F6",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB7A83F",
+          "0xB7A94A"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 16,
+          "capacity": 16,
+          "relation": "exact",
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）16 / 容量 0x10"
+        }
+      },
+      "closer": {
+        "va": "0xB7A923",
+        "kind": "jz",
+        "jcc_va": "0xB7A929",
+        "seq_va": "0xB7A91F",
+        "jcc_dst": "0xB7A945",
+        "cmp": "cmp     ebx, [esp+2C5Ch+var_2C40]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x268]",
+        "slot_value": 616,
+        "va": "0xB7AA89",
+        "mov_va": "0xB7AA6E",
+        "host": "[edx+268h]",
+        "argc": 4,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB7A8A8",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "result=",
+        "uniqid_ms=",
+        "eq_bonus_modules={"
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0xCADA-lounge-msma_equip_bonus_modules_update_r.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": []
+  },
+  "structs": {
+    "response": {
+      "go_name": "MsmaEquipBonusModulesUpdateR",
+      "role": "response",
+      "wire_length": "4 + 8 + 4",
+      "members": [
+        {
+          "name": "Result",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "result"
+        },
+        {
+          "name": "UniqidMs",
+          "wire_type": "u64",
+          "length": "8",
+          "field_ref": "uniqid_ms"
+        },
+        {
+          "name": "EqBonusModules",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "eq_bonus_modules"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "7c26a64354953bfb",
+  "check_fingerprint": "2a1a0fb64f3f7aca"
+}

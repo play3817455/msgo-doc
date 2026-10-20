@@ -1,0 +1,6 @@
+序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+0,-,2,u16,opcode,命令号,分发器 switch 选择子,0xA78D,0xb26603,确证
+1,0,4,u32,from_ent_id,发射者实体 ID（日志串 `from_ent_id=`）,经 `vt[0x1E0]` 交业务,-,B264DB|B26659,确证
+2,4,1,u8,wslot_idx,武器槽序号（日志串 `wslot_idx=`，字节打印器）,经 `vt[0x1E0]` 交业务,-,B2651B|B26681,确证
+3,5,4,u32,fire_points_cnt,"火力点个数（上界 `cmp ebx,0Ch` @`B2655D` ⇒ ≤12）",驱动元素循环,0..12,B26531,确证
+4,9,6N,"array<struct(3×u16),N>",fire_points,"火力点坐标列表（日志 `fire_points={x,y,z}`）",经 `vt[0x1E0]` 交业务,N ≤ 12,B2656F|B2658C|B2669E,确证

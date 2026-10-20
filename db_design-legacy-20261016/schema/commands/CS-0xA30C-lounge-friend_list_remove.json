@@ -1,0 +1,298 @@
+{
+  "id": "CS-0xA30C-lounge-friend_list_remove",
+  "opcode": "0xA30C",
+  "direction": "CS",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "friend_list_remove",
+  "source_dir": "protocol_analysis/commands/CS-0xA30C-lounge-friend_list_remove",
+  "meta": {
+    "opcode": "`0xA30C`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`friend_list_remove`",
+    "名字符串": "`)<-_proto_lounge_client::send_friend_list_remove(` @ `0xEEC018`",
+    "代码位置": "sub_B9AC50 @ `0xB9AC50`（`0xB9AC50`..`0xB9ADFD`）",
+    "opcode 写入证据": "`0xB9ACC4`",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0x0006`（6）",
+    "容量申请证据": "`0xB9AC96`（`push 0x0006`）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)` @ `0xB9AD8B`",
+    "附加通知": "`[obj+79A8h]` 回调，模块 id `0x155` @ `0xB9ADA6`",
+    "配对命令": "S→C `SC-0xE5B9-lounge-friend_list_remove_r`（已 DONE）"
+  },
+  "handler": "sub_B9AC50",
+  "handler_va": "0xB9AC50",
+  "block": [
+    "0xB9AC50",
+    "0xB9ADFD"
+  ],
+  "name_str": ")<-_proto_lounge_client::send_friend_list_remove(",
+  "name_str_va": "0xEEC018",
+  "capacity": "0x6",
+  "capacity_va": "0xB9AC96",
+  "closer_va": "0xB9AD30",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)` @ `0xB9AD8B`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": "0xB9AD8B",
+  "wire": {
+    "length_expr": "4",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x6（容量记账口径，非线长）",
+    "field_count": 1,
+    "length_source": "field_sum",
+    "readme_conclusion": "结论：请求把指定驾驶员从好友名单删除。",
+    "readme_close": "2 + 4 = 6 == 容量 0x6 = 6（精确相等）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "写入 `buf+0`，供服务端分发；无 case 块（C→S）",
+      "enum": "0xA30C",
+      "evidence_va": [
+        "0xB9ACC4"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "2",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "pilotid",
+      "meaning": "好友驾驶员 id",
+      "purpose": "来源=入参 `arg_0`（`mov ecx,[esp+40h+arg_0]` → 内联 `mov [eax],ecx`）",
+      "enum": null,
+      "evidence_va": [
+        "0xB9ACD4"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0xA30C（分发器 switch 选择子）",
+      "evidence_va": "0xB9ACC4"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0x6 B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xB9AC96"
+    },
+    {
+      "step": 3,
+      "kind": "write_scalar",
+      "detail": "pilotid：`u32`（线长 4）—— 好友驾驶员 id",
+      "evidence_va": "0xB9ACD4"
+    },
+    {
+      "step": 4,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xB9AD30"
+    },
+    {
+      "step": 5,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xB9AD94"
+    },
+    {
+      "step": 6,
+      "kind": "notify",
+      "detail": "附加通知回调 `[obj+79A8h]`（模块 id，非字段）",
+      "evidence_va": "0xB9ADA6"
+    }
+  ],
+  "capabilities": [
+    "delete",
+    "query",
+    "lounge.friend"
+  ],
+  "capabilities_derived": [
+    "unclassified"
+  ],
+  "db_effects": [],
+  "pair": "SC-0xE5B9-lounge-friend_list_remove_r",
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:44",
+    "batch": 10,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 6,
+        "va": "0xB9AC96",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB9AC93",
+        "call_va": "0xB9AC98"
+      },
+      "field_window": {
+        "start_va": "0xB9AC50",
+        "end_va": "0xB9AD30",
+        "guard": null,
+        "closer_or_commit_va": "0xB9AD30",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "pilotid",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB9ACD4"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB9ACC4",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB9ACD4",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB9AD06",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 1,
+        "checkable": 1,
+        "pairs": [
+          {
+            "field": "pilotid",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB9ACD4",
+            "kind": "inline_store"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB9ACC4",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB9AC50",
+          "0xB9AD30"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 6,
+          "capacity": 6,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB9AD06",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）6 / 容量 0x6"
+        }
+      },
+      "closer": {
+        "va": "0xB9AD30",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xB9AD94",
+        "mov_va": "0xB9AD8B",
+        "host": "[edx+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "pilotid="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0xA30C-lounge-friend_list_remove.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0xB9ACC4",
+    "notify_va": "0xB9ADA6",
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xB9ACC4"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "FriendListRemove",
+      "role": "request",
+      "wire_length": "4",
+      "members": [
+        {
+          "name": "Pilotid",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "pilotid"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "a5f12656e945a8a7",
+  "check_fingerprint": "9e62d2ed83d2476c"
+}

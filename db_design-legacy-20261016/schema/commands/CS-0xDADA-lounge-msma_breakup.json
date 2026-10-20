@@ -1,0 +1,302 @@
+{
+  "id": "CS-0xDADA-lounge-msma_breakup",
+  "opcode": "0xDADA",
+  "direction": "CS",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "msma_breakup",
+  "source_dir": "protocol_analysis/commands/CS-0xDADA-lounge-msma_breakup",
+  "meta": {
+    "opcode": "`0xDADA`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`msma_breakup`",
+    "名字符串": "`)<-_proto_lounge_client::send_msma_breakup(` @ `0xEEB860`",
+    "代码位置": "`0xB96100`（`0xB96100`..`0xB962B9`）",
+    "opcode 写入证据": "`0xB96174`",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0x000A`（10）",
+    "容量申请证据": "`0xB96146`（分配器 `[obj+0Ch]` 的 `vt[0x78]`）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)` @ `0xB96247`",
+    "提交": "`sub_B02FF0` @ `0xB961E7`",
+    "配对命令": "S→C `0x3F80-lounge-msma_breakup_r`（已 DONE）"
+  },
+  "handler": null,
+  "handler_va": "0xB96100",
+  "block": [
+    "0xB96100",
+    "0xB962B9"
+  ],
+  "name_str": ")<-_proto_lounge_client::send_msma_breakup(",
+  "name_str_va": "0xEEB860",
+  "capacity": "0xA",
+  "capacity_va": "0xB96146",
+  "closer_va": "0xB961E7",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)` @ `0xB96247`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": "0xB96247",
+  "wire": {
+    "length_expr": "8",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0xA（容量记账口径，非线长）",
+    "field_count": 1,
+    "length_source": "field_sum",
+    "readme_conclusion": "字段数：**2**（含 opcode 第 0 项）",
+    "readme_close": "2+8 = 10 **== 容量 0xA = 10**（精确相等）。"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "写入 `buf+0`，供服务端分发；无 case 块（C→S）",
+      "enum": "0xDADA",
+      "evidence_va": [
+        "`0xB96174`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "8",
+      "wire_type": "u64",
+      "name": "uniqid_ms",
+      "meaning": "机体唯一ID（u64）",
+      "purpose": "来源=入参 `arg_0/4`（低 32 位在前、高 32 位在后两次内联 `mov`）→ `vt[0x58](buf,len)` 发送至服务端",
+      "enum": null,
+      "evidence_va": [
+        "`0xB96188;0xB9618A`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0xDADA（分发器 switch 选择子）",
+      "evidence_va": "0xB96174"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0xA B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xB96146"
+    },
+    {
+      "step": 3,
+      "kind": "write_scalar",
+      "detail": "uniqid_ms：`u64`（线长 8）—— 机体唯一ID（u64）",
+      "evidence_va": "0xB96188"
+    },
+    {
+      "step": 4,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xB961E7"
+    },
+    {
+      "step": 5,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xB96250"
+    }
+  ],
+  "capabilities": [
+    "unclassified",
+    "lounge.breakup"
+  ],
+  "capabilities_derived": [
+    "unclassified"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:42",
+    "batch": 4,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 10,
+        "va": "0xB96146",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB96143",
+        "call_va": "0xB96148"
+      },
+      "field_window": {
+        "start_va": "0xB96100",
+        "end_va": "0xB961E7",
+        "guard": null,
+        "closer_or_commit_va": "0xB961E7",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "uniqid_ms",
+            "wire_type": "u64",
+            "width": 8,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "`0xB96188;0xB9618A`"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB96174",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB96188",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB961BD",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 0,
+        "checkable": 1,
+        "pairs": [],
+        "gaps": [
+          {
+            "field": "uniqid_ms",
+            "wire_type": "u64",
+            "width": 8,
+            "shape": "scalar",
+            "note": "汇编事件序列里找不到与之对位的读写点（缺字段或宽度不符）"
+          }
+        ],
+        "unmatched_actual": [
+          {
+            "va": "0xB96174",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          },
+          {
+            "va": "0xB96188",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB96100",
+          "0xB961E7"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 6,
+          "capacity": 10,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB961BD",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）6 / 容量 0xa"
+        }
+      },
+      "closer": {
+        "va": "0xB961E7",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xB96250",
+        "mov_va": "0xB96247",
+        "host": "[edx+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "uniqid_ms="
+      ]
+    },
+    "mismatches": [],
+    "notes": [
+      {
+        "check": "primitive_widths",
+        "note": "定宽对位不可判定：C→S 写线在复合写入器内部 consumed 未知；缺口 uniqid_ms"
+      }
+    ],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0xDADA-lounge-msma_breakup.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0xB96174",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "`0xB96174`"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "MsmaBreakup",
+      "role": "request",
+      "wire_length": "8",
+      "members": [
+        {
+          "name": "UniqidMs",
+          "wire_type": "u64",
+          "length": "8",
+          "field_ref": "uniqid_ms"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "c9d4b1515c09bb6d",
+  "check_fingerprint": "c830910ee295c722"
+}

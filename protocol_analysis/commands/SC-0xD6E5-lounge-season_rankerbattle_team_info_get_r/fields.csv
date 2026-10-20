@@ -1,0 +1,5 @@
+序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+1,0,4,u32,result,取得结果码（日志串 `result=`）,经 `vt[0x5D8]` 交业务,-,0xb7e8f0|0xb7ea77,确证
+2,4,4,u32,troops,编队 ID/部队号（日志串 `troops=`）,经 `vt[0x5D8]` 交业务,-,0xb7e930|0xb7eaa1,确证
+3,8,4,u32,pilots_num,队员条数（上限 200；无独立日志名，按 `pilots={` 计数，命名推定）,驱动 `pilots` 数组循环（`cmp edi，ebx`@`B7E9BE`）,0..200,0xb7e946|0xb7e972|0xb7e9be,确证
+4,12,55n,"array<team_pilot,200>",pilots,队员列表（日志串 `pilots={`；成员打印器 `sub_B51310`）,经 `vt[0x5D8]` 交业务；槽步进 64 = `sub_B41AC0`（`add dword ptr [edx]，40h`）,-,0xb7e984|0xb7e9aa|0xb7eabc,确证

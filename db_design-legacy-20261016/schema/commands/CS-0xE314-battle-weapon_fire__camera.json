@@ -1,0 +1,466 @@
+{
+  "id": "CS-0xE314-battle-weapon_fire__camera",
+  "opcode": "0xE314",
+  "direction": "CS",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "weapon_fire__camera",
+  "source_dir": "protocol_analysis/commands/CS-0xE314-battle-weapon_fire__camera",
+  "meta": {
+    "opcode": "`0xE314`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`battle_client`",
+    "命令名": "`weapon_fire__camera`",
+    "名字符串": "`)<-_proto_battle_client::send_weapon_fire__camera(` @ `0x00EE0FE0`",
+    "代码位置": "`sub_B3A580` @ `0x00B3A580`（`0x00B3A580`..`0x00B3A857`）",
+    "opcode 写入证据": "`0x00B3A600`",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0x076`（118）",
+    "容量申请证据": "`0x00B3A5C6`（分配器 `[obj+0Ch]` 的 `vt[0x78]`）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)` @ `0x00B3A7E5`",
+    "提交": "`sub_B02FF0` @ `0x00B3A6E5`",
+    "配对命令": "（无同名 S→C 应答，见 `notes.md`）"
+  },
+  "handler": "sub_B3A580",
+  "handler_va": "0x00B3A580",
+  "block": [
+    "0xB3A580",
+    "0xB3A857"
+  ],
+  "name_str": ")<-_proto_battle_client::send_weapon_fire__camera(",
+  "name_str_va": "0x00EE0FE0",
+  "capacity": "0x76",
+  "capacity_va": "0xB3A5C6",
+  "closer_va": "0xB3A6E5",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)` @ `0x00B3A7E5`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": "0x00B3A7E5",
+  "wire": {
+    "length_expr": "4 + 4 + var + 2",
+    "fixed": false,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x76（容量记账口径，非线长）",
+    "field_count": 4,
+    "length_source": "field_sum",
+    "readme_conclusion": "字段数：**5**（含 opcode 第 0 项）",
+    "readme_close": "2 + 4 + 4 + 2×N + 2，N≤51 ⇒ 上限场景 114 ≤ 容量 0x76 = 118（富余 4）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "写入 `buf+0`，供服务端分发；无 case 块（C→S）",
+      "enum": "0xE314",
+      "evidence_va": [
+        "`00B3A600`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "frame_count",
+      "meaning": "帧序号",
+      "purpose": "来源=入参 `arg_0`（`mov ecx,[esp+arg_0]` @`0xB3A612`）→ 内联写 `[eax],ecx`（@`0xB3A616`）",
+      "enum": null,
+      "evidence_va": [
+        "`0xB3A612`;`0xB3A616`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "ent_ids_num",
+      "meaning": "实体会话数（= 数组元素个数，上限 0x33=51）",
+      "purpose": "来源=入参 `arg_8`（既作循环上界、又写线）→ 写原语 `sub_B02D80`（u32 @`0xB3A62C`）；上界检查 `cmp ebp,33h; ja 失败`（@`0xB3A60F`）",
+      "enum": "0..51",
+      "evidence_va": [
+        "`0xB3A60F`;`0xB3A62C`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "8",
+      "length": "var",
+      "wire_type": "array<u16,N>",
+      "name": "ent_ids",
+      "meaning": "实体 ID 数组（N=ent_ids_num，每元素 u16）",
+      "purpose": "来源=入参 `arg_4`（`mov si,[esi+eax*2]` @`0xB3A65E`）→ 内联写 `[ecx],si`（@`0xB3A662`），循环 `add ecx,2` / `cmp eax,ebp`",
+      "enum": "长度 = 2×ent_ids_num",
+      "evidence_va": [
+        "`0xB3A65E`;`0xB3A662`;`0xB3A66E`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 4,
+      "offset": "var",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "AI_ent_id",
+      "meaning": "AI 实体 ID",
+      "purpose": "来源=入参 `arg_C`（`mov dx,word ptr [esp+arg_C]` @`0xB3A683`）→ 内联写 `[ecx],dx`（@`0xB3A688`）",
+      "enum": null,
+      "evidence_va": [
+        "`0xB3A683`;`0xB3A688`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0xE314（分发器 switch 选择子）",
+      "evidence_va": "0x00B3A600"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0x76 B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xB3A5C6"
+    },
+    {
+      "step": 3,
+      "kind": "write_scalar",
+      "detail": "frame_count：`u32`（线长 4）—— 帧序号",
+      "evidence_va": "0xB3A612"
+    },
+    {
+      "step": 4,
+      "kind": "write_count",
+      "detail": "ent_ids_num：`u32`（线长 4）—— 实体会话数（= 数组元素个数，上限 0x33=51）",
+      "evidence_va": "0xB3A60F"
+    },
+    {
+      "step": 5,
+      "kind": "write_array",
+      "detail": "ent_ids：`array<u16,N>`（线长 var）—— 实体 ID 数组（N=ent_ids_num，每元素 u16）",
+      "evidence_va": "0xB3A65E"
+    },
+    {
+      "step": 6,
+      "kind": "write_scalar",
+      "detail": "AI_ent_id：`u16`（线长 2）—— AI 实体 ID",
+      "evidence_va": "0xB3A683"
+    },
+    {
+      "step": 7,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xB3A6E5"
+    },
+    {
+      "step": 8,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xB3A7EE"
+    }
+  ],
+  "capabilities": [
+    "battle_action"
+  ],
+  "capabilities_derived": [
+    "battle"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:48",
+    "batch": 20,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 118,
+        "va": "0xB3A5C6",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB3A5C3",
+        "call_va": "0xB3A5C8"
+      },
+      "field_window": {
+        "start_va": "0xB3A580",
+        "end_va": "0xB3A6E5",
+        "guard": null,
+        "closer_or_commit_va": "0xB3A6E5",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "frame_count",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "`0xB3A612`;`0xB3A616`"
+            ]
+          },
+          {
+            "name": "ent_ids_num",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "`0xB3A60F`;`0xB3A62C`"
+            ]
+          },
+          {
+            "name": "ent_ids",
+            "wire_type": "array<u16,N>",
+            "width": null,
+            "seq": 3,
+            "shape": "agg",
+            "evidence_va": [
+              "`0xB3A65E`;`0xB3A662`;`0xB3A66E`"
+            ]
+          },
+          {
+            "name": "AI_ent_id",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 4,
+            "shape": "scalar",
+            "evidence_va": [
+              "`0xB3A683`;`0xB3A688`"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB3A600",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB3A616",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB3A62C",
+            "kind": "write",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB3A662",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB3A688",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB3A6BB",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 3,
+        "checkable": 3,
+        "pairs": [
+          {
+            "field": "frame_count",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB3A616",
+            "kind": "inline_store"
+          },
+          {
+            "field": "ent_ids_num",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB3A62C",
+            "kind": "write"
+          },
+          {
+            "field": "AI_ent_id",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB3A662",
+            "kind": "inline_store"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB3A600",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          },
+          {
+            "va": "0xB3A688",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB3A580",
+          "0xB3A6E5"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 14,
+          "capacity": 118,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB3A6BB",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）14 / 容量 0x76"
+        }
+      },
+      "closer": {
+        "va": "0xB3A6E5",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xB3A7EE",
+        "mov_va": "0xB3A7E5",
+        "host": "[eax+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "frame_count=",
+        "ent_ids={",
+        "AI_ent_id="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0xE314-battle-weapon_fire__camera.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0x00B3A600",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "`00B3A600`"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "WeaponFireCamera",
+      "role": "request",
+      "wire_length": "4 + 4 + var + 2",
+      "members": [
+        {
+          "name": "FrameCount",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "frame_count"
+        },
+        {
+          "name": "EntIdsNum",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "ent_ids_num"
+        },
+        {
+          "name": "EntIds",
+          "wire_type": "array<u16,N>",
+          "length": "var",
+          "field_ref": "ent_ids",
+          "element": "u16",
+          "element_length": "2",
+          "cap": null,
+          "count_field": "ent_ids_num",
+          "count_field_source": "heuristic",
+          "count_var": "N",
+          "note": null
+        },
+        {
+          "name": "AIEntId",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "AI_ent_id"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "0b2430111afa79aa",
+  "check_fingerprint": "ce05dcce02f08270"
+}

@@ -1,0 +1,232 @@
+{
+ "id": "CS-0xE591-lounge-storage_msma_extend",
+ "verified_at": "2026-09-30 15:25:45",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "handler_func",
+ "block": [
+  "0xBA3E90",
+  "0xBA410C"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 18,
+   "va": "0xBA3ED6",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xBA3ED3",
+   "call_va": "0xBA3ED8"
+  },
+  "field_window": {
+   "start_va": "0xBA3E90",
+   "end_va": "0xBA3FC7",
+   "guard": null,
+   "closer_or_commit_va": "0xBA3FC7",
+   "within_model_block": true,
+   "range_from": "handler_func"
+  },
+  "primitive_widths": {
+   "direction": "CS",
+   "expected": [
+    {
+     "name": "count",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "`0xBA3F18`;`0xBA3F1C`"
+     ]
+    },
+    {
+     "name": "total_price",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 2,
+     "shape": "scalar",
+     "evidence_va": [
+      "`0xBA3F2B`;`0xBA3F37`"
+     ]
+    },
+    {
+     "name": "use_bc",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 3,
+     "shape": "scalar",
+     "evidence_va": [
+      "`0xBA3F3F`"
+     ]
+    },
+    {
+     "name": "token_id",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 4,
+     "shape": "scalar",
+     "evidence_va": [
+      "`0xBA3F59`"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xBA3F0C",
+     "kind": "inline_store",
+     "width": 2,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xBA3F1C",
+     "kind": "inline_store",
+     "width": 4,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xBA3F37",
+     "kind": "inline_store",
+     "width": 4,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xBA3F3F",
+     "kind": "write",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xBA3F59",
+     "kind": "write",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xBA3F9D",
+     "kind": "composite",
+     "width": null,
+     "wire_type": null,
+     "name": "sub_B03020",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 4,
+   "checkable": 4,
+   "pairs": [
+    {
+     "field": "count",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xBA3F1C",
+     "kind": "inline_store"
+    },
+    {
+     "field": "total_price",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xBA3F37",
+     "kind": "inline_store"
+    },
+    {
+     "field": "use_bc",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xBA3F3F",
+     "kind": "write"
+    },
+    {
+     "field": "token_id",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xBA3F59",
+     "kind": "write"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [
+    {
+     "va": "0xBA3F0C",
+     "kind": "inline_store",
+     "width": 2,
+     "wire_type": null
+    }
+   ],
+   "nested_unmatchable": [],
+   "window": [
+    "0xBA3E90",
+    "0xBA3FC7"
+   ],
+   "scalar_match_verifiable": false,
+   "capacity_relation": {
+    "observed_min": 18,
+    "capacity": 18,
+    "relation": "within",
+    "unknown_events": [
+     {
+      "va": "0xBA3F9D",
+      "kind": "composite",
+      "name": "sub_B03020"
+     }
+    ],
+    "is_lower_bound": true,
+    "note": "观测线长（下界）18 / 容量 0x12"
+   }
+  },
+  "closer": {
+   "va": "0xBA3FC7",
+   "kind": "commit",
+   "jcc_va": null,
+   "seq_va": null,
+   "cmp": null,
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x58]",
+   "slot_value": 88,
+   "va": "0xBA40A3",
+   "mov_va": "0xBA409A",
+   "host": "[edx+58h]",
+   "argc": 2,
+   "form": "mov_then_call",
+   "error_slot": null
+  },
+  "log_strings": [
+   "count=",
+   "total_price=",
+   "use_bc=",
+   "token_id="
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "count",
+  "token_id",
+  "total_price",
+  "use_bc"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 13
+}

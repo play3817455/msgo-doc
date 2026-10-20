@@ -1,0 +1,261 @@
+{
+ "id": "CS-0x9370-lounge-clan_rokaku_use_point",
+ "verified_at": "2026-09-30 15:25:44",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "handler_func",
+ "block": [
+  "0xBA2A80",
+  "0xBA2D40"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 22,
+   "va": "0xBA2AC6",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xBA2AC3",
+   "call_va": "0xBA2AC8"
+  },
+  "field_window": {
+   "start_va": "0xBA2A80",
+   "end_va": "0xBA2BD1",
+   "guard": null,
+   "closer_or_commit_va": "0xBA2BD1",
+   "within_model_block": true,
+   "range_from": "handler_func"
+  },
+  "primitive_widths": {
+   "direction": "CS",
+   "expected": [
+    {
+     "name": "tree_id",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xBA2B0C"
+     ]
+    },
+    {
+     "name": "node_no",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 2,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xBA2B27"
+     ]
+    },
+    {
+     "name": "idx_no",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 3,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xBA2B2F"
+     ]
+    },
+    {
+     "name": "point_use",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 4,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xBA2B49"
+     ]
+    },
+    {
+     "name": "is_supply",
+     "wire_type": "u8",
+     "width": 1,
+     "seq": 5,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xBA2B63"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xBA2AFC",
+     "kind": "inline_store",
+     "width": 2,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xBA2B0C",
+     "kind": "inline_store",
+     "width": 4,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xBA2B27",
+     "kind": "inline_store",
+     "width": 4,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xBA2B2F",
+     "kind": "write",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xBA2B49",
+     "kind": "write",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xBA2B63",
+     "kind": "write",
+     "width": 1,
+     "wire_type": "u8",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xBA2BA7",
+     "kind": "composite",
+     "width": null,
+     "wire_type": null,
+     "name": "sub_B03020",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 5,
+   "checkable": 5,
+   "pairs": [
+    {
+     "field": "tree_id",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xBA2B0C",
+     "kind": "inline_store"
+    },
+    {
+     "field": "node_no",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xBA2B27",
+     "kind": "inline_store"
+    },
+    {
+     "field": "idx_no",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xBA2B2F",
+     "kind": "write"
+    },
+    {
+     "field": "point_use",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xBA2B49",
+     "kind": "write"
+    },
+    {
+     "field": "is_supply",
+     "width": 1,
+     "shape": "scalar",
+     "va": "0xBA2B63",
+     "kind": "write"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [
+    {
+     "va": "0xBA2AFC",
+     "kind": "inline_store",
+     "width": 2,
+     "wire_type": null
+    }
+   ],
+   "nested_unmatchable": [],
+   "window": [
+    "0xBA2A80",
+    "0xBA2BD1"
+   ],
+   "scalar_match_verifiable": false,
+   "capacity_relation": {
+    "observed_min": 19,
+    "capacity": 22,
+    "relation": "within",
+    "unknown_events": [
+     {
+      "va": "0xBA2BA7",
+      "kind": "composite",
+      "name": "sub_B03020"
+     }
+    ],
+    "is_lower_bound": true,
+    "note": "观测线长（下界）19 / 容量 0x16"
+   }
+  },
+  "closer": {
+   "va": "0xBA2BD1",
+   "kind": "commit",
+   "jcc_va": null,
+   "seq_va": null,
+   "cmp": null,
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x58]",
+   "slot_value": 88,
+   "va": "0xBA2CD7",
+   "mov_va": "0xBA2CCE",
+   "host": "[edx+58h]",
+   "argc": 2,
+   "form": "mov_then_call",
+   "error_slot": null
+  },
+  "log_strings": [
+   "tree_id=",
+   "node_no=",
+   "idx_no=",
+   "point_use=",
+   "is_supply="
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "idx_no",
+  "is_supply",
+  "node_no",
+  "point_use",
+  "tree_id"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 9
+}

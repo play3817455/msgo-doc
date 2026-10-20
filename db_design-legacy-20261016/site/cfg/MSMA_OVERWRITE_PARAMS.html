@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MSMA_OVERWRITE_PARAMS · db_design</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <h1><a href="../index.html">db_design</a></h1>
+      <p class="header-note">唯一证据源：<code>protocol_analysis/</code></p>
+      <nav><a href="../index.html">首页</a>
+      <a href="../homing/index.html">归位库</a>
+      <a href="../tables/index.html">旧表留档</a>
+      <a href="../commands/index.html">命令</a>
+      <a href="../cfg/index.html" class="active">配置表79</a>
+      <a href="../srv/index.html">服务端配置</a>
+      <a href="../asm-audit/index.html">ASM 审计</a>
+      <a href="../oracle-audit/index.html">Oracle 审计</a>
+      <a href="../entities/index.html">协议实体</a>
+      <a href="../fields/index.html">字段索引</a>
+      <a href="../relations.html">表关系</a></nav>
+    </div>
+  </header>
+  <main class="wrap">
+
+    <p class="breadcrumb"><a href="index.html">配置表79</a> / <code>MSMA_OVERWRITE_PARAMS</code></p>
+    <h2><code>MSMA_OVERWRITE_PARAMS</code> <span class="badge" style="background:#1565c0">DOWNLOAD</span> <span class="badge" style="background:#2e7d32">确证</span></h2>
+    <dl class="asm-dl">
+      <dt>CSV</dt><dd><code>msma/msma_overwrite_params.csv</code></dd>
+      <dt>用途</dt><dd>区域参数覆写表 —— 不新增行，而是对已装载的表行做逐字段覆写：MS→CHARA_PARAM、WEAPON→武器设定、PLAN/BULLET/WRESTLE 同理。CN 客户端只接受区域列为 CHINA / CHINA_TPE 的行，其余行整行丢弃。</dd>
+      <dt>读表函数</dt><dd><code>sub_580360</code></dd>
+      <dt>表ID</dt><dd>78</dd>
+      <dt>下载序</dt><dd></dd>
+      <dt>类名</dt><dd><code>CMsmaOverwriteParamsTable</code></dd>
+      <dt>列统计</dt><dd>0 列 · 确证 55 · 已映射 0 · 间隙 0</dd>
+      <dt>证据</dt><dd><a href="../../../reverse-login-chain/detail/W06-数据表下载-逐字段.md" target="_blank">reverse-login-chain/detail/W06-数据表下载-逐字段.md</a></dd>
+    </dl>
+    <section>
+      <h3>列定案</h3>
+      <p class="muted"><code>db_column</code> = PostgreSQL 列名（确证/有语义的 partial 用订案名；<code>unknown_*</code> 暂保留 colN）</p>
+      <table class="wide">
+        <thead>
+          <tr>
+            <th>CSV#</th><th>DB列</th><th>订案名</th><th>中文摘要</th><th>类型</th>
+            <th>状态</th><th>读表</th><th>偏移/VA</th><th>语义详情</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><code>0</code></td>
+      <td><code>row_type</code></td>
+      <td><code>row_type</code></td>
+      <td>行类型关键字</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 0 · +0 · 0x580116</td>
+      <td class="meaning-cell">★行类型关键字（不是 ID！）：MS / WEAPON / PLAN / BULLET / WRESTLE；未知值 ⇒ 整行丢弃，&#x27;#&#x27; 开头 ⇒ 注释行</td>
+    </tr>
+    <tr>
+      <td><code>1</code></td>
+      <td><code>region</code></td>
+      <td><code>region</code></td>
+      <td>发行区域（CHINA / CHINA_TPE）</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 1 · 0x580116</td>
+      <td class="meaning-cell">发行区域关键字：`CHINA`（字面量 @0xD7A87C，len 5）或 `CHINA_TPE`（@0xD7A868，len 9）；其余值整行丢弃（不报错）；比较用 sub_408530（返回 0 = 相等）</td>
+    </tr>
+    <tr>
+      <td><code>2</code></td>
+      <td><code>target_id</code></td>
+      <td><code>target_id</code></td>
+      <td>目标行 ID</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 2 · 0x580116</td>
+      <td class="meaning-cell">目标行/目标的 ID：TYPE=MS ⇒ `CHARA_PARAM` 的 `msma_id`（行基址 = 树节点+0x18）；TYPE=WEAPON ⇒ 武器运行时对象的 ID（`sub_57F320` 写该对象 +0x774…+0x9F0）；TYPE=PLAN ⇒ `MSMA_PLAN.plan_id`（写行 +8/+12/+16）；TYPE=BULLET/WRESTLE 同理</td>
+    </tr>
+    <tr>
+      <td><code>3</code></td>
+      <td><code>overwrite_field_1</code></td>
+      <td><code>overwrite_field_1</code></td>
+      <td>第 1 组 · 字段名</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 3 · 0x580116</td>
+      <td class="meaning-cell">第 1 组覆写对的 FIELD：目标表字段的语义名（处理器用 exe 内硬编码 UTF-16 字面量逐名匹配后写到该行的固定内存偏移）；不认识的名字 ⇒ 只跳过它的 VALUE，不报错、不影响后续对。可用名：`MS` RESPAWN/WARP/COST/ARMOR/BOOST/BOOST_CHARGE/BOOST_SPEED/PAYLOAD/MODULE_SLOT(9)｜`WEAPON` CHARGE_LV1|LV2_POWER/SCALE/SPEED、POWER/RANGE/HIGH_LOCKON/STABILITY/RAPID_DELAY/COOL_TIME/RELOAD_TIME/WEAPON_CHANGE_TIME/SHIELD/LOCKON/LOCKON_TIME/LOCK_RADIUS/DELAY_TIME/CONDITION_TIME/CONDITION_TYPE/BULLET_ID/MAGAZINE_NUM/MAGAZINE_NUM_TOTAL/WEIGHT/DOWN_POINT(26)｜`PLAN` SP_PARTS1/2/3(3)｜`BULLET` EXP_RANGE(1)｜`WRESTLE` BOOST/DELAY/MOVE(3)</td>
+    </tr>
+    <tr>
+      <td><code>4</code></td>
+      <td><code>overwrite_value_1</code></td>
+      <td><code>overwrite_value_1</code></td>
+      <td>第 1 组 · 新值</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 4 · 0x580116</td>
+      <td class="meaning-cell">第 1 组覆写对的 VALUE：写进上格 FIELD 对应偏移的新值。类型随 FIELD 而定 —— 字符串槽用 sub_402310（窄串赋值），数值槽用 sub_BBB370（取整）</td>
+    </tr>
+    <tr>
+      <td><code>5</code></td>
+      <td><code>overwrite_field_2</code></td>
+      <td><code>overwrite_field_2</code></td>
+      <td>第 2 组 · 字段名</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 5 · 0x580116</td>
+      <td class="meaning-cell">第 2 组覆写对的 FIELD：目标表字段的语义名（处理器用 exe 内硬编码 UTF-16 字面量逐名匹配后写到该行的固定内存偏移）；不认识的名字 ⇒ 只跳过它的 VALUE，不报错、不影响后续对。可用名：`MS` RESPAWN/WARP/COST/ARMOR/BOOST/BOOST_CHARGE/BOOST_SPEED/PAYLOAD/MODULE_SLOT(9)｜`WEAPON` CHARGE_LV1|LV2_POWER/SCALE/SPEED、POWER/RANGE/HIGH_LOCKON/STABILITY/RAPID_DELAY/COOL_TIME/RELOAD_TIME/WEAPON_CHANGE_TIME/SHIELD/LOCKON/LOCKON_TIME/LOCK_RADIUS/DELAY_TIME/CONDITION_TIME/CONDITION_TYPE/BULLET_ID/MAGAZINE_NUM/MAGAZINE_NUM_TOTAL/WEIGHT/DOWN_POINT(26)｜`PLAN` SP_PARTS1/2/3(3)｜`BULLET` EXP_RANGE(1)｜`WRESTLE` BOOST/DELAY/MOVE(3)</td>
+    </tr>
+    <tr>
+      <td><code>6</code></td>
+      <td><code>overwrite_value_2</code></td>
+      <td><code>overwrite_value_2</code></td>
+      <td>第 2 组 · 新值</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 6 · 0x580116</td>
+      <td class="meaning-cell">第 2 组覆写对的 VALUE：写进上格 FIELD 对应偏移的新值。类型随 FIELD 而定 —— 字符串槽用 sub_402310（窄串赋值），数值槽用 sub_BBB370（取整）</td>
+    </tr>
+    <tr>
+      <td><code>7</code></td>
+      <td><code>overwrite_field_3</code></td>
+      <td><code>overwrite_field_3</code></td>
+      <td>第 3 组 · 字段名</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 7 · 0x580116</td>
+      <td class="meaning-cell">第 3 组覆写对的 FIELD：目标表字段的语义名（处理器用 exe 内硬编码 UTF-16 字面量逐名匹配后写到该行的固定内存偏移）；不认识的名字 ⇒ 只跳过它的 VALUE，不报错、不影响后续对。可用名：`MS` RESPAWN/WARP/COST/ARMOR/BOOST/BOOST_CHARGE/BOOST_SPEED/PAYLOAD/MODULE_SLOT(9)｜`WEAPON` CHARGE_LV1|LV2_POWER/SCALE/SPEED、POWER/RANGE/HIGH_LOCKON/STABILITY/RAPID_DELAY/COOL_TIME/RELOAD_TIME/WEAPON_CHANGE_TIME/SHIELD/LOCKON/LOCKON_TIME/LOCK_RADIUS/DELAY_TIME/CONDITION_TIME/CONDITION_TYPE/BULLET_ID/MAGAZINE_NUM/MAGAZINE_NUM_TOTAL/WEIGHT/DOWN_POINT(26)｜`PLAN` SP_PARTS1/2/3(3)｜`BULLET` EXP_RANGE(1)｜`WRESTLE` BOOST/DELAY/MOVE(3)</td>
+    </tr>
+    <tr>
+      <td><code>8</code></td>
+      <td><code>overwrite_value_3</code></td>
+      <td><code>overwrite_value_3</code></td>
+      <td>第 3 组 · 新值</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 8 · 0x580116</td>
+      <td class="meaning-cell">第 3 组覆写对的 VALUE：写进上格 FIELD 对应偏移的新值。类型随 FIELD 而定 —— 字符串槽用 sub_402310（窄串赋值），数值槽用 sub_BBB370（取整）</td>
+    </tr>
+    <tr>
+      <td><code>9</code></td>
+      <td><code>overwrite_field_4</code></td>
+      <td><code>overwrite_field_4</code></td>
+      <td>第 4 组 · 字段名</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 9 · 0x580116</td>
+      <td class="meaning-cell">第 4 组覆写对的 FIELD：目标表字段的语义名（处理器用 exe 内硬编码 UTF-16 字面量逐名匹配后写到该行的固定内存偏移）；不认识的名字 ⇒ 只跳过它的 VALUE，不报错、不影响后续对。可用名：`MS` RESPAWN/WARP/COST/ARMOR/BOOST/BOOST_CHARGE/BOOST_SPEED/PAYLOAD/MODULE_SLOT(9)｜`WEAPON` CHARGE_LV1|LV2_POWER/SCALE/SPEED、POWER/RANGE/HIGH_LOCKON/STABILITY/RAPID_DELAY/COOL_TIME/RELOAD_TIME/WEAPON_CHANGE_TIME/SHIELD/LOCKON/LOCKON_TIME/LOCK_RADIUS/DELAY_TIME/CONDITION_TIME/CONDITION_TYPE/BULLET_ID/MAGAZINE_NUM/MAGAZINE_NUM_TOTAL/WEIGHT/DOWN_POINT(26)｜`PLAN` SP_PARTS1/2/3(3)｜`BULLET` EXP_RANGE(1)｜`WRESTLE` BOOST/DELAY/MOVE(3)</td>
+    </tr>
+    <tr>
+      <td><code>10</code></td>
+      <td><code>overwrite_value_4</code></td>
+      <td><code>overwrite_value_4</code></td>
+      <td>第 4 组 · 新值</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 10 · 0x580116</td>
+      <td class="meaning-cell">第 4 组覆写对的 VALUE：写进上格 FIELD 对应偏移的新值。类型随 FIELD 而定 —— 字符串槽用 sub_402310（窄串赋值），数值槽用 sub_BBB370（取整）</td>
+    </tr>
+    <tr>
+      <td><code>11</code></td>
+      <td><code>overwrite_field_5</code></td>
+      <td><code>overwrite_field_5</code></td>
+      <td>第 5 组 · 字段名</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 11 · 0x580116</td>
+      <td class="meaning-cell">第 5 组覆写对的 FIELD：目标表字段的语义名（处理器用 exe 内硬编码 UTF-16 字面量逐名匹配后写到该行的固定内存偏移）；不认识的名字 ⇒ 只跳过它的 VALUE，不报错、不影响后续对。可用名：`MS` RESPAWN/WARP/COST/ARMOR/BOOST/BOOST_CHARGE/BOOST_SPEED/PAYLOAD/MODULE_SLOT(9)｜`WEAPON` CHARGE_LV1|LV2_POWER/SCALE/SPEED、POWER/RANGE/HIGH_LOCKON/STABILITY/RAPID_DELAY/COOL_TIME/RELOAD_TIME/WEAPON_CHANGE_TIME/SHIELD/LOCKON/LOCKON_TIME/LOCK_RADIUS/DELAY_TIME/CONDITION_TIME/CONDITION_TYPE/BULLET_ID/MAGAZINE_NUM/MAGAZINE_NUM_TOTAL/WEIGHT/DOWN_POINT(26)｜`PLAN` SP_PARTS1/2/3(3)｜`BULLET` EXP_RANGE(1)｜`WRESTLE` BOOST/DELAY/MOVE(3)</td>
+    </tr>
+    <tr>
+      <td><code>12</code></td>
+      <td><code>overwrite_value_5</code></td>
+      <td><code>overwrite_value_5</code></td>
+      <td>第 5 组 · 新值</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 12 · 0x580116</td>
+      <td class="meaning-cell">第 5 组覆写对的 VALUE：写进上格 FIELD 对应偏移的新值。类型随 FIELD 而定 —— 字符串槽用 sub_402310（窄串赋值），数值槽用 sub_BBB370（取整）</td>
+    </tr>
+    <tr>
+      <td><code>13</code></td>
+      <td><code>overwrite_field_6</code></td>
+      <td><code>overwrite_field_6</code></td>
+      <td>第 6 组 · 字段名</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 13 · 0x580116</td>
+      <td class="meaning-cell">第 6 组覆写对的 FIELD：目标表字段的语义名（处理器用 exe 内硬编码 UTF-16 字面量逐名匹配后写到该行的固定内存偏移）；不认识的名字 ⇒ 只跳过它的 VALUE，不报错、不影响后续对。可用名：`MS` RESPAWN/WARP/COST/ARMOR/BOOST/BOOST_CHARGE/BOOST_SPEED/PAYLOAD/MODULE_SLOT(9)｜`WEAPON` CHARGE_LV1|LV2_POWER/SCALE/SPEED、POWER/RANGE/HIGH_LOCKON/STABILITY/RAPID_DELAY/COOL_TIME/RELOAD_TIME/WEAPON_CHANGE_TIME/SHIELD/LOCKON/LOCKON_TIME/LOCK_RADIUS/DELAY_TIME/CONDITION_TIME/CONDITION_TYPE/BULLET_ID/MAGAZINE_NUM/MAGAZINE_NUM_TOTAL/WEIGHT/DOWN_POINT(26)｜`PLAN` SP_PARTS1/2/3(3)｜`BULLET` EXP_RANGE(1)｜`WRESTLE` BOOST/DELAY/MOVE(3)</td>
+    </tr>
+    <tr>
+      <td><code>14</code></td>
+      <td><code>overwrite_value_6</code></td>
+      <td><code>overwrite_value_6</code></td>
+      <td>第 6 组 · 新值</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 14 · 0x580116</td>
+      <td class="meaning-cell">第 6 组覆写对的 VALUE：写进上格 FIELD 对应偏移的新值。类型随 FIELD 而定 —— 字符串槽用 sub_402310（窄串赋值），数值槽用 sub_BBB370（取整）</td>
+    </tr>
+    <tr>
+      <td><code>15</code></td>
+      <td><code>overwrite_field_7</code></td>
+      <td><code>overwrite_field_7</code></td>
+      <td>第 7 组 · 字段名</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 15 · 0x580116</td>
+      <td class="meaning-cell">第 7 组覆写对的 FIELD：目标表字段的语义名（处理器用 exe 内硬编码 UTF-16 字面量逐名匹配后写到该行的固定内存偏移）；不认识的名字 ⇒ 只跳过它的 VALUE，不报错、不影响后续对。可用名：`MS` RESPAWN/WARP/COST/ARMOR/BOOST/BOOST_CHARGE/BOOST_SPEED/PAYLOAD/MODULE_SLOT(9)｜`WEAPON` CHARGE_LV1|LV2_POWER/SCALE/SPEED、POWER/RANGE/HIGH_LOCKON/STABILITY/RAPID_DELAY/COOL_TIME/RELOAD_TIME/WEAPON_CHANGE_TIME/SHIELD/LOCKON/LOCKON_TIME/LOCK_RADIUS/DELAY_TIME/CONDITION_TIME/CONDITION_TYPE/BULLET_ID/MAGAZINE_NUM/MAGAZINE_NUM_TOTAL/WEIGHT/DOWN_POINT(26)｜`PLAN` SP_PARTS1/2/3(3)｜`BULLET` EXP_RANGE(1)｜`WRESTLE` BOOST/DELAY/MOVE(3)</td>
+    </tr>
+    <tr>
+      <td><code>16</code></td>
+      <td><code>overwrite_value_7</code></td>
+      <td><code>overwrite_value_7</code></td>
+      <td>第 7 组 · 新值</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 16 · 0x580116</td>
+      <td class="meaning-cell">第 7 组覆写对的 VALUE：写进上格 FIELD 对应偏移的新值。类型随 FIELD 而定 —— 字符串槽用 sub_402310（窄串赋值），数值槽用 sub_BBB370（取整）</td>
+    </tr>
+    <tr>
+      <td><code>17</code></td>
+      <td><code>overwrite_field_8</code></td>
+      <td><code>overwrite_field_8</code></td>
+      <td>第 8 组 · 字段名</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 17 · 0x580116</td>
+      <td class="meaning-cell">第 8 组覆写对的 FIELD：目标表字段的语义名（处理器用 exe 内硬编码 UTF-16 字面量逐名匹配后写到该行的固定内存偏移）；不认识的名字 ⇒ 只跳过它的 VALUE，不报错、不影响后续对。可用名：`MS` RESPAWN/WARP/COST/ARMOR/BOOST/BOOST_CHARGE/BOOST_SPEED/PAYLOAD/MODULE_SLOT(9)｜`WEAPON` CHARGE_LV1|LV2_POWER/SCALE/SPEED、POWER/RANGE/HIGH_LOCKON/STABILITY/RAPID_DELAY/COOL_TIME/RELOAD_TIME/WEAPON_CHANGE_TIME/SHIELD/LOCKON/LOCKON_TIME/LOCK_RADIUS/DELAY_TIME/CONDITION_TIME/CONDITION_TYPE/BULLET_ID/MAGAZINE_NUM/MAGAZINE_NUM_TOTAL/WEIGHT/DOWN_POINT(26)｜`PLAN` SP_PARTS1/2/3(3)｜`BULLET` EXP_RANGE(1)｜`WRESTLE` BOOST/DELAY/MOVE(3)</td>
+    </tr>
+    <tr>
+      <td><code>18</code></td>
+      <td><code>overwrite_value_8</code></td>
+      <td><code>overwrite_value_8</code></td>
+      <td>第 8 组 · 新值</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 18 · 0x580116</td>
+      <td class="meaning-cell">第 8 组覆写对的 VALUE：写进上格 FIELD 对应偏移的新值。类型随 FIELD 而定 —— 字符串槽用 sub_402310（窄串赋值），数值槽用 sub_BBB370（取整）</td>
+    </tr>
+    <tr>
+      <td><code>19</code></td>
+      <td><code>overwrite_field_9</code></td>
+      <td><code>overwrite_field_9</code></td>
+      <td>第 9 组 · 字段名</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 19 · 0x580116</td>
+      <td class="meaning-cell">第 9 组覆写对的 FIELD：目标表字段的语义名（处理器用 exe 内硬编码 UTF-16 字面量逐名匹配后写到该行的固定内存偏移）；不认识的名字 ⇒ 只跳过它的 VALUE，不报错、不影响后续对。可用名：`MS` RESPAWN/WARP/COST/ARMOR/BOOST/BOOST_CHARGE/BOOST_SPEED/PAYLOAD/MODULE_SLOT(9)｜`WEAPON` CHARGE_LV1|LV2_POWER/SCALE/SPEED、POWER/RANGE/HIGH_LOCKON/STABILITY/RAPID_DELAY/COOL_TIME/RELOAD_TIME/WEAPON_CHANGE_TIME/SHIELD/LOCKON/LOCKON_TIME/LOCK_RADIUS/DELAY_TIME/CONDITION_TIME/CONDITION_TYPE/BULLET_ID/MAGAZINE_NUM/MAGAZINE_NUM_TOTAL/WEIGHT/DOWN_POINT(26)｜`PLAN` SP_PARTS1/2/3(3)｜`BULLET` EXP_RANGE(1)｜`WRESTLE` BOOST/DELAY/MOVE(3)</td>
+    </tr>
+    <tr>
+      <td><code>20</code></td>
+      <td><code>overwrite_value_9</code></td>
+      <td><code>overwrite_value_9</code></td>
+      <td>第 9 组 · 新值</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 20 · 0x580116</td>
+      <td class="meaning-cell">第 9 组覆写对的 VALUE：写进上格 FIELD 对应偏移的新值。类型随 FIELD 而定 —— 字符串槽用 sub_402310（窄串赋值），数值槽用 sub_BBB370（取整）</td>
+    </tr>
+    <tr>
+      <td><code>21</code></td>
+      <td><code>overwrite_field_10</code></td>
+      <td><code>overwrite_field_10</code></td>
+      <td>第 10 组 · 字段名</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 21 · 0x580116</td>
+      <td class="meaning-cell">第 10 组覆写对的 FIELD：目标表字段的语义名（处理器用 exe 内硬编码 UTF-16 字面量逐名匹配后写到该行的固定内存偏移）；不认识的名字 ⇒ 只跳过它的 VALUE，不报错、不影响后续对。可用名：`MS` RESPAWN/WARP/COST/ARMOR/BOOST/BOOST_CHARGE/BOOST_SPEED/PAYLOAD/MODULE_SLOT(9)｜`WEAPON` CHARGE_LV1|LV2_POWER/SCALE/SPEED、POWER/RANGE/HIGH_LOCKON/STABILITY/RAPID_DELAY/COOL_TIME/RELOAD_TIME/WEAPON_CHANGE_TIME/SHIELD/LOCKON/LOCKON_TIME/LOCK_RADIUS/DELAY_TIME/CONDITION_TIME/CONDITION_TYPE/BULLET_ID/MAGAZINE_NUM/MAGAZINE_NUM_TOTAL/WEIGHT/DOWN_POINT(26)｜`PLAN` SP_PARTS1/2/3(3)｜`BULLET` EXP_RANGE(1)｜`WRESTLE` BOOST/DELAY/MOVE(3)</td>
+    </tr>
+    <tr>
+      <td><code>22</code></td>
+      <td><code>overwrite_value_10</code></td>
+      <td><code>overwrite_value_10</code></td>
+      <td>第 10 组 · 新值</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 22 · 0x580116</td>
+      <td class="meaning-cell">第 10 组覆写对的 VALUE：写进上格 FIELD 对应偏移的新值。类型随 FIELD 而定 —— 字符串槽用 sub_402310（窄串赋值），数值槽用 sub_BBB370（取整）</td>
+    </tr>
+    <tr>
+      <td><code>23</code></td>
+      <td><code>overwrite_field_11</code></td>
+      <td><code>overwrite_field_11</code></td>
+      <td>第 11 组 · 字段名</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 23 · 0x580116</td>
+      <td class="meaning-cell">第 11 组覆写对的 FIELD：目标表字段的语义名（处理器用 exe 内硬编码 UTF-16 字面量逐名匹配后写到该行的固定内存偏移）；不认识的名字 ⇒ 只跳过它的 VALUE，不报错、不影响后续对。可用名：`MS` RESPAWN/WARP/COST/ARMOR/BOOST/BOOST_CHARGE/BOOST_SPEED/PAYLOAD/MODULE_SLOT(9)｜`WEAPON` CHARGE_LV1|LV2_POWER/SCALE/SPEED、POWER/RANGE/HIGH_LOCKON/STABILITY/RAPID_DELAY/COOL_TIME/RELOAD_TIME/WEAPON_CHANGE_TIME/SHIELD/LOCKON/LOCKON_TIME/LOCK_RADIUS/DELAY_TIME/CONDITION_TIME/CONDITION_TYPE/BULLET_ID/MAGAZINE_NUM/MAGAZINE_NUM_TOTAL/WEIGHT/DOWN_POINT(26)｜`PLAN` SP_PARTS1/2/3(3)｜`BULLET` EXP_RANGE(1)｜`WRESTLE` BOOST/DELAY/MOVE(3)</td>
+    </tr>
+    <tr>
+      <td><code>24</code></td>
+      <td><code>overwrite_value_11</code></td>
+      <td><code>overwrite_value_11</code></td>
+      <td>第 11 组 · 新值</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 24 · 0x580116</td>
+      <td class="meaning-cell">第 11 组覆写对的 VALUE：写进上格 FIELD 对应偏移的新值。类型随 FIELD 而定 —— 字符串槽用 sub_402310（窄串赋值），数值槽用 sub_BBB370（取整）</td>
+    </tr>
+    <tr>
+      <td><code>25</code></td>
+      <td><code>overwrite_field_12</code></td>
+      <td><code>overwrite_field_12</code></td>
+      <td>第 12 组 · 字段名</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 25 · 0x580116</td>
+      <td class="meaning-cell">第 12 组覆写对的 FIELD：目标表字段的语义名（处理器用 exe 内硬编码 UTF-16 字面量逐名匹配后写到该行的固定内存偏移）；不认识的名字 ⇒ 只跳过它的 VALUE，不报错、不影响后续对。可用名：`MS` RESPAWN/WARP/COST/ARMOR/BOOST/BOOST_CHARGE/BOOST_SPEED/PAYLOAD/MODULE_SLOT(9)｜`WEAPON` CHARGE_LV1|LV2_POWER/SCALE/SPEED、POWER/RANGE/HIGH_LOCKON/STABILITY/RAPID_DELAY/COOL_TIME/RELOAD_TIME/WEAPON_CHANGE_TIME/SHIELD/LOCKON/LOCKON_TIME/LOCK_RADIUS/DELAY_TIME/CONDITION_TIME/CONDITION_TYPE/BULLET_ID/MAGAZINE_NUM/MAGAZINE_NUM_TOTAL/WEIGHT/DOWN_POINT(26)｜`PLAN` SP_PARTS1/2/3(3)｜`BULLET` EXP_RANGE(1)｜`WRESTLE` BOOST/DELAY/MOVE(3)</td>
+    </tr>
+    <tr>
+      <td><code>26</code></td>
+      <td><code>overwrite_value_12</code></td>
+      <td><code>overwrite_value_12</code></td>
+      <td>第 12 组 · 新值</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 26 · 0x580116</td>
+      <td class="meaning-cell">第 12 组覆写对的 VALUE：写进上格 FIELD 对应偏移的新值。类型随 FIELD 而定 —— 字符串槽用 sub_402310（窄串赋值），数值槽用 sub_BBB370（取整）</td>
+    </tr>
+    <tr>
+      <td><code>27</code></td>
+      <td><code>overwrite_field_13</code></td>
+      <td><code>overwrite_field_13</code></td>
+      <td>第 13 组 · 字段名</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 27 · 0x580116</td>
+      <td class="meaning-cell">第 13 组覆写对的 FIELD：目标表字段的语义名（处理器用 exe 内硬编码 UTF-16 字面量逐名匹配后写到该行的固定内存偏移）；不认识的名字 ⇒ 只跳过它的 VALUE，不报错、不影响后续对。可用名：`MS` RESPAWN/WARP/COST/ARMOR/BOOST/BOOST_CHARGE/BOOST_SPEED/PAYLOAD/MODULE_SLOT(9)｜`WEAPON` CHARGE_LV1|LV2_POWER/SCALE/SPEED、POWER/RANGE/HIGH_LOCKON/STABILITY/RAPID_DELAY/COOL_TIME/RELOAD_TIME/WEAPON_CHANGE_TIME/SHIELD/LOCKON/LOCKON_TIME/LOCK_RADIUS/DELAY_TIME/CONDITION_TIME/CONDITION_TYPE/BULLET_ID/MAGAZINE_NUM/MAGAZINE_NUM_TOTAL/WEIGHT/DOWN_POINT(26)｜`PLAN` SP_PARTS1/2/3(3)｜`BULLET` EXP_RANGE(1)｜`WRESTLE` BOOST/DELAY/MOVE(3)</td>
+    </tr>
+    <tr>
+      <td><code>28</code></td>
+      <td><code>overwrite_value_13</code></td>
+      <td><code>overwrite_value_13</code></td>
+      <td>第 13 组 · 新值</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 28 · 0x580116</td>
+      <td class="meaning-cell">第 13 组覆写对的 VALUE：写进上格 FIELD 对应偏移的新值。类型随 FIELD 而定 —— 字符串槽用 sub_402310（窄串赋值），数值槽用 sub_BBB370（取整）</td>
+    </tr>
+    <tr>
+      <td><code>29</code></td>
+      <td><code>overwrite_field_14</code></td>
+      <td><code>overwrite_field_14</code></td>
+      <td>第 14 组 · 字段名</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 29 · 0x580116</td>
+      <td class="meaning-cell">第 14 组覆写对的 FIELD：目标表字段的语义名（处理器用 exe 内硬编码 UTF-16 字面量逐名匹配后写到该行的固定内存偏移）；不认识的名字 ⇒ 只跳过它的 VALUE，不报错、不影响后续对。可用名：`MS` RESPAWN/WARP/COST/ARMOR/BOOST/BOOST_CHARGE/BOOST_SPEED/PAYLOAD/MODULE_SLOT(9)｜`WEAPON` CHARGE_LV1|LV2_POWER/SCALE/SPEED、POWER/RANGE/HIGH_LOCKON/STABILITY/RAPID_DELAY/COOL_TIME/RELOAD_TIME/WEAPON_CHANGE_TIME/SHIELD/LOCKON/LOCKON_TIME/LOCK_RADIUS/DELAY_TIME/CONDITION_TIME/CONDITION_TYPE/BULLET_ID/MAGAZINE_NUM/MAGAZINE_NUM_TOTAL/WEIGHT/DOWN_POINT(26)｜`PLAN` SP_PARTS1/2/3(3)｜`BULLET` EXP_RANGE(1)｜`WRESTLE` BOOST/DELAY/MOVE(3)</td>
+    </tr>
+    <tr>
+      <td><code>30</code></td>
+      <td><code>overwrite_value_14</code></td>
+      <td><code>overwrite_value_14</code></td>
+      <td>第 14 组 · 新值</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 30 · 0x580116</td>
+      <td class="meaning-cell">第 14 组覆写对的 VALUE：写进上格 FIELD 对应偏移的新值。类型随 FIELD 而定 —— 字符串槽用 sub_402310（窄串赋值），数值槽用 sub_BBB370（取整）</td>
+    </tr>
+    <tr>
+      <td><code>31</code></td>
+      <td><code>overwrite_field_15</code></td>
+      <td><code>overwrite_field_15</code></td>
+      <td>第 15 组 · 字段名</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 31 · 0x580116</td>
+      <td class="meaning-cell">第 15 组覆写对的 FIELD：目标表字段的语义名（处理器用 exe 内硬编码 UTF-16 字面量逐名匹配后写到该行的固定内存偏移）；不认识的名字 ⇒ 只跳过它的 VALUE，不报错、不影响后续对。可用名：`MS` RESPAWN/WARP/COST/ARMOR/BOOST/BOOST_CHARGE/BOOST_SPEED/PAYLOAD/MODULE_SLOT(9)｜`WEAPON` CHARGE_LV1|LV2_POWER/SCALE/SPEED、POWER/RANGE/HIGH_LOCKON/STABILITY/RAPID_DELAY/COOL_TIME/RELOAD_TIME/WEAPON_CHANGE_TIME/SHIELD/LOCKON/LOCKON_TIME/LOCK_RADIUS/DELAY_TIME/CONDITION_TIME/CONDITION_TYPE/BULLET_ID/MAGAZINE_NUM/MAGAZINE_NUM_TOTAL/WEIGHT/DOWN_POINT(26)｜`PLAN` SP_PARTS1/2/3(3)｜`BULLET` EXP_RANGE(1)｜`WRESTLE` BOOST/DELAY/MOVE(3)</td>
+    </tr>
+    <tr>
+      <td><code>32</code></td>
+      <td><code>overwrite_value_15</code></td>
+      <td><code>overwrite_value_15</code></td>
+      <td>第 15 组 · 新值</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 32 · 0x580116</td>
+      <td class="meaning-cell">第 15 组覆写对的 VALUE：写进上格 FIELD 对应偏移的新值。类型随 FIELD 而定 —— 字符串槽用 sub_402310（窄串赋值），数值槽用 sub_BBB370（取整）</td>
+    </tr>
+    <tr>
+      <td><code>33</code></td>
+      <td><code>overwrite_field_16</code></td>
+      <td><code>overwrite_field_16</code></td>
+      <td>第 16 组 · 字段名</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 33 · 0x580116</td>
+      <td class="meaning-cell">第 16 组覆写对的 FIELD：目标表字段的语义名（处理器用 exe 内硬编码 UTF-16 字面量逐名匹配后写到该行的固定内存偏移）；不认识的名字 ⇒ 只跳过它的 VALUE，不报错、不影响后续对。可用名：`MS` RESPAWN/WARP/COST/ARMOR/BOOST/BOOST_CHARGE/BOOST_SPEED/PAYLOAD/MODULE_SLOT(9)｜`WEAPON` CHARGE_LV1|LV2_POWER/SCALE/SPEED、POWER/RANGE/HIGH_LOCKON/STABILITY/RAPID_DELAY/COOL_TIME/RELOAD_TIME/WEAPON_CHANGE_TIME/SHIELD/LOCKON/LOCKON_TIME/LOCK_RADIUS/DELAY_TIME/CONDITION_TIME/CONDITION_TYPE/BULLET_ID/MAGAZINE_NUM/MAGAZINE_NUM_TOTAL/WEIGHT/DOWN_POINT(26)｜`PLAN` SP_PARTS1/2/3(3)｜`BULLET` EXP_RANGE(1)｜`WRESTLE` BOOST/DELAY/MOVE(3)</td>
+    </tr>
+    <tr>
+      <td><code>34</code></td>
+      <td><code>overwrite_value_16</code></td>
+      <td><code>overwrite_value_16</code></td>
+      <td>第 16 组 · 新值</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 34 · 0x580116</td>
+      <td class="meaning-cell">第 16 组覆写对的 VALUE：写进上格 FIELD 对应偏移的新值。类型随 FIELD 而定 —— 字符串槽用 sub_402310（窄串赋值），数值槽用 sub_BBB370（取整）</td>
+    </tr>
+    <tr>
+      <td><code>35</code></td>
+      <td><code>overwrite_field_17</code></td>
+      <td><code>overwrite_field_17</code></td>
+      <td>第 17 组 · 字段名</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 35 · 0x580116</td>
+      <td class="meaning-cell">第 17 组覆写对的 FIELD：目标表字段的语义名（处理器用 exe 内硬编码 UTF-16 字面量逐名匹配后写到该行的固定内存偏移）；不认识的名字 ⇒ 只跳过它的 VALUE，不报错、不影响后续对。可用名：`MS` RESPAWN/WARP/COST/ARMOR/BOOST/BOOST_CHARGE/BOOST_SPEED/PAYLOAD/MODULE_SLOT(9)｜`WEAPON` CHARGE_LV1|LV2_POWER/SCALE/SPEED、POWER/RANGE/HIGH_LOCKON/STABILITY/RAPID_DELAY/COOL_TIME/RELOAD_TIME/WEAPON_CHANGE_TIME/SHIELD/LOCKON/LOCKON_TIME/LOCK_RADIUS/DELAY_TIME/CONDITION_TIME/CONDITION_TYPE/BULLET_ID/MAGAZINE_NUM/MAGAZINE_NUM_TOTAL/WEIGHT/DOWN_POINT(26)｜`PLAN` SP_PARTS1/2/3(3)｜`BULLET` EXP_RANGE(1)｜`WRESTLE` BOOST/DELAY/MOVE(3)</td>
+    </tr>
+    <tr>
+      <td><code>36</code></td>
+      <td><code>overwrite_value_17</code></td>
+      <td><code>overwrite_value_17</code></td>
+      <td>第 17 组 · 新值</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 36 · 0x580116</td>
+      <td class="meaning-cell">第 17 组覆写对的 VALUE：写进上格 FIELD 对应偏移的新值。类型随 FIELD 而定 —— 字符串槽用 sub_402310（窄串赋值），数值槽用 sub_BBB370（取整）</td>
+    </tr>
+    <tr>
+      <td><code>37</code></td>
+      <td><code>overwrite_field_18</code></td>
+      <td><code>overwrite_field_18</code></td>
+      <td>第 18 组 · 字段名</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 37 · 0x580116</td>
+      <td class="meaning-cell">第 18 组覆写对的 FIELD：目标表字段的语义名（处理器用 exe 内硬编码 UTF-16 字面量逐名匹配后写到该行的固定内存偏移）；不认识的名字 ⇒ 只跳过它的 VALUE，不报错、不影响后续对。可用名：`MS` RESPAWN/WARP/COST/ARMOR/BOOST/BOOST_CHARGE/BOOST_SPEED/PAYLOAD/MODULE_SLOT(9)｜`WEAPON` CHARGE_LV1|LV2_POWER/SCALE/SPEED、POWER/RANGE/HIGH_LOCKON/STABILITY/RAPID_DELAY/COOL_TIME/RELOAD_TIME/WEAPON_CHANGE_TIME/SHIELD/LOCKON/LOCKON_TIME/LOCK_RADIUS/DELAY_TIME/CONDITION_TIME/CONDITION_TYPE/BULLET_ID/MAGAZINE_NUM/MAGAZINE_NUM_TOTAL/WEIGHT/DOWN_POINT(26)｜`PLAN` SP_PARTS1/2/3(3)｜`BULLET` EXP_RANGE(1)｜`WRESTLE` BOOST/DELAY/MOVE(3)</td>
+    </tr>
+    <tr>
+      <td><code>38</code></td>
+      <td><code>overwrite_value_18</code></td>
+      <td><code>overwrite_value_18</code></td>
+      <td>第 18 组 · 新值</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 38 · 0x580116</td>
+      <td class="meaning-cell">第 18 组覆写对的 VALUE：写进上格 FIELD 对应偏移的新值。类型随 FIELD 而定 —— 字符串槽用 sub_402310（窄串赋值），数值槽用 sub_BBB370（取整）</td>
+    </tr>
+    <tr>
+      <td><code>39</code></td>
+      <td><code>overwrite_field_19</code></td>
+      <td><code>overwrite_field_19</code></td>
+      <td>第 19 组 · 字段名</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 39 · 0x580116</td>
+      <td class="meaning-cell">第 19 组覆写对的 FIELD：目标表字段的语义名（处理器用 exe 内硬编码 UTF-16 字面量逐名匹配后写到该行的固定内存偏移）；不认识的名字 ⇒ 只跳过它的 VALUE，不报错、不影响后续对。可用名：`MS` RESPAWN/WARP/COST/ARMOR/BOOST/BOOST_CHARGE/BOOST_SPEED/PAYLOAD/MODULE_SLOT(9)｜`WEAPON` CHARGE_LV1|LV2_POWER/SCALE/SPEED、POWER/RANGE/HIGH_LOCKON/STABILITY/RAPID_DELAY/COOL_TIME/RELOAD_TIME/WEAPON_CHANGE_TIME/SHIELD/LOCKON/LOCKON_TIME/LOCK_RADIUS/DELAY_TIME/CONDITION_TIME/CONDITION_TYPE/BULLET_ID/MAGAZINE_NUM/MAGAZINE_NUM_TOTAL/WEIGHT/DOWN_POINT(26)｜`PLAN` SP_PARTS1/2/3(3)｜`BULLET` EXP_RANGE(1)｜`WRESTLE` BOOST/DELAY/MOVE(3)</td>
+    </tr>
+    <tr>
+      <td><code>40</code></td>
+      <td><code>overwrite_value_19</code></td>
+      <td><code>overwrite_value_19</code></td>
+      <td>第 19 组 · 新值</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 40 · 0x580116</td>
+      <td class="meaning-cell">第 19 组覆写对的 VALUE：写进上格 FIELD 对应偏移的新值。类型随 FIELD 而定 —— 字符串槽用 sub_402310（窄串赋值），数值槽用 sub_BBB370（取整）</td>
+    </tr>
+    <tr>
+      <td><code>41</code></td>
+      <td><code>overwrite_field_20</code></td>
+      <td><code>overwrite_field_20</code></td>
+      <td>第 20 组 · 字段名</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 41 · 0x580116</td>
+      <td class="meaning-cell">第 20 组覆写对的 FIELD：目标表字段的语义名（处理器用 exe 内硬编码 UTF-16 字面量逐名匹配后写到该行的固定内存偏移）；不认识的名字 ⇒ 只跳过它的 VALUE，不报错、不影响后续对。可用名：`MS` RESPAWN/WARP/COST/ARMOR/BOOST/BOOST_CHARGE/BOOST_SPEED/PAYLOAD/MODULE_SLOT(9)｜`WEAPON` CHARGE_LV1|LV2_POWER/SCALE/SPEED、POWER/RANGE/HIGH_LOCKON/STABILITY/RAPID_DELAY/COOL_TIME/RELOAD_TIME/WEAPON_CHANGE_TIME/SHIELD/LOCKON/LOCKON_TIME/LOCK_RADIUS/DELAY_TIME/CONDITION_TIME/CONDITION_TYPE/BULLET_ID/MAGAZINE_NUM/MAGAZINE_NUM_TOTAL/WEIGHT/DOWN_POINT(26)｜`PLAN` SP_PARTS1/2/3(3)｜`BULLET` EXP_RANGE(1)｜`WRESTLE` BOOST/DELAY/MOVE(3)</td>
+    </tr>
+    <tr>
+      <td><code>42</code></td>
+      <td><code>overwrite_value_20</code></td>
+      <td><code>overwrite_value_20</code></td>
+      <td>第 20 组 · 新值</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 42 · 0x580116</td>
+      <td class="meaning-cell">第 20 组覆写对的 VALUE：写进上格 FIELD 对应偏移的新值。类型随 FIELD 而定 —— 字符串槽用 sub_402310（窄串赋值），数值槽用 sub_BBB370（取整）</td>
+    </tr>
+    <tr>
+      <td><code>43</code></td>
+      <td><code>overwrite_field_21</code></td>
+      <td><code>overwrite_field_21</code></td>
+      <td>第 21 组 · 字段名</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 43 · 0x580116</td>
+      <td class="meaning-cell">第 21 组覆写对的 FIELD：目标表字段的语义名（处理器用 exe 内硬编码 UTF-16 字面量逐名匹配后写到该行的固定内存偏移）；不认识的名字 ⇒ 只跳过它的 VALUE，不报错、不影响后续对。可用名：`MS` RESPAWN/WARP/COST/ARMOR/BOOST/BOOST_CHARGE/BOOST_SPEED/PAYLOAD/MODULE_SLOT(9)｜`WEAPON` CHARGE_LV1|LV2_POWER/SCALE/SPEED、POWER/RANGE/HIGH_LOCKON/STABILITY/RAPID_DELAY/COOL_TIME/RELOAD_TIME/WEAPON_CHANGE_TIME/SHIELD/LOCKON/LOCKON_TIME/LOCK_RADIUS/DELAY_TIME/CONDITION_TIME/CONDITION_TYPE/BULLET_ID/MAGAZINE_NUM/MAGAZINE_NUM_TOTAL/WEIGHT/DOWN_POINT(26)｜`PLAN` SP_PARTS1/2/3(3)｜`BULLET` EXP_RANGE(1)｜`WRESTLE` BOOST/DELAY/MOVE(3)</td>
+    </tr>
+    <tr>
+      <td><code>44</code></td>
+      <td><code>overwrite_value_21</code></td>
+      <td><code>overwrite_value_21</code></td>
+      <td>第 21 组 · 新值</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 44 · 0x580116</td>
+      <td class="meaning-cell">第 21 组覆写对的 VALUE：写进上格 FIELD 对应偏移的新值。类型随 FIELD 而定 —— 字符串槽用 sub_402310（窄串赋值），数值槽用 sub_BBB370（取整）</td>
+    </tr>
+    <tr>
+      <td><code>45</code></td>
+      <td><code>overwrite_field_22</code></td>
+      <td><code>overwrite_field_22</code></td>
+      <td>第 22 组 · 字段名</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 45 · 0x580116</td>
+      <td class="meaning-cell">第 22 组覆写对的 FIELD：目标表字段的语义名（处理器用 exe 内硬编码 UTF-16 字面量逐名匹配后写到该行的固定内存偏移）；不认识的名字 ⇒ 只跳过它的 VALUE，不报错、不影响后续对。可用名：`MS` RESPAWN/WARP/COST/ARMOR/BOOST/BOOST_CHARGE/BOOST_SPEED/PAYLOAD/MODULE_SLOT(9)｜`WEAPON` CHARGE_LV1|LV2_POWER/SCALE/SPEED、POWER/RANGE/HIGH_LOCKON/STABILITY/RAPID_DELAY/COOL_TIME/RELOAD_TIME/WEAPON_CHANGE_TIME/SHIELD/LOCKON/LOCKON_TIME/LOCK_RADIUS/DELAY_TIME/CONDITION_TIME/CONDITION_TYPE/BULLET_ID/MAGAZINE_NUM/MAGAZINE_NUM_TOTAL/WEIGHT/DOWN_POINT(26)｜`PLAN` SP_PARTS1/2/3(3)｜`BULLET` EXP_RANGE(1)｜`WRESTLE` BOOST/DELAY/MOVE(3)</td>
+    </tr>
+    <tr>
+      <td><code>46</code></td>
+      <td><code>overwrite_value_22</code></td>
+      <td><code>overwrite_value_22</code></td>
+      <td>第 22 组 · 新值</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 46 · 0x580116</td>
+      <td class="meaning-cell">第 22 组覆写对的 VALUE：写进上格 FIELD 对应偏移的新值。类型随 FIELD 而定 —— 字符串槽用 sub_402310（窄串赋值），数值槽用 sub_BBB370（取整）</td>
+    </tr>
+    <tr>
+      <td><code>47</code></td>
+      <td><code>overwrite_field_23</code></td>
+      <td><code>overwrite_field_23</code></td>
+      <td>第 23 组 · 字段名</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 47 · 0x580116</td>
+      <td class="meaning-cell">第 23 组覆写对的 FIELD：目标表字段的语义名（处理器用 exe 内硬编码 UTF-16 字面量逐名匹配后写到该行的固定内存偏移）；不认识的名字 ⇒ 只跳过它的 VALUE，不报错、不影响后续对。可用名：`MS` RESPAWN/WARP/COST/ARMOR/BOOST/BOOST_CHARGE/BOOST_SPEED/PAYLOAD/MODULE_SLOT(9)｜`WEAPON` CHARGE_LV1|LV2_POWER/SCALE/SPEED、POWER/RANGE/HIGH_LOCKON/STABILITY/RAPID_DELAY/COOL_TIME/RELOAD_TIME/WEAPON_CHANGE_TIME/SHIELD/LOCKON/LOCKON_TIME/LOCK_RADIUS/DELAY_TIME/CONDITION_TIME/CONDITION_TYPE/BULLET_ID/MAGAZINE_NUM/MAGAZINE_NUM_TOTAL/WEIGHT/DOWN_POINT(26)｜`PLAN` SP_PARTS1/2/3(3)｜`BULLET` EXP_RANGE(1)｜`WRESTLE` BOOST/DELAY/MOVE(3)</td>
+    </tr>
+    <tr>
+      <td><code>48</code></td>
+      <td><code>overwrite_value_23</code></td>
+      <td><code>overwrite_value_23</code></td>
+      <td>第 23 组 · 新值</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 48 · 0x580116</td>
+      <td class="meaning-cell">第 23 组覆写对的 VALUE：写进上格 FIELD 对应偏移的新值。类型随 FIELD 而定 —— 字符串槽用 sub_402310（窄串赋值），数值槽用 sub_BBB370（取整）</td>
+    </tr>
+    <tr>
+      <td><code>49</code></td>
+      <td><code>overwrite_field_24</code></td>
+      <td><code>overwrite_field_24</code></td>
+      <td>第 24 组 · 字段名</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 49 · 0x580116</td>
+      <td class="meaning-cell">第 24 组覆写对的 FIELD：目标表字段的语义名（处理器用 exe 内硬编码 UTF-16 字面量逐名匹配后写到该行的固定内存偏移）；不认识的名字 ⇒ 只跳过它的 VALUE，不报错、不影响后续对。可用名：`MS` RESPAWN/WARP/COST/ARMOR/BOOST/BOOST_CHARGE/BOOST_SPEED/PAYLOAD/MODULE_SLOT(9)｜`WEAPON` CHARGE_LV1|LV2_POWER/SCALE/SPEED、POWER/RANGE/HIGH_LOCKON/STABILITY/RAPID_DELAY/COOL_TIME/RELOAD_TIME/WEAPON_CHANGE_TIME/SHIELD/LOCKON/LOCKON_TIME/LOCK_RADIUS/DELAY_TIME/CONDITION_TIME/CONDITION_TYPE/BULLET_ID/MAGAZINE_NUM/MAGAZINE_NUM_TOTAL/WEIGHT/DOWN_POINT(26)｜`PLAN` SP_PARTS1/2/3(3)｜`BULLET` EXP_RANGE(1)｜`WRESTLE` BOOST/DELAY/MOVE(3)</td>
+    </tr>
+    <tr>
+      <td><code>50</code></td>
+      <td><code>overwrite_value_24</code></td>
+      <td><code>overwrite_value_24</code></td>
+      <td>第 24 组 · 新值</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 50 · 0x580116</td>
+      <td class="meaning-cell">第 24 组覆写对的 VALUE：写进上格 FIELD 对应偏移的新值。类型随 FIELD 而定 —— 字符串槽用 sub_402310（窄串赋值），数值槽用 sub_BBB370（取整）</td>
+    </tr>
+    <tr>
+      <td><code>51</code></td>
+      <td><code>overwrite_field_25</code></td>
+      <td><code>overwrite_field_25</code></td>
+      <td>第 25 组 · 字段名</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 51 · 0x580116</td>
+      <td class="meaning-cell">第 25 组覆写对的 FIELD：目标表字段的语义名（处理器用 exe 内硬编码 UTF-16 字面量逐名匹配后写到该行的固定内存偏移）；不认识的名字 ⇒ 只跳过它的 VALUE，不报错、不影响后续对。可用名：`MS` RESPAWN/WARP/COST/ARMOR/BOOST/BOOST_CHARGE/BOOST_SPEED/PAYLOAD/MODULE_SLOT(9)｜`WEAPON` CHARGE_LV1|LV2_POWER/SCALE/SPEED、POWER/RANGE/HIGH_LOCKON/STABILITY/RAPID_DELAY/COOL_TIME/RELOAD_TIME/WEAPON_CHANGE_TIME/SHIELD/LOCKON/LOCKON_TIME/LOCK_RADIUS/DELAY_TIME/CONDITION_TIME/CONDITION_TYPE/BULLET_ID/MAGAZINE_NUM/MAGAZINE_NUM_TOTAL/WEIGHT/DOWN_POINT(26)｜`PLAN` SP_PARTS1/2/3(3)｜`BULLET` EXP_RANGE(1)｜`WRESTLE` BOOST/DELAY/MOVE(3)</td>
+    </tr>
+    <tr>
+      <td><code>52</code></td>
+      <td><code>overwrite_value_25</code></td>
+      <td><code>overwrite_value_25</code></td>
+      <td>第 25 组 · 新值</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 52 · 0x580116</td>
+      <td class="meaning-cell">第 25 组覆写对的 VALUE：写进上格 FIELD 对应偏移的新值。类型随 FIELD 而定 —— 字符串槽用 sub_402310（窄串赋值），数值槽用 sub_BBB370（取整）</td>
+    </tr>
+    <tr>
+      <td><code>53</code></td>
+      <td><code>overwrite_field_26</code></td>
+      <td><code>overwrite_field_26</code></td>
+      <td>第 26 组 · 字段名</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 53 · 0x580116</td>
+      <td class="meaning-cell">第 26 组覆写对的 FIELD：目标表字段的语义名（处理器用 exe 内硬编码 UTF-16 字面量逐名匹配后写到该行的固定内存偏移）；不认识的名字 ⇒ 只跳过它的 VALUE，不报错、不影响后续对。可用名：`MS` RESPAWN/WARP/COST/ARMOR/BOOST/BOOST_CHARGE/BOOST_SPEED/PAYLOAD/MODULE_SLOT(9)｜`WEAPON` CHARGE_LV1|LV2_POWER/SCALE/SPEED、POWER/RANGE/HIGH_LOCKON/STABILITY/RAPID_DELAY/COOL_TIME/RELOAD_TIME/WEAPON_CHANGE_TIME/SHIELD/LOCKON/LOCKON_TIME/LOCK_RADIUS/DELAY_TIME/CONDITION_TIME/CONDITION_TYPE/BULLET_ID/MAGAZINE_NUM/MAGAZINE_NUM_TOTAL/WEIGHT/DOWN_POINT(26)｜`PLAN` SP_PARTS1/2/3(3)｜`BULLET` EXP_RANGE(1)｜`WRESTLE` BOOST/DELAY/MOVE(3)</td>
+    </tr>
+    <tr>
+      <td><code>54</code></td>
+      <td><code>overwrite_value_26</code></td>
+      <td><code>overwrite_value_26</code></td>
+      <td>第 26 组 · 新值</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5800D0</code></td>
+      <td class="muted">csv 54 · 0x580116</td>
+      <td class="meaning-cell">第 26 组覆写对的 VALUE：写进上格 FIELD 对应偏移的新值。类型随 FIELD 而定 —— 字符串槽用 sub_402310（窄串赋值），数值槽用 sub_BBB370（取整）</td>
+    </tr></tbody>
+      </table>
+    </section>
+
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">生成于 2026-10-12 · 改 JSON 后重跑 build_site.py · HTML 只读</div>
+  </footer>
+</body>
+</html>

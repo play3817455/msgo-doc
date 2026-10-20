@@ -1,0 +1,676 @@
+{
+  "id": "SC-0x0BCE-battle-score_update_coopwave",
+  "opcode": "0x0BCE",
+  "direction": "SC",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "score_update_coopwave",
+  "source_dir": "protocol_analysis/commands/SC-0x0BCE-battle-score_update_coopwave",
+  "meta": {
+    "opcode": "`0x0BCE`",
+    "方向": "SC（服务端 → 客户端（recv））",
+    "协议类": "`battle_client`",
+    "命令名": "`score_update_coopwave`",
+    "名字符串": "`)->_proto_battle_client::recv_score_update_coopwave(` @ `0xEE0268`，引用点 `0xB0EA2D`",
+    "处理函数": "`sub_B0CC20` @ `0xB0CC20`（battle 分发器）",
+    "处理块范围": "`0xB0E879` .. `0xB0EC1F`（块首 `0xB0E879 push 0ADh; call sub_B05DA0`，错误码 `0x0AD`）",
+    "关联命令": "相关 `SC-0x8D59 score_update`(DRAFT，普通计分)；本命令为**联合作战波次**计分，无配对 C→S"
+  },
+  "handler": "sub_B0CC20",
+  "handler_va": "0xB0CC20",
+  "block": [
+    "0xB0E879",
+    "0xB0EC1F"
+  ],
+  "name_str": ")->_proto_battle_client::recv_score_update_coopwave(",
+  "name_str_va": "0xEE0268",
+  "capacity": "0x16",
+  "capacity_va": "0xB0E895",
+  "closer_va": "0xB0E9E4",
+  "dispatch": null,
+  "dispatch_slot": "vt[0x228]",
+  "dispatch_va": "0xB0EC03",
+  "wire": {
+    "length_expr": "22",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x16（容量记账口径，非线长）",
+    "field_count": 7,
+    "length_source": "closure_row",
+    "readme_conclusion": "**报文体总长：定长 22 字节**（4×u32 + 3×u16 交错）。",
+    "readme_close": "4+4+4+2+4+2+2 = 22；闭合点 0xB0E9E4 要求「游标 == 末尾」✓"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "battle 分发的 switch 选择子",
+      "enum": "0x0BCE",
+      "evidence_va": [
+        "0xB0EA2D"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "reason",
+      "meaning": "计分原因(计分类别枚举)",
+      "purpose": "交 vt[0x228] 第1实参；日志 reason=",
+      "enum": "?",
+      "evidence_va": [
+        "0xB0E8D0",
+        "0xB0E8C1",
+        "0xB02DE9",
+        "0xB0EA83",
+        "0xB0EC00"
+      ],
+      "confidence": "类型确证/枚举待定",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "world_id",
+      "meaning": "大区(世界)ID",
+      "purpose": "交 vt[0x228] 第2实参；日志 world_id=",
+      "enum": "?",
+      "evidence_va": [
+        "0xB0E910",
+        "0xB0E901",
+        "0xB0EAAD",
+        "0xB0EBFD"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "8",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "pilot_id",
+      "meaning": "驾驶员(角色)ID",
+      "purpose": "交 vt[0x228] 第3实参；日志 pilot_id=",
+      "enum": null,
+      "evidence_va": [
+        "0xB0E934",
+        "0xB0E925",
+        "0xB0EAD7",
+        "0xB0EBF6"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 4,
+      "offset": "12",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "point_gain",
+      "meaning": "本次获得的积分",
+      "purpose": "交 vt[0x228] 第4实参(movzx)；日志 point_gain=(十六进制)",
+      "enum": null,
+      "evidence_va": [
+        "0xB0E958",
+        "0xB0E949",
+        "0xB02E0B",
+        "0xB0EB02",
+        "0xB0EBE8"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    },
+    {
+      "seq": 5,
+      "offset": "14",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "point_total",
+      "meaning": "累计总积分",
+      "purpose": "交 vt[0x228] 第5实参；日志 point_total=",
+      "enum": null,
+      "evidence_va": [
+        "0xB0E980",
+        "0xB0E971",
+        "0xB0EB2C",
+        "0xB0EBE7"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 7
+    },
+    {
+      "seq": 6,
+      "offset": "18",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "n_cont_kill",
+      "meaning": "连续击杀数",
+      "purpose": "交 vt[0x228] 第6实参；日志 n_cont_kill=(十六进制)",
+      "enum": null,
+      "evidence_va": [
+        "0xB0E9A8",
+        "0xB0E999",
+        "0xB0EB57",
+        "0xB0EBE0"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 8
+    },
+    {
+      "seq": 7,
+      "offset": "20",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "bonus_cont_kill",
+      "meaning": "连续击杀奖励加成",
+      "purpose": "交 vt[0x228] 第7实参；日志 bonus_cont_kill=(十六进制)",
+      "enum": null,
+      "evidence_va": [
+        "0xB0E9D0",
+        "0xB0E9C1",
+        "0xB0EB7D",
+        "0xB0EBD0"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 9
+    },
+    {
+      "seq": -1,
+      "offset": "22",
+      "length": "0",
+      "wire_type": "-",
+      "name": "（长度闭合）",
+      "meaning": "游标必须==报文末尾",
+      "purpose": "容量 0x16==线长 22",
+      "enum": null,
+      "evidence_va": [
+        "0xB0E9E4",
+        "0xB0E9EA"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 10,
+      "is_closure": true
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0x0BCE（分发器 switch 选择子）",
+      "evidence_va": "0xB0EA2D"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB05DA0`（模块 id 173）→ 之后逐字段读线",
+      "evidence_va": "0xB0E880"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "reason：`u32`（线长 4）—— 计分原因(计分类别枚举)",
+      "evidence_va": "0xB0E8D0"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "world_id：`u32`（线长 4）—— 大区(世界)ID",
+      "evidence_va": "0xB0E910"
+    },
+    {
+      "step": 5,
+      "kind": "read_scalar",
+      "detail": "pilot_id：`u32`（线长 4）—— 驾驶员(角色)ID",
+      "evidence_va": "0xB0E934"
+    },
+    {
+      "step": 6,
+      "kind": "read_scalar",
+      "detail": "point_gain：`u16`（线长 2）—— 本次获得的积分",
+      "evidence_va": "0xB0E958"
+    },
+    {
+      "step": 7,
+      "kind": "read_scalar",
+      "detail": "point_total：`u32`（线长 4）—— 累计总积分",
+      "evidence_va": "0xB0E980"
+    },
+    {
+      "step": 8,
+      "kind": "read_scalar",
+      "detail": "n_cont_kill：`u16`（线长 2）—— 连续击杀数",
+      "evidence_va": "0xB0E9A8"
+    },
+    {
+      "step": 9,
+      "kind": "read_scalar",
+      "detail": "bonus_cont_kill：`u16`（线长 2）—— 连续击杀奖励加成",
+      "evidence_va": "0xB0E9D0"
+    },
+    {
+      "step": 10,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB0E9E4"
+    },
+    {
+      "step": 11,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x228]`，实参 7 个",
+      "evidence_va": "0xB0EC03"
+    },
+    {
+      "step": 12,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB0E8EA"
+    }
+  ],
+  "capabilities": [
+    "settle",
+    "update"
+  ],
+  "capabilities_derived": [
+    "notify"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:46",
+    "batch": 15,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 22,
+        "va": "0xB0E895",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB0E892",
+        "call_va": "0xB0E897"
+      },
+      "field_window": {
+        "start_va": "0xB0E881",
+        "end_va": "0xB0EA0B",
+        "guard": {
+          "va": "0xB0E880",
+          "func": "0xB05DA0",
+          "module_id": 173,
+          "release_va": "0xB05D90"
+        },
+        "closer_or_commit_va": "0xB0E9E4",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "reason",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB0E8D0",
+              "0xB0E8C1",
+              "0xB02DE9",
+              "0xB0EA83",
+              "0xB0EC00"
+            ]
+          },
+          {
+            "name": "world_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB0E910",
+              "0xB0E901",
+              "0xB0EAAD",
+              "0xB0EBFD"
+            ]
+          },
+          {
+            "name": "pilot_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB0E934",
+              "0xB0E925",
+              "0xB0EAD7",
+              "0xB0EBF6"
+            ]
+          },
+          {
+            "name": "point_gain",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 4,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB0E958",
+              "0xB0E949",
+              "0xB02E0B",
+              "0xB0EB02",
+              "0xB0EBE8"
+            ]
+          },
+          {
+            "name": "point_total",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 5,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB0E980",
+              "0xB0E971",
+              "0xB0EB2C",
+              "0xB0EBE7"
+            ]
+          },
+          {
+            "name": "n_cont_kill",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 6,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB0E9A8",
+              "0xB0E999",
+              "0xB0EB57",
+              "0xB0EBE0"
+            ]
+          },
+          {
+            "name": "bonus_cont_kill",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 7,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB0E9D0",
+              "0xB0E9C1",
+              "0xB0EB7D",
+              "0xB0EBD0"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB0E8D0",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0E910",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0E934",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0E958",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0E980",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0E9A8",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0E9D0",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 7,
+        "checkable": 7,
+        "pairs": [
+          {
+            "field": "reason",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB0E8D0",
+            "kind": "read"
+          },
+          {
+            "field": "world_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB0E910",
+            "kind": "read"
+          },
+          {
+            "field": "pilot_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB0E934",
+            "kind": "read"
+          },
+          {
+            "field": "point_gain",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB0E958",
+            "kind": "read"
+          },
+          {
+            "field": "point_total",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB0E980",
+            "kind": "read"
+          },
+          {
+            "field": "n_cont_kill",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB0E9A8",
+            "kind": "read"
+          },
+          {
+            "field": "bonus_cont_kill",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB0E9D0",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB0E881",
+          "0xB0EA0B"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 22,
+          "capacity": 22,
+          "relation": "exact",
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）22 / 容量 0x16"
+        }
+      },
+      "closer": {
+        "va": "0xB0E9E4",
+        "kind": "jz",
+        "jcc_va": "0xB0E9EA",
+        "seq_va": "0xB0E9E0",
+        "jcc_dst": "0xB0EA06",
+        "cmp": "cmp     ebx, [esp+1B3Ch+var_1B24]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x228]",
+        "slot_value": 552,
+        "va": "0xB0EC03",
+        "mov_va": "0xB0EBDA",
+        "host": "[edx+228h]",
+        "argc": 7,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB0E8EA",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "reason=",
+        "world_id=",
+        "pilot_id=",
+        "point_gain=",
+        "point_total=",
+        "n_cont_kill=",
+        "bonus_cont_kill="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0x0BCE-battle-score_update_coopwave.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": "（长度闭合）",
+    "opcode_field_va": [
+      "0xB0EA2D"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "ScoreUpdateCoopwave",
+      "role": "response",
+      "wire_length": "22",
+      "members": [
+        {
+          "name": "Reason",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "reason"
+        },
+        {
+          "name": "WorldId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "world_id"
+        },
+        {
+          "name": "PilotId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "pilot_id"
+        },
+        {
+          "name": "PointGain",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "point_gain"
+        },
+        {
+          "name": "PointTotal",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "point_total"
+        },
+        {
+          "name": "NContKill",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "n_cont_kill"
+        },
+        {
+          "name": "BonusContKill",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "bonus_cont_kill"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "eda46e7e742b783f",
+  "check_fingerprint": "450e15fb86f473d9"
+}

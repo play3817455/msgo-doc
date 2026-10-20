@@ -1,0 +1,62 @@
+{
+  "id": "srv.shop_recycle",
+  "slug": "shop_recycle",
+  "title": "回收价目（每道具模板一行）",
+  "kind": "server_config",
+  "status": "complete",
+  "ddl": "serverv/migrations/0033_srv_shop_recycle_and_itemcode.up.sql",
+  "generated_by": "db_design/tools/build_srv_docs.py",
+  "note": "本文件由 db_design/tools/build_srv_docs.py 从 serverv/migrations/0033_srv_shop_recycle_and_itemcode.up.sql 生成，勿手改：改 srv.* 请改迁移再重跑生成器",
+  "purpose": "道具回收价目（每道具模板一行）：CS-0xC9F9 shop_sell 的唯一价源 —— 服务端按 recycle_gp × num 给 GP；没有行或 enabled=false 则拒绝出售（客户端上报的 total_price 只进日志，与 shop_buy 同口径）",
+  "primary_key": [
+    "item_id"
+  ],
+  "columns": [
+    {
+      "name": "item_id",
+      "sql_type": "BIGINT",
+      "not_null": true,
+      "default": null,
+      "checks": [
+        "item_id BETWEEN 0 AND 4294967295"
+      ],
+      "meaning": "道具模板 ID [u32] 对应 game.item.item_id / SC-0x02EE 元素成员 item_id@0xB4351F"
+    },
+    {
+      "name": "recycle_gp",
+      "sql_type": "BIGINT",
+      "not_null": true,
+      "default": "0",
+      "checks": [
+        "recycle_gp BETWEEN 0 AND 4294967295"
+      ],
+      "meaning": "回收单价（每件给多少 GP）[u32] 线上无此字段（SC-0xD4F8 只有 result）⇒ 本服策略值；0 = 不回收"
+    },
+    {
+      "name": "enabled",
+      "sql_type": "BOOLEAN",
+      "not_null": true,
+      "default": "TRUE,",
+      "checks": [],
+      "meaning": "是否可回收（运营开关；false 与\"没有行\"同样拒绝出售，但日志不同）"
+    },
+    {
+      "name": "label",
+      "sql_type": "TEXT",
+      "not_null": true,
+      "default": "'',",
+      "checks": [],
+      "meaning": "运营备注（不入任何线字段）"
+    },
+    {
+      "name": "updated_at",
+      "sql_type": "TIMESTAMPTZ",
+      "not_null": true,
+      "default": "now()",
+      "checks": [],
+      "meaning": "本行最后修改时间"
+    }
+  ],
+  "seed_columns": [],
+  "seed_rows": []
+}

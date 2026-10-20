@@ -1,0 +1,51 @@
+{
+  "id": "tbl_friend_histories",
+  "title": "好友履历",
+  "status": "complete",
+  "table_disposition": "PERSIST",
+  "purpose": "持久化 friend_histories 113B；同 lpcard",
+  "entity_ref": "friend_histories",
+  "evidence_commands": [
+    "SC-0x9F94-lounge-friend_history_get_xworld_r"
+  ],
+  "column_groups": [
+    {
+      "name": "friend_histories（113B · 同 lpcard）",
+      "columns": [
+        "friend_histories"
+      ]
+    }
+  ],
+  "columns": [
+    {
+      "name": "friend_histories",
+      "disposition": "COMPOSITE",
+      "composite_ref": "lpcard",
+      "meaning": "跨服好友履历元素（日志 friend_histories=；113B 线 / 132B 槽）",
+      "wire_sources": [
+        {
+          "command": "SC-0x9F94-lounge-friend_history_get_xworld_r",
+          "struct": "friend_histories",
+          "field_name": "friend_histories",
+          "offset": null,
+          "length": 113,
+          "wire_type": "array<struct,113>",
+          "protocol_path": "protocol_analysis/commands/SC-0x9F94-lounge-friend_history_get_xworld_r/README.md",
+          "section": "§3",
+          "reader": "sub_B43100",
+          "printer": "sub_B49580",
+          "evidence_va": "B6E8F8|B49580",
+          "notes": "数组元素；成员见 composite lpcard"
+        }
+      ],
+      "asm_verified": true
+    }
+  ],
+  "asm_audit": {
+    "composite_ref": "friend_histories",
+    "status": "pass",
+    "issues_count": 0,
+    "memory_status": "pass",
+    "memory_issues_count": 0
+  }
+}

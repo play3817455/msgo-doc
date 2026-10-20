@@ -1,0 +1,252 @@
+{
+  "id": "unlocked_navi",
+  "title": "解锁导航 unlocked_navi（8B）",
+  "domain": "lounge",
+  "domain_votes": {
+    "lounge": 2
+  },
+  "folded_composites": [
+    "navi_entry",
+    "unlocked_navi"
+  ],
+  "anchored_by": "tbl_unlocked_navi",
+  "legacy_table": "tbl_unlocked_navi",
+  "row_key": [
+    "navi_id"
+  ],
+  "views": [
+    {
+      "composite": "navi_entry",
+      "length": 8,
+      "memory_claim": 8,
+      "reader": "sub_B434B0",
+      "printer": "sub_B49C80",
+      "commands": [
+        "SC-0x0906-lounge-player_navi_get_list_r"
+      ]
+    },
+    {
+      "composite": "unlocked_navi",
+      "length": 8,
+      "memory_claim": 8,
+      "reader": "sub_B434B0",
+      "printer": "sub_B49C80",
+      "commands": [
+        "SC-0xA0BB-lounge-player_navi_unlock_r"
+      ]
+    }
+  ],
+  "members": [
+    {
+      "name": "navi_id",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "导航 ID",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "navi_entry",
+          "unlocked_navi"
+        ]
+      },
+      "views": [
+        "navi_entry",
+        "unlocked_navi"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB434BE",
+      "evidence_ref": {
+        "command": "SC-0x0906-lounge-player_navi_get_list_r",
+        "struct": "navi_entry",
+        "field": "navi_id",
+        "reader": "sub_B434B0",
+        "printer": "",
+        "protocol_path": "protocol_analysis/commands/SC-0x0906-lounge-player_navi_get_list_r/README.md",
+        "section": "§3 字段 2"
+      },
+      "role": "identity"
+    },
+    {
+      "name": "status",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "导航解锁/进度状态（枚举待交叉）",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "navi_entry",
+          "unlocked_navi"
+        ]
+      },
+      "views": [
+        "navi_entry",
+        "unlocked_navi"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB434D5",
+      "evidence_ref": {
+        "command": "SC-0x0906-lounge-player_navi_get_list_r",
+        "struct": "navi_entry",
+        "field": "status",
+        "reader": "sub_B434B0",
+        "printer": "",
+        "protocol_path": "protocol_analysis/commands/SC-0x0906-lounge-player_navi_get_list_r/README.md",
+        "section": "§3 字段 2"
+      },
+      "role": "attribute"
+    }
+  ],
+  "wire_body": "unlocked_navi",
+  "writes": [],
+  "reads": [
+    {
+      "command": "SC-0x0906-lounge-player_navi_get_list_r",
+      "op": "read",
+      "via": "navi_entry"
+    },
+    {
+      "command": "SC-0xA0BB-lounge-player_navi_unlock_r",
+      "op": "read",
+      "via": "unlocked_navi"
+    }
+  ],
+  "db_effects": [
+    {
+      "command": "SC-0xA0BB-lounge-player_navi_unlock_r",
+      "entity": "unlocked_navi",
+      "op": "update",
+      "fields": [
+        "unlocked_navi"
+      ],
+      "table_ref": "tbl_unlocked_navi"
+    },
+    {
+      "command": "SC-0xA0BB-lounge-player_navi_unlock_r",
+      "entity": "unlocked_navi",
+      "op": "update",
+      "fields": [
+        "unlock_r"
+      ],
+      "table_ref": "tbl_unlocked_navi"
+    }
+  ],
+  "pk_members": [
+    "navi_id"
+  ],
+  "pk_kind": "row_key",
+  "is_root": true,
+  "identity": [
+    "navi_id"
+  ],
+  "multi": false,
+  "array_parents": [],
+  "inline_parents": [],
+  "shape": "root",
+  "parent": "",
+  "parents": [],
+  "has_scope": false,
+  "disposition": "PERSIST",
+  "table": "game.unlocked_navi",
+  "columns_excluded": [],
+  "columns": [
+    {
+      "member": "navi_id",
+      "column": "navi_id",
+      "role": "identity",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "导航 ID",
+      "evidence_va": "0xB434BE",
+      "pk": true
+    },
+    {
+      "member": "status",
+      "column": "status",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "导航解锁/进度状态（枚举待交叉）",
+      "evidence_va": "0xB434D5",
+      "pk": false
+    }
+  ],
+  "columns_expected": 2,
+  "keys": {
+    "scope": [
+      "world_id",
+      "pilot_id"
+    ],
+    "own": [
+      "navi_id"
+    ],
+    "inherited": [],
+    "primary_key": [
+      "world_id",
+      "pilot_id",
+      "navi_id"
+    ],
+    "pk_kind": "row_key",
+    "children": [],
+    "nested": [],
+    "child_key": [
+      "elem_index"
+    ]
+  },
+  "tables": [
+    {
+      "name": "game.unlocked_navi",
+      "shape": "root",
+      "parent": "",
+      "parent_table": "",
+      "via_member": "",
+      "key_extra": [],
+      "scope": [
+        "world_id",
+        "pilot_id"
+      ],
+      "links": [],
+      "child_tables": [],
+      "columns": [
+        {
+          "member": "navi_id",
+          "column": "navi_id",
+          "role": "identity",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "导航 ID",
+          "evidence_va": "0xB434BE",
+          "pk": true
+        },
+        {
+          "member": "status",
+          "column": "status",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "导航解锁/进度状态（枚举待交叉）",
+          "evidence_va": "0xB434D5",
+          "pk": false
+        }
+      ],
+      "key_members": [
+        "world_id",
+        "pilot_id",
+        "navi_id"
+      ],
+      "primary_key": [
+        "world_id",
+        "pilot_id",
+        "navi_id"
+      ]
+    }
+  ],
+  "links": []
+}

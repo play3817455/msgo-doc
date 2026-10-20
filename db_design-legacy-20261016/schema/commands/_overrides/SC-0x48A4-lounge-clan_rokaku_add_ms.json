@@ -1,0 +1,67 @@
+{
+  "id": "SC-0x48A4-lounge-clan_rokaku_add_ms",
+  "revision": 1,
+  "verified_at": "2026-09-22",
+  "verifier": "人工（IDA 汇编：元素读取器 sub_B43A80 整函数展开 + 内层 ms_lounge sub_B43570 / unlockw sub_B439D0 + 数组内存步进 0x1A0 + 打印器 sub_B4A6D0）",
+  "reason": "`ms[]` 的草稿行有两处错：① 线类型写成 `array<ms>`，元素名撞上了 battle 线形的 `ms`（244B）；实际元素由 `sub_B43A80` 读，整函数消费 `sub_B43570`(303) + 3×`sub_B439D0`(30) + 2×u32(8) = **401B**，成员落 `schema/composites/ms_rokaku.json`（打印器 `sub_B4A6D0` 打 `body=` / `weapons={` / `limit_use=` / `limit_coolup=`）。② 长度列只写了元素线宽 `401`（条数另有线上字段 `ms_count`），按 §3.1 应为 `401·ms_count ≈ 4+401·ms_count+4`；草稿的「总长 69896」与 `is_firstonetime` 偏移 `69892` 都是**容量/内存记账**（`4+168×416+4`，槽 0x1A0=416），不是线偏移 —— 线偏移只能是 `var`。元素线长 401 ≠ 槽 416（内存里 3 个 weapons 槽各 32B，线上各 30B），两者必须分开记。",
+  "evidence": [
+    {
+      "what": "元素读取器整函数消费 = 401B（三段相加），与槽步进 416 分离",
+      "va": [
+        "0xB43A80",
+        "0xB43570",
+        "0xB439D0"
+      ],
+      "detail": "`sub_B43A80` 先 call `sub_B43570`（ms_lounge 303B），再循环 3 次 call `sub_B439D0`（unlockw 30B/次，内存步进 0x20=32），最后 2×u32 直读（mem 0x198/0x19C）⇒ 线长 303+90+8=401，内存跨度 312+96+8=416。"
+    },
+    {
+      "what": "数组内存步进与预留器：槽 0x1A0=416（不是线长 401）",
+      "va": [
+        "0xB41880",
+        "0xB5E7B4",
+        "0xB5E7E6"
+      ],
+      "detail": "`sub_B41880` 把 bump 游标按 `add dword ptr [edx],1A0h` 推进 count 次；循环体 `0xB5E7E6 add [var_2C48],1A0h` 也只推**目的缓冲**指针。线上游标（`var_2C44`）只由 `sub_B43A80` 推进 ⇒ 线上元素步进 = 401。容量 `0x11108`=69896=`4+168×416+4` 因此是槽口径。"
+    },
+    {
+      "what": "条数上界 168 与闭合点",
+      "va": [
+        "0xB5E7A6",
+        "0xB5E872"
+      ],
+      "detail": "`cmp ebx,0A8h` ⇒ ms_count ≤ 168；`0xB5E872` 处校验「游标 == 报文末尾」仍成立（闭合与元素步进无关）。"
+    },
+    {
+      "what": "元素成员名取自元素打印器（内层 sub_B49DE0 给 ms 本体，外层 sub_B4A6D0 给 weapons/limit_*）",
+      "va": [
+        "0xB4A6D0",
+        "0xB49DE0",
+        "0xB4A580"
+      ],
+      "detail": "`sub_B4A6D0` 打 `body={…}`（调 `sub_B49DE0`）、`weapons={`（3×`sub_B4A580` = unlockw）、`limit_use=`、`limit_coolup=`；成员名与内存偏移逐一对应 composites/ms_rokaku.json。"
+    }
+  ],
+  "patch": {
+    "ms[]": {
+      "wire_type": "array<ms_rokaku,ms_count>",
+      "length": "401·ms_count",
+      "meaning": "络格追加机体数组（元素 = ms_rokaku：ms_lounge 303B + weapons[3]×30B + 2×u32 = 401B）",
+      "purpose": "经 `vt[0x488]` 交业务（3 实参）；元素成员就地展开在 composites/ms_rokaku.json",
+      "enum": "元素线长 401 / 槽步进 0x1A0=416；条数上限 168（`cmp ebx,0A8h`@`0xB5E7A6`）",
+      "evidence_va": [
+        "0xB5E7B4",
+        "0xB5E7DA",
+        "0xB43A80"
+      ]
+    },
+    "is_firstonetime": {
+      "offset": "var",
+      "meaning": "是否首次（紧跟变长数组之后，线偏移 = 4 + 401·ms_count）",
+      "evidence_va": [
+        "0xB5E81F"
+      ]
+    }
+  },
+  "wire_length_expr": "4 + 401·ms_count + 4",
+  "wire_note": "草稿的「总长 69896 == 容量 0x11108」是**槽口径**：69896 = 4 + 168×416 + 4（槽 0x1A0）。线长按元素线长 401 记 = `4 + 401·ms_count + 4`（count=168 时 67376）。容量记账只用于反推漏读段（§3.1），不进线长列。"
+}

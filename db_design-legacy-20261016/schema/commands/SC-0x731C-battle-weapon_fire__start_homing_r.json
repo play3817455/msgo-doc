@@ -1,0 +1,499 @@
+{
+  "id": "SC-0x731C-battle-weapon_fire__start_homing_r",
+  "opcode": "0x731C",
+  "direction": "SC",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "weapon_fire__start_homing_r",
+  "source_dir": "protocol_analysis/commands/SC-0x731C-battle-weapon_fire__start_homing_r",
+  "meta": {
+    "opcode": "`0x731C`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`battle_client`",
+    "命令名": "`weapon_fire__start_homing_r`",
+    "处理块范围": "`0xb1f0eb`..`0xb1f40f`",
+    "名字串引用点": "`0xb1f24f`",
+    "声明容量（解码缓冲）": "`0xC`（`0xb1f107`）",
+    "长度闭合点": "`0xb1f206`",
+    "去向": "`vt[0x1BC]` @ `0xb1f3c5`（5 实参）"
+  },
+  "handler": null,
+  "handler_va": null,
+  "block": [
+    "0xb1f0eb",
+    "0xb1f40f"
+  ],
+  "name_str": null,
+  "name_str_va": "0xb1f24f",
+  "capacity": "0xC",
+  "capacity_va": "0xb1f107",
+  "closer_va": "0xB1F206",
+  "dispatch": "`vt[0x1BC]` @ `0xb1f3c5`（5 实参）",
+  "dispatch_slot": "vt[0x1BC]",
+  "dispatch_va": "0xb1f3c5",
+  "wire": {
+    "length_expr": "4 + 2 + 2 + 2 + 2",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0xC（容量记账口径，非线长）",
+    "field_count": 5,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：12。",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0x731C",
+      "evidence_va": [
+        "`0xb1f24f`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "grenade_id",
+      "meaning": "手雷 id（日志串 `grenade_id=`）",
+      "purpose": "`vt[0x1BC]` 实参（`0xb1f3c0`）",
+      "enum": null,
+      "evidence_va": [
+        "0xb1f142"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "pos_x",
+      "meaning": "投掷点 X（日志串 `pos_x=`）",
+      "purpose": "`vt[0x1BC]` 实参（`movzx word ptr` @`0xb1f3b8`）",
+      "enum": null,
+      "evidence_va": [
+        "0xb1f182"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "6",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "pos_y",
+      "meaning": "投掷点 Y（日志串 `pos_y=`）",
+      "purpose": "同上（`0xb1f3b0`）",
+      "enum": null,
+      "evidence_va": [
+        "0xb1f1a6"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 4,
+      "offset": "8",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "pos_z",
+      "meaning": "投掷点 Z（日志串 `pos_z=`）",
+      "purpose": "同上（`0xb1f3a8`）",
+      "enum": null,
+      "evidence_va": [
+        "0xb1f1ca"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    },
+    {
+      "seq": 5,
+      "offset": "10",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "target_ent_id",
+      "meaning": "目标实体 id（日志串 `target_ent_id=`）",
+      "purpose": "同上（`0xb1f3a7`）",
+      "enum": null,
+      "evidence_va": [
+        "0xb1f1f2"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 7
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0x731C（分发器 switch 选择子）",
+      "evidence_va": "0xB1F24F"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB05DA0`（模块 id 130）→ 之后逐字段读线",
+      "evidence_va": "0xB1F0F2"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "grenade_id：`u32`（线长 4）—— 手雷 id（日志串 `grenade_id=`）",
+      "evidence_va": "0xB1F142"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "pos_x：`u16`（线长 2）—— 投掷点 X（日志串 `pos_x=`）",
+      "evidence_va": "0xB1F182"
+    },
+    {
+      "step": 5,
+      "kind": "read_scalar",
+      "detail": "pos_y：`u16`（线长 2）—— 投掷点 Y（日志串 `pos_y=`）",
+      "evidence_va": "0xB1F1A6"
+    },
+    {
+      "step": 6,
+      "kind": "read_scalar",
+      "detail": "pos_z：`u16`（线长 2）—— 投掷点 Z（日志串 `pos_z=`）",
+      "evidence_va": "0xB1F1CA"
+    },
+    {
+      "step": 7,
+      "kind": "read_scalar",
+      "detail": "target_ent_id：`u16`（线长 2）—— 目标实体 id（日志串 `target_ent_id=`）",
+      "evidence_va": "0xB1F1F2"
+    },
+    {
+      "step": 8,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB1F206"
+    },
+    {
+      "step": 9,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x1BC]`，实参 5 个",
+      "evidence_va": "0xB1F3C5"
+    },
+    {
+      "step": 10,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB1F15C"
+    }
+  ],
+  "capabilities": [
+    "battle_action",
+    "flow"
+  ],
+  "capabilities_derived": [
+    "battle",
+    "flow"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:47",
+    "batch": 18,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 12,
+        "va": "0xB1F107",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB1F104",
+        "call_va": "0xB1F109"
+      },
+      "field_window": {
+        "start_va": "0xB1F0F3",
+        "end_va": "0xB1F22D",
+        "guard": {
+          "va": "0xB1F0F2",
+          "func": "0xB05DA0",
+          "module_id": 130,
+          "release_va": "0xB05D90"
+        },
+        "closer_or_commit_va": "0xB1F206",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "grenade_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb1f142"
+            ]
+          },
+          {
+            "name": "pos_x",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb1f182"
+            ]
+          },
+          {
+            "name": "pos_y",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb1f1a6"
+            ]
+          },
+          {
+            "name": "pos_z",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 4,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb1f1ca"
+            ]
+          },
+          {
+            "name": "target_ent_id",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 5,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb1f1f2"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB1F142",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB1F182",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB1F1A6",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB1F1CA",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB1F1F2",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 5,
+        "checkable": 5,
+        "pairs": [
+          {
+            "field": "grenade_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB1F142",
+            "kind": "read"
+          },
+          {
+            "field": "pos_x",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB1F182",
+            "kind": "read"
+          },
+          {
+            "field": "pos_y",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB1F1A6",
+            "kind": "read"
+          },
+          {
+            "field": "pos_z",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB1F1CA",
+            "kind": "read"
+          },
+          {
+            "field": "target_ent_id",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB1F1F2",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB1F0F3",
+          "0xB1F22D"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 12,
+          "capacity": 12,
+          "relation": "exact",
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）12 / 容量 0xc"
+        }
+      },
+      "closer": {
+        "va": "0xB1F206",
+        "kind": "jz",
+        "jcc_va": "0xB1F20C",
+        "seq_va": "0xB1F202",
+        "jcc_dst": "0xB1F228",
+        "cmp": "cmp     ebx, [esp+1B3Ch+var_1B24]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x1BC]",
+        "slot_value": 444,
+        "va": "0xB1F3C5",
+        "mov_va": "0xB1F3A1",
+        "host": "[edx+1BCh]",
+        "argc": 5,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB1F15C",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "grenade_id=",
+        "pos_x=",
+        "pos_y=",
+        "pos_z=",
+        "target_ent_id="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0x731C-battle-weapon_fire__start_homing_r.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "`0xb1f24f`"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "WeaponFireStartHomingR",
+      "role": "response",
+      "wire_length": "4 + 2 + 2 + 2 + 2",
+      "members": [
+        {
+          "name": "GrenadeId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "grenade_id"
+        },
+        {
+          "name": "PosX",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "pos_x"
+        },
+        {
+          "name": "PosY",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "pos_y"
+        },
+        {
+          "name": "PosZ",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "pos_z"
+        },
+        {
+          "name": "TargetEntId",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "target_ent_id"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "6203ded4e2d35da2",
+  "check_fingerprint": "58abf72766770ff1"
+}

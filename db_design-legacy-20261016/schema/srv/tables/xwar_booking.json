@@ -1,0 +1,62 @@
+{
+  "id": "srv.xwar_booking",
+  "slug": "xwar_booking",
+  "title": "XWar 匹配规则开关",
+  "kind": "server_config",
+  "status": "complete",
+  "ddl": "serverv/migrations/0013_srv_lobby.up.sql",
+  "generated_by": "db_design/tools/build_srv_docs.py",
+  "note": "本文件由 db_design/tools/build_srv_docs.py 从 serverv/migrations/0013_srv_lobby.up.sql 生成，勿手改：改 srv.* 请改迁移再重跑生成器",
+  "purpose": "XWar 预约匹配规则开关（单行，id=1）；SC-0xCCDF 的两个服务端侧标志来源",
+  "primary_key": [
+    "id"
+  ],
+  "columns": [
+    {
+      "name": "id",
+      "sql_type": "SMALLINT",
+      "not_null": true,
+      "default": "1",
+      "checks": [
+        "id = 1"
+      ],
+      "meaning": "单行哨兵（恒为 1）"
+    },
+    {
+      "name": "matching_battlerule_flag",
+      "sql_type": "BIGINT",
+      "not_null": true,
+      "default": "0,",
+      "checks": [],
+      "meaning": "匹配战斗规则标志 [u32] SC-0xCCDF@0xb7b0d6|0xb7b0e5"
+    },
+    {
+      "name": "matching_extrule_flag",
+      "sql_type": "BIGINT",
+      "not_null": true,
+      "default": "0,",
+      "checks": [],
+      "meaning": "匹配扩展规则标志 [u32] SC-0xCCDF@0xb7b0fe|0xb7b10d"
+    },
+    {
+      "name": "updated_at",
+      "sql_type": "TIMESTAMPTZ",
+      "not_null": true,
+      "default": "now()",
+      "checks": [],
+      "meaning": "本行最后修改时间（GM 改开关时更新）"
+    }
+  ],
+  "seed_columns": [
+    "id",
+    "matching_battlerule_flag",
+    "matching_extrule_flag"
+  ],
+  "seed_rows": [
+    {
+      "id": "1",
+      "matching_battlerule_flag": "0",
+      "matching_extrule_flag": "0"
+    }
+  ]
+}

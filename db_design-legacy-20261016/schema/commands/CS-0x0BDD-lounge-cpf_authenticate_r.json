@@ -1,0 +1,335 @@
+{
+  "id": "CS-0x0BDD-lounge-cpf_authenticate_r",
+  "opcode": "0x0BDD",
+  "direction": "CS",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "cpf_authenticate_r",
+  "source_dir": "protocol_analysis/commands/CS-0x0BDD-lounge-cpf_authenticate_r",
+  "meta": {
+    "opcode": "`0x0BDD`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`cpf_authenticate_r`",
+    "名字符串": "`)<-_proto_lounge_client::send_cpf_authenticate_r( ` @ `0xeed018`",
+    "代码位置": "sub_BA4B00 @ `0xba4b00`（`0xba4b00`..`0xba4d43`）",
+    "opcode 写入/分发证据": "`0xba4b83`（opcode 写入指令）",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0x86`（134）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽 @`0x00BA4CCD`）；`call vt[0x58](buf, 负载长度)`",
+    "配对命令（同 opcode 反向）": "（本批次内无同 opcode 反向命令）"
+  },
+  "handler": "sub_BA4B00",
+  "handler_va": "0xba4b00",
+  "block": [
+    "0xBA4B00",
+    "0xBA4D43"
+  ],
+  "name_str": ")<-_proto_lounge_client::send_cpf_authenticate_r(",
+  "name_str_va": "0xeed018",
+  "capacity": "0x86",
+  "capacity_va": null,
+  "closer_va": "0xBA4C24",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽 @`0x00BA4CCD`）；`call vt[0x58](buf, 负载长度)`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": "0x00BA4CCD",
+  "wire": {
+    "length_expr": "4 + data_len",
+    "fixed": false,
+    "var_drivers": [
+      "data_len"
+    ],
+    "capacity_note": "声明容量 0x86（容量记账口径，非线长）",
+    "field_count": 2,
+    "length_source": "field_sum",
+    "readme_conclusion": "结论：2 字段 + opcode：CPF 反外挂握手应答（长度前缀 + 变长字节串）——lounge 协议类版本。",
+    "readme_close": "容量 0x86 == 2 + 4 + 128 ✓。"
+  },
+  "fields": [
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "data_len",
+      "meaning": "数据长度（上限 0x80=128，`cmp ebp,80h; ja 出错` @`0xBA4B7D`）",
+      "purpose": "来源=入参 arg_4（`0xBA4B79 mov ebp,[esp+arg_4]`），内联 `mov [eax],ebp`",
+      "enum": "≤128",
+      "evidence_va": [
+        "0xBA4B99"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "data_len",
+      "wire_type": "bytes",
+      "name": "data",
+      "meaning": "CPF 握手数据块（变长字节串，无 NUL 结尾）",
+      "purpose": "来源=入参 arg_0（`0xBA4BB0 mov edx,[esp+arg_0]`），循环内联逐字节 `mov [esi],dl`",
+      "enum": "长度 = data_len",
+      "evidence_va": [
+        "0xBA4BB7"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0x0BDD（分发器 switch 选择子）",
+      "evidence_va": "0xBA4B83"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0x86 B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xBA4B46"
+    },
+    {
+      "step": 3,
+      "kind": "write_count",
+      "detail": "data_len：`u32`（线长 4）—— 数据长度（上限 0x80=128，`cmp ebp,80h; ja 出错` @`0xBA4B7D`）",
+      "evidence_va": "0xBA4B99"
+    },
+    {
+      "step": 4,
+      "kind": "write_scalar",
+      "detail": "data：`bytes`（线长 data_len）—— CPF 握手数据块（变长字节串，无 NUL 结尾）",
+      "evidence_va": "0xBA4BB7"
+    },
+    {
+      "step": 5,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xBA4C24"
+    },
+    {
+      "step": 6,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xBA4CD6"
+    }
+  ],
+  "capabilities": [
+    "validate",
+    "lounge.cpf"
+  ],
+  "capabilities_derived": [
+    "validate"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [
+    "CS-0x0BDD-battle-cpf_authenticate_r"
+  ],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:42",
+    "batch": 5,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 134,
+        "va": "0xBA4B46",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xBA4B43",
+        "call_va": "0xBA4B4B"
+      },
+      "field_window": {
+        "start_va": "0xBA4B00",
+        "end_va": "0xBA4C24",
+        "guard": null,
+        "closer_or_commit_va": "0xBA4C24",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "data_len",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xBA4B99"
+            ]
+          },
+          {
+            "name": "data",
+            "wire_type": "bytes",
+            "width": null,
+            "seq": 2,
+            "shape": "agg",
+            "evidence_va": [
+              "0xBA4BB7"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xBA4B83",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xBA4B99",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xBA4BB7",
+            "kind": "inline_store",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xBA4BFA",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 1,
+        "checkable": 1,
+        "pairs": [
+          {
+            "field": "data_len",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xBA4B99",
+            "kind": "inline_store"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xBA4B83",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          },
+          {
+            "va": "0xBA4BB7",
+            "kind": "inline_store",
+            "width": 1,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xBA4B00",
+          "0xBA4C24"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 7,
+          "capacity": 134,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xBA4BFA",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）7 / 容量 0x86"
+        }
+      },
+      "closer": {
+        "va": "0xBA4C24",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xBA4CD6",
+        "mov_va": "0xBA4CCD",
+        "host": "[edx+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "data={"
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0x0BDD-lounge-cpf_authenticate_r.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0xba4b83",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": []
+  },
+  "structs": {
+    "request": {
+      "go_name": "CpfAuthenticateR",
+      "role": "request",
+      "wire_length": "4 + data_len",
+      "members": [
+        {
+          "name": "DataLen",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "data_len"
+        },
+        {
+          "name": "Data",
+          "wire_type": "bytes",
+          "length": "data_len",
+          "field_ref": "data",
+          "element": null,
+          "element_length": null,
+          "cap": null,
+          "count_field": "data_len",
+          "count_field_source": "length_expr",
+          "note": "元素成员未建模（composites/ 无此结构），须以 IDA 复核补"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "6d2a5d3d83d63278",
+  "check_fingerprint": "946990945b21098d"
+}

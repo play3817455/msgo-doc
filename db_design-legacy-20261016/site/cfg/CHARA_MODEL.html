@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CHARA_MODEL · db_design</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <h1><a href="../index.html">db_design</a></h1>
+      <p class="header-note">唯一证据源：<code>protocol_analysis/</code></p>
+      <nav><a href="../index.html">首页</a>
+      <a href="../homing/index.html">归位库</a>
+      <a href="../tables/index.html">旧表留档</a>
+      <a href="../commands/index.html">命令</a>
+      <a href="../cfg/index.html" class="active">配置表79</a>
+      <a href="../srv/index.html">服务端配置</a>
+      <a href="../asm-audit/index.html">ASM 审计</a>
+      <a href="../oracle-audit/index.html">Oracle 审计</a>
+      <a href="../entities/index.html">协议实体</a>
+      <a href="../fields/index.html">字段索引</a>
+      <a href="../relations.html">表关系</a></nav>
+    </div>
+  </header>
+  <main class="wrap">
+
+    <p class="breadcrumb"><a href="index.html">配置表79</a> / <code>CHARA_MODEL</code></p>
+    <h2><code>CHARA_MODEL</code> <span class="badge" style="background:#1565c0">DOWNLOAD</span> <span class="badge" style="background:#2e7d32">确证</span></h2>
+    <dl class="asm-dl">
+      <dt>CSV</dt><dd><code>msma/msma_model.csv</code></dd>
+      <dt>用途</dt><dd>★**机体模型与外观表**（模型/体型/外观资源相关；行键 = **u64 模型ID**）。</dd>
+      <dt>读表函数</dt><dd><code>sub_571380</code></dd>
+      <dt>表ID</dt><dd>5</dd>
+      <dt>下载序</dt><dd>5</dd>
+      <dt>类名</dt><dd><code>CCharaTable</code></dd>
+      <dt>列统计</dt><dd>69 列 · 确证 76 · 已映射 0 · 间隙 1</dd>
+      <dt>证据</dt><dd><a href="../../../datatables/01-列注释/05-5-CHARA_MODEL.md" target="_blank">datatables/01-列注释/05-5-CHARA_MODEL.md</a></dd>
+    </dl>
+    <section>
+      <h3>列定案</h3>
+      <p class="muted"><code>db_column</code> = PostgreSQL 列名（确证/有语义的 partial 用订案名；<code>unknown_*</code> 暂保留 colN）</p>
+      <table class="wide">
+        <thead>
+          <tr>
+            <th>CSV#</th><th>DB列</th><th>订案名</th><th>中文摘要</th><th>类型</th>
+            <th>状态</th><th>读表</th><th>偏移/VA</th><th>语义详情</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><code>0</code></td>
+      <td><code>model_pack_id</code></td>
+      <td><code>model_pack_id</code></td>
+      <td>模型打包ID</td>
+      <td><code>i64</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 0 · +0 · 0x5713ba</td>
+      <td class="meaning-cell">行键 u64 模型打包 ID（sub_571380 col0→+0；sub_473390 解码 chara/ 路径）</td>
+    </tr>
+    <tr>
+      <td><code>1</code></td>
+      <td><code>hangar_scale</code></td>
+      <td><code>hangar_scale</code></td>
+      <td>机体高度输入（含战场相机）</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 1 · +8 · 0x5713c4</td>
+      <td class="meaning-cell">机体高度输入：571380 CSV1→模型配置+8；47CEE0将其乘现场模型scale Y（rymModel virtual104→53FB00→model+100，再读+4），模型引用缺失时直接返回配置值，整个模型配置缺失时才返回原始常量160。ACDF90将所得高度加入普通TPS跟随Y，ACDEC0再加入自身位置。旧hangar_scale名称及“仅机库缩放”说明不完整，保留物理DB列名兼容；不是把模型碰撞盒自动读入此列。还有其他actor消费者，非专用相机旋钮；原始逐模型高度值未知。当前两台实验填170来自原始根OBB局部高度，待复测，不等于原服CSV。</td>
+    </tr>
+    <tr>
+      <td><code>2</code></td>
+      <td><code>camera_offset_x</code></td>
+      <td><code>camera_offset_x</code></td>
+      <td>相机偏移X</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 2 · +12 · 0x5713cf</td>
+      <td class="meaning-cell">机库相机偏移 X（col2→+0C）</td>
+    </tr>
+    <tr>
+      <td><code>3</code></td>
+      <td><code>camera_offset_y</code></td>
+      <td><code>camera_offset_y</code></td>
+      <td>相机偏移Y</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 3 · +16 · 0x5713da</td>
+      <td class="meaning-cell">机库相机偏移 Y（col3→+10；亦复制到 +18）</td>
+    </tr>
+    <tr>
+      <td><code>4</code></td>
+      <td><code>camera_offset_z</code></td>
+      <td><code>camera_offset_z</code></td>
+      <td>相机偏移Z</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 4 · +20 · 0x5713e5</td>
+      <td class="meaning-cell">机库相机偏移 Z（col4→+14）</td>
+    </tr>
+    <tr>
+      <td><code>5</code></td>
+      <td><code>camera_distance</code></td>
+      <td><code>camera_distance</code></td>
+      <td>相机距离</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 5 · +28 · 0x5713f6</td>
+      <td class="meaning-cell">机库相机距离（col5→+1C）</td>
+    </tr>
+    <tr>
+      <td><code>6</code></td>
+      <td><code>flag_mirror_mesh</code></td>
+      <td><code>flag_mirror_mesh</code></td>
+      <td>镜像网格</td>
+      <td><code>bool</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 6 · +32 · 0x571409</td>
+      <td class="meaning-cell">机库网格 X 轴镜像（col6→+20；sub_428A40→sub_439930 模型装载）</td>
+    </tr>
+    <tr>
+      <td><code>7</code></td>
+      <td><code>camera_yaw</code></td>
+      <td><code>camera_yaw</code></td>
+      <td>相机偏航</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 7 · +36 · 0x571411</td>
+      <td class="meaning-cell">机库相机偏航角（col7→+24）</td>
+    </tr>
+    <tr>
+      <td><code>8</code></td>
+      <td><code>camera_pitch</code></td>
+      <td><code>camera_pitch</code></td>
+      <td>相机俯仰</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 8 · +40 · 0x57141f</td>
+      <td class="meaning-cell">机库相机俯仰角（col8→+28）</td>
+    </tr>
+    <tr>
+      <td><code>9</code></td>
+      <td><code>camera_roll</code></td>
+      <td><code>camera_roll</code></td>
+      <td>相机滚转</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 9 · +44 · 0x57142a</td>
+      <td class="meaning-cell">机库相机滚转角（col9→+2C）</td>
+    </tr>
+    <tr>
+      <td><code>10</code></td>
+      <td><code>reserved_u32_10</code></td>
+      <td><code>reserved_u32_10</code></td>
+      <td>预留列 col10</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 10</td>
+      <td class="meaning-cell">CSV col10 预留（sub_571380 跳过；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>11</code></td>
+      <td><code>camera_fov</code></td>
+      <td><code>camera_fov</code></td>
+      <td>物理积分质量 col11</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 11 · +48 · 0x571435</td>
+      <td class="meaning-cell">物理积分质量输入（571380 CSV11→CHARA_MODEL+48；4A5470/498950送入53D340，写CMassPoint+56并构造质量×重力；53D580在质量为0时直接返回，跳过速度和位移积分）。旧相机FOV名称无此消费链依据；保留旧DB列camera_fov仅为字段寻址兼容。原始逐模型质量值及单位未知，不能按FOV、wiki载重量或武器重量填值；2026-10-08仅00 Raiser/吉姆两条经用户授权填实验值1，用户观察到下落；其余577条仍空/0。实验值非原始资料，地面控制仍未验收。隔离原始指令验证只证明零质量门，不等于现场落地或完整物理恢复。</td>
+    </tr>
+    <tr>
+      <td><code>12</code></td>
+      <td><code>flag_hide_shield</code></td>
+      <td><code>flag_hide_shield</code></td>
+      <td>隐藏盾牌</td>
+      <td><code>bool</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 12 · +52 · 0x571448</td>
+      <td class="meaning-cell">机库隐藏盾牌网格（col12→+34；sub_44FEE0→sub_AFEFE0 加载门控）</td>
+    </tr>
+    <tr>
+      <td><code>13</code></td>
+      <td><code>flag_hide_weapon</code></td>
+      <td><code>flag_hide_weapon</code></td>
+      <td>隐藏武器</td>
+      <td><code>bool</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 13 · +53 · 0x571458</td>
+      <td class="meaning-cell">机库隐藏武器网格（col13→+35；sub_559D30/CMsmaMeshCustomizeTable）</td>
+    </tr>
+    <tr>
+      <td><code>14</code></td>
+      <td><code>flag_hide_backpack</code></td>
+      <td><code>flag_hide_backpack</code></td>
+      <td>角色可视性条件 col14</td>
+      <td><code>bool</code></td>
+      <td><span class="badge" style="background:#1565c0">已映射</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 14 · +54 · 0x571468</td>
+      <td class="meaning-cell">col14→+54（0x36）bool（571380）；477300 在角色+1168 bit1为0，或角色+216非空且本标记为0时返回false；4C7B00对自身角色的该分支不清除隐藏原因2。字段原名、完整用途与各机体原始取值未知；不能称为隐藏背包。2026-10-07只对已核实模型101010101/184302101开启此布尔条件，恢复自身相机隐藏原因2的正常清除路径；这是按目标客户端行为实现的功能兼容策略，不是找回原服取值，不强制清除其他隐藏原因。</td>
+    </tr>
+    <tr>
+      <td><code>15</code></td>
+      <td><code>camera_target_y</code></td>
+      <td><code>camera_target_y</code></td>
+      <td>相机目标Y</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 15 · +56 · 0x571470</td>
+      <td class="meaning-cell">机库相机目标高度（col15→+38）</td>
+    </tr>
+    <tr>
+      <td><code>16</code></td>
+      <td><code>mesh_pair0_a</code></td>
+      <td><code>mesh_pair0_a</code></td>
+      <td>网格定制槽0.a</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 16 · +60 · 0x571492</td>
+      <td class="meaning-cell">csv16 → +60（0x3C），u32。ASM: `mov [ebx-8], eax`（第 1 轮；ebx=edi+44h）；客户端读取补充：CChara 类别3效果选择链将本列作为 fx.csv 查询输入；具体配对槽与状态路径见 serverv/docs/R001-VRA特效资源层级与机体目标绑定.md。当前发布样本为空。</td>
+    </tr>
+    <tr>
+      <td><code>17</code></td>
+      <td><code>mesh_pair1_a</code></td>
+      <td><code>mesh_pair1_a</code></td>
+      <td>网格定制槽1.a</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 17 · +68 · 0x57149f</td>
+      <td class="meaning-cell">csv17 → +68（0x44），u32。ASM: `mov [ebx], eax`（第 1 轮）｜旧 schema 偏移 64；客户端读取补充：CChara 类别3效果选择链将本列作为 fx.csv 查询输入；具体配对槽与状态路径见 serverv/docs/R001-VRA特效资源层级与机体目标绑定.md。当前发布样本为空。</td>
+    </tr>
+    <tr>
+      <td><code>18</code></td>
+      <td><code>mesh_pair2_a</code></td>
+      <td><code>mesh_pair2_a</code></td>
+      <td>网格定制槽2.a</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 18 · +76 · 0x5714ab</td>
+      <td class="meaning-cell">csv18 → +76（0x4C），u32。ASM: `mov [ebx+8], eax`（第 1 轮）｜旧 schema 偏移 68；客户端读取补充：CChara 类别3效果选择链将本列作为 fx.csv 查询输入；具体配对槽与状态路径见 serverv/docs/R001-VRA特效资源层级与机体目标绑定.md。当前发布样本为空。</td>
+    </tr>
+    <tr>
+      <td><code>19</code></td>
+      <td><code>mesh_pair3_a</code></td>
+      <td><code>mesh_pair3_a</code></td>
+      <td>网格定制槽3.a</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 19 · +84 · 0x5714b8</td>
+      <td class="meaning-cell">csv19 → +84（0x54），u32。ASM: `mov [ebx+10h], eax`（第 1 轮）｜旧 schema 偏移 None；客户端读取补充：CChara 类别3效果选择链将本列作为 fx.csv 查询输入；具体配对槽与状态路径见 serverv/docs/R001-VRA特效资源层级与机体目标绑定.md。当前发布样本为空。</td>
+    </tr>
+    <tr>
+      <td><code>20</code></td>
+      <td><code>mesh_pair4_a</code></td>
+      <td><code>mesh_pair4_a</code></td>
+      <td>网格定制槽4.a</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 20 · +92 · 0x5714c5</td>
+      <td class="meaning-cell">csv20 → +92（0x5C），u32。ASM: `mov [ebx+18h], eax`（第 1 轮）｜旧 schema 偏移 72；客户端读取补充：CChara 类别3效果选择链将本列作为 fx.csv 查询输入；具体配对槽与状态路径见 serverv/docs/R001-VRA特效资源层级与机体目标绑定.md。当前发布样本为空。</td>
+    </tr>
+    <tr>
+      <td><code>21</code></td>
+      <td><code>mesh_pair5_a</code></td>
+      <td><code>mesh_pair5_a</code></td>
+      <td>网格定制槽5.a</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 21 · +100 · 0x5714d2</td>
+      <td class="meaning-cell">csv21 → +100（0x64），u32。ASM: `mov [ebx+20h], eax`（第 1 轮）｜旧 schema 偏移 None；客户端读取补充：CChara 类别3效果选择链将本列作为 fx.csv 查询输入；具体配对槽与状态路径见 serverv/docs/R001-VRA特效资源层级与机体目标绑定.md。当前发布样本为空。</td>
+    </tr>
+    <tr>
+      <td><code>22</code></td>
+      <td><code>mesh_pair6_a</code></td>
+      <td><code>mesh_pair6_a</code></td>
+      <td>网格定制槽6.a</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 22 · +108 · 0x5714df</td>
+      <td class="meaning-cell">csv22 → +108（0x6C），u32。ASM: `mov [ebx+28h], eax`（第 1 轮）｜旧 schema 偏移 76；客户端读取补充：CChara 类别3效果选择链将本列作为 fx.csv 查询输入；具体配对槽与状态路径见 serverv/docs/R001-VRA特效资源层级与机体目标绑定.md。当前发布样本为空。</td>
+    </tr>
+    <tr>
+      <td><code>23</code></td>
+      <td><code>mesh_pair7_a</code></td>
+      <td><code>mesh_pair7_a</code></td>
+      <td>网格定制槽7.a</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 23 · +116 · 0x5714e7</td>
+      <td class="meaning-cell">csv23 → +116（0x74），u32。ASM: `mov [ebx+30h], eax`（第 1 轮）｜旧 schema 偏移 80；客户端读取补充：CChara 类别3效果选择链将本列作为 fx.csv 查询输入；具体配对槽与状态路径见 serverv/docs/R001-VRA特效资源层级与机体目标绑定.md。当前发布样本为空。</td>
+    </tr>
+    <tr>
+      <td><code>24</code></td>
+      <td><code>mesh_pair0_b</code></td>
+      <td><code>mesh_pair0_b</code></td>
+      <td>网格定制槽0.b</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 24 · +64 · 0x571492</td>
+      <td class="meaning-cell">csv24 → +64（0x40），u32。ASM: `mov [ebx-8], eax`（第 2 轮；ebx=edi+48h）｜旧 schema 偏移 84；客户端读取补充：CChara 类别3效果选择链将本列作为 fx.csv 查询输入；具体配对槽与状态路径见 serverv/docs/R001-VRA特效资源层级与机体目标绑定.md。当前发布样本为空。</td>
+    </tr>
+    <tr>
+      <td><code>25</code></td>
+      <td><code>mesh_pair1_b</code></td>
+      <td><code>mesh_pair1_b</code></td>
+      <td>网格定制槽1.b</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 25 · +72 · 0x57149f</td>
+      <td class="meaning-cell">csv25 → +72（0x48），u32。ASM: `mov [ebx], eax`（第 2 轮）｜旧 schema 偏移 88；客户端读取补充：CChara 类别3效果选择链将本列作为 fx.csv 查询输入；具体配对槽与状态路径见 serverv/docs/R001-VRA特效资源层级与机体目标绑定.md。当前发布样本为空。</td>
+    </tr>
+    <tr>
+      <td><code>26</code></td>
+      <td><code>mesh_pair2_b</code></td>
+      <td><code>mesh_pair2_b</code></td>
+      <td>网格定制槽2.b</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 26 · +80 · 0x5714ab</td>
+      <td class="meaning-cell">csv26 → +80（0x50），u32。ASM: `mov [ebx+8], eax`（第 2 轮）｜旧 schema 偏移 92；客户端读取补充：CChara 类别3效果选择链将本列作为 fx.csv 查询输入；具体配对槽与状态路径见 serverv/docs/R001-VRA特效资源层级与机体目标绑定.md。当前发布样本为空。</td>
+    </tr>
+    <tr>
+      <td><code>27</code></td>
+      <td><code>mesh_pair3_b</code></td>
+      <td><code>mesh_pair3_b</code></td>
+      <td>网格定制槽3.b</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 27 · +88 · 0x5714b8</td>
+      <td class="meaning-cell">csv27 → +88（0x58），u32。ASM: `mov [ebx+10h], eax`（第 2 轮）｜旧 schema 偏移 96；客户端读取补充：CChara 类别3效果选择链将本列作为 fx.csv 查询输入；具体配对槽与状态路径见 serverv/docs/R001-VRA特效资源层级与机体目标绑定.md。当前发布样本为空。</td>
+    </tr>
+    <tr>
+      <td><code>28</code></td>
+      <td><code>mesh_pair4_b</code></td>
+      <td><code>mesh_pair4_b</code></td>
+      <td>网格定制槽4.b</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 28 · +96 · 0x5714c5</td>
+      <td class="meaning-cell">csv28 → +96（0x60），u32。ASM: `mov [ebx+18h], eax`（第 2 轮）｜旧 schema 偏移 100；客户端读取补充：CChara 类别3效果选择链将本列作为 fx.csv 查询输入；具体配对槽与状态路径见 serverv/docs/R001-VRA特效资源层级与机体目标绑定.md。当前发布样本为空。</td>
+    </tr>
+    <tr>
+      <td><code>29</code></td>
+      <td><code>mesh_pair5_b</code></td>
+      <td><code>mesh_pair5_b</code></td>
+      <td>网格定制槽5.b</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 29 · +104 · 0x5714d2</td>
+      <td class="meaning-cell">csv29 → +104（0x68），u32。ASM: `mov [ebx+20h], eax`（第 2 轮）；客户端读取补充：CChara 类别3效果选择链将本列作为 fx.csv 查询输入；具体配对槽与状态路径见 serverv/docs/R001-VRA特效资源层级与机体目标绑定.md。当前发布样本为空。</td>
+    </tr>
+    <tr>
+      <td><code>30</code></td>
+      <td><code>mesh_pair6_b</code></td>
+      <td><code>mesh_pair6_b</code></td>
+      <td>网格定制槽6.b</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 30 · +112 · 0x5714df</td>
+      <td class="meaning-cell">csv30 → +112（0x70），u32。ASM: `mov [ebx+28h], eax`（第 2 轮）｜旧 schema 偏移 108；客户端读取补充：CChara 类别3效果选择链将本列作为 fx.csv 查询输入；具体配对槽与状态路径见 serverv/docs/R001-VRA特效资源层级与机体目标绑定.md。当前发布样本为空。</td>
+    </tr>
+    <tr>
+      <td><code>31</code></td>
+      <td><code>mesh_pair7_b</code></td>
+      <td><code>mesh_pair7_b</code></td>
+      <td>网格定制槽7.b</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 31 · +120 · 0x5714e7</td>
+      <td class="meaning-cell">csv31 → +120（0x78），u32。ASM: `mov [ebx+30h], eax`（第 2 轮）｜旧 schema 偏移 112；客户端读取补充：CChara 类别3效果选择链将本列作为 fx.csv 查询输入；具体配对槽与状态路径见 serverv/docs/R001-VRA特效资源层级与机体目标绑定.md。当前发布样本为空。</td>
+    </tr>
+    <tr>
+      <td><code>32</code></td>
+      <td><code>mesh_path_a</code></td>
+      <td><code>mesh_path_a</code></td>
+      <td>网格路径A</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 32 · +124 · 0x571501</td>
+      <td class="meaning-cell">主网格路径窄串（col32→+7C；sub_402310）</td>
+    </tr>
+    <tr>
+      <td><code>33</code></td>
+      <td><code>mesh_path_b</code></td>
+      <td><code>mesh_path_b</code></td>
+      <td>网格路径B</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 33 · +152 · 0x571542</td>
+      <td class="meaning-cell">副网格路径窄串（col33→+98）</td>
+    </tr>
+    <tr>
+      <td><code>34</code></td>
+      <td><code>mesh_path_c</code></td>
+      <td><code>mesh_path_c</code></td>
+      <td>网格路径C</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 34 · +180 · 0x571583</td>
+      <td class="meaning-cell">第三网格路径窄串（col34→+B4）</td>
+    </tr>
+    <tr>
+      <td><code>35</code></td>
+      <td><code>texture_variant</code></td>
+      <td><code>texture_variant</code></td>
+      <td>贴图变体</td>
+      <td><code>u8</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 35 · +208 · 0x5715bf</td>
+      <td class="meaning-cell">贴图变体/配色索引 u8（col35→+D0）</td>
+    </tr>
+    <tr>
+      <td><code>36</code></td>
+      <td><code>texture_path</code></td>
+      <td><code>texture_path</code></td>
+      <td>贴图路径</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 36 · +212 · 0x5715d4</td>
+      <td class="meaning-cell">贴图资源路径窄串（col36→+D4）</td>
+    </tr>
+    <tr>
+      <td><code>37</code></td>
+      <td><code>render_param_a</code></td>
+      <td><code>render_param_a</code></td>
+      <td>类别1键候选37</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#1565c0">已映射</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 37 · +240 · 0x571610</td>
+      <td class="meaning-cell">sub_A856E0 将本列整数作为 fx.csv category=1 查询键；字段业务语义待确认（col37→+F0；sub_BBB370）；客户端读取补充：sub_A856E0 将本列整数作为 fx.csv category=1 查询键之一，用于表初始化资源准备；字段业务语义与战场触发仍未确认。当前发布样本为空。</td>
+    </tr>
+    <tr>
+      <td><code>38</code></td>
+      <td><code>render_u32_38</code></td>
+      <td><code>render_u32_38</code></td>
+      <td>渲染参数 u32 38</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 38 · +244 · 0x57162a</td>
+      <td class="meaning-cell">材质/渲染 u32（col38→+F4；sub_439930 模型参数块）；客户端读取补充：sub_A856E0 将本列整数作为 fx.csv category=1 查询键之一，用于表初始化资源准备；字段业务语义与战场触发仍未确认。当前发布样本为空。</td>
+    </tr>
+    <tr>
+      <td><code>39</code></td>
+      <td><code>render_u32_39</code></td>
+      <td><code>render_u32_39</code></td>
+      <td>渲染参数 u32 39</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 39 · +248 · 0x57163a</td>
+      <td class="meaning-cell">材质/渲染 u32（col39→+F8；sub_439930 模型参数块）；客户端读取补充：sub_A856E0 将本列整数作为 fx.csv category=1 查询键之一，用于表初始化资源准备；字段业务语义与战场触发仍未确认。当前发布样本为空。</td>
+    </tr>
+    <tr>
+      <td><code>40</code></td>
+      <td><code>render_u32_40</code></td>
+      <td><code>render_u32_40</code></td>
+      <td>渲染参数 u32 40</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 40 · +252 · 0x57164a</td>
+      <td class="meaning-cell">材质/渲染 u32（col40→+FC；sub_439930 模型参数块）；客户端读取补充：sub_A856E0 将本列整数作为 fx.csv category=1 查询键之一，用于表初始化资源准备；字段业务语义与战场触发仍未确认。当前发布样本为空。</td>
+    </tr>
+    <tr>
+      <td><code>41</code></td>
+      <td><code>render_param_b</code></td>
+      <td><code>render_param_b</code></td>
+      <td>渲染参数B</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#1565c0">已映射</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 41 · +256 · 0x571655</td>
+      <td class="meaning-cell">渲染参数 float（col41→+0x100；sub_571380 经 sub_BBB470 浮点读取）</td>
+    </tr>
+    <tr>
+      <td><code>42</code></td>
+      <td><code>render_param_c</code></td>
+      <td><code>render_param_c</code></td>
+      <td>类别1键候选42</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#1565c0">已映射</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 42 · +260 · 0x571660</td>
+      <td class="meaning-cell">sub_A856E0 将本列整数作为 fx.csv category=1 查询键；字段业务语义待确认（col42→+104；sub_BBB370）；客户端读取补充：sub_A856E0 将本列整数作为 fx.csv category=1 查询键之一，用于表初始化资源准备；字段业务语义与战场触发仍未确认。当前发布样本为空。</td>
+    </tr>
+    <tr>
+      <td><code>43</code></td>
+      <td><code>render_u32_43</code></td>
+      <td><code>render_u32_43</code></td>
+      <td>渲染参数 u32 43</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 43 · +264 · 0x571670</td>
+      <td class="meaning-cell">材质/渲染 u32（col43→+108；sub_439930 模型参数块）</td>
+    </tr>
+    <tr>
+      <td><code>44</code></td>
+      <td><code>render_flag_44</code></td>
+      <td><code>render_flag_44</code></td>
+      <td>csv44 @+268</td>
+      <td><code>bool</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 44 · +268 · 0x57169a</td>
+      <td class="meaning-cell">csv44 → +268（0x10C），bool；旧 schema 误标 gap，实为读列。ASM: `mov [edi+10Ch], al`（sub_BBB370 结果 !=0）</td>
+    </tr>
+    <tr>
+      <td><code>45</code></td>
+      <td><code>render_u32_45</code></td>
+      <td><code>render_u32_45</code></td>
+      <td>csv45 @+272</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 45 · +272 · 0x5716aa</td>
+      <td class="meaning-cell">csv45 → +272（0x110），u32。ASM: `mov [edi+110h], eax`｜旧 schema 偏移 268</td>
+    </tr>
+    <tr>
+      <td><code>46</code></td>
+      <td><code>render_param_46</code></td>
+      <td><code>render_param_46</code></td>
+      <td>csv46 @+276</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 46 · +276 · 0x5716b5</td>
+      <td class="meaning-cell">csv46 → +276（0x114），float；旧 schema 误标 gap，实为读列。ASM: `fstp dword ptr [edi+114h]`（sub_BBB470）</td>
+    </tr>
+    <tr>
+      <td><code>47</code></td>
+      <td><code>flag_effect_a</code></td>
+      <td><code>flag_effect_a</code></td>
+      <td>csv47 @+280</td>
+      <td><code>bool</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 47 · +280 · 0x5716da</td>
+      <td class="meaning-cell">csv47 → +280（0x118），bool。ASM: `mov [edi+118h], al`｜旧 schema 偏移 272</td>
+    </tr>
+    <tr>
+      <td><code>48</code></td>
+      <td><code>flag_effect_b</code></td>
+      <td><code>flag_effect_b</code></td>
+      <td>csv48 @+281</td>
+      <td><code>bool</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 48 · +281 · 0x5716fa</td>
+      <td class="meaning-cell">csv48 → +281（0x119），bool。ASM: `mov [edi+119h], al`｜旧 schema 偏移 276<div class="enum-vals"> <a class="enum-conv-link" href="enums/sub_402310.html" title="CSV 窄串拷贝">↗ sub_402310</a></div></td>
+    </tr>
+    <tr>
+      <td><code>49</code></td>
+      <td><code>flag_effect_c</code></td>
+      <td><code>flag_effect_c</code></td>
+      <td>csv49 @+282</td>
+      <td><code>bool</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 49 · +282 · 0x57171f</td>
+      <td class="meaning-cell">csv49 → +282（0x11A），bool。ASM: `mov [edi+11Ah], al`｜旧 schema 偏移 280<div class="enum-vals"> <a class="enum-conv-link" href="enums/sub_402310.html" title="CSV 窄串拷贝">↗ sub_402310</a></div></td>
+    </tr>
+    <tr>
+      <td><code>50</code></td>
+      <td><code>effect_path_a</code></td>
+      <td><code>effect_path_a</code></td>
+      <td>特效路径A</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 50 · +284 · 0x571725</td>
+      <td class="meaning-cell">特效资源路径 A（col50→+11C）<div class="enum-vals"> <a class="enum-conv-link" href="enums/sub_402310.html" title="CSV 窄串拷贝">↗ sub_402310</a></div></td>
+    </tr>
+    <tr>
+      <td><code>51</code></td>
+      <td><code>effect_path_b</code></td>
+      <td><code>effect_path_b</code></td>
+      <td>特效路径B</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 51 · +312 · 0x571766</td>
+      <td class="meaning-cell">特效资源路径 B（col51→+138）</td>
+    </tr>
+    <tr>
+      <td><code>52</code></td>
+      <td><code>effect_path_c</code></td>
+      <td><code>effect_path_c</code></td>
+      <td>特效路径C</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 52 · +340 · 0x5717a7</td>
+      <td class="meaning-cell">特效资源路径 C（col52→+154）</td>
+    </tr>
+    <tr>
+      <td><code>53</code></td>
+      <td><code>lod_distance</code></td>
+      <td><code>lod_distance</code></td>
+      <td>csv53 @+368</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 53 · +368 · 0x5717fd</td>
+      <td class="meaning-cell">csv53 → +368（0x170），float；旧 schema 误标 gap，实为读列。ASM: `fstp dword ptr [edi+170h]`（sub_BBB470，第 1 个 float）<div class="enum-vals"><a class="enum-chip" href="enums/sub_571290.html#v-ONEHAND" title="单手"><code>ONEHAND</code>=2<span class="enum-zh">单手</span></a> <a class="enum-chip" href="enums/sub_571290.html#v-SHOLDER" title="肩扛"><code>SHOLDER</code>=3<span class="enum-zh">肩扛</span></a> <a class="enum-chip" href="enums/sub_571290.html#v-TWOHAND" title="双手"><code>TWOHAND</code>=4<span class="enum-zh">双手</span></a> <a class="enum-chip" href="enums/sub_571290.html#v-SHIELD" title="护盾"><code>SHIELD</code>=5<span class="enum-zh">护盾</span></a> <a class="enum-chip" href="enums/sub_571290.html#v-PECULIAR_1" title="特殊挂点1"><code>PECULIAR_1</code>=6<span class="enum-zh">特殊挂点1</span></a> <a class="enum-chip" href="enums/sub_571290.html#v-PECULIAR_2" title="特殊挂点2"><code>PECULIAR_2</code>=7<span class="enum-zh">特殊挂点2</span></a> <a class="enum-chip" href="enums/sub_571290.html#v-PECULIAR_3" title="特殊挂点3"><code>PECULIAR_3</code>=8<span class="enum-zh">特殊挂点3</span></a> <a class="enum-chip" href="enums/sub_571290.html#v-MODELORIGIN" title="模型原点"><code>MODELORIGIN</code>=12<span class="enum-zh">模型原点</span></a> <a class="enum-conv-link" href="enums/sub_571290.html" title="模型装备挂点/持握方式">↗ sub_571290</a></div></td>
+    </tr>
+    <tr>
+      <td><code>54</code></td>
+      <td><code>flag_lod_54</code></td>
+      <td><code>flag_lod_54</code></td>
+      <td>csv54 @+372</td>
+      <td><code>bool</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 54 · +372 · 0x571820</td>
+      <td class="meaning-cell">csv54 → +372（0x174），bool。ASM: `mov [edi+174h], al`｜旧 schema 偏移 368</td>
+    </tr>
+    <tr>
+      <td><code>55</code></td>
+      <td><code>equip_slot_type</code></td>
+      <td><code>equip_slot_type</code></td>
+      <td>装备槽类型</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 55 · +376 · 0x571837</td>
+      <td class="meaning-cell">默认可装备槽 ONEHAND/SHOLDER/TWOHAND 等（sub_571290→+178）<div class="enum-vals"><a class="enum-chip" href="enums/sub_571290.html#v-ONEHAND" title="单手"><code>ONEHAND</code>=2<span class="enum-zh">单手</span></a> <a class="enum-chip" href="enums/sub_571290.html#v-SHOLDER" title="肩扛"><code>SHOLDER</code>=3<span class="enum-zh">肩扛</span></a> <a class="enum-chip" href="enums/sub_571290.html#v-TWOHAND" title="双手"><code>TWOHAND</code>=4<span class="enum-zh">双手</span></a> <a class="enum-chip" href="enums/sub_571290.html#v-SHIELD" title="护盾"><code>SHIELD</code>=5<span class="enum-zh">护盾</span></a> <a class="enum-chip" href="enums/sub_571290.html#v-PECULIAR_1" title="特殊挂点1"><code>PECULIAR_1</code>=6<span class="enum-zh">特殊挂点1</span></a> <a class="enum-chip" href="enums/sub_571290.html#v-PECULIAR_2" title="特殊挂点2"><code>PECULIAR_2</code>=7<span class="enum-zh">特殊挂点2</span></a> <a class="enum-chip" href="enums/sub_571290.html#v-PECULIAR_3" title="特殊挂点3"><code>PECULIAR_3</code>=8<span class="enum-zh">特殊挂点3</span></a> <a class="enum-chip" href="enums/sub_571290.html#v-MODELORIGIN" title="模型原点"><code>MODELORIGIN</code>=12<span class="enum-zh">模型原点</span></a> <a class="enum-conv-link" href="enums/sub_571290.html" title="模型装备挂点/持握方式">↗ sub_571290</a></div></td>
+    </tr>
+    <tr>
+      <td><code>56</code></td>
+      <td><code>light_dir_x</code></td>
+      <td><code>light_dir_x</code></td>
+      <td>csv56 @+380</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 56 · +380 · 0x57187a</td>
+      <td class="meaning-cell">csv56 → +380（0x17C），float。ASM: `mov [edi+17Ch], eax`（sub_BBB470→float 三元组 x）｜旧 schema 偏移 388</td>
+    </tr>
+    <tr>
+      <td><code>57</code></td>
+      <td><code>light_dir_y</code></td>
+      <td><code>light_dir_y</code></td>
+      <td>csv57 @+384</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 57 · +384 · 0x571881</td>
+      <td class="meaning-cell">csv57 → +384（0x180），float。ASM: `mov [edi+180h], ecx`（三元组 y；z 恒 0 写 +184h）｜旧 schema 偏移 392</td>
+    </tr>
+    <tr>
+      <td><code>58</code></td>
+      <td><code>light_color_x</code></td>
+      <td><code>light_color_x</code></td>
+      <td>csv58 @+392</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 58 · +392 · 0x5718bc</td>
+      <td class="meaning-cell">csv58 → +392（0x188），float；旧 schema 误标 gap，实为读列。ASM: `mov [edi+188h], eax`（第 2 组三元组 x）</td>
+    </tr>
+    <tr>
+      <td><code>59</code></td>
+      <td><code>light_color_y</code></td>
+      <td><code>light_color_y</code></td>
+      <td>csv59 @+396</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 59 · +396 · 0x5718c3</td>
+      <td class="meaning-cell">csv59 → +396（0x18C），float。ASM: `mov [edi+18Ch], ecx`（三元组 y；z 恒 0 写 +190h）｜旧 schema 偏移 392</td>
+    </tr>
+    <tr>
+      <td><code>60</code></td>
+      <td><code>flag_shadow</code></td>
+      <td><code>flag_shadow</code></td>
+      <td>csv60 @+404</td>
+      <td><code>bool</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 60 · +404 · 0x5718e7</td>
+      <td class="meaning-cell">csv60 → +404（0x194），bool；旧 schema 误标 gap，实为读列。ASM: `mov [edi+194h], al`</td>
+    </tr>
+    <tr>
+      <td><code>61</code></td>
+      <td><code>shadow_scale</code></td>
+      <td><code>shadow_scale</code></td>
+      <td>csv61 @+408</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 61 · +408 · 0x5718f7</td>
+      <td class="meaning-cell">csv61 → +408（0x198），u32。ASM: `mov [edi+198h], eax`（sub_BBB370 整型，非 float）｜旧 schema 偏移 404</td>
+    </tr>
+    <tr>
+      <td><code>62</code></td>
+      <td><code>flag_render_62</code></td>
+      <td><code>flag_render_62</code></td>
+      <td>csv62 @+412</td>
+      <td><code>bool</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 62 · +412 · 0x571914</td>
+      <td class="meaning-cell">csv62 → +412（0x19C），bool。ASM: `mov [edi+19Ch], al`｜旧 schema 偏移 404</td>
+    </tr>
+    <tr>
+      <td><code>63</code></td>
+      <td><code>render_u32_63</code></td>
+      <td><code>render_u32_63</code></td>
+      <td>csv63 @+416</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 63 · +416 · 0x571924</td>
+      <td class="meaning-cell">csv63 → +416（0x1A0），u32。ASM: `mov [edi+1A0h], eax`｜旧 schema 偏移 408</td>
+    </tr>
+    <tr>
+      <td><code>64</code></td>
+      <td><code>level_min</code></td>
+      <td><code>level_min</code></td>
+      <td>等级下限</td>
+      <td><code>u16</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 64 · +420 · 0x57192a</td>
+      <td class="meaning-cell">可用等级下限 u16（col64→+1A4；与 col65 归一）</td>
+    </tr>
+    <tr>
+      <td><code>65</code></td>
+      <td><code>level_max</code></td>
+      <td><code>level_max</code></td>
+      <td>等级上限</td>
+      <td><code>u16</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 65 · +422 · 0x57193b</td>
+      <td class="meaning-cell">可用等级上限 u16（col65→+1A6；&lt;min 则 =min+1）</td>
+    </tr>
+    <tr>
+      <td><code>66</code></td>
+      <td><code>flag_variant_a</code></td>
+      <td><code>flag_variant_a</code></td>
+      <td>变体开关A</td>
+      <td><code>bool</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 66 · +424 · 0x571965</td>
+      <td class="meaning-cell">模型变体 A（col66→+1A8；&gt;0 启用；sub_439930 变体选择）</td>
+    </tr>
+    <tr>
+      <td><code>67</code></td>
+      <td><code>flag_variant_b</code></td>
+      <td><code>flag_variant_b</code></td>
+      <td>变体开关B</td>
+      <td><code>bool</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 67 · +425 · 0x571992</td>
+      <td class="meaning-cell">模型变体 B（col67→+1A9；&gt;0 启用；sub_439930 变体选择）</td>
+    </tr>
+    <tr>
+      <td><code>68</code></td>
+      <td><code>display_mode</code></td>
+      <td><code>display_mode</code></td>
+      <td>显示模式</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 68 · +426 · 0x5719bb</td>
+      <td class="meaning-cell">显示模式（col68：1/2 拆为 +1AA/+1AB 两 bool）</td>
+    </tr>
+    <tr>
+      <td><code>69</code></td>
+      <td><code>render_u32_69</code></td>
+      <td><code>render_u32_69</code></td>
+      <td>渲染参数 u32 69</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 69 · +428 · 0x5719c7</td>
+      <td class="meaning-cell">材质/渲染 u32（col69→+1AC；sub_439930 模型参数块）</td>
+    </tr>
+    <tr>
+      <td><code>70</code></td>
+      <td><code>flag_force_load</code></td>
+      <td><code>flag_force_load</code></td>
+      <td>强制加载</td>
+      <td><code>bool</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 70 · +432 · 0x5719e4</td>
+      <td class="meaning-cell">强制加载模型资源（col70→+1B0；sub_439930 跳过节流）</td>
+    </tr>
+    <tr>
+      <td><code>71</code></td>
+      <td><code>model_id_lo</code></td>
+      <td><code>model_id_lo</code></td>
+      <td>模型 ID 低32</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 71 · +436 · 0x5719f7</td>
+      <td class="meaning-cell">★资源键低 32（col71→+1B4）</td>
+    </tr>
+    <tr>
+      <td><code>72</code></td>
+      <td><code>model_id_hi</code></td>
+      <td><code>model_id_hi</code></td>
+      <td>模型 ID 高32</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 72 · +440 · 0x571a07</td>
+      <td class="meaning-cell">★资源键高 32（col72→+1B8）</td>
+    </tr>
+    <tr>
+      <td><code>73</code></td>
+      <td><code>render_u32_73</code></td>
+      <td><code>render_u32_73</code></td>
+      <td>csv73 @+452</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 73 · +452 · 0x571a21</td>
+      <td class="meaning-cell">csv73 → +452（0x1C4），u32。ASM: `mov [edi+1C4h], eax`｜旧 schema 偏移 444；客户端读取补充：sub_493210 从本列组读取类别3效果键/覆盖值；字段对应状态条件见 VRA 追踪文档。当前发布样本为空。</td>
+    </tr>
+    <tr>
+      <td><code>74</code></td>
+      <td><code>render_u32_74</code></td>
+      <td><code>render_u32_74</code></td>
+      <td>csv74 @+444</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 74 · +444 · 0x571a31</td>
+      <td class="meaning-cell">csv74 → +444（0x1BC），u32。ASM: `mov [edi+1BCh], eax`｜旧 schema 偏移 448；客户端读取补充：sub_493210 从本列组读取类别3效果键/覆盖值；字段对应状态条件见 VRA 追踪文档。当前发布样本为空。</td>
+    </tr>
+    <tr>
+      <td><code>75</code></td>
+      <td><code>render_u32_75</code></td>
+      <td><code>render_u32_75</code></td>
+      <td>csv75 @+456</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 75 · +456 · 0x571a41</td>
+      <td class="meaning-cell">csv75 → +456（0x1C8），u32。ASM: `mov [edi+1C8h], eax`｜旧 schema 偏移 452</td>
+    </tr>
+    <tr>
+      <td><code>76</code></td>
+      <td><code>render_u32_76</code></td>
+      <td><code>render_u32_76</code></td>
+      <td>csv76 @+448</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_571380</code></td>
+      <td class="muted">csv 76 · +448 · 0x571a4f</td>
+      <td class="meaning-cell">csv76 → +448（0x1C0），u32。ASM: `mov [edi+1C0h], eax`｜旧 schema 偏移 456</td>
+    </tr></tbody>
+      </table>
+    </section>
+
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">生成于 2026-10-12 · 改 JSON 后重跑 build_site.py · HTML 只读</div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,1688 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WEAPON_SETTING · db_design</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <h1><a href="../index.html">db_design</a></h1>
+      <p class="header-note">唯一证据源：<code>protocol_analysis/</code></p>
+      <nav><a href="../index.html">首页</a>
+      <a href="../homing/index.html">归位库</a>
+      <a href="../tables/index.html">旧表留档</a>
+      <a href="../commands/index.html">命令</a>
+      <a href="../cfg/index.html" class="active">配置表79</a>
+      <a href="../srv/index.html">服务端配置</a>
+      <a href="../asm-audit/index.html">ASM 审计</a>
+      <a href="../oracle-audit/index.html">Oracle 审计</a>
+      <a href="../entities/index.html">协议实体</a>
+      <a href="../fields/index.html">字段索引</a>
+      <a href="../relations.html">表关系</a></nav>
+    </div>
+  </header>
+  <main class="wrap">
+
+    <p class="breadcrumb"><a href="index.html">配置表79</a> / <code>WEAPON_SETTING</code></p>
+    <h2><code>WEAPON_SETTING</code> <span class="badge" style="background:#1565c0">DOWNLOAD</span> <span class="badge" style="background:#2e7d32">确证</span></h2>
+    <dl class="asm-dl">
+      <dt>CSV</dt><dd><code>item/weapon_settings.csv</code></dd>
+      <dt>用途</dt><dd>武器设置（射击/命中/弹道参数）</dd>
+      <dt>读表函数</dt><dd><code>sub_597F50</code></dd>
+      <dt>表ID</dt><dd>37</dd>
+      <dt>下载序</dt><dd>37</dd>
+      <dt>类名</dt><dd><code>CWeaponTable</code></dd>
+      <dt>列统计</dt><dd>123 列 · 确证 122 · 已映射 1 · 间隙 25</dd>
+      <dt>证据</dt><dd><a href="../../../datatables/01-列注释/37-37-WEAPON_SETTING.md" target="_blank">datatables/01-列注释/37-37-WEAPON_SETTING.md</a></dd>
+    </dl>
+    <section>
+      <h3>列定案</h3>
+      <p class="muted"><code>db_column</code> = PostgreSQL 列名（确证/有语义的 partial 用订案名；<code>unknown_*</code> 暂保留 colN）</p>
+      <table class="wide">
+        <thead>
+          <tr>
+            <th>CSV#</th><th>DB列</th><th>订案名</th><th>中文摘要</th><th>类型</th>
+            <th>状态</th><th>读表</th><th>偏移/VA</th><th>语义详情</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><code>0</code></td>
+      <td><code>weapon_setting_id</code></td>
+      <td><code>weapon_setting_id</code></td>
+      <td>武器设置 ID</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 0 · +0 · 0x597f81</td>
+      <td class="meaning-cell">主键；CWeaponTable 行键（sub_597F50 @+0）</td>
+    </tr>
+    <tr>
+      <td><code>1</code></td>
+      <td><code>parent_setting_id</code></td>
+      <td><code>parent_setting_id</code></td>
+      <td>父行 ID</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 1 · 0x597f8f</td>
+      <td class="meaning-cell">继承源 weapon_setting_id（col1→sub_483020 查父行合并空字段）</td>
+    </tr>
+    <tr>
+      <td><code>2</code></td>
+      <td><code>model_id_lo</code></td>
+      <td><code>model_id_lo</code></td>
+      <td>图标/默认挂载资源键（独立i64）</td>
+      <td><code>i64</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 2 · +8 · 0x597fd0</td>
+      <td class="meaning-cell">独立的第一个 i64 资源键 @+8；col2/col3 各读一次 sub_BBB3F0，并非低高32位。武器容器节点+24为记录起点（sub_59A580），sub_5940F0将记录关联到ITEM+76；sub_593860 @0x5938E4/E7从记录+8/+12取此键用于普通武器图标，sub_506B10 @0x506CF8默认挂载分支也取此键。</td>
+    </tr>
+    <tr>
+      <td><code>3</code></td>
+      <td><code>model_id_hi</code></td>
+      <td><code>model_id_hi</code></td>
+      <td>资源键2（独立i64）</td>
+      <td><code>i64</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 3 · +16 · 0x597fde</td>
+      <td class="meaning-cell">独立的第二个 i64 资源键 @+16；sub_506B10的武器状态/形态分支可取此键。字段名为历史命名，非第一个键的高32位；普通武器图标不读此列。</td>
+    </tr>
+    <tr>
+      <td><code>4</code></td>
+      <td><code>variant_id_lo</code></td>
+      <td><code>variant_id_lo</code></td>
+      <td>资源键3（独立i64）</td>
+      <td><code>i64</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 4 · +24 · 0x597fec</td>
+      <td class="meaning-cell">独立的第三个 i64 资源键 @+24；不是低32位。武器变形/挂载选择还有分支，见 sub_506B10。</td>
+    </tr>
+    <tr>
+      <td><code>5</code></td>
+      <td><code>col5</code></td>
+      <td><code>col5</code></td>
+      <td>CSV col5 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 5</td>
+      <td class="meaning-cell">CSV col5 预留（sub_597F50 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>6</code></td>
+      <td><code>col6</code></td>
+      <td><code>col6</code></td>
+      <td>CSV col6 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 6</td>
+      <td class="meaning-cell">CSV col6 预留（sub_597F50 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>7</code></td>
+      <td><code>bind_model_flag</code></td>
+      <td><code>bind_model_flag</code></td>
+      <td>发射点起始编号</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 7 · +40 · 0x597ffa</td>
+      <td class="meaning-cell">CSV col7→+40；4AFD40 @4AFF89/4AFF8C作为S_wpn_%02d（actor+292==3时%03d）的起始编号。旧bind_model_flag名称保留兼容，不代表模型强制绑定开关。原服逐武器编号未知。</td>
+    </tr>
+    <tr>
+      <td><code>8</code></td>
+      <td><code>shop_item_id</code></td>
+      <td><code>shop_item_id</code></td>
+      <td>发射点结束编号（0回退起始）</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 8 · +44 · 0x598005</td>
+      <td class="meaning-cell">CSV col8→+44；4AFD40 @4AFF82读取，零时取+40，循环包含结束编号（4B0344/4B034C）；不是已证明的商店商品ID。旧shop_item_id为物理兼容名。</td>
+    </tr>
+    <tr>
+      <td><code>9</code></td>
+      <td><code>inherit_parent_bit</code></td>
+      <td><code>inherit_parent_bit</code></td>
+      <td>继承父行位</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 9 · +2228 · 0x598008</td>
+      <td class="meaning-cell">从父行继承空字段（+2228 bit6）</td>
+    </tr>
+    <tr>
+      <td><code>10</code></td>
+      <td><code>enabled</code></td>
+      <td><code>enabled</code></td>
+      <td>启用</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 10 · +60 · 0x598033</td>
+      <td class="meaning-cell">武器槽启用开关（col10→+60 bool）</td>
+    </tr>
+    <tr>
+      <td><code>11</code></td>
+      <td><code>sort_order</code></td>
+      <td><code>sort_order</code></td>
+      <td>发射点子对象扫描分支</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 11 · +48 · 0x598041</td>
+      <td class="meaning-cell">CSV col11→+48；4AFD40 @4AFFE0零时跳至4B01C0直接按S_wpn名称查找，非零先扫描子对象；找不到仍有直接查找及默认变换回退。旧sort_order不代表已证明的UI排序用途，完整枚举未知。</td>
+    </tr>
+    <tr>
+      <td><code>12</code></td>
+      <td><code>cost_points</code></td>
+      <td><code>cost_points</code></td>
+      <td>消耗点数</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 12 · +52 · 0x598044</td>
+      <td class="meaning-cell">装备消耗/COST（@+52；负值取绝对值）</td>
+    </tr>
+    <tr>
+      <td><code>13</code></td>
+      <td><code>equip_slot_type</code></td>
+      <td><code>equip_slot_type</code></td>
+      <td>装备槽位</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 13 · +56 · 0x59807b</td>
+      <td class="meaning-cell">ONEHAND/TWOHAND/SHIELD 等（sub_5968A0→+56）<div class="enum-vals"><a class="enum-chip" href="enums/sub_5968a0.html#v-ONEHAND" title="单手"><code>ONEHAND</code>=2<span class="enum-zh">单手</span></a> <a class="enum-chip" href="enums/sub_5968a0.html#v-SHOLDER" title="肩扛"><code>SHOLDER</code>=3<span class="enum-zh">肩扛</span></a> <a class="enum-chip" href="enums/sub_5968a0.html#v-TWOHAND" title="双手"><code>TWOHAND</code>=4<span class="enum-zh">双手</span></a> <a class="enum-chip" href="enums/sub_5968a0.html#v-SHIELD" title="护盾"><code>SHIELD</code>=5<span class="enum-zh">护盾</span></a> <a class="enum-chip" href="enums/sub_5968a0.html#v-PECULIAR_1" title="特殊挂点1"><code>PECULIAR_1</code>=6<span class="enum-zh">特殊挂点1</span></a> <a class="enum-chip" href="enums/sub_5968a0.html#v-PECULIAR_2" title="特殊挂点2"><code>PECULIAR_2</code>=7<span class="enum-zh">特殊挂点2</span></a> <a class="enum-chip" href="enums/sub_5968a0.html#v-PECULIAR_3" title="特殊挂点3"><code>PECULIAR_3</code>=8<span class="enum-zh">特殊挂点3</span></a> <a class="enum-chip" href="enums/sub_5968a0.html#v-PECULIAR_4" title="PECULIAR_4（特殊挂点 4）"><code>PECULIAR_4</code>=9<span class="enum-zh">PECULIAR_4（特殊挂点 4）</span></a> <a class="enum-chip" href="enums/sub_5968a0.html#v-PECULIAR_5" title="PECULIAR_5（特殊挂点 5）"><code>PECULIAR_5</code>=10<span class="enum-zh">PECULIAR_5（特殊挂点 5）</span></a> <a class="enum-chip" href="enums/sub_5968a0.html#v-PECULIAR_6" title="PECULIAR_6（特殊挂点 6）"><code>PECULIAR_6</code>=11<span class="enum-zh">PECULIAR_6（特殊挂点 6）</span></a> <a class="enum-chip" href="enums/sub_5968a0.html#v-MODELORIGIN" title="模型原点"><code>MODELORIGIN</code>=12<span class="enum-zh">模型原点</span></a> <a class="enum-conv-link" href="enums/sub_5968a0.html" title="装备槽位">↗ sub_5968A0</a></div></td>
+    </tr>
+    <tr>
+      <td><code>14</code></td>
+      <td><code>magazine_size</code></td>
+      <td><code>magazine_size</code></td>
+      <td>动作层索引减1（旧列名 magazine_size）</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#1565c0">已映射</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 14 · +64 · 0x59808e</td>
+      <td class="meaning-cell">597F50 将 col14 的整数加1写到+64；4A45A0 把+64传给4A01C0作为动作层索引，后者直接按模型+820+352索引寻址。AE3990构造4层（索引0..3），CSV可表示-1..2；空串解析为0，得到客户端默认层1，不代表原服逐武器正确层已恢复。弹匣容量在col104，不能把wiki发数写入此列。</td>
+    </tr>
+    <tr>
+      <td><code>15</code></td>
+      <td><code>melee_shield_subtype</code></td>
+      <td><code>melee_shield_subtype</code></td>
+      <td>近战盾细分</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 15 · +68 · 0x5980a6</td>
+      <td class="meaning-cell">射击/格斗/盾子类（sub_596990→+68）<div class="enum-vals"><a class="enum-chip" href="enums/sub_596990.html#v-WRESTLE" title="格斗"><code>WRESTLE</code>=20<span class="enum-zh">格斗</span></a> <a class="enum-chip" href="enums/sub_596990.html#v-WRESTLE2" title="WRESTLE2（格斗 2）"><code>WRESTLE2</code>=21<span class="enum-zh">WRESTLE2（格斗 2）</span></a> <a class="enum-chip" href="enums/sub_596990.html#v-SHIELD" title="护盾"><code>SHIELD</code>=30<span class="enum-zh">护盾</span></a> <a class="enum-chip" href="enums/sub_596990.html#v-SHIELD2" title="SHIELD2（护盾 2）"><code>SHIELD2</code>=31<span class="enum-zh">SHIELD2（护盾 2）</span></a> <a class="enum-chip" href="enums/sub_596990.html#v-ATTACH_SHIELD" title="ATTACH·护盾/盾战"><code>ATTACH_SHIELD</code>=32<span class="enum-zh">ATTACH·护盾/盾战</span></a> <a class="enum-chip" href="enums/sub_596990.html#v-SHOT_SHIELD" title="Shot·护盾/盾战"><code>SHOT_SHIELD</code>=33<span class="enum-zh">Shot·护盾/盾战</span></a> <a class="enum-chip" href="enums/sub_596990.html#v-SHOTGUN" title="霰弹枪"><code>SHOTGUN</code>=2<span class="enum-zh">霰弹枪</span></a> <a class="enum-chip" href="enums/sub_596990.html#v-ONEHAND_SHOT" title="单手·Shot"><code>ONEHAND_SHOT</code>=3<span class="enum-zh">单手·Shot</span></a> <a class="enum-chip" href="enums/sub_596990.html#v-SHOLDER_SHOT" title="肩扛·Shot"><code>SHOLDER_SHOT</code>=4<span class="enum-zh">肩扛·Shot</span></a> <a class="enum-chip" href="enums/sub_596990.html#v-TWOHAND_SHOT" title="双手·Shot"><code>TWOHAND_SHOT</code>=5<span class="enum-zh">双手·Shot</span></a> <a class="enum-chip" href="enums/sub_596990.html#v-TWOHAND_SHOT2" title="双手·SHOT2"><code>TWOHAND_SHOT2</code>=8<span class="enum-zh">双手·SHOT2</span></a> <a class="enum-chip" href="enums/sub_596990.html#v-SPECIAL_SHOT" title="特殊·Shot"><code>SPECIAL_SHOT</code>=6<span class="enum-zh">特殊·Shot</span></a> <a class="enum-conv-link" href="enums/sub_596990.html" title="格斗细分类">↗ sub_596990</a> <span class="muted">…共 16 项</span></div></td>
+    </tr>
+    <tr>
+      <td><code>16</code></td>
+      <td><code>weapon_shot_subtype</code></td>
+      <td><code>weapon_shot_subtype</code></td>
+      <td>射击子类</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 16 · +72 · 0x5980c0</td>
+      <td class="meaning-cell">同系射击细分（sub_596A80→+72）<div class="enum-vals"><a class="enum-chip" href="enums/sub_596a80.html#v-WRESTLE" title="格斗"><code>WRESTLE</code>=20<span class="enum-zh">格斗</span></a> <a class="enum-chip" href="enums/sub_596a80.html#v-WRESTLE2" title="WRESTLE2（格斗 2）"><code>WRESTLE2</code>=21<span class="enum-zh">WRESTLE2（格斗 2）</span></a> <a class="enum-chip" href="enums/sub_596a80.html#v-SHIELD" title="护盾"><code>SHIELD</code>=30<span class="enum-zh">护盾</span></a> <a class="enum-chip" href="enums/sub_596a80.html#v-SHIELD2" title="SHIELD2（护盾 2）"><code>SHIELD2</code>=31<span class="enum-zh">SHIELD2（护盾 2）</span></a> <a class="enum-chip" href="enums/sub_596a80.html#v-ATTACH_SHIELD" title="ATTACH·护盾/盾战"><code>ATTACH_SHIELD</code>=32<span class="enum-zh">ATTACH·护盾/盾战</span></a> <a class="enum-chip" href="enums/sub_596a80.html#v-SHOTGUN" title="霰弹枪"><code>SHOTGUN</code>=2<span class="enum-zh">霰弹枪</span></a> <a class="enum-chip" href="enums/sub_596a80.html#v-ONEHAND_SHOT" title="单手·Shot"><code>ONEHAND_SHOT</code>=3<span class="enum-zh">单手·Shot</span></a> <a class="enum-chip" href="enums/sub_596a80.html#v-SHOLDER_SHOT" title="肩扛·Shot"><code>SHOLDER_SHOT</code>=4<span class="enum-zh">肩扛·Shot</span></a> <a class="enum-chip" href="enums/sub_596a80.html#v-TWOHAND_SHOT" title="双手·Shot"><code>TWOHAND_SHOT</code>=5<span class="enum-zh">双手·Shot</span></a> <a class="enum-chip" href="enums/sub_596a80.html#v-SPECIAL_SHOT" title="特殊·Shot"><code>SPECIAL_SHOT</code>=6<span class="enum-zh">特殊·Shot</span></a> <a class="enum-chip" href="enums/sub_596a80.html#v-SNAIP_SHOT" title="SNAIP·射击"><code>SNAIP_SHOT</code>=7<span class="enum-zh">SNAIP·射击</span></a> <a class="enum-chip" href="enums/sub_596a80.html#v-SETUP" title="SETUP（Setup/架设）"><code>SETUP</code>=10<span class="enum-zh">SETUP（Setup/架设）</span></a> <a class="enum-conv-link" href="enums/sub_596a80.html" title="攻击属性">↗ sub_596A80</a> <span class="muted">…共 13 项</span></div></td>
+    </tr>
+    <tr>
+      <td><code>17</code></td>
+      <td><code>lock_on_flag</code></td>
+      <td><code>lock_on_flag</code></td>
+      <td>锁定</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 17 · +76 · 0x5980df</td>
+      <td class="meaning-cell">可否锁定目标（col17→+76 bool）</td>
+    </tr>
+    <tr>
+      <td><code>18</code></td>
+      <td><code>close_range_mode</code></td>
+      <td><code>close_range_mode</code></td>
+      <td>近距模式</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 18 · +80</td>
+      <td class="meaning-cell">近距模式：CSV 写 CLOSE 触发近距射击（sub_40CE20→+80 bool）<div class="enum-vals"><a class="enum-chip" href="enums/sub_40ce20.html#v-CLOSE" title="近战/CLOSE"><code>CLOSE</code>=1<span class="enum-zh">近战/CLOSE</span></a> <a class="enum-conv-link" href="enums/sub_40ce20.html" title="字符串相等比较">↗ sub_40CE20</a></div></td>
+    </tr>
+    <tr>
+      <td><code>19</code></td>
+      <td><code>use_parent_close_flag</code></td>
+      <td><code>use_parent_close_flag</code></td>
+      <td>use_parent_close_flag</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 19 · +2228 · 0x59813e</td>
+      <td class="meaning-cell">use_parent_close_flag： sub_597F50 mem+2228 0x59813e</td>
+    </tr>
+    <tr>
+      <td><code>20</code></td>
+      <td><code>use_parent_lock_flag</code></td>
+      <td><code>use_parent_lock_flag</code></td>
+      <td>use_parent_lock_flag</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 20 · +2228 · 0x59816a</td>
+      <td class="meaning-cell">use_parent_lock_flag： sub_597F50 mem+2228 0x59816a</td>
+    </tr>
+    <tr>
+      <td><code>21</code></td>
+      <td><code>weapon_category</code></td>
+      <td><code>weapon_category</code></td>
+      <td>武器功能类</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 21 · +84 · 0x59817a</td>
+      <td class="meaning-cell">MACHINEGUN/BEAM/REPAIR 等 52 类（sub_596B70→+84；决定 POWER 符号）<div class="enum-vals"><a class="enum-chip" href="enums/sub_596b70.html#v-MACHINEGUN" title="机枪"><code>MACHINEGUN</code>=0<span class="enum-zh">机枪</span></a> <a class="enum-chip" href="enums/sub_596b70.html#v-SHOTGUN" title="霰弹枪"><code>SHOTGUN</code>=1<span class="enum-zh">霰弹枪</span></a> <a class="enum-chip" href="enums/sub_596b70.html#v-BAZOOKA" title="火箭筒"><code>BAZOOKA</code>=2<span class="enum-zh">火箭筒</span></a> <a class="enum-chip" href="enums/sub_596b70.html#v-GRENADE_LAUNCHER" title="榴弹发射器"><code>GRENADE_LAUNCHER</code>=3<span class="enum-zh">榴弹发射器</span></a> <a class="enum-chip" href="enums/sub_596b70.html#v-MISSILE" title="导弹"><code>MISSILE</code>=4<span class="enum-zh">导弹</span></a> <a class="enum-chip" href="enums/sub_596b70.html#v-BEAM" title="光束"><code>BEAM</code>=5<span class="enum-zh">光束</span></a> <a class="enum-chip" href="enums/sub_596b70.html#v-WRESTLE" title="格斗"><code>WRESTLE</code>=6<span class="enum-zh">格斗</span></a> <a class="enum-chip" href="enums/sub_596b70.html#v-SNIPE" title="狙击"><code>SNIPE</code>=7<span class="enum-zh">狙击</span></a> <a class="enum-chip" href="enums/sub_596b70.html#v-TRENCH_MORTAR" title="迫击炮"><code>TRENCH_MORTAR</code>=8<span class="enum-zh">迫击炮</span></a> <a class="enum-chip" href="enums/sub_596b70.html#v-LANDMINE" title="地雷"><code>LANDMINE</code>=9<span class="enum-zh">地雷</span></a> <a class="enum-chip" href="enums/sub_596b70.html#v-HAND_THROW" title="手投"><code>HAND_THROW</code>=10<span class="enum-zh">手投</span></a> <a class="enum-chip" href="enums/sub_596b70.html#v-SENTRYGUN" title="哨戒炮"><code>SENTRYGUN</code>=11<span class="enum-zh">哨戒炮</span></a> <a class="enum-conv-link" href="enums/sub_596b70.html" title="武器子类型">↗ sub_596B70</a> <span class="muted">…共 52 项</span></div></td>
+    </tr>
+    <tr>
+      <td><code>22</code></td>
+      <td><code>weapon_category_derived</code></td>
+      <td><code>weapon_category_derived</code></td>
+      <td>派生类别</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 22 · +88 · 0x598196</td>
+      <td class="meaning-cell">由 weapon_category 派生（sub_596100→+88）</td>
+    </tr>
+    <tr>
+      <td><code>23</code></td>
+      <td><code>damage_type</code></td>
+      <td><code>damage_type</code></td>
+      <td>damage_type</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 23 · +2240 · 0x5982b6</td>
+      <td class="meaning-cell">u32 裸读（`sub_BBB370`，push 17h）→ `mem+2240`(0x8C0)。与 csv24..28 同属 `+0x8C0..0x8D4` 连续块（IDA：0x5982ab push 17h → 0x5982ae call → 0x5982b6 mov [esi+8C0h],eax）。★该块只在 `[+0x8B4] &amp; 0x20` 置位时读；未置位走 0x598304 分支整块写 -1(0xFFFFFFFF)。</td>
+    </tr>
+    <tr>
+      <td><code>24</code></td>
+      <td><code>burst_param_1</code></td>
+      <td><code>burst_param_1</code></td>
+      <td>burst_param_1</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 24 · +2244 · 0x5982c4</td>
+      <td class="meaning-cell">burst_param_1： sub_597F50 push 18h → mem+2244(0x8C4) @0x5982c4</td>
+    </tr>
+    <tr>
+      <td><code>25</code></td>
+      <td><code>burst_param_2</code></td>
+      <td><code>burst_param_2</code></td>
+      <td>burst_param_2</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 25 · +2248 · 0x5982d2</td>
+      <td class="meaning-cell">burst_param_2： sub_597F50 push 19h → mem+2248(0x8C8) @0x5982d2</td>
+    </tr>
+    <tr>
+      <td><code>26</code></td>
+      <td><code>burst_param_3</code></td>
+      <td><code>burst_param_3</code></td>
+      <td>burst_param_3</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 26 · +2252 · 0x5982e0</td>
+      <td class="meaning-cell">burst_param_3： sub_597F50 push 1Ah → mem+2252(0x8CC) @0x5982e0</td>
+    </tr>
+    <tr>
+      <td><code>27</code></td>
+      <td><code>burst_param_4</code></td>
+      <td><code>burst_param_4</code></td>
+      <td>burst_param_4</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 27 · +2256 · 0x5982ee</td>
+      <td class="meaning-cell">burst_param_4： sub_597F50 push 1Bh → mem+2256(0x8D0) @0x5982ee</td>
+    </tr>
+    <tr>
+      <td><code>28</code></td>
+      <td><code>fire_mode_type</code></td>
+      <td><code>fire_mode_type</code></td>
+      <td>CSV列28（语义未定，u32→+2260）</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 28 · +2260 · 0x5982fc</td>
+      <td class="meaning-cell">u32（`sub_BBB370` 裸读，push 1Ch）→ `mem+2260`(0x8D4) @0x5982fc。★这是 `+0x8C0..0x8D4` 连续 6 格块（csv23..28：2240/2244/2248/2252/2256/2260）的最后一格，全块只在 `[+0x8B4] &amp; 0x20` 置位时读。语义未定（CSV 全列 1648 行皆空）。⚠️ 旧记录「发射模式 / sub_596C60→+96」是误标：`sub_596C60` 与 +96 属 csv30（见 csv30 的 IDA 实证）；旧记录里 csv24..26 的 mem 偏移也整体错位一格（真值 2244/2248/2252）。</td>
+    </tr>
+    <tr>
+      <td><code>29</code></td>
+      <td><code>scatter_pattern</code></td>
+      <td><code>scatter_pattern</code></td>
+      <td>散布模式</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 29 · +92 · 0x598330</td>
+      <td class="meaning-cell">NORMAL/SCATTERS/SP_BEAM 等（sub_596510→+92 cmp-chain）<div class="enum-vals"><a class="enum-chip" href="enums/sub_596510.html#v-NORMAL" title="普通"><code>NORMAL</code>=0<span class="enum-zh">普通</span></a> <a class="enum-chip" href="enums/sub_596510.html#v-SCATTERS" title="SCATTERS（散射）"><code>SCATTERS</code>=1<span class="enum-zh">SCATTERS（散射）</span></a> <a class="enum-chip" href="enums/sub_596510.html#v-VERTICAL_WAY" title="VERTICAL_WAY（垂直移动）"><code>VERTICAL_WAY</code>=2<span class="enum-zh">VERTICAL_WAY（垂直移动）</span></a> <a class="enum-chip" href="enums/sub_596510.html#v-SIDE_WAY" title="SIDE_WAY（侧向移动）"><code>SIDE_WAY</code>=3<span class="enum-zh">SIDE_WAY（侧向移动）</span></a> <a class="enum-chip" href="enums/sub_596510.html#v-SIDE_WAY_2" title="SIDE_WAY_2（侧向移动 2）"><code>SIDE_WAY_2</code>=4<span class="enum-zh">SIDE_WAY_2（侧向移动 2）</span></a> <a class="enum-chip" href="enums/sub_596510.html#v-SP_BEAM" title="Sp·光束"><code>SP_BEAM</code>=5<span class="enum-zh">Sp·光束</span></a> <a class="enum-chip" href="enums/sub_596510.html#v-TRENCH_MORTAR" title="迫击炮"><code>TRENCH_MORTAR</code>=6<span class="enum-zh">迫击炮</span></a> <a class="enum-chip" href="enums/sub_596510.html#v-PARALLEL" title="PARALLEL（并行/同時）"><code>PARALLEL</code>=7<span class="enum-zh">PARALLEL（并行/同時）</span></a> <a class="enum-conv-link" href="enums/sub_596510.html" title="散布模式">↗ sub_596510</a></div></td>
+    </tr>
+    <tr>
+      <td><code>30</code></td>
+      <td><code>damage_attribute</code></td>
+      <td><code>damage_attribute</code></td>
+      <td>攻击行为类型（旧列名 damage_attribute）</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 30 · +96 · 0x598375</td>
+      <td class="meaning-cell">597F50 col30 -&gt; 596C60 -&gt; +96，枚举见 weapon_runtime_enums_v15.json（13338 目标 v15 提取）。NONE=0 不生成以 bullet_id 为依据的能力位1；GUN_SINGLE=2/GUN_RAPID=3 等用于攻击派发。这不是 BEAM/SOLID 伤害属性，后者是 col32。不能仅根据武器图标选行为。<div class="enum-vals"><a class="enum-chip" href="enums/sub_596c60.html#v-NONE" title="无"><code>NONE</code>=0<span class="enum-zh">无</span></a> <a class="enum-chip" href="enums/sub_596c60.html#v-SHIELD" title="护盾"><code>SHIELD</code>=1<span class="enum-zh">护盾</span></a> <a class="enum-chip" href="enums/sub_596c60.html#v-GUN_SINGLE" title="Gun·单次"><code>GUN_SINGLE</code>=2<span class="enum-zh">Gun·单次</span></a> <a class="enum-chip" href="enums/sub_596c60.html#v-GUN_RAPID" title="GUN_RAPID（枪械连射）"><code>GUN_RAPID</code>=3<span class="enum-zh">GUN_RAPID（枪械连射）</span></a> <a class="enum-chip" href="enums/sub_596c60.html#v-WRESTLE" title="格斗"><code>WRESTLE</code>=4<span class="enum-zh">格斗</span></a> <a class="enum-chip" href="enums/sub_596c60.html#v-GRENADE" title="手雷"><code>GRENADE</code>=5<span class="enum-zh">手雷</span></a> <a class="enum-chip" href="enums/sub_596c60.html#v-HAND_THROW" title="手投"><code>HAND_THROW</code>=6<span class="enum-zh">手投</span></a> <a class="enum-chip" href="enums/sub_596c60.html#v-DEPLOY_ARMS" title="部署武装"><code>DEPLOY_ARMS</code>=7<span class="enum-zh">部署武装</span></a> <a class="enum-chip" href="enums/sub_596c60.html#v-TRENCH_MORTAR" title="迫击炮"><code>TRENCH_MORTAR</code>=8<span class="enum-zh">迫击炮</span></a> <a class="enum-chip" href="enums/sub_596c60.html#v-SNIPE_BEAM" title="狙击·光束"><code>SNIPE_BEAM</code>=9<span class="enum-zh">狙击·光束</span></a> <a class="enum-chip" href="enums/sub_596c60.html#v-BIT" title="比特"><code>BIT</code>=10<span class="enum-zh">比特</span></a> <a class="enum-chip" href="enums/sub_596c60.html#v-DAMAGE_FIELD" title="伤害场"><code>DAMAGE_FIELD</code>=11<span class="enum-zh">伤害场</span></a> <a class="enum-conv-link" href="enums/sub_596c60.html" title="伤害类型">↗ sub_596C60</a> <span class="muted">…共 29 项</span></div></td>
+    </tr>
+    <tr>
+      <td><code>31</code></td>
+      <td><code>lockon_mode</code></td>
+      <td><code>lockon_mode</code></td>
+      <td>锁定模式</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 31 · +100 · 0x59838d</td>
+      <td class="meaning-cell">NONE/LOCKON/SCOPE/FUNNEL 等（sub_5965F0→+100）<div class="enum-vals"><a class="enum-chip" href="enums/sub_5965f0.html#v-NONE" title="无"><code>NONE</code>=0<span class="enum-zh">无</span></a> <a class="enum-chip" href="enums/sub_5965f0.html#v-LOCKON" title="锁定"><code>LOCKON</code>=1<span class="enum-zh">锁定</span></a> <a class="enum-chip" href="enums/sub_5965f0.html#v-SCOPE" title="SCOPE（瞄准镜）"><code>SCOPE</code>=2<span class="enum-zh">SCOPE（瞄准镜）</span></a> <a class="enum-chip" href="enums/sub_5965f0.html#v-LOCKON_HOMING" title="LOCKON·制导"><code>LOCKON_HOMING</code>=3<span class="enum-zh">LOCKON·制导</span></a> <a class="enum-chip" href="enums/sub_5965f0.html#v-LOCKON_BOOMERANG" title="锁定·BOOMERANG"><code>LOCKON_BOOMERANG</code>=4<span class="enum-zh">锁定·BOOMERANG</span></a> <a class="enum-chip" href="enums/sub_5965f0.html#v-FUNNEL" title="浮游炮"><code>FUNNEL</code>=5<span class="enum-zh">浮游炮</span></a> <a class="enum-chip" href="enums/sub_5965f0.html#v-INCOM" title="INCOM（收入/入账奖励）"><code>INCOM</code>=6<span class="enum-zh">INCOM（收入/入账奖励）</span></a> <a class="enum-chip" href="enums/sub_5965f0.html#v-FUNNEL_MK2" title="浮游炮·Mk2"><code>FUNNEL_MK2</code>=7<span class="enum-zh">浮游炮·Mk2</span></a> <a class="enum-chip" href="enums/sub_5965f0.html#v-SENSING_SCOPE" title="SENSING_SCOPE（感应瞄准镜）"><code>SENSING_SCOPE</code>=8<span class="enum-zh">SENSING_SCOPE（感应瞄准镜）</span></a> <a class="enum-conv-link" href="enums/sub_5965f0.html" title="连射模式">↗ sub_5965F0</a></div></td>
+    </tr>
+    <tr>
+      <td><code>32</code></td>
+      <td><code>weapon_attribute</code></td>
+      <td><code>weapon_attribute</code></td>
+      <td>武器属性： 实弹｜ 光束｜ 爆炸｜</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 32 · +108 · 0x5983c8</td>
+      <td class="meaning-cell">★武器属性（`sub_5964A0`，4 值）：`SOLID=1` 实弹｜`BEAM=2` 光束｜`BLAST=3` 爆炸｜`DEAD=4`<div class="enum-vals"><a class="enum-chip" href="enums/sub_5964a0.html#v-SOLID" title="实弹"><code>SOLID</code>=1<span class="enum-zh">实弹</span></a> <a class="enum-chip" href="enums/sub_5964a0.html#v-BEAM" title="光束"><code>BEAM</code>=2<span class="enum-zh">光束</span></a> <a class="enum-chip" href="enums/sub_5964a0.html#v-BLAST" title="爆炸"><code>BLAST</code>=3<span class="enum-zh">爆炸</span></a> <a class="enum-chip" href="enums/sub_5964a0.html#v-DEAD" title="即死"><code>DEAD</code>=4<span class="enum-zh">即死</span></a> <a class="enum-conv-link" href="enums/sub_5964a0.html" title="弹种属性">↗ sub_5964A0</a></div></td>
+    </tr>
+    <tr>
+      <td><code>33</code></td>
+      <td><code>flag_bit_33</code></td>
+      <td><code>flag_bit_33</code></td>
+      <td>标志位 @+8B4h bit0</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 33 · +2228 · 0x598404</td>
+      <td class="meaning-cell">标志位 @+8B4h bit0（col33 非零置位）</td>
+    </tr>
+    <tr>
+      <td><code>34</code></td>
+      <td><code>flag_bit_34</code></td>
+      <td><code>flag_bit_34</code></td>
+      <td>标志位 @+8B4h bit1</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 34 · +2228 · 0x598424</td>
+      <td class="meaning-cell">标志位 @+8B4h bit1（col34 非零置位）</td>
+    </tr>
+    <tr>
+      <td><code>35</code></td>
+      <td><code>col35</code></td>
+      <td><code>col35</code></td>
+      <td>派生名模板（csv35→+112）</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 35 · +112 · 0x598448</td>
+      <td class="meaning-cell">reader 真读（`0x598448` 取列；值当名字模板 → sub_5978A0 三项名字模板块 @+112）；原标 gap 系仿真静默截断（EMU-CUT）造成的假阴性</td>
+    </tr>
+    <tr>
+      <td><code>36</code></td>
+      <td><code>weapon_power</code></td>
+      <td><code>weapon_power</code></td>
+      <td>威力</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 36 · +196 · 0x598494</td>
+      <td class="meaning-cell">基础威力（col36 float→+196；回复系类别在消费端取负）</td>
+    </tr>
+    <tr>
+      <td><code>37</code></td>
+      <td><code>col37</code></td>
+      <td><code>col37</code></td>
+      <td>派生名模板（csv37→+284）</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 37 · +284 · 0x5984a2</td>
+      <td class="meaning-cell">reader 真读（`0x5984a2` 取列；值当名字模板 → wstring 原样 @+284）；原标 gap 系仿真静默截断（EMU-CUT）造成的假阴性</td>
+    </tr>
+    <tr>
+      <td><code>38</code></td>
+      <td><code>range_meter</code></td>
+      <td><code>range_meter</code></td>
+      <td>射程</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 38 · +312 · 0x5984e8</td>
+      <td class="meaning-cell">有效射程米（col38→+312）</td>
+    </tr>
+    <tr>
+      <td><code>39</code></td>
+      <td><code>col39</code></td>
+      <td><code>col39</code></td>
+      <td>派生名模板（csv39→+316）</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 39 · +316 · 0x5984f6</td>
+      <td class="meaning-cell">reader 真读（`0x5984f6` 取列；值当名字模板 → sub_BBB920→sub_56F550（条件追加 fx 后缀） @+316）；原标 gap 系仿真静默截断（EMU-CUT）造成的假阴性</td>
+    </tr>
+    <tr>
+      <td><code>40</code></td>
+      <td><code>accuracy_multiplier</code></td>
+      <td><code>accuracy_multiplier</code></td>
+      <td>命中精度倍率</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 40 · +344 · 0x59856a</td>
+      <td class="meaning-cell">命中精度倍率（col40→+344；缺省 1.0；sub_597F50 末段补默认）</td>
+    </tr>
+    <tr>
+      <td><code>41</code></td>
+      <td><code>optional_name_flag</code></td>
+      <td><code>optional_name_flag</code></td>
+      <td>可选名称标志</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 41 · +348</td>
+      <td class="meaning-cell">col41 非零时写入可选显示名窄串（→+348；sub_4029E0）</td>
+    </tr>
+    <tr>
+      <td><code>42</code></td>
+      <td><code>col42</code></td>
+      <td><code>col42</code></td>
+      <td>派生名模板（csv42→+376）</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 42 · +376 · 0x5985ea</td>
+      <td class="meaning-cell">reader 真读（`0x5985ea` 取列；值当名字模板 → sub_5978A0 三项名字模板块 @+376）；原标 gap 系仿真静默截断（EMU-CUT）造成的假阴性</td>
+    </tr>
+    <tr>
+      <td><code>43</code></td>
+      <td><code>recoil_multiplier</code></td>
+      <td><code>recoil_multiplier</code></td>
+      <td>后坐力倍率</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 43 · +460 · 0x598633</td>
+      <td class="meaning-cell">后坐力倍率（col43→+460；#36 RECOIL 查键区 +376；sub_597AF0 派生）</td>
+    </tr>
+    <tr>
+      <td><code>44</code></td>
+      <td><code>col44</code></td>
+      <td><code>col44</code></td>
+      <td>派生名模板（csv44→+464）</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 44 · +464 · 0x598641</td>
+      <td class="meaning-cell">reader 真读（`0x598641` 取列；值当名字模板 → sub_5978A0 三项名字模板块 @+464）；原标 gap 系仿真静默截断（EMU-CUT）造成的假阴性</td>
+    </tr>
+    <tr>
+      <td><code>45</code></td>
+      <td><code>reload_multiplier</code></td>
+      <td><code>reload_multiplier</code></td>
+      <td>装填倍率</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 45 · +548 · 0x59868e</td>
+      <td class="meaning-cell">装填时间倍率（col45→+548；#36 RELOAD 查键区 +464）</td>
+    </tr>
+    <tr>
+      <td><code>46</code></td>
+      <td><code>col46</code></td>
+      <td><code>col46</code></td>
+      <td>弹体模型资源模板</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 46 · +552 · 0x59869c</td>
+      <td class="meaning-cell">597F50 col46 -&gt; 5976F0/5978A0 -&gt; +552的三项wstring；5976F0 经56F550在非空且不匹配禁用串时加fx/前缀。514AD0调用513D30，普通分支从+552+28变体索引取路径，AB4A70加载；模型为空会拒绝本次弹体初始化。不能根据武器图标推导弹体资源。</td>
+    </tr>
+    <tr>
+      <td><code>47</code></td>
+      <td><code>cooldown_multiplier</code></td>
+      <td><code>cooldown_multiplier</code></td>
+      <td>弹体模型缩放（旧列名 cooldown_multiplier）</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 47 · +636 · 0x5986e9</td>
+      <td class="meaning-cell">597F50 col47 float -&gt; +636；513D30在AB4A70成功后把此值填入三轴缩放向量并调用模型虚表+112。不是冷却时间；本次普通无父行武器未观察到+636为零时的自动1.0补值。</td>
+    </tr>
+    <tr>
+      <td><code>48</code></td>
+      <td><code>col48</code></td>
+      <td><code>col48</code></td>
+      <td>派生名模板（csv48→+640）</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 48 · +640 · 0x5986f7</td>
+      <td class="meaning-cell">reader 真读（`0x5986f7` 取列；值当名字模板 → sub_5978A0 三项名字模板块 @+640）；原标 gap 系仿真静默截断（EMU-CUT）造成的假阴性</td>
+    </tr>
+    <tr>
+      <td><code>49</code></td>
+      <td><code>switch_time_multiplier</code></td>
+      <td><code>switch_time_multiplier</code></td>
+      <td>切换倍率</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 49 · +724 · 0x598744</td>
+      <td class="meaning-cell">武器切换时间倍率（col49→+724；#36 SWITCHTIME 查键区 +640）</td>
+    </tr>
+    <tr>
+      <td><code>50</code></td>
+      <td><code>col50</code></td>
+      <td><code>col50</code></td>
+      <td>派生名模板（csv50→+728）</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 50 · +728 · 0x598752</td>
+      <td class="meaning-cell">reader 真读（`0x598752` 取列；值当名字模板 → sub_5978A0 三项名字模板块 @+728）；原标 gap 系仿真静默截断（EMU-CUT）造成的假阴性</td>
+    </tr>
+    <tr>
+      <td><code>51</code></td>
+      <td><code>lockon_multiplier</code></td>
+      <td><code>lockon_multiplier</code></td>
+      <td>锁定倍率</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 51 · +812 · 0x5987a4</td>
+      <td class="meaning-cell">锁定镜头倍率（col51→+812；#36 LOCKON_CAM 查键区 +728）</td>
+    </tr>
+    <tr>
+      <td><code>52</code></td>
+      <td><code>col52</code></td>
+      <td><code>col52</code></td>
+      <td>派生名模板（csv52→+816）</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 52 · +816 · 0x5987b2</td>
+      <td class="meaning-cell">reader 真读（`0x5987b2` 取列；值当名字模板 → sub_5978A0 三项名字模板块 @+816）；原标 gap 系仿真静默截断（EMU-CUT）造成的假阴性</td>
+    </tr>
+    <tr>
+      <td><code>53</code></td>
+      <td><code>stability_multiplier</code></td>
+      <td><code>stability_multiplier</code></td>
+      <td>稳定倍率</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 53 · +900 · 0x598804</td>
+      <td class="meaning-cell">集弹/稳定倍率（col53→+900；#36 STABILITY 查键区 +816）</td>
+    </tr>
+    <tr>
+      <td><code>54</code></td>
+      <td><code>col54</code></td>
+      <td><code>col54</code></td>
+      <td>派生名模板（csv54→+1156）</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 54 · +1156 · 0x598857</td>
+      <td class="meaning-cell">reader 真读（`0x598857` 取列；值当名字模板 → sub_5978A0 三项名字模板块 @+1156）；原标 gap 系仿真静默截断（EMU-CUT）造成的假阴性</td>
+    </tr>
+    <tr>
+      <td><code>55</code></td>
+      <td><code>rapid_delay_multiplier</code></td>
+      <td><code>rapid_delay_multiplier</code></td>
+      <td>连射延迟倍率</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 55 · +1240 · 0x598899</td>
+      <td class="meaning-cell">连射间隔倍率（col55→+1240；#36 RAPIDDELAY 查键区 +1156）</td>
+    </tr>
+    <tr>
+      <td><code>56</code></td>
+      <td><code>optional_effect_flag</code></td>
+      <td><code>optional_effect_flag</code></td>
+      <td>可选特效标志</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 56 · +1244</td>
+      <td class="meaning-cell">col56 非零时写入可选特效名列表（→+1244；sub_4029E0）</td>
+    </tr>
+    <tr>
+      <td><code>57</code></td>
+      <td><code>optional_sound_flag</code></td>
+      <td><code>optional_sound_flag</code></td>
+      <td>可选音效标志</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 57 · +1272</td>
+      <td class="meaning-cell">col57 非零时写入可选音效名列表（→+1272；sub_4029E0）</td>
+    </tr>
+    <tr>
+      <td><code>58</code></td>
+      <td><code>col58</code></td>
+      <td><code>col58</code></td>
+      <td>派生名模板（csv58→+1300）</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 58 · +1300 · 0x5989b6</td>
+      <td class="meaning-cell">reader 真读（`0x5989b6` 取列；值当名字模板 → sub_597D00 三项派生块（后两项后缀 +10） @+1300）；原标 gap 系仿真静默截断（EMU-CUT）造成的假阴性</td>
+    </tr>
+    <tr>
+      <td><code>59</code></td>
+      <td><code>spread_multiplier</code></td>
+      <td><code>spread_multiplier</code></td>
+      <td>散布倍率</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 59 · +1384 · 0x5989fe</td>
+      <td class="meaning-cell">弹道散布倍率（col59→+1384；STABILITY 散布查键区 +1300）</td>
+    </tr>
+    <tr>
+      <td><code>60</code></td>
+      <td><code>col60</code></td>
+      <td><code>col60</code></td>
+      <td>派生名模板（csv60→+1388）</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 60 · +1388 · 0x598a0c</td>
+      <td class="meaning-cell">reader 真读（`0x598a0c` 取列；值当名字模板 → sub_597D00 三项派生块（后两项后缀 +10） @+1388）；原标 gap 系仿真静默截断（EMU-CUT）造成的假阴性</td>
+    </tr>
+    <tr>
+      <td><code>61</code></td>
+      <td><code>col61</code></td>
+      <td><code>col61</code></td>
+      <td>派生名模板（csv61→+1556）</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 61 · +1556 · 0x598a60</td>
+      <td class="meaning-cell">reader 真读（`0x598a60` 取列；值当名字模板 → sub_597D00 三项派生块（后两项后缀 +10） @+1556）；原标 gap 系仿真静默截断（EMU-CUT）造成的假阴性</td>
+    </tr>
+    <tr>
+      <td><code>62</code></td>
+      <td><code>col62</code></td>
+      <td><code>col62</code></td>
+      <td>派生名模板（csv62→+1640）</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 62 · +1640 · 0x598aa7</td>
+      <td class="meaning-cell">reader 真读（`0x598aa7` 取列；值当名字模板 → sub_597D00 三项派生块（后两项后缀 +10） @+1640）；原标 gap 系仿真静默截断（EMU-CUT）造成的假阴性</td>
+    </tr>
+    <tr>
+      <td><code>63</code></td>
+      <td><code>col63</code></td>
+      <td><code>col63</code></td>
+      <td>派生名模板（csv63→+1808）</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 63 · +1808 · 0x598afb</td>
+      <td class="meaning-cell">reader 真读（`0x598afb` 取列；值当名字模板 → sub_597D00 三项派生块（后两项后缀 +10） @+1808）；原标 gap 系仿真静默截断（EMU-CUT）造成的假阴性</td>
+    </tr>
+    <tr>
+      <td><code>64</code></td>
+      <td><code>ammo_type_id</code></td>
+      <td><code>ammo_type_id</code></td>
+      <td>ammo_type_id</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 64 · 0x598b3d</td>
+      <td class="meaning-cell">ammo_type_id： sub_597F50 0x598b3d</td>
+    </tr>
+    <tr>
+      <td><code>65</code></td>
+      <td><code>ammo_count</code></td>
+      <td><code>ammo_count</code></td>
+      <td>配置字段 +0x768（非运行时弹匣）</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 65 · +1896 · 0x598b4b</td>
+      <td class="meaning-cell">597F50 col65 -&gt; +1896/+0x768，与 col66 任一为零则两项清零。不是 5083F0 消费的战斗弹匣容量；原 ammo_count 命名不能作为语义证据。</td>
+    </tr>
+    <tr>
+      <td><code>66</code></td>
+      <td><code>ammo_reserve</code></td>
+      <td><code>ammo_reserve</code></td>
+      <td>配置字段 +0x76C（非运行时备弹）</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 66 · +1900 · 0x598b53</td>
+      <td class="meaning-cell">597F50 col66 -&gt; +1900/+0x76C，与 col65 配对。不是 50C820 消费的战斗备弹；具体用途仍待追踪。</td>
+    </tr>
+    <tr>
+      <td><code>67</code></td>
+      <td><code>ammo_pack_id</code></td>
+      <td><code>ammo_pack_id</code></td>
+      <td>弹药包 ID</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 67 · +1904 · 0x598b84</td>
+      <td class="meaning-cell">备用弹药/消耗道具 ID（col67→+1904；与 col64 弹药类型配套）</td>
+    </tr>
+    <tr>
+      <td><code>68</code></td>
+      <td><code>bullet_id</code></td>
+      <td><code>bullet_id</code></td>
+      <td>弹体定义引用（关联空缺会影响弹数初始化）</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 68 · +1908 · 0x598b92</td>
+      <td class="meaning-cell">597F50 col68 -&gt; +1908；59A070 经 4D2620 查 BULLET。596F30 在攻击类型非NONE时按此值非零生成能力位1；50CC90 以位1或类别15/CAMERAGUN的位0x2000初始化弹数，6E2A50也检查这些位切换弹数/无限图标显示路径。不能填任意编号代替缺失的弹体定义。</td>
+    </tr>
+    <tr>
+      <td><code>69</code></td>
+      <td><code>projectile_count</code></td>
+      <td><code>projectile_count</code></td>
+      <td>弹丸数</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 69 · +1912 · 0x598ba0</td>
+      <td class="meaning-cell">单发弹丸/弹头数量（col69→+1912）</td>
+    </tr>
+    <tr>
+      <td><code>70</code></td>
+      <td><code>burst_rounds</code></td>
+      <td><code>burst_rounds</code></td>
+      <td>连射轮数</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 70 · +1916 · 0x598ba8</td>
+      <td class="meaning-cell">连射/点射轮数（col70→+1916）</td>
+    </tr>
+    <tr>
+      <td><code>71</code></td>
+      <td><code>shot_interval_ms</code></td>
+      <td><code>shot_interval_ms</code></td>
+      <td>射击间隔</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 71 · +1920 · 0x598bc4</td>
+      <td class="meaning-cell">连射间隔毫秒（col71→+1920）</td>
+    </tr>
+    <tr>
+      <td><code>72</code></td>
+      <td><code>muzzle_count</code></td>
+      <td><code>muzzle_count</code></td>
+      <td>枪口数</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 72 · +1924 · 0x598bd2</td>
+      <td class="meaning-cell">同时发射枪口/炮口数（col72→+1924）</td>
+    </tr>
+    <tr>
+      <td><code>73</code></td>
+      <td><code>bullet_inherit_setting_id</code></td>
+      <td><code>bullet_inherit_setting_id</code></td>
+      <td>弹丸继承源</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 73 · +1928 · 0x598bdf</td>
+      <td class="meaning-cell">非零时按此 weapon_setting_id 查父行弹丸参数（col73→+1928；sub_596F30）</td>
+    </tr>
+    <tr>
+      <td><code>74</code></td>
+      <td><code>effect_name_list</code></td>
+      <td><code>effect_name_list</code></td>
+      <td>特效名列表</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 74 · +2264</td>
+      <td class="meaning-cell">特效资源名列表窄串（col74 sub_402310→+2264）<div class="enum-vals"> <a class="enum-conv-link" href="enums/sub_402310.html" title="CSV 窄串拷贝">↗ sub_402310</a></div></td>
+    </tr>
+    <tr>
+      <td><code>75</code></td>
+      <td><code>col75</code></td>
+      <td><code>col75</code></td>
+      <td>CSV col75 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 75</td>
+      <td class="meaning-cell">CSV col75 预留（sub_597F50 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>76</code></td>
+      <td><code>col76</code></td>
+      <td><code>col76</code></td>
+      <td>CSV col76 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 76</td>
+      <td class="meaning-cell">CSV col76 预留（sub_597F50 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>77</code></td>
+      <td><code>hit_effect_list</code></td>
+      <td><code>hit_effect_list</code></td>
+      <td>射程明细关联键（旧列名 hit_effect_list）</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 77 · +2292</td>
+      <td class="meaning-cell">597F50 CSV77字符串 -&gt; +2292；59A070经5812E0在CWeaponBattleDetailTables+20的RANGE子表按字符串键查询，读node+40编码值后存至weapon+1940，未找到清零。A72C10子表虚表名称互证；595A10把明细射程乘100。普通弹体514AD0读取射程，534660限制飞行距离。这不是命中特效列表，键不应按整数武器ID规范化。</td>
+    </tr>
+    <tr>
+      <td><code>78</code></td>
+      <td><code>col78</code></td>
+      <td><code>col78</code></td>
+      <td>CSV col78 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 78</td>
+      <td class="meaning-cell">CSV col78 预留（sub_597F50 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>79</code></td>
+      <td><code>muzzle_effect_list</code></td>
+      <td><code>muzzle_effect_list</code></td>
+      <td>枪口特效列表</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 79 · +2320</td>
+      <td class="meaning-cell">枪口 FX 名列表（col79→+2320）<div class="enum-vals"> <a class="enum-conv-link" href="enums/sub_402310.html" title="CSV 窄串拷贝">↗ sub_402310</a></div></td>
+    </tr>
+    <tr>
+      <td><code>80</code></td>
+      <td><code>col80</code></td>
+      <td><code>col80</code></td>
+      <td>CSV col80 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 80</td>
+      <td class="meaning-cell">CSV col80 预留（sub_597F50 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>81</code></td>
+      <td><code>trail_effect_list</code></td>
+      <td><code>trail_effect_list</code></td>
+      <td>弹道特效列表</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 81 · +2348</td>
+      <td class="meaning-cell">弹道 FX 名列表（col81→+2348）<div class="enum-vals"> <a class="enum-conv-link" href="enums/sub_402310.html" title="CSV 窄串拷贝">↗ sub_402310</a></div></td>
+    </tr>
+    <tr>
+      <td><code>82</code></td>
+      <td><code>col82</code></td>
+      <td><code>col82</code></td>
+      <td>CSV col82 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 82</td>
+      <td class="meaning-cell">CSV col82 预留（sub_597F50 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>83</code></td>
+      <td><code>col83</code></td>
+      <td><code>col83</code></td>
+      <td>CSV col83 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 83</td>
+      <td class="meaning-cell">CSV col83 预留（sub_597F50 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>84</code></td>
+      <td><code>col84</code></td>
+      <td><code>col84</code></td>
+      <td>CSV col84 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 84</td>
+      <td class="meaning-cell">CSV col84 预留（sub_597F50 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>85</code></td>
+      <td><code>col85</code></td>
+      <td><code>col85</code></td>
+      <td>CSV col85 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 85</td>
+      <td class="meaning-cell">CSV col85 预留（sub_597F50 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>86</code></td>
+      <td><code>col86</code></td>
+      <td><code>col86</code></td>
+      <td>CSV col86 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 86</td>
+      <td class="meaning-cell">CSV col86 预留（sub_597F50 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>87</code></td>
+      <td><code>sound_set_list</code></td>
+      <td><code>sound_set_list</code></td>
+      <td>枚举/类别 —— 写名称</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 87</td>
+      <td class="meaning-cell">枚举/类别 —— 写名称（可选 0 个，见 `枚举表.md` `sub_402310`）<div class="enum-vals"> <a class="enum-conv-link" href="enums/sub_402310.html" title="CSV 窄串拷贝">↗ sub_402310</a></div></td>
+    </tr>
+    <tr>
+      <td><code>88</code></td>
+      <td><code>col88</code></td>
+      <td><code>col88</code></td>
+      <td>CSV col88 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 88</td>
+      <td class="meaning-cell">CSV col88 预留（sub_597F50 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>89</code></td>
+      <td><code>voice_set_list</code></td>
+      <td><code>voice_set_list</code></td>
+      <td>枚举/类别 —— 写名称</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 89</td>
+      <td class="meaning-cell">枚举/类别 —— 写名称（可选 0 个，见 `枚举表.md` `sub_402310`）<div class="enum-vals"> <a class="enum-conv-link" href="enums/sub_402310.html" title="CSV 窄串拷贝">↗ sub_402310</a></div></td>
+    </tr>
+    <tr>
+      <td><code>90</code></td>
+      <td><code>col90</code></td>
+      <td><code>col90</code></td>
+      <td>CSV col90 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 90</td>
+      <td class="meaning-cell">CSV col90 预留（sub_597F50 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>91</code></td>
+      <td><code>camera_shake_list</code></td>
+      <td><code>camera_shake_list</code></td>
+      <td>装填明细关联键（旧列名 camera_shake_list）</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 91 · +2432</td>
+      <td class="meaning-cell">597F50 CSV91字符串 -&gt; +2432；59A070经5812E0在CWeaponBattleDetailTables+84的RELOAD子表按字符串键查询，值存至weapon+1988，未找到清零。A72C10子表虚表名称及5088E0读取互证。这不是镜头震动枚举，也不是CSV107单轮弹体数量；真实明细数值须回查wiki。</td>
+    </tr>
+    <tr>
+      <td><code>92</code></td>
+      <td><code>col92</code></td>
+      <td><code>col92</code></td>
+      <td>CSV col92 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 92</td>
+      <td class="meaning-cell">CSV col92 预留（sub_597F50 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>93</code></td>
+      <td><code>screen_flash_list</code></td>
+      <td><code>screen_flash_list</code></td>
+      <td>枚举/类别 —— 写名称</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 93</td>
+      <td class="meaning-cell">枚举/类别 —— 写名称（可选 0 个，见 `枚举表.md` `sub_402310`）<div class="enum-vals"> <a class="enum-conv-link" href="enums/sub_402310.html" title="CSV 窄串拷贝">↗ sub_402310</a></div></td>
+    </tr>
+    <tr>
+      <td><code>94</code></td>
+      <td><code>col94</code></td>
+      <td><code>col94</code></td>
+      <td>CSV col94 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 94</td>
+      <td class="meaning-cell">CSV col94 预留（sub_597F50 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>95</code></td>
+      <td><code>buff_effect_list</code></td>
+      <td><code>buff_effect_list</code></td>
+      <td>枚举/类别 —— 写名称</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 95</td>
+      <td class="meaning-cell">枚举/类别 —— 写名称（可选 0 个，见 `枚举表.md` `sub_402310`）<div class="enum-vals"> <a class="enum-conv-link" href="enums/sub_402310.html" title="CSV 窄串拷贝">↗ sub_402310</a></div></td>
+    </tr>
+    <tr>
+      <td><code>96</code></td>
+      <td><code>col96</code></td>
+      <td><code>col96</code></td>
+      <td>CSV col96 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 96</td>
+      <td class="meaning-cell">CSV col96 预留（sub_597F50 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>97</code></td>
+      <td><code>col97</code></td>
+      <td><code>col97</code></td>
+      <td>CSV col97 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 97</td>
+      <td class="meaning-cell">CSV col97 预留（sub_597F50 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>98</code></td>
+      <td><code>debuff_effect_list</code></td>
+      <td><code>debuff_effect_list</code></td>
+      <td>枚举/类别 —— 写名称</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 98</td>
+      <td class="meaning-cell">枚举/类别 —— 写名称（可选 0 个，见 `枚举表.md` `sub_402310`）<div class="enum-vals"> <a class="enum-conv-link" href="enums/sub_402310.html" title="CSV 窄串拷贝">↗ sub_402310</a></div></td>
+    </tr>
+    <tr>
+      <td><code>99</code></td>
+      <td><code>col99</code></td>
+      <td><code>col99</code></td>
+      <td>CSV col99 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 99</td>
+      <td class="meaning-cell">CSV col99 预留（sub_597F50 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>100</code></td>
+      <td><code>spawn_effect_list</code></td>
+      <td><code>spawn_effect_list</code></td>
+      <td>枚举/类别 —— 写名称</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 100</td>
+      <td class="meaning-cell">枚举/类别 —— 写名称（可选 0 个，见 `枚举表.md` `sub_402310`）<div class="enum-vals"> <a class="enum-conv-link" href="enums/sub_402310.html" title="CSV 窄串拷贝">↗ sub_402310</a></div></td>
+    </tr>
+    <tr>
+      <td><code>101</code></td>
+      <td><code>col101</code></td>
+      <td><code>col101</code></td>
+      <td>CSV col101 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 101</td>
+      <td class="meaning-cell">CSV col101 预留（sub_597F50 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>102</code></td>
+      <td><code>col102</code></td>
+      <td><code>col102</code></td>
+      <td>CSV col102 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 102</td>
+      <td class="meaning-cell">CSV col102 预留（sub_597F50 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>103</code></td>
+      <td><code>shield_absorb_rate</code></td>
+      <td><code>shield_absorb_rate</code></td>
+      <td>盾吸收率</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 103 · +2020 · 0x598e9c</td>
+      <td class="meaning-cell">SHIELD 复合参数第3项 float（col103→+2020；同 #36 SHIELD→+2020）</td>
+    </tr>
+    <tr>
+      <td><code>104</code></td>
+      <td><code>reload_type</code></td>
+      <td><code>reload_type</code></td>
+      <td>战斗弹匣容量（旧列名 reload_type）</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 104 · +2040 · 0x598eba</td>
+      <td class="meaning-cell">597F50 col104 -&gt; 57ECF0 编码 -&gt; +2040/+0x7F8；5083F0 通过 47A230 读取容量，50CC90 初始化装备槽计数；596F30 按是否非零设置 0x40000。数值须取 wiki 弾数第一项。</td>
+    </tr>
+    <tr>
+      <td><code>105</code></td>
+      <td><code>reload_param</code></td>
+      <td><code>reload_param</code></td>
+      <td>战斗备弹数量（旧列名 reload_param）</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 105 · +2048 · 0x598ee2</td>
+      <td class="meaning-cell">597F50 col105 -&gt; 40C8E0 编码 -&gt; +2048/+0x800；50C820 通过 40C740 读取备弹，50CC90 初始化装备槽，-1 为特殊无限分支。数值须取 wiki 弾数第二项。</td>
+    </tr>
+    <tr>
+      <td><code>106</code></td>
+      <td><code>reload_ammo_per_clip</code></td>
+      <td><code>reload_ammo_per_clip</code></td>
+      <td>攻击批次数量与回报减量（旧列名 reload_ammo_per_clip）</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 106 · +2056 · 0x598ef5</td>
+      <td class="meaning-cell">597F50 col106 -&gt; +2056；4F1FB0复制到控制器+4056，4F3310每次节拍减1并调用虚表+1192。6E1C90对GUN_SINGLE等按1/2/3/4选择发射模式图示20/30/40/50。4D1D40回报剩余弹数也减此值。不同攻击类型的本地扣弹与调用条件仍待核对；此批次数量不同于col107的每轮弹体数量。</td>
+    </tr>
+    <tr>
+      <td><code>107</code></td>
+      <td><code>reload_time</code></td>
+      <td><code>reload_time</code></td>
+      <td>单轮弹体创建数量（旧列名 reload_time）</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 107 · +2060 · 0x598f08</td>
+      <td class="meaning-cell">597F50 col107 -&gt; 57ECF0编码 -&gt; +2060；51B6C0以47A230解码值为循环上限创建弹体，0则不进入创建循环。5180D0/5185B0散布分支也按此数量分配角度。不是装填秒数；5088E0读取的装填参数来自+1988，经59A070从WEAPON_BATTLE_DETAIL关联。双枪、霰弹和分时连射不能仅凭wiki模式文字等同为此列。</td>
+    </tr>
+    <tr>
+      <td><code>108</code></td>
+      <td><code>lockon_acquire_range</code></td>
+      <td><code>lockon_acquire_range</code></td>
+      <td>锁定捕获距离</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 108 · +2068 · 0x598f30</td>
+      <td class="meaning-cell">锁定捕获距离米（col108→+2068；max_lock_count 前置 float 组）</td>
+    </tr>
+    <tr>
+      <td><code>109</code></td>
+      <td><code>lockon_track_range</code></td>
+      <td><code>lockon_track_range</code></td>
+      <td>锁定跟踪距离</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 109 · +2072 · 0x598f3e</td>
+      <td class="meaning-cell">锁定维持/跟踪距离米（col109→+2072）</td>
+    </tr>
+    <tr>
+      <td><code>110</code></td>
+      <td><code>homing_grenade_flag</code></td>
+      <td><code>homing_grenade_flag</code></td>
+      <td>诱导榴弹标志</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 110 · +2228 · 0x598f47</td>
+      <td class="meaning-cell">标志位 @+8B4h bit4（col110 非零置位；配合 col120-122 诱导弹道）</td>
+    </tr>
+    <tr>
+      <td><code>111</code></td>
+      <td><code>lockon_cone_deg</code></td>
+      <td><code>lockon_cone_deg</code></td>
+      <td>锁定锥角</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 111 · +2076 · 0x598f6a</td>
+      <td class="meaning-cell">锁定捕获锥角/FOV（col111→+2076 float）</td>
+    </tr>
+    <tr>
+      <td><code>112</code></td>
+      <td><code>max_lock_count</code></td>
+      <td><code>max_lock_count</code></td>
+      <td>max_lock_count</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 112 · 0x598f7b</td>
+      <td class="meaning-cell">max_lock_count： sub_597F50 0x598f7b</td>
+    </tr>
+    <tr>
+      <td><code>113</code></td>
+      <td><code>col113</code></td>
+      <td><code>col113</code></td>
+      <td>CSV col113 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 113</td>
+      <td class="meaning-cell">CSV col113 预留（sub_597F50 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>114</code></td>
+      <td><code>full_lockon_flag</code></td>
+      <td><code>full_lockon_flag</code></td>
+      <td>全向锁定标志</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 114 · +2228 · 0x598f81</td>
+      <td class="meaning-cell">标志位 @+8B4h bit7（col114 非零置位 @+2228）</td>
+    </tr>
+    <tr>
+      <td><code>115</code></td>
+      <td><code>lockon_filter_flags</code></td>
+      <td><code>lockon_filter_flags</code></td>
+      <td>锁定过滤</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 115 · +2084 · 0x598fab</td>
+      <td class="meaning-cell">锁定目标过滤位（col115→+2084）</td>
+    </tr>
+    <tr>
+      <td><code>116</code></td>
+      <td><code>lockon_priority</code></td>
+      <td><code>lockon_priority</code></td>
+      <td>锁定优先级</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 116 · +2088 · 0x598fb1</td>
+      <td class="meaning-cell">多目标锁定时优先级（col116→+2088）</td>
+    </tr>
+    <tr>
+      <td><code>117</code></td>
+      <td><code>lockon_break_threshold</code></td>
+      <td><code>lockon_break_threshold</code></td>
+      <td>锁定丢失阈值</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 117 · +2092 · 0x598fc2</td>
+      <td class="meaning-cell">锁定丢失/重捕获阈值（col117→+2092）</td>
+    </tr>
+    <tr>
+      <td><code>118</code></td>
+      <td><code>projectile_launch_angle</code></td>
+      <td><code>projectile_launch_angle</code></td>
+      <td>发射仰角</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 118 · +2096 · 0x598fd5</td>
+      <td class="meaning-cell">曲射/榴弹发射仰角（col118→+2096）</td>
+    </tr>
+    <tr>
+      <td><code>119</code></td>
+      <td><code>projectile_launch_speed</code></td>
+      <td><code>projectile_launch_speed</code></td>
+      <td>发射初速</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 119 · +2100 · 0x598fe3</td>
+      <td class="meaning-cell">曲射弹道初速（col119→+2100）</td>
+    </tr>
+    <tr>
+      <td><code>120</code></td>
+      <td><code>grenade_arc_peak</code></td>
+      <td><code>grenade_arc_peak</code></td>
+      <td>榴弹弧顶</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 120 · +2104 · 0x598ff1</td>
+      <td class="meaning-cell">榴弹弧顶高度/弧度（col120→+2104；sub_596F30 诱导榴弹三元组）</td>
+    </tr>
+    <tr>
+      <td><code>121</code></td>
+      <td><code>grenade_homing_strength</code></td>
+      <td><code>grenade_homing_strength</code></td>
+      <td>榴弹诱导强度</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 121 · +2108 · 0x598fff</td>
+      <td class="meaning-cell">榴弹诱导强度（col121→+2108；sub_596F30 与 col120/122 联动）</td>
+    </tr>
+    <tr>
+      <td><code>122</code></td>
+      <td><code>grenade_gravity_scale</code></td>
+      <td><code>grenade_gravity_scale</code></td>
+      <td>榴弹重力缩放</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 122 · +2112 · 0x59900d</td>
+      <td class="meaning-cell">榴弹重力/下落缩放（col122→+2112；sub_596F30 诱导榴弹三元组）</td>
+    </tr>
+    <tr>
+      <td><code>123</code></td>
+      <td><code>flag_bit_123</code></td>
+      <td><code>flag_bit_123</code></td>
+      <td>flag_bit_123</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 123 · +2229 · 0x59902c</td>
+      <td class="meaning-cell">flag_bit_123： sub_597F50 mem+2229 0x59902c</td>
+    </tr>
+    <tr>
+      <td><code>124</code></td>
+      <td><code>flag_bit_124</code></td>
+      <td><code>flag_bit_124</code></td>
+      <td>flag_bit_124</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 124 · +2229 · 0x59904c</td>
+      <td class="meaning-cell">flag_bit_124： sub_597F50 mem+2229 0x59904c</td>
+    </tr>
+    <tr>
+      <td><code>125</code></td>
+      <td><code>aim_mode</code></td>
+      <td><code>aim_mode</code></td>
+      <td>aim_mode</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 125 · 0x599055</td>
+      <td class="meaning-cell">aim_mode： sub_597F50 0x599055</td>
+    </tr>
+    <tr>
+      <td><code>126</code></td>
+      <td><code>status_duration_sec</code></td>
+      <td><code>status_duration_sec</code></td>
+      <td>状态持续时间</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 126 · +2116 · 0x5990a2</td>
+      <td class="meaning-cell">附加状态持续秒（col126→+2116；col128 status_effect 前置）</td>
+    </tr>
+    <tr>
+      <td><code>127</code></td>
+      <td><code>status_radius_m</code></td>
+      <td><code>status_radius_m</code></td>
+      <td>状态作用半径</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 127 · +2120 · 0x5990b8</td>
+      <td class="meaning-cell">附加状态作用半径米（col127→+2120）</td>
+    </tr>
+    <tr>
+      <td><code>128</code></td>
+      <td><code>status_effect</code></td>
+      <td><code>status_effect</code></td>
+      <td>附加状态</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 128 · +2124 · 0x5990ce</td>
+      <td class="meaning-cell">RADAR_JAMMING/SLOW/DEBUFF 等（sub_596D50→+2124）<div class="enum-vals"><a class="enum-chip" href="enums/sub_596d50.html#v-RADAR_JAMMING" title="雷达干扰"><code>RADAR_JAMMING</code>=1<span class="enum-zh">雷达干扰</span></a> <a class="enum-chip" href="enums/sub_596d50.html#v-SHORT" title="SHORT（短距/短管）"><code>SHORT</code>=2<span class="enum-zh">SHORT（短距/短管）</span></a> <a class="enum-chip" href="enums/sub_596d50.html#v-FLASHBANG" title="FLASHBANG（闪光弹）"><code>FLASHBANG</code>=3<span class="enum-zh">FLASHBANG（闪光弹）</span></a> <a class="enum-chip" href="enums/sub_596d50.html#v-SC_JAMMING_A" title="Sc干扰A"><code>SC_JAMMING_A</code>=4<span class="enum-zh">Sc干扰A</span></a> <a class="enum-chip" href="enums/sub_596d50.html#v-SC_JAMMING_B" title="Sc干扰B"><code>SC_JAMMING_B</code>=5<span class="enum-zh">Sc干扰B</span></a> <a class="enum-chip" href="enums/sub_596d50.html#v-BLAZING" title="BLAZING（炽热/高热点）"><code>BLAZING</code>=6<span class="enum-zh">BLAZING（炽热/高热点）</span></a> <a class="enum-chip" href="enums/sub_596d50.html#v-SLOW" title="SLOW（慢速）"><code>SLOW</code>=7<span class="enum-zh">SLOW（慢速）</span></a> <a class="enum-chip" href="enums/sub_596d50.html#v-DEBUFF" title="DEBUFF（减益效果）"><code>DEBUFF</code>=9<span class="enum-zh">DEBUFF（减益效果）</span></a> <a class="enum-chip" href="enums/sub_596d50.html#v-DEBUFF_ATK" title="DEBUFF·攻击"><code>DEBUFF_ATK</code>=10<span class="enum-zh">DEBUFF·攻击</span></a> <a class="enum-chip" href="enums/sub_596d50.html#v-BUFF_DEF" title="Buff·防御"><code>BUFF_DEF</code>=11<span class="enum-zh">Buff·防御</span></a> <a class="enum-chip" href="enums/sub_596d50.html#v-GN_FANG_A_SLOW" title="GN_FANG_A_SLOW（GN 龙牙 A·慢速）"><code>GN_FANG_A_SLOW</code>=12<span class="enum-zh">GN_FANG_A_SLOW（GN 龙牙 A·慢速）</span></a> <a class="enum-chip" href="enums/sub_596d50.html#v-GN_FANG_B_SLOW" title="GN_FANG_B_SLOW（GN 龙牙 B·慢速）"><code>GN_FANG_B_SLOW</code>=13<span class="enum-zh">GN_FANG_B_SLOW（GN 龙牙 B·慢速）</span></a> <a class="enum-conv-link" href="enums/sub_596d50.html" title="锁定状态">↗ sub_596D50</a> <span class="muted">…共 15 项</span></div></td>
+    </tr>
+    <tr>
+      <td><code>129</code></td>
+      <td><code>status_effect_power</code></td>
+      <td><code>status_effect_power</code></td>
+      <td>状态效果强度</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 129 · +2128 · 0x5990ec</td>
+      <td class="meaning-cell">附加状态效果强度倍率（col129→+2128；col128 枚举配套）</td>
+    </tr>
+    <tr>
+      <td><code>130</code></td>
+      <td><code>col130</code></td>
+      <td><code>col130</code></td>
+      <td>CSV col130 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 130</td>
+      <td class="meaning-cell">CSV col130 预留（sub_597F50 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>131</code></td>
+      <td><code>ui_stat_display_id</code></td>
+      <td><code>ui_stat_display_id</code></td>
+      <td>UI 数值展示</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 131 · +2144 · 0x599103</td>
+      <td class="meaning-cell">武器面板数值展示样式 ID（col131→+2144）</td>
+    </tr>
+    <tr>
+      <td><code>132</code></td>
+      <td><code>display_mode</code></td>
+      <td><code>display_mode</code></td>
+      <td>display_mode</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 132 · 0x599109</td>
+      <td class="meaning-cell">display_mode： sub_597F50 0x599109</td>
+    </tr>
+    <tr>
+      <td><code>133</code></td>
+      <td><code>display_overlay_mode</code></td>
+      <td><code>display_overlay_mode</code></td>
+      <td>展示叠加模式</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 133 · 0x599128</td>
+      <td class="meaning-cell">UI 展示叠加模式 1..11（col133→+2229/+2230 位编码；sub_597F50 switch）</td>
+    </tr>
+    <tr>
+      <td><code>134</code></td>
+      <td><code>variant_id_hi_lo</code></td>
+      <td><code>variant_id_hi_lo</code></td>
+      <td>变体 ID 高段低32</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 134 · +32 · 0x5991f3</td>
+      <td class="meaning-cell">变体 i64 高段低 32（col134→+32；与 col135 成对）</td>
+    </tr>
+    <tr>
+      <td><code>135</code></td>
+      <td><code>variant_id_hi_hi</code></td>
+      <td><code>variant_id_hi_hi</code></td>
+      <td>变体 ID 高段高32</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 135 · +36 · 0x599211</td>
+      <td class="meaning-cell">变体 i64 高段高 32（col135→+36）</td>
+    </tr>
+    <tr>
+      <td><code>136</code></td>
+      <td><code>tag_list</code></td>
+      <td><code>tag_list</code></td>
+      <td>枚举/类别 —— 写名称</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 136</td>
+      <td class="meaning-cell">枚举/类别 —— 写名称（可选 0 个，见 `枚举表.md` `sub_402310`）<div class="enum-vals"> <a class="enum-conv-link" href="enums/sub_402310.html" title="CSV 窄串拷贝">↗ sub_402310</a></div></td>
+    </tr>
+    <tr>
+      <td><code>137</code></td>
+      <td><code>melee_shield_subtype_alt</code></td>
+      <td><code>melee_shield_subtype_alt</code></td>
+      <td>同 col15 系</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 137 · +2224 · 0x59925b</td>
+      <td class="meaning-cell">同 col15 系（`sub_596990`，16 值，见上）<div class="enum-vals"><a class="enum-chip" href="enums/sub_596990.html#v-WRESTLE" title="格斗"><code>WRESTLE</code>=20<span class="enum-zh">格斗</span></a> <a class="enum-chip" href="enums/sub_596990.html#v-WRESTLE2" title="WRESTLE2（格斗 2）"><code>WRESTLE2</code>=21<span class="enum-zh">WRESTLE2（格斗 2）</span></a> <a class="enum-chip" href="enums/sub_596990.html#v-SHIELD" title="护盾"><code>SHIELD</code>=30<span class="enum-zh">护盾</span></a> <a class="enum-chip" href="enums/sub_596990.html#v-SHIELD2" title="SHIELD2（护盾 2）"><code>SHIELD2</code>=31<span class="enum-zh">SHIELD2（护盾 2）</span></a> <a class="enum-chip" href="enums/sub_596990.html#v-ATTACH_SHIELD" title="ATTACH·护盾/盾战"><code>ATTACH_SHIELD</code>=32<span class="enum-zh">ATTACH·护盾/盾战</span></a> <a class="enum-chip" href="enums/sub_596990.html#v-SHOT_SHIELD" title="Shot·护盾/盾战"><code>SHOT_SHIELD</code>=33<span class="enum-zh">Shot·护盾/盾战</span></a> <a class="enum-chip" href="enums/sub_596990.html#v-SHOTGUN" title="霰弹枪"><code>SHOTGUN</code>=2<span class="enum-zh">霰弹枪</span></a> <a class="enum-chip" href="enums/sub_596990.html#v-ONEHAND_SHOT" title="单手·Shot"><code>ONEHAND_SHOT</code>=3<span class="enum-zh">单手·Shot</span></a> <a class="enum-chip" href="enums/sub_596990.html#v-SHOLDER_SHOT" title="肩扛·Shot"><code>SHOLDER_SHOT</code>=4<span class="enum-zh">肩扛·Shot</span></a> <a class="enum-chip" href="enums/sub_596990.html#v-TWOHAND_SHOT" title="双手·Shot"><code>TWOHAND_SHOT</code>=5<span class="enum-zh">双手·Shot</span></a> <a class="enum-chip" href="enums/sub_596990.html#v-TWOHAND_SHOT2" title="双手·SHOT2"><code>TWOHAND_SHOT2</code>=8<span class="enum-zh">双手·SHOT2</span></a> <a class="enum-chip" href="enums/sub_596990.html#v-SPECIAL_SHOT" title="特殊·Shot"><code>SPECIAL_SHOT</code>=6<span class="enum-zh">特殊·Shot</span></a> <a class="enum-conv-link" href="enums/sub_596990.html" title="格斗细分类">↗ sub_596990</a> <span class="muted">…共 16 项</span></div></td>
+    </tr>
+    <tr>
+      <td><code>138</code></td>
+      <td><code>unknown_list_138</code></td>
+      <td><code>unknown_list_138</code></td>
+      <td>枚举/类别 —— 写名称</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 138</td>
+      <td class="meaning-cell">枚举/类别 —— 写名称（可选 0 个，见 `枚举表.md` `sub_402310`）<div class="enum-vals"> <a class="enum-conv-link" href="enums/sub_402310.html" title="CSV 窄串拷贝">↗ sub_402310</a></div></td>
+    </tr>
+    <tr>
+      <td><code>139</code></td>
+      <td><code>projectile_setting_id</code></td>
+      <td><code>projectile_setting_id</code></td>
+      <td>弹道设置 ID</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 139 · +2208 · 0x5992b6</td>
+      <td class="meaning-cell">关联弹道/发射物设置 ID（col139→+2208）</td>
+    </tr>
+    <tr>
+      <td><code>140</code></td>
+      <td><code>spawn_offset_x</code></td>
+      <td><code>spawn_offset_x</code></td>
+      <td>生成点 X 偏移</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 140 · +2212 · 0x5992c7</td>
+      <td class="meaning-cell">弹丸/特效生成点 X 偏移（col140→+2212）</td>
+    </tr>
+    <tr>
+      <td><code>141</code></td>
+      <td><code>spawn_offset_y</code></td>
+      <td><code>spawn_offset_y</code></td>
+      <td>生成点 Y 偏移</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 141 · +2216 · 0x5992d8</td>
+      <td class="meaning-cell">弹丸/特效生成点 Y 偏移（col141→+2216）</td>
+    </tr>
+    <tr>
+      <td><code>142</code></td>
+      <td><code>col142</code></td>
+      <td><code>col142</code></td>
+      <td>CSV col142 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 142</td>
+      <td class="meaning-cell">CSV col142 预留（sub_597F50 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>143</code></td>
+      <td><code>col143</code></td>
+      <td><code>col143</code></td>
+      <td>CSV col143 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 143</td>
+      <td class="meaning-cell">CSV col143 预留（sub_597F50 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>144</code></td>
+      <td><code>col144</code></td>
+      <td><code>col144</code></td>
+      <td>CSV col144 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 144</td>
+      <td class="meaning-cell">CSV col144 预留（sub_597F50 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>145</code></td>
+      <td><code>spawn_offset_z</code></td>
+      <td><code>spawn_offset_z</code></td>
+      <td>生成点 Z 偏移</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 145 · +2220 · 0x5992f1</td>
+      <td class="meaning-cell">弹丸/特效生成点 Z 偏移（col145→+2220）</td>
+    </tr>
+    <tr>
+      <td><code>146</code></td>
+      <td><code>special_effect_secondary</code></td>
+      <td><code>special_effect_secondary</code></td>
+      <td>同 col146 二次读取</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 146 · +2140 · 0x599337</td>
+      <td class="meaning-cell">同 col146 二次读取（sub_596E40）<div class="enum-vals"><a class="enum-chip" href="enums/sub_596d50.html#v-RADAR_JAMMING" title="雷达干扰"><code>RADAR_JAMMING</code>=1<span class="enum-zh">雷达干扰</span></a> <a class="enum-chip" href="enums/sub_596d50.html#v-SHORT" title="SHORT（短距/短管）"><code>SHORT</code>=2<span class="enum-zh">SHORT（短距/短管）</span></a> <a class="enum-chip" href="enums/sub_596d50.html#v-FLASHBANG" title="FLASHBANG（闪光弹）"><code>FLASHBANG</code>=3<span class="enum-zh">FLASHBANG（闪光弹）</span></a> <a class="enum-chip" href="enums/sub_596d50.html#v-SC_JAMMING_A" title="Sc干扰A"><code>SC_JAMMING_A</code>=4<span class="enum-zh">Sc干扰A</span></a> <a class="enum-chip" href="enums/sub_596d50.html#v-SC_JAMMING_B" title="Sc干扰B"><code>SC_JAMMING_B</code>=5<span class="enum-zh">Sc干扰B</span></a> <a class="enum-chip" href="enums/sub_596d50.html#v-BLAZING" title="BLAZING（炽热/高热点）"><code>BLAZING</code>=6<span class="enum-zh">BLAZING（炽热/高热点）</span></a> <a class="enum-chip" href="enums/sub_596d50.html#v-SLOW" title="SLOW（慢速）"><code>SLOW</code>=7<span class="enum-zh">SLOW（慢速）</span></a> <a class="enum-chip" href="enums/sub_596d50.html#v-DEBUFF" title="DEBUFF（减益效果）"><code>DEBUFF</code>=9<span class="enum-zh">DEBUFF（减益效果）</span></a> <a class="enum-chip" href="enums/sub_596d50.html#v-DEBUFF_ATK" title="DEBUFF·攻击"><code>DEBUFF_ATK</code>=10<span class="enum-zh">DEBUFF·攻击</span></a> <a class="enum-chip" href="enums/sub_596d50.html#v-BUFF_DEF" title="Buff·防御"><code>BUFF_DEF</code>=11<span class="enum-zh">Buff·防御</span></a> <a class="enum-chip" href="enums/sub_596d50.html#v-GN_FANG_A_SLOW" title="GN_FANG_A_SLOW（GN 龙牙 A·慢速）"><code>GN_FANG_A_SLOW</code>=12<span class="enum-zh">GN_FANG_A_SLOW（GN 龙牙 A·慢速）</span></a> <a class="enum-chip" href="enums/sub_596d50.html#v-GN_FANG_B_SLOW" title="GN_FANG_B_SLOW（GN 龙牙 B·慢速）"><code>GN_FANG_B_SLOW</code>=13<span class="enum-zh">GN_FANG_B_SLOW（GN 龙牙 B·慢速）</span></a> <a class="enum-conv-link" href="enums/sub_596d50.html" title="锁定状态">↗ sub_596D50</a> <span class="muted">…共 15 项</span></div></td>
+    </tr>
+    <tr>
+      <td><code>147</code></td>
+      <td><code>damage_field_burst_cap</code></td>
+      <td><code>damage_field_burst_cap</code></td>
+      <td>伤害场上限修正</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_597F50</code></td>
+      <td class="muted">csv 147 · +2136 · 0x59933d</td>
+      <td class="meaning-cell">fire_mode=DAMAGE_FIELD_GUN(24) 时连射上限修正（col147→+2136）</td>
+    </tr></tbody>
+      </table>
+    </section>
+
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">生成于 2026-10-12 · 改 JSON 后重跑 build_site.py · HTML 只读</div>
+  </footer>
+</body>
+</html>

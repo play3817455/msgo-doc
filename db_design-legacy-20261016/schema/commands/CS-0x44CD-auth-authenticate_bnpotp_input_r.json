@@ -1,0 +1,297 @@
+{
+  "id": "CS-0x44CD-auth-authenticate_bnpotp_input_r",
+  "opcode": "0x44CD",
+  "direction": "CS",
+  "proto": "auth",
+  "proto_class": "auth_client",
+  "name": "authenticate_bnpotp_input_r",
+  "source_dir": "protocol_analysis/commands/CS-0x44CD-auth-authenticate_bnpotp_input_r",
+  "meta": {
+    "opcode": "`0x44CD`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`auth_client`",
+    "命令名": "`authenticate_bnpotp_input_r`",
+    "名字符串": "`)<-_proto_auth_client::send_authenticate_bnpotp_input_r(` @ `0xedb00c`",
+    "代码位置": "sub_B05190 @ `0xb05190`（`0xb05190`..`0xb0536c`）",
+    "opcode 写入证据": "`0xb05219`",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0x206`（518）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)`",
+    "配对命令（同 opcode 反向）": "见 §4.3 与其他命令的关联 / INDEX 反向表"
+  },
+  "handler": "sub_B05190",
+  "handler_va": "0xb05190",
+  "block": [
+    "0xB05190",
+    "0xB0536C"
+  ],
+  "name_str": ")<-_proto_auth_client::send_authenticate_bnpotp_input_r(",
+  "name_str_va": "0xedb00c",
+  "capacity": "0x206",
+  "capacity_va": null,
+  "closer_va": "0xB05290",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": null,
+  "wire": {
+    "length_expr": "var",
+    "fixed": false,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x206（容量记账口径，非线长）",
+    "field_count": 1,
+    "length_source": "field_sum",
+    "readme_conclusion": "结论：auth 阶段 BNPO OTP 输入：一段 OTP 明文串。",
+    "readme_close": "2 + 513(串槽) = 515 ≤ 容量 0x206=518（富余 3，上限场景）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发给 auth 协议类处理块（C→S 无 case 块）",
+      "enum": "0x44CD",
+      "evidence_va": [
+        "0xB05219"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "2",
+      "length": "var",
+      "wire_type": "bytes",
+      "name": "input_otp",
+      "meaning": "OTP 输入串（NUL 结尾）",
+      "purpose": "来源=入参 arg_0（@0xB0520A）；写线原语 `sub_B02B40`（串长 `edi` + 1B NUL）；经 `vt[0x58]` 发送，服务端据此校验动态口令",
+      "enum": "slot 预算 513（push 0x201@0xB0520E）",
+      "evidence_va": [
+        "0xB05222"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0x44CD（分发器 switch 选择子）",
+      "evidence_va": "0xB05219"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0x206 B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xB051D3"
+    },
+    {
+      "step": 3,
+      "kind": "write_scalar",
+      "detail": "input_otp：`bytes`（线长 var）—— OTP 输入串（NUL 结尾）",
+      "evidence_va": "0xB05222"
+    },
+    {
+      "step": 4,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xB05290"
+    },
+    {
+      "step": 5,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xB05306"
+    }
+  ],
+  "capabilities": [
+    "validate"
+  ],
+  "capabilities_derived": [
+    "unclassified"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:42",
+    "batch": 2,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 518,
+        "va": "0xB051D3",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB051D0",
+        "call_va": "0xB051D8"
+      },
+      "field_window": {
+        "start_va": "0xB05190",
+        "end_va": "0xB05290",
+        "guard": null,
+        "closer_or_commit_va": "0xB05290",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "input_otp",
+            "wire_type": "bytes",
+            "width": null,
+            "seq": 1,
+            "shape": "agg",
+            "evidence_va": [
+              "0xB05222"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB05219",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB05222",
+            "kind": "write",
+            "width": null,
+            "wire_type": "str",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB05266",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 0,
+        "checkable": 0,
+        "pairs": [],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB05219",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          },
+          {
+            "va": "0xB05222",
+            "kind": "write",
+            "width": null,
+            "wire_type": "str"
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB05190",
+          "0xB05290"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 2,
+          "capacity": 518,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB05222",
+              "kind": "write",
+              "name": ""
+            },
+            {
+              "va": "0xB05266",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）2 / 容量 0x206"
+        }
+      },
+      "closer": {
+        "va": "0xB05290",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xB05306",
+        "mov_va": "0xB052FB",
+        "host": "[edx+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "input_otp=\""
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0x44CD-auth-authenticate_bnpotp_input_r.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0xb05219",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xB05219"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "AuthenticateBnpotpInputR",
+      "role": "request",
+      "wire_length": "var",
+      "members": [
+        {
+          "name": "InputOtp",
+          "wire_type": "bytes",
+          "length": "var",
+          "field_ref": "input_otp",
+          "element": null,
+          "element_length": null,
+          "cap": null,
+          "count_field": null,
+          "count_field_source": null,
+          "note": "元素成员未建模（composites/ 无此结构），须以 IDA 复核补"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "fe3a7db5ae475939",
+  "check_fingerprint": "923d0852e83d5843"
+}

@@ -1,0 +1,472 @@
+{
+  "id": "recruit",
+  "title": "招募详情 recruit（80B 线 / 84B 槽）",
+  "domain": "lounge",
+  "domain_votes": {
+    "lounge": 1
+  },
+  "folded_composites": [
+    "recruit"
+  ],
+  "anchored_by": "",
+  "legacy_table": "tbl_recruit",
+  "row_key": [],
+  "views": [
+    {
+      "composite": "recruit",
+      "length": 80,
+      "memory_claim": 84,
+      "reader": "sub_B45400",
+      "printer": "sub_B4D840",
+      "commands": [
+        "SC-0x305D-lounge-party_recruit_detail_get_r"
+      ]
+    }
+  ],
+  "members": [
+    {
+      "name": "channel_id",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "频道 ID",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "recruit"
+        ]
+      },
+      "views": [
+        "recruit"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB4541A|B4D840",
+      "evidence_ref": {
+        "command": "SC-0x305D-lounge-party_recruit_detail_get_r",
+        "struct": "recruit",
+        "field": "channel_id",
+        "reader": "sub_B45400",
+        "printer": "sub_B4D840",
+        "protocol_path": "protocol_analysis/commands/SC-0x305D-lounge-party_recruit_detail_get_r/README.md",
+        "section": "§3"
+      },
+      "role": "ref",
+      "ref_kind": "fk",
+      "fk_target": "channel.channelid",
+      "ref_basis": "对象名命中 channel"
+    },
+    {
+      "name": "comment",
+      "wire_type": "bytes[61]",
+      "length": 61,
+      "meaning": "招募留言（定长 61B）",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "recruit"
+        ]
+      },
+      "views": [
+        "recruit"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB4546C|B4D840",
+      "evidence_ref": {
+        "command": "SC-0x305D-lounge-party_recruit_detail_get_r",
+        "struct": "recruit",
+        "field": "comment",
+        "reader": "sub_B45400",
+        "printer": "sub_B4D840",
+        "protocol_path": "protocol_analysis/commands/SC-0x305D-lounge-party_recruit_detail_get_r/README.md",
+        "section": "§3"
+      },
+      "role": "payload"
+    },
+    {
+      "name": "is_lock",
+      "wire_type": "i8",
+      "length": 1,
+      "meaning": "是否上锁",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "recruit"
+        ]
+      },
+      "views": [
+        "recruit"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB4549D|B4D840",
+      "evidence_ref": {
+        "command": "SC-0x305D-lounge-party_recruit_detail_get_r",
+        "struct": "recruit",
+        "field": "is_lock",
+        "reader": "sub_B45400",
+        "printer": "sub_B4D840",
+        "protocol_path": "protocol_analysis/commands/SC-0x305D-lounge-party_recruit_detail_get_r/README.md",
+        "section": "§3"
+      },
+      "role": "flag"
+    },
+    {
+      "name": "member_count",
+      "wire_type": "u16",
+      "length": 2,
+      "meaning": "队伍人数",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "recruit"
+        ]
+      },
+      "views": [
+        "recruit"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB45454|B4D840",
+      "evidence_ref": {
+        "command": "SC-0x305D-lounge-party_recruit_detail_get_r",
+        "struct": "recruit",
+        "field": "member_count",
+        "reader": "sub_B45400",
+        "printer": "sub_B4D840",
+        "protocol_path": "protocol_analysis/commands/SC-0x305D-lounge-party_recruit_detail_get_r/README.md",
+        "section": "§3"
+      },
+      "role": "counter"
+    },
+    {
+      "name": "party_id",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "队伍 ID",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "recruit"
+        ]
+      },
+      "views": [
+        "recruit"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB4542F|B4D840",
+      "evidence_ref": {
+        "command": "SC-0x305D-lounge-party_recruit_detail_get_r",
+        "struct": "recruit",
+        "field": "party_id",
+        "reader": "sub_B45400",
+        "printer": "sub_B4D840",
+        "protocol_path": "protocol_analysis/commands/SC-0x305D-lounge-party_recruit_detail_get_r/README.md",
+        "section": "§3"
+      },
+      "role": "ref",
+      "ref_kind": "fk",
+      "fk_target": "party.party_id",
+      "ref_basis": "人工裁决·外键：队伍根表已建（composites/party.json + new_objects.party，按世界一行 scope=[world_id]）：party_id 是它的身份列，recruit/recruits 的 party_id 指过来。ID 载体见 reviewed.batch_14_party_root（读侧 SC-0x5F18/0x5C61、写侧 CS-0x1F3E/0x16AE/0x6E16）。"
+    },
+    {
+      "name": "party_type",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "队伍类型（线上 +76 / 内存 +80）——★ 2026-09-25 定名（原名 `w76_u32` 是位置占位符），判据同 `remain_minutes`：① IDA `sub_B45400` 在此处 `push edi+50h; call sub_B02DD0`（u32 原语）；② live `game.recruits.party_type` 的注释是「队伍类型 [u32] SC-0xB43F@0xB454BE」，而同一读取器里 u32 的 call 点就是 `0xB454BE`（本复合体原先记的 `0xB454C9` 是 call 之后的 `setnz al`，属**记错一位**，本次一并改正）；③ `CS-0x645D-party_create` / `CS-0x9226-party_info_edit` 都送 `party_type`，`CS-0x0A73-party_recruit_list_get` 还按它过滤列表 ⇒ 它是队伍自身的属性。",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "recruit"
+        ]
+      },
+      "views": [
+        "recruit"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB454BE",
+      "evidence_ref": {
+        "command": "SC-0x305D-lounge-party_recruit_detail_get_r",
+        "struct": "recruit",
+        "field": "party_type",
+        "reader": "sub_B02DD0",
+        "printer": "sub_B4D840",
+        "protocol_path": "protocol_analysis/commands/SC-0x305D-lounge-party_recruit_detail_get_r/README.md",
+        "section": "§3 字段 11"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "pstat",
+      "wire_type": "i8",
+      "length": 1,
+      "meaning": "队伍状态",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "recruit"
+        ]
+      },
+      "views": [
+        "recruit"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB45487|B4D840",
+      "evidence_ref": {
+        "command": "SC-0x305D-lounge-party_recruit_detail_get_r",
+        "struct": "recruit",
+        "field": "pstat",
+        "reader": "sub_B45400",
+        "printer": "sub_B4D840",
+        "protocol_path": "protocol_analysis/commands/SC-0x305D-lounge-party_recruit_detail_get_r/README.md",
+        "section": "§3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "remain_minutes",
+      "wire_type": "u16",
+      "length": 2,
+      "meaning": "剩余分钟数（线上 +74 / 内存 +76）——★ 2026-09-25 定名（原名 `w74_u16` 是位置占位符）。三条独立证据把语义取死：① **同一读取器**：IDA 复看 `sub_B45400`，本字段的取值就是 `0xB454A3 push eax(edi+4Ch); 0xB454A4 call sub_B02DF0`，而列表项 `recruits` 用的是**同一个函数同一个取值点**（`reader: sub_B45400`，VA 亦为 `0xB454A4`），`recruits` 在该偏移已命名为 `remain_minutes`；② **旧库列注释**：live `game.recruits.remain_minutes` 的注释逐字为「剩余分钟数 [u16] SC-0xB43F-lounge-party_recruit_list_get_r@0xB454A4」——与 ① 的 VA 相同；③ **第三条命令同形**：`SC-0x1E49-party_enter_r` 的队伍体在 comment 之后同样是 u16 → u32 的尾对，`composites/party.json` 已把 u16 命名为 `remain_minutes`。⇒ 把占位名改成与 `recruits`/`party` 同名（同一字段三个命令口径一致）。",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "recruit"
+        ]
+      },
+      "views": [
+        "recruit"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB454A4",
+      "evidence_ref": {
+        "command": "SC-0x305D-lounge-party_recruit_detail_get_r",
+        "struct": "recruit",
+        "field": "remain_minutes",
+        "reader": "sub_B02DF0",
+        "printer": "sub_B4D840",
+        "protocol_path": "protocol_analysis/commands/SC-0x305D-lounge-party_recruit_detail_get_r/README.md",
+        "section": "§3 字段 11"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "troops",
+      "wire_type": "i8",
+      "length": 1,
+      "meaning": "势力",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "recruit"
+        ]
+      },
+      "views": [
+        "recruit"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB45441|B4D840",
+      "evidence_ref": {
+        "command": "SC-0x305D-lounge-party_recruit_detail_get_r",
+        "struct": "recruit",
+        "field": "troops",
+        "reader": "sub_B45400",
+        "printer": "sub_B4D840",
+        "protocol_path": "protocol_analysis/commands/SC-0x305D-lounge-party_recruit_detail_get_r/README.md",
+        "section": "§3"
+      },
+      "role": "attribute"
+    }
+  ],
+  "wire_body": "recruit",
+  "writes": [],
+  "reads": [
+    {
+      "command": "SC-0x305D-lounge-party_recruit_detail_get_r",
+      "op": "read",
+      "via": "recruit"
+    }
+  ],
+  "db_effects": [
+    {
+      "command": "SC-0x305D-lounge-party_recruit_detail_get_r",
+      "entity": "recruit",
+      "op": "read",
+      "fields": [
+        "recruit"
+      ],
+      "table_ref": "tbl_recruit"
+    },
+    {
+      "command": "SC-0x305D-lounge-party_recruit_detail_get_r",
+      "entity": "recruit",
+      "op": "read",
+      "fields": [
+        "recruit_detail"
+      ],
+      "table_ref": "tbl_recruit"
+    }
+  ],
+  "pk_members": [],
+  "pk_kind": "scope_only",
+  "is_root": true,
+  "identity": [],
+  "disposition_override": "DERIVED",
+  "disposition_reason": "**招募详情的读视图**（80B / 9 成员）：`SC-0x305D-party_recruit_detail_get_r` 的 `recruit` 与 `SC-0xB43F` 的列表项 `recruits` 是**同一读取器 `sub_B45400` 解出的同一个 80B 元素**（2026-09-25 复看 IDA：9 个字段的偏移、宽度、取值指令逐条相同，线 80B / 内存 84B；两张复合体只是同结构的两个用例：单发 vs 数组元素）。9 列全是**队伍自身属性**——`party_id` 指 `game.party`（身份列），其余 8 列（`channel_id`/`troops`/`member_count`/`comment`/`pstat`/`is_lock`/`remain_minutes`/`party_type`）本批已并进手写实体复合体 `composites/party.json`（逐列带命令 + VA）⇒ 行可派生、不建表。**0 个 CS 写方**；旧库那张 `game.recruit` 的行键是 `(world_id, pilot_id)`（`uq_game_recruit_world_pilot`）= **每个请求者一份的详情快照**（拿读方当行主，同一队伍被 N 个请求者存 N 份；旧表还漏了 2026-09-23 修长后才出现的 `remain_minutes`/`party_type` 两列）⇒ 退 `game.recruit`（见 retire_tables）。孪生裁决登记在 `twin_verdicts[\"recruit+recruits\"]`。",
+  "multi": false,
+  "array_parents": [],
+  "inline_parents": [],
+  "shape": "root",
+  "parent": "",
+  "parents": [],
+  "has_scope": false,
+  "disposition": "DERIVED",
+  "table": "",
+  "no_table_reason": "disposition=DERIVED（不建表）：**招募详情的读视图**（80B / 9 成员）：`SC-0x305D-party_recruit_detail_get_r` 的 `recruit` 与 `SC-0xB43F` 的列表项 `recruits` 是**同一读取器 `sub_B45400` 解出的同一个 80B 元素**（2026-09-25 复看 IDA：9 个字段的偏移、宽度、取值指令逐条相同，线 80B / 内存 84B；两张复合体只是同结构的两个用例：单发 vs 数组元素）。9 列全是**队伍自身属性**——`party_id` 指 `game.party`（身份列），其余 8 列（`channel_id`/`troops`/`member_count`/`comment`/`pstat`/`is_lock`/`remain_minutes`/`party_type`）本批已并进手写实体复合体 `composites/party.json`（逐列带命令 + VA）⇒ 行可派生、不建表。**0 个 CS 写方**；旧库那张 `game.recruit` 的行键是 `(world_id, pilot_id)`（`uq_game_recruit_world_pilot`）= **每个请求者一份的详情快照**（拿读方当行主，同一队伍被 N 个请求者存 N 份；旧表还漏了 2026-09-23 修长后才出现的 `remain_minutes`/`party_type` 两列）⇒ 退 `game.recruit`（见 retire_tables）。孪生裁决登记在 `twin_verdicts[\"recruit+recruits\"]`。",
+  "columns_excluded": [],
+  "columns": [
+    {
+      "member": "channel_id",
+      "column": "channel_id",
+      "role": "ref",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "频道 ID",
+      "evidence_va": "0xB4541A|B4D840",
+      "pk": false
+    },
+    {
+      "member": "comment",
+      "column": "comment",
+      "role": "payload",
+      "wire_type": "bytes[61]",
+      "synthetic": false,
+      "meaning": "招募留言（定长 61B）",
+      "evidence_va": "0xB4546C|B4D840",
+      "pk": false
+    },
+    {
+      "member": "is_lock",
+      "column": "is_lock",
+      "role": "flag",
+      "wire_type": "i8",
+      "synthetic": false,
+      "meaning": "是否上锁",
+      "evidence_va": "0xB4549D|B4D840",
+      "pk": false
+    },
+    {
+      "member": "member_count",
+      "column": "member_count",
+      "role": "counter",
+      "wire_type": "u16",
+      "synthetic": false,
+      "meaning": "队伍人数",
+      "evidence_va": "0xB45454|B4D840",
+      "pk": false
+    },
+    {
+      "member": "party_id",
+      "column": "party_id",
+      "role": "ref",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "队伍 ID",
+      "evidence_va": "0xB4542F|B4D840",
+      "pk": false
+    },
+    {
+      "member": "party_type",
+      "column": "party_type",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "队伍类型（线上 +76 / 内存 +80）——★ 2026-09-25 定名（原名 `w76_u32` 是位置占位符），判据同 `remain_minutes`：① IDA `sub_B45400` 在此处 `push edi+50h; call sub_B02DD0`（u32 原语）；② live `game.recruits.party_type` 的注释是「队伍类型 [u32] SC-0xB43F@0xB454BE」，而同一读取器里 u32 的 call 点就是 `0xB454BE`（本复合体原先记的 `0xB454C9` 是 call 之后的 `setnz al`，属**记错一位**，本次一并改正）；③ `CS-0x645D-party_create` / `CS-0x9226-party_info_edit` 都送 `party_type`，`CS-0x0A73-party_recruit_list_get` 还按它过滤列表 ⇒ 它是队伍自身的属性。",
+      "evidence_va": "0xB454BE",
+      "pk": false
+    },
+    {
+      "member": "pstat",
+      "column": "pstat",
+      "role": "attribute",
+      "wire_type": "i8",
+      "synthetic": false,
+      "meaning": "队伍状态",
+      "evidence_va": "0xB45487|B4D840",
+      "pk": false
+    },
+    {
+      "member": "remain_minutes",
+      "column": "remain_minutes",
+      "role": "attribute",
+      "wire_type": "u16",
+      "synthetic": false,
+      "meaning": "剩余分钟数（线上 +74 / 内存 +76）——★ 2026-09-25 定名（原名 `w74_u16` 是位置占位符）。三条独立证据把语义取死：① **同一读取器**：IDA 复看 `sub_B45400`，本字段的取值就是 `0xB454A3 push eax(edi+4Ch); 0xB454A4 call sub_B02DF0`，而列表项 `recruits` 用的是**同一个函数同一个取值点**（`reader: sub_B45400`，VA 亦为 `0xB454A4`），`recruits` 在该偏移已命名为 `remain_minutes`；② **旧库列注释**：live `game.recruits.remain_minutes` 的注释逐字为「剩余分钟数 [u16] SC-0xB43F-lounge-party_recruit_list_get_r@0xB454A4」——与 ① 的 VA 相同；③ **第三条命令同形**：`SC-0x1E49-party_enter_r` 的队伍体在 comment 之后同样是 u16 → u32 的尾对，`composites/party.json` 已把 u16 命名为 `remain_minutes`。⇒ 把占位名改成与 `recruits`/`party` 同名（同一字段三个命令口径一致）。",
+      "evidence_va": "0xB454A4",
+      "pk": false
+    },
+    {
+      "member": "troops",
+      "column": "troops",
+      "role": "attribute",
+      "wire_type": "i8",
+      "synthetic": false,
+      "meaning": "势力",
+      "evidence_va": "0xB45441|B4D840",
+      "pk": false
+    }
+  ],
+  "columns_expected": 9,
+  "keys": {
+    "scope": [
+      "world_id",
+      "pilot_id"
+    ],
+    "own": [],
+    "inherited": [],
+    "primary_key": [
+      "world_id",
+      "pilot_id"
+    ],
+    "pk_kind": "scope_only",
+    "children": [],
+    "nested": [],
+    "child_key": [
+      "elem_index"
+    ]
+  },
+  "tables": [],
+  "links": []
+}

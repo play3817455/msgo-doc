@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CS-0x8898-battle-weapon_fire__damage_field · db_design</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <h1><a href="../index.html">db_design</a></h1>
+      <p class="header-note">唯一证据源：<code>protocol_analysis/</code></p>
+      <nav><a href="../index.html">首页</a>
+      <a href="../homing/index.html">归位库</a>
+      <a href="../tables/index.html">旧表留档</a>
+      <a href="../commands/index.html" class="active">命令</a>
+      <a href="../cfg/index.html">配置表79</a>
+      <a href="../srv/index.html">服务端配置</a>
+      <a href="../asm-audit/index.html">ASM 审计</a>
+      <a href="../oracle-audit/index.html">Oracle 审计</a>
+      <a href="../entities/index.html">协议实体</a>
+      <a href="../fields/index.html">字段索引</a>
+      <a href="../relations.html">表关系</a></nav>
+    </div>
+  </header>
+  <main class="wrap">
+
+    <nav class="breadcrumb"><a href="index.html">命令</a> / <span><code>CS-0x8898-battle-weapon_fire__damage_field</code></span></nav>
+    <h2>CS-0x8898-battle-weapon_fire__damage_field
+      <span class="badge" style="background:#455a64">CS</span>
+      <span class="badge" style="background:#1565c0">battle</span>
+      <span class="badge" style="background:#1565c0">BEHAVIOR-DONE</span></h2>
+    
+      <dl class="asm-dl">
+        <dt>opcode</dt><dd><code>0x8898</code> · CS · battle</dd>
+        <dt>协议类</dt><dd><code>battle_client</code></dd>
+        <dt>处理函数</dt><dd><code>sub_B3AD30</code> <code>0xb3ad30</code></dd>
+        <dt>处理块</dt><dd>0xB3AD30 .. 0xB3B342</dd>
+        <dt>名字串</dt><dd><code>)&lt;-_proto_battle_client::send_weapon_fire__damage_field(</code> <code>0xee1080</code></dd>
+        <dt>声明容量</dt><dd>0x4A <span class="muted">—</span>
+          <span class="muted">（缓冲 claim，非线长）</span></dd>
+        <dt>长度闭合点</dt><dd><code>0xB3AFC1</code></dd>
+        <dt>去向槽</dt><dd><code>vt[0x58]</code> <span class="muted">—</span></dd>
+        <dt>配对 / 同族</dt><dd><a href="SC-0xA9E7-battle-weapon_fire__damage_field_r.html"><code>SC-0xA9E7-battle-weapon_fire__damage_field_r</code></a></dd>
+        <dt>证据目录</dt><dd><a href="../../../protocol_analysis/commands/CS-0x8898-battle-weapon_fire__damage_field/README.md" target="_blank">README.md</a> · <a href="../../../protocol_analysis/commands/CS-0x8898-battle-weapon_fire__damage_field/fields.csv" target="_blank">fields.csv</a> · <a href="../../../protocol_analysis/commands/CS-0x8898-battle-weapon_fire__damage_field/asm.md" target="_blank">asm.md</a> · <a href="../../../protocol_analysis/commands/CS-0x8898-battle-weapon_fire__damage_field/notes.md" target="_blank">notes.md</a></dd>
+      </dl>
+    <p class="muted">opcode 写入/分发证据 <code>0xb3adb1</code></p>
+
+    <section>
+      <h3>线长</h3>
+      <dl class="asm-dl">
+        <dt>报文体线长</dt><dd><code>4 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 1 + 1 + 4 + 4 + 1 + 2</code>
+          <span class="badge" style="background:#455a64">定长</span>
+          <span class="muted">来源 field_sum</span></dd>
+        <dt>变长驱动</dt><dd><span class="muted">—</span></dd>
+        <dt>负载字段数</dt><dd>18</dd>
+        <dt>容量口径</dt><dd class="muted">声明容量 0x4A（容量记账口径，非线长）</dd>
+        <dt>README 结论</dt><dd class="muted">结论：范围伤害场（damage field）开火上报：帧号 + 发射点 + 两组目标点 + 命中标记/特效/父手雷 id / 蓄力/AI。</dd>
+        <dt>README 闭合</dt><dd class="muted">2 + 4 + 2×11 + 1×2 + 4×2 + 1 + 2 = 41 ≤ 容量 0x4A = 74（富余 33）</dd>
+        
+      </dl>
+    </section>
+
+    <section>
+      <h3>包结构体</h3>
+      <p class="muted">由 <code>fields[]</code> 归并而成；线序即字段行序，可复用的聚合体只在
+        <code>element</code> 里引用 <code>schema/composites/</code>。</p>
+      
+      <div class="struct-block">
+        <h4><code>WeaponFireDamageField</code> <span class="muted">(request · 角色 request)</span>
+          <span class="muted">线长 4 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 1 + 1 + 4 + 4 + 1 + 2</span></h4>
+        <table class="srv-table">
+          <thead><tr><th>Go 成员</th><th>线类型</th><th>线长</th><th>字段引用</th><th>元素 / 计数</th></tr></thead>
+          <tbody><tr>
+          <td><code class="fname">FrameCount</code></td>
+          <td><code>u32</code></td>
+          <td><code>4</code></td>
+          <td>frame_count</td>
+          <td class="muted">—</td>
+        </tr><tr>
+          <td><code class="fname">LaunchX</code></td>
+          <td><code>u16</code></td>
+          <td><code>2</code></td>
+          <td>launch_x</td>
+          <td class="muted">—</td>
+        </tr><tr>
+          <td><code class="fname">LaunchY</code></td>
+          <td><code>u16</code></td>
+          <td><code>2</code></td>
+          <td>launch_y</td>
+          <td class="muted">—</td>
+        </tr><tr>
+          <td><code class="fname">LaunchZ</code></td>
+          <td><code>u16</code></td>
+          <td><code>2</code></td>
+          <td>launch_z</td>
+          <td class="muted">—</td>
+        </tr><tr>
+          <td><code class="fname">Target1X</code></td>
+          <td><code>u16</code></td>
+          <td><code>2</code></td>
+          <td>target1_x</td>
+          <td class="muted">—</td>
+        </tr><tr>
+          <td><code class="fname">Target1Y</code></td>
+          <td><code>u16</code></td>
+          <td><code>2</code></td>
+          <td>target1_y</td>
+          <td class="muted">—</td>
+        </tr><tr>
+          <td><code class="fname">Target1Z</code></td>
+          <td><code>u16</code></td>
+          <td><code>2</code></td>
+          <td>target1_z</td>
+          <td class="muted">—</td>
+        </tr><tr>
+          <td><code class="fname">Target2X</code></td>
+          <td><code>u16</code></td>
+          <td><code>2</code></td>
+          <td>target2_x</td>
+          <td class="muted">—</td>
+        </tr><tr>
+          <td><code class="fname">Target2Y</code></td>
+          <td><code>u16</code></td>
+          <td><code>2</code></td>
+          <td>target2_y</td>
+          <td class="muted">—</td>
+        </tr><tr>
+          <td><code class="fname">Target2Z</code></td>
+          <td><code>u16</code></td>
+          <td><code>2</code></td>
+          <td>target2_z</td>
+          <td class="muted">—</td>
+        </tr><tr>
+          <td><code class="fname">TargetEntId</code></td>
+          <td><code>u16</code></td>
+          <td><code>2</code></td>
+          <td>target_ent_id</td>
+          <td class="muted">—</td>
+        </tr><tr>
+          <td><code class="fname">Msec</code></td>
+          <td><code>u16</code></td>
+          <td><code>2</code></td>
+          <td>msec</td>
+          <td class="muted">—</td>
+        </tr><tr>
+          <td><code class="fname">Shot0Impact1</code></td>
+          <td><code>u8</code></td>
+          <td><code>1</code></td>
+          <td>shot0_impact1</td>
+          <td class="muted">—</td>
+        </tr><tr>
+          <td><code class="fname">FxOpt</code></td>
+          <td><code>u8</code></td>
+          <td><code>1</code></td>
+          <td>fx_opt</td>
+          <td class="muted">—</td>
+        </tr><tr>
+          <td><code class="fname">ImpactGrenadeId</code></td>
+          <td><code>u32</code></td>
+          <td><code>4</code></td>
+          <td>impact_grenade_id</td>
+          <td class="muted">—</td>
+        </tr><tr>
+          <td><code class="fname">ParentGrenadeId</code></td>
+          <td><code>u32</code></td>
+          <td><code>4</code></td>
+          <td>parent_grenade_id</td>
+          <td class="muted">—</td>
+        </tr><tr>
+          <td><code class="fname">ChargeLv</code></td>
+          <td><code>u8</code></td>
+          <td><code>1</code></td>
+          <td>charge_lv</td>
+          <td class="muted">—</td>
+        </tr><tr>
+          <td><code class="fname">AIEntId</code></td>
+          <td><code>u16</code></td>
+          <td><code>2</code></td>
+          <td>AI_ent_id</td>
+          <td class="muted">—</td>
+        </tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h3>字段解剖</h3>
+      <table class="wide">
+        <thead><tr>
+          <th>序</th><th>偏移</th><th>线长</th><th>线类型</th><th>字段名</th>
+          <th>含义</th><th>用途（来源/去向）</th><th>取值/枚举</th><th>去向</th><th>证据 VA</th><th>置信度</th>
+        </tr></thead>
+        <tbody><tr>
+          <td>0</td>
+          <td><code>0</code></td>
+          <td><code>2</code></td>
+          <td><code>u16</code></td>
+          <td><code class="fname">opcode</code></td>
+          <td>命令号</td>
+          <td>写入 buf+0，供服务端分发；无 case 块（C→S）</td>
+          <td class="muted">0x8898</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xb3adb1</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>1</td>
+          <td><code>2</code></td>
+          <td><code>4</code></td>
+          <td><code>u32</code></td>
+          <td><code class="fname">frame_count</code></td>
+          <td>帧计数</td>
+          <td>来源=入参 arg_0；内联 `mov [ecx],esi`；服务端据此同步时序</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB3ADBF</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>2</td>
+          <td><code>6</code></td>
+          <td><code>2</code></td>
+          <td><code>u16</code></td>
+          <td><code class="fname">launch_x</code></td>
+          <td>发射点 X</td>
+          <td>来源=入参 arg_4；内联 `mov [edx],ax`</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB3ADD8</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>3</td>
+          <td><code>8</code></td>
+          <td><code>2</code></td>
+          <td><code>u16</code></td>
+          <td><code class="fname">launch_y</code></td>
+          <td>发射点 Y</td>
+          <td>来源=入参 arg_8；`sub_B02DA0`</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB3ADE0</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>4</td>
+          <td><code>10</code></td>
+          <td><code>2</code></td>
+          <td><code>u16</code></td>
+          <td><code class="fname">launch_z</code></td>
+          <td>发射点 Z</td>
+          <td>来源=入参 arg_C；`sub_B02DA0`</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB3ADF9</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>5</td>
+          <td><code>12</code></td>
+          <td><code>2</code></td>
+          <td><code>u16</code></td>
+          <td><code class="fname">target1_x</code></td>
+          <td>目标点 1 X</td>
+          <td>来源=入参 arg_10；`sub_B02DA0`</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB3AE12</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>6</td>
+          <td><code>14</code></td>
+          <td><code>2</code></td>
+          <td><code>u16</code></td>
+          <td><code class="fname">target1_y</code></td>
+          <td>目标点 1 Y</td>
+          <td>来源=入参 arg_14；`sub_B02DA0`</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB3AE2B</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>7</td>
+          <td><code>16</code></td>
+          <td><code>2</code></td>
+          <td><code>u16</code></td>
+          <td><code class="fname">target1_z</code></td>
+          <td>目标点 1 Z</td>
+          <td>来源=入参 arg_18；`sub_B02DA0`</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB3AE44</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>8</td>
+          <td><code>18</code></td>
+          <td><code>2</code></td>
+          <td><code>u16</code></td>
+          <td><code class="fname">target2_x</code></td>
+          <td>目标点 2 X</td>
+          <td>来源=入参 arg_1C；`sub_B02DA0`</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB3AE5D</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>9</td>
+          <td><code>20</code></td>
+          <td><code>2</code></td>
+          <td><code>u16</code></td>
+          <td><code class="fname">target2_y</code></td>
+          <td>目标点 2 Y</td>
+          <td>来源=入参 arg_20；`sub_B02DA0`</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB3AE76</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>10</td>
+          <td><code>22</code></td>
+          <td><code>2</code></td>
+          <td><code>u16</code></td>
+          <td><code class="fname">target2_z</code></td>
+          <td>目标点 2 Z</td>
+          <td>来源=入参 arg_24；`sub_B02DA0`</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB3AE8F</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>11</td>
+          <td><code>24</code></td>
+          <td><code>2</code></td>
+          <td><code>u16</code></td>
+          <td><code class="fname">target_ent_id</code></td>
+          <td>目标实体 id</td>
+          <td>来源=入参 arg_28；`sub_B02DA0`</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB3AEA8</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>12</td>
+          <td><code>26</code></td>
+          <td><code>2</code></td>
+          <td><code>u16</code></td>
+          <td><code class="fname">msec</code></td>
+          <td>延时（毫秒）</td>
+          <td>来源=入参 arg_2C；`sub_B02DA0`</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB3AEC1</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>13</td>
+          <td><code>28</code></td>
+          <td><code>1</code></td>
+          <td><code>u8</code></td>
+          <td><code class="fname">shot0_impact1</code></td>
+          <td>0=发射 / 1=命中</td>
+          <td>来源=入参 arg_30；`sub_B061C0`(u8)</td>
+          <td class="muted">0/1</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB3AEDA</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>14</td>
+          <td><code>29</code></td>
+          <td><code>1</code></td>
+          <td><code>u8</code></td>
+          <td><code class="fname">fx_opt</code></td>
+          <td>特效选项位</td>
+          <td>来源=入参 arg_34；`sub_B061C0`(u8)</td>
+          <td class="muted">取值域 {0,1}（布尔：写侧调用点 @0x510E30 先调 sub_515690（包围盒/条件判定，只返回 0/1）再把它作为包装 sub_B026D0 第 7 实参送入装配器）</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB3AEF3</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>15</td>
+          <td><code>30</code></td>
+          <td><code>4</code></td>
+          <td><code>u32</code></td>
+          <td><code class="fname">impact_grenade_id</code></td>
+          <td>伤害场实体 id</td>
+          <td>来源=入参 arg_38；`sub_B02D80`(u32)</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB3AF0C</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>16</td>
+          <td><code>34</code></td>
+          <td><code>4</code></td>
+          <td><code>u32</code></td>
+          <td><code class="fname">parent_grenade_id</code></td>
+          <td>父手雷实体 id</td>
+          <td>来源=入参 arg_3C；`sub_B02D80`(u32)</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB3AF25</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>17</td>
+          <td><code>38</code></td>
+          <td><code>1</code></td>
+          <td><code>u8</code></td>
+          <td><code class="fname">charge_lv</code></td>
+          <td>蓄力等级</td>
+          <td>来源=入参 arg_40；`sub_B061C0`(u8)</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB3AF3E</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>18</td>
+          <td><code>39</code></td>
+          <td><code>2</code></td>
+          <td><code>u16</code></td>
+          <td><code class="fname">AI_ent_id</code></td>
+          <td>AI 实体 id</td>
+          <td>来源=入参 arg_44；`sub_B02DA0`</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB3AF57</code></td>
+          <td class="muted">确证</td>
+        </tr></tbody>
+      </table>
+    </section>
+
+    <section>
+      <h3>客户端行为</h3>
+      <table class="srv-table">
+        <thead><tr><th>步</th><th>类别</th><th>动作</th><th>证据 VA</th></tr></thead>
+        <tbody><tr>
+          <td>1</td>
+          <td><code>write_scalar</code></td>
+          <td>opcode 0x8898（分发器 switch 选择子）</td>
+          <td><code>0xB3ADB1</code></td>
+        </tr><tr>
+          <td>2</td>
+          <td><code>alloc</code></td>
+          <td>分配发送缓冲 0x4A B（`[X+78h]` 分配器 + `push IMM`）</td>
+          <td><code>0xB3AD7B</code></td>
+        </tr><tr>
+          <td>3</td>
+          <td><code>write_scalar</code></td>
+          <td>frame_count：`u32`（线长 4）—— 帧计数</td>
+          <td><code>0xB3ADBF</code></td>
+        </tr><tr>
+          <td>4</td>
+          <td><code>write_scalar</code></td>
+          <td>launch_x：`u16`（线长 2）—— 发射点 X</td>
+          <td><code>0xB3ADD8</code></td>
+        </tr><tr>
+          <td>5</td>
+          <td><code>write_scalar</code></td>
+          <td>launch_y：`u16`（线长 2）—— 发射点 Y</td>
+          <td><code>0xB3ADE0</code></td>
+        </tr><tr>
+          <td>6</td>
+          <td><code>write_scalar</code></td>
+          <td>launch_z：`u16`（线长 2）—— 发射点 Z</td>
+          <td><code>0xB3ADF9</code></td>
+        </tr><tr>
+          <td>7</td>
+          <td><code>write_scalar</code></td>
+          <td>target1_x：`u16`（线长 2）—— 目标点 1 X</td>
+          <td><code>0xB3AE12</code></td>
+        </tr><tr>
+          <td>8</td>
+          <td><code>write_scalar</code></td>
+          <td>target1_y：`u16`（线长 2）—— 目标点 1 Y</td>
+          <td><code>0xB3AE2B</code></td>
+        </tr><tr>
+          <td>9</td>
+          <td><code>write_scalar</code></td>
+          <td>target1_z：`u16`（线长 2）—— 目标点 1 Z</td>
+          <td><code>0xB3AE44</code></td>
+        </tr><tr>
+          <td>10</td>
+          <td><code>write_scalar</code></td>
+          <td>target2_x：`u16`（线长 2）—— 目标点 2 X</td>
+          <td><code>0xB3AE5D</code></td>
+        </tr><tr>
+          <td>11</td>
+          <td><code>write_scalar</code></td>
+          <td>target2_y：`u16`（线长 2）—— 目标点 2 Y</td>
+          <td><code>0xB3AE76</code></td>
+        </tr><tr>
+          <td>12</td>
+          <td><code>write_scalar</code></td>
+          <td>target2_z：`u16`（线长 2）—— 目标点 2 Z</td>
+          <td><code>0xB3AE8F</code></td>
+        </tr><tr>
+          <td>13</td>
+          <td><code>write_scalar</code></td>
+          <td>target_ent_id：`u16`（线长 2）—— 目标实体 id</td>
+          <td><code>0xB3AEA8</code></td>
+        </tr><tr>
+          <td>14</td>
+          <td><code>write_scalar</code></td>
+          <td>msec：`u16`（线长 2）—— 延时（毫秒）</td>
+          <td><code>0xB3AEC1</code></td>
+        </tr><tr>
+          <td>15</td>
+          <td><code>write_scalar</code></td>
+          <td>shot0_impact1：`u8`（线长 1）—— 0=发射 / 1=命中</td>
+          <td><code>0xB3AEDA</code></td>
+        </tr><tr>
+          <td>16</td>
+          <td><code>write_scalar</code></td>
+          <td>fx_opt：`u8`（线长 1）—— 特效选项位</td>
+          <td><code>0xB3AEF3</code></td>
+        </tr><tr>
+          <td>17</td>
+          <td><code>write_scalar</code></td>
+          <td>impact_grenade_id：`u32`（线长 4）—— 伤害场实体 id</td>
+          <td><code>0xB3AF0C</code></td>
+        </tr><tr>
+          <td>18</td>
+          <td><code>write_scalar</code></td>
+          <td>parent_grenade_id：`u32`（线长 4）—— 父手雷实体 id</td>
+          <td><code>0xB3AF25</code></td>
+        </tr><tr>
+          <td>19</td>
+          <td><code>write_scalar</code></td>
+          <td>charge_lv：`u8`（线长 1）—— 蓄力等级</td>
+          <td><code>0xB3AF3E</code></td>
+        </tr><tr>
+          <td>20</td>
+          <td><code>write_scalar</code></td>
+          <td>AI_ent_id：`u16`（线长 2）—— AI 实体 id</td>
+          <td><code>0xB3AF57</code></td>
+        </tr><tr>
+          <td>21</td>
+          <td><code>commit</code></td>
+          <td>提交/发送 `sub_B02FF0(buf)`：定长报文提交点</td>
+          <td><code>0xB3AFC1</code></td>
+        </tr><tr>
+          <td>22</td>
+          <td><code>send</code></td>
+          <td>去向 `vt[0x58](buf, 负载长度)`，实参 2 个</td>
+          <td><code>0xB3B2C7</code></td>
+        </tr></tbody>
+      </table>
+    </section>
+
+    <section>
+      <h3>能力</h3>
+      <span class="cap-chip">battle_action</span><div class="muted">命名学推断（非证据）：<span class="cap-chip cap-derived">battle</span></div>
+    </section>
+
+    <section>
+      <h3>DB 影响</h3>
+      <p class="muted">未补。CS 的 op 需服务端语义确认；SC 的 op 由去向槽 <code>vt[0xNNN]</code> 的实参决定。</p>
+    </section>
+
+    
+
+    <section>
+      <h3>汇编复核（IDA asm 为唯一权威）</h3>
+      
+      <dl class="asm-dl">
+        <dt>状态</dt><dd><span class="badge" style="background:#1565c0">BEHAVIOR-DONE</span></dd>
+        <dt>复核批次</dt><dd>18</dd>
+        <dt>复核时间</dt><dd>2026-09-30 15:25:47</dd>
+        <dt>提取器</dt><dd><code>tools/verify_commands_ida.py</code></dd>
+      </dl>
+      <table class="srv-table">
+        <thead><tr><th>检查项</th><th>键</th><th>结果</th></tr></thead>
+        <tbody><tr><td>容量指纹</td><td><code>capacity</code></td><td><code>{&quot;value&quot;: 74, &quot;va&quot;: &quot;0xB3AD7B&quot;, &quot;reg&quot;: &quot;edx&quot;, &quot;host&quot;: &quot;[eax+78h]&quot;, &quot;alloc_va&quot;: &quot;0xB3AD78&quot;, &quot;call_va&quot;: &quot;0xB3AD7D&quot;}</code></td></tr><tr><td>字段窗口</td><td><code>field_window</code></td><td><code>{&quot;start_va&quot;: &quot;0xB3AD30&quot;, &quot;end_va&quot;: &quot;0xB3AFC1&quot;, &quot;guard&quot;: null, &quot;closer_or_commit_va&quot;: &quot;0xB3AFC1&quot;, &quot;within_model_block&quot;: true, &quot;range_from&quot;: &quot;handler_func&quot;}</code></td></tr><tr><td>原语宽度</td><td><code>primitive_widths</code></td><td><code>{&quot;direction&quot;: &quot;CS&quot;, &quot;expected&quot;: [{&quot;name&quot;: &quot;frame_count&quot;, &quot;wire_type&quot;: &quot;u32&quot;, &quot;width&quot;: 4, &quot;seq&quot;: 1, &quot;shape&quot;: &quot;scalar&quot;, &quot;evidence_va&quot;: [&quot;0xB3ADBF&quot;]}, {&quot;name&quot;: &quot;launch_x&quot;, &quot;wire_type&quot;: &quot;u16&quot;, &quot;width&quot;: 2, &quot;seq&quot;: 2, &quot;shape&quot;: &quot;scalar&quot;, &quot;evidence_va&quot;: [&quot;0xB3ADD8&quot;]}, {&quot;name&quot;: &quot;launch_y&quot;, &quot;wire_type&quot;: &quot;u16&quot;, &quot;width&quot;: 2, &quot;seq&quot;: 3, &quot;shape&quot;: &quot;scalar&quot;, &quot;evidence_va&quot;: [&quot;0xB3ADE0&quot;]}, {&quot;name&quot;: &quot;launch_z&quot;, &quot;wire_type&quot;: &quot;u16&quot;, &quot;width&quot;: 2, &quot;seq&quot;: 4, &quot;shape&quot;: &quot;scalar&quot;, &quot;evidence_va&quot;: [&quot;0xB3ADF9&quot;]}, {&quot;name&quot;: &quot;target1_x&quot;, &quot;wire_type&quot;: &quot;u16&quot;, &quot;width&quot;: 2, &quot;seq&quot;: 5, &quot;shape&quot;: &quot;scalar&quot;, &quot;evidence_va&quot;: [&quot;0xB3AE12&quot;]}, {&quot;name&quot;: &quot;target1_y&quot;, &quot;wire_type&quot;: &quot;u16&quot;, &quot;width&quot;: 2, &quot;seq&quot;: 6, &quot;shape&quot;: &quot;scalar&quot;, &quot;evidence_va&quot;: [&quot;0xB3AE2B&quot;]}, {&quot;name&quot;: &quot;target1_z&quot;, &quot;wire_type&quot;: &quot;u16&quot;, &quot;width&quot;: 2, &quot;seq&quot;: 7, &quot;shape&quot;: &quot;scalar&quot;, &quot;evidence_va&quot;: [&quot;0xB3AE44&quot;]}, {&quot;name&quot;: &quot;target2_x&quot;, &quot;wire_type&quot;: &quot;u16&quot;, &quot;width&quot;: 2, &quot;seq&quot;: 8, &quot;shape&quot;: &quot;scalar&quot;, &quot;evidence_va&quot;: [&quot;0xB3AE5D&quot;]}, {&quot;name&quot;: &quot;target2_y&quot;, &quot;wire_type&quot;: &quot;u16&quot;, &quot;width&quot;: 2, &quot;seq&quot;: 9, &quot;shape&quot;: &quot;scalar&quot;, &quot;evidence_va&quot;: [&quot;0xB3AE76&quot;]}, {&quot;name&quot;: &quot;target2_z&quot;, &quot;wire_type&quot;: &quot;u16&quot;, &quot;width&quot;: 2, &quot;seq&quot;: 10, &quot;shape&quot;: &quot;scalar&quot;, &quot;evidence_va&quot;: [&quot;0xB3AE8F&quot;]}, {&quot;name&quot;: &quot;target_ent_id&quot;, &quot;wire_type&quot;: &quot;u16&quot;, &quot;width&quot;: 2, &quot;seq&quot;: 11, &quot;shape&quot;: &quot;scalar&quot;, &quot;evidence_va&quot;: [&quot;0xB3AEA8&quot;]}, {&quot;name&quot;: &quot;msec&quot;, &quot;wire_type&quot;: &quot;u16&quot;, &quot;width&quot;: 2, &quot;seq&quot;: 12, &quot;shape&quot;: &quot;scalar&quot;, &quot;evidence_va&quot;: [&quot;0xB3AEC1&quot;]}, {&quot;name&quot;: &quot;shot0_impact1&quot;, &quot;wire_type&quot;: &quot;u8&quot;, &quot;width&quot;: 1, &quot;seq&quot;: 13, &quot;shape&quot;: &quot;scalar&quot;, &quot;evidence_va&quot;: [&quot;0xB3AEDA&quot;]}, {&quot;name&quot;: &quot;fx_opt&quot;, &quot;wire_type&quot;: &quot;u8&quot;, &quot;width&quot;: 1, &quot;seq&quot;: 14, &quot;shape&quot;: &quot;scalar&quot;, &quot;evidence_va&quot;: [&quot;0xB3AEF3&quot;]}, {&quot;name&quot;: &quot;impact_grenade_id&quot;, &quot;wire_type&quot;: &quot;u32&quot;, &quot;width&quot;: 4, &quot;seq&quot;: 15, &quot;shape&quot;: &quot;scalar&quot;, &quot;evidence_va&quot;: [&quot;0xB3AF0C&quot;]}, {&quot;name&quot;: &quot;parent_grenade_id&quot;, &quot;wire_type&quot;: &quot;u32&quot;, &quot;width&quot;: 4, &quot;seq&quot;: 16, &quot;shape&quot;: &quot;scalar&quot;, &quot;evidence_va&quot;: [&quot;0xB3AF25&quot;]}, {&quot;name&quot;: &quot;charge_lv&quot;, &quot;wire_type&quot;: &quot;u8&quot;, &quot;width&quot;: 1, &quot;seq&quot;: 17, &quot;shape&quot;: &quot;scalar&quot;, &quot;evidence_va&quot;: [&quot;0xB3AF3E&quot;]}, {&quot;name&quot;: &quot;AI_ent_id&quot;, &quot;wire_type&quot;: &quot;u16&quot;, &quot;width&quot;: 2, &quot;seq&quot;: 18, &quot;shape&quot;: &quot;scalar&quot;, &quot;evidence_va&quot;: [&quot;0xB3AF57&quot;]}], &quot;actual&quot;: [{&quot;va&quot;: &quot;0xB3ADB1&quot;, &quot;kind&quot;: &quot;inline_store&quot;, &quot;width&quot;: 2, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: null, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB3ADBF&quot;, &quot;kind&quot;: &quot;inline_store&quot;, &quot;width&quot;: 4, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: null, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB3ADD8&quot;, &quot;kind&quot;: &quot;inline_store&quot;, &quot;width&quot;: 2, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: null, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB3ADE0&quot;, &quot;kind&quot;: &quot;write&quot;, &quot;width&quot;: 2, &quot;wire_type&quot;: &quot;u16&quot;, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: null, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB3ADF9&quot;, &quot;kind&quot;: &quot;write&quot;, &quot;width&quot;: 2, &quot;wire_type&quot;: &quot;u16&quot;, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: null, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB3AE12&quot;, &quot;kind&quot;: &quot;write&quot;, &quot;width&quot;: 2, &quot;wire_type&quot;: &quot;u16&quot;, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: null, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB3AE2B&quot;, &quot;kind&quot;: &quot;write&quot;, &quot;width&quot;: 2, &quot;wire_type&quot;: &quot;u16&quot;, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: null, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB3AE44&quot;, &quot;kind&quot;: &quot;write&quot;, &quot;width&quot;: 2, &quot;wire_type&quot;: &quot;u16&quot;, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: null, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB3AE5D&quot;, &quot;kind&quot;: &quot;write&quot;, &quot;width&quot;: 2, &quot;wire_type&quot;: &quot;u16&quot;, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: null, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB3AE76&quot;, &quot;kind&quot;: &quot;write&quot;, &quot;width&quot;: 2, &quot;wire_type&quot;: &quot;u16&quot;, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: null, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB3AE8F&quot;, &quot;kind&quot;: &quot;write&quot;, &quot;width&quot;: 2, &quot;wire_type&quot;: &quot;u16&quot;, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: null, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB3AEA8&quot;, &quot;kind&quot;: &quot;write&quot;, &quot;width&quot;: 2, &quot;wire_type&quot;: &quot;u16&quot;, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: null, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB3AEC1&quot;, &quot;kind&quot;: &quot;write&quot;, &quot;width&quot;: 2, &quot;wire_type&quot;: &quot;u16&quot;, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: null, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB3AEDA&quot;, &quot;kind&quot;: &quot;write&quot;, &quot;width&quot;: 1, &quot;wire_type&quot;: &quot;u8&quot;, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: null, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB3AEF3&quot;, &quot;kind&quot;: &quot;write&quot;, &quot;width&quot;: 1, &quot;wire_type&quot;: &quot;u8&quot;, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: null, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB3AF0C&quot;, &quot;kind&quot;: &quot;write&quot;, &quot;width&quot;: 4, &quot;wire_type&quot;: &quot;u32&quot;, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: null, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB3AF25&quot;, &quot;kind&quot;: &quot;write&quot;, &quot;width&quot;: 4, &quot;wire_type&quot;: &quot;u32&quot;, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: null, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB3AF3E&quot;, &quot;kind&quot;: &quot;write&quot;, &quot;width&quot;: 1, &quot;wire_type&quot;: &quot;u8&quot;, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: null, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB3AF57&quot;, &quot;kind&quot;: &quot;write&quot;, &quot;width&quot;: 2, &quot;wire_type&quot;: &quot;u16&quot;, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: null, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB3AF97&quot;, &quot;kind&quot;: &quot;composite&quot;, &quot;width&quot;: null, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;sub_B03020&quot;, &quot;consumed&quot;: null, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}], &quot;matched&quot;: 18, &quot;checkable&quot;: 18, &quot;pairs&quot;: [{&quot;field&quot;: &quot;frame_count&quot;, &quot;width&quot;: 4, &quot;shape&quot;: &quot;scalar&quot;, &quot;va&quot;: &quot;0xB3ADBF&quot;, &quot;kind&quot;: &quot;inline_store&quot;}, {&quot;field&quot;: &quot;launch_x&quot;, &quot;width&quot;: 2, &quot;shape&quot;: &quot;scalar&quot;, &quot;va&quot;: &quot;0xB3ADD8&quot;, &quot;kind&quot;: &quot;inline_store&quot;}, {&quot;field&quot;: &quot;launch_y&quot;, &quot;width&quot;: 2, &quot;shape&quot;: &quot;scalar&quot;, &quot;va&quot;: &quot;0xB3ADE0&quot;, &quot;kind&quot;: &quot;write&quot;}, {&quot;field&quot;: &quot;launch_z&quot;, &quot;width&quot;: 2, &quot;shape&quot;: &quot;scalar&quot;, &quot;va&quot;: &quot;0xB3ADF9&quot;, &quot;kind&quot;: &quot;write&quot;}, {&quot;field&quot;: &quot;target1_x&quot;, &quot;width&quot;: 2, &quot;shape&quot;: &quot;scalar&quot;, &quot;va&quot;: &quot;0xB3AE12&quot;, &quot;kind&quot;: &quot;write&quot;}, {&quot;field&quot;: &quot;target1_y&quot;, &quot;width&quot;: 2, &quot;shape&quot;: &quot;scalar&quot;, &quot;va&quot;: &quot;0xB3AE2B&quot;, &quot;kind&quot;: &quot;write&quot;}, {&quot;field&quot;: &quot;target1_z&quot;, &quot;width&quot;: 2, &quot;shape&quot;: &quot;scalar&quot;, &quot;va&quot;: &quot;0xB3AE44&quot;, &quot;kind&quot;: &quot;write&quot;}, {&quot;field&quot;: &quot;target2_x&quot;, &quot;width&quot;: 2, &quot;shape&quot;: &quot;scalar&quot;, &quot;va&quot;: &quot;0xB3AE5D&quot;, &quot;kind&quot;: &quot;write&quot;}, {&quot;field&quot;: &quot;target2_y&quot;, &quot;width&quot;: 2, &quot;shape&quot;: &quot;scalar&quot;, &quot;va&quot;: &quot;0xB3AE76&quot;, &quot;kind&quot;: &quot;write&quot;}, {&quot;field&quot;: &quot;target2_z&quot;, &quot;width&quot;: 2, &quot;shape&quot;: &quot;scalar&quot;, &quot;va&quot;: &quot;0xB3AE8F&quot;, &quot;kind&quot;: &quot;write&quot;}, {&quot;field&quot;: &quot;target_ent_id&quot;, &quot;width&quot;: 2, &quot;shape&quot;: &quot;scalar&quot;, &quot;va&quot;: &quot;0xB3AEA8&quot;, &quot;kind&quot;: &quot;write&quot;}, {&quot;field&quot;: &quot;msec&quot;, &quot;width&quot;: 2, &quot;shape&quot;: &quot;scalar&quot;, &quot;va&quot;: &quot;0xB3AEC1&quot;, &quot;kind&quot;: &quot;write&quot;}, {&quot;field&quot;: &quot;shot0_impact1&quot;, &quot;width&quot;: 1, &quot;shape&quot;: &quot;scalar&quot;, &quot;va&quot;: &quot;0xB3AEDA&quot;, &quot;kind&quot;: &quot;write&quot;}, {&quot;field&quot;: &quot;fx_opt&quot;, &quot;width&quot;: 1, &quot;shape&quot;: &quot;scalar&quot;, &quot;va&quot;: &quot;0xB3AEF3&quot;, &quot;kind&quot;: &quot;write&quot;}, {&quot;field&quot;: &quot;impact_grenade_id&quot;, &quot;width&quot;: 4, &quot;shape&quot;: &quot;scalar&quot;, &quot;va&quot;: &quot;0xB3AF0C&quot;, &quot;kind&quot;: &quot;write&quot;}, {&quot;field&quot;: &quot;parent_grenade_id&quot;, &quot;width&quot;: 4, &quot;shape&quot;: &quot;scalar&quot;, &quot;va&quot;: &quot;0xB3AF25&quot;, &quot;kind&quot;: &quot;write&quot;}, {&quot;field&quot;: &quot;charge_lv&quot;, &quot;width&quot;: 1, &quot;shape&quot;: &quot;scalar&quot;, &quot;va&quot;: &quot;0xB3AF3E&quot;, &quot;kind&quot;: &quot;write&quot;}, {&quot;field&quot;: &quot;AI_ent_id&quot;, &quot;width&quot;: 2, &quot;shape&quot;: &quot;scalar&quot;, &quot;va&quot;: &quot;0xB3AF57&quot;, &quot;kind&quot;: &quot;write&quot;}], &quot;gaps&quot;: [], &quot;unmatched_actual&quot;: [{&quot;va&quot;: &quot;0xB3ADB1&quot;, &quot;kind&quot;: &quot;inline_store&quot;, &quot;width&quot;: 2, &quot;wire_type&quot;: null}], &quot;nested_unmatchable&quot;: [], &quot;window&quot;: [&quot;0xB3AD30&quot;, &quot;0xB3AFC1&quot;], &quot;scalar_match_verifiable&quot;: false, &quot;capacity_relation&quot;: {&quot;observed_min&quot;: 41, &quot;capacity&quot;: 74, &quot;relation&quot;: &quot;within&quot;, &quot;unknown_events&quot;: [{&quot;va&quot;: &quot;0xB3AF97&quot;, &quot;kind&quot;: &quot;composite&quot;, &quot;name&quot;: &quot;sub_B03020&quot;}], &quot;is_lower_bound&quot;: true, &quot;note&quot;: &quot;观测线长（下界）41 / 容量 0x4a&quot;}}</code></td></tr><tr><td>闭合点</td><td><code>closer</code></td><td><code>{&quot;va&quot;: &quot;0xB3AFC1&quot;, &quot;kind&quot;: &quot;commit&quot;, &quot;jcc_va&quot;: null, &quot;seq_va&quot;: null, &quot;cmp&quot;: null, &quot;va_convention&quot;: &quot;cmp&quot;}</code></td></tr><tr><td>去向槽+实参</td><td><code>dispatch_slot</code></td><td><code>{&quot;slot&quot;: &quot;vt[0x58]&quot;, &quot;slot_value&quot;: 88, &quot;va&quot;: &quot;0xB3B2C7&quot;, &quot;mov_va&quot;: &quot;0xB3B2BE&quot;, &quot;host&quot;: &quot;[eax+58h]&quot;, &quot;argc&quot;: 2, &quot;form&quot;: &quot;mov_then_call&quot;, &quot;error_slot&quot;: null}</code></td></tr><tr><td>日志串</td><td><code>log_strings</code></td><td><code>[&quot;frame_count=&quot;, &quot;launch_x=&quot;, &quot;launch_y=&quot;, &quot;launch_z=&quot;, &quot;target1_x=&quot;, &quot;target1_y=&quot;, &quot;target1_z=&quot;, &quot;target2_x=&quot;, &quot;target2_y=&quot;, &quot;target2_z=&quot;, &quot;target_ent_id=&quot;, &quot;msec=&quot;, &quot;shot0_impact1=&quot;, &quot;fx_opt=&quot;, &quot;impact_grenade_id=&quot;, &quot;parent_grenade_id=&quot;, &quot;charge_lv=&quot;, &quot;AI_ent_id=&quot;]</code></td></tr></tbody>
+      </table>
+      <p>无差异。</p>
+      <p>原始证据切片：<a href="../../../db_design/schema/commands/_verify/CS-0x8898-battle-weapon_fire__damage_field.json" target="_blank"><code>commands/_verify/CS-0x8898-battle-weapon_fire__damage_field.json</code></a></p>
+    </section>
+
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">生成于 2026-10-12 · 改 JSON 后重跑 build_site.py · HTML 只读</div>
+  </footer>
+</body>
+</html>

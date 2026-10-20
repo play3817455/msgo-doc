@@ -1,0 +1,174 @@
+{
+ "id": "CS-0x03F7-battle-ban_transform",
+ "verified_at": "2026-09-30 15:25:46",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "handler_func",
+ "block": [
+  "0xB40960",
+  "0xB40B46"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 10,
+   "va": "0xB409A6",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xB409A3",
+   "call_va": "0xB409A8"
+  },
+  "field_window": {
+   "start_va": "0xB40960",
+   "end_va": "0xB40A51",
+   "guard": null,
+   "closer_or_commit_va": "0xB40A51",
+   "within_model_block": true,
+   "range_from": "handler_func"
+  },
+  "primitive_widths": {
+   "direction": "CS",
+   "expected": [
+    {
+     "name": "ent_id",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB409E9"
+     ]
+    },
+    {
+     "name": "val",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 2,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB409F5"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB409D4",
+     "kind": "inline_store",
+     "width": 2,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB409E9",
+     "kind": "inline_store",
+     "width": 4,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB409F5",
+     "kind": "inline_store",
+     "width": 4,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB40A27",
+     "kind": "composite",
+     "width": null,
+     "wire_type": null,
+     "name": "sub_B03020",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 2,
+   "checkable": 2,
+   "pairs": [
+    {
+     "field": "ent_id",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB409E9",
+     "kind": "inline_store"
+    },
+    {
+     "field": "val",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB409F5",
+     "kind": "inline_store"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [
+    {
+     "va": "0xB409D4",
+     "kind": "inline_store",
+     "width": 2,
+     "wire_type": null
+    }
+   ],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB40960",
+    "0xB40A51"
+   ],
+   "scalar_match_verifiable": false,
+   "capacity_relation": {
+    "observed_min": 10,
+    "capacity": 10,
+    "relation": "within",
+    "unknown_events": [
+     {
+      "va": "0xB40A27",
+      "kind": "composite",
+      "name": "sub_B03020"
+     }
+    ],
+    "is_lower_bound": true,
+    "note": "观测线长（下界）10 / 容量 0xa"
+   }
+  },
+  "closer": {
+   "va": "0xB40A51",
+   "kind": "commit",
+   "jcc_va": null,
+   "seq_va": null,
+   "cmp": null,
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x58]",
+   "slot_value": 88,
+   "va": "0xB40ADD",
+   "mov_va": "0xB40AD4",
+   "host": "[edx+58h]",
+   "argc": 2,
+   "form": "mov_then_call",
+   "error_slot": null
+  },
+  "log_strings": [
+   "ent_id=",
+   "val="
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "ent_id",
+  "val"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 14
+}

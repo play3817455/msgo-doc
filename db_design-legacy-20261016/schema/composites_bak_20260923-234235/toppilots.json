@@ -1,0 +1,388 @@
+{
+  "id": "toppilots",
+  "title": "榜首项 toppilots（布局同 ranking）",
+  "length": 95,
+  "status": "complete",
+  "layout_same_as": "ranking",
+  "reader": "sub_B46560",
+  "printer": "sub_B4F890",
+  "memory_claim": 104,
+  "evidence": {
+    "commands": [
+      "SC-0xB985-lounge-ranking_pilot_get_r"
+    ],
+    "protocol_paths": [
+      "protocol_analysis/commands/SC-0xB985-lounge-ranking_pilot_get_r/README.md"
+    ],
+    "note": "协议字段名 toppilots；成员定义见 composite ranking"
+  },
+  "members": [
+    {
+      "name": "rank",
+      "offset": 0,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "排名",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0xB985-lounge-ranking_pilot_get_r",
+          "struct": "ranking",
+          "field_name": "rank",
+          "offset": 0,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0xB985-lounge-ranking_pilot_get_r/README.md",
+          "section": "§3 / §4.3",
+          "reader": "sub_B46560",
+          "printer": "sub_B4F890",
+          "evidence_va": "0xb4657a"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xb4657a",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 0
+    },
+    {
+      "name": "pilot_id",
+      "offset": 4,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "机师 ID",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0xB985-lounge-ranking_pilot_get_r",
+          "struct": "ranking",
+          "field_name": "pilot_id",
+          "offset": 4,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0xB985-lounge-ranking_pilot_get_r/README.md",
+          "section": "§3 / §4.3",
+          "reader": "sub_B46560",
+          "printer": "sub_B4F890",
+          "evidence_va": "0xb46591"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xb46591",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 4
+    },
+    {
+      "name": "name",
+      "offset": 8,
+      "length": 25,
+      "wire_type": "char[25]",
+      "meaning": "名称（定长 25 字节）",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0xB985-lounge-ranking_pilot_get_r",
+          "struct": "ranking",
+          "field_name": "name",
+          "offset": 8,
+          "length": 25,
+          "wire_type": "char[25]",
+          "protocol_path": "protocol_analysis/commands/SC-0xB985-lounge-ranking_pilot_get_r/README.md",
+          "section": "§3 / §4.3",
+          "reader": "sub_B46560",
+          "printer": "sub_B4F890",
+          "notes": "cmp 计数 0x19 定长循环",
+          "evidence_va": "0xb465ab"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xb465ab",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 8
+    },
+    {
+      "name": "troops",
+      "offset": 33,
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "势力/阵营",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0xB985-lounge-ranking_pilot_get_r",
+          "struct": "ranking",
+          "field_name": "troops",
+          "offset": 33,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0xB985-lounge-ranking_pilot_get_r/README.md",
+          "section": "§3 / §4.3",
+          "reader": "sub_B46560",
+          "printer": "sub_B4F890",
+          "evidence_va": "0xB465C9"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB465C9",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 33
+    },
+    {
+      "name": "level",
+      "offset": 34,
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "等级",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0xB985-lounge-ranking_pilot_get_r",
+          "struct": "ranking",
+          "field_name": "level",
+          "offset": 34,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0xB985-lounge-ranking_pilot_get_r/README.md",
+          "section": "§3 / §4.3",
+          "reader": "sub_B46560",
+          "printer": "sub_B4F890",
+          "notes": "槽内 offset 35 对齐填充；线上紧接 troops 后读 u8",
+          "evidence_va": "0xB465DF"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB465DF",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 34
+    },
+    {
+      "name": "clan_id",
+      "offset": 35,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "公会 ID",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0xB985-lounge-ranking_pilot_get_r",
+          "struct": "ranking",
+          "field_name": "clan_id",
+          "offset": 35,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0xB985-lounge-ranking_pilot_get_r/README.md",
+          "section": "§3 / §4.3",
+          "reader": "sub_B46560",
+          "printer": "sub_B4F890",
+          "evidence_va": "0xB465F2"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB465F2",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 36
+    },
+    {
+      "name": "clan_name",
+      "offset": 39,
+      "length": 31,
+      "wire_type": "char[31]",
+      "meaning": "公会名称（定长 31 字节）",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0xB985-lounge-ranking_pilot_get_r",
+          "struct": "ranking",
+          "field_name": "clan_name",
+          "offset": 39,
+          "length": 31,
+          "wire_type": "char[31]",
+          "protocol_path": "protocol_analysis/commands/SC-0xB985-lounge-ranking_pilot_get_r/README.md",
+          "section": "§3 / §4.3",
+          "reader": "sub_B46560",
+          "printer": "sub_B4F890",
+          "notes": "cmp 计数 0x1F 定长循环",
+          "evidence_va": "0xB46610"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB46610",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 40
+    },
+    {
+      "name": "emb_base",
+      "offset": 70,
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "徽章底图",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0xB985-lounge-ranking_pilot_get_r",
+          "struct": "ranking",
+          "field_name": "emb_base",
+          "offset": 70,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0xB985-lounge-ranking_pilot_get_r/README.md",
+          "section": "§3 / §4.3",
+          "reader": "sub_B46560",
+          "printer": "sub_B4F890",
+          "evidence_va": "0xB46627"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB46627",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 71
+    },
+    {
+      "name": "emb_parts1",
+      "offset": 71,
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "徽章部件 1",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0xB985-lounge-ranking_pilot_get_r",
+          "struct": "ranking",
+          "field_name": "emb_parts1",
+          "offset": 71,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0xB985-lounge-ranking_pilot_get_r/README.md",
+          "section": "§3 / §4.3",
+          "reader": "sub_B46560",
+          "printer": "sub_B4F890",
+          "evidence_va": "0xB46639"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB46639",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 72
+    },
+    {
+      "name": "emb_parts2",
+      "offset": 72,
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "徽章部件 2",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0xB985-lounge-ranking_pilot_get_r",
+          "struct": "ranking",
+          "field_name": "emb_parts2",
+          "offset": 72,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0xB985-lounge-ranking_pilot_get_r/README.md",
+          "section": "§3 / §4.3",
+          "reader": "sub_B46560",
+          "printer": "sub_B4F890",
+          "notes": "槽内 offset 74-75 对齐填充；线上紧接 emb_parts2 后读 u32 score",
+          "evidence_va": "0xB4664B"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB4664B",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 73
+    },
+    {
+      "name": "score",
+      "offset": 73,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "分数",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0xB985-lounge-ranking_pilot_get_r",
+          "struct": "ranking",
+          "field_name": "score",
+          "offset": 73,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0xB985-lounge-ranking_pilot_get_r/README.md",
+          "section": "§3 / §4.3",
+          "reader": "sub_B46560",
+          "printer": "sub_B4F890",
+          "evidence_va": "0xB4665D"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB4665D",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 76
+    },
+    {
+      "name": "avatar",
+      "offset": 77,
+      "length": 18,
+      "wire_type": "avatar",
+      "meaning": "外观（18B 子结构）",
+      "disposition": "PERSIST",
+      "composite_ref": "avatar",
+      "wire_sources": [
+        {
+          "command": "SC-0xB985-lounge-ranking_pilot_get_r",
+          "struct": "ranking",
+          "field_name": "avatar",
+          "offset": 77,
+          "length": 18,
+          "wire_type": "avatar",
+          "protocol_path": "protocol_analysis/commands/SC-0xB985-lounge-ranking_pilot_get_r/README.md",
+          "section": "§3 / §4.3",
+          "reader": "sub_B068B0",
+          "printer": "sub_B08920",
+          "notes": "ranking 读取器内嵌 sub_B068B0",
+          "evidence_va": "0xB46668",
+          "evidence_call_site": "sub_B46560"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB46668",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 80
+    }
+  ],
+  "asm_audit": {
+    "verified": "2026-09-20",
+    "reader": "sub_B46560",
+    "writer": null,
+    "total_bytes": 95,
+    "fields_ok": 12,
+    "fields_fail": 0,
+    "issues": [],
+    "status": "pass",
+    "memory": {
+      "verified": "2026-09-20",
+      "status": "pass",
+      "mem_fields": 7,
+      "fields_ok": 7,
+      "fields_fail": 0,
+      "issues": []
+    }
+  },
+  "_audit_members_from": "ranking",
+  "wire_memory_remediated": "2026-09-20",
+  "members_source": "alias:layout:ranking",
+  "members_materialized_at": "2026-09-22",
+  "members_materialized_note": "整份同 `ranking`；成员已就地摊平（口径：结构体不写「见 XXX」）。别名键保留作出处：基座改了要重跑本工具 --check 对漂移。",
+  "oracle_audit": {
+    "date": "2026-09-23",
+    "tool": "emulab/oracle_fix.py",
+    "verdict_before": "GAP",
+    "verdict_after": "PASS",
+    "changes": [
+      "rank: memory_offset None -> 0",
+      "pilot_id: memory_offset None -> 4",
+      "name: memory_offset None -> 8",
+      "troops: memory_offset None -> 33",
+      "level: memory_offset None -> 34"
+    ]
+  }
+}

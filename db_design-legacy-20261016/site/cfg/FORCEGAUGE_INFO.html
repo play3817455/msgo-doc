@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FORCEGAUGE_INFO · db_design</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <h1><a href="../index.html">db_design</a></h1>
+      <p class="header-note">唯一证据源：<code>protocol_analysis/</code></p>
+      <nav><a href="../index.html">首页</a>
+      <a href="../homing/index.html">归位库</a>
+      <a href="../tables/index.html">旧表留档</a>
+      <a href="../commands/index.html">命令</a>
+      <a href="../cfg/index.html" class="active">配置表79</a>
+      <a href="../srv/index.html">服务端配置</a>
+      <a href="../asm-audit/index.html">ASM 审计</a>
+      <a href="../oracle-audit/index.html">Oracle 审计</a>
+      <a href="../entities/index.html">协议实体</a>
+      <a href="../fields/index.html">字段索引</a>
+      <a href="../relations.html">表关系</a></nav>
+    </div>
+  </header>
+  <main class="wrap">
+
+    <p class="breadcrumb"><a href="index.html">配置表79</a> / <code>FORCEGAUGE_INFO</code></p>
+    <h2><code>FORCEGAUGE_INFO</code> <span class="badge" style="background:#1565c0">DOWNLOAD</span> <span class="badge" style="background:#2e7d32">确证</span></h2>
+    <dl class="asm-dl">
+      <dt>CSV</dt><dd><code>reward/forcegauge.csv</code></dd>
+      <dt>用途</dt><dd>战力槽（Force Gauge）定义：战斗内蓄力槽最大值/恢复/触发 Buff</dd>
+      <dt>读表函数</dt><dd><code>sub_577560</code></dd>
+      <dt>表ID</dt><dd>62</dd>
+      <dt>下载序</dt><dd>70</dd>
+      <dt>类名</dt><dd><code>CForceGaugeTable</code></dd>
+      <dt>列统计</dt><dd>14 列 · 确证 14 · 已映射 0 · 间隙 0</dd>
+      <dt>证据</dt><dd><a href="../../../datatables/01-列注释/70-62-FORCEGAUGE_INFO.md" target="_blank">datatables/01-列注释/70-62-FORCEGAUGE_INFO.md</a></dd>
+    </dl>
+    <section>
+      <h3>列定案</h3>
+      <p class="muted"><code>db_column</code> = PostgreSQL 列名（确证/有语义的 partial 用订案名；<code>unknown_*</code> 暂保留 colN）</p>
+      <table class="wide">
+        <thead>
+          <tr>
+            <th>CSV#</th><th>DB列</th><th>订案名</th><th>中文摘要</th><th>类型</th>
+            <th>状态</th><th>读表</th><th>偏移/VA</th><th>语义详情</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><code>0</code></td>
+      <td><code>gauge_id</code></td>
+      <td><code>gauge_id</code></td>
+      <td>战力槽 ID</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_577560</code></td>
+      <td class="muted">csv 0 · 0x57758d</td>
+      <td class="meaning-cell">战力槽 ID（主键；CForceGaugeTable）</td>
+    </tr>
+    <tr>
+      <td><code>1</code></td>
+      <td><code>name_ref_id</code></td>
+      <td><code>name_ref_id</code></td>
+      <td>名称引用 ID</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_577560</code></td>
+      <td class="muted">csv 1 · +4 · 0x57759b</td>
+      <td class="meaning-cell">战力槽名称引用 ID（u32 col1 → +4；UI 字符串索引）</td>
+    </tr>
+    <tr>
+      <td><code>2</code></td>
+      <td><code>max_value</code></td>
+      <td><code>max_value</code></td>
+      <td>槽最大值</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_577560</code></td>
+      <td class="muted">csv 2 · +8 · 0x5775a6</td>
+      <td class="meaning-cell">槽最大值（u32 col2 → +8）</td>
+    </tr>
+    <tr>
+      <td><code>3</code></td>
+      <td><code>recover_rate</code></td>
+      <td><code>recover_rate</code></td>
+      <td>自然恢复速率</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_577560</code></td>
+      <td class="muted">csv 3 · +12 · 0x5775b1</td>
+      <td class="meaning-cell">自然恢复速率（u32 col3 → +12）</td>
+    </tr>
+    <tr>
+      <td><code>4</code></td>
+      <td><code>decay_rate</code></td>
+      <td><code>decay_rate</code></td>
+      <td>衰减速率</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_577560</code></td>
+      <td class="muted">csv 4 · +16 · 0x5775bc</td>
+      <td class="meaning-cell">衰减速率（u32 col4 → +16）</td>
+    </tr>
+    <tr>
+      <td><code>5</code></td>
+      <td><code>trigger_threshold</code></td>
+      <td><code>trigger_threshold</code></td>
+      <td>触发阈值</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_577560</code></td>
+      <td class="muted">csv 5 · +20 · 0x5775c7</td>
+      <td class="meaning-cell">触发阈值（u32 col5 → +20）</td>
+    </tr>
+    <tr>
+      <td><code>6</code></td>
+      <td><code>effect_id</code></td>
+      <td><code>effect_id</code></td>
+      <td>关联效果 ID</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_577560</code></td>
+      <td class="muted">csv 6 · +24 · 0x5775d2</td>
+      <td class="meaning-cell">关联效果 ID（u32 col6 → +24）</td>
+    </tr>
+    <tr>
+      <td><code>7</code></td>
+      <td><code>display_order</code></td>
+      <td><code>display_order</code></td>
+      <td>UI 排序</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_577560</code></td>
+      <td class="muted">csv 7 · +28 · 0x5775dd</td>
+      <td class="meaning-cell">UI 排序（u32 col7 → +28）</td>
+    </tr>
+    <tr>
+      <td><code>8</code></td>
+      <td><code>gauge_label</code></td>
+      <td><code>gauge_label</code></td>
+      <td>战力槽显示标签</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_577560</code></td>
+      <td class="muted">csv 8 · +32 · 0x5775f1</td>
+      <td class="meaning-cell">战力槽显示标签（wstring col8 → +32）</td>
+    </tr>
+    <tr>
+      <td><code>9</code></td>
+      <td><code>icon_id</code></td>
+      <td><code>icon_id</code></td>
+      <td>图标 ID</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_577560</code></td>
+      <td class="muted">csv 9 · +60 · 0x57762a</td>
+      <td class="meaning-cell">图标 ID（u32 col9 → +60）</td>
+    </tr>
+    <tr>
+      <td><code>10</code></td>
+      <td><code>color_code</code></td>
+      <td><code>color_code</code></td>
+      <td>UI 颜色编码</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_577560</code></td>
+      <td class="muted">csv 10 · +64 · 0x57763c</td>
+      <td class="meaning-cell">UI 颜色编码（u32 col10 → +64）</td>
+    </tr>
+    <tr>
+      <td><code>11</code></td>
+      <td><code>buff_id</code></td>
+      <td><code>buff_id</code></td>
+      <td>满槽触发 Buff ID</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_577560</code></td>
+      <td class="muted">csv 11 · +68 · 0x577650</td>
+      <td class="meaning-cell">满槽触发 Buff ID（u32 col11 → +68；→ BUFF）</td>
+    </tr>
+    <tr>
+      <td><code>12</code></td>
+      <td><code>gauge_description</code></td>
+      <td><code>gauge_description</code></td>
+      <td>战力槽说明</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_577560</code></td>
+      <td class="muted">csv 12 · +72</td>
+      <td class="meaning-cell">战力槽说明（wstring col12 → +72）</td>
+    </tr>
+    <tr>
+      <td><code>13</code></td>
+      <td><code>extra_param</code></td>
+      <td><code>extra_param</code></td>
+      <td>扩展参数</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_577560</code></td>
+      <td class="muted">csv 13 · +100 · 0x5776a3</td>
+      <td class="meaning-cell">扩展参数（u32 col13 → +100）</td>
+    </tr></tbody>
+      </table>
+    </section>
+
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">生成于 2026-10-12 · 改 JSON 后重跑 build_site.py · HTML 只读</div>
+  </footer>
+</body>
+</html>

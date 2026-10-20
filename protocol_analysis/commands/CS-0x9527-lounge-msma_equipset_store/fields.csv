@@ -1,0 +1,12 @@
+序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+0,"0","2","u16","opcode","命令号","写入 buf+0，供服务端分发；无 case 块（C→S）","0x9527","0xb98f02","确证"
+1,"2","8","u64","uniqid_ms","机体唯一 id","来源=入参 arg_0/arg_4（低 32 位在前，两个内联 `mov [eax],ecx`/`mov [eax+4],ecx`）；服务端据此定位机体","-","0xB98F12, 0xB98F20","确证"
+2,"10","8","u64","equip_set.uniq_id","装备套组唯一 id","来源=结构成员 `[src+0]`（写入器 `sub_B41C60`：`mov edx,[edi]; mov [ecx],edx` / `mov edx,[edi+4]; mov [ecx+4],edx`）；打印器 `sub_B4AA30` 名 `uniq_id`","-","0xB41C73, 0xB41C7B","确证"
+3,"18","2","u16","equip_set.slot","套组槽位号","来源=结构成员 `[src+8]`（`mov dx,[edi+8]; mov [ecx],dx`）；打印器成员名 `slot`","-","0xB41C92","确证"
+4,"20","12","u32[3]","equip_set.eq_weapon","装备武器（3 项）","来源=结构成员 `[src+0Ch..0x14]`（循环 3 次，`add edx,4`@0xB41CBD，`cmp ecx,3`@0xB41CC0）；打印器成员 `eq_weapon={`","3×u32，**无线上计数**","0xB41CA3 (loop @0xB41CA3..0xB41CC3)","确证"
+5,"32","4","u32","equip_set.eq_shield","装备盾","来源=结构成员 `[src+18h]`（`mov edx,[edi+18h]; mov [esi],edx`）；打印器成员 `eq_shield`","-","0xB41CD1","确证"
+6,"36","4","u32","equip_set.eq_special","装备特殊装备","来源=结构成员 `[src+1Ch]`；打印器成员 `eq_special`","-","0xB41CE7","确证"
+7,"40","40","u32[10]","equip_set.eq_modules","装备模块（10 项）","来源=结构成员 `[src+20h..0x44]`（循环 10 次，`cmp edx,0Ah`@0xB41D1B）；打印器成员 `eq_modules={`","10×u32，**无线上计数**","0xB41D00 (loop @0xB41D00..0xB41D1E)","确证"
+8,"80","4","u32","equip_set.eq_bonus_modules","奖励模块（1 项）","来源=结构成员 `[src+48h]`（循环 1 次，`cmp edx,1`@0xB41D3C）；打印器成员 `eq_bonus_modules={`","1×u32（固定 1 项数组）","0xB41D25 (loop @0xB41D25..0xB41D3F)","确证"
+9,"84","4","u32","equip_set.eq_rental_modules","租赁模块（1 项）","来源=结构成员 `[src+4Ch]`（循环 1 次，`cmp edx,1`@0xB41D5D）；打印器成员 `eq_rental_modules={`","1×u32（固定 1 项数组）","0xB41D46 (loop @0xB41D46..0xB41D60)","确证"
+10,"88","43","u8[43]","equip_set.setname","套组名（43 字节定长字符数组）","来源=结构成员 `[src+50h..0x7A]`（循环 `cmp ecx,2Bh`=43 次，逐字节 `mov dl,[ecx+edi+50h]`@0xB41D6E）；打印器成员 `setname`","定长 43 字节，**无 NUL 保证**（按固定字节数读写）","0xB41D64 (loop @0xB41D64..0xB41D7D)","确证"

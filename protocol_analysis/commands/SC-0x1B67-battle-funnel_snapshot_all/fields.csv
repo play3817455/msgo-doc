@@ -1,0 +1,7 @@
+序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+0,-,2,u16,opcode,命令号,分发器 switch 选择子,0x1B67,0xB11181,确证
+1,0,4,u32,snapshot_num,随附快照条目数 N,"上限 `cmp ebx,68h`（104）；驱动数组；经 `vt[0x1E4]` 交付",0..104,0xB110B2|0xB110DE,确证
+2,4,10·N (N≤104),"array<funnel_snapshot_entry,N>",snapshot_arr,快照数组（元素线上 10B / 缓冲槽步进 12B）,数组基址经 `vt[0x1E4]` 交付；日志 `snapshot_arr={…}`（打印器 `sub_B0BF80`）,元素线长 10 / 槽 12,0xB1110A(元素读取器 sub_B081C0)|0xB110ED(sub_B06060 预留 0x0C/槽)|0xB11116(循环步进 0x0C),确证
+3,+0,4,u32,snapshot_arr.ent_id,快照所属实体 ID,元素成员 `[+0]`；打印器 `ent_id=`,-,0xB081CE|sub_B0BF80[+0],确证
+4,+4,1,i8,snapshot_arr.wslot_idx,武器槽下标,元素成员 `[+4]`；打印器 `wslot_idx=`（`movsx`）,-,0xB081E4|sub_B0BF80[+4],确证
+5,+5,5,bytes[5],snapshot_arr.move_info,移动/姿态信息（定长 5B）,元素成员 `[+5..+9]`；打印器 `move_info=`（逐字节循环 5 次）,-,"0xB081FB(循环写，cmp ecx,5)|sub_B0BF80",确证

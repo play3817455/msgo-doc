@@ -1,0 +1,346 @@
+{
+  "id": "challenge_info",
+  "title": "部队挑战 challenge_info（13B 线 / 20B 槽）",
+  "domain": "lounge",
+  "domain_votes": {
+    "lounge": 2,
+    "battle": 1
+  },
+  "folded_composites": [
+    "challenge_info"
+  ],
+  "anchored_by": "",
+  "legacy_table": "tbl_challenge_info",
+  "row_key": [],
+  "views": [
+    {
+      "composite": "challenge_info",
+      "length": 13,
+      "memory_claim": 20,
+      "reader": "sub_B07540",
+      "printer": "sub_B0A1A0",
+      "commands": [
+        "SC-0x51B7-lounge-pilot_troopchallenge_clear_notify",
+        "SC-0xFA18-lounge-pilot_netcafechallenge_get_r",
+        "SC-0xFE02-battle-daily_record_progress_r"
+      ]
+    }
+  ],
+  "members": [
+    {
+      "name": "id",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "条目 ID",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "challenge_info"
+        ]
+      },
+      "views": [
+        "challenge_info"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "B07554|B0A1BF",
+      "evidence_ref": {
+        "command": "SC-0x51B7-lounge-pilot_troopchallenge_clear_notify",
+        "struct": "challenge_info",
+        "field": "id",
+        "reader": "sub_B07540",
+        "printer": "sub_B0A1A0",
+        "protocol_path": "protocol_analysis/commands/SC-0x51B7-lounge-pilot_troopchallenge_clear_notify/README.md",
+        "section": "§3 / notes.md"
+      },
+      "role": "identity"
+    },
+    {
+      "name": "is_clear",
+      "wire_type": "i8",
+      "length": 1,
+      "meaning": "是否已通关（打印器 movsx）",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "challenge_info"
+        ]
+      },
+      "views": [
+        "challenge_info"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "B0758A|B0A237",
+      "evidence_ref": {
+        "command": "SC-0x51B7-lounge-pilot_troopchallenge_clear_notify",
+        "struct": "challenge_info",
+        "field": "is_clear",
+        "reader": "sub_B07540",
+        "printer": "sub_B0A1A0",
+        "protocol_path": "protocol_analysis/commands/SC-0x51B7-lounge-pilot_troopchallenge_clear_notify/README.md",
+        "section": "§3 / notes.md"
+      },
+      "role": "flag"
+    },
+    {
+      "name": "sub_val",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "子进度值",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "challenge_info"
+        ]
+      },
+      "views": [
+        "challenge_info"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "B07578|B0A214",
+      "evidence_ref": {
+        "command": "SC-0x51B7-lounge-pilot_troopchallenge_clear_notify",
+        "struct": "challenge_info",
+        "field": "sub_val",
+        "reader": "sub_B07540",
+        "printer": "sub_B0A1A0",
+        "protocol_path": "protocol_analysis/commands/SC-0x51B7-lounge-pilot_troopchallenge_clear_notify/README.md",
+        "section": "§3 / notes.md"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "val",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "进度值",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "challenge_info"
+        ]
+      },
+      "views": [
+        "challenge_info"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "B07566|B0A1ED",
+      "evidence_ref": {
+        "command": "SC-0x51B7-lounge-pilot_troopchallenge_clear_notify",
+        "struct": "challenge_info",
+        "field": "val",
+        "reader": "sub_B07540",
+        "printer": "sub_B0A1A0",
+        "protocol_path": "protocol_analysis/commands/SC-0x51B7-lounge-pilot_troopchallenge_clear_notify/README.md",
+        "section": "§3 / notes.md"
+      },
+      "role": "attribute"
+    }
+  ],
+  "wire_body": "challenge_info",
+  "writes": [],
+  "reads": [
+    {
+      "command": "SC-0x51B7-lounge-pilot_troopchallenge_clear_notify",
+      "op": "read",
+      "via": "challenge_info"
+    },
+    {
+      "command": "SC-0xFA18-lounge-pilot_netcafechallenge_get_r",
+      "op": "read",
+      "via": "challenge_info"
+    },
+    {
+      "command": "SC-0xFE02-battle-daily_record_progress_r",
+      "op": "read",
+      "via": "challenge_info"
+    }
+  ],
+  "db_effects": [
+    {
+      "command": "SC-0x51B7-lounge-pilot_troopchallenge_clear_notify",
+      "entity": "challenge_info",
+      "op": "delete",
+      "fields": [
+        "challenge_info"
+      ],
+      "table_ref": "tbl_challenge_info"
+    },
+    {
+      "command": "SC-0x51B7-lounge-pilot_troopchallenge_clear_notify",
+      "entity": "challenge_info",
+      "op": "delete",
+      "fields": [
+        "troopchallenge_clear"
+      ],
+      "table_ref": "tbl_challenge_info"
+    }
+  ],
+  "pk_members": [
+    "id"
+  ],
+  "pk_kind": "uniqid",
+  "is_root": true,
+  "identity": [
+    "id"
+  ],
+  "multi": false,
+  "array_parents": [],
+  "inline_parents": [],
+  "shape": "root",
+  "parent": "",
+  "parents": [],
+  "has_scope": false,
+  "disposition": "PERSIST",
+  "table": "game.challenge_info",
+  "columns_excluded": [],
+  "columns": [
+    {
+      "member": "id",
+      "column": "id",
+      "role": "identity",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "条目 ID",
+      "evidence_va": "B07554|B0A1BF",
+      "pk": true
+    },
+    {
+      "member": "is_clear",
+      "column": "is_clear",
+      "role": "flag",
+      "wire_type": "i8",
+      "synthetic": false,
+      "meaning": "是否已通关（打印器 movsx）",
+      "evidence_va": "B0758A|B0A237",
+      "pk": false
+    },
+    {
+      "member": "sub_val",
+      "column": "sub_val",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "子进度值",
+      "evidence_va": "B07578|B0A214",
+      "pk": false
+    },
+    {
+      "member": "val",
+      "column": "val",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "进度值",
+      "evidence_va": "B07566|B0A1ED",
+      "pk": false
+    }
+  ],
+  "columns_expected": 4,
+  "keys": {
+    "scope": [
+      "world_id",
+      "pilot_id"
+    ],
+    "own": [
+      "id"
+    ],
+    "inherited": [],
+    "primary_key": [
+      "world_id",
+      "pilot_id",
+      "challenge_info_id"
+    ],
+    "pk_kind": "uniqid",
+    "children": [],
+    "nested": [],
+    "child_key": [
+      "elem_index"
+    ]
+  },
+  "tables": [
+    {
+      "name": "game.challenge_info",
+      "shape": "root",
+      "parent": "",
+      "parent_table": "",
+      "via_member": "",
+      "key_extra": [],
+      "scope": [
+        "world_id",
+        "pilot_id"
+      ],
+      "links": [],
+      "child_tables": [],
+      "columns": [
+        {
+          "member": "id",
+          "column": "challenge_info_id",
+          "role": "identity",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "条目 ID",
+          "evidence_va": "B07554|B0A1BF",
+          "pk": true,
+          "renamed_from": "id"
+        },
+        {
+          "member": "is_clear",
+          "column": "is_clear",
+          "role": "flag",
+          "wire_type": "i8",
+          "synthetic": false,
+          "meaning": "是否已通关（打印器 movsx）",
+          "evidence_va": "B0758A|B0A237",
+          "pk": false
+        },
+        {
+          "member": "sub_val",
+          "column": "sub_val",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "子进度值",
+          "evidence_va": "B07578|B0A214",
+          "pk": false
+        },
+        {
+          "member": "val",
+          "column": "val",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "进度值",
+          "evidence_va": "B07566|B0A1ED",
+          "pk": false
+        }
+      ],
+      "key_members": [
+        "world_id",
+        "pilot_id",
+        "id"
+      ],
+      "primary_key": [
+        "world_id",
+        "pilot_id",
+        "challenge_info_id"
+      ]
+    }
+  ],
+  "links": []
+}

@@ -1,0 +1,29 @@
+{
+  "id": "SC-0x7ED3-lounge-clan_search_sortfilter_get_r",
+  "revision": 1,
+  "verified_at": "2026-09-22",
+  "verifier": "人工（IDA 汇编整函数扫描：元素读取器 + 元素打印器 + 数组预留步进三方对齐）",
+  "reason": "`search_res` 的长度列是空的（草稿没写出线长）。读取器 sub_B45BA0 整函数消费 114B，槽步进 120（sub_B417A0 的 0x78，末尾 6B 行内填充），故长度应写 `114·N`。元素结构归档为 schema/composites/srch_res.json（无元素打印器，成员按线序命名）。",
+  "evidence": [
+    {
+      "what": "元素读取器/打印器与预留步进三方对齐（见 schema/composites 对应文件）",
+      "va": [
+        "B45BA0",
+        "B69116",
+        "B6913A"
+      ],
+      "detail": "本批共 26 行未建模数组字段，逐条进 IDA 扫描元素读取器整函数取线宽，再与元素打印器成员名/内存偏移、数组预留器槽步进交叉验证。"
+    }
+  ],
+  "patch": {
+    "search_res": {
+      "length": "114·N",
+      "enum": "元素线长 114 / 槽步进 120",
+      "evidence_va": [
+        "B69116",
+        "B6913A",
+        "B45BA0"
+      ]
+    }
+  }
+}

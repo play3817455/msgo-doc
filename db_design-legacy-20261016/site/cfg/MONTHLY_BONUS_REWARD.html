@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MONTHLY_BONUS_REWARD · db_design</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <h1><a href="../index.html">db_design</a></h1>
+      <p class="header-note">唯一证据源：<code>protocol_analysis/</code></p>
+      <nav><a href="../index.html">首页</a>
+      <a href="../homing/index.html">归位库</a>
+      <a href="../tables/index.html">旧表留档</a>
+      <a href="../commands/index.html">命令</a>
+      <a href="../cfg/index.html" class="active">配置表79</a>
+      <a href="../srv/index.html">服务端配置</a>
+      <a href="../asm-audit/index.html">ASM 审计</a>
+      <a href="../oracle-audit/index.html">Oracle 审计</a>
+      <a href="../entities/index.html">协议实体</a>
+      <a href="../fields/index.html">字段索引</a>
+      <a href="../relations.html">表关系</a></nav>
+    </div>
+  </header>
+  <main class="wrap">
+
+    <p class="breadcrumb"><a href="index.html">配置表79</a> / <code>MONTHLY_BONUS_REWARD</code></p>
+    <h2><code>MONTHLY_BONUS_REWARD</code> <span class="badge" style="background:#1565c0">DOWNLOAD</span> <span class="badge" style="background:#2e7d32">确证</span></h2>
+    <dl class="asm-dl">
+      <dt>CSV</dt><dd><code>reward/monthly_bonus_reward.csv</code></dd>
+      <dt>用途</dt><dd>月度登录奖励：按年月+日序+渠道发放 GP/物品</dd>
+      <dt>读表函数</dt><dd><code>sub_57B0A0</code></dd>
+      <dt>表ID</dt><dd>76</dd>
+      <dt>下载序</dt><dd>59</dd>
+      <dt>类名</dt><dd><code>CMonthlyBonusRewardTable</code></dd>
+      <dt>列统计</dt><dd>8 列 · 确证 8 · 已映射 0 · 间隙 0</dd>
+      <dt>证据</dt><dd><a href="../../../datatables/01-列注释/59-76-MONTHLY_BONUS_REWARD.md" target="_blank">datatables/01-列注释/59-76-MONTHLY_BONUS_REWARD.md</a></dd>
+    </dl>
+    <section>
+      <h3>列定案</h3>
+      <p class="muted"><code>db_column</code> = PostgreSQL 列名（确证/有语义的 partial 用订案名；<code>unknown_*</code> 暂保留 colN）</p>
+      <table class="wide">
+        <thead>
+          <tr>
+            <th>CSV#</th><th>DB列</th><th>订案名</th><th>中文摘要</th><th>类型</th>
+            <th>状态</th><th>读表</th><th>偏移/VA</th><th>语义详情</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><code>0</code></td>
+      <td><code>reward_id</code></td>
+      <td><code>reward_id</code></td>
+      <td>奖励 ID</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_57B0A0</code></td>
+      <td class="muted">csv 0 · 0x57b0ce</td>
+      <td class="meaning-cell">月度奖励 ID（主键）</td>
+    </tr>
+    <tr>
+      <td><code>1</code></td>
+      <td><code>year_month</code></td>
+      <td><code>year_month</code></td>
+      <td>年月</td>
+      <td><code>u16</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_57B0A0</code></td>
+      <td class="muted">csv 1 · +4 · 0x57b0dc</td>
+      <td class="meaning-cell">年月编码（u16 col1 → +4；YYYYMM 或序数）</td>
+    </tr>
+    <tr>
+      <td><code>2</code></td>
+      <td><code>login_channel</code></td>
+      <td><code>login_channel</code></td>
+      <td>登录渠道</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_57B0A0</code></td>
+      <td class="muted">csv 2 · +8</td>
+      <td class="meaning-cell">登录渠道（enum col2 比较链：LOGIN=0 / XWAR=1 / 其它=-1 → +8）<div class="enum-vals"><span class="enum-chip enum-chip-static"><code>LOGIN</code>=0</span> <span class="enum-chip enum-chip-static"><code>XWAR</code>=1</span> <span class="enum-chip enum-chip-static"><code>INVALID</code>=-1</span></div></td>
+    </tr>
+    <tr>
+      <td><code>3</code></td>
+      <td><code>day_of_month</code></td>
+      <td><code>day_of_month</code></td>
+      <td>日序</td>
+      <td><code>u16</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_57B0A0</code></td>
+      <td class="muted">csv 3 · +12 · 0x57b15b</td>
+      <td class="meaning-cell">月份内日序（u16 col3 → +12；第几天登录领取）</td>
+    </tr>
+    <tr>
+      <td><code>4</code></td>
+      <td><code>reward_type</code></td>
+      <td><code>reward_type</code></td>
+      <td>奖励物类型</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_57B0A0</code></td>
+      <td class="muted">csv 4 · +16 · 0x57b16c</td>
+      <td class="meaning-cell">奖励物类型（enum col4 sub_5703A0：GP=999/ITEM=0/MSMA=1/BUILDUP_MSMA=998 → +16）<div class="enum-vals"><a class="enum-chip" href="enums/sub_5703a0.html#v-GP" title="GP（游戏点数）"><code>GP</code>=999<span class="enum-zh">GP（游戏点数）</span></a> <a class="enum-chip" href="enums/sub_5703a0.html#v-ITEM" title="道具"><code>ITEM</code>=0<span class="enum-zh">道具</span></a> <a class="enum-chip" href="enums/sub_5703a0.html#v-MSMA" title="机体"><code>MSMA</code>=1<span class="enum-zh">机体</span></a> <a class="enum-chip" href="enums/sub_5703a0.html#v-BUILDUP_MSMA" title="强化机体"><code>BUILDUP_MSMA</code>=998<span class="enum-zh">强化机体</span></a> <a class="enum-conv-link" href="enums/sub_5703a0.html" title="奖励类型">↗ sub_5703A0</a></div></td>
+    </tr>
+    <tr>
+      <td><code>5</code></td>
+      <td><code>reward_param_id</code></td>
+      <td><code>reward_param_id</code></td>
+      <td>奖励物 ID</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_57B0A0</code></td>
+      <td class="muted">csv 5 · +20 · 0x57b1b8</td>
+      <td class="meaning-cell">奖励物 ID（u32 col5）</td>
+    </tr>
+    <tr>
+      <td><code>6</code></td>
+      <td><code>reward_quantity</code></td>
+      <td><code>reward_quantity</code></td>
+      <td>奖励数量</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_57B0A0</code></td>
+      <td class="muted">csv 6 · +24 · 0x57b1c3</td>
+      <td class="meaning-cell">奖励数量（u32 col6）</td>
+    </tr>
+    <tr>
+      <td><code>7</code></td>
+      <td><code>bonus_flag</code></td>
+      <td><code>bonus_flag</code></td>
+      <td>附加标志</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_57B0A0</code></td>
+      <td class="muted">csv 7 · +28 · 0x57b1ce</td>
+      <td class="meaning-cell">附加标志（u32 col7）</td>
+    </tr></tbody>
+      </table>
+    </section>
+
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">生成于 2026-10-12 · 改 JSON 后重跑 build_site.py · HTML 只读</div>
+  </footer>
+</body>
+</html>

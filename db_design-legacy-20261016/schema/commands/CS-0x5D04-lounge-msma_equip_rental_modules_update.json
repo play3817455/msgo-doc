@@ -1,0 +1,508 @@
+{
+  "id": "CS-0x5D04-lounge-msma_equip_rental_modules_update",
+  "opcode": "0x5D04",
+  "direction": "CS",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "msma_equip_rental_modules_update",
+  "source_dir": "protocol_analysis/commands/CS-0x5D04-lounge-msma_equip_rental_modules_update",
+  "meta": {
+    "opcode": "`0x5D04`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`msma_equip_rental_modules_update`",
+    "名字符串": "`)<-_proto_lounge_client::send_msma_equip_rental_modules_update(` @ `0xeeb590`",
+    "代码位置": "sub_B944A0 @ `0xb944a0`（`0xb944a0`..`0xb947b0`）",
+    "opcode 写入证据": "`0xb9451c`",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0x36`（54）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)`",
+    "配对命令（同 opcode 反向）": "见 §4.3 与其他命令的关联 / INDEX 反向表"
+  },
+  "handler": "sub_B944A0",
+  "handler_va": "0xb944a0",
+  "block": [
+    "0xB944A0",
+    "0xB947B0"
+  ],
+  "name_str": ")<-_proto_lounge_client::send_msma_equip_rental_modules_update(",
+  "name_str_va": "0xeeb590",
+  "capacity": "0x36",
+  "capacity_va": null,
+  "closer_va": "0xB94758",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": null,
+  "wire": {
+    "length_expr": "8 + 40 + 4",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x36（容量记账口径，非线长）",
+    "field_count": 3,
+    "length_source": "field_sum",
+    "readme_conclusion": "结论：机体装备（含租用模块）更新：机体唯一 id + 10 个装备模块 + 1 个租用模块。",
+    "readme_close": "2 + 8 + 40 + 4 = 54 = 容量 0x36=54（精确相等）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发给 lounge 协议类处理块（C→S 无 case 块）",
+      "enum": "0x5D04",
+      "evidence_va": [
+        "0xB9451C"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "2",
+      "length": "8",
+      "wire_type": "u64",
+      "name": "uniqid_ms",
+      "meaning": "机体唯一 id",
+      "purpose": "来源=入参 arg_0（低 32 位 @0xB94523）+ arg_4（高 32 位 @0xB9452F）；内联两次 `mov`（低 32 位在前）；经 `vt[0x58]` 发送",
+      "enum": null,
+      "evidence_va": [
+        "0xB9452D"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "10",
+      "length": "40",
+      "wire_type": "array<u32,10>",
+      "name": "eq_modules",
+      "meaning": "装备模块 id（**固定 10 元、无线上计数**）",
+      "purpose": "来源=入参 arg_8 指向的 u32 数组（@0xB94544 `mov esi,[ebx+eax*4]`）；循环内联 `mov [edi],esi`；循环上界**字面量 10**（`cmp eax,0Ah`@0xB94552）；arg_8 为 NULL 即跳错误出口（@0xB9452B test/jz）",
+      "enum": "固定 10 元",
+      "evidence_va": [
+        "0xB94547"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "50",
+      "length": "4",
+      "wire_type": "array<u32,1>",
+      "name": "eq_rental_modules",
+      "meaning": "租用模块 id（**固定 1 元、无线上计数**）",
+      "purpose": "来源=入参 arg_C 指向的 u32（@0xB94568 `mov edx,[esi+eax*4]`）；循环内联 `mov [edi],edx`；循环上界**字面量 1**（`cmp eax,1`@0xB94576）；arg_C 为 NULL 即跳错误出口（@0xB9455B test/jz）",
+      "enum": "固定 1 元",
+      "evidence_va": [
+        "0xB9456B"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0x5D04（分发器 switch 选择子）",
+      "evidence_va": "0xB9451C"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0x36 B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xB944EA"
+    },
+    {
+      "step": 3,
+      "kind": "write_scalar",
+      "detail": "uniqid_ms：`u64`（线长 8）—— 机体唯一 id",
+      "evidence_va": "0xB9452D"
+    },
+    {
+      "step": 4,
+      "kind": "write_array",
+      "detail": "eq_modules：`array<u32,10>`（线长 40）—— 装备模块 id（**固定 10 元、无线上计数**）",
+      "evidence_va": "0xB94547"
+    },
+    {
+      "step": 5,
+      "kind": "write_array",
+      "detail": "eq_rental_modules：`array<u32,1>`（线长 4）—— 租用模块 id（**固定 1 元、无线上计数**）",
+      "evidence_va": "0xB9456B"
+    },
+    {
+      "step": 6,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xB94758"
+    },
+    {
+      "step": 7,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xB94758"
+    }
+  ],
+  "capabilities": [
+    "update"
+  ],
+  "capabilities_derived": [
+    "notify",
+    "update"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:43",
+    "batch": 7,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 54,
+        "va": "0xB944EA",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB944E7",
+        "call_va": "0xB944EC"
+      },
+      "field_window": {
+        "start_va": "0xB944A0",
+        "end_va": "0xB94758",
+        "guard": null,
+        "closer_or_commit_va": "0xB94758",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "uniqid_ms",
+            "wire_type": "u64",
+            "width": 8,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB9452D"
+            ]
+          },
+          {
+            "name": "eq_modules",
+            "wire_type": "array<u32,10>",
+            "width": null,
+            "seq": 2,
+            "shape": "agg",
+            "evidence_va": [
+              "0xB94547"
+            ]
+          },
+          {
+            "name": "eq_rental_modules",
+            "wire_type": "array<u32,1>",
+            "width": null,
+            "seq": 3,
+            "shape": "agg",
+            "evidence_va": [
+              "0xB9456B"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB9451C",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB9452D",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB94547",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB9456B",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB945C9",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB9463C",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B08500",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB9465A",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03580",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB94678",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03580",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB946B5",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03580",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB946E4",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03580",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB946F8",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B036E0",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 0,
+        "checkable": 1,
+        "pairs": [],
+        "gaps": [
+          {
+            "field": "uniqid_ms",
+            "wire_type": "u64",
+            "width": 8,
+            "shape": "scalar",
+            "note": "汇编事件序列里找不到与之对位的读写点（缺字段或宽度不符）"
+          }
+        ],
+        "unmatched_actual": [
+          {
+            "va": "0xB9451C",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          },
+          {
+            "va": "0xB9452D",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null
+          },
+          {
+            "va": "0xB94547",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null
+          },
+          {
+            "va": "0xB9456B",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB944A0",
+          "0xB94758"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 14,
+          "capacity": 54,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB945C9",
+              "kind": "composite",
+              "name": "sub_B03020"
+            },
+            {
+              "va": "0xB9463C",
+              "kind": "composite",
+              "name": "sub_B08500"
+            },
+            {
+              "va": "0xB9465A",
+              "kind": "composite",
+              "name": "sub_B03580"
+            },
+            {
+              "va": "0xB94678",
+              "kind": "composite",
+              "name": "sub_B03580"
+            },
+            {
+              "va": "0xB946B5",
+              "kind": "composite",
+              "name": "sub_B03580"
+            },
+            {
+              "va": "0xB946E4",
+              "kind": "composite",
+              "name": "sub_B03580"
+            },
+            {
+              "va": "0xB946F8",
+              "kind": "composite",
+              "name": "sub_B036E0"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）14 / 容量 0x36"
+        }
+      },
+      "closer": {
+        "va": "0xB94758",
+        "kind": "send",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xB94758",
+        "mov_va": "0xB9474F",
+        "host": "[edx+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": []
+    },
+    "mismatches": [],
+    "notes": [
+      {
+        "check": "primitive_widths",
+        "note": "定宽对位不可判定：C→S 写线在复合写入器内部 consumed 未知；缺口 uniqid_ms"
+      }
+    ],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0x5D04-lounge-msma_equip_rental_modules_update.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0xb9451c",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xB9451C"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "MsmaEquipRentalModulesUpdate",
+      "role": "request",
+      "wire_length": "8 + 40 + 4",
+      "members": [
+        {
+          "name": "UniqidMs",
+          "wire_type": "u64",
+          "length": "8",
+          "field_ref": "uniqid_ms"
+        },
+        {
+          "name": "EqModules",
+          "wire_type": "array<u32,10>",
+          "length": "40",
+          "field_ref": "eq_modules",
+          "element": "u32",
+          "element_length": "4",
+          "cap": 10,
+          "count_field": null,
+          "count_field_source": "fixed"
+        },
+        {
+          "name": "EqRentalModules",
+          "wire_type": "array<u32,1>",
+          "length": "4",
+          "field_ref": "eq_rental_modules",
+          "element": "u32",
+          "element_length": "4",
+          "cap": 1,
+          "count_field": null,
+          "count_field_source": "fixed"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "c73cea5261d8e261",
+  "check_fingerprint": "5bf8cc2ffe8aad98"
+}

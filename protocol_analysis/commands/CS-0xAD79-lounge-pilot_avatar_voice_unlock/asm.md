@@ -1,0 +1,46 @@
+# 汇编证据 —— CS-0xAD79-lounge-pilot_avatar_voice_unlock
+
+> 所有地址为完整 VA（`VA = 文件偏移 + 0x400000`，无重定位），可在 IDA 中直接 `G` 跳转。
+
+## 1. 代码位置
+
+- sub_B8BCE0 @ `0xB8BCE0`（`0xB8BCE0`..`0xB8BEC5`）
+- 命令名字符串：`)<-_proto_lounge_client::send_pilot_avatar_voice_unlock(` @ `0xEEA620`
+- opcode 写入：`0xB8BD54`
+- 声明容量：`0x000A`（分配器容量 `push` @ `0xB8BD26`）
+- 发送去向：`vt[0x58]` @ `0xB8BE56`
+
+## 2. 组包块切片（容量申请 → opcode → 逐字段写线 → 提交）
+
+```asm
+  00b8bd26  push    0Ah
+  00b8bd54  mov     word ptr [ebp+0], 0AD79h   ; 字段 0 `opcode` => 2
+  00b8bd69  mov     [ecx], edi   ; 字段 1 `custom_id` => 4
+  00b8bd75  mov     [edx], cl   ; 字段 2 `use_bc` => 1
+```
+
+> `sub_B02D80`=写 u32 / `sub_B02DA0`=写 u16 / `sub_B061C0`=写 u8 / `sub_B06190`=写 u64 /
+> `sub_B061E0`=写 f32 / `sub_B02B40`=写 NUL 串（**紧邻其前的 `push N`** = 串槽预算）；内联 `mov [reg],src` 宽度看操作数。
+
+## 3. 提交后的 trace 打印块（字段名取证：日志名序 == 线序）
+
+```asm
+  00EE3EF8  push offset a<name>; "custom_id="
+  00EE3FE4  push offset a<name>; "use_bc="
+```
+
+## 4. 发送去向切片
+
+```asm
+  00b8be56  mov     eax, [edx+58h]
+```
+
+> `vt[0x58]` = 客户端对象虚表槽；实参 = `(buf, 负载长度)`（`sub <len>, <buf首址>` 即「游标 − 缓冲首址」）。
+
+## 5. 字段证据索引
+
+| 字段 | 证据 VA | 说明 |
+|---|---|---|
+| `opcode` | `0xB8BD54` | u16 / 2 |
+| `custom_id` | `0xB8BD69` | u32 / 4 |
+| `use_bc` | `0xB8BD75` | u8 / 1 |

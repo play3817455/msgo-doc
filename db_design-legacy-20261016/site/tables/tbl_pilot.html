@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>机师 · db_design</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <h1><a href="../index.html">db_design</a></h1>
+      <p class="header-note">唯一证据源：<code>protocol_analysis/</code></p>
+      <nav><a href="../index.html">首页</a>
+      <a href="../homing/index.html">归位库</a>
+      <a href="../tables/index.html" class="active">旧表留档</a>
+      <a href="../commands/index.html">命令</a>
+      <a href="../cfg/index.html">配置表79</a>
+      <a href="../srv/index.html">服务端配置</a>
+      <a href="../asm-audit/index.html">ASM 审计</a>
+      <a href="../oracle-audit/index.html">Oracle 审计</a>
+      <a href="../entities/index.html">协议实体</a>
+      <a href="../fields/index.html">字段索引</a>
+      <a href="../relations.html">表关系</a></nav>
+    </div>
+  </header>
+  <main class="wrap">
+
+    <nav class="breadcrumb"><a href="index.html">表设计</a> / <span><code>tbl_pilot</code></span></nav>
+    <h2>机师 <span class="badge" style="background:#2e7d32">complete</span> <span class="badge" style="background:#2e7d32">ASM ✓</span></h2>
+    <p>持久化 CS-0xFD3E pilot 159B 结构体字段及 slot；398B/51672B 形态待后续补充证据</p>
+    <p class="muted">共 35 节点 · PERSIST 34 · TBD 0</p>
+    
+    <section class="asm-panel">
+      <h3>ASM 审计 <span class="badge" style="background:#2e7d32">ASM ✓</span> · memory <span class="badge" style="background:#2e7d32">ASM ✓</span></h3>
+      <dl class="asm-dl">
+        <dt>composite</dt><dd><code>pilot</code></dd>
+        <dt>reader</dt><dd><code>sub_B06980</code></dd>
+        <dt>线长</dt><dd>159 B
+           / 槽 176 B</dd>
+        <dt>wire_layout</dt><dd><code>4+25+1+1+1+2+4+2+2+2+4+18+4+31+1+1+1+4+31+4+4+4+4+4</code></dd>
+        <dt>wire 字段</dt><dd>24 ok</dd>
+        <dt>memory 字段</dt><dd>24 audited · 24 ok</dd>
+        <dt>verified</dt><dd>wire 2026-09-20 · mem 2026-09-26</dd>
+      </dl>
+    </section>
+    <h3>证据命令</h3>
+    <ul><li><a href="../commands/CS-0xFD3E-lounge-pilot_create.html"><code>CS-0xFD3E-lounge-pilot_create</code></a> · <a href="../../../protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md" target="_blank">protocol README</a></li><li><a href="../commands/CS-0x498B-lounge-pilot_rename.html"><code>CS-0x498B-lounge-pilot_rename</code></a> · <a href="../../../protocol_analysis/commands/CS-0x498B-lounge-pilot_rename/README.md" target="_blank">protocol README</a></li><li><a href="../commands/CS-0x6142-lounge-pilot_delete.html"><code>CS-0x6142-lounge-pilot_delete</code></a> · <a href="../../../protocol_analysis/commands/CS-0x6142-lounge-pilot_delete/README.md" target="_blank">protocol README</a></li></ul>
+
+    <h3 id="columns">列树（按分组）</h3>
+    <div class="tree-legend">
+      <span>列名</span><span>线类型</span><span>disposition</span><span>含义</span><span>→ protocol 证据</span>
+    </div>
+    
+    <section class="col-group">
+      <h3>标识</h3>
+      <ul class="field-tree root-tree"><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">pilot_id</code>
+          <code class="ftype">u32</code>
+          <span class="offset"></span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="">✓</span>
+        </div>
+        <div class="tree-meaning">驾驶员 ID</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>CS-0xFD3E-lounge-pilot_create</code> struct <code>pilot</code> @0x0 §3.1 <a class="ev-link" href="../../../protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">name</code>
+          <code class="ftype">u8[25]</code>
+          <span class="offset"></span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="">✓</span>
+        </div>
+        <div class="tree-meaning">驾驶员名（NUL 结尾，定长 25 槽）</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>CS-0xFD3E-lounge-pilot_create</code> struct <code>pilot</code> @0x4 §3.1 <a class="ev-link" href="../../../protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">slot</code>
+          <code class="ftype">u32</code>
+          <span class="offset"></span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span>
+        </div>
+        <div class="tree-meaning">驾驶员存放槽位序号</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>CS-0xFD3E-lounge-pilot_create</code> @159 §3 <a class="ev-link" href="../../../protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li></ul>
+    </section>
+    <section class="col-group">
+      <h3>基础属性</h3>
+      <ul class="field-tree root-tree"><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">troops</code>
+          <code class="ftype">i8</code>
+          <span class="offset"></span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="">✓</span>
+        </div>
+        <div class="tree-meaning">所属阵营</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>CS-0xFD3E-lounge-pilot_create</code> struct <code>pilot</code> @0x1D §3.1 <a class="ev-link" href="../../../protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">level</code>
+          <code class="ftype">i8</code>
+          <span class="offset"></span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="">✓</span>
+        </div>
+        <div class="tree-meaning">等级</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>CS-0xFD3E-lounge-pilot_create</code> struct <code>pilot</code> @0x1E §3.1 <a class="ev-link" href="../../../protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">mil_class</code>
+          <code class="ftype">i8</code>
+          <span class="offset"></span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="">✓</span>
+        </div>
+        <div class="tree-meaning">军衔阶级</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>CS-0xFD3E-lounge-pilot_create</code> struct <code>pilot</code> @0x1F §3.1 <a class="ev-link" href="../../../protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">byword</code>
+          <code class="ftype">u16</code>
+          <span class="offset"></span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="">✓</span>
+        </div>
+        <div class="tree-meaning">口头禅（byword 表 ID）</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>CS-0xFD3E-lounge-pilot_create</code> struct <code>pilot</code> @0x20 §3.1 <a class="ev-link" href="../../../protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li></ul>
+    </section>
+    <section class="col-group">
+      <h3>战绩与等级点</h3>
+      <ul class="field-tree root-tree"><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">cmdr_fame</code>
+          <code class="ftype">u32</code>
+          <span class="offset"></span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="">✓</span>
+        </div>
+        <div class="tree-meaning">指挥官功勋</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>CS-0xFD3E-lounge-pilot_create</code> struct <code>pilot</code> @0x24 §3.1 <a class="ev-link" href="../../../protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">rate_vslocal</code>
+          <code class="ftype">u16</code>
+          <span class="offset"></span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="">✓</span>
+        </div>
+        <div class="tree-meaning">对本服胜率</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>CS-0xFD3E-lounge-pilot_create</code> struct <code>pilot</code> @0x28 §3.1 <a class="ev-link" href="../../../protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">rate_vslocal_4ev</code>
+          <code class="ftype">u16</code>
+          <span class="offset"></span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="">✓</span>
+        </div>
+        <div class="tree-meaning">对本服胜率（4 人战）</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>CS-0xFD3E-lounge-pilot_create</code> struct <code>pilot</code> @0x2A §3.1 <a class="ev-link" href="../../../protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">rate_vslocal_clan</code>
+          <code class="ftype">u16</code>
+          <span class="offset"></span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="">✓</span>
+        </div>
+        <div class="tree-meaning">对本服胜率（部队战）</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>CS-0xFD3E-lounge-pilot_create</code> struct <code>pilot</code> @0x2C §3.1 <a class="ev-link" href="../../../protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">level_point</code>
+          <code class="ftype">u32</code>
+          <span class="offset"></span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="">✓</span>
+        </div>
+        <div class="tree-meaning">等级点数</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>CS-0xFD3E-lounge-pilot_create</code> struct <code>pilot</code> @0x30 §3.1 <a class="ev-link" href="../../../protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li></ul>
+    </section>
+    <section class="col-group">
+      <h3>外观 avatar（18B 子段）</h3>
+      <ul class="field-tree root-tree"><li class="tree-branch">
+      <details open>
+        <summary><code class='fname'>avatar</code> <code class='ftype'>avatar(18B)</code> <span class='offset'></span> <span class="badge" style="background:#455a64">COMPOSITE</span> <span class="muted">← <code>avatar</code></span></summary>
+        <div class="tree-body">
+          <div class="tree-detail">外观（18B；写原语 sub_B06290）</div>
+          <div class="evidence-line"><code>CS-0xFD3E-lounge-pilot_create</code> struct <code>pilot</code> @0x34 §3.1 <a class="ev-link" href="../../../protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md" target="_blank">📄 protocol</a></div>
+          <ul class="field-tree"><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">avatar_id</code>
+          <code class="ftype">u32</code>
+          <span class="offset">wire +0 4B</span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xB068CC">✓</span>
+        </div>
+        <div class="tree-meaning">外观模板 ID</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>CS-0xFD3E-lounge-pilot_create</code> struct <code>avatar</code> @0 §3.1 <a class="ev-link" href="../../../protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md" target="_blank">📄 protocol</a></div><div class="evidence-line"><code>CS-0x43F2-lounge-pilot_avatar_edit</code> struct <code>avatar</code> @2 §3 <a class="ev-link" href="../../../protocol_analysis/commands/CS-0x43F2-lounge-pilot_avatar_edit/README.md" target="_blank">📄 protocol</a></div><div class="evidence-line"><code>SC-0xE536-lounge-pilot_avatar_edit_r</code> struct <code>avatar</code> @0 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xE536-lounge-pilot_avatar_edit_r/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">gender</code>
+          <code class="ftype">u8</code>
+          <span class="offset">wire +4 1B</span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xB068E2">✓</span>
+        </div>
+        <div class="tree-meaning">性别</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>CS-0xFD3E-lounge-pilot_create</code> struct <code>avatar</code> @4 §3.1 <a class="ev-link" href="../../../protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md" target="_blank">📄 protocol</a></div><div class="evidence-line"><code>CS-0x43F2-lounge-pilot_avatar_edit</code> struct <code>avatar</code> @6 §3 <a class="ev-link" href="../../../protocol_analysis/commands/CS-0x43F2-lounge-pilot_avatar_edit/README.md" target="_blank">📄 protocol</a></div><div class="evidence-line"><code>SC-0xE536-lounge-pilot_avatar_edit_r</code> struct <code>avatar</code> @4 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xE536-lounge-pilot_avatar_edit_r/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">face</code>
+          <code class="ftype">u8</code>
+          <span class="offset">wire +5 1B</span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xB068F4">✓</span>
+        </div>
+        <div class="tree-meaning">脸型</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>CS-0xFD3E-lounge-pilot_create</code> struct <code>avatar</code> @5 §3.1 <a class="ev-link" href="../../../protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md" target="_blank">📄 protocol</a></div><div class="evidence-line"><code>CS-0x43F2-lounge-pilot_avatar_edit</code> struct <code>avatar</code> @7 §3 <a class="ev-link" href="../../../protocol_analysis/commands/CS-0x43F2-lounge-pilot_avatar_edit/README.md" target="_blank">📄 protocol</a></div><div class="evidence-line"><code>SC-0xE536-lounge-pilot_avatar_edit_r</code> struct <code>avatar</code> @5 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xE536-lounge-pilot_avatar_edit_r/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">skincolor</code>
+          <code class="ftype">u8</code>
+          <span class="offset">wire +6 1B</span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xB0690A">✓</span>
+        </div>
+        <div class="tree-meaning">肤色</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>CS-0xFD3E-lounge-pilot_create</code> struct <code>avatar</code> @6 §3.1 <a class="ev-link" href="../../../protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md" target="_blank">📄 protocol</a></div><div class="evidence-line"><code>CS-0x43F2-lounge-pilot_avatar_edit</code> struct <code>avatar</code> @8 §3 <a class="ev-link" href="../../../protocol_analysis/commands/CS-0x43F2-lounge-pilot_avatar_edit/README.md" target="_blank">📄 protocol</a></div><div class="evidence-line"><code>SC-0xE536-lounge-pilot_avatar_edit_r</code> struct <code>avatar</code> @6 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xE536-lounge-pilot_avatar_edit_r/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">clothes</code>
+          <code class="ftype">u16</code>
+          <span class="offset">wire +7 mem +8 2B</span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xB0690E">✓</span>
+        </div>
+        <div class="tree-meaning">服装</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>CS-0xFD3E-lounge-pilot_create</code> struct <code>avatar</code> @7 §3.1 <a class="ev-link" href="../../../protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md" target="_blank">📄 protocol</a></div><div class="evidence-line"><code>CS-0x43F2-lounge-pilot_avatar_edit</code> struct <code>avatar</code> @9 §3 <a class="ev-link" href="../../../protocol_analysis/commands/CS-0x43F2-lounge-pilot_avatar_edit/README.md" target="_blank">📄 protocol</a></div><div class="evidence-line"><code>SC-0xE536-lounge-pilot_avatar_edit_r</code> struct <code>avatar</code> @7 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xE536-lounge-pilot_avatar_edit_r/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">hair</code>
+          <code class="ftype">u32</code>
+          <span class="offset">wire +9 mem +12 4B</span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xB0691F">✓</span>
+        </div>
+        <div class="tree-meaning">发型</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>CS-0xFD3E-lounge-pilot_create</code> struct <code>avatar</code> @9 §3.1 <a class="ev-link" href="../../../protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md" target="_blank">📄 protocol</a></div><div class="evidence-line"><code>CS-0x43F2-lounge-pilot_avatar_edit</code> struct <code>avatar</code> @11 §3 <a class="ev-link" href="../../../protocol_analysis/commands/CS-0x43F2-lounge-pilot_avatar_edit/README.md" target="_blank">📄 protocol</a></div><div class="evidence-line"><code>SC-0xE536-lounge-pilot_avatar_edit_r</code> struct <code>avatar</code> @9 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xE536-lounge-pilot_avatar_edit_r/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">accessory</code>
+          <code class="ftype">u8</code>
+          <span class="offset">wire +13 mem +16 1B</span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xB06930">✓</span>
+        </div>
+        <div class="tree-meaning">饰品</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>CS-0xFD3E-lounge-pilot_create</code> struct <code>avatar</code> @13 §3.1 <a class="ev-link" href="../../../protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md" target="_blank">📄 protocol</a></div><div class="evidence-line"><code>CS-0x43F2-lounge-pilot_avatar_edit</code> struct <code>avatar</code> @15 §3 <a class="ev-link" href="../../../protocol_analysis/commands/CS-0x43F2-lounge-pilot_avatar_edit/README.md" target="_blank">📄 protocol</a></div><div class="evidence-line"><code>SC-0xE536-lounge-pilot_avatar_edit_r</code> struct <code>avatar</code> @13 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xE536-lounge-pilot_avatar_edit_r/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">frame</code>
+          <code class="ftype">u8</code>
+          <span class="offset">wire +14 mem +17 1B</span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xB06941">✓</span>
+        </div>
+        <div class="tree-meaning">边框</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>CS-0xFD3E-lounge-pilot_create</code> struct <code>avatar</code> @14 §3.1 <a class="ev-link" href="../../../protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md" target="_blank">📄 protocol</a></div><div class="evidence-line"><code>CS-0x43F2-lounge-pilot_avatar_edit</code> struct <code>avatar</code> @16 §3 <a class="ev-link" href="../../../protocol_analysis/commands/CS-0x43F2-lounge-pilot_avatar_edit/README.md" target="_blank">📄 protocol</a></div><div class="evidence-line"><code>SC-0xE536-lounge-pilot_avatar_edit_r</code> struct <code>avatar</code> @14 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xE536-lounge-pilot_avatar_edit_r/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">voice</code>
+          <code class="ftype">u8</code>
+          <span class="offset">wire +15 mem +18 1B</span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xB06952">✓</span>
+        </div>
+        <div class="tree-meaning">语音</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>CS-0xFD3E-lounge-pilot_create</code> struct <code>avatar</code> @15 §3.1 <a class="ev-link" href="../../../protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md" target="_blank">📄 protocol</a></div><div class="evidence-line"><code>CS-0x43F2-lounge-pilot_avatar_edit</code> struct <code>avatar</code> @17 §3 <a class="ev-link" href="../../../protocol_analysis/commands/CS-0x43F2-lounge-pilot_avatar_edit/README.md" target="_blank">📄 protocol</a></div><div class="evidence-line"><code>SC-0xE536-lounge-pilot_avatar_edit_r</code> struct <code>avatar</code> @15 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xE536-lounge-pilot_avatar_edit_r/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">byword</code>
+          <code class="ftype">u16</code>
+          <span class="offset">wire +16 mem +20 2B</span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xB0696C">✓</span>
+        </div>
+        <div class="tree-meaning">口头禅（外观内嵌 byword 表 ID）</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>CS-0xFD3E-lounge-pilot_create</code> struct <code>avatar</code> @16 §3.1 <a class="ev-link" href="../../../protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md" target="_blank">📄 protocol</a></div><div class="evidence-line"><code>CS-0x43F2-lounge-pilot_avatar_edit</code> struct <code>avatar</code> @18 §3 <a class="ev-link" href="../../../protocol_analysis/commands/CS-0x43F2-lounge-pilot_avatar_edit/README.md" target="_blank">📄 protocol</a></div><div class="evidence-line"><code>SC-0xE536-lounge-pilot_avatar_edit_r</code> struct <code>avatar</code> @16 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xE536-lounge-pilot_avatar_edit_r/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li></ul>
+        </div>
+      </details>
+    </li></ul>
+    </section>
+    <section class="col-group">
+      <h3>部队（线格式内含）</h3>
+      <ul class="field-tree root-tree"><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">clan_id</code>
+          <code class="ftype">u32</code>
+          <span class="offset"></span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="">✓</span>
+        </div>
+        <div class="tree-meaning">所属部队 ID</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>CS-0xFD3E-lounge-pilot_create</code> struct <code>pilot</code> @0x4C §3.1 <a class="ev-link" href="../../../protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">clan_name</code>
+          <code class="ftype">u8[31]</code>
+          <span class="offset"></span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="">✓</span>
+        </div>
+        <div class="tree-meaning">部队名（NUL 结尾，定长 31 槽）</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>CS-0xFD3E-lounge-pilot_create</code> struct <code>pilot</code> @0x50 §3.1 <a class="ev-link" href="../../../protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">clan_emb_base</code>
+          <code class="ftype">i8</code>
+          <span class="offset"></span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="">✓</span>
+        </div>
+        <div class="tree-meaning">部队徽章底图</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>CS-0xFD3E-lounge-pilot_create</code> struct <code>pilot</code> @0x6F §3.1 <a class="ev-link" href="../../../protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">clan_emb_parts1</code>
+          <code class="ftype">i8</code>
+          <span class="offset"></span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="">✓</span>
+        </div>
+        <div class="tree-meaning">部队徽章部件 1</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>CS-0xFD3E-lounge-pilot_create</code> struct <code>pilot</code> @0x70 §3.1 <a class="ev-link" href="../../../protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">clan_emb_parts2</code>
+          <code class="ftype">i8</code>
+          <span class="offset"></span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="">✓</span>
+        </div>
+        <div class="tree-meaning">部队徽章部件 2</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>CS-0xFD3E-lounge-pilot_create</code> struct <code>pilot</code> @0x71 §3.1 <a class="ev-link" href="../../../protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li></ul>
+    </section>
+    <section class="col-group">
+      <h3>杯赛</h3>
+      <ul class="field-tree root-tree"><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">cupteam_id</code>
+          <code class="ftype">u32</code>
+          <span class="offset"></span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="">✓</span>
+        </div>
+        <div class="tree-meaning">杯赛队伍 ID</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>CS-0xFD3E-lounge-pilot_create</code> struct <code>pilot</code> @0x74 §3.1 <a class="ev-link" href="../../../protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">cupteam_name</code>
+          <code class="ftype">u8[31]</code>
+          <span class="offset"></span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="">✓</span>
+        </div>
+        <div class="tree-meaning">杯赛队伍名（NUL 结尾，定长 31 槽）</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>CS-0xFD3E-lounge-pilot_create</code> struct <code>pilot</code> @0x78 §3.1 <a class="ev-link" href="../../../protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li></ul>
+    </section>
+    <section class="col-group">
+      <h3>点数与惩罚</h3>
+      <ul class="field-tree root-tree"><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">accum_point</code>
+          <code class="ftype">u32</code>
+          <span class="offset"></span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="">✓</span>
+        </div>
+        <div class="tree-meaning">累计点数</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>CS-0xFD3E-lounge-pilot_create</code> struct <code>pilot</code> @0x98 §3.1 <a class="ev-link" href="../../../protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">rank</code>
+          <code class="ftype">u32</code>
+          <span class="offset"></span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="">✓</span>
+        </div>
+        <div class="tree-meaning">名次/顺位</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>CS-0xFD3E-lounge-pilot_create</code> struct <code>pilot</code> @0x9C §3.1 <a class="ev-link" href="../../../protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">base_accump</code>
+          <code class="ftype">u32</code>
+          <span class="offset"></span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="">✓</span>
+        </div>
+        <div class="tree-meaning">基础累计点</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>CS-0xFD3E-lounge-pilot_create</code> struct <code>pilot</code> @0xA0 §3.1 <a class="ev-link" href="../../../protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">req_accump</code>
+          <code class="ftype">u32</code>
+          <span class="offset"></span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="">✓</span>
+        </div>
+        <div class="tree-meaning">所需累计点</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>CS-0xFD3E-lounge-pilot_create</code> struct <code>pilot</code> @0xA4 §3.1 <a class="ev-link" href="../../../protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">penalty</code>
+          <code class="ftype">u32</code>
+          <span class="offset"></span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="">✓</span>
+        </div>
+        <div class="tree-meaning">惩罚值</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>CS-0xFD3E-lounge-pilot_create</code> struct <code>pilot</code> @0xA8 §3.1 <a class="ev-link" href="../../../protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted">159B 创建 struct 末字段（sub_B08AD0 penalty=）；398B 列表形态无此字段</div>
+      </div>
+    </li></ul>
+    </section>
+
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">生成于 2026-10-12 · 改 JSON 后重跑 build_site.py · HTML 只读</div>
+  </footer>
+</body>
+</html>

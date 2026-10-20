@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI_WEAPON_PARAM · db_design</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <h1><a href="../index.html">db_design</a></h1>
+      <p class="header-note">唯一证据源：<code>protocol_analysis/</code></p>
+      <nav><a href="../index.html">首页</a>
+      <a href="../homing/index.html">归位库</a>
+      <a href="../tables/index.html">旧表留档</a>
+      <a href="../commands/index.html">命令</a>
+      <a href="../cfg/index.html" class="active">配置表79</a>
+      <a href="../srv/index.html">服务端配置</a>
+      <a href="../asm-audit/index.html">ASM 审计</a>
+      <a href="../oracle-audit/index.html">Oracle 审计</a>
+      <a href="../entities/index.html">协议实体</a>
+      <a href="../fields/index.html">字段索引</a>
+      <a href="../relations.html">表关系</a></nav>
+    </div>
+  </header>
+  <main class="wrap">
+
+    <p class="breadcrumb"><a href="index.html">配置表79</a> / <code>AI_WEAPON_PARAM</code></p>
+    <h2><code>AI_WEAPON_PARAM</code> <span class="badge" style="background:#1565c0">DOWNLOAD</span> <span class="badge" style="background:#2e7d32">确证</span></h2>
+    <dl class="asm-dl">
+      <dt>CSV</dt><dd><code>npc/ai_weaponparam.csv</code></dd>
+      <dt>用途</dt><dd>NPC AI 按交战距离段 + 武器槽选择射击策略（照准锥、集弾节奏、射击模式权重）</dd>
+      <dt>读表函数</dt><dd><code>sub_56F080</code></dd>
+      <dt>表ID</dt><dd>43</dd>
+      <dt>下载序</dt><dd>43</dd>
+      <dt>类名</dt><dd><code>CAIWeaponParam</code></dd>
+      <dt>列统计</dt><dd>17 列 · 确证 17 · 已映射 0 · 间隙 0</dd>
+      <dt>证据</dt><dd><a href="../../../datatables/01-列注释/43-43-AI_WEAPON_PARAM.md" target="_blank">datatables/01-列注释/43-43-AI_WEAPON_PARAM.md</a></dd>
+    </dl>
+    <section>
+      <h3>列定案</h3>
+      <p class="muted"><code>db_column</code> = PostgreSQL 列名（确证/有语义的 partial 用订案名；<code>unknown_*</code> 暂保留 colN）</p>
+      <table class="wide">
+        <thead>
+          <tr>
+            <th>CSV#</th><th>DB列</th><th>订案名</th><th>中文摘要</th><th>类型</th>
+            <th>状态</th><th>读表</th><th>偏移/VA</th><th>语义详情</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><code>0</code></td>
+      <td><code>weapon_param_id</code></td>
+      <td><code>weapon_param_id</code></td>
+      <td>主键；CAIWeaponParam 索引表键（sub_541710 按 ID 查行）</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56F080</code></td>
+      <td class="muted">csv 0 · +0 · 0x56f0ae</td>
+      <td class="meaning-cell">主键；CAIWeaponParam 索引表键（sub_541710 按 ID 查行）</td>
+    </tr>
+    <tr>
+      <td><code>1</code></td>
+      <td><code>engage_range</code></td>
+      <td><code>engage_range</code></td>
+      <td>交战距离段：决定 AI 在 Near/Middle/Far/持盾时取哪套射击参数（与 AI_PARAM 距离权重配合）</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56F080</code></td>
+      <td class="muted">csv 1 · +4 · 0x56f0ce</td>
+      <td class="meaning-cell">交战距离段：决定 AI 在 Near/Middle/Far/持盾时取哪套射击参数（与 AI_PARAM 距离权重配合）<div class="enum-vals"><a class="enum-chip" href="enums/sub_56e750.html#v-NEAR" title="近距"><code>NEAR</code>=1<span class="enum-zh">近距</span></a> <a class="enum-chip" href="enums/sub_56e750.html#v-MIDDLE" title="中距"><code>MIDDLE</code>=2<span class="enum-zh">中距</span></a> <a class="enum-chip" href="enums/sub_56e750.html#v-FAR" title="远距"><code>FAR</code>=3<span class="enum-zh">远距</span></a> <a class="enum-chip" href="enums/sub_56e750.html#v-SHIELD" title="护盾"><code>SHIELD</code>=4<span class="enum-zh">护盾</span></a> <a class="enum-conv-link" href="enums/sub_56e750.html" title="交战距离档">↗ sub_56E750</a></div></td>
+    </tr>
+    <tr>
+      <td><code>2</code></td>
+      <td><code>weapon_slot</code></td>
+      <td><code>weapon_slot</code></td>
+      <td>武器槽位：MAIN/EX/SUB1 对应机体主武装、EX、副武装；UNKNOWN(-1) 表示不限槽</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56F080</code></td>
+      <td class="muted">csv 2 · +8 · 0x56f10f</td>
+      <td class="meaning-cell">武器槽位：MAIN/EX/SUB1 对应机体主武装、EX、副武装；UNKNOWN(-1) 表示不限槽<div class="enum-vals"><a class="enum-chip" href="enums/sub_56e7f0.html#v-UNKNOWN" title="未知/不限"><code>UNKNOWN</code>=-1<span class="enum-zh">未知/不限</span></a> <a class="enum-chip" href="enums/sub_56e7f0.html#v-MAIN" title="主武装"><code>MAIN</code>=0<span class="enum-zh">主武装</span></a> <a class="enum-chip" href="enums/sub_56e7f0.html#v-EX" title="EX武装"><code>EX</code>=1<span class="enum-zh">EX武装</span></a> <a class="enum-chip" href="enums/sub_56e7f0.html#v-SUB1" title="副武装1"><code>SUB1</code>=2<span class="enum-zh">副武装1</span></a> <a class="enum-conv-link" href="enums/sub_56e7f0.html" title="武器槽位">↗ sub_56E7F0</a></div></td>
+    </tr>
+    <tr>
+      <td><code>3</code></td>
+      <td><code>aim_pitch_min_deg</code></td>
+      <td><code>aim_pitch_min_deg</code></td>
+      <td>照准俯仰角下限（CSV 写度数，sub_CC7056×π/180 转弧度后取负存入 +12；空=180°）。sub_551CE0 与 flt_D6B460 合成俯仰锥</td>
+      <td><code>str_float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56F080</code></td>
+      <td class="muted">csv 3 · +12 · 0x56f184</td>
+      <td class="meaning-cell">照准俯仰角下限（CSV 写度数，sub_CC7056×π/180 转弧度后取负存入 +12；空=180°）。sub_551CE0 与 flt_D6B460 合成俯仰锥<div class="enum-vals"> <a class="enum-conv-link" href="enums/sub_cc7056.html" title="浮点解析 (strtod)">↗ sub_CC7056</a></div></td>
+    </tr>
+    <tr>
+      <td><code>4</code></td>
+      <td><code>aim_pitch_max_deg</code></td>
+      <td><code>aim_pitch_max_deg</code></td>
+      <td>照准俯仰角上限（度→弧度，正号存入 +16）。与 aim_pitch_min 构成 AI 俯仰瞄准范围</td>
+      <td><code>str_float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56F080</code></td>
+      <td class="muted">csv 4 · +16 · 0x56f1e3</td>
+      <td class="meaning-cell">照准俯仰角上限（度→弧度，正号存入 +16）。与 aim_pitch_min 构成 AI 俯仰瞄准范围<div class="enum-vals"> <a class="enum-conv-link" href="enums/sub_cc7056.html" title="浮点解析 (strtod)">↗ sub_CC7056</a></div></td>
+    </tr>
+    <tr>
+      <td><code>5</code></td>
+      <td><code>aim_yaw_min_deg</code></td>
+      <td><code>aim_yaw_min_deg</code></td>
+      <td>照准偏航角下限（度→弧度存入 +20）。sub_5512E0/551CE0 传入 CGoal_TraverseEdge 作水平瞄准界</td>
+      <td><code>str_float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56F080</code></td>
+      <td class="muted">csv 5 · +20 · 0x56f242</td>
+      <td class="meaning-cell">照准偏航角下限（度→弧度存入 +20）。sub_5512E0/551CE0 传入 CGoal_TraverseEdge 作水平瞄准界<div class="enum-vals"> <a class="enum-conv-link" href="enums/sub_cc7056.html" title="浮点解析 (strtod)">↗ sub_CC7056</a></div></td>
+    </tr>
+    <tr>
+      <td><code>6</code></td>
+      <td><code>aim_yaw_max_deg</code></td>
+      <td><code>aim_yaw_max_deg</code></td>
+      <td>照准偏航角上限（度→弧度后取负存入 +24）。与 aim_yaw_min 配对限定左右摆角</td>
+      <td><code>str_float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56F080</code></td>
+      <td class="muted">csv 6 · +24 · 0x56f2a3</td>
+      <td class="meaning-cell">照准偏航角上限（度→弧度后取负存入 +24）。与 aim_yaw_min 配对限定左右摆角</td>
+    </tr>
+    <tr>
+      <td><code>7</code></td>
+      <td><code>spread_timing_a</code></td>
+      <td><code>spread_timing_a</code></td>
+      <td>集弾/射击节奏系数 A（× flt_D91AF8 后经 sub_BE2300 生成 AI 散布计时向量；对应脚本 msma_common_weaponparam「集弾性能補正」）</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56F080</code></td>
+      <td class="muted">csv 7 · +28 · 0x56f2bd</td>
+      <td class="meaning-cell">集弾/射击节奏系数 A（× flt_D91AF8 后经 sub_BE2300 生成 AI 散布计时向量；对应脚本 msma_common_weaponparam「集弾性能補正」）</td>
+    </tr>
+    <tr>
+      <td><code>8</code></td>
+      <td><code>spread_timing_b</code></td>
+      <td><code>spread_timing_b</code></td>
+      <td>集弾/射击节奏系数 B（× flt_D91AF8；sub_552B00 与系数 A 一起写入 CAI 实体 +128..+140 计时数组）</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56F080</code></td>
+      <td class="muted">csv 8 · +32 · 0x56f2c8</td>
+      <td class="meaning-cell">集弾/射击节奏系数 B（× flt_D91AF8；sub_552B00 与系数 A 一起写入 CAI 实体 +128..+140 计时数组）</td>
+    </tr>
+    <tr>
+      <td><code>9</code></td>
+      <td><code>norm_trigger_a</code></td>
+      <td><code>norm_trigger_a</code></td>
+      <td>归一化触发项 A（与 col10 相加≠0 时，col8/9 各除以该和；用于缩放集弾节奏权重）</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56F080</code></td>
+      <td class="muted">csv 9 · +36 · 0x56f2f8</td>
+      <td class="meaning-cell">归一化触发项 A（与 col10 相加≠0 时，col8/9 各除以该和；用于缩放集弾节奏权重）</td>
+    </tr>
+    <tr>
+      <td><code>10</code></td>
+      <td><code>warning_shot_value</code></td>
+      <td><code>warning_shot_value</code></td>
+      <td>警告射击阈值（sub_55A280：若等于 flt_D6D398 则置 CAI+872 警告射击标志；脚本列「警告射撃」）</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56F080</code></td>
+      <td class="muted">csv 10 · +40 · 0x56f2fb</td>
+      <td class="meaning-cell">警告射击阈值（sub_55A280：若等于 flt_D6D398 则置 CAI+872 警告射击标志；脚本列「警告射撃」）</td>
+    </tr>
+    <tr>
+      <td><code>11</code></td>
+      <td><code>behavior_flag</code></td>
+      <td><code>behavior_flag</code></td>
+      <td>AI 行为标志位（+44；sub_551CE0 检测 bit1→插入 CGoal_MoveActionWait 移动等待）</td>
+      <td><code>bool</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56F080</code></td>
+      <td class="muted">csv 11 · +44 · 0x56f341</td>
+      <td class="meaning-cell">AI 行为标志位（+44；sub_551CE0 检测 bit1→插入 CGoal_MoveActionWait 移动等待）</td>
+    </tr>
+    <tr>
+      <td><code>12</code></td>
+      <td><code>tree_priority</code></td>
+      <td><code>tree_priority</code></td>
+      <td>索引树优先级/过滤字节（+45；sub_576160 跳过 byte=0 的节点用于脚本命令匹配）</td>
+      <td><code>u8</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56F080</code></td>
+      <td class="muted">csv 12 · +45 · 0x56f34c</td>
+      <td class="meaning-cell">索引树优先级/过滤字节（+45；sub_576160 跳过 byte=0 的节点用于脚本命令匹配）</td>
+    </tr>
+    <tr>
+      <td><code>13</code></td>
+      <td><code>fire_single_weight</code></td>
+      <td><code>fire_single_weight</code></td>
+      <td>単発射击权重（归一化后 sub_55A280→sub_552AB0 驱动 CAI+88 单发计时；脚本「単発」）</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56F080</code></td>
+      <td class="muted">csv 13 · +48 · 0x56f386</td>
+      <td class="meaning-cell">単発射击权重（归一化后 sub_55A280→sub_552AB0 驱动 CAI+88 单发计时；脚本「単発」）</td>
+    </tr>
+    <tr>
+      <td><code>14</code></td>
+      <td><code>fire_burst_weight</code></td>
+      <td><code>fire_burst_weight</code></td>
+      <td>ランダム点射权重（→ CAI+92 连点射计时；脚本「ランダム点射」）</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56F080</code></td>
+      <td class="muted">csv 14 · +52 · 0x56f386</td>
+      <td class="meaning-cell">ランダム点射权重（→ CAI+92 连点射计时；脚本「ランダム点射」）</td>
+    </tr>
+    <tr>
+      <td><code>15</code></td>
+      <td><code>fire_full_mag_weight</code></td>
+      <td><code>fire_full_mag_weight</code></td>
+      <td>装填弾全射撃权重（→ CAI+96 打光弹仓计时；脚本「装填弾全射撃」）</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56F080</code></td>
+      <td class="muted">csv 15 · +56 · 0x56f386</td>
+      <td class="meaning-cell">装填弾全射撃权重（→ CAI+96 打光弹仓计时；脚本「装填弾全射撃」）</td>
+    </tr>
+    <tr>
+      <td><code>16</code></td>
+      <td><code>fire_sustain_weight</code></td>
+      <td><code>fire_sustain_weight</code></td>
+      <td>継続射撃权重（四路概率第 4 项，sub_56E510 归一化至 +60；与前三项合计为射击模式分布）</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56F080</code></td>
+      <td class="muted">csv 16 · +60 · 0x56f386</td>
+      <td class="meaning-cell">継続射撃权重（四路概率第 4 项，sub_56E510 归一化至 +60；与前三项合计为射击模式分布）</td>
+    </tr></tbody>
+      </table>
+    </section>
+
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">生成于 2026-10-12 · 改 JSON 后重跑 build_site.py · HTML 只读</div>
+  </footer>
+</body>
+</html>

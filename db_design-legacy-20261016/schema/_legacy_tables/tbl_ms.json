@@ -1,0 +1,65 @@
+{
+  "id": "tbl_ms",
+  "title": "机体（battle 快照）",
+  "status": "complete",
+  "table_disposition": "EVENT",
+  "purpose": "battle ms 244B 线格式；43 成员（sub_B06D80/sub_B09240）；槽 264B",
+  "entity_ref": "ms",
+  "evidence_commands": [
+    "SC-0x1E2F-battle-msma_spawn_list_get_r_one",
+    "SC-0x717D-battle-entity_msma_appear",
+    "SC-0x7621-battle-entity_msma_appear_self"
+  ],
+  "column_groups": [
+    {
+      "name": "ms（244B · battle 线形）",
+      "columns": [
+        "ms"
+      ]
+    }
+  ],
+  "columns": [
+    {
+      "name": "ms",
+      "disposition": "COMPOSITE",
+      "composite_ref": "ms",
+      "meaning": "机体状态结构（battle 244B 线长 / 264B 槽）",
+      "wire_sources": [
+        {
+          "command": "SC-0x1E2F-battle-msma_spawn_list_get_r_one",
+          "struct": "ms",
+          "field_name": "ms",
+          "offset": 4,
+          "length": 244,
+          "wire_type": "struct<ms>",
+          "protocol_path": "protocol_analysis/commands/SC-0x1E2F-battle-msma_spawn_list_get_r_one/README.md",
+          "section": "§3",
+          "reader": "sub_B06D80",
+          "printer": "sub_B09240",
+          "evidence_va": "0xB11DBA",
+          "notes": "帧表 264 为槽跨度"
+        },
+        {
+          "command": "SC-0x717D-battle-entity_msma_appear",
+          "struct": "ms",
+          "field_name": "ms",
+          "offset": 9,
+          "length": 244,
+          "wire_type": "struct<ms>",
+          "protocol_path": "protocol_analysis/commands/SC-0x717D-battle-entity_msma_appear/README.md",
+          "section": "§3",
+          "reader": "sub_B06D80",
+          "evidence_va": "0xB1EBD9"
+        }
+      ],
+      "asm_verified": true
+    }
+  ],
+  "asm_audit": {
+    "composite_ref": "ms",
+    "status": "pass",
+    "issues_count": 0,
+    "memory_status": "pass",
+    "memory_issues_count": 0
+  }
+}

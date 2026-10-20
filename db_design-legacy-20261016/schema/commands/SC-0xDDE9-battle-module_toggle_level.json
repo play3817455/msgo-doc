@@ -1,0 +1,372 @@
+{
+  "id": "SC-0xDDE9-battle-module_toggle_level",
+  "opcode": "0xDDE9",
+  "direction": "SC",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "module_toggle_level",
+  "source_dir": "protocol_analysis/commands/SC-0xDDE9-battle-module_toggle_level",
+  "meta": {
+    "opcode": "`0xDDE9`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`battle_client`",
+    "命令名": "`module_toggle_level`",
+    "处理块范围": "`0xb2d340`..`0xb2d57e`",
+    "名字串引用点": "`0xee6d18`",
+    "声明容量（解码缓冲）": "`0xA`（`B2D35C`）",
+    "长度闭合点": "`B2D40B`（`cmp`）→ `B2D411 jz`",
+    "报错码": "`0x127`（块内 `push 1; push 127h; vt[0x64]`）",
+    "去向": "`vt[0x380]` @`B2D562`（3 实参）"
+  },
+  "handler": null,
+  "handler_va": null,
+  "block": [
+    "0xb2d340",
+    "0xb2d57e"
+  ],
+  "name_str": null,
+  "name_str_va": "0xee6d18",
+  "capacity": "0xA",
+  "capacity_va": "0xB2D35C",
+  "closer_va": "0xB2D40B",
+  "dispatch": "`vt[0x380]` @`B2D562`（3 实参）",
+  "dispatch_slot": "vt[0x380]",
+  "dispatch_va": "0xB2D562",
+  "wire": {
+    "length_expr": "2 + 4 + 4",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0xA（容量记账口径，非线长）",
+    "field_count": 3,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：10",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "ent_id",
+      "meaning": "实体 ID（日志串 `ent_id=`）",
+      "purpose": "经 `vt[0x380]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xb2d397",
+        "0xb2d4ab"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 2,
+      "offset": "2",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "level_up_flag",
+      "meaning": "升级标志（日志串 `level_up_flag=`）",
+      "purpose": "经 `vt[0x380]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xb2d3d7",
+        "0xb2d4d5"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 3,
+      "offset": "6",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "next_level_max",
+      "meaning": "下一等级上限（日志串 `next_level_max=`）",
+      "purpose": "经 `vt[0x380]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xb2d3fb",
+        "0xb2d4fa"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0xDDE9（分发器 switch 选择子）",
+      "evidence_va": "0x0000"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB05DA0`（模块 id 295）→ 之后逐字段读线",
+      "evidence_va": "0xB2D347"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "ent_id：`u16`（线长 2）—— 实体 ID（日志串 `ent_id=`）",
+      "evidence_va": "0xB2D397"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "level_up_flag：`u32`（线长 4）—— 升级标志（日志串 `level_up_flag=`）",
+      "evidence_va": "0xB2D3D7"
+    },
+    {
+      "step": 5,
+      "kind": "read_scalar",
+      "detail": "next_level_max：`u32`（线长 4）—— 下一等级上限（日志串 `next_level_max=`）",
+      "evidence_va": "0xB2D3FB"
+    },
+    {
+      "step": 6,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB2D40B"
+    },
+    {
+      "step": 7,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x380]`，实参 3 个",
+      "evidence_va": "0xB2D562"
+    },
+    {
+      "step": 8,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB2D3B1"
+    }
+  ],
+  "capabilities": [
+    "unclassified",
+    "battle.module_toggle"
+  ],
+  "capabilities_derived": [
+    "unclassified"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:48",
+    "batch": 20,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 10,
+        "va": "0xB2D35C",
+        "reg": "eax",
+        "host": "[edx+78h]",
+        "alloc_va": "0xB2D359",
+        "call_va": "0xB2D35E"
+      },
+      "field_window": {
+        "start_va": "0xB2D348",
+        "end_va": "0xB2D432",
+        "guard": {
+          "va": "0xB2D347",
+          "func": "0xB05DA0",
+          "module_id": 295,
+          "release_va": "0xB05D90"
+        },
+        "closer_or_commit_va": "0xB2D40B",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "ent_id",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb2d397",
+              "0xb2d4ab"
+            ]
+          },
+          {
+            "name": "level_up_flag",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb2d3d7",
+              "0xb2d4d5"
+            ]
+          },
+          {
+            "name": "next_level_max",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb2d3fb",
+              "0xb2d4fa"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB2D397",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB2D3D7",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB2D3FB",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 3,
+        "checkable": 3,
+        "pairs": [
+          {
+            "field": "ent_id",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB2D397",
+            "kind": "read"
+          },
+          {
+            "field": "level_up_flag",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB2D3D7",
+            "kind": "read"
+          },
+          {
+            "field": "next_level_max",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB2D3FB",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB2D348",
+          "0xB2D432"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 10,
+          "capacity": 10,
+          "relation": "exact",
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）10 / 容量 0xa"
+        }
+      },
+      "closer": {
+        "va": "0xB2D40B",
+        "kind": "jz",
+        "jcc_va": "0xB2D411",
+        "seq_va": "0xB2D407",
+        "jcc_dst": "0xB2D42D",
+        "cmp": "cmp     ebx, [esp+1B3Ch+var_1B24]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x380]",
+        "slot_value": 896,
+        "va": "0xB2D562",
+        "mov_va": "0xB2D54E",
+        "host": "[eax+380h]",
+        "argc": 3,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB2D3B1",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "ent_id=",
+        "level_up_flag=",
+        "next_level_max="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0xDDE9-battle-module_toggle_level.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": []
+  },
+  "structs": {
+    "response": {
+      "go_name": "ModuleToggleLevel",
+      "role": "response",
+      "wire_length": "2 + 4 + 4",
+      "members": [
+        {
+          "name": "EntId",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "ent_id"
+        },
+        {
+          "name": "LevelUpFlag",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "level_up_flag"
+        },
+        {
+          "name": "NextLevelMax",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "next_level_max"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "6814ddd353dceba0",
+  "check_fingerprint": "65aff7905217d34c"
+}

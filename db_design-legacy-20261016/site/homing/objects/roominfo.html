@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>对战房间 roominfo（135B） · db_design</title>
+  <link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <h1><a href="../../index.html">db_design</a></h1>
+      <p class="header-note">唯一证据源：<code>protocol_analysis/</code></p>
+      <nav><a href="../../index.html">首页</a>
+      <a href="../../homing/index.html" class="active">归位库</a>
+      <a href="../../tables/index.html">旧表留档</a>
+      <a href="../../commands/index.html">命令</a>
+      <a href="../../cfg/index.html">配置表79</a>
+      <a href="../../srv/index.html">服务端配置</a>
+      <a href="../../asm-audit/index.html">ASM 审计</a>
+      <a href="../../oracle-audit/index.html">Oracle 审计</a>
+      <a href="../../entities/index.html">协议实体</a>
+      <a href="../../fields/index.html">字段索引</a>
+      <a href="../../relations.html">表关系</a></nav>
+    </div>
+  </header>
+  <main class="wrap">
+
+    <nav class="breadcrumb"><a href="../index.html">归位库</a> / <span><code>roominfo</code></span></nav>
+    <h2>对战房间 roominfo（135B） <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="badge" style="background:#9e9e9e">root</span></h2>
+    <section class="asm-panel"><dl class="asm-dl"><dt>对象</dt><dd><code>roominfo</code></dd><dt>形态</dt><dd>根表</dd><dt>L1 域</dt><dd>lounge <span class="muted">{&quot;lounge&quot;: 2}</span></dd><dt>生命周期</dt><dd><span class="badge" style="background:#2e7d32">PERSIST</span></dd><dt>旧表锚点</dt><dd><code>tbl_roominfo</code></dd><dt>身份列</dt><dd><code>room_id</code> </dd><dt>主键</dt><dd><code>world_id</code> <code>pilot_id</code> <code>room_id</code> </dd><dt>主键类别</dt><dd><code>self_named</code></dd><dt>作用域</dt><dd><code>world_id</code> <code>pilot_id</code> </dd><dt>数组子表键</dt><dd><code>elem_index</code> </dd><dt>内嵌成员</dt><dd><span class="muted">—</span></dd><dt>父对象</dt><dd><span class="muted">—</span></dd><dt>线视图</dt><dd><code>roominfo</code> </dd><dt>宿主线体</dt><dd><code>roominfo</code></dd><dt>折叠线形</dt><dd><span class="muted">—</span></dd></dl></section>
+
+    <h3>线视图（同一对象在线上可能有多种形态）</h3>
+    <table>
+      <thead><tr><th>复合体</th><th>线长</th><th>槽宽</th><th>reader</th><th>printer</th><th>命令</th></tr></thead>
+      <tbody><tr><td><code>roominfo</code></td><td>135 B</td><td>144 B</td><td><code>sub_B44880</code></td><td><code>sub_B4C0D0</code></td><td>2 · <a href="../../commands/SC-0x244E-lounge-btlroom_info_one.html"><code>SC-0x244E-lounge-btlroom_info_one</code></a> <a href="../../commands/SC-0x6B15-lounge-btlroom_member_detail_get_r.html"><code>SC-0x6B15-lounge-btlroom_member_detail_get_r</code></a> </td></tr></tbody>
+    </table>
+
+    <h3>落库</h3>
+    
+    <section class="col-group">
+      <h3><code>game.roominfo</code> 根表
+        </h3>
+      <p class="muted">自然键 <code>world_id, pilot_id, room_id</code>
+        
+        
+         · 唯一索引 <code>uq_game_roominfo_world_pilot_room_id</code> (world_id, pilot_id, room_id)</p>
+      <table>
+        <thead><tr><th>列</th><th>DDL 类型</th><th>角色</th><th>线类型 / 长</th><th>含义</th><th>DDL 注释（出处）</th><th>归位出处</th></tr></thead>
+        <tbody><tr><td><code>count_eff</code></td><td><code>INTEGER</code></td><td><span class="badge" style="background:#455a64">attribute</span></td><td><code>u16</code> · 2B</td><td>联邦侧人数</td><td class="muted">联邦侧人数 [u16] SC-0x6B15-lounge-btlroom_member_detail_get_r@0xB44956</td><td><a href="../../commands/SC-0x6B15-lounge-btlroom_member_detail_get_r.html"><code>SC-0x6B15-lounge-btlroom_member_detail_get_r</code></a> <span class="muted">@0xB44956</span></td></tr><tr><td><code>count_max</code></td><td><code>INTEGER</code></td><td><span class="badge" style="background:#455a64">attribute</span></td><td><code>u16</code> · 2B</td><td>房间人数上限</td><td class="muted">房间人数上限 [u16] SC-0x6B15-lounge-btlroom_member_detail_get_r@0xB44978</td><td><a href="../../commands/SC-0x6B15-lounge-btlroom_member_detail_get_r.html"><code>SC-0x6B15-lounge-btlroom_member_detail_get_r</code></a> <span class="muted">@0xB44978</span></td></tr><tr><td><code>count_zeon</code></td><td><code>INTEGER</code></td><td><span class="badge" style="background:#455a64">attribute</span></td><td><code>u16</code> · 2B</td><td>吉翁侧人数</td><td class="muted">吉翁侧人数 [u16] SC-0x6B15-lounge-btlroom_member_detail_get_r@0xB44967</td><td><a href="../../commands/SC-0x6B15-lounge-btlroom_member_detail_get_r.html"><code>SC-0x6B15-lounge-btlroom_member_detail_get_r</code></a> <span class="muted">@0xB44967</span></td></tr><tr><td><code>extrule_id</code></td><td><code>BIGINT</code></td><td><span class="badge" style="background:#6a1b9a">ref</span></td><td><code>u32</code> · 4B</td><td>扩展规则 ID</td><td class="muted">扩展规则 ID [u32] SC-0x244E-lounge-btlroom_info_one@0xB44928</td><td><a href="../../commands/SC-0x244E-lounge-btlroom_info_one.html"><code>SC-0x244E-lounge-btlroom_info_one</code></a> <span class="muted">@0xB44928</span></td></tr><tr><td><code>is_lock</code></td><td><code>SMALLINT</code></td><td><span class="badge" style="background:#5d4037">flag</span></td><td><code>i8</code> · 1B</td><td>是否上锁</td><td class="muted">是否上锁 [i8] SC-0x244E-lounge-btlroom_info_one@0xB4493E</td><td><a href="../../commands/SC-0x244E-lounge-btlroom_info_one.html"><code>SC-0x244E-lounge-btlroom_info_one</code></a> <span class="muted">@0xB4493E</span></td></tr><tr><td><code>is_vsclan</code></td><td><code>SMALLINT</code></td><td><span class="badge" style="background:#5d4037">flag</span></td><td><code>i8</code> · 1B</td><td>是否部队对战房间</td><td class="muted">是否部队对战房间 [i8] SC-0x6B15-lounge-btlroom_member_detail_get_r@0xB44945</td><td><a href="../../commands/SC-0x6B15-lounge-btlroom_member_detail_get_r.html"><code>SC-0x6B15-lounge-btlroom_member_detail_get_r</code></a> <span class="muted">@0xB4493E</span></td></tr><tr><td><code>master_name</code></td><td><code>TEXT</code></td><td><span class="badge" style="background:#c62828">payload</span></td><td><code>bytes[25]</code> · 25B</td><td>房主名称（定长 25B）</td><td class="muted">房主名称（定长 25B） [bytes[25]] SC-0x6B15-lounge-btlroom_member_detail_get_r@0xB449B8</td><td><a href="../../commands/SC-0x6B15-lounge-btlroom_member_detail_get_r.html"><code>SC-0x6B15-lounge-btlroom_member_detail_get_r</code></a> <span class="muted">@0xB449C2</span></td></tr><tr><td><code>master_pilotid</code></td><td><code>BIGINT</code></td><td><span class="badge" style="background:#6a1b9a">ref</span></td><td><code>u32</code> · 4B</td><td>房主 pilot ID</td><td class="muted">房主 pilot ID [u32] SC-0x6B15-lounge-btlroom_member_detail_get_r@0xB44989</td><td><a href="../../commands/SC-0x6B15-lounge-btlroom_member_detail_get_r.html"><code>SC-0x6B15-lounge-btlroom_member_detail_get_r</code></a> <span class="muted">@0xB44989</span></td></tr><tr><td><code>master_worldid</code></td><td><code>BIGINT</code></td><td><span class="badge" style="background:#6a1b9a">ref</span></td><td><code>u32</code> · 4B</td><td>房主 world ID</td><td class="muted">房主 world ID [u32] SC-0x6B15-lounge-btlroom_member_detail_get_r@0xB4499A</td><td><a href="../../commands/SC-0x6B15-lounge-btlroom_member_detail_get_r.html"><code>SC-0x6B15-lounge-btlroom_member_detail_get_r</code></a> <span class="muted">@0xB4499A</span></td></tr><tr><td><code>mission_id</code></td><td><code>BIGINT</code></td><td><span class="badge" style="background:#6a1b9a">ref</span></td><td><code>u32</code> · 4B</td><td>任务 ID</td><td class="muted">任务 ID [u32] SC-0x244E-lounge-btlroom_info_one@0xB44912</td><td><a href="../../commands/SC-0x244E-lounge-btlroom_info_one.html"><code>SC-0x244E-lounge-btlroom_info_one</code></a> <span class="muted">@0xB44912</span></td></tr><tr><td><code>play_elapsed</code></td><td><code>BIGINT</code></td><td><span class="badge" style="background:#455a64">attribute</span></td><td><code>u32</code> · 4B</td><td>已进行时间（秒）</td><td class="muted">已进行时间（秒） [u32] SC-0x244E-lounge-btlroom_info_one@0xB448FC</td><td><a href="../../commands/SC-0x244E-lounge-btlroom_info_one.html"><code>SC-0x244E-lounge-btlroom_info_one</code></a> <span class="muted">@0xB448FC</span></td></tr><tr><td><code>room_id</code> <span class="muted">PK</span></td><td><code>BIGINT NOT NULL</code></td><td><span class="badge" style="background:#2e7d32">identity</span></td><td><code>u32</code> · 4B</td><td>房间 ID</td><td class="muted">房间 ID [u32] SC-0x244E-lounge-btlroom_info_one@0xB4489A</td><td><a href="../../commands/SC-0x244E-lounge-btlroom_info_one.html"><code>SC-0x244E-lounge-btlroom_info_one</code></a> <span class="muted">@0xB4489A</span></td></tr><tr><td><code>room_name</code></td><td><code>TEXT</code></td><td><span class="badge" style="background:#c62828">payload</span></td><td><code>bytes[73]</code> · 73B</td><td>房间名（定长 73B）</td><td class="muted">房间名（定长 73B） [bytes[73]] SC-0x244E-lounge-btlroom_info_one@0xB4489F</td><td><a href="../../commands/SC-0x244E-lounge-btlroom_info_one.html"><code>SC-0x244E-lounge-btlroom_info_one</code></a> <span class="muted">@0xB4489F</span></td></tr><tr><td><code>room_stat</code></td><td><code>SMALLINT</code></td><td><span class="badge" style="background:#455a64">attribute</span></td><td><code>i8</code> · 1B</td><td>房间状态</td><td class="muted">房间状态 [i8] SC-0x244E-lounge-btlroom_info_one@0xB448E6</td><td><a href="../../commands/SC-0x244E-lounge-btlroom_info_one.html"><code>SC-0x244E-lounge-btlroom_info_one</code></a> <span class="muted">@0xB448E6</span></td></tr><tr><td><code>room_type</code></td><td><code>BIGINT</code></td><td><span class="badge" style="background:#455a64">attribute</span></td><td><code>u32</code> · 4B</td><td>房间类型</td><td class="muted">房间类型 [u32] SC-0x244E-lounge-btlroom_info_one@0xB448D0</td><td><a href="../../commands/SC-0x244E-lounge-btlroom_info_one.html"><code>SC-0x244E-lounge-btlroom_info_one</code></a> <span class="muted">@0xB448D0</span></td></tr></tbody>
+      </table>
+    </section>
+
+    <h3>子表链接</h3>
+    <table><thead><tr><th>成员</th><th>类别</th><th>子表 / 行所在表</th><th>元素数</th><th>元素线长</th><th>复合体</th><th>VA</th></tr></thead>
+      <tbody><tr><td colspan="7" class="muted">无</td></tr></tbody></table>
+    
+
+    <h3>外键（出向）</h3>
+    <table><thead><tr><th>本列</th><th>目标</th><th>类别</th><th>依据</th><th>VA</th></tr></thead>
+      <tbody><tr><td><code>roominfo.master_pilotid</code></td><td><code>core.pilot_registry.pilot_id</code></td><td>fk</td><td>名字形如机师 id（master_pilotid）</td><td><span class="muted">0xB44989</span></td></tr><tr><td><code>roominfo.master_worldid</code></td><td><code>core.worlds.world_id</code></td><td>fk</td><td>名字形如世界 id（master_worldid）</td><td><span class="muted">0xB4499A</span></td></tr></tbody></table>
+    
+    <h3>外键（入向：别人指向我）</h3>
+    <table><thead><tr><th>来源列</th><th>目标</th><th>类别</th><th>VA</th></tr></thead>
+      <tbody><tr><td colspan="4" class="muted">无</td></tr></tbody></table>
+    <h3>主数据引用（→ cfg.*）</h3>
+    <table><thead><tr><th>本列</th><th>目标</th><th>依据</th><th>VA</th></tr></thead>
+      <tbody><tr><td><code>roominfo.extrule_id</code></td><td><code>cfg.MISSION_EXTRULE.rule_id</code></td><td>人工裁决·主数据：扩展规则 id = 任务附加规则表 MISSION_EXTRULE（purpose 即「任务附加规则」，主键 rule_id）；coop_room/roominfo/dailycup_conf 用的都是这一张</td><td><span class="muted">0xB44928</span></td></tr><tr><td><code>roominfo.mission_id</code></td><td><code>cfg.MISSION_COOP.mission_id</code></td><td>主数据候选 [&#x27;MISSION_COOP&#x27;, &#x27;MISSION_VS&#x27;]（cfg 主键列名多命中，待定）</td><td><span class="muted">0xB44912</span></td></tr></tbody></table>
+    <h3>未决引用</h3>
+    <table><thead><tr><th>本列</th><th>原因</th><th>VA</th></tr></thead>
+      <tbody><tr><td colspan="3" class="muted">无</td></tr></tbody></table>
+
+    <h3>不落库成员（0）</h3>
+    <p class="muted">EVENT/TBD 生命周期、<code>memory_only</code>、对齐补位：线上有、库里不建列，
+      理由在此显式登记（反向覆盖门）。</p>
+    <table><thead><tr><th>成员</th><th>角色</th><th>理由</th><th>线类型</th><th>VA</th></tr></thead>
+      <tbody><tr><td colspan="5" class="muted">无</td></tr></tbody></table>
+
+    <h3>命令归属（CS 写 / SC 读）</h3>
+    <table><thead><tr><th>写命令</th><th>op</th><th>via</th><th>verbs</th></tr></thead>
+      <tbody><tr><td colspan="4" class="muted">无</td></tr></tbody></table>
+    <table><thead><tr><th>读命令</th><th>op</th><th>via</th><th>verbs</th></tr></thead>
+      <tbody><tr><td><a href="../../commands/SC-0x244E-lounge-btlroom_info_one.html"><code>SC-0x244E-lounge-btlroom_info_one</code></a></td><td>read</td><td><code>roominfo</code></td><td></td></tr><tr><td><a href="../../commands/SC-0x6B15-lounge-btlroom_member_detail_get_r.html"><code>SC-0x6B15-lounge-btlroom_member_detail_get_r</code></a></td><td>read</td><td><code>roominfo</code></td><td></td></tr></tbody></table>
+    
+    <p class="muted">子表：—</p>
+    
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">生成于 2026-10-12 · 改 JSON 后重跑 build_site.py · HTML 只读</div>
+  </footer>
+</body>
+</html>

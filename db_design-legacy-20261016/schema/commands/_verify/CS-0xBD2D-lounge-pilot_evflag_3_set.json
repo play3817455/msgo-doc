@@ -1,0 +1,156 @@
+{
+ "id": "CS-0xBD2D-lounge-pilot_evflag_3_set",
+ "verified_at": "2026-09-30 15:25:42",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "handler_func",
+ "block": [
+  "0xB8B540",
+  "0xB8B6F3"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 10,
+   "va": "0xB8B583",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xB8B580",
+   "call_va": "0xB8B585"
+  },
+  "field_window": {
+   "start_va": "0xB8B540",
+   "end_va": "0xB8B624",
+   "guard": null,
+   "closer_or_commit_va": "0xB8B624",
+   "within_model_block": true,
+   "range_from": "handler_func"
+  },
+  "primitive_widths": {
+   "direction": "CS",
+   "expected": [
+    {
+     "name": "evflag3",
+     "wire_type": "u64",
+     "width": 8,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "`0xB8B5C5`"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB8B5B1",
+     "kind": "inline_store",
+     "width": 2,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB8B5C5",
+     "kind": "inline_store",
+     "width": 4,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB8B5FA",
+     "kind": "composite",
+     "width": null,
+     "wire_type": null,
+     "name": "sub_B03020",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 0,
+   "checkable": 1,
+   "pairs": [],
+   "gaps": [
+    {
+     "field": "evflag3",
+     "wire_type": "u64",
+     "width": 8,
+     "shape": "scalar",
+     "note": "汇编事件序列里找不到与之对位的读写点（缺字段或宽度不符）"
+    }
+   ],
+   "unmatched_actual": [
+    {
+     "va": "0xB8B5B1",
+     "kind": "inline_store",
+     "width": 2,
+     "wire_type": null
+    },
+    {
+     "va": "0xB8B5C5",
+     "kind": "inline_store",
+     "width": 4,
+     "wire_type": null
+    }
+   ],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB8B540",
+    "0xB8B624"
+   ],
+   "scalar_match_verifiable": false,
+   "capacity_relation": {
+    "observed_min": 6,
+    "capacity": 10,
+    "relation": "within",
+    "unknown_events": [
+     {
+      "va": "0xB8B5FA",
+      "kind": "composite",
+      "name": "sub_B03020"
+     }
+    ],
+    "is_lower_bound": true,
+    "note": "观测线长（下界）6 / 容量 0xa"
+   }
+  },
+  "closer": {
+   "va": "0xB8B624",
+   "kind": "commit",
+   "jcc_va": null,
+   "seq_va": null,
+   "cmp": null,
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x58]",
+   "slot_value": 88,
+   "va": "0xB8B68D",
+   "mov_va": "0xB8B684",
+   "host": "[edx+58h]",
+   "argc": 2,
+   "form": "mov_then_call",
+   "error_slot": null
+  },
+  "log_strings": [
+   "evflag3="
+  ]
+ },
+ "mismatches": [],
+ "notes": [
+  {
+   "check": "primitive_widths",
+   "note": "定宽对位不可判定：C→S 写线在复合写入器内部 consumed 未知；缺口 evflag3"
+  }
+ ],
+ "log_name_hits": [
+  "evflag3"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 4
+}

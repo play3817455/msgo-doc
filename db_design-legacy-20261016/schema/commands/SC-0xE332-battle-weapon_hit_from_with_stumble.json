@@ -1,0 +1,567 @@
+{
+  "id": "SC-0xE332-battle-weapon_hit_from_with_stumble",
+  "opcode": "0xE332",
+  "direction": "SC",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "weapon_hit_from_with_stumble",
+  "source_dir": "protocol_analysis/commands/SC-0xE332-battle-weapon_hit_from_with_stumble",
+  "meta": {
+    "opcode": "`0xE332`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`battle_client`",
+    "命令名": "`weapon_hit_from_with_stumble`",
+    "处理函数": "`sub_B0CC20`（battle 分发器）",
+    "处理块范围": "`0xB2E55F`..`0xB2E8C8`",
+    "名字串引用点": "`0xB2E6EB`",
+    "声明容量（解码缓冲）": "`0x10`（`0xB2E57B`）",
+    "长度闭合点": "`0xB2E6A2`",
+    "去向": "`vt[0x200]` @ `0xB2E892`（6 实参）"
+  },
+  "handler": "sub_B0CC20",
+  "handler_va": "0xB0CC20",
+  "block": [
+    "0xB2E55F",
+    "0xB2E8C8"
+  ],
+  "name_str": null,
+  "name_str_va": "0xB2E6EB",
+  "capacity": "0x10",
+  "capacity_va": "0xB2E57B",
+  "closer_va": "0xB2E6A2",
+  "dispatch": "`vt[0x200]` @ `0xB2E892`（6 实参）",
+  "dispatch_slot": "vt[0x200]",
+  "dispatch_va": "0xB2E892",
+  "wire": {
+    "length_expr": "2 + 2 + 4 + 4 + 2 + 2",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x10（容量记账口径，非线长）",
+    "field_count": 6,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：16。",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0xE332",
+      "evidence_va": [
+        "0xB2E6EB"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "ent_id",
+      "meaning": "受击实体 ID（日志串 `ent_id=`）",
+      "purpose": "经 `vt[0x200]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB2E5B6",
+        "0xB2E742"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "2",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "hit_dir",
+      "meaning": "受击方向（日志串 `hit_dir=`）",
+      "purpose": "经 `vt[0x200]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB2E5F6",
+        "0xB2E76D"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "4",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "spbits",
+      "meaning": "状态位（special bits；日志串 `spbits=`）",
+      "purpose": "经 `vt[0x200]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB2E61A",
+        "0xB2E797"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 4,
+      "offset": "8",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "optbits",
+      "meaning": "选项位（日志串 `optbits=`）",
+      "purpose": "经 `vt[0x200]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB2E63E",
+        "0xB2E7C1"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    },
+    {
+      "seq": 5,
+      "offset": "12",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "stumble_power",
+      "meaning": "踉跄力度（日志串 `stumble_power=`）",
+      "purpose": "经 `vt[0x200]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB2E666",
+        "0xB2E7EC"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 7
+    },
+    {
+      "seq": 6,
+      "offset": "14",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "stumble_msec",
+      "meaning": "踉跄时长（毫秒；日志串 `stumble_msec=`）",
+      "purpose": "经 `vt[0x200]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB2E68E",
+        "0xB2E812"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 8
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0xE332（分发器 switch 选择子）",
+      "evidence_va": "0xB2E6EB"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB05DA0`（模块 id 160）→ 之后逐字段读线",
+      "evidence_va": "0xB2E566"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "ent_id：`u16`（线长 2）—— 受击实体 ID（日志串 `ent_id=`）",
+      "evidence_va": "0xB2E5B6"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "hit_dir：`u16`（线长 2）—— 受击方向（日志串 `hit_dir=`）",
+      "evidence_va": "0xB2E5F6"
+    },
+    {
+      "step": 5,
+      "kind": "read_scalar",
+      "detail": "spbits：`u32`（线长 4）—— 状态位（special bits；日志串 `spbits=`）",
+      "evidence_va": "0xB2E61A"
+    },
+    {
+      "step": 6,
+      "kind": "read_scalar",
+      "detail": "optbits：`u32`（线长 4）—— 选项位（日志串 `optbits=`）",
+      "evidence_va": "0xB2E63E"
+    },
+    {
+      "step": 7,
+      "kind": "read_scalar",
+      "detail": "stumble_power：`u16`（线长 2）—— 踉跄力度（日志串 `stumble_power=`）",
+      "evidence_va": "0xB2E666"
+    },
+    {
+      "step": 8,
+      "kind": "read_scalar",
+      "detail": "stumble_msec：`u16`（线长 2）—— 踉跄时长（毫秒；日志串 `stumble_msec=`）",
+      "evidence_va": "0xB2E68E"
+    },
+    {
+      "step": 9,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB2E6A2"
+    },
+    {
+      "step": 10,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x200]`，实参 6 个",
+      "evidence_va": "0xB2E892"
+    },
+    {
+      "step": 11,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB2E5D0"
+    }
+  ],
+  "capabilities": [
+    "battle_action"
+  ],
+  "capabilities_derived": [
+    "unclassified"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:48",
+    "batch": 20,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 16,
+        "va": "0xB2E57B",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB2E578",
+        "call_va": "0xB2E57D"
+      },
+      "field_window": {
+        "start_va": "0xB2E567",
+        "end_va": "0xB2E6C9",
+        "guard": {
+          "va": "0xB2E566",
+          "func": "0xB05DA0",
+          "module_id": 160,
+          "release_va": "0xB05D90"
+        },
+        "closer_or_commit_va": "0xB2E6A2",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "ent_id",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB2E5B6",
+              "0xB2E742"
+            ]
+          },
+          {
+            "name": "hit_dir",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB2E5F6",
+              "0xB2E76D"
+            ]
+          },
+          {
+            "name": "spbits",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB2E61A",
+              "0xB2E797"
+            ]
+          },
+          {
+            "name": "optbits",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 4,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB2E63E",
+              "0xB2E7C1"
+            ]
+          },
+          {
+            "name": "stumble_power",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 5,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB2E666",
+              "0xB2E7EC"
+            ]
+          },
+          {
+            "name": "stumble_msec",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 6,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB2E68E",
+              "0xB2E812"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB2E5B6",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB2E5F6",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB2E61A",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB2E63E",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB2E666",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB2E68E",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 6,
+        "checkable": 6,
+        "pairs": [
+          {
+            "field": "ent_id",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB2E5B6",
+            "kind": "read"
+          },
+          {
+            "field": "hit_dir",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB2E5F6",
+            "kind": "read"
+          },
+          {
+            "field": "spbits",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB2E61A",
+            "kind": "read"
+          },
+          {
+            "field": "optbits",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB2E63E",
+            "kind": "read"
+          },
+          {
+            "field": "stumble_power",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB2E666",
+            "kind": "read"
+          },
+          {
+            "field": "stumble_msec",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB2E68E",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB2E567",
+          "0xB2E6C9"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 16,
+          "capacity": 16,
+          "relation": "exact",
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）16 / 容量 0x10"
+        }
+      },
+      "closer": {
+        "va": "0xB2E6A2",
+        "kind": "jz",
+        "jcc_va": "0xB2E6A8",
+        "seq_va": "0xB2E69E",
+        "jcc_dst": "0xB2E6C4",
+        "cmp": "cmp     ebx, [esp+1B3Ch+var_1B24]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x200]",
+        "slot_value": 512,
+        "va": "0xB2E892",
+        "mov_va": "0xB2E867",
+        "host": "[eax+200h]",
+        "argc": 6,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB2E5D0",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "ent_id=",
+        "hit_dir=",
+        "spbits=",
+        "optbits=",
+        "stumble_power=",
+        "stumble_msec="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0xE332-battle-weapon_hit_from_with_stumble.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xB2E6EB"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "WeaponHitFromWithStumble",
+      "role": "response",
+      "wire_length": "2 + 2 + 4 + 4 + 2 + 2",
+      "members": [
+        {
+          "name": "EntId",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "ent_id"
+        },
+        {
+          "name": "HitDir",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "hit_dir"
+        },
+        {
+          "name": "Spbits",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "spbits"
+        },
+        {
+          "name": "Optbits",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "optbits"
+        },
+        {
+          "name": "StumblePower",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "stumble_power"
+        },
+        {
+          "name": "StumbleMsec",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "stumble_msec"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "7322d38b32f97c81",
+  "check_fingerprint": "a223ae357805d495"
+}

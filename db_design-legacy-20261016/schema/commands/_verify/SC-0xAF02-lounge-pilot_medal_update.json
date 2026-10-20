@@ -1,0 +1,139 @@
+{
+ "id": "SC-0xAF02-lounge-pilot_medal_update",
+ "verified_at": "2026-09-30 15:25:44",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "block",
+ "block": [
+  "0xB7230A",
+  "0xB724DC"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 128,
+   "va": "0xB7231F",
+   "reg": "eax",
+   "host": "[edx+78h]",
+   "alloc_va": "0xB7231C",
+   "call_va": "0xB72324"
+  },
+  "field_window": {
+   "start_va": "0xB7230B",
+   "end_va": "0xB723B1",
+   "guard": {
+    "va": "0xB7230A",
+    "func": "0xB41120",
+    "module_id": null,
+    "release_va": "0xB41110"
+   },
+   "closer_or_commit_va": "0xB72390",
+   "within_model_block": true,
+   "range_from": "block"
+  },
+  "primitive_widths": {
+   "direction": "SC",
+   "expected": [
+    {
+     "name": "hav_medal",
+     "wire_type": "array<u64,16>",
+     "width": null,
+     "seq": 1,
+     "shape": "agg",
+     "evidence_va": [
+      "B7234E",
+      "B72366",
+      "B72378"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB7234E",
+     "kind": "opaque",
+     "width": null,
+     "wire_type": null,
+     "name": "sub_B41280",
+     "consumed": 128,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB72366",
+     "kind": "read",
+     "width": 128,
+     "wire_type": "u64",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 0,
+   "checkable": 0,
+   "pairs": [],
+   "gaps": [],
+   "unmatched_actual": [
+    {
+     "va": "0xB7234E",
+     "kind": "opaque",
+     "width": null,
+     "wire_type": null
+    },
+    {
+     "va": "0xB72366",
+     "kind": "read",
+     "width": 128,
+     "wire_type": "u64"
+    }
+   ],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB7230B",
+    "0xB723B1"
+   ],
+   "scalar_match_verifiable": true,
+   "capacity_relation": {
+    "observed_min": 128,
+    "capacity": 128,
+    "relation": "exact",
+    "unknown_events": [],
+    "is_lower_bound": false,
+    "note": "观测线长（下界）128 / 容量 0x80"
+   }
+  },
+  "closer": {
+   "va": "0xB72390",
+   "kind": "jz",
+   "jcc_va": "0xB72396",
+   "seq_va": "0xB7238C",
+   "jcc_dst": "0xB723AF",
+   "cmp": "cmp     ecx, [esp+2C5Ch+var_2C40]",
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0xC8]",
+   "slot_value": 200,
+   "va": "0xB724C0",
+   "mov_va": "0xB724B7",
+   "host": "[eax+0C8h]",
+   "argc": 1,
+   "form": "mov_then_call",
+   "error_slot": {
+    "slot": "vt[0x64]",
+    "va": "0xB7238A",
+    "argc": 2
+   }
+  },
+  "log_strings": [
+   "hav_medal={"
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "hav_medal"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 10
+}

@@ -1,0 +1,51 @@
+{
+  "id": "tbl_trchallenge_info",
+  "title": "部队挑战信息",
+  "status": "complete",
+  "table_disposition": "PERSIST",
+  "purpose": "持久化 trchallenge_info 13B 线；布局同 challenge_info（sub_B07540/sub_B0A1A0）；槽 200",
+  "entity_ref": "trchallenge_info",
+  "evidence_commands": [
+    "SC-0x271C-lounge-pilot_troopchallenge_get_r"
+  ],
+  "column_groups": [
+    {
+      "name": "trchallenge_info（13B 线 · 同 challenge_info）",
+      "columns": [
+        "trchallenge_info"
+      ]
+    }
+  ],
+  "columns": [
+    {
+      "name": "trchallenge_info",
+      "disposition": "COMPOSITE",
+      "composite_ref": "challenge_info",
+      "meaning": "部队挑战信息（日志 `trchallenge_info={…}`；线长 13 / 槽 200）",
+      "wire_sources": [
+        {
+          "command": "SC-0x271C-lounge-pilot_troopchallenge_get_r",
+          "struct": "trchallenge_info",
+          "field_name": "trchallenge_info",
+          "offset": 4,
+          "length": 13,
+          "wire_type": "struct",
+          "protocol_path": "protocol_analysis/commands/SC-0x271C-lounge-pilot_troopchallenge_get_r/README.md",
+          "section": "§3",
+          "reader": "sub_B07540",
+          "printer": "sub_B0A1A0",
+          "evidence_va": "B59056|B5903E|B59103",
+          "notes": "字段 #2；sub_B41400 预留 0xC8=200 槽"
+        }
+      ],
+      "asm_verified": true
+    }
+  ],
+  "asm_audit": {
+    "composite_ref": "trchallenge_info",
+    "status": "pass",
+    "issues_count": 0,
+    "memory_status": "pass",
+    "memory_issues_count": 0
+  }
+}

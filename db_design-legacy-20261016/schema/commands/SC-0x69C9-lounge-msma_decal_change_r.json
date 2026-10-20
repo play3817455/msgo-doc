@@ -1,0 +1,441 @@
+{
+  "id": "SC-0x69C9-lounge-msma_decal_change_r",
+  "opcode": "0x69C9",
+  "direction": "SC",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "msma_decal_change_r",
+  "source_dir": "protocol_analysis/commands/SC-0x69C9-lounge-msma_decal_change_r",
+  "meta": {
+    "opcode": "`0x69C9`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`msma_decal_change_r`",
+    "处理块范围": "`0xb64fbb`..`0xb6526b`",
+    "名字串引用点": "`0xb65106`",
+    "声明容量（解码缓冲）": "`0x18`（`0xb64fd0`）",
+    "长度闭合点": "`0xb650bb`",
+    "去向": "`vt[0x288]` @ `0xb6524f`（6 实参）"
+  },
+  "handler": null,
+  "handler_va": null,
+  "block": [
+    "0xb64fbb",
+    "0xb6526b"
+  ],
+  "name_str": null,
+  "name_str_va": "0xb65106",
+  "capacity": "0x18",
+  "capacity_va": "0xb64fd0",
+  "closer_va": "0xB650BF",
+  "dispatch": "`vt[0x288]` @ `0xb6524f`（6 实参）",
+  "dispatch_slot": "vt[0x288]",
+  "dispatch_va": "0xb6524f",
+  "wire": {
+    "length_expr": "4 + 8 + 4 + 8",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x18（容量记账口径，非线长）",
+    "field_count": 4,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：24。",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0x69C9",
+      "evidence_va": [
+        "`0xb65106`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "result",
+      "meaning": "处理结果码（日志串 `result=`）",
+      "purpose": "`vt[0x288]` 实参之一",
+      "enum": null,
+      "evidence_va": [
+        "0xb6500b"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "8",
+      "wire_type": "u64",
+      "name": "uniqid_ms",
+      "meaning": "机体实例唯一编号（日志串 `uniqid_ms=`）",
+      "purpose": "`vt[0x288]` 实参（拆低/高 32 位）",
+      "enum": null,
+      "evidence_va": [
+        "0xb6504b"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "12",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "decal",
+      "meaning": "贴花种类（日志串 `decal=`）",
+      "purpose": "`vt[0x288]` 实参",
+      "enum": null,
+      "evidence_va": [
+        "0xb6506f"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 4,
+      "offset": "16",
+      "length": "8",
+      "wire_type": "u64",
+      "name": "uniqid_decal",
+      "meaning": "贴花实例唯一编号（日志串 `uniqid_decal=`）",
+      "purpose": "`vt[0x288]` 实参（拆低/高 32 位）",
+      "enum": null,
+      "evidence_va": [
+        "0xb65093"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0x69C9（分发器 switch 选择子）",
+      "evidence_va": "0xB65106"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB41120`（模块 id None）→ 之后逐字段读线",
+      "evidence_va": "0xB64FBB"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "result：`u32`（线长 4）—— 处理结果码（日志串 `result=`）",
+      "evidence_va": "0xB6500B"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "uniqid_ms：`u64`（线长 8）—— 机体实例唯一编号（日志串 `uniqid_ms=`）",
+      "evidence_va": "0xB6504B"
+    },
+    {
+      "step": 5,
+      "kind": "read_scalar",
+      "detail": "decal：`u32`（线长 4）—— 贴花种类（日志串 `decal=`）",
+      "evidence_va": "0xB6506F"
+    },
+    {
+      "step": 6,
+      "kind": "read_scalar",
+      "detail": "uniqid_decal：`u64`（线长 8）—— 贴花实例唯一编号（日志串 `uniqid_decal=`）",
+      "evidence_va": "0xB65093"
+    },
+    {
+      "step": 7,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB650BF"
+    },
+    {
+      "step": 8,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x288]`，实参 6 个",
+      "evidence_va": "0xB6524F"
+    },
+    {
+      "step": 9,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB65025"
+    }
+  ],
+  "capabilities": [
+    "update",
+    "lounge.decal"
+  ],
+  "capabilities_derived": [
+    "update"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:42",
+    "batch": 2,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 24,
+        "va": "0xB64FD0",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB64FCD",
+        "call_va": "0xB64FD2"
+      },
+      "field_window": {
+        "start_va": "0xB64FBC",
+        "end_va": "0xB650E4",
+        "guard": {
+          "va": "0xB64FBB",
+          "func": "0xB41120",
+          "module_id": null,
+          "release_va": "0xB41110"
+        },
+        "closer_or_commit_va": "0xB650BF",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "result",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb6500b"
+            ]
+          },
+          {
+            "name": "uniqid_ms",
+            "wire_type": "u64",
+            "width": 8,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb6504b"
+            ]
+          },
+          {
+            "name": "decal",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb6506f"
+            ]
+          },
+          {
+            "name": "uniqid_decal",
+            "wire_type": "u64",
+            "width": 8,
+            "seq": 4,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb65093"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB6500B",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB6504B",
+            "kind": "read",
+            "width": 8,
+            "wire_type": "u64",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB6506F",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB65093",
+            "kind": "read",
+            "width": 8,
+            "wire_type": "u64",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 4,
+        "checkable": 4,
+        "pairs": [
+          {
+            "field": "result",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB6500B",
+            "kind": "read"
+          },
+          {
+            "field": "uniqid_ms",
+            "width": 8,
+            "shape": "scalar",
+            "va": "0xB6504B",
+            "kind": "read"
+          },
+          {
+            "field": "decal",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB6506F",
+            "kind": "read"
+          },
+          {
+            "field": "uniqid_decal",
+            "width": 8,
+            "shape": "scalar",
+            "va": "0xB65093",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB64FBC",
+          "0xB650E4"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 24,
+          "capacity": 24,
+          "relation": "exact",
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）24 / 容量 0x18"
+        }
+      },
+      "closer": {
+        "va": "0xB650BF",
+        "kind": "jz",
+        "jcc_va": "0xB650C3",
+        "seq_va": "0xB650BB",
+        "jcc_dst": "0xB650DF",
+        "cmp": "cmp     eax, [esp+2C5Ch+var_2C40]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x288]",
+        "slot_value": 648,
+        "va": "0xB6524F",
+        "mov_va": "0xB6522C",
+        "host": "[edx+288h]",
+        "argc": 6,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB65025",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "result=",
+        "uniqid_ms=",
+        "decal=",
+        "uniqid_decal="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0x69C9-lounge-msma_decal_change_r.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "`0xb65106`"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "MsmaDecalChangeR",
+      "role": "response",
+      "wire_length": "4 + 8 + 4 + 8",
+      "members": [
+        {
+          "name": "Result",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "result"
+        },
+        {
+          "name": "UniqidMs",
+          "wire_type": "u64",
+          "length": "8",
+          "field_ref": "uniqid_ms"
+        },
+        {
+          "name": "Decal",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "decal"
+        },
+        {
+          "name": "UniqidDecal",
+          "wire_type": "u64",
+          "length": "8",
+          "field_ref": "uniqid_decal"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "c0497a1cf2db5801",
+  "check_fingerprint": "f1ab9bbcb848e056"
+}

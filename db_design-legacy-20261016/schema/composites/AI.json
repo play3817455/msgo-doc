@@ -1,0 +1,839 @@
+{
+  "id": "AI",
+  "title": "AI 参数结构 AI（165B 线 / 168B 槽）",
+  "length": 165,
+  "status": "complete",
+  "reader": "sub_B07230",
+  "printer": "sub_B09C10",
+  "memory_claim": 168,
+  "wire_layout": "1+33+4+1+2+10×4+10×2+10×2+14×2+2×4+3×2+1+1",
+  "evidence": {
+    "commands": [
+      "SC-0xB463-battle-msma_AI_install"
+    ],
+    "protocol_paths": [
+      "protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md"
+    ],
+    "note": "B463 msma_AI_install；配对 B604 resume / 1165 uninstall"
+  },
+  "members": [
+    {
+      "name": "type",
+      "offset": 0,
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "AI 类型",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0xB463-battle-msma_AI_install",
+          "struct": "AI",
+          "field_name": "type",
+          "offset": 0,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md",
+          "section": "§4.3",
+          "reader": "sub_B07230",
+          "printer": "sub_B09C10",
+          "evidence_va": "0xb0724c"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xb0724c",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 0
+    },
+    {
+      "name": "name",
+      "offset": 1,
+      "length": 33,
+      "wire_type": "char[33]",
+      "meaning": "名称（定长 33 字节）",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0xB463-battle-msma_AI_install",
+          "struct": "AI",
+          "field_name": "name",
+          "offset": 1,
+          "length": 33,
+          "wire_type": "char[33]",
+          "protocol_path": "protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md",
+          "section": "§4.3",
+          "reader": "sub_B07230",
+          "printer": "sub_B09C10",
+          "notes": "cmp ecx,21h 定长循环",
+          "evidence_va": "0xb07265"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xb07265",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 1
+    },
+    {
+      "name": "param_id",
+      "offset": 34,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "参数 ID",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0xB463-battle-msma_AI_install",
+          "struct": "AI",
+          "field_name": "param_id",
+          "offset": 34,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md",
+          "section": "§4.3",
+          "reader": "sub_B07230",
+          "printer": "sub_B09C10",
+          "notes": "槽内 offset 34-35 对齐填充",
+          "evidence_va": "0xB07283"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07283",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 36
+    },
+    {
+      "name": "action_type",
+      "offset": 38,
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "行动类型",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0xB463-battle-msma_AI_install",
+          "struct": "AI",
+          "field_name": "action_type",
+          "offset": 38,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md",
+          "section": "§4.3",
+          "reader": "sub_B07230",
+          "printer": "sub_B09C10",
+          "evidence_va": "0xB07296"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07296",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 40
+    },
+    {
+      "name": "move_spd",
+      "offset": 39,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "移动速度",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0xB463-battle-msma_AI_install",
+          "struct": "AI",
+          "field_name": "move_spd",
+          "offset": 39,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md",
+          "section": "§4.3",
+          "reader": "sub_B07230",
+          "printer": "sub_B09C10",
+          "notes": "槽内 offset 41 对齐填充",
+          "evidence_va": "0xB072B1"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB072B1",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 42
+    },
+    {
+      "name": "stat",
+      "offset": 41,
+      "length": 40,
+      "wire_type": "u32[10]",
+      "meaning": "状态数组（10×u32）",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0xB463-battle-msma_AI_install",
+          "struct": "AI",
+          "field_name": "stat",
+          "offset": 41,
+          "length": 40,
+          "wire_type": "u32[10]",
+          "protocol_path": "protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md",
+          "section": "§4.3",
+          "reader": "sub_B07230",
+          "printer": "sub_B09C10",
+          "notes": "cmp eax,0Ah 定长循环",
+          "evidence_va": "0xb072d2"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xb072d2",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 44
+    },
+    {
+      "name": "hate_ent_id",
+      "offset": 81,
+      "length": 20,
+      "wire_type": "u16[10]",
+      "meaning": "仇恨实体 ID（10×u16）",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0xB463-battle-msma_AI_install",
+          "struct": "AI",
+          "field_name": "hate_ent_id",
+          "offset": 81,
+          "length": 20,
+          "wire_type": "u16[10]",
+          "protocol_path": "protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md",
+          "section": "§4.3",
+          "reader": "sub_B07230",
+          "printer": "sub_B09C10",
+          "notes": "cmp ecx,0Ah 定长循环",
+          "evidence_va": "0xB072F9"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB072F9",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 84
+    },
+    {
+      "name": "hate_val",
+      "offset": 101,
+      "length": 20,
+      "wire_type": "u16[10]",
+      "meaning": "仇恨值（10×u16）",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0xB463-battle-msma_AI_install",
+          "struct": "AI",
+          "field_name": "hate_val",
+          "offset": 101,
+          "length": 20,
+          "wire_type": "u16[10]",
+          "protocol_path": "protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md",
+          "section": "§4.3",
+          "reader": "sub_B07230",
+          "printer": "sub_B09C10",
+          "notes": "cmp ecx,0Ah 定长循环",
+          "evidence_va": "0xB07322"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07322",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 104
+    },
+    {
+      "name": "pop_init_x",
+      "offset": 121,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "出现初始 X",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0xB463-battle-msma_AI_install",
+          "struct": "AI",
+          "field_name": "pop_init_x",
+          "offset": 121,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md",
+          "section": "§4.3",
+          "reader": "sub_B07230",
+          "printer": "sub_B09C10",
+          "evidence_va": "0xB07345"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07345",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 124
+    },
+    {
+      "name": "pop_init_y",
+      "offset": 123,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "出现初始 Y",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0xB463-battle-msma_AI_install",
+          "struct": "AI",
+          "field_name": "pop_init_y",
+          "offset": 123,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md",
+          "section": "§4.3",
+          "reader": "sub_B07230",
+          "printer": "sub_B09C10",
+          "evidence_va": "0xB0735D"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB0735D",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 126
+    },
+    {
+      "name": "pop_init_z",
+      "offset": 125,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "出现初始 Z",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0xB463-battle-msma_AI_install",
+          "struct": "AI",
+          "field_name": "pop_init_z",
+          "offset": 125,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md",
+          "section": "§4.3",
+          "reader": "sub_B07230",
+          "printer": "sub_B09C10",
+          "evidence_va": "0xB07378"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07378",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 128
+    },
+    {
+      "name": "pop_init_dir",
+      "offset": 127,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "出现初始朝向",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0xB463-battle-msma_AI_install",
+          "struct": "AI",
+          "field_name": "pop_init_dir",
+          "offset": 127,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md",
+          "section": "§4.3",
+          "reader": "sub_B07230",
+          "printer": "sub_B09C10",
+          "evidence_va": "0xB07393"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07393",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 130
+    },
+    {
+      "name": "fire_start_x",
+      "offset": 129,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "射击起点 X",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0xB463-battle-msma_AI_install",
+          "struct": "AI",
+          "field_name": "fire_start_x",
+          "offset": 129,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md",
+          "section": "§4.3",
+          "reader": "sub_B07230",
+          "printer": "sub_B09C10",
+          "evidence_va": "0xB073AE"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB073AE",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 132
+    },
+    {
+      "name": "fire_start_y",
+      "offset": 131,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "射击起点 Y",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0xB463-battle-msma_AI_install",
+          "struct": "AI",
+          "field_name": "fire_start_y",
+          "offset": 131,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md",
+          "section": "§4.3",
+          "reader": "sub_B07230",
+          "printer": "sub_B09C10",
+          "evidence_va": "0xB073C9"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB073C9",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 134
+    },
+    {
+      "name": "fire_start_z",
+      "offset": 133,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "射击起点 Z",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0xB463-battle-msma_AI_install",
+          "struct": "AI",
+          "field_name": "fire_start_z",
+          "offset": 133,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md",
+          "section": "§4.3",
+          "reader": "sub_B07230",
+          "printer": "sub_B09C10",
+          "evidence_va": "0xB073E4"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB073E4",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 136
+    },
+    {
+      "name": "fire_end_x",
+      "offset": 135,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "射击终点 X",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0xB463-battle-msma_AI_install",
+          "struct": "AI",
+          "field_name": "fire_end_x",
+          "offset": 135,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md",
+          "section": "§4.3",
+          "reader": "sub_B07230",
+          "printer": "sub_B09C10",
+          "evidence_va": "0xB073FF"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB073FF",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 138
+    },
+    {
+      "name": "fire_end_y",
+      "offset": 137,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "射击终点 Y",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0xB463-battle-msma_AI_install",
+          "struct": "AI",
+          "field_name": "fire_end_y",
+          "offset": 137,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md",
+          "section": "§4.3",
+          "reader": "sub_B07230",
+          "printer": "sub_B09C10",
+          "evidence_va": "0xB07421"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07421",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 140
+    },
+    {
+      "name": "fire_end_z",
+      "offset": 139,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "射击终点 Z",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0xB463-battle-msma_AI_install",
+          "struct": "AI",
+          "field_name": "fire_end_z",
+          "offset": 139,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md",
+          "section": "§4.3",
+          "reader": "sub_B07230",
+          "printer": "sub_B09C10",
+          "evidence_va": "0xB07425"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07425",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 142
+    },
+    {
+      "name": "move_end_x",
+      "offset": 141,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "移动终点 X",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0xB463-battle-msma_AI_install",
+          "struct": "AI",
+          "field_name": "move_end_x",
+          "offset": 141,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md",
+          "section": "§4.3",
+          "reader": "sub_B07230",
+          "printer": "sub_B09C10",
+          "evidence_va": "0xB0743D"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB0743D",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 144
+    },
+    {
+      "name": "move_end_y",
+      "offset": 143,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "移动终点 Y",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0xB463-battle-msma_AI_install",
+          "struct": "AI",
+          "field_name": "move_end_y",
+          "offset": 143,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md",
+          "section": "§4.3",
+          "reader": "sub_B07230",
+          "printer": "sub_B09C10",
+          "evidence_va": "0xB07455"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07455",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 146
+    },
+    {
+      "name": "move_end_z",
+      "offset": 145,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "移动终点 Z",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0xB463-battle-msma_AI_install",
+          "struct": "AI",
+          "field_name": "move_end_z",
+          "offset": 145,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md",
+          "section": "§4.3",
+          "reader": "sub_B07230",
+          "printer": "sub_B09C10",
+          "evidence_va": "0xB0746D"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB0746D",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 148
+    },
+    {
+      "name": "order_kind",
+      "offset": 147,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "指令种类",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0xB463-battle-msma_AI_install",
+          "struct": "AI",
+          "field_name": "order_kind",
+          "offset": 147,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md",
+          "section": "§4.3",
+          "reader": "sub_B07230",
+          "printer": "sub_B09C10",
+          "evidence_va": "0xB07485"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07485",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 150
+    },
+    {
+      "name": "order_param",
+      "offset": 149,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "指令参数",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0xB463-battle-msma_AI_install",
+          "struct": "AI",
+          "field_name": "order_param",
+          "offset": 149,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md",
+          "section": "§4.3",
+          "reader": "sub_B07230",
+          "printer": "sub_B09C10",
+          "evidence_va": "0xB07499"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07499",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 152
+    },
+    {
+      "name": "group_id",
+      "offset": 153,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "编组 ID",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0xB463-battle-msma_AI_install",
+          "struct": "AI",
+          "field_name": "group_id",
+          "offset": 153,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md",
+          "section": "§4.3",
+          "reader": "sub_B07230",
+          "printer": "sub_B09C10",
+          "evidence_va": "0xB074AD"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB074AD",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 156
+    },
+    {
+      "name": "center_ms_entid",
+      "offset": 157,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "中心机体实体 ID",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0xB463-battle-msma_AI_install",
+          "struct": "AI",
+          "field_name": "center_ms_entid",
+          "offset": 157,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md",
+          "section": "§4.3",
+          "reader": "sub_B07230",
+          "printer": "sub_B09C10",
+          "evidence_va": "0xB074C1"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB074C1",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 160
+    },
+    {
+      "name": "route_number",
+      "offset": 159,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "路线编号",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0xB463-battle-msma_AI_install",
+          "struct": "AI",
+          "field_name": "route_number",
+          "offset": 159,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md",
+          "section": "§4.3",
+          "reader": "sub_B07230",
+          "printer": "sub_B09C10",
+          "evidence_va": "0xB074D5"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB074D5",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 162
+    },
+    {
+      "name": "formation_id",
+      "offset": 161,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "阵型 ID",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0xB463-battle-msma_AI_install",
+          "struct": "AI",
+          "field_name": "formation_id",
+          "offset": 161,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md",
+          "section": "§4.3",
+          "reader": "sub_B07230",
+          "printer": "sub_B09C10",
+          "evidence_va": "0xB074E9"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB074E9",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 164
+    },
+    {
+      "name": "formation_number",
+      "offset": 163,
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "阵型数量",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0xB463-battle-msma_AI_install",
+          "struct": "AI",
+          "field_name": "formation_number",
+          "offset": 163,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md",
+          "section": "§4.3",
+          "reader": "sub_B07230",
+          "printer": "sub_B09C10",
+          "evidence_va": "0xB074FD"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB074FD",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 166
+    },
+    {
+      "name": "stuck_escape",
+      "offset": 164,
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "卡住脱困",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0xB463-battle-msma_AI_install",
+          "struct": "AI",
+          "field_name": "stuck_escape",
+          "offset": 164,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md",
+          "section": "§4.3",
+          "reader": "sub_B07230",
+          "printer": "sub_B09C10",
+          "evidence_va": "0xB07520"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07520",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 167
+    }
+  ],
+  "asm_audit": {
+    "verified": "2026-09-20",
+    "reader": "sub_B07230",
+    "writer": null,
+    "total_bytes": 165,
+    "fields_ok": 29,
+    "fields_fail": 0,
+    "issues": [],
+    "status": "pass",
+    "memory": {
+      "verified": "2026-09-26",
+      "status": "pass",
+      "mem_fields": 29,
+      "fields_ok": 29,
+      "fields_fail": 0,
+      "issues": []
+    }
+  },
+  "wire_memory_remediated": "2026-09-20",
+  "oracle_audit": {
+    "date": "2026-09-23",
+    "tool": "emulab/oracle_fix.py",
+    "verdict_before": "GAP",
+    "verdict_after": "PASS",
+    "changes": [
+      "type: memory_offset None -> 0",
+      "name: memory_offset None -> 1"
+    ]
+  }
+}

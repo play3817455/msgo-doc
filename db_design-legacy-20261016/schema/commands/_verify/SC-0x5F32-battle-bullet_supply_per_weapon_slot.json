@@ -1,0 +1,202 @@
+{
+ "id": "SC-0x5F32-battle-bullet_supply_per_weapon_slot",
+ "verified_at": "2026-09-30 15:25:46",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "block",
+ "block": [
+  "0xB19147",
+  "0xB193EA"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 12,
+   "va": "0xB1915C",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xB19159",
+   "call_va": "0xB1915E"
+  },
+  "field_window": {
+   "start_va": "0xB19148",
+   "end_va": "0xB19276",
+   "guard": {
+    "va": "0xB19147",
+    "func": "0xB05DA0",
+    "module_id": null,
+    "release_va": "0xB05D90"
+   },
+   "closer_or_commit_va": "0xB1924F",
+   "within_model_block": true,
+   "range_from": "block"
+  },
+  "primitive_widths": {
+   "direction": "SC",
+   "expected": [
+    {
+     "name": "supplyer_end_id",
+     "wire_type": "u16",
+     "width": 2,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB19197",
+      "0xB192EF"
+     ]
+    },
+    {
+     "name": "supply_amount_per_weapon_slot_count",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 2,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB191C9",
+      "0xB1930A"
+     ]
+    },
+    {
+     "name": "supply_amount_per_weapon_slot[]",
+     "wire_type": "array<u16>",
+     "width": null,
+     "seq": 3,
+     "shape": "agg",
+     "evidence_va": [
+      "0xB19204",
+      "0xB1930A"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB19197",
+     "kind": "read",
+     "width": 2,
+     "wire_type": "u16",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB191C9",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB19204",
+     "kind": "bounded",
+     "width": 2,
+     "wire_type": null,
+     "name": "sub_B05E40",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB19221",
+     "kind": "read",
+     "width": 2,
+     "wire_type": "u16",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 2,
+   "checkable": 2,
+   "pairs": [
+    {
+     "field": "supplyer_end_id",
+     "width": 2,
+     "shape": "scalar",
+     "va": "0xB19197",
+     "kind": "read"
+    },
+    {
+     "field": "supply_amount_per_weapon_slot_count",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB191C9",
+     "kind": "read"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [
+    {
+     "va": "0xB19204",
+     "kind": "bounded",
+     "width": 2,
+     "wire_type": null
+    },
+    {
+     "va": "0xB19221",
+     "kind": "read",
+     "width": 2,
+     "wire_type": "u16"
+    }
+   ],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB19148",
+    "0xB19276"
+   ],
+   "scalar_match_verifiable": true,
+   "capacity_relation": {
+    "observed_min": 8,
+    "capacity": 12,
+    "relation": "within",
+    "unknown_events": [
+     {
+      "va": "0xB19204",
+      "kind": "bounded",
+      "name": "sub_B05E40"
+     }
+    ],
+    "is_lower_bound": true,
+    "note": "观测线长（下界）8 / 容量 0xc"
+   }
+  },
+  "closer": {
+   "va": "0xB1924F",
+   "kind": "jz",
+   "jcc_va": "0xB19255",
+   "seq_va": "0xB1924B",
+   "jcc_dst": "0xB19271",
+   "cmp": "cmp     ecx, [esp+1B3Ch+var_1B24]",
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x27C]",
+   "slot_value": 636,
+   "va": "0xB193CE",
+   "mov_va": "0xB193C0",
+   "host": "[edx+27Ch]",
+   "argc": 3,
+   "form": "mov_then_call",
+   "error_slot": {
+    "slot": "vt[0x64]",
+    "va": "0xB191B1",
+    "argc": 2
+   }
+  },
+  "log_strings": [
+   "supplyer_end_id=",
+   "supply_amount_per_weapon_slot={"
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "supplyer_end_id"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 17
+}

@@ -1,0 +1,460 @@
+{
+  "id": "CS-0x6142-lounge-pilot_delete",
+  "opcode": "0x6142",
+  "direction": "CS",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "pilot_delete",
+  "source_dir": "protocol_analysis/commands/CS-0x6142-lounge-pilot_delete",
+  "meta": {
+    "opcode": "`0x6142`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`pilot_delete`",
+    "名字符串": "`)<-_proto_lounge_client::send_pilot_delete(` @ `0xeea3a0`",
+    "代码位置": "sub_B8A630 @ `0xb8a630`（`0xb8a630`..`0xb8a8a8`）",
+    "opcode 写入证据": "`0xb8a6a9`",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0x12`（18）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)`",
+    "配对命令（同 opcode 反向）": "见 §4.3 与其他命令的关联 / INDEX 反向表"
+  },
+  "handler": "sub_B8A630",
+  "handler_va": "0xb8a630",
+  "block": [
+    "0xB8A630",
+    "0xB8A8A8"
+  ],
+  "name_str": ")<-_proto_lounge_client::send_pilot_delete(",
+  "name_str_va": "0xeea3a0",
+  "capacity": "0x12",
+  "capacity_va": null,
+  "closer_va": "0xB8A764",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": null,
+  "wire": {
+    "length_expr": "4 + 4 + 4 + 1",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x12（容量记账口径，非线长）",
+    "field_count": 4,
+    "length_source": "field_sum",
+    "readme_conclusion": "结论：删除角色：阵营 + 机位 + 角色 id + 删除类型。",
+    "readme_close": "2 + 4 + 4 + 4 + 1 = 15 ≤ 容量 0x12=18（富余 3）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发给 lounge 协议类处理块（C→S 无 case 块）",
+      "enum": "0x6142",
+      "evidence_va": [
+        "0xB8A6A9"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "2",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "troops",
+      "meaning": "阵营",
+      "purpose": "来源=入参 arg_0（@0xB8A6B5）；内联 `mov [eax],esi`；经 `vt[0x58]` 发送",
+      "enum": null,
+      "evidence_va": [
+        "0xB8A6B9"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "6",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "slot",
+      "meaning": "机位（角色槽位）",
+      "purpose": "来源=入参 arg_4（@0xB8A6C8）；内联 `mov [eax],ecx`；经 `vt[0x58]` 发送",
+      "enum": null,
+      "evidence_va": [
+        "0xB8A6D4"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "10",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "pilot_id",
+      "meaning": "角色 id",
+      "purpose": "来源=入参 arg_8（@0xB8A6D7）；写线原语 `sub_B02D80`(u32)；经 `vt[0x58]` 发送",
+      "enum": null,
+      "evidence_va": [
+        "0xB8A6DC"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 4,
+      "offset": "14",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "del_kind",
+      "meaning": "删除类型",
+      "purpose": "来源=入参 arg_C（@0xB8A6F1）；写线原语 `sub_B061C0`(u8)；经 `vt[0x58]` 发送",
+      "enum": null,
+      "evidence_va": [
+        "0xB8A6F6"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0x6142（分发器 switch 选择子）",
+      "evidence_va": "0xB8A6A9"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0x12 B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xB8A673"
+    },
+    {
+      "step": 3,
+      "kind": "write_scalar",
+      "detail": "troops：`u32`（线长 4）—— 阵营",
+      "evidence_va": "0xB8A6B9"
+    },
+    {
+      "step": 4,
+      "kind": "write_scalar",
+      "detail": "slot：`u32`（线长 4）—— 机位（角色槽位）",
+      "evidence_va": "0xB8A6D4"
+    },
+    {
+      "step": 5,
+      "kind": "write_scalar",
+      "detail": "pilot_id：`u32`（线长 4）—— 角色 id",
+      "evidence_va": "0xB8A6DC"
+    },
+    {
+      "step": 6,
+      "kind": "write_scalar",
+      "detail": "del_kind：`u8`（线长 1）—— 删除类型",
+      "evidence_va": "0xB8A6F6"
+    },
+    {
+      "step": 7,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xB8A764"
+    },
+    {
+      "step": 8,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xB8A842"
+    }
+  ],
+  "capabilities": [
+    "delete",
+    "lounge.pilot"
+  ],
+  "capabilities_derived": [
+    "delete"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:42",
+    "batch": 2,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 18,
+        "va": "0xB8A673",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB8A670",
+        "call_va": "0xB8A675"
+      },
+      "field_window": {
+        "start_va": "0xB8A630",
+        "end_va": "0xB8A764",
+        "guard": null,
+        "closer_or_commit_va": "0xB8A764",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "troops",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB8A6B9"
+            ]
+          },
+          {
+            "name": "slot",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB8A6D4"
+            ]
+          },
+          {
+            "name": "pilot_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB8A6DC"
+            ]
+          },
+          {
+            "name": "del_kind",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 4,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB8A6F6"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB8A6A9",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB8A6B9",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB8A6D4",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB8A6DC",
+            "kind": "write",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB8A6F6",
+            "kind": "write",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB8A73A",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 4,
+        "checkable": 4,
+        "pairs": [
+          {
+            "field": "troops",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB8A6B9",
+            "kind": "inline_store"
+          },
+          {
+            "field": "slot",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB8A6D4",
+            "kind": "inline_store"
+          },
+          {
+            "field": "pilot_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB8A6DC",
+            "kind": "write"
+          },
+          {
+            "field": "del_kind",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB8A6F6",
+            "kind": "write"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB8A6A9",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB8A630",
+          "0xB8A764"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 15,
+          "capacity": 18,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB8A73A",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）15 / 容量 0x12"
+        }
+      },
+      "closer": {
+        "va": "0xB8A764",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xB8A842",
+        "mov_va": "0xB8A839",
+        "host": "[edx+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "troops=",
+        "slot=",
+        "pilot_id=",
+        "del_kind="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0x6142-lounge-pilot_delete.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0xb8a6a9",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xB8A6A9"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "PilotDelete",
+      "role": "request",
+      "wire_length": "4 + 4 + 4 + 1",
+      "members": [
+        {
+          "name": "Troops",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "troops"
+        },
+        {
+          "name": "Slot",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "slot"
+        },
+        {
+          "name": "PilotId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "pilot_id"
+        },
+        {
+          "name": "DelKind",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "del_kind"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "5970086e2975dcbd",
+  "check_fingerprint": "6bf72e34e06bfc51"
+}

@@ -1,0 +1,5 @@
+序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+0,0,2,u16,opcode,命令号,写入 `buf+0`，供服务端分发；无 case 块（C→S）,0xDDB7,`00B3C58C`,确证
+1,0,4,u32,frame_count,帧序号,"来源=入参 `arg_0`（`mov esi,[esp+arg_0]` @`0xB3C598`）→ 内联写 `[ecx],esi`（@`0xB3C59C`）",-,`0xB3C598`;`0xB3C59C`,确证
+2,4,2,u16,AI_ent_id,AI 实体 ID,"来源=入参 `arg_4`（`mov ax,word ptr [esp+arg_4]` @`0xB3C5A9`）→ 内联写 `[edx],ax`（@`0xB3C5B6`）",-,`0xB3C5A9`;`0xB3C5B6`,确证
+3,6,2,u16,group_id,所属组 ID,来源=入参 `arg_8` → 写原语 `sub_B02DA0`（u16 @`0xB3C5BF`）,-,`0xB3C5BF`,确证

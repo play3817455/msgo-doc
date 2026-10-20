@@ -1,0 +1,461 @@
+{
+  "id": "config",
+  "title": "对战配置 config（34B 线 / 40B 槽）",
+  "length": 34,
+  "status": "complete",
+  "reader": "sub_B077B0",
+  "printer": "sub_B0A670",
+  "memory_claim": 40,
+  "wire_layout": "u16+u32+u32+u16+u32+u32+u32+u16+u32+u32",
+  "evidence": {
+    "commands": [
+      "SC-0x1365-battle-game_begin",
+      "SC-0xA5DA-battle-authenticate_r"
+    ],
+    "protocol_paths": [
+      "protocol_analysis/commands/SC-0x1365-battle-game_begin/README.md",
+      "protocol_analysis/commands/SC-0xA5DA-battle-authenticate_r/README.md"
+    ],
+    "note": "读取器按线序写入槽布局；u16 后 2B 对齐 padding（槽 +2/+14/+30）；claim 0x28=40"
+  },
+  "members": [
+    {
+      "name": "A_troops",
+      "offset": 0,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "A 军兵力",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1365-battle-game_begin",
+          "struct": "config",
+          "field_name": "A_troops",
+          "offset": 0,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0x1365-battle-game_begin/README.md",
+          "section": "§3.1",
+          "reader": "sub_B077B0",
+          "printer": "sub_B0A670",
+          "evidence_va": "B077C3|B0A685"
+        },
+        {
+          "command": "SC-0xA5DA-battle-authenticate_r",
+          "struct": "config",
+          "field_name": "A_troops",
+          "offset": 0,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0xA5DA-battle-authenticate_r/README.md",
+          "section": "§4.3",
+          "reader": "sub_B077B0",
+          "printer": "sub_B0A670",
+          "evidence_va": "0xb077ce"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "B077C3|B0A685",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 0
+    },
+    {
+      "name": "A_point_max",
+      "offset": 2,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "A 军点数上限",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1365-battle-game_begin",
+          "struct": "config",
+          "field_name": "A_point_max",
+          "offset": 2,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x1365-battle-game_begin/README.md",
+          "section": "§3.1",
+          "reader": "sub_B077B0",
+          "printer": "sub_B0A670",
+          "evidence_va": "B077DF|B0A6AC",
+          "notes": "槽 offset +4；线序 offset +2"
+        },
+        {
+          "command": "SC-0xA5DA-battle-authenticate_r",
+          "struct": "config",
+          "field_name": "A_point_max",
+          "offset": 2,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0xA5DA-battle-authenticate_r/README.md",
+          "section": "§4.3",
+          "reader": "sub_B077B0",
+          "printer": "sub_B0A670",
+          "evidence_va": "0xb077e4"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "B077DF|B0A6AC",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 4
+    },
+    {
+      "name": "A_win_cnt",
+      "offset": 6,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "A 军胜利计数",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1365-battle-game_begin",
+          "struct": "config",
+          "field_name": "A_win_cnt",
+          "offset": 6,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x1365-battle-game_begin/README.md",
+          "section": "§3.1",
+          "reader": "sub_B077B0",
+          "printer": "sub_B0A670",
+          "evidence_va": "B077F1|B0A6D3",
+          "notes": "槽 offset +8；线序 offset +6"
+        },
+        {
+          "command": "SC-0xA5DA-battle-authenticate_r",
+          "struct": "config",
+          "field_name": "A_win_cnt",
+          "offset": 6,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0xA5DA-battle-authenticate_r/README.md",
+          "section": "§4.3",
+          "reader": "sub_B077B0",
+          "printer": "sub_B0A670",
+          "evidence_va": "0xb077f6"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "B077F1|B0A6D3",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 8
+    },
+    {
+      "name": "B_troops",
+      "offset": 10,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "B 军兵力",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1365-battle-game_begin",
+          "struct": "config",
+          "field_name": "B_troops",
+          "offset": 10,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0x1365-battle-game_begin/README.md",
+          "section": "§3.1",
+          "reader": "sub_B077B0",
+          "printer": "sub_B0A670",
+          "evidence_va": "B07803|B0A6FA",
+          "notes": "槽 offset +0xC；线序 offset +10"
+        },
+        {
+          "command": "SC-0xA5DA-battle-authenticate_r",
+          "struct": "config",
+          "field_name": "B_troops",
+          "offset": 10,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0xA5DA-battle-authenticate_r/README.md",
+          "section": "§4.3",
+          "reader": "sub_B077B0",
+          "printer": "sub_B0A670",
+          "evidence_va": "0xb07812"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "B07803|B0A6FA",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 12
+    },
+    {
+      "name": "B_point_max",
+      "offset": 12,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "B 军点数上限",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1365-battle-game_begin",
+          "struct": "config",
+          "field_name": "B_point_max",
+          "offset": 12,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x1365-battle-game_begin/README.md",
+          "section": "§3.1",
+          "reader": "sub_B077B0",
+          "printer": "sub_B0A670",
+          "evidence_va": "B07812|B0A722",
+          "notes": "槽 offset +0x10；线序 offset +12"
+        },
+        {
+          "command": "SC-0xA5DA-battle-authenticate_r",
+          "struct": "config",
+          "field_name": "B_point_max",
+          "offset": 12,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0xA5DA-battle-authenticate_r/README.md",
+          "section": "§4.3",
+          "reader": "sub_B077B0",
+          "printer": "sub_B0A670",
+          "evidence_va": "0xb07823"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "B07812|B0A722",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 16
+    },
+    {
+      "name": "B_win_cnt",
+      "offset": 16,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "B 军胜利计数",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1365-battle-game_begin",
+          "struct": "config",
+          "field_name": "B_win_cnt",
+          "offset": 16,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x1365-battle-game_begin/README.md",
+          "section": "§3.1",
+          "reader": "sub_B077B0",
+          "printer": "sub_B0A670",
+          "evidence_va": "B07823|B0A749",
+          "notes": "槽 offset +0x14；线序 offset +16"
+        },
+        {
+          "command": "SC-0xA5DA-battle-authenticate_r",
+          "struct": "config",
+          "field_name": "B_win_cnt",
+          "offset": 16,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0xA5DA-battle-authenticate_r/README.md",
+          "section": "§4.3",
+          "reader": "sub_B077B0",
+          "printer": "sub_B0A670",
+          "evidence_va": "0xb07834"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "B07823|B0A749",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 20
+    },
+    {
+      "name": "dotdmg_min",
+      "offset": 20,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "dot 伤害下限",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1365-battle-game_begin",
+          "struct": "config",
+          "field_name": "dotdmg_min",
+          "offset": 20,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x1365-battle-game_begin/README.md",
+          "section": "§3.1",
+          "reader": "sub_B077B0",
+          "printer": "sub_B0A670",
+          "evidence_va": "B07834|B0A77C",
+          "notes": "槽 offset +0x18；线序 offset +20"
+        },
+        {
+          "command": "SC-0xA5DA-battle-authenticate_r",
+          "struct": "config",
+          "field_name": "dotdmg_min",
+          "offset": 20,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0xA5DA-battle-authenticate_r/README.md",
+          "section": "§4.3",
+          "reader": "sub_B077B0",
+          "printer": "sub_B0A670",
+          "evidence_va": "0xb07845"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "B07834|B0A77C",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 24
+    },
+    {
+      "name": "atk_team",
+      "offset": 24,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "当前进攻方队伍",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1365-battle-game_begin",
+          "struct": "config",
+          "field_name": "atk_team",
+          "offset": 24,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0x1365-battle-game_begin/README.md",
+          "section": "§3.1",
+          "reader": "sub_B077B0",
+          "printer": "sub_B0A670",
+          "evidence_va": "B07845|B0A797",
+          "notes": "槽 offset +0x1C；线序 offset +24"
+        },
+        {
+          "command": "SC-0xA5DA-battle-authenticate_r",
+          "struct": "config",
+          "field_name": "atk_team",
+          "offset": 24,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0xA5DA-battle-authenticate_r/README.md",
+          "section": "§4.3",
+          "reader": "sub_B077B0",
+          "printer": "sub_B0A670",
+          "evidence_va": "0xb07856"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "B07845|B0A797",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 28
+    },
+    {
+      "name": "round_now",
+      "offset": 26,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "当前回合",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1365-battle-game_begin",
+          "struct": "config",
+          "field_name": "round_now",
+          "offset": 26,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x1365-battle-game_begin/README.md",
+          "section": "§3.1",
+          "reader": "sub_B077B0",
+          "printer": "sub_B0A670",
+          "evidence_va": "B07856|B0A7CB",
+          "notes": "槽 offset +0x20；线序 offset +26"
+        },
+        {
+          "command": "SC-0xA5DA-battle-authenticate_r",
+          "struct": "config",
+          "field_name": "round_now",
+          "offset": 26,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0xA5DA-battle-authenticate_r/README.md",
+          "section": "§4.3",
+          "reader": "sub_B077B0",
+          "printer": "sub_B0A670",
+          "evidence_va": "0xb07870"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "B07856|B0A7CB",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 32
+    },
+    {
+      "name": "round_max",
+      "offset": 30,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "回合上限",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x1365-battle-game_begin",
+          "struct": "config",
+          "field_name": "round_max",
+          "offset": 30,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x1365-battle-game_begin/README.md",
+          "section": "§3.1",
+          "reader": "sub_B077B0",
+          "printer": "sub_B0A670",
+          "evidence_va": "B07870|B0A7ED",
+          "notes": "槽 offset +0x24；线序 offset +30"
+        },
+        {
+          "command": "SC-0xA5DA-battle-authenticate_r",
+          "struct": "config",
+          "field_name": "round_max",
+          "offset": 30,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0xA5DA-battle-authenticate_r/README.md",
+          "section": "§4.3",
+          "reader": "sub_B077B0",
+          "printer": "sub_B0A670"
+        }
+      ],
+      "memory_offset": 36,
+      "asm_verified": true,
+      "asm_audit_date": "2026-09-20",
+      "asm_evidence_va": "B07870|B0A7ED"
+    }
+  ],
+  "asm_audit": {
+    "verified": "2026-09-20",
+    "reader": "sub_B077B0",
+    "writer": null,
+    "total_bytes": 34,
+    "fields_ok": 10,
+    "fields_fail": 0,
+    "issues": [],
+    "status": "pass",
+    "memory": {
+      "verified": "2026-09-26",
+      "status": "pass",
+      "mem_fields": 10,
+      "fields_ok": 10,
+      "fields_fail": 0,
+      "issues": [],
+      "manual_batch": 4,
+      "note": "sub_B077B0 u16 后 2B 对齐；claim 0x28=40"
+    }
+  },
+  "wire_memory_remediated": "2026-09-20",
+  "oracle_audit": {
+    "date": "2026-09-23",
+    "tool": "emulab/oracle_fix.py",
+    "verdict_before": "GAP",
+    "verdict_after": "PASS",
+    "changes": [
+      "A_troops: memory_offset None -> 0"
+    ]
+  }
+}

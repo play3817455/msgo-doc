@@ -1,0 +1,268 @@
+{
+  "id": "SC-0xDB2C-lounge-bbs_get_access_url",
+  "opcode": "0xDB2C",
+  "direction": "SC",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "bbs_get_access_url",
+  "source_dir": "protocol_analysis/commands/SC-0xDB2C-lounge-bbs_get_access_url",
+  "meta": {
+    "opcode": "`0xDB2C`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`bbs_get_access_url`",
+    "处理块范围": "`0xb8000b`..`0xb8017e`",
+    "名字串引用点": "`0xee69e4`",
+    "声明容量（解码缓冲）": "`0x101`（`B80020`）",
+    "长度闭合点": "`B8007F`（`cmp`）→ `B80083 jnz`",
+    "报错码": "`0x20B`（块内 `push 1; push 20Bh; vt[0x64]`）",
+    "去向": "`vt[0x4EC]` @`B80162`（1 实参）"
+  },
+  "handler": null,
+  "handler_va": null,
+  "block": [
+    "0xb8000b",
+    "0xb8017e"
+  ],
+  "name_str": null,
+  "name_str_va": "0xee69e4",
+  "capacity": "0x101",
+  "capacity_va": "0xB80020",
+  "closer_va": "0xB8007F",
+  "dispatch": "`vt[0x4EC]` @`B80162`（1 实参）",
+  "dispatch_slot": "vt[0x4EC]",
+  "dispatch_va": "0xB80162",
+  "wire": {
+    "length_expr": "L+1",
+    "fixed": false,
+    "var_drivers": [
+      "L"
+    ],
+    "capacity_note": "声明容量 0x101（容量记账口径，非线长）",
+    "field_count": 1,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：strlen(url)+1（≤257）",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "L+1",
+      "wire_type": "str",
+      "name": "url",
+      "meaning": "BBS 访问 URL（NUL 串；日志串 `url=\"`）",
+      "purpose": "经 `vt[0x4EC]` 交业务；槽预算 257",
+      "enum": null,
+      "evidence_va": [
+        "0xb80053",
+        "0xb80100"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0xDB2C（分发器 switch 选择子）",
+      "evidence_va": "0x0000"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB41120`（模块 id None）→ 之后逐字段读线",
+      "evidence_va": "0xB8000B"
+    },
+    {
+      "step": 3,
+      "kind": "read_string",
+      "detail": "url：`str`（线长 L+1）—— BBS 访问 URL（NUL 串；日志串 `url=\"`）",
+      "evidence_va": "0xB80053"
+    },
+    {
+      "step": 4,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jnz）",
+      "evidence_va": "0xB8007F"
+    },
+    {
+      "step": 5,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x4EC]`，实参 1 个",
+      "evidence_va": "0xB80162"
+    },
+    {
+      "step": 6,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB8006D"
+    }
+  ],
+  "capabilities": [
+    "query",
+    "lounge.bbs"
+  ],
+  "capabilities_derived": [
+    "unclassified"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:45",
+    "batch": 12,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 257,
+        "va": "0xB80020",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB8001D",
+        "call_va": "0xB80025"
+      },
+      "field_window": {
+        "start_va": "0xB8000C",
+        "end_va": "0xB8008A",
+        "guard": {
+          "va": "0xB8000B",
+          "func": "0xB41120",
+          "module_id": null,
+          "release_va": "0xB41110"
+        },
+        "closer_or_commit_va": "0xB8007F",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "url",
+            "wire_type": "str",
+            "width": null,
+            "seq": 1,
+            "shape": "str",
+            "evidence_va": [
+              "0xb80053",
+              "0xb80100"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB80053",
+            "kind": "read",
+            "width": null,
+            "wire_type": "str",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 1,
+        "checkable": 1,
+        "pairs": [
+          {
+            "field": "url",
+            "width": null,
+            "shape": "str",
+            "va": "0xB80053",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB8000C",
+          "0xB8008A"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 0,
+          "capacity": 257,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB80053",
+              "kind": "read",
+              "name": ""
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）0 / 容量 0x101"
+        }
+      },
+      "closer": {
+        "va": "0xB8007F",
+        "kind": "jnz",
+        "jcc_va": "0xB80083",
+        "seq_va": "0xB8007B",
+        "jcc_dst": "0xB80061",
+        "cmp": "cmp     ebx, [esp+2C5Ch+var_2C40]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x4EC]",
+        "slot_value": 1260,
+        "va": "0xB80162",
+        "mov_va": "0xB80159",
+        "host": "[edx+4ECh]",
+        "argc": 1,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB8006D",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "url=\""
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0xDB2C-lounge-bbs_get_access_url.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": []
+  },
+  "structs": {
+    "response": {
+      "go_name": "BbsGetAccessUrl",
+      "role": "response",
+      "wire_length": "L+1",
+      "members": [
+        {
+          "name": "Url",
+          "wire_type": "str",
+          "length": "L+1",
+          "field_ref": "url",
+          "element": null,
+          "element_length": null,
+          "cap": null,
+          "count_field": null,
+          "count_field_source": null,
+          "note": "元素成员未建模（composites/ 无此结构），须以 IDA 复核补"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "5ef89ceb077128b0",
+  "check_fingerprint": "94dfcd132c6f2b16"
+}

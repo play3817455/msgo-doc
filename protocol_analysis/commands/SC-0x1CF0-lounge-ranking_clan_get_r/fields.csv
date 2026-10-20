@@ -1,0 +1,13 @@
+序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+0,-,2,u16,opcode,命令号,分发器 switch 选择子,0x1CF0,0xB571C4,确证
+1,0,4,u32,result,查询结果码,经 `vt[0x4B0]`；日志 `result=`,-,0xB56F5A|0xB5721A,确证
+2,4,10,u16[5],order,排序字段组（5×u16；缓冲槽 10）,经 `vt[0x4B0]`；日志 `order=`,-,0xB56F9A(sub_B46420 内联 5×u16=10B)|0xB56F8B(sub_B41220 预留 0x0A)|0xB57242,确证
+3,14,8,u64,rankself,自身战队名次/唯一 ID,经 `vt[0x4B0]`；日志 `rankself=`,-,0xB56FBE(sub_B434B0 2×u32)|0xB56FAF(sub_B41A10)|0xB5726C,确证
+4,22,4,u32,page_now,当前页号,经 `vt[0x4B0]`；日志 `page_now=`,-,0xB56FE2|0xB57298,确证
+5,26,4,u32,page_max,总页数,经 `vt[0x4B0]`；日志 `page_max=`,-,0xB5700A|0xB572C2,确证
+6,30,4,u32,ranking_num,排行榜条目数 N,"上限 `cmp ebx,64h`（100）；驱动数组；经 `vt[0x4B0]`",0..100,0xB57024|0xB57050,确证
+7,34,99·N,"array<clan_ranking_entry,N>",ranking,战队排行榜（N ≤ 100；元素线上 99B / 槽步进 108B）,数组基址经 `vt[0x4B0]`；日志 `ranking={…}`,元素线长 99 / 槽 108,0xB5707C(sub_B46690)|0xB5705F(sub_B41900 0x6C/槽)|0xB57088(循环 0x6C)|0xB572DD,确证
+8,?（数组后）,4,u32,topclans_num,顶尖战队条目数 M,"上限 `cmp [var],3`；驱动数组；经 `vt[0x4B0]`",0..3,0xB570B0|0xB570C0,推测
+9,?,99·M,"array<clan_ranking_entry,N>",topclans,顶尖战队列表（N ≤ 3；元素线上 99B / 槽步进 108B）,数组基址经 `vt[0x4B0]`；日志 `topclans={…}`,元素线长 99 / 槽 108,0xB570FA(sub_B46690)|0xB570D9(sub_B41900)|0xB57106|0xB5734D,推测
+10,?,L+1,str,term_str,赛期（term）名称字符串（NUL 结尾）,"经 `vt[0x4B0]`；日志 `term_str=""…""`",槽位预算 65（`push 41h`）,0xB5713F(sub_B02BA0)|0xB5712C(push 41h),推测
+11,?（末）,1,u8,clan_kind,战队类别,经 `vt[0x4B0]`；日志 `clan_kind=`,-,0xB57167|0xB57403,推测

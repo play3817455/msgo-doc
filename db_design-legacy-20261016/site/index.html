@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>首页 · db_design</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <h1><a href="index.html">db_design</a></h1>
+      <p class="header-note">唯一证据源：<code>protocol_analysis/</code></p>
+      <nav><a href="index.html" class="active">首页</a>
+      <a href="homing/index.html">归位库</a>
+      <a href="tables/index.html">旧表留档</a>
+      <a href="commands/index.html">命令</a>
+      <a href="cfg/index.html">配置表79</a>
+      <a href="srv/index.html">服务端配置</a>
+      <a href="asm-audit/index.html">ASM 审计</a>
+      <a href="oracle-audit/index.html">Oracle 审计</a>
+      <a href="entities/index.html">协议实体</a>
+      <a href="fields/index.html">字段索引</a>
+      <a href="relations.html">表关系</a></nav>
+    </div>
+  </header>
+  <main class="wrap">
+
+    <section class="hero">
+      <h2>数据库字段设计</h2>
+      <p class="lead">阶段 <strong>P6 归位库已切</strong> · DDL/store 由 <code>schema/homing/objects/</code> 生成
+        · 证据仅来自 <code>protocol_analysis/</code></p>
+    </section>
+
+    <section class="grid stats">
+      <div class="stat"><div class="num">75</div><div class="lbl">complete 表</div></div>
+      <div class="stat"><div class="num">75/75</div><div class="lbl">ASM wire 链 pass</div></div>
+      <div class="stat"><div class="num">134</div><div class="lbl">composite</div></div>
+      <div class="stat"><div class="num">14</div><div class="lbl">服务端配置表</div></div>
+      <div class="stat"><div class="num">1267</div><div class="lbl">协议字段索引</div></div>
+      <div class="stat"><div class="num">915</div><div class="lbl">交互命令</div></div>
+    </section>
+
+    
+    <section>
+      <h2>交互命令（命令维度模型）</h2>
+      <p class="lead">915 条命令 · 3010 个负载字段 ·
+        证据只允许来自 <code>protocol_analysis/</code> 与 IDA 汇编（口径见 <code>docs/01-命令模型.md</code>）</p>
+      <div class="grid stats">
+        <div class="stat"><div class="num">2</div><div class="lbl">IMPORTED</div></div>
+        <div class="stat"><div class="num">0</div><div class="lbl">ASM-VERIFIED</div></div>
+        <div class="stat"><div class="num">913</div><div class="lbl">BEHAVIOR-DONE</div></div>
+        <div class="stat"><div class="num">564</div><div class="lbl">SC 收</div></div>
+        <div class="stat"><div class="num">351</div><div class="lbl">CS 发</div></div>
+      </div>
+      <p><a href="commands/index.html">查看全部命令 →</a>
+         · <a href="commands/structs.html">包结构体</a>
+         · <a href="commands/capabilities.html">能力矩阵</a>
+         · <a href="commands/db-effects.html">数据库影响</a></p>
+    </section>
+
+    <section>
+      <h2>归位库（新库设计）</h2>
+      <p class="lead">以字节级模型为地基的<strong>域 → 对象 → 角色</strong>三层归位：DDL 与 Go store 都由
+        <code>schema/homing/objects/*.json</code> 生成，逐列可回溯到命令 @VA。</p>
+      <div class="card-grid">
+        <a class="card card-primary" href="homing/index.html">
+          <h3>对象 / 建表总览</h3>
+          <p class="card-meta">对象与表、主键、角色词表、类型映射、未建表对象</p>
+        </a>
+        <a class="card" href="homing/coverage.html">
+          <h3>归位覆盖率</h3>
+          <p class="card-meta">正向：每列指回命令@VA · 反向：不落库成员显式登记理由</p>
+        </a>
+        <a class="card" href="homing/relations.html">
+          <h3>对象关联</h3>
+          <p class="card-meta">外键 / 主数据引用（cfg.*）/ 未决引用</p>
+        </a>
+        <a class="card" href="homing/unresolved.html">
+          <h3>未决清单</h3>
+          <p class="card-meta">引擎判不了的批次，逐条带推理依据</p>
+        </a>
+      </div>
+    </section>
+
+    <section>
+      <h2>表设计（旧提议 · 留档）</h2>
+      <p class="lead">P3 起 <code>schema/tables/*.json</code> 已降级为 <code>_legacy_tables/</code>，
+        不再驱动 DDL，只作对照留档。新库设计见上面的<strong>归位库</strong>。</p>
+      <div class="card-grid">
+    <a class="card card-primary" href="tables/tbl_adop_get.html">
+      <div class="card-status"><span class="badge" style="background:#2e7d32">complete</span> <span class="badge" style="background:#2e7d32">ASM ✓</span></div>
+      <h3><code>tbl_adop_get</code></h3>
+      <p>采纳获得</p>
+      <div class="card-meta">1 列 · PERSIST 0</div>
+    </a>
+    <a class="card card-primary" href="tables/tbl_adop_list.html">
+      <div class="card-status"><span class="badge" style="background:#2e7d32">complete</span> <span class="badge" style="background:#2e7d32">ASM ✓</span></div>
+      <h3><code>tbl_adop_list</code></h3>
+      <p>采纳列表项</p>
+      <div class="card-meta">1 列 · PERSIST 0</div>
+    </a>
+    <a class="card card-primary" href="tables/tbl_AI.html">
+      <div class="card-status"><span class="badge" style="background:#2e7d32">complete</span> <span class="badge" style="background:#2e7d32">ASM ✓</span></div>
+      <h3><code>tbl_AI</code></h3>
+      <p>AI 参数（battle 事件）</p>
+      <div class="card-meta">1 列 · PERSIST 0</div>
+    </a>
+    <a class="card card-primary" href="tables/tbl_appear_info.html">
+      <div class="card-status"><span class="badge" style="background:#2e7d32">complete</span> <span class="badge" style="background:#2e7d32">ASM ✓</span></div>
+      <h3><code>tbl_appear_info</code></h3>
+      <p>部署武装出现</p>
+      <div class="card-meta">1 列 · PERSIST 0</div>
+    </a>
+    <a class="card card-primary" href="tables/tbl_avatar.html">
+      <div class="card-status"><span class="badge" style="background:#2e7d32">complete</span> <span class="badge" style="background:#2e7d32">ASM ✓</span></div>
+      <h3><code>tbl_avatar</code></h3>
+      <p>飞行员外观</p>
+      <div class="card-meta">1 列 · PERSIST 0</div>
+    </a>
+    <a class="card card-primary" href="tables/tbl_beginner_challenge_info.html">
+      <div class="card-status"><span class="badge" style="background:#2e7d32">complete</span> <span class="badge" style="background:#2e7d32">ASM ✓</span></div>
+      <h3><code>tbl_beginner_challenge_info</code></h3>
+      <p>新手挑战信息</p>
+      <div class="card-meta">1 列 · PERSIST 0</div>
+    </a>
+    <a class="card card-primary" href="tables/tbl_bgm_desc.html">
+      <div class="card-status"><span class="badge" style="background:#2e7d32">complete</span> <span class="badge" style="background:#2e7d32">ASM ✓</span></div>
+      <h3><code>tbl_bgm_desc</code></h3>
+      <p>BGM 描述</p>
+      <div class="card-meta">1 列 · PERSIST 0</div>
+    </a>
+    <a class="card card-primary" href="tables/tbl_block_detail.html">
+      <div class="card-status"><span class="badge" style="background:#2e7d32">complete</span> <span class="badge" style="background:#2e7d32">ASM ✓</span></div>
+      <h3><code>tbl_block_detail</code></h3>
+      <p>屏蔽详情</p>
+      <div class="card-meta">1 列 · PERSIST 0</div>
+    </a>
+    <a class="card card-primary" href="tables/tbl_bracket.html">
+      <div class="card-status"><span class="badge" style="background:#2e7d32">complete</span> <span class="badge" style="background:#2e7d32">ASM ✓</span></div>
+      <h3><code>tbl_bracket</code></h3>
+      <p>每日杯对阵表</p>
+      <div class="card-meta">1 列 · PERSIST 0</div>
+    </a>
+    <a class="card card-primary" href="tables/tbl_bracket_info.html">
+      <div class="card-status"><span class="badge" style="background:#2e7d32">complete</span> <span class="badge" style="background:#2e7d32">ASM ✓</span></div>
+      <h3><code>tbl_bracket_info</code></h3>
+      <p>对阵表信息</p>
+      <div class="card-meta">1 列 · PERSIST 0</div>
+    </a>
+    <a class="card card-primary" href="tables/tbl_buffitem.html">
+      <div class="card-status"><span class="badge" style="background:#2e7d32">complete</span> <span class="badge" style="background:#2e7d32">ASM ✓</span></div>
+      <h3><code>tbl_buffitem</code></h3>
+      <p>战斗增益道具</p>
+      <div class="card-meta">1 列 · PERSIST 0</div>
+    </a>
+    <a class="card card-primary" href="tables/tbl_buffitem_ex.html">
+      <div class="card-status"><span class="badge" style="background:#2e7d32">complete</span> <span class="badge" style="background:#2e7d32">ASM ✓</span></div>
+      <h3><code>tbl_buffitem_ex</code></h3>
+      <p>战斗增益道具附加</p>
+      <div class="card-meta">1 列 · PERSIST 0</div>
+    </a></div>
+      <p><a href="tables/index.html">查看全部旧提议表 →</a></p>
+    </section>
+
+    <section>
+      <h2>配置表（datatables）</h2>
+      <p class="lead">79 张 CSV 配置表列语义 · 订案字段名 · 与 GM 共用 <code>cfg_schema.json</code></p>
+      <p><a class="card card-primary" href="cfg/index.html" style="display:inline-block;padding:0.75rem 1rem;">配置表79 →</a></p>
+    </section>
+
+    <section>
+      <h2>服务端配置表（srv.*）</h2>
+      <p class="lead">价目 / 容量 / 频道登记本等<strong>服务端策略值</strong>：运行时来源是库里的表；
+        本页 JSON 由 <code>build_srv_docs.py</code> 从迁移 SQL 反推，只当文档</p>
+      <p><a class="card card-primary" href="srv/index.html" style="display:inline-block;padding:0.75rem 1rem;">srv.* 服务端配置表</a></p>
+    </section>
+
+    <section>
+      <h2>辅助视图</h2>
+      <ul>
+        <li><a href="commands/index.html">交互命令</a> — 每条命令的字段解剖 / 包结构体 / 行为 / DB 影响</li>
+        <li><a href="commands/structs.html">包结构体总览</a> — 请求·应答的 Go 结构体成员序列</li>
+        <li><a href="commands/capabilities.html">能力矩阵</a> — 受控能力标签与命令覆盖</li>
+        <li><a href="commands/db-effects.html">数据库影响</a> — 命令 → 实体 / 提议表 的 read·create·update·delete</li>
+        <li><a href="asm-audit/index.html">ASM 审计</a> — 73 表 wire 链 / evidence_va 状态</li>
+        <li><a href="oracle-audit/index.html">Oracle 审计</a> — 用客户端自己的代码当判据，四层复核结论</li>
+        <li><a href="entities/index.html">协议实体</a> — 按线宽形态 / struct 浏览</li>
+        <li><a href="fields/index.html">字段索引</a> — 1191 唯一名自动草稿（P0）</li>
+        <li><a href="relations.html">表关系</a> — 提议表之间的 FK（待补）</li>
+        <li><a href="homing/index.html">归位库</a> — 新库设计：对象 / 角色 / 覆盖率 / 未决</li>
+      </ul>
+    </section>
+
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">生成于 2026-10-12 · 改 JSON 后重跑 build_site.py · HTML 只读</div>
+  </footer>
+</body>
+</html>

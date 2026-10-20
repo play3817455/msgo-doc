@@ -1,0 +1,467 @@
+{
+  "id": "SC-0xE69C-lounge-clan_mshipbid_request_r",
+  "opcode": "0xE69C",
+  "direction": "SC",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "clan_mshipbid_request_r",
+  "source_dir": "protocol_analysis/commands/SC-0xE69C-lounge-clan_mshipbid_request_r",
+  "meta": {
+    "opcode": "`0xE69C`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`clan_mshipbid_request_r`",
+    "处理函数": "`sub_B51930`（lounge 分发器）",
+    "处理块范围": "`0xB83F19`..`0xB841E3`",
+    "名字串引用点": "`0xB8406E`",
+    "声明容量（解码缓冲）": "`0x28`（`0xB83F35`）",
+    "长度闭合点": "`0xB84025`",
+    "去向": "`vt[0x42C]` @ `0xB841B8`（4 实参）"
+  },
+  "handler": "sub_B51930",
+  "handler_va": "0xB51930",
+  "block": [
+    "0xB83F19",
+    "0xB841E3"
+  ],
+  "name_str": null,
+  "name_str_va": "0xB8406E",
+  "capacity": "0x28",
+  "capacity_va": "0xB83F35",
+  "closer_va": "0xB84025",
+  "dispatch": "`vt[0x42C]` @ `0xB841B8`（4 实参）",
+  "dispatch_slot": "vt[0x42C]",
+  "dispatch_va": "0xB841B8",
+  "wire": {
+    "length_expr": "4 + 4 + var(≤31) + 1",
+    "fixed": false,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x28（容量记账口径，非线长）",
+    "field_count": 4,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：4+4+31+1。",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0xE69C",
+      "evidence_va": [
+        "0xB8406E"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "result",
+      "meaning": "结果码（日志串 `result=`）",
+      "purpose": "经 `vt[0x42C]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB83F70",
+        "0xB840C4"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "mclan_id",
+      "meaning": "母舰战队 ID（日志串 `mclan_id=`）",
+      "purpose": "经 `vt[0x42C]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB83FB0",
+        "0xB840EE"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "8",
+      "length": "var(≤31)",
+      "wire_type": "str",
+      "name": "mclan_name",
+      "meaning": "母舰战队名（NUL 结尾串；槽位预算 `0x1F`=31；日志串 `mclan_name=\"`）",
+      "purpose": "经 `vt[0x42C]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB83FD5",
+        "0xB8411B"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5,
+      "slot_budget": 31
+    },
+    {
+      "seq": 4,
+      "offset": "39",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "clan_kind",
+      "meaning": "战队种类（日志串 `clan_kind=`）",
+      "purpose": "经 `vt[0x42C]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB84015",
+        "0xB84149"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0xE69C（分发器 switch 选择子）",
+      "evidence_va": "0xB8406E"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB41120`（模块 id 437）→ 之后逐字段读线",
+      "evidence_va": "0xB83F20"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "result：`u32`（线长 4）—— 结果码（日志串 `result=`）",
+      "evidence_va": "0xB83F70"
+    },
+    {
+      "step": 4,
+      "kind": "read_count",
+      "detail": "mclan_id：`u32`（线长 4）—— 母舰战队 ID（日志串 `mclan_id=`）",
+      "evidence_va": "0xB83FB0"
+    },
+    {
+      "step": 5,
+      "kind": "read_string",
+      "detail": "mclan_name：`str`（线长 var(≤31)）—— 母舰战队名（NUL 结尾串；槽位预算 `0x1F`=31；日志串 `mclan_name=\"`）",
+      "evidence_va": "0xB83FD5"
+    },
+    {
+      "step": 6,
+      "kind": "read_scalar",
+      "detail": "clan_kind：`u8`（线长 1）—— 战队种类（日志串 `clan_kind=`）",
+      "evidence_va": "0xB84015"
+    },
+    {
+      "step": 7,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB84025"
+    },
+    {
+      "step": 8,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x42C]`，实参 4 个",
+      "evidence_va": "0xB841B8"
+    },
+    {
+      "step": 9,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB83F8A"
+    }
+  ],
+  "capabilities": [
+    "unclassified",
+    "lounge.clan_mshipbid"
+  ],
+  "capabilities_derived": [
+    "unclassified"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:45",
+    "batch": 13,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 40,
+        "va": "0xB83F35",
+        "reg": "eax",
+        "host": "[edx+78h]",
+        "alloc_va": "0xB83F32",
+        "call_va": "0xB83F37"
+      },
+      "field_window": {
+        "start_va": "0xB83F21",
+        "end_va": "0xB8404C",
+        "guard": {
+          "va": "0xB83F20",
+          "func": "0xB41120",
+          "module_id": 437,
+          "release_va": "0xB41110"
+        },
+        "closer_or_commit_va": "0xB84025",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "result",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB83F70",
+              "0xB840C4"
+            ]
+          },
+          {
+            "name": "mclan_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB83FB0",
+              "0xB840EE"
+            ]
+          },
+          {
+            "name": "mclan_name",
+            "wire_type": "str",
+            "width": null,
+            "seq": 3,
+            "shape": "str",
+            "evidence_va": [
+              "0xB83FD5",
+              "0xB8411B"
+            ]
+          },
+          {
+            "name": "clan_kind",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 4,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB84015",
+              "0xB84149"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB83F70",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB83FB0",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB83FD5",
+            "kind": "read",
+            "width": null,
+            "wire_type": "str",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB84015",
+            "kind": "read",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 4,
+        "checkable": 4,
+        "pairs": [
+          {
+            "field": "result",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB83F70",
+            "kind": "read"
+          },
+          {
+            "field": "mclan_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB83FB0",
+            "kind": "read"
+          },
+          {
+            "field": "mclan_name",
+            "width": null,
+            "shape": "str",
+            "va": "0xB83FD5",
+            "kind": "read"
+          },
+          {
+            "field": "clan_kind",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB84015",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB83F21",
+          "0xB8404C"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 9,
+          "capacity": 40,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB83FD5",
+              "kind": "read",
+              "name": ""
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）9 / 容量 0x28"
+        }
+      },
+      "closer": {
+        "va": "0xB84025",
+        "kind": "jz",
+        "jcc_va": "0xB8402B",
+        "seq_va": "0xB84021",
+        "jcc_dst": "0xB84047",
+        "cmp": "cmp     ebx, [esp+2C5Ch+var_2C40]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x42C]",
+        "slot_value": 1068,
+        "va": "0xB841B8",
+        "mov_va": "0xB841A0",
+        "host": "[edx+42Ch]",
+        "argc": 4,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB83F8A",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "result=",
+        "mclan_id=",
+        "mclan_name=\"",
+        "clan_kind="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0xE69C-lounge-clan_mshipbid_request_r.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xB8406E"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "ClanMshipbidRequestR",
+      "role": "response",
+      "wire_length": "4 + 4 + var(≤31) + 1",
+      "members": [
+        {
+          "name": "Result",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "result"
+        },
+        {
+          "name": "MclanId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "mclan_id"
+        },
+        {
+          "name": "MclanName",
+          "wire_type": "str",
+          "length": "var(≤31)",
+          "field_ref": "mclan_name",
+          "element": null,
+          "element_length": null,
+          "cap": null,
+          "count_field": "mclan_id",
+          "count_field_source": "nearest_scalar",
+          "note": "元素成员未建模（composites/ 无此结构），须以 IDA 复核补"
+        },
+        {
+          "name": "ClanKind",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "clan_kind"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "f702d3f80257f1d4",
+  "check_fingerprint": "9bb5e3acf0c62d4f",
+  "import_repairs": [
+    "str_slot_budget:mclan_name(31 → var(≤31)；线上实写 strlen+1)",
+    "wire_len_member_rows_folded:4 + 4 + 31 + 1 → 4 + 4 + var(≤31) + 1"
+  ]
+}

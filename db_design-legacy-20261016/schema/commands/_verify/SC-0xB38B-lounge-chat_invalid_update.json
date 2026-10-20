@@ -1,0 +1,123 @@
+{
+ "id": "SC-0xB38B-lounge-chat_invalid_update",
+ "verified_at": "2026-09-30 15:25:44",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "block",
+ "block": [
+  "0xB737E9",
+  "0xB73954"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 2,
+   "va": "0xB737FE",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xB737FB",
+   "call_va": "0xB73800"
+  },
+  "field_window": {
+   "start_va": "0xB737EA",
+   "end_va": "0xB7386A",
+   "guard": {
+    "va": "0xB737E9",
+    "func": "0xB41120",
+    "module_id": null,
+    "release_va": "0xB41110"
+   },
+   "closer_or_commit_va": "0xB73862",
+   "within_model_block": true,
+   "range_from": "block"
+  },
+  "primitive_widths": {
+   "direction": "SC",
+   "expected": [
+    {
+     "name": "is_invalid",
+     "wire_type": "u16",
+     "width": 2,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "B73839",
+      "B7392A"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB73839",
+     "kind": "read",
+     "width": 2,
+     "wire_type": "u16",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 1,
+   "checkable": 1,
+   "pairs": [
+    {
+     "field": "is_invalid",
+     "width": 2,
+     "shape": "scalar",
+     "va": "0xB73839",
+     "kind": "read"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB737EA",
+    "0xB7386A"
+   ],
+   "scalar_match_verifiable": true,
+   "capacity_relation": {
+    "observed_min": 2,
+    "capacity": 2,
+    "relation": "exact",
+    "unknown_events": [],
+    "is_lower_bound": false,
+    "note": "观测线长（下界）2 / 容量 0x2"
+   }
+  },
+  "closer": {
+   "va": "0xB73862",
+   "kind": "jnz",
+   "jcc_va": "0xB73866",
+   "seq_va": "0xB7385E",
+   "jcc_dst": "0xB73847",
+   "cmp": "cmp     ebx, [esp+2C5Ch+var_2C40]",
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x134]",
+   "slot_value": 308,
+   "va": "0xB73938",
+   "mov_va": "0xB7392F",
+   "host": "[edx+134h]",
+   "argc": 1,
+   "form": "mov_then_call",
+   "error_slot": {
+    "slot": "vt[0x64]",
+    "va": "0xB73850",
+    "argc": 2
+   }
+  },
+  "log_strings": [
+   "is_invalid="
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "is_invalid"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 11
+}

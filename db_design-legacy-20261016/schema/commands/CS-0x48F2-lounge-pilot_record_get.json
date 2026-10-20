@@ -1,0 +1,404 @@
+{
+  "id": "CS-0x48F2-lounge-pilot_record_get",
+  "opcode": "0x48F2",
+  "direction": "CS",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "pilot_record_get",
+  "source_dir": "protocol_analysis/commands/CS-0x48F2-lounge-pilot_record_get",
+  "meta": {
+    "opcode": "`0x48F2`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`pilot_record_get`",
+    "名字符串": "`)<-_proto_lounge_client::send_pilot_record_get(` @ `0xeeaa90`",
+    "代码位置": "sub_B8E290 @ `0xb8e290`（`0xb8e290`..`0xb8e4c9`）",
+    "opcode 写入证据": "`0xb8e30c`",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0xE`（14）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)`",
+    "配对命令（同 opcode 反向）": "见 §4.3 与其他命令的关联 / INDEX 反向表"
+  },
+  "handler": "sub_B8E290",
+  "handler_va": "0xb8e290",
+  "block": [
+    "0xB8E290",
+    "0xB8E4C9"
+  ],
+  "name_str": ")<-_proto_lounge_client::send_pilot_record_get(",
+  "name_str_va": "0xeeaa90",
+  "capacity": "0xE",
+  "capacity_va": null,
+  "closer_va": "0xB8E3AD",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": null,
+  "wire": {
+    "length_expr": "4 + 4 + 1",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0xE（容量记账口径，非线长）",
+    "field_count": 3,
+    "length_source": "field_sum",
+    "readme_conclusion": "结论：获取角色战绩（角色 id + 世界 id + 是否查勋章）。",
+    "readme_close": "2 + 4 + 4 + 1 = 11 ≤ 容量 0xE=14（富余 3）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发给 lounge 协议类处理块（C→S 无 case 块）",
+      "enum": "0x48F2",
+      "evidence_va": [
+        "0xB8E30C"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "2",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "pilot_id",
+      "meaning": "角色 id",
+      "purpose": "来源=入参 arg_0（@0xB8E318）；内联 `mov [eax],esi`；经 `vt[0x58]` 发送",
+      "enum": null,
+      "evidence_va": [
+        "0xB8E31C"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "6",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "world_id",
+      "meaning": "世界（大区）id",
+      "purpose": "来源=入参 arg_4（@0xB8E32B）；内联 `mov [eax],ecx`；经 `vt[0x58]` 发送",
+      "enum": null,
+      "evidence_va": [
+        "0xB8E337"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "10",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "is_checkmedal",
+      "meaning": "是否查询勋章",
+      "purpose": "来源=入参 arg_8（@0xB8E33A）；写线原语 `sub_B061C0`(u8)；经 `vt[0x58]` 发送",
+      "enum": null,
+      "evidence_va": [
+        "0xB8E33F"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0x48F2（分发器 switch 选择子）",
+      "evidence_va": "0xB8E30C"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0xE B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xB8E2D6"
+    },
+    {
+      "step": 3,
+      "kind": "write_scalar",
+      "detail": "pilot_id：`u32`（线长 4）—— 角色 id",
+      "evidence_va": "0xB8E31C"
+    },
+    {
+      "step": 4,
+      "kind": "write_scalar",
+      "detail": "world_id：`u32`（线长 4）—— 世界（大区）id",
+      "evidence_va": "0xB8E337"
+    },
+    {
+      "step": 5,
+      "kind": "write_scalar",
+      "detail": "is_checkmedal：`u8`（线长 1）—— 是否查询勋章",
+      "evidence_va": "0xB8E33F"
+    },
+    {
+      "step": 6,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xB8E3AD"
+    },
+    {
+      "step": 7,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xB8E463"
+    }
+  ],
+  "capabilities": [
+    "report",
+    "query",
+    "lounge.pilot"
+  ],
+  "capabilities_derived": [
+    "query"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:43",
+    "batch": 7,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 14,
+        "va": "0xB8E2D6",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB8E2D3",
+        "call_va": "0xB8E2D8"
+      },
+      "field_window": {
+        "start_va": "0xB8E290",
+        "end_va": "0xB8E3AD",
+        "guard": null,
+        "closer_or_commit_va": "0xB8E3AD",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "pilot_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB8E31C"
+            ]
+          },
+          {
+            "name": "world_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB8E337"
+            ]
+          },
+          {
+            "name": "is_checkmedal",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB8E33F"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB8E30C",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB8E31C",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB8E337",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB8E33F",
+            "kind": "write",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB8E383",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 3,
+        "checkable": 3,
+        "pairs": [
+          {
+            "field": "pilot_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB8E31C",
+            "kind": "inline_store"
+          },
+          {
+            "field": "world_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB8E337",
+            "kind": "inline_store"
+          },
+          {
+            "field": "is_checkmedal",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB8E33F",
+            "kind": "write"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB8E30C",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB8E290",
+          "0xB8E3AD"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 11,
+          "capacity": 14,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB8E383",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）11 / 容量 0xe"
+        }
+      },
+      "closer": {
+        "va": "0xB8E3AD",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xB8E463",
+        "mov_va": "0xB8E45A",
+        "host": "[edx+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "pilot_id=",
+        "world_id=",
+        "is_checkmedal="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0x48F2-lounge-pilot_record_get.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0xb8e30c",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xB8E30C"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "PilotRecordGet",
+      "role": "request",
+      "wire_length": "4 + 4 + 1",
+      "members": [
+        {
+          "name": "PilotId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "pilot_id"
+        },
+        {
+          "name": "WorldId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "world_id"
+        },
+        {
+          "name": "IsCheckmedal",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "is_checkmedal"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "60d85f524166cf8f",
+  "check_fingerprint": "3b3dec640969d133"
+}

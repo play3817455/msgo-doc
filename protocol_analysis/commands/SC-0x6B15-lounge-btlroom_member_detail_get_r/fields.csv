@@ -1,0 +1,6 @@
+序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+0,-,2,u16,opcode,命令号,分发器 switch 选择子,`0x6B15`,`0xb65771`,确证
+1,0,4,u32,result,查询结果码（日志串 `result=`）,`vt[0x1CC]` 实参,-,0xb65648,确证
+2,4,135,struct<roominfo>,roominfo,房间信息（日志串 `roominfo=`；claim 144 / 线长 135）,`vt[0x1CC]` 实参（指针，预留 `sub_B41440`）,-,0xb65688,确证
+3,139,4,u32,members_count,"成员列表计数（上限检查 `cmp ebx,33h` @`0xb656ca`）",驱动循环（≤51）,≤51,0xb6569e,确证
+4,143,52,"array<member,N>",members,房间成员明细列表（日志串 `members={`）,"`vt[0x1CC]` 实参（指针）；元素由 `sub_B454D0` 读取，**元素线长 52 / 槽步进 64**（`sub_B41AC0` `add …,40h`）",-,0xb656fa,确证

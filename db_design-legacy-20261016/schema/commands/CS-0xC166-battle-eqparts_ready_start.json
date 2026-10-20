@@ -1,0 +1,463 @@
+{
+  "id": "CS-0xC166-battle-eqparts_ready_start",
+  "opcode": "0xC166",
+  "direction": "CS",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "eqparts_ready_start",
+  "source_dir": "protocol_analysis/commands/CS-0xC166-battle-eqparts_ready_start",
+  "meta": {
+    "opcode": "`0xC166`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`battle_client`",
+    "命令名": "`eqparts_ready_start`",
+    "名字符串": "`)<-_proto_battle_client::send_eqparts_ready_start(` @ `0xEE1128`",
+    "代码位置": "`0xB3C290`（`0xB3C290`..`0xB3C50E`）",
+    "opcode 写入证据": "`0xB3C30C`",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0x0012`（18）",
+    "容量申请证据": "`0xB3C2D6`（分配器 `[obj+0Ch]` 的 `vt[0x78]`）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)` @ `0xB3C49C`",
+    "提交": "`sub_B02FF0` @ `0xB3C3C7`",
+    "配对命令": "S→C `0x8D58-battle-eqparts_ready_start_r`（已 DONE）"
+  },
+  "handler": null,
+  "handler_va": "0xB3C290",
+  "block": [
+    "0xB3C290",
+    "0xB3C50E"
+  ],
+  "name_str": ")<-_proto_battle_client::send_eqparts_ready_start(",
+  "name_str_va": "0xEE1128",
+  "capacity": "0x12",
+  "capacity_va": "0xB3C2D6",
+  "closer_va": "0xB3C3C7",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)` @ `0xB3C49C`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": "0xB3C49C",
+  "wire": {
+    "length_expr": "4 + 2 + 2 + 1",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x12（容量记账口径，非线长）",
+    "field_count": 4,
+    "length_source": "field_sum",
+    "readme_conclusion": "字段数：**5**（含 opcode 第 0 项）",
+    "readme_close": "2+4+2+2+1 = 11 ≤ 容量 0x12 = 18（富余 7）。"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "写入 `buf+0`，供服务端分发；无 case 块（C→S）",
+      "enum": "0xC166",
+      "evidence_va": [
+        "`0xB3C30C`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "frame_count",
+      "meaning": "帧计数",
+      "purpose": "来源=入参 `arg_0`（写线指令见证据列）→ `vt[0x58](buf,len)` 发送至服务端",
+      "enum": null,
+      "evidence_va": [
+        "`0xB3C31C`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "AI_ent_id",
+      "meaning": "AI实体ID",
+      "purpose": "来源=入参 `arg_4`（写线指令见证据列）→ `vt[0x58](buf,len)` 发送至服务端",
+      "enum": null,
+      "evidence_va": [
+        "`0xB3C336`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "6",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "group_id",
+      "meaning": "分组ID",
+      "purpose": "来源=入参 `arg_8`（写线指令见证据列）→ `vt[0x58](buf,len)` 发送至服务端",
+      "enum": null,
+      "evidence_va": [
+        "`0xB3C33F`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 4,
+      "offset": "8",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "reason",
+      "meaning": "原因",
+      "purpose": "来源=入参 `arg_C`（写线指令见证据列）→ `vt[0x58](buf,len)` 发送至服务端",
+      "enum": null,
+      "evidence_va": [
+        "`0xB3C359`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0xC166（分发器 switch 选择子）",
+      "evidence_va": "0xB3C30C"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0x12 B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xB3C2D6"
+    },
+    {
+      "step": 3,
+      "kind": "write_scalar",
+      "detail": "frame_count：`u32`（线长 4）—— 帧计数",
+      "evidence_va": "0xB3C31C"
+    },
+    {
+      "step": 4,
+      "kind": "write_scalar",
+      "detail": "AI_ent_id：`u16`（线长 2）—— AI实体ID",
+      "evidence_va": "0xB3C336"
+    },
+    {
+      "step": 5,
+      "kind": "write_scalar",
+      "detail": "group_id：`u16`（线长 2）—— 分组ID",
+      "evidence_va": "0xB3C33F"
+    },
+    {
+      "step": 6,
+      "kind": "write_scalar",
+      "detail": "reason：`u8`（线长 1）—— 原因",
+      "evidence_va": "0xB3C359"
+    },
+    {
+      "step": 7,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xB3C3C7"
+    },
+    {
+      "step": 8,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xB3C4A5"
+    }
+  ],
+  "capabilities": [
+    "flow",
+    "query",
+    "battle.eqparts"
+  ],
+  "capabilities_derived": [
+    "flow"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:47",
+    "batch": 19,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 18,
+        "va": "0xB3C2D6",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB3C2D3",
+        "call_va": "0xB3C2D8"
+      },
+      "field_window": {
+        "start_va": "0xB3C290",
+        "end_va": "0xB3C3C7",
+        "guard": null,
+        "closer_or_commit_va": "0xB3C3C7",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "frame_count",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "`0xB3C31C`"
+            ]
+          },
+          {
+            "name": "AI_ent_id",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "`0xB3C336`"
+            ]
+          },
+          {
+            "name": "group_id",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "`0xB3C33F`"
+            ]
+          },
+          {
+            "name": "reason",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 4,
+            "shape": "scalar",
+            "evidence_va": [
+              "`0xB3C359`"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB3C30C",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB3C31C",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB3C336",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB3C33F",
+            "kind": "write",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB3C359",
+            "kind": "write",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB3C39D",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 4,
+        "checkable": 4,
+        "pairs": [
+          {
+            "field": "frame_count",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB3C31C",
+            "kind": "inline_store"
+          },
+          {
+            "field": "AI_ent_id",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB3C336",
+            "kind": "inline_store"
+          },
+          {
+            "field": "group_id",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB3C33F",
+            "kind": "write"
+          },
+          {
+            "field": "reason",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB3C359",
+            "kind": "write"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB3C30C",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB3C290",
+          "0xB3C3C7"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 11,
+          "capacity": 18,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB3C39D",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）11 / 容量 0x12"
+        }
+      },
+      "closer": {
+        "va": "0xB3C3C7",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xB3C4A5",
+        "mov_va": "0xB3C49C",
+        "host": "[edx+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "frame_count=",
+        "AI_ent_id=",
+        "group_id=",
+        "reason="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0xC166-battle-eqparts_ready_start.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0xB3C30C",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "`0xB3C30C`"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "EqpartsReadyStart",
+      "role": "request",
+      "wire_length": "4 + 2 + 2 + 1",
+      "members": [
+        {
+          "name": "FrameCount",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "frame_count"
+        },
+        {
+          "name": "AIEntId",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "AI_ent_id"
+        },
+        {
+          "name": "GroupId",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "group_id"
+        },
+        {
+          "name": "Reason",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "reason"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "a6ee68d57ea44fa3",
+  "check_fingerprint": "ba5630c379201e33"
+}

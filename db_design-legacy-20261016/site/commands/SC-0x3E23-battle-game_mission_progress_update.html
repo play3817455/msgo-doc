@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SC-0x3E23-battle-game_mission_progress_update · db_design</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <h1><a href="../index.html">db_design</a></h1>
+      <p class="header-note">唯一证据源：<code>protocol_analysis/</code></p>
+      <nav><a href="../index.html">首页</a>
+      <a href="../homing/index.html">归位库</a>
+      <a href="../tables/index.html">旧表留档</a>
+      <a href="../commands/index.html" class="active">命令</a>
+      <a href="../cfg/index.html">配置表79</a>
+      <a href="../srv/index.html">服务端配置</a>
+      <a href="../asm-audit/index.html">ASM 审计</a>
+      <a href="../oracle-audit/index.html">Oracle 审计</a>
+      <a href="../entities/index.html">协议实体</a>
+      <a href="../fields/index.html">字段索引</a>
+      <a href="../relations.html">表关系</a></nav>
+    </div>
+  </header>
+  <main class="wrap">
+
+    <nav class="breadcrumb"><a href="index.html">命令</a> / <span><code>SC-0x3E23-battle-game_mission_progress_update</code></span></nav>
+    <h2>SC-0x3E23-battle-game_mission_progress_update
+      <span class="badge" style="background:#455a64">SC</span>
+      <span class="badge" style="background:#1565c0">battle</span>
+      <span class="badge" style="background:#1565c0">BEHAVIOR-DONE</span></h2>
+    
+      <dl class="asm-dl">
+        <dt>opcode</dt><dd><code>0x3E23</code> · SC · battle</dd>
+        <dt>协议类</dt><dd><code>battle_client</code></dd>
+        <dt>处理函数</dt><dd><code>sub_B0CC20</code> <code>0xB0CC20</code></dd>
+        <dt>处理块</dt><dd>0xB14DE4 .. 0xB14F4B</dd>
+        <dt>名字串</dt><dd><code>—</code> <code>0xB14E87</code></dd>
+        <dt>声明容量</dt><dd>0x40 <code>0xB14DF9</code>
+          <span class="muted">（缓冲 claim，非线长）</span></dd>
+        <dt>长度闭合点</dt><dd><code>0xB14E5D</code></dd>
+        <dt>去向槽</dt><dd><code>vt[0x114]</code> <code>0xB14F2F</code></dd>
+        <dt>配对 / 同族</dt><dd><span class="muted">—</span></dd>
+        <dt>证据目录</dt><dd><a href="../../../protocol_analysis/commands/SC-0x3E23-battle-game_mission_progress_update/README.md" target="_blank">README.md</a> · <a href="../../../protocol_analysis/commands/SC-0x3E23-battle-game_mission_progress_update/fields.csv" target="_blank">fields.csv</a> · <a href="../../../protocol_analysis/commands/SC-0x3E23-battle-game_mission_progress_update/asm.md" target="_blank">asm.md</a> · <a href="../../../protocol_analysis/commands/SC-0x3E23-battle-game_mission_progress_update/notes.md" target="_blank">notes.md</a></dd>
+      </dl>
+    
+
+    <section>
+      <h3>线长</h3>
+      <dl class="asm-dl">
+        <dt>报文体线长</dt><dd><code>46</code>
+          <span class="badge" style="background:#455a64">定长</span>
+          <span class="muted">来源 field_sum</span></dd>
+        <dt>变长驱动</dt><dd><span class="muted">—</span></dd>
+        <dt>负载字段数</dt><dd>1</dd>
+        <dt>容量口径</dt><dd class="muted">声明容量 0x40（容量记账口径，非线长）</dd>
+        <dt>README 结论</dt><dd class="muted">**报文体总长**：**64** 字节（== 容量 0x40）。</dd>
+        <dt>README 闭合</dt><dd class="muted">容量 0x40 与线长的关系：**相等**（全定长）</dd>
+        
+      </dl>
+    </section>
+
+    <section>
+      <h3>包结构体</h3>
+      <p class="muted">由 <code>fields[]</code> 归并而成；线序即字段行序，可复用的聚合体只在
+        <code>element</code> 里引用 <code>schema/composites/</code>。</p>
+      
+      <div class="struct-block">
+        <h4><code>GameMissionProgressUpdate</code> <span class="muted">(response · 角色 response)</span>
+          <span class="muted">线长 46</span></h4>
+        <table class="srv-table">
+          <thead><tr><th>Go 成员</th><th>线类型</th><th>线长</th><th>字段引用</th><th>元素 / 计数</th></tr></thead>
+          <tbody><tr>
+          <td><code class="fname">Mprogress</code></td>
+          <td><code>struct</code></td>
+          <td><code>46</code></td>
+          <td>mprogress</td>
+          <td class="muted">元素线长 46B · <div class="composite-inline"><span class="muted">14 个成员 <span class="muted">（布局同 progress）</span>：</span><code>remain_msec</code> u32 · <code>coop_step</code> u32 · <code>A_point_now</code> u32 · <code>B_point_now</code> u32 · <code>A_gauge_dmg_scale</code> u16 · <code>B_gauge_dmg_scale</code> u16 · <code>coop_dead_remain</code> i8 · <code>is_prestart</code> i8 · <code>rule_status</code> u32 · <code>rule_timer_msec</code> u32 · <code>rule_param1</code> u32 · <code>rule_param2</code> u32 · <code>A_dot_dmg</code> u32 · <code>B_dot_dmg</code> u32</div></td>
+        </tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h3>字段解剖</h3>
+      <table class="wide">
+        <thead><tr>
+          <th>序</th><th>偏移</th><th>线长</th><th>线类型</th><th>字段名</th>
+          <th>含义</th><th>用途（来源/去向）</th><th>取值/枚举</th><th>去向</th><th>证据 VA</th><th>置信度</th>
+        </tr></thead>
+        <tbody><tr>
+          <td>0</td>
+          <td><code>-</code></td>
+          <td><code>2</code></td>
+          <td><code>u16</code></td>
+          <td><code class="fname">opcode</code></td>
+          <td>命令号</td>
+          <td>分发器 switch 选择子</td>
+          <td class="muted">0x3E23</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB14E87</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>1</td>
+          <td><code>0</code></td>
+          <td><code>46</code></td>
+          <td><code>struct</code></td>
+          <td><code class="fname">mprogress</code></td>
+          <td>任务进度结构（claim `0x40`=64 / 线长 46，读取器 `sub_B07880`）</td>
+          <td>经 `vt[0x114]` 交业务</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB14E34</code> <code>0xB14ED6</code></td>
+          <td class="muted">确证</td>
+        </tr><tr class="row-members"><td colspan="11"><div class="composite-block"><div class="composite-head"><code>mprogress</code> <span class="muted">结构体成员</span> <span class="muted">线长 46B · 槽 64B · 布局同 progress · ASM pass</span> <span class="muted">定义 <code>schema/composites/mprogress.json</code></span></div><table class="srv-table composite-table"><thead><tr><th>成员</th><th>线类型</th><th>线偏移 / 线长</th><th>disposition</th><th>含义</th></tr></thead><tbody><tr><td><code class="fname">remain_msec</code></td><td><code>u32</code></td><td class="muted">线 +0 4B</td><td><span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="B07893|B0A840">✓</span></td><td>本局剩余时间（毫秒）</td></tr><tr><td><code class="fname">coop_step</code></td><td><code>u32</code></td><td class="muted">线 +4 4B</td><td><span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="B078AD|B0A867">✓</span></td><td>协力（coop）阶段步号</td></tr><tr><td><code class="fname">A_point_now</code></td><td><code>u32</code></td><td class="muted">线 +8 4B</td><td><span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="B078C3|B0A88E">✓</span></td><td>A 军当前点数</td></tr><tr><td><code class="fname">B_point_now</code></td><td><code>u32</code></td><td class="muted">线 +12 4B</td><td><span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="B078D9|B0A8B5">✓</span></td><td>B 军当前点数</td></tr><tr><td><code class="fname">A_gauge_dmg_scale</code></td><td><code>u16</code></td><td class="muted">线 +16 2B</td><td><span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="B078E6|B0A8D0">✓</span></td><td>A 军量表伤害比例</td></tr><tr><td><code class="fname">B_gauge_dmg_scale</code></td><td><code>u16</code></td><td class="muted">线 +18 2B</td><td><span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="B078FB|B0A8F8">✓</span></td><td>B 军量表伤害比例</td></tr><tr><td><code class="fname">coop_dead_remain</code></td><td><code>i8</code></td><td class="muted">线 +20 1B</td><td><span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="B0790C|B0A928">✓</span></td><td>协力死亡剩余计数（打印器 movsx）</td></tr><tr><td><code class="fname">is_prestart</code></td><td><code>i8</code></td><td class="muted">线 +21 1B</td><td><span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="B0791D|B0A948">✓</span></td><td>是否处于开局前阶段（打印器 movsx）</td></tr><tr><td><code class="fname">rule_status</code></td><td><code>u32</code></td><td class="muted">线 +22 mem +24 4B</td><td><span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="B0792E|B0A97C">✓</span></td><td>规则状态</td></tr><tr><td><code class="fname">rule_timer_msec</code></td><td><code>u32</code></td><td class="muted">线 +26 mem +28 4B</td><td><span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="B0793F|B0A9A3">✓</span></td><td>规则计时（毫秒）</td></tr><tr><td><code class="fname">rule_param1</code></td><td><code>u32</code></td><td class="muted">线 +30 mem +32 4B</td><td><span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="B07950|B0A9CA">✓</span></td><td>规则参数 1</td></tr><tr><td><code class="fname">rule_param2</code></td><td><code>u32</code></td><td class="muted">线 +34 mem +36 4B</td><td><span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="B07961|B0A9F1">✓</span></td><td>规则参数 2</td></tr><tr><td><code class="fname">A_dot_dmg</code></td><td><code>u32</code></td><td class="muted">线 +38 mem +40 4B</td><td><span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="B07972|B0AA18">✓</span></td><td>A 军 dot 伤害值</td></tr><tr><td><code class="fname">B_dot_dmg</code></td><td><code>u32</code></td><td class="muted">线 +42 mem +44 4B</td><td><span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="B0798C|B0AA3A">✓</span></td><td>B 军 dot 伤害值</td></tr></tbody></table></div></td></tr></tbody>
+      </table>
+    </section>
+
+    <section>
+      <h3>客户端行为</h3>
+      <table class="srv-table">
+        <thead><tr><th>步</th><th>类别</th><th>动作</th><th>证据 VA</th></tr></thead>
+        <tbody><tr>
+          <td>1</td>
+          <td><code>read_scalar</code></td>
+          <td>opcode 0x3E23（分发器 switch 选择子）</td>
+          <td><code>0xB14E87</code></td>
+        </tr><tr>
+          <td>2</td>
+          <td><code>guard</code></td>
+          <td>进入解码窗口：守卫 `0xB05DA0`（模块 id None）→ 之后逐字段读线</td>
+          <td><code>0xB14DE4</code></td>
+        </tr><tr>
+          <td>3</td>
+          <td><code>read_struct</code></td>
+          <td>mprogress：`struct`（线长 46）—— 任务进度结构（claim `0x40`=64 / 线长 46，读取器 `sub_B07880`）</td>
+          <td><code>0xB14E34</code></td>
+        </tr><tr>
+          <td>4</td>
+          <td><code>close_check</code></td>
+          <td>闭合校验：读游标 == 报文末尾（jnz）</td>
+          <td><code>0xB14E5D</code></td>
+        </tr><tr>
+          <td>5</td>
+          <td><code>dispatch</code></td>
+          <td>交业务 `vt[0x114]`，实参 1 个</td>
+          <td><code>0xB14F2F</code></td>
+        </tr><tr>
+          <td>6</td>
+          <td><code>error_path</code></td>
+          <td>失败路径 `vt[0x64](1, 错误码)`（不是业务去向）</td>
+          <td><code>0xB14E4B</code></td>
+        </tr></tbody>
+      </table>
+    </section>
+
+    <section>
+      <h3>能力</h3>
+      <span class="cap-chip">update</span><span class="cap-chip">battle.game_mission</span><div class="muted">命名学推断（非证据）：<span class="cap-chip cap-derived">notify</span></div>
+    </section>
+
+    <section>
+      <h3>DB 影响</h3>
+      <table class="srv-table">
+        <thead><tr><th>实体 / 表</th><th>op</th><th>业务字段</th><th>disposition</th><th>证据 VA</th></tr></thead>
+        <tbody><tr>
+          <td><a href="../entities/mprogress.html"><code>mprogress</code></a> <a href="../tables/tbl_mprogress.html"><code>tbl_mprogress</code></a></td>
+          <td><code>update</code></td>
+          <td>mprogress</td>
+          <td><span class="badge" style="background:#455a64">COMPOSITE</span></td>
+          <td><code>0xB14E34</code></td>
+        </tr><tr>
+          <td><a href="../entities/mprogress.html"><code>mprogress</code></a> <a href="../tables/tbl_mprogress.html"><code>tbl_mprogress</code></a></td>
+          <td><code>update</code></td>
+          <td>mission_progress</td>
+          <td><span class="badge" style="background:#c62828">EVENT</span></td>
+          <td><code>0xB07880</code></td>
+        </tr></tbody>
+      </table>
+    </section>
+
+    
+
+    <section>
+      <h3>汇编复核（IDA asm 为唯一权威）</h3>
+      
+      <dl class="asm-dl">
+        <dt>状态</dt><dd><span class="badge" style="background:#1565c0">BEHAVIOR-DONE</span></dd>
+        <dt>复核批次</dt><dd>2</dd>
+        <dt>复核时间</dt><dd>2026-09-30 15:25:42</dd>
+        <dt>提取器</dt><dd><code>tools/verify_commands_ida.py</code></dd>
+      </dl>
+      <table class="srv-table">
+        <thead><tr><th>检查项</th><th>键</th><th>结果</th></tr></thead>
+        <tbody><tr><td>容量指纹</td><td><code>capacity</code></td><td><code>{&quot;value&quot;: 64, &quot;va&quot;: &quot;0xB14DF9&quot;, &quot;reg&quot;: &quot;edx&quot;, &quot;host&quot;: &quot;[eax+78h]&quot;, &quot;alloc_va&quot;: &quot;0xB14DF6&quot;, &quot;call_va&quot;: &quot;0xB14DFB&quot;}</code></td></tr><tr><td>字段窗口</td><td><code>field_window</code></td><td><code>{&quot;start_va&quot;: &quot;0xB14DE5&quot;, &quot;end_va&quot;: &quot;0xB14E65&quot;, &quot;guard&quot;: {&quot;va&quot;: &quot;0xB14DE4&quot;, &quot;func&quot;: &quot;0xB05DA0&quot;, &quot;module_id&quot;: null, &quot;release_va&quot;: &quot;0xB05D90&quot;}, &quot;closer_or_commit_va&quot;: &quot;0xB14E5D&quot;, &quot;within_model_block&quot;: true, &quot;range_from&quot;: &quot;block&quot;}</code></td></tr><tr><td>原语宽度</td><td><code>primitive_widths</code></td><td><code>{&quot;direction&quot;: &quot;SC&quot;, &quot;expected&quot;: [{&quot;name&quot;: &quot;mprogress&quot;, &quot;wire_type&quot;: &quot;struct&quot;, &quot;width&quot;: null, &quot;seq&quot;: 1, &quot;shape&quot;: &quot;agg&quot;, &quot;evidence_va&quot;: [&quot;0xB14E34&quot;, &quot;0xB14ED6&quot;]}], &quot;actual&quot;: [{&quot;va&quot;: &quot;0xB07893&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 4, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 4, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB078AD&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 4, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 4, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB078C3&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 4, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 4, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB078D9&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 4, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 4, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB078E6&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 2, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 2, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB078FB&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 2, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 2, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB0790C&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 1, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 1, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB0791D&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 1, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 1, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB0792E&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 4, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 4, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB0793F&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 4, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 4, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB07950&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 4, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 4, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB07961&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 4, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 4, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB07972&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 4, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 4, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB0798C&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 4, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 4, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB14E25&quot;, &quot;kind&quot;: &quot;opaque&quot;, &quot;width&quot;: null, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;sub_B05ED0&quot;, &quot;consumed&quot;: 0, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB14E34&quot;, &quot;kind&quot;: &quot;composite&quot;, &quot;width&quot;: null, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;sub_B07880&quot;, &quot;consumed&quot;: 46, &quot;consumed_effective&quot;: 46, &quot;nested_of&quot;: null}], &quot;matched&quot;: 0, &quot;checkable&quot;: 0, &quot;pairs&quot;: [], &quot;gaps&quot;: [], &quot;unmatched_actual&quot;: [{&quot;va&quot;: &quot;0xB14E25&quot;, &quot;kind&quot;: &quot;opaque&quot;, &quot;width&quot;: null, &quot;wire_type&quot;: null}, {&quot;va&quot;: &quot;0xB14E34&quot;, &quot;kind&quot;: &quot;composite&quot;, &quot;width&quot;: null, &quot;wire_type&quot;: null}, {&quot;va&quot;: &quot;0xB07893&quot;, &quot;kind&quot;: &quot;nested_run&quot;, &quot;width&quot;: 16, &quot;wire_type&quot;: null}, {&quot;va&quot;: &quot;0xB078E6&quot;, &quot;kind&quot;: &quot;nested_run&quot;, &quot;width&quot;: 4, &quot;wire_type&quot;: null}, {&quot;va&quot;: &quot;0xB0790C&quot;, &quot;kind&quot;: &quot;nested_run&quot;, &quot;width&quot;: 2, &quot;wire_type&quot;: null}, {&quot;va&quot;: &quot;0xB0792E&quot;, &quot;kind&quot;: &quot;nested_run&quot;, &quot;width&quot;: 24, &quot;wire_type&quot;: null}], &quot;nested_unmatchable&quot;: [], &quot;window&quot;: [&quot;0xB14DE5&quot;, &quot;0xB14E65&quot;], &quot;scalar_match_verifiable&quot;: true, &quot;capacity_relation&quot;: {&quot;observed_min&quot;: 46, &quot;capacity&quot;: 64, &quot;relation&quot;: &quot;within&quot;, &quot;unknown_events&quot;: [], &quot;is_lower_bound&quot;: false, &quot;note&quot;: &quot;观测线长（下界）46 / 容量 0x40&quot;}, &quot;zero_load&quot;: true}</code></td></tr><tr><td>闭合点</td><td><code>closer</code></td><td><code>{&quot;va&quot;: &quot;0xB14E5D&quot;, &quot;kind&quot;: &quot;jnz&quot;, &quot;jcc_va&quot;: &quot;0xB14E61&quot;, &quot;seq_va&quot;: &quot;0xB14E59&quot;, &quot;jcc_dst&quot;: &quot;0xB14E42&quot;, &quot;cmp&quot;: &quot;cmp     ebx, [esp+1B3Ch+var_1B24]&quot;, &quot;va_convention&quot;: &quot;cmp&quot;}</code></td></tr><tr><td>去向槽+实参</td><td><code>dispatch_slot</code></td><td><code>{&quot;slot&quot;: &quot;vt[0x114]&quot;, &quot;slot_value&quot;: 276, &quot;va&quot;: &quot;0xB14F2F&quot;, &quot;mov_va&quot;: &quot;0xB14F26&quot;, &quot;host&quot;: &quot;[edx+114h]&quot;, &quot;argc&quot;: 1, &quot;form&quot;: &quot;mov_then_call&quot;, &quot;error_slot&quot;: {&quot;slot&quot;: &quot;vt[0x64]&quot;, &quot;va&quot;: &quot;0xB14E4B&quot;, &quot;argc&quot;: 2}}</code></td></tr><tr><td>日志串</td><td><code>log_strings</code></td><td><code>[&quot;mprogress=&quot;]</code></td></tr></tbody>
+      </table>
+      <p>无差异。</p>
+      <p>原始证据切片：<a href="../../../db_design/schema/commands/_verify/SC-0x3E23-battle-game_mission_progress_update.json" target="_blank"><code>commands/_verify/SC-0x3E23-battle-game_mission_progress_update.json</code></a></p>
+    </section>
+
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">生成于 2026-10-12 · 改 JSON 后重跑 build_site.py · HTML 只读</div>
+  </footer>
+</body>
+</html>

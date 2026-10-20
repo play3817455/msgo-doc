@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>表关系 · db_design</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <h1><a href="index.html">db_design</a></h1>
+      <p class="header-note">唯一证据源：<code>protocol_analysis/</code></p>
+      <nav><a href="index.html">首页</a>
+      <a href="homing/index.html">归位库</a>
+      <a href="tables/index.html">旧表留档</a>
+      <a href="commands/index.html">命令</a>
+      <a href="cfg/index.html">配置表79</a>
+      <a href="srv/index.html">服务端配置</a>
+      <a href="asm-audit/index.html">ASM 审计</a>
+      <a href="oracle-audit/index.html">Oracle 审计</a>
+      <a href="entities/index.html">协议实体</a>
+      <a href="fields/index.html">字段索引</a>
+      <a href="relations.html" class="active">表关系</a></nav>
+    </div>
+  </header>
+  <main class="wrap">
+
+    <h2>表关系（提议）</h2>
+    <p class="muted">FK 关系待从协议命令提炼后补充。旧表声明与旧库唯一键列序已冻结在
+      <code>schema/_meta/legacy_evidence.json</code>（<code>tools/freeze_legacy.py</code>）。</p>
+    <table>
+      <thead><tr><th>表 ID</th><th>状态</th><th>用途</th><th>证据命令</th></tr></thead>
+      <tbody><tr>
+      <td><code>tbl_AI</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>battle AI 165B 线格式；29 成员（sub_B07230/sub_B09C10）；槽 168B</td>
+      <td><code>SC-0xB463-battle-msma_AI_install</code></td>
+    </tr><tr>
+      <td><code>tbl_adop_get</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 adop_get 13B 线；布局同 adop_list 3 成员（sub_B43D90/sub_B4AC50）</td>
+      <td><code>SC-0xCDE7-lounge-msma_adop_update</code>, <code>SC-0xD5E6-lounge-result_info</code></td>
+    </tr><tr>
+      <td><code>tbl_adop_list</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 adop_list 13B 线格式；3 成员（sub_B43D90/sub_B4AC50）；槽 16B</td>
+      <td><code>SC-0xA832-lounge-msma_add</code></td>
+    </tr><tr>
+      <td><code>tbl_appear_info</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>EVENT appear_info 86B 线；17 成员含 snapshot 嵌套</td>
+      <td><code>SC-0x057A-battle-entity_deploy_arms_appear</code></td>
+    </tr><tr>
+      <td><code>tbl_avatar</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>PERSIST avatar 18B；10 成员（sub_B068B0/sub_B08920）</td>
+      <td><code>CS-0x43F2-lounge-pilot_avatar_edit</code>, <code>CS-0xFD3E-lounge-pilot_create</code>, <code>SC-0xE536-lounge-pilot_avatar_edit_r</code></td>
+    </tr><tr>
+      <td><code>tbl_beginner_challenge_info</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 beginner_challenge_info 454B 线；4 成员 begin_time/elapsed_days/archived/value（sub_B42440/sub_B47B90）</td>
+      <td><code>SC-0x063E-lounge-pilot_select_r</code>, <code>SC-0xE17B-lounge-beginner_challenge_get_r</code></td>
+    </tr><tr>
+      <td><code>tbl_bgm_desc</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>EVENT 快照 bgm_desc 14B 线；5 成员终局/王牌/强制 BGM（sub_B07E00/sub_B0B320）</td>
+      <td><code>SC-0x1365-battle-game_begin</code>, <code>SC-0xDC1E-battle-bgm_change</code></td>
+    </tr><tr>
+      <td><code>tbl_block_detail</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 block_detail 元素 113B 线；布局同 lpcard 20 成员（sub_B43100/sub_B49580）；数组 ≤100</td>
+      <td><code>SC-0x7587-lounge-block_list_get_detail_xworld_r</code></td>
+    </tr><tr>
+      <td><code>tbl_bracket</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 bracket 166B 线格式；is_abort + nodes[15]（sub_B47060/sub_B50E10）；槽 212B</td>
+      <td><code>SC-0xB553-lounge-dailycup_get_bracket_r</code></td>
+    </tr><tr>
+      <td><code>tbl_bracket_info</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 bracket_info 46B 线；11 成员杯赛对阵元数据（sub_B46D80/sub_B50840）</td>
+      <td><code>SC-0xD784-lounge-cupteam_party_status_update</code></td>
+    </tr><tr>
+      <td><code>tbl_buffitem</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>EVENT 快照 buffitem 元素 6B；3 成员（sub_B07E70/sub_B0B410）；数组 14 元</td>
+      <td><code>SC-0x91C9-battle-battle_buffitem_list</code></td>
+    </tr><tr>
+      <td><code>tbl_buffitem_ex</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>EVENT 快照 buffitem_ex 元素；布局同 buffitem 6B；数组 14 元</td>
+      <td><code>SC-0x91C9-battle-battle_buffitem_list</code></td>
+    </tr><tr>
+      <td><code>tbl_buildup_info</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 buildup_info 42B 线；build_num[7]+up_param[7]（sub_B41DA0/sub_B44050/sub_B4B160）</td>
+      <td><code>CS-0x4E38-lounge-msma_over_custom_buildup</code>, <code>SC-0xE49E-lounge-msma_over_custom_buildup_r</code></td>
+    </tr><tr>
+      <td><code>tbl_challenge_info</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 challenge_info 13B 线；4 成员 id/val/sub_val/is_clear（sub_B07540/sub_B0A1A0）</td>
+      <td><code>SC-0x51B7-lounge-pilot_troopchallenge_clear_notify</code></td>
+    </tr><tr>
+      <td><code>tbl_check_quest</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>EVENT 快照 check_quest 133B 线；10 成员 quest_id/title/成就触发与进度值（sub_B06C00/sub_B08F80）</td>
+      <td><code>SC-0x6059-battle-check_progress_quest_r</code></td>
+    </tr><tr>
+      <td><code>tbl_cinfo</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 cinfo 639B 战队主体；25 成员（sub_B4E240）；槽步进 648</td>
+      <td><code>SC-0x5800-lounge-clan_info_get_other_r</code>, <code>SC-0x8E92-lounge-clan_info_get_self_r</code></td>
+    </tr><tr>
+      <td><code>tbl_clan_eff</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 clan_eff 11B 线（槽 12B）；5 成员 clan_id/world_id/emb_*（sub_B45F30/sub_B4EC50）</td>
+      <td><code>SC-0x244E-lounge-btlroom_info_one</code></td>
+    </tr><tr>
+      <td><code>tbl_clan_zeon</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 clan_zeon 11B 线（槽 12B）；布局同 clan_eff 5 成员（sub_B45F30/sub_B4EC50）</td>
+      <td><code>SC-0x244E-lounge-btlroom_info_one</code></td>
+    </tr><tr>
+      <td><code>tbl_config</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>EVENT 快照 config 34B 线；10 成员 A/B 军兵力·点数·回合等（sub_B077B0/sub_B0A670）</td>
+      <td><code>SC-0x1365-battle-game_begin</code>, <code>SC-0xA5DA-battle-authenticate_r</code></td>
+    </tr><tr>
+      <td><code>tbl_dailycup_conf</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 dailycup_conf 73B；14 成员</td>
+      <td><code>SC-0x44C1-lounge-dailycup_config_update</code></td>
+    </tr><tr>
+      <td><code>tbl_dailycup_conf_next</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 dailycup_conf_next 73B；同 dailycup_conf</td>
+      <td><code>SC-0x44C1-lounge-dailycup_config_update</code></td>
+    </tr><tr>
+      <td><code>tbl_dc_point</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 dc_point 41B 线 + 内存嵌套 bef_next/aft_next</td>
+      <td><code>SC-0x2AAF-lounge-dailycup_get_point_r</code></td>
+    </tr><tr>
+      <td><code>tbl_dcpoint_detail</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 dcpoint_detail；布局同 dc_point（D5E6）</td>
+      <td><code>SC-0xD5E6-lounge-result_info</code></td>
+    </tr><tr>
+      <td><code>tbl_eq_bonus_modules_lot</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 eq_bonus_modules_lot 12B；3×u32 模块 ID</td>
+      <td><code>SC-0xA812-lounge-msma_equip_bonus_modules_lot_get_r</code></td>
+    </tr><tr>
+      <td><code>tbl_equip_set</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 equip_set 121B 结构；证据 CS-0x9527 / SC-0x7172</td>
+      <td><code>CS-0x9527-lounge-msma_equipset_store</code>, <code>CS-0xE410-lounge-msma_equipset_del</code>, <code>CS-0xF5AC-lounge-msma_equipset_switch</code>, <code>SC-0x7172-lounge-msma_equipset_store_r</code></td>
+    </tr><tr>
+      <td><code>tbl_exam_state</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 exam_state 68B；同 examination_state</td>
+      <td><code>SC-0xA204-lounge-pilot_examination_state</code></td>
+    </tr><tr>
+      <td><code>tbl_ext_subrule</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 ext_subrule 20B；2 成员（sub_B456F0/sub_B4DDF0）</td>
+      <td><code>SC-0xCCDF-lounge-xwar_booking_option_get_r</code></td>
+    </tr><tr>
+      <td><code>tbl_extrarule_xwar_info</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>EVENT 快照 extrarule_xwar_info 514B；布局同 xwar_ext_rule（sub_B08160/sub_B0BEC0）</td>
+      <td><code>SC-0xA5DA-battle-authenticate_r</code></td>
+    </tr><tr>
+      <td><code>tbl_friend_histories</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 friend_histories 113B；同 lpcard</td>
+      <td><code>SC-0x9F94-lounge-friend_history_get_xworld_r</code></td>
+    </tr><tr>
+      <td><code>tbl_funnelss</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>funnelss 10B 线格式；3 成员（sub_B081C0/sub_B0BF80）；槽 12B</td>
+      <td><code>SC-0x717D-battle-entity_msma_appear</code>, <code>SC-0x7621-battle-entity_msma_appear_self</code></td>
+    </tr><tr>
+      <td><code>tbl_hack_check</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>pos_move 反作弊自检 79B；29 成员（sub_B065D0/sub_B0B9E0）</td>
+      <td><code>CS-0x421B-battle-pos_move</code></td>
+    </tr><tr>
+      <td><code>tbl_intro_info</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 intro_info 547B；4 成员（sub_B46140/sub_B4F080）</td>
+      <td><code>SC-0xA5FE-lounge-clan_introduction_set_r</code></td>
+    </tr><tr>
+      <td><code>tbl_item</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化背包道具实例：位置 inv_place + item 22B（uniqid/item_id/tm_sec/tm_usec/stack）</td>
+      <td><code>SC-0x02EE-lounge-item_init_get_r</code>, <code>SC-0xF72A-lounge-item_add</code></td>
+    </tr><tr>
+      <td><code>tbl_item_list</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 item_list shop_lineup 23B 线格式；7 成员（sub_B458A0/sub_B4E110）；9193 为 8B 另 wire_form</td>
+      <td><code>SC-0x9193-lounge-result_item_fullopen_r</code>, <code>SC-0x99A0-lounge-shop_lineup_r</code>, <code>SC-0xAB7B-lounge-shop_lineup_notify</code></td>
+    </tr><tr>
+      <td><code>tbl_leaders</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 leaders 52B 线格式；7 成员含 avatar（sub_B454D0/sub_B4D9D0）；槽 64B</td>
+      <td><code>SC-0xB43F-lounge-party_recruit_list_get_r</code></td>
+    </tr><tr>
+      <td><code>tbl_lpcard</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 lpcard 113B 线格式；20 成员（sub_B43100/sub_B49580）；槽步进 132</td>
+      <td><code>SC-0x7051-lounge-clan_memberlist_get_r</code></td>
+    </tr><tr>
+      <td><code>tbl_lvjudge_hist</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 lvjudge_hist 369B；8 成员（sub_B44750/sub_B4BE80）</td>
+      <td><code>SC-0xDC47-lounge-pilot_record_get_r</code></td>
+    </tr><tr>
+      <td><code>tbl_member</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 member 52B 元素；7 成员同 leaders（sub_B454D0/sub_B4D9D0）</td>
+      <td><code>SC-0x6B15-lounge-btlroom_member_detail_get_r</code></td>
+    </tr><tr>
+      <td><code>tbl_missionunit_set</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 missionunit_set 12B：deck_type + deck_set + missionunit_id；CS/SC 互证</td>
+      <td><code>CS-0x33CC-lounge-msma_missionunit_store</code>, <code>SC-0x1908-lounge-msma_missionunit_store_r</code>, <code>SC-0x36D9-lounge-msma_missionunit_get_list_r</code></td>
+    </tr><tr>
+      <td><code>tbl_mprogress</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 mprogress 46B 线；布局同 progress（sub_B07880/sub_B0A820）</td>
+      <td><code>SC-0x3E23-battle-game_mission_progress_update</code></td>
+    </tr><tr>
+      <td><code>tbl_ms</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>battle ms 244B 线格式；43 成员（sub_B06D80/sub_B09240）；槽 264B</td>
+      <td><code>SC-0x1E2F-battle-msma_spawn_list_get_r_one</code>, <code>SC-0x717D-battle-entity_msma_appear</code>, <code>SC-0x7621-battle-entity_msma_appear_self</code></td>
+    </tr><tr>
+      <td><code>tbl_ms_rokaku</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>一名机师的全部机体记录，逐机体一行（`uniqid` 行键）——机体仓库/编成/强化的真源。401B 线含 `weapons[3]`（子表）与络格限制；303B 线是它的前缀线形（无 weapons/limit_*）。</td>
+      <td><code>CS-0x0AA5-lounge-msma_equip_weapon_change</code>, <code>CS-0x4CCB-lounge-msma_is_favorite_update</code>, <code>CS-0x60FC-lounge-msma_color_change</code>, <code>CS-0x72F1-lounge-msma_decal_change</code>, <code>CS-0x9883-lounge-msma_buildup</code>, <code>CS-0xCEF4-lounge-msma_overhaul</code>, <code>CS-0xDADA-lounge-msma_breakup</code>, <code>CS-0xDF37-lounge-msma_weapon_buildup_extra_cnt_update</code>, <code>SC-0x48A4-lounge-clan_rokaku_add_ms</code>, <code>SC-0x5B3F-lounge-msma_weapon_buildup_extra_cnt_update_r</code>, <code>SC-0x69C9-lounge-msma_decal_change_r</code>, <code>SC-0xA003-lounge-msma_color_change_r</code>, <code>SC-0xA832-lounge-msma_add</code>, <code>SC-0xFE46-lounge-msma_get_buyback_list_r</code></td>
+    </tr><tr>
+      <td><code>tbl_ms_set</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 ms_set 95B 结构；证据 CS-0xA76E / SC-0xB8BB 跨方向互证</td>
+      <td><code>CS-0x7306-lounge-msma_msset_apply</code>, <code>CS-0xA76E-lounge-msma_msset_store</code>, <code>CS-0xBC92-lounge-msma_msset_del</code>, <code>SC-0x356F-lounge-msma_msset_get_r</code>, <code>SC-0xB8BB-lounge-msma_msset_store_r</code></td>
+    </tr><tr>
+      <td><code>tbl_netcafe_challenge_info</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>EVENT 网咖挑战 netcafe_challenge_info 13B；布局同 challenge_info</td>
+      <td><code>SC-0x7626-battle-netcafe_challenge_progress_r</code></td>
+    </tr><tr>
+      <td><code>tbl_order</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 order 10B 线格式；5 成员 u16×5（sub_B42060/sub_B46420/sub_B4F620）</td>
+      <td><code>CS-0x3FAF-lounge-ranking_pilot_get_page</code>, <code>CS-0xD9AE-lounge-ranking_pilot_get</code>, <code>SC-0xB985-lounge-ranking_pilot_get_r</code>, <code>SC-0xC5A9-lounge-ranking_elite_pilot_get_page_r</code>, <code>SC-0xC664-lounge-ranking_elite_pilot_get_page_light_r</code></td>
+    </tr><tr>
+      <td><code>tbl_party_member_stat</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 party_member_stat 31B 线格式；7 成员含 avatar（sub_B432C0/sub_B498C0）；槽 40B</td>
+      <td><code>SC-0x76B1-lounge-party_member_stat_update</code></td>
+    </tr><tr>
+      <td><code>tbl_pcard</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 pcard 398B 线格式；58 成员（sub_B42BB0/sub_B48C10）；槽步进 424</td>
+      <td><code>SC-0xB4B6-lounge-pilotcard_get_r</code></td>
+    </tr><tr>
+      <td><code>tbl_phase_info</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 phase_info 13B 线；4 成员阶段·轮次·开闭时间（sub_B46D20/sub_B50780）</td>
+      <td><code>SC-0xD784-lounge-cupteam_party_status_update</code></td>
+    </tr><tr>
+      <td><code>tbl_pilot</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 CS-0xFD3E pilot 159B 结构体字段及 slot；398B/51672B 形态待后续补充证据</td>
+      <td><code>CS-0x498B-lounge-pilot_rename</code>, <code>CS-0x6142-lounge-pilot_delete</code>, <code>CS-0xFD3E-lounge-pilot_create</code></td>
+    </tr><tr>
+      <td><code>tbl_pilot_detail</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 pilot_detail 51672B；53 成员 + 5 嵌套 composite；SC-0x063E §3.1/§3.2</td>
+      <td><code>CS-0x4E94-lounge-pilot_avatar_parts_unlock</code>, <code>CS-0x6142-lounge-pilot_delete</code>, <code>CS-0xAD79-lounge-pilot_avatar_voice_unlock</code>, <code>CS-0xCB9B-lounge-pilot_comment_edit</code>, <code>SC-0x063E-lounge-pilot_select_r</code></td>
+    </tr><tr>
+      <td><code>tbl_pilot_evflag3</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>按机师持久化 `evflag3` 8B 位掩码（`CS-0xBD2D` 回写、`SC-0xE0DE` 下发）。1:1 表：一台机师一行，没有槽位/成员行键。</td>
+      <td><code>CS-0xBD2D-lounge-pilot_evflag_3_set</code>, <code>SC-0xE0DE-lounge-pilot_evflag_3_get_r</code></td>
+    </tr><tr>
+      <td><code>tbl_pilots_list</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 pilots_list 398B 线格式；58 成员（sub_B42BB0/sub_B48C10）；槽步进 424</td>
+      <td><code>CS-0x2F63-lounge-pilotcard_get</code>, <code>CS-0x43F2-lounge-pilot_avatar_edit</code>, <code>CS-0x498B-lounge-pilot_rename</code>, <code>CS-0x6142-lounge-pilot_delete</code>, <code>SC-0xE13A-lounge-pilot_list_get_r</code></td>
+    </tr><tr>
+      <td><code>tbl_pointdmg</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>EVENT pointdmg 12B；gaugedmg u32[3]</td>
+      <td><code>SC-0xD5E6-lounge-result_info</code></td>
+    </tr><tr>
+      <td><code>tbl_precord</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 precord 242B；61 成员（sub_B440B0/sub_B4B240）</td>
+      <td><code>SC-0xDC47-lounge-pilot_record_get_r</code></td>
+    </tr><tr>
+      <td><code>tbl_progress</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>EVENT 快照 progress 46B 线；14 成员据点·量表·规则计时等（sub_B07880/sub_B0A820）</td>
+      <td><code>SC-0x1365-battle-game_begin</code>, <code>SC-0xA5DA-battle-authenticate_r</code>, <code>SC-0xC66B-battle-game_round_end</code>, <code>SC-0xD5E6-lounge-result_info</code></td>
+    </tr><tr>
+      <td><code>tbl_ranking</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 ranking 95B 线格式；12 成员含 avatar（sub_B46560/sub_B4F890）；槽 104B</td>
+      <td><code>SC-0x9F9B-lounge-season_rankerbattle_get_entitled_pilot_list_r</code>, <code>SC-0xB985-lounge-ranking_pilot_get_r</code></td>
+    </tr><tr>
+      <td><code>tbl_ranking_info</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 ranking_info 10B；布局同 order（sub_B46420/sub_B4F620）</td>
+      <td><code>SC-0x9F9B-lounge-season_rankerbattle_get_entitled_pilot_list_r</code></td>
+    </tr><tr>
+      <td><code>tbl_rankself</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 rankself 40B 线格式；6 成员（sub_B464A0/sub_B4F710）</td>
+      <td><code>SC-0xB985-lounge-ranking_pilot_get_r</code></td>
+    </tr><tr>
+      <td><code>tbl_recruit</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 recruit 74B；7 成员（sub_B45400/sub_B4D840）</td>
+      <td><code>SC-0x305D-lounge-party_recruit_detail_get_r</code></td>
+    </tr><tr>
+      <td><code>tbl_recruits</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 recruits 80B 线格式；9 成员（sub_B45400/sub_B4D840）；槽 84B</td>
+      <td><code>SC-0xB43F-lounge-party_recruit_list_get_r</code></td>
+    </tr><tr>
+      <td><code>tbl_replay_info</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 replay_info 38B；10 成员（sub_B47340/sub_B513F0）</td>
+      <td><code>SC-0xA148-lounge-season_rankerbattle_replay_info</code></td>
+    </tr><tr>
+      <td><code>tbl_roominfo</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 roominfo；两条命令同为 135B 全量（共用读取器 sub_B44880）；15 成员 sub_B4C0D0</td>
+      <td><code>SC-0x244E-lounge-btlroom_info_one</code>, <code>SC-0x6B15-lounge-btlroom_member_detail_get_r</code></td>
+    </tr><tr>
+      <td><code>tbl_season_rb_conf</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 season_rb_conf 52B；13 成员（sub_B471E0/sub_B51120）</td>
+      <td><code>SC-0x63D3-lounge-season_rankerbattle_config_update</code></td>
+    </tr><tr>
+      <td><code>tbl_snapshot</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>battle snapshot 39B 线格式；21 成员（sub_B075A0/sub_B0A260）；槽 44B</td>
+      <td><code>SC-0x717D-battle-entity_msma_appear</code>, <code>SC-0x7621-battle-entity_msma_appear_self</code></td>
+    </tr><tr>
+      <td><code>tbl_sort_info</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 sort_info；clan_search 18B（12 成员）/ invite_pilotlist 9B（9 成员）两种线形</td>
+      <td><code>CS-0x2749-lounge-clan_search_sortfilter_get</code>, <code>CS-0x49D1-lounge-clan_invite_pilotlist_get</code>, <code>SC-0x5696-lounge-clan_invite_pilotlist_get_r</code>, <code>SC-0x7ED3-lounge-clan_search_sortfilter_get_r</code></td>
+    </tr><tr>
+      <td><code>tbl_special_a_info</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 special_a_info 40B；布局同 rankself（sub_B464A0/sub_B4F710）</td>
+      <td><code>SC-0x8D4F-lounge-get_special_a_info_r</code></td>
+    </tr><tr>
+      <td><code>tbl_special_a_next</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 special_a_next 12B；3 成员 u32×3（sub_B46CD0/sub_B506E0）</td>
+      <td><code>SC-0x8D4F-lounge-get_special_a_info_r</code></td>
+    </tr><tr>
+      <td><code>tbl_toppilots</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 toppilots 数组元素；布局同 ranking 95B（sub_B46560/sub_B4F890）；槽 104B</td>
+      <td><code>SC-0xB985-lounge-ranking_pilot_get_r</code></td>
+    </tr><tr>
+      <td><code>tbl_total_result_wave</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>EVENT total_result_wave 19B；7 成员</td>
+      <td><code>SC-0xD5E6-lounge-result_info</code></td>
+    </tr><tr>
+      <td><code>tbl_trchallenge_info</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 trchallenge_info 13B 线；布局同 challenge_info（sub_B07540/sub_B0A1A0）；槽 200</td>
+      <td><code>SC-0x271C-lounge-pilot_troopchallenge_get_r</code></td>
+    </tr><tr>
+      <td><code>tbl_unlocked_navi</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 unlocked_navi 8B；navi_id + status</td>
+      <td><code>SC-0xA0BB-lounge-player_navi_unlock_r</code></td>
+    </tr><tr>
+      <td><code>tbl_unlockw</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 unlockw 30B 线格式；6 成员（sub_B439D0/sub_B4A580）；槽 32B</td>
+      <td><code>SC-0xA832-lounge-msma_add</code></td>
+    </tr><tr>
+      <td><code>tbl_wave_res</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>EVENT 快照 wave_res 34B 线；15 成员波次/通关/容器/敌基地得分（sub_B08020/sub_B0B770）</td>
+      <td><code>SC-0x6475-battle-game_coopwave_result</code></td>
+    </tr><tr>
+      <td><code>tbl_wbonus</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 wbonus 4B；3 成员 i8+i8+u16（sub_B453B0/sub_B4D7A0）</td>
+      <td><code>SC-0xCE21-lounge-xwar_booking_waitbonus_notice</code>, <code>SC-0xD5E6-lounge-result_info</code></td>
+    </tr><tr>
+      <td><code>tbl_xwar_ext_rule</code></td>
+      <td><span class="badge" style="background:#2e7d32">complete</span></td>
+      <td>持久化 xwar_ext_rule 514B；6 成员（sub_B08160/sub_B0BEC0）；槽 516B</td>
+      <td><code>SC-0xCCDF-lounge-xwar_booking_option_get_r</code></td>
+    </tr></tbody>
+    </table>
+
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">生成于 2026-10-12 · 改 JSON 后重跑 build_site.py · HTML 只读</div>
+  </footer>
+</body>
+</html>

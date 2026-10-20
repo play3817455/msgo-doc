@@ -1,0 +1,209 @@
+{
+ "id": "SC-0x747B-battle-weapon_fire__chain_mine",
+ "verified_at": "2026-09-30 15:25:47",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "block",
+ "block": [
+  "0xB1F40F",
+  "0xB1F6A1"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 12,
+   "va": "0xB1F424",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xB1F421",
+   "call_va": "0xB1F426"
+  },
+  "field_window": {
+   "start_va": "0xB1F410",
+   "end_va": "0xB1F522",
+   "guard": {
+    "va": "0xB1F40F",
+    "func": "0xB05DA0",
+    "module_id": null,
+    "release_va": "0xB05D90"
+   },
+   "closer_or_commit_va": "0xB1F4FB",
+   "within_model_block": true,
+   "range_from": "block"
+  },
+  "primitive_widths": {
+   "direction": "SC",
+   "expected": [
+    {
+     "name": "from_ent_id",
+     "wire_type": "u16",
+     "width": 2,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xb1f45f"
+     ]
+    },
+    {
+     "name": "to_ent_id",
+     "wire_type": "u16",
+     "width": 2,
+     "seq": 2,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xb1f49f"
+     ]
+    },
+    {
+     "name": "weapon_itemid",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 3,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xb1f4c3"
+     ]
+    },
+    {
+     "name": "fire_id",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 4,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xb1f4e7"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB1F45F",
+     "kind": "read",
+     "width": 2,
+     "wire_type": "u16",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB1F49F",
+     "kind": "read",
+     "width": 2,
+     "wire_type": "u16",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB1F4C3",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB1F4E7",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 4,
+   "checkable": 4,
+   "pairs": [
+    {
+     "field": "from_ent_id",
+     "width": 2,
+     "shape": "scalar",
+     "va": "0xB1F45F",
+     "kind": "read"
+    },
+    {
+     "field": "to_ent_id",
+     "width": 2,
+     "shape": "scalar",
+     "va": "0xB1F49F",
+     "kind": "read"
+    },
+    {
+     "field": "weapon_itemid",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB1F4C3",
+     "kind": "read"
+    },
+    {
+     "field": "fire_id",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB1F4E7",
+     "kind": "read"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB1F410",
+    "0xB1F522"
+   ],
+   "scalar_match_verifiable": true,
+   "capacity_relation": {
+    "observed_min": 12,
+    "capacity": 12,
+    "relation": "exact",
+    "unknown_events": [],
+    "is_lower_bound": false,
+    "note": "观测线长（下界）12 / 容量 0xc"
+   }
+  },
+  "closer": {
+   "va": "0xB1F4FB",
+   "kind": "jz",
+   "jcc_va": "0xB1F501",
+   "seq_va": "0xB1F4F7",
+   "jcc_dst": "0xB1F51D",
+   "cmp": "cmp     ebx, [esp+1B3Ch+var_1B24]",
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x1DC]",
+   "slot_value": 476,
+   "va": "0xB1F685",
+   "mov_va": "0xB1F669",
+   "host": "[edx+1DCh]",
+   "argc": 4,
+   "form": "mov_then_call",
+   "error_slot": {
+    "slot": "vt[0x64]",
+    "va": "0xB1F479",
+    "argc": 2
+   }
+  },
+  "log_strings": [
+   "from_ent_id=",
+   "to_ent_id=",
+   "weapon_itemid=",
+   "fire_id="
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "fire_id",
+  "from_ent_id",
+  "to_ent_id",
+  "weapon_itemid"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 18
+}

@@ -1,0 +1,415 @@
+{
+  "id": "SC-0x2AC7-lounge-pilot_avatar_parts_unlock_r",
+  "opcode": "0x2AC7",
+  "direction": "SC",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "pilot_avatar_parts_unlock_r",
+  "source_dir": "protocol_analysis/commands/SC-0x2AC7-lounge-pilot_avatar_parts_unlock_r",
+  "meta": {
+    "opcode": "`0x2AC7`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`pilot_avatar_parts_unlock_r`",
+    "处理函数": "`sub_B51930` @ `0xB51930`（lounge 分发器）",
+    "处理块范围": "`0xB59AF2..0xB59D8B`",
+    "名字串引用点": "`0xB59C18`",
+    "声明容量（解码缓冲）": "`0x508`（`0xB59B07`）",
+    "长度闭合点": "`0xB59BD5`",
+    "去向": "`vt[0xD0]` @ `0xB59D6F`（3 实参：result + custom_id + 数组基址）"
+  },
+  "handler": "sub_B51930",
+  "handler_va": "0xB51930",
+  "block": [
+    "0xB59AF2",
+    "0xB59D8B"
+  ],
+  "name_str": null,
+  "name_str_va": "0xB59C18",
+  "capacity": "0x508",
+  "capacity_va": "0xB59B07",
+  "closer_va": "0xB59BD5",
+  "dispatch": "`vt[0xD0]` @ `0xB59D6F`（3 实参：result + custom_id + 数组基址）",
+  "dispatch_slot": "vt[0xD0]",
+  "dispatch_va": "0xB59D6F",
+  "wire": {
+    "length_expr": "4 + 4 + 1280",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x508（容量记账口径，非线长）",
+    "field_count": 3,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体总长**：4 + 4 + 1280 = **1288**（== 容量 0x508）",
+    "readme_close": "4 + 4 + 1280 = **1288**（== 容量 0x508）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0x2AC7",
+      "evidence_va": [
+        "0xB59C18"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "result",
+      "meaning": "头像部件解锁结果码",
+      "purpose": "经 `vt[0xD0]`；日志 `result=`",
+      "enum": null,
+      "evidence_va": [
+        "0xB59B45",
+        "0xB59C6E"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "custom_id",
+      "meaning": "自定义（配色/头像）ID",
+      "purpose": "经 `vt[0xD0]`；日志 `custom_id=`",
+      "enum": null,
+      "evidence_va": [
+        "0xB59B82",
+        "0xB59C98"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "8",
+      "length": "1280",
+      "wire_type": "u64[160]",
+      "name": "hav_avatar",
+      "meaning": "已拥有头像部件 ID 列表（固定 160 项 u64，无线上计数）",
+      "purpose": "数组基址经 `vt[0xD0]`；日志 `hav_avatar={…}`",
+      "enum": "固定 160 项 × 8B",
+      "evidence_va": [
+        "0xB59BA8(sub_B06200 循环读)",
+        "0xB59B97(sub_B41420 预留 0x500)",
+        "0xB59BC6 区(cmp edi,0A0h)"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0x2AC7（分发器 switch 选择子）",
+      "evidence_va": "0xB59C18"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB41120`（模块 id None）→ 之后逐字段读线",
+      "evidence_va": "0xB59AF2"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "result：`u32`（线长 4）—— 头像部件解锁结果码",
+      "evidence_va": "0xB59B45"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "custom_id：`u32`（线长 4）—— 自定义（配色/头像）ID",
+      "evidence_va": "0xB59B82"
+    },
+    {
+      "step": 5,
+      "kind": "read_array",
+      "detail": "hav_avatar：`u64[160]`（线长 1280）—— 已拥有头像部件 ID 列表（固定 160 项 u64，无线上计数）",
+      "evidence_va": "0xB59BA8"
+    },
+    {
+      "step": 6,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB59BD5"
+    },
+    {
+      "step": 7,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0xD0]`，实参 3 个",
+      "evidence_va": "0xB59D6F"
+    },
+    {
+      "step": 8,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB59B5C"
+    }
+  ],
+  "capabilities": [
+    "update",
+    "lounge.pilot_avatar"
+  ],
+  "capabilities_derived": [
+    "update"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:43",
+    "batch": 6,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 1288,
+        "va": "0xB59B07",
+        "reg": "eax",
+        "host": "[edx+78h]",
+        "alloc_va": "0xB59B04",
+        "call_va": "0xB59B0C"
+      },
+      "field_window": {
+        "start_va": "0xB59AF3",
+        "end_va": "0xB59BF6",
+        "guard": {
+          "va": "0xB59AF2",
+          "func": "0xB41120",
+          "module_id": null,
+          "release_va": "0xB41110"
+        },
+        "closer_or_commit_va": "0xB59BD5",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "result",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB59B45",
+              "0xB59C6E"
+            ]
+          },
+          {
+            "name": "custom_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB59B82",
+              "0xB59C98"
+            ]
+          },
+          {
+            "name": "hav_avatar",
+            "wire_type": "u64[160]",
+            "width": 1280,
+            "seq": 3,
+            "shape": "fixed_arr",
+            "evidence_va": [
+              "0xB59BA8(sub_B06200 循环读)",
+              "0xB59B97(sub_B41420 预留 0x500)",
+              "0xB59BC6 区(cmp edi,0A0h)"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB59B45",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB59B82",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB59B97",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B41420",
+            "consumed": 1280,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB59BA8",
+            "kind": "read",
+            "width": 1280,
+            "wire_type": "u64",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 3,
+        "checkable": 3,
+        "pairs": [
+          {
+            "field": "result",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB59B45",
+            "kind": "read"
+          },
+          {
+            "field": "custom_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB59B82",
+            "kind": "read"
+          },
+          {
+            "field": "hav_avatar",
+            "width": 1280,
+            "shape": "fixed_arr",
+            "va": "0xB59B97",
+            "kind": "opaque"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB59BA8",
+            "kind": "read",
+            "width": 1280,
+            "wire_type": "u64"
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB59AF3",
+          "0xB59BF6"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 1288,
+          "capacity": 1288,
+          "relation": "exact",
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）1288 / 容量 0x508"
+        }
+      },
+      "closer": {
+        "va": "0xB59BD5",
+        "kind": "jz",
+        "jcc_va": "0xB59BDB",
+        "seq_va": "0xB59BD1",
+        "jcc_dst": "0xB59BF4",
+        "cmp": "cmp     eax, [esp+2C5Ch+var_2C40]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0xD0]",
+        "slot_value": 208,
+        "va": "0xB59D6F",
+        "mov_va": "0xB59D66",
+        "host": "[eax+0D0h]",
+        "argc": 3,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB59B5C",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "result=",
+        "custom_id=",
+        "hav_avatar={"
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0x2AC7-lounge-pilot_avatar_parts_unlock_r.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xB59C18"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "PilotAvatarPartsUnlockR",
+      "role": "response",
+      "wire_length": "4 + 4 + 1280",
+      "members": [
+        {
+          "name": "Result",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "result"
+        },
+        {
+          "name": "CustomId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "custom_id"
+        },
+        {
+          "name": "HavAvatar",
+          "wire_type": "u64[160]",
+          "length": "1280",
+          "field_ref": "hav_avatar",
+          "element": "u64",
+          "element_length": "8",
+          "cap": 160,
+          "count_field": null,
+          "count_field_source": "fixed"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "40ad40d087e9fb58",
+  "check_fingerprint": "c0cae01370740f64"
+}

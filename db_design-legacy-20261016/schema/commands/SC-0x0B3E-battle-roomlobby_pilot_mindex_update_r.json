@@ -1,0 +1,550 @@
+{
+  "id": "SC-0x0B3E-battle-roomlobby_pilot_mindex_update_r",
+  "opcode": "0x0B3E",
+  "direction": "SC",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "roomlobby_pilot_mindex_update_r",
+  "source_dir": "protocol_analysis/commands/SC-0x0B3E-battle-roomlobby_pilot_mindex_update_r",
+  "meta": {
+    "opcode": "`0x0B3E`",
+    "方向": "SC（服务端 → 客户端（recv））",
+    "协议类": "`battle_client`",
+    "命令名": "`roomlobby_pilot_mindex_update_r`",
+    "名字符串": "`)->_proto_battle_client::recv_roomlobby_pilot_mindex_update_r(` @ `0xEE02E0`，引用点 `0xB0E55F`",
+    "处理函数": "`sub_B0CC20` @ `0xB0CC20`（battle 分发器）",
+    "处理块范围": "`0xB0E407` .. `0xB0E708`（块首 `0xB0E407 push 0Bh; call sub_B05DA0`，错误码 `0x0B`）",
+    "关联命令": "配对请求 `../CS-0x9B19-battle-roomlobby_pilot_mindex_update/`（`sub_B31E20`，容量 `0x6`）"
+  },
+  "handler": "sub_B0CC20",
+  "handler_va": "0xB0CC20",
+  "block": [
+    "0xB0E407",
+    "0xB0E708"
+  ],
+  "name_str": ")->_proto_battle_client::recv_roomlobby_pilot_mindex_update_r(",
+  "name_str_va": "0xEE02E0",
+  "capacity": "0xE",
+  "capacity_va": "0xB0E420",
+  "closer_va": "0xB0E51C",
+  "dispatch": null,
+  "dispatch_slot": "vt[0x8C]",
+  "dispatch_va": "0xB0E6CF",
+  "wire": {
+    "length_expr": "14",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0xE（容量记账口径，非线长）",
+    "field_count": 5,
+    "length_source": "closure_row",
+    "readme_conclusion": "**报文体总长：定长 14 字节**（3×u32 + 2×u8）。",
+    "readme_close": "4+4+4+1+1 = 14；闭合点 0xB0E51C 要求「游标 == 末尾」✓"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "battle 分发的 switch 选择子",
+      "enum": "0x0B3E",
+      "evidence_va": [
+        "0xB0E55F"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "result",
+      "meaning": "更新结果码",
+      "purpose": "交 vt[0x8C] 第1实参；日志 result=",
+      "enum": "?",
+      "evidence_va": [
+        "0xB0E45B",
+        "0xB0E44C",
+        "0xB02DE9",
+        "0xB0E5B5",
+        "0xB0E6CC"
+      ],
+      "confidence": "类型确证/枚举待定",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "world_id",
+      "meaning": "大区(世界)ID",
+      "purpose": "交 vt[0x8C] 第2实参；日志 world_id=",
+      "enum": "?",
+      "evidence_va": [
+        "0xB0E498",
+        "0xB0E489",
+        "0xB0E5DF",
+        "0xB0E6C9"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "8",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "pilot_id",
+      "meaning": "驾驶员(角色)ID",
+      "purpose": "交 vt[0x8C] 第3实参；日志 pilot_id=",
+      "enum": null,
+      "evidence_va": [
+        "0xB0E4BC",
+        "0xB0E4AD",
+        "0xB0E609",
+        "0xB0E6C2"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 4,
+      "offset": "12",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "member_index",
+      "meaning": "房间内成员槽位序号(mindex)",
+      "purpose": "交 vt[0x8C] 第4实参(movzx)；日志 member_index=",
+      "enum": "?",
+      "evidence_va": [
+        "0xB0E4E0",
+        "0xB0E4D1",
+        "0xB06249",
+        "0xB0E631",
+        "0xB0E6B4"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    },
+    {
+      "seq": 5,
+      "offset": "13",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "is_commander",
+      "meaning": "该成员是否指挥官",
+      "purpose": "交 vt[0x8C] 第5实参(movzx)；日志 is_commander=",
+      "enum": "?",
+      "evidence_va": [
+        "0xB0E508",
+        "0xB0E4F9",
+        "0xB0E656",
+        "0xB0E6A4"
+      ],
+      "confidence": "类型确证/枚举待定",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 7
+    },
+    {
+      "seq": -1,
+      "offset": "14",
+      "length": "0",
+      "wire_type": "-",
+      "name": "（长度闭合）",
+      "meaning": "游标必须==报文末尾",
+      "purpose": "容量 0xE==线长 14",
+      "enum": null,
+      "evidence_va": [
+        "0xB0E51C",
+        "0xB0E522"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 8,
+      "is_closure": true
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0x0B3E（分发器 switch 选择子）",
+      "evidence_va": "0xB0E55F"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB05DA0`（模块 id 11）→ 之后逐字段读线",
+      "evidence_va": "0xB0E40B"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "result：`u32`（线长 4）—— 更新结果码",
+      "evidence_va": "0xB0E45B"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "world_id：`u32`（线长 4）—— 大区(世界)ID",
+      "evidence_va": "0xB0E498"
+    },
+    {
+      "step": 5,
+      "kind": "read_scalar",
+      "detail": "pilot_id：`u32`（线长 4）—— 驾驶员(角色)ID",
+      "evidence_va": "0xB0E4BC"
+    },
+    {
+      "step": 6,
+      "kind": "read_scalar",
+      "detail": "member_index：`u8`（线长 1）—— 房间内成员槽位序号(mindex)",
+      "evidence_va": "0xB0E4E0"
+    },
+    {
+      "step": 7,
+      "kind": "read_scalar",
+      "detail": "is_commander：`u8`（线长 1）—— 该成员是否指挥官",
+      "evidence_va": "0xB0E508"
+    },
+    {
+      "step": 8,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB0E51C"
+    },
+    {
+      "step": 9,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x8C]`，实参 5 个",
+      "evidence_va": "0xB0E6CF"
+    },
+    {
+      "step": 10,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB0E472"
+    }
+  ],
+  "capabilities": [
+    "update",
+    "battle.roomlobby_pilot"
+  ],
+  "capabilities_derived": [
+    "notify"
+  ],
+  "db_effects": [],
+  "pair": "CS-0x9B19-battle-roomlobby_pilot_mindex_update",
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:46",
+    "batch": 15,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 14,
+        "va": "0xB0E420",
+        "reg": "eax",
+        "host": "[edx+78h]",
+        "alloc_va": "0xB0E41D",
+        "call_va": "0xB0E422"
+      },
+      "field_window": {
+        "start_va": "0xB0E40C",
+        "end_va": "0xB0E53D",
+        "guard": {
+          "va": "0xB0E40B",
+          "func": "0xB05DA0",
+          "module_id": 11,
+          "release_va": "0xB05D90"
+        },
+        "closer_or_commit_va": "0xB0E51C",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "result",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB0E45B",
+              "0xB0E44C",
+              "0xB02DE9",
+              "0xB0E5B5",
+              "0xB0E6CC"
+            ]
+          },
+          {
+            "name": "world_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB0E498",
+              "0xB0E489",
+              "0xB0E5DF",
+              "0xB0E6C9"
+            ]
+          },
+          {
+            "name": "pilot_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB0E4BC",
+              "0xB0E4AD",
+              "0xB0E609",
+              "0xB0E6C2"
+            ]
+          },
+          {
+            "name": "member_index",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 4,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB0E4E0",
+              "0xB0E4D1",
+              "0xB06249",
+              "0xB0E631",
+              "0xB0E6B4"
+            ]
+          },
+          {
+            "name": "is_commander",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 5,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB0E508",
+              "0xB0E4F9",
+              "0xB0E656",
+              "0xB0E6A4"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB0E45B",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0E498",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0E4BC",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0E4E0",
+            "kind": "read",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0E508",
+            "kind": "read",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 5,
+        "checkable": 5,
+        "pairs": [
+          {
+            "field": "result",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB0E45B",
+            "kind": "read"
+          },
+          {
+            "field": "world_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB0E498",
+            "kind": "read"
+          },
+          {
+            "field": "pilot_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB0E4BC",
+            "kind": "read"
+          },
+          {
+            "field": "member_index",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB0E4E0",
+            "kind": "read"
+          },
+          {
+            "field": "is_commander",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB0E508",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB0E40C",
+          "0xB0E53D"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 14,
+          "capacity": 14,
+          "relation": "exact",
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）14 / 容量 0xe"
+        }
+      },
+      "closer": {
+        "va": "0xB0E51C",
+        "kind": "jz",
+        "jcc_va": "0xB0E522",
+        "seq_va": "0xB0E518",
+        "jcc_dst": "0xB0E53B",
+        "cmp": "cmp     ebx, [esp+1B3Ch+var_1B24]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x8C]",
+        "slot_value": 140,
+        "va": "0xB0E6CF",
+        "mov_va": "0xB0E6AD",
+        "host": "[edx+8Ch]",
+        "argc": 5,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB0E472",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "result=",
+        "world_id=",
+        "pilot_id=",
+        "member_index=",
+        "is_commander="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0x0B3E-battle-roomlobby_pilot_mindex_update_r.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": "（长度闭合）",
+    "opcode_field_va": [
+      "0xB0E55F"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "RoomlobbyPilotMindexUpdateR",
+      "role": "response",
+      "wire_length": "14",
+      "members": [
+        {
+          "name": "Result",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "result"
+        },
+        {
+          "name": "WorldId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "world_id"
+        },
+        {
+          "name": "PilotId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "pilot_id"
+        },
+        {
+          "name": "MemberIndex",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "member_index"
+        },
+        {
+          "name": "IsCommander",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "is_commander"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "c6c856c73f5b4b02",
+  "check_fingerprint": "ae96428a71466597"
+}

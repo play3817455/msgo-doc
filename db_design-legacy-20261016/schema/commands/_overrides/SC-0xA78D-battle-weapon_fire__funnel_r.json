@@ -1,0 +1,30 @@
+{
+  "id": "SC-0xA78D-battle-weapon_fire__funnel_r",
+  "revision": 1,
+  "verified_at": "2026-09-22",
+  "verifier": "人工（IDA 汇编整函数扫描：元素读取器 + 元素打印器 + 数组预留步进三方对齐）",
+  "reason": "`array<struct(3×u16),N>` 是记法问题：内联元组应具名。元素线长 6（sub_B07760 三次 u16 读取、槽步进 6），与 CS 侧共用 schema/composites/fire_point.json（成员 x/y/z，打印器 sub_B0A5D0）。",
+  "evidence": [
+    {
+      "what": "元素读取器/打印器与预留步进三方对齐（见 schema/composites 对应文件）",
+      "va": [
+        "0xB07760",
+        "0xB0A5D0",
+        "0xB2656F"
+      ],
+      "detail": "本批共 26 行未建模数组字段，逐条进 IDA 扫描元素读取器整函数取线宽，再与元素打印器成员名/内存偏移、数组预留器槽步进交叉验证。"
+    }
+  ],
+  "patch": {
+    "fire_points": {
+      "wire_type": "array<fire_point,N>",
+      "length": "6·N",
+      "enum": "元素线长 6（3×u16，x/y/z）/ 槽 6",
+      "evidence_va": [
+        "0xB2656F",
+        "0xB07760",
+        "0xB0A5D0"
+      ]
+    }
+  }
+}

@@ -1,0 +1,366 @@
+{
+  "id": "SC-0xFCE9-lounge-btlroom_invite_r",
+  "opcode": "0xFCE9",
+  "direction": "SC",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "btlroom_invite_r",
+  "source_dir": "protocol_analysis/commands/SC-0xFCE9-lounge-btlroom_invite_r",
+  "meta": {
+    "opcode": "`0xFCE9`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`btlroom_invite_r`",
+    "名字符串": "`)->_proto_lounge_client::recv_btlroom_invite_r( ` @ `0xee5500`",
+    "代码位置": "sub_B51930 @ `0xb51930`　块 `0xb88852`..`0xb88a8e`",
+    "opcode 写入/分发证据": "`0xb88966`（命令名字符串引用点 = case 归属锚点）",
+    "处理块范围": "`0xB88852`..`0xB88A8E`",
+    "声明容量": "`0xC`（12）",
+    "配对命令（同 opcode 反向）": "（本批次内无同 opcode 反向命令）"
+  },
+  "handler": "sub_B51930",
+  "handler_va": "0xb51930",
+  "block": [
+    "0xB88852",
+    "0xB88A8E"
+  ],
+  "name_str": ")->_proto_lounge_client::recv_btlroom_invite_r(",
+  "name_str_va": "0xee5500",
+  "capacity": "0xC",
+  "capacity_va": null,
+  "closer_va": "0xB8891D",
+  "dispatch": null,
+  "dispatch_slot": "vt[0x1B4]",
+  "dispatch_va": null,
+  "wire": {
+    "length_expr": "4 + 4 + 4",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0xC（容量记账口径，非线长）",
+    "field_count": 3,
+    "length_source": "field_sum",
+    "readme_conclusion": "结论：3 字段（3×u32），容量 12 == 线长 12 精确相等。",
+    "readme_close": "闭合点：0x00B8891D（游标寄存器与报文末尾比较，jz/jnz 走成功分支）。"
+  },
+  "fields": [
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "result",
+      "meaning": "结果码",
+      "purpose": "`sub_B02DD0`（`0xB888A9`）读 u32；去向 `vt[0x1B4]` 第 3 实参（`0xB88A6F push edx`）",
+      "enum": null,
+      "evidence_va": [
+        "0xB888A9"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "refuse_pilot_id",
+      "meaning": "拒绝邀请的角色 ID",
+      "purpose": "`sub_B02DD0`（`0xB888E9`）读 u32；去向 `vt[0x1B4]` 第 2 实参（`0xB88A6C push edx`）",
+      "enum": null,
+      "evidence_va": [
+        "0xB888E9"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 3,
+      "offset": "8",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "reason",
+      "meaning": "拒绝理由",
+      "purpose": "`sub_B02DD0`（`0xB8890D`）读 u32；去向 `vt[0x1B4]` 第 1 实参（`0xB88A65 push edx`）",
+      "enum": null,
+      "evidence_va": [
+        "0xB8890D"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0xFCE9（分发器 switch 选择子）",
+      "evidence_va": "0xB88966"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB41120`（模块 id 145）→ 之后逐字段读线",
+      "evidence_va": "0xB88859"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "result：`u32`（线长 4）—— 结果码",
+      "evidence_va": "0xB888A9"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "refuse_pilot_id：`u32`（线长 4）—— 拒绝邀请的角色 ID",
+      "evidence_va": "0xB888E9"
+    },
+    {
+      "step": 5,
+      "kind": "read_scalar",
+      "detail": "reason：`u32`（线长 4）—— 拒绝理由",
+      "evidence_va": "0xB8890D"
+    },
+    {
+      "step": 6,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB8891D"
+    },
+    {
+      "step": 7,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x1B4]`，实参 3 个",
+      "evidence_va": "0xB88A72"
+    },
+    {
+      "step": 8,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB888C3"
+    }
+  ],
+  "capabilities": [
+    "unclassified",
+    "lounge.btlroom_invite"
+  ],
+  "capabilities_derived": [
+    "unclassified"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:46",
+    "batch": 14,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 12,
+        "va": "0xB8886E",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB8886B",
+        "call_va": "0xB88870"
+      },
+      "field_window": {
+        "start_va": "0xB8885A",
+        "end_va": "0xB88944",
+        "guard": {
+          "va": "0xB88859",
+          "func": "0xB41120",
+          "module_id": 145,
+          "release_va": "0xB41110"
+        },
+        "closer_or_commit_va": "0xB8891D",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "result",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB888A9"
+            ]
+          },
+          {
+            "name": "refuse_pilot_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB888E9"
+            ]
+          },
+          {
+            "name": "reason",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB8890D"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB888A9",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB888E9",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB8890D",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 3,
+        "checkable": 3,
+        "pairs": [
+          {
+            "field": "result",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB888A9",
+            "kind": "read"
+          },
+          {
+            "field": "refuse_pilot_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB888E9",
+            "kind": "read"
+          },
+          {
+            "field": "reason",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB8890D",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB8885A",
+          "0xB88944"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 12,
+          "capacity": 12,
+          "relation": "exact",
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）12 / 容量 0xc"
+        }
+      },
+      "closer": {
+        "va": "0xB8891D",
+        "kind": "jz",
+        "jcc_va": "0xB88923",
+        "seq_va": "0xB88919",
+        "jcc_dst": "0xB8893F",
+        "cmp": "cmp     ebx, [esp+2C5Ch+var_2C40]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x1B4]",
+        "slot_value": 436,
+        "va": "0xB88A72",
+        "mov_va": "0xB88A5F",
+        "host": "[eax+1B4h]",
+        "argc": 3,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB888C3",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "result=",
+        "refuse_pilot_id=",
+        "reason="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0xFCE9-lounge-btlroom_invite_r.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0xb88966",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": []
+  },
+  "structs": {
+    "response": {
+      "go_name": "BtlroomInviteR",
+      "role": "response",
+      "wire_length": "4 + 4 + 4",
+      "members": [
+        {
+          "name": "Result",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "result"
+        },
+        {
+          "name": "RefusePilotId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "refuse_pilot_id"
+        },
+        {
+          "name": "Reason",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "reason"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "c3370307dd917908",
+  "check_fingerprint": "8e8a3cc96632e2a6"
+}

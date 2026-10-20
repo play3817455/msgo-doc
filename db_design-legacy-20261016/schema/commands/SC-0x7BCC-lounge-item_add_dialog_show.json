@@ -1,0 +1,332 @@
+{
+  "id": "SC-0x7BCC-lounge-item_add_dialog_show",
+  "opcode": "0x7BCC",
+  "direction": "SC",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "item_add_dialog_show",
+  "source_dir": "protocol_analysis/commands/SC-0x7BCC-lounge-item_add_dialog_show",
+  "meta": {
+    "opcode": "`0x7BCC`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`item_add_dialog_show`",
+    "处理块范围": "`B68C9D`..`B68E86`",
+    "名字串引用点": "`B68D8D`",
+    "声明容量（解码缓冲）": "`0x6`（`B68CB9`）",
+    "长度闭合点": "`B68D44`",
+    "收尾函数": "`sub_B41110`（lounge 口径）",
+    "去向": "`vt[0x334]` @ `B68E5E`（2 实参）"
+  },
+  "handler": null,
+  "handler_va": null,
+  "block": [
+    "0xB68C9D",
+    "0xB68E86"
+  ],
+  "name_str": null,
+  "name_str_va": "0xB68D8D",
+  "capacity": "0x6",
+  "capacity_va": "0xB68CB9",
+  "closer_va": "0xB68D44",
+  "dispatch": "`vt[0x334]` @ `B68E5E`（2 实参）",
+  "dispatch_slot": "vt[0x334]",
+  "dispatch_va": "0xB68E5E",
+  "wire": {
+    "length_expr": "4 + 2",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x6（容量记账口径，非线长）",
+    "field_count": 2,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：6。",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0x7BCC",
+      "evidence_va": [
+        "B68D8D"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "item_id",
+      "meaning": "获得道具 ID（日志串 `item_id=`）",
+      "purpose": "经 `vt[0x334]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B68CF4",
+        "B68DE3"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "stack",
+      "meaning": "堆叠数量（日志串 `stack=`）",
+      "purpose": "经 `vt[0x334]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B68D34",
+        "B68E09"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0x7BCC（分发器 switch 选择子）",
+      "evidence_va": "0xB68D8D"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB41120`（模块 id 322）→ 之后逐字段读线",
+      "evidence_va": "0xB68CA4"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "item_id：`u32`（线长 4）—— 获得道具 ID（日志串 `item_id=`）",
+      "evidence_va": "0xB68CF4"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "stack：`u16`（线长 2）—— 堆叠数量（日志串 `stack=`）",
+      "evidence_va": "0xB68D34"
+    },
+    {
+      "step": 5,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB68D44"
+    },
+    {
+      "step": 6,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x334]`，实参 2 个",
+      "evidence_va": "0xB68E6A"
+    },
+    {
+      "step": 7,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB68D0E"
+    }
+  ],
+  "capabilities": [
+    "create",
+    "lounge.item"
+  ],
+  "capabilities_derived": [
+    "create"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:44",
+    "batch": 8,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 6,
+        "va": "0xB68CB9",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB68CB6",
+        "call_va": "0xB68CBB"
+      },
+      "field_window": {
+        "start_va": "0xB68CA5",
+        "end_va": "0xB68D6B",
+        "guard": {
+          "va": "0xB68CA4",
+          "func": "0xB41120",
+          "module_id": 322,
+          "release_va": "0xB41110"
+        },
+        "closer_or_commit_va": "0xB68D44",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "item_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "B68CF4",
+              "B68DE3"
+            ]
+          },
+          {
+            "name": "stack",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "B68D34",
+              "B68E09"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB68CF4",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB68D34",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 2,
+        "checkable": 2,
+        "pairs": [
+          {
+            "field": "item_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB68CF4",
+            "kind": "read"
+          },
+          {
+            "field": "stack",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB68D34",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB68CA5",
+          "0xB68D6B"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 6,
+          "capacity": 6,
+          "relation": "exact",
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）6 / 容量 0x6"
+        }
+      },
+      "closer": {
+        "va": "0xB68D44",
+        "kind": "jz",
+        "jcc_va": "0xB68D4A",
+        "seq_va": "0xB68D40",
+        "jcc_dst": "0xB68D66",
+        "cmp": "cmp     ebx, [esp+2C5Ch+var_2C40]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x334]",
+        "slot_value": 820,
+        "va": "0xB68E6A",
+        "mov_va": "0xB68E5E",
+        "host": "[edx+334h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB68D0E",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "item_id=",
+        "stack="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0x7BCC-lounge-item_add_dialog_show.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "B68D8D"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "ItemAddDialogShow",
+      "role": "response",
+      "wire_length": "4 + 2",
+      "members": [
+        {
+          "name": "ItemId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "item_id"
+        },
+        {
+          "name": "Stack",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "stack"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "70aa6dea0c01cc9f",
+  "check_fingerprint": "4928969d0ac72973"
+}

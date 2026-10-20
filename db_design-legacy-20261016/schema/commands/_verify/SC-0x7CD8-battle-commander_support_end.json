@@ -1,0 +1,273 @@
+{
+ "id": "SC-0x7CD8-battle-commander_support_end",
+ "verified_at": "2026-09-30 15:25:47",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "block",
+ "block": [
+  "0xB20D67",
+  "0xB210B5"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 11,
+   "va": "0xB20D83",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xB20D80",
+   "call_va": "0xB20D85"
+  },
+  "field_window": {
+   "start_va": "0xB20D6F",
+   "end_va": "0xB20ED1",
+   "guard": {
+    "va": "0xB20D6E",
+    "func": "0xB05DA0",
+    "module_id": 227,
+    "release_va": "0xB05D90"
+   },
+   "closer_or_commit_va": "0xB20EAA",
+   "within_model_block": true,
+   "range_from": "block"
+  },
+  "primitive_widths": {
+   "direction": "SC",
+   "expected": [
+    {
+     "name": "team",
+     "wire_type": "u8",
+     "width": 1,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "B20DBE",
+      "B20F47"
+     ]
+    },
+    {
+     "name": "troops",
+     "wire_type": "u8",
+     "width": 1,
+     "seq": 2,
+     "shape": "scalar",
+     "evidence_va": [
+      "B20DFE",
+      "B20F71"
+     ]
+    },
+    {
+     "name": "support_type",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 3,
+     "shape": "scalar",
+     "evidence_va": [
+      "B20E22",
+      "B20F9D"
+     ]
+    },
+    {
+     "name": "ent_id",
+     "wire_type": "u16",
+     "width": 2,
+     "seq": 4,
+     "shape": "scalar",
+     "evidence_va": [
+      "B20E46",
+      "B20FC8"
+     ]
+    },
+    {
+     "name": "spt_ms_index",
+     "wire_type": "u16",
+     "width": 2,
+     "seq": 5,
+     "shape": "scalar",
+     "evidence_va": [
+      "B20E6E",
+      "B20FF3"
+     ]
+    },
+    {
+     "name": "spt_spot_index",
+     "wire_type": "u8",
+     "width": 1,
+     "seq": 6,
+     "shape": "scalar",
+     "evidence_va": [
+      "B20E96",
+      "B21016"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB20DBE",
+     "kind": "read",
+     "width": 1,
+     "wire_type": "u8",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB20DFE",
+     "kind": "read",
+     "width": 1,
+     "wire_type": "u8",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB20E22",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB20E46",
+     "kind": "read",
+     "width": 2,
+     "wire_type": "u16",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB20E6E",
+     "kind": "read",
+     "width": 2,
+     "wire_type": "u16",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB20E96",
+     "kind": "read",
+     "width": 1,
+     "wire_type": "u8",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 6,
+   "checkable": 6,
+   "pairs": [
+    {
+     "field": "team",
+     "width": 1,
+     "shape": "scalar",
+     "va": "0xB20DBE",
+     "kind": "read"
+    },
+    {
+     "field": "troops",
+     "width": 1,
+     "shape": "scalar",
+     "va": "0xB20DFE",
+     "kind": "read"
+    },
+    {
+     "field": "support_type",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB20E22",
+     "kind": "read"
+    },
+    {
+     "field": "ent_id",
+     "width": 2,
+     "shape": "scalar",
+     "va": "0xB20E46",
+     "kind": "read"
+    },
+    {
+     "field": "spt_ms_index",
+     "width": 2,
+     "shape": "scalar",
+     "va": "0xB20E6E",
+     "kind": "read"
+    },
+    {
+     "field": "spt_spot_index",
+     "width": 1,
+     "shape": "scalar",
+     "va": "0xB20E96",
+     "kind": "read"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB20D6F",
+    "0xB20ED1"
+   ],
+   "scalar_match_verifiable": true,
+   "capacity_relation": {
+    "observed_min": 11,
+    "capacity": 11,
+    "relation": "exact",
+    "unknown_events": [],
+    "is_lower_bound": false,
+    "note": "观测线长（下界）11 / 容量 0xb"
+   }
+  },
+  "closer": {
+   "va": "0xB20EAA",
+   "kind": "jz",
+   "jcc_va": "0xB20EB0",
+   "seq_va": "0xB20EA6",
+   "jcc_dst": "0xB20ECC",
+   "cmp": "cmp     ebx, [esp+1B3Ch+var_1B24]",
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x2C0]",
+   "slot_value": 704,
+   "va": "0xB21099",
+   "mov_va": "0xB21075",
+   "host": "[eax+2C0h]",
+   "argc": 6,
+   "form": "mov_then_call",
+   "error_slot": {
+    "slot": "vt[0x64]",
+    "va": "0xB20DD8",
+    "argc": 2
+   }
+  },
+  "log_strings": [
+   "team=",
+   "troops=",
+   "support_type=",
+   "ent_id=",
+   "spt_ms_index=",
+   "spt_spot_index="
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "ent_id",
+  "spt_ms_index",
+  "spt_spot_index",
+  "support_type",
+  "team",
+  "troops"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 18
+}

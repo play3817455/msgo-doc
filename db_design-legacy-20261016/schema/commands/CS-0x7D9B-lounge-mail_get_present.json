@@ -1,0 +1,417 @@
+{
+  "id": "CS-0x7D9B-lounge-mail_get_present",
+  "opcode": "0x7D9B",
+  "direction": "CS",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "mail_get_present",
+  "source_dir": "protocol_analysis/commands/CS-0x7D9B-lounge-mail_get_present",
+  "meta": {
+    "opcode": "`0x7D9B`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`mail_get_present`",
+    "名字符串": "`)<-_proto_lounge_client::send_mail_get_present(` @ `0xeec28c`",
+    "代码位置": "sub_B9C530 @ `0xb9c530`（`0xb9c530`..`0xb9c774`）",
+    "opcode 写入证据": "`0xb9c5ac`",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0x12`（18）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)`",
+    "配对命令": "S→C `SC-0x20C4-lounge-mail_get_present_r`（同族另有 `SC-0x3671-lounge-mail_get_present_body_r`）"
+  },
+  "handler": "sub_B9C530",
+  "handler_va": "0xb9c530",
+  "block": [
+    "0xB9C530",
+    "0xB9C774"
+  ],
+  "name_str": ")<-_proto_lounge_client::send_mail_get_present(",
+  "name_str_va": "0xeec28c",
+  "capacity": "0x12",
+  "capacity_va": null,
+  "closer_va": "0xB9C652",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": null,
+  "wire": {
+    "length_expr": "8 + 4 + 4",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x12（容量记账口径，非线长）",
+    "field_count": 3,
+    "length_source": "field_sum",
+    "readme_conclusion": "结论：领取邮件附件（present）：邮件 id + 附件类型 + 附件 id。",
+    "readme_close": "2 + 8(u64) + 4 + 4 = 18 == 容量 0x12 = 18（精确相等）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "写入 buf+0，供服务端分发；无 case 块（C→S）",
+      "enum": "0x7D9B",
+      "evidence_va": [
+        "0xb9c5ac"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "2",
+      "length": "8",
+      "wire_type": "u64",
+      "name": "mailid",
+      "meaning": "邮件唯一 id",
+      "purpose": "来源=入参 arg_0/arg_4（低 32 位在前，两个内联 `mov [eax],ecx`/`mov [eax+4],ecx`）；服务端据此定位邮件",
+      "enum": null,
+      "evidence_va": [
+        "0xB9C5BC, 0xB9C5C2"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "10",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "attach_type",
+      "meaning": "附件类型",
+      "purpose": "来源=入参 arg_8；内联 `mov [edx],ecx`；服务端据此解析附件",
+      "enum": "不定域：值来自 IF::CSendMailWindow 字段 [this+0x180]（礼物附件类型选择），exe 里无字面量枚举",
+      "evidence_va": [
+        "0xB9C5D4"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "14",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "attach_id",
+      "meaning": "附件 id",
+      "purpose": "来源=入参 arg_C；写线原语 `sub_B02D80`(u32)",
+      "enum": null,
+      "evidence_va": [
+        "0xB9C5E4"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0x7D9B（分发器 switch 选择子）",
+      "evidence_va": "0xB9C5AC"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0x12 B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xB9C576"
+    },
+    {
+      "step": 3,
+      "kind": "write_scalar",
+      "detail": "mailid：`u64`（线长 8）—— 邮件唯一 id",
+      "evidence_va": "0xB9C5BC"
+    },
+    {
+      "step": 4,
+      "kind": "write_scalar",
+      "detail": "attach_type：`u32`（线长 4）—— 附件类型",
+      "evidence_va": "0xB9C5D4"
+    },
+    {
+      "step": 5,
+      "kind": "write_scalar",
+      "detail": "attach_id：`u32`（线长 4）—— 附件 id",
+      "evidence_va": "0xB9C5E4"
+    },
+    {
+      "step": 6,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xB9C652"
+    },
+    {
+      "step": 7,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xB9C70B"
+    }
+  ],
+  "capabilities": [
+    "query",
+    "lounge.mail"
+  ],
+  "capabilities_derived": [
+    "unclassified"
+  ],
+  "db_effects": [],
+  "pair": "SC-0x20C4-lounge-mail_get_present_r",
+  "related": [
+    "SC-0x3671-lounge-mail_get_present_body_r"
+  ],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:44",
+    "batch": 9,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 18,
+        "va": "0xB9C576",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB9C573",
+        "call_va": "0xB9C578"
+      },
+      "field_window": {
+        "start_va": "0xB9C530",
+        "end_va": "0xB9C652",
+        "guard": null,
+        "closer_or_commit_va": "0xB9C652",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "mailid",
+            "wire_type": "u64",
+            "width": 8,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB9C5BC, 0xB9C5C2"
+            ]
+          },
+          {
+            "name": "attach_type",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB9C5D4"
+            ]
+          },
+          {
+            "name": "attach_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB9C5E4"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB9C5AC",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB9C5BC",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB9C5D4",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB9C5E4",
+            "kind": "write",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB9C628",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 2,
+        "checkable": 3,
+        "pairs": [
+          {
+            "field": "attach_type",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB9C5BC",
+            "kind": "inline_store"
+          },
+          {
+            "field": "attach_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB9C5D4",
+            "kind": "inline_store"
+          }
+        ],
+        "gaps": [
+          {
+            "field": "mailid",
+            "wire_type": "u64",
+            "width": 8,
+            "shape": "scalar",
+            "note": "汇编事件序列里找不到与之对位的读写点（缺字段或宽度不符）"
+          }
+        ],
+        "unmatched_actual": [
+          {
+            "va": "0xB9C5AC",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          },
+          {
+            "va": "0xB9C5E4",
+            "kind": "write",
+            "width": 4,
+            "wire_type": "u32"
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB9C530",
+          "0xB9C652"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 14,
+          "capacity": 18,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB9C628",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）14 / 容量 0x12"
+        }
+      },
+      "closer": {
+        "va": "0xB9C652",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xB9C70B",
+        "mov_va": "0xB9C702",
+        "host": "[edx+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "mailid=",
+        "attach_type=",
+        "attach_id="
+      ]
+    },
+    "mismatches": [],
+    "notes": [
+      {
+        "check": "primitive_widths",
+        "note": "定宽对位不可判定：C→S 写线在复合写入器内部 consumed 未知；缺口 mailid"
+      }
+    ],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0x7D9B-lounge-mail_get_present.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0xb9c5ac",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xb9c5ac"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "MailGetPresent",
+      "role": "request",
+      "wire_length": "8 + 4 + 4",
+      "members": [
+        {
+          "name": "Mailid",
+          "wire_type": "u64",
+          "length": "8",
+          "field_ref": "mailid"
+        },
+        {
+          "name": "AttachType",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "attach_type"
+        },
+        {
+          "name": "AttachId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "attach_id"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "b4c183b27edbf661",
+  "check_fingerprint": "366abcff5b0ee1ff"
+}

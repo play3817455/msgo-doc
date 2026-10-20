@@ -1,0 +1,217 @@
+{
+ "id": "SC-0x1159-battle-game_mapgimmick_update",
+ "verified_at": "2026-09-30 15:25:46",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "block",
+ "block": [
+  "0xB0EF02",
+  "0xB0F127"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 1028,
+   "va": "0xB0EF17",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xB0EF14",
+   "call_va": "0xB0EF1C"
+  },
+  "field_window": {
+   "start_va": "0xB0EF03",
+   "end_va": "0xB0EFE8",
+   "guard": {
+    "va": "0xB0EF02",
+    "func": "0xB05DA0",
+    "module_id": null,
+    "release_va": "0xB05D90"
+   },
+   "closer_or_commit_va": "0xB0EFC7",
+   "within_model_block": true,
+   "range_from": "block"
+  },
+  "primitive_widths": {
+   "direction": "SC",
+   "expected": [
+    {
+     "name": "count",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB0EF47",
+      "0xB0EF70",
+      "0xB0EF73",
+      "0xB0F107"
+     ]
+    },
+    {
+     "name": "gimmick_progress",
+     "wire_type": "array<gimmick_progress_entry,N>",
+     "width": null,
+     "seq": 2,
+     "shape": "agg",
+     "evidence_va": [
+      "0xB0EF7F",
+      "0xB07DB0"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB07DBE",
+     "kind": "nested",
+     "width": 4,
+     "wire_type": null,
+     "name": "",
+     "consumed": 4,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB07DD4",
+     "kind": "nested",
+     "width": 1,
+     "wire_type": null,
+     "name": "",
+     "consumed": 1,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB07DE6",
+     "kind": "nested",
+     "width": 2,
+     "wire_type": null,
+     "name": "",
+     "consumed": 2,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB0EF47",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB0EF7F",
+     "kind": "opaque",
+     "width": null,
+     "wire_type": null,
+     "name": "sub_B05FC0",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB0EF9C",
+     "kind": "opaque",
+     "width": null,
+     "wire_type": null,
+     "name": "sub_B07DB0",
+     "consumed": 7,
+     "consumed_effective": 7,
+     "nested_of": null
+    }
+   ],
+   "matched": 1,
+   "checkable": 1,
+   "pairs": [
+    {
+     "field": "count",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB0EF47",
+     "kind": "read"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [
+    {
+     "va": "0xB0EF9C",
+     "kind": "opaque",
+     "width": null,
+     "wire_type": null
+    },
+    {
+     "va": "0xB07DBE",
+     "kind": "nested",
+     "width": 4,
+     "wire_type": null
+    },
+    {
+     "va": "0xB07DD4",
+     "kind": "nested",
+     "width": 1,
+     "wire_type": null
+    },
+    {
+     "va": "0xB07DE6",
+     "kind": "nested",
+     "width": 2,
+     "wire_type": null
+    }
+   ],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB0EF03",
+    "0xB0EFE8"
+   ],
+   "scalar_match_verifiable": true,
+   "capacity_relation": {
+    "observed_min": 11,
+    "capacity": 1028,
+    "relation": "within",
+    "unknown_events": [
+     {
+      "va": "0xB0EF7F",
+      "kind": "opaque",
+      "name": "sub_B05FC0"
+     }
+    ],
+    "is_lower_bound": true,
+    "note": "观测线长（下界）11 / 容量 0x404"
+   }
+  },
+  "closer": {
+   "va": "0xB0EFC7",
+   "kind": "jz",
+   "jcc_va": "0xB0EFCD",
+   "seq_va": "0xB0EFC3",
+   "jcc_dst": "0xB0EFE6",
+   "cmp": "cmp     ecx, [esp+1B3Ch+var_1B24]",
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x11C]",
+   "slot_value": 284,
+   "va": "0xB0F10B",
+   "mov_va": "0xB0F101",
+   "host": "[edx+11Ch]",
+   "argc": 2,
+   "form": "mov_then_call",
+   "error_slot": {
+    "slot": "vt[0x64]",
+    "va": "0xB0EF5E",
+    "argc": 2
+   }
+  },
+  "log_strings": [
+   "gimmick_progress={"
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "gimmick_progress"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 15
+}

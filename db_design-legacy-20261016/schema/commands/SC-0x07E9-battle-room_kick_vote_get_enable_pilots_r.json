@@ -1,0 +1,597 @@
+{
+  "id": "SC-0x07E9-battle-room_kick_vote_get_enable_pilots_r",
+  "opcode": "0x07E9",
+  "direction": "SC",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "room_kick_vote_get_enable_pilots_r",
+  "source_dir": "protocol_analysis/commands/SC-0x07E9-battle-room_kick_vote_get_enable_pilots_r",
+  "meta": {
+    "opcode": "`0x07E9`",
+    "方向": "SC（服务端 → 客户端（recv））",
+    "协议类": "`battle_client`",
+    "命令名": "`room_kick_vote_get_enable_pilots_r`",
+    "名字符串": "`)->_proto_battle_client::recv_room_kick_vote_get_enable_pilots_r( ` @ `0xEE0390`，引用点 `0xB0DDBA`",
+    "处理函数": "`sub_B0CC20` @ `0xB0CC20`（battle 分发器）",
+    "处理块范围": "`0xB0DBFC` .. `0xB0DFA1`（块首 `0xB0DBFC push 31h; call sub_B05DA0`，错误码 `0x31`）",
+    "关联命令": "同族（踢人投票）：`../CS-0x0452-battle-room_kick_vote/`、`../SC-0x27F3-battle-room_kick_vote_r/`、`../SC-0x0EC5-battle-room_kick_to/`"
+  },
+  "handler": "sub_B0CC20",
+  "handler_va": "0xB0CC20",
+  "block": [
+    "0xB0DBFC",
+    "0xB0DFA1"
+  ],
+  "name_str": ")->_proto_battle_client::recv_room_kick_vote_get_enable_pilots_r(",
+  "name_str_va": "0xEE0390",
+  "capacity": "0x1AC",
+  "capacity_va": "0xB0DC15",
+  "closer_va": "0xB0DD77",
+  "dispatch": null,
+  "dispatch_slot": "vt[0xE8]",
+  "dispatch_va": "0xB0DF5A",
+  "wire": {
+    "length_expr": "12+4*(A+B)",
+    "fixed": false,
+    "var_drivers": [
+      "A",
+      "B"
+    ],
+    "capacity_note": "声明容量 0x1AC（容量记账口径，非线长）",
+    "field_count": 5,
+    "length_source": "closure_row",
+    "readme_conclusion": "**报文体总长：变长 12 + 4×(A+B) 字节**（A = 世界数，B = 驾驶员数；两个计数 + 两个数组 + 结果各计一次）。",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "battle 分发的 switch 选择子",
+      "enum": "0x07E9",
+      "evidence_va": [
+        "0xB0DDBA"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "f_0 ?",
+      "meaning": "第1个列表的元素个数A(无日志标签，占位名)",
+      "purpose": "列表长度前缀；驱动A次元素读取",
+      "enum": "<=0x34(52)",
+      "evidence_va": [
+        "0xB0DC45",
+        "0xB0DC6E"
+      ],
+      "confidence": "类型与上限确证/名为占位",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "4*A",
+      "wire_type": "array<u32,A>",
+      "name": "enable_worlds",
+      "meaning": "可投票踢人的世界(大区)ID列表",
+      "purpose": "交 vt[0xE8] 第1实参(基址)+第2实参(A)；日志 enable_worlds={",
+      "enum": null,
+      "evidence_va": [
+        "0xB0DC7D",
+        "0xB0DC9A",
+        "0xB0DCA6",
+        "0xB0DE04"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "4+4*A",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "f_1 ?",
+      "meaning": "第2个列表的元素个数B(无日志标签，占位名)",
+      "purpose": "列表长度前缀；驱动B次元素读取",
+      "enum": "<=0x34(52)",
+      "evidence_va": [
+        "0xB0DCCB",
+        "0xB0DCDF"
+      ],
+      "confidence": "类型与上限确证/名为占位",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 4,
+      "offset": "8+4*A",
+      "length": "4*B",
+      "wire_type": "array<u32,B>",
+      "name": "enable_pilots",
+      "meaning": "可被投票踢出的驾驶员(玩家)ID列表",
+      "purpose": "交 vt[0xE8] 第3实参(基址)+第4实参(B)；日志 enable_pilots={",
+      "enum": null,
+      "evidence_va": [
+        "0xB0DCF2",
+        "0xB0DD0F",
+        "0xB0DD1B",
+        "0xB0DE71"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    },
+    {
+      "seq": 5,
+      "offset": "8+4*(A+B)",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "result",
+      "meaning": "处理结果码",
+      "purpose": "交 vt[0xE8] 第5实参；日志 result=",
+      "enum": "?",
+      "evidence_va": [
+        "0xB0DD4E",
+        "0xB02DE9",
+        "0xB0DEE9"
+      ],
+      "confidence": "类型确证/枚举待定",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 7
+    },
+    {
+      "seq": -1,
+      "offset": "12+4*(A+B)",
+      "length": "0",
+      "wire_type": "-",
+      "name": "（长度闭合）",
+      "meaning": "游标必须==报文末尾（A,B<=52）",
+      "purpose": "-",
+      "enum": null,
+      "evidence_va": [
+        "0xB0DD77",
+        "0xB0DD7D"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 8,
+      "is_closure": true
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0x07E9（分发器 switch 选择子）",
+      "evidence_va": "0xB0DDBA"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB05DA0`（模块 id 49）→ 之后逐字段读线",
+      "evidence_va": "0xB0DC00"
+    },
+    {
+      "step": 3,
+      "kind": "read_count",
+      "detail": "f_0 ?：`u32`（线长 4）—— 第1个列表的元素个数A(无日志标签，占位名)",
+      "evidence_va": "0xB0DC45"
+    },
+    {
+      "step": 4,
+      "kind": "read_array",
+      "detail": "enable_worlds：`array<u32,A>`（线长 4*A）—— 可投票踢人的世界(大区)ID列表",
+      "evidence_va": "0xB0DC7D"
+    },
+    {
+      "step": 5,
+      "kind": "read_count",
+      "detail": "f_1 ?：`u32`（线长 4）—— 第2个列表的元素个数B(无日志标签，占位名)",
+      "evidence_va": "0xB0DCCB"
+    },
+    {
+      "step": 6,
+      "kind": "read_array",
+      "detail": "enable_pilots：`array<u32,B>`（线长 4*B）—— 可被投票踢出的驾驶员(玩家)ID列表",
+      "evidence_va": "0xB0DCF2"
+    },
+    {
+      "step": 7,
+      "kind": "read_scalar",
+      "detail": "result：`u32`（线长 4）—— 处理结果码",
+      "evidence_va": "0xB0DD4E"
+    },
+    {
+      "step": 8,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB0DD77"
+    },
+    {
+      "step": 9,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0xE8]`，实参 5 个",
+      "evidence_va": "0xB0DF5A"
+    },
+    {
+      "step": 10,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB0DC5C"
+    }
+  ],
+  "capabilities": [
+    "delete",
+    "query",
+    "battle.room"
+  ],
+  "capabilities_derived": [
+    "delete"
+  ],
+  "db_effects": [],
+  "pair": "CS-0x0452-battle-room_kick_vote",
+  "related": [
+    "SC-0x27F3-battle-room_kick_vote_r",
+    "SC-0x0EC5-battle-room_kick_to"
+  ],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:46",
+    "batch": 14,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 428,
+        "va": "0xB0DC15",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB0DC12",
+        "call_va": "0xB0DC1A"
+      },
+      "field_window": {
+        "start_va": "0xB0DC01",
+        "end_va": "0xB0DD98",
+        "guard": {
+          "va": "0xB0DC00",
+          "func": "0xB05DA0",
+          "module_id": 49,
+          "release_va": "0xB05D90"
+        },
+        "closer_or_commit_va": "0xB0DD77",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "f_0 ?",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB0DC45",
+              "0xB0DC6E"
+            ]
+          },
+          {
+            "name": "enable_worlds",
+            "wire_type": "array<u32,A>",
+            "width": null,
+            "seq": 2,
+            "shape": "agg",
+            "evidence_va": [
+              "0xB0DC7D",
+              "0xB0DC9A",
+              "0xB0DCA6",
+              "0xB0DE04"
+            ]
+          },
+          {
+            "name": "f_1 ?",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB0DCCB",
+              "0xB0DCDF"
+            ]
+          },
+          {
+            "name": "enable_pilots",
+            "wire_type": "array<u32,B>",
+            "width": null,
+            "seq": 4,
+            "shape": "agg",
+            "evidence_va": [
+              "0xB0DCF2",
+              "0xB0DD0F",
+              "0xB0DD1B",
+              "0xB0DE71"
+            ]
+          },
+          {
+            "name": "result",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 5,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB0DD4E",
+              "0xB02DE9",
+              "0xB0DEE9"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB0DC45",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0DC7D",
+            "kind": "bounded",
+            "width": 4,
+            "wire_type": null,
+            "name": "sub_B41850",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0DC9A",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0DCCB",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0DCF2",
+            "kind": "bounded",
+            "width": 4,
+            "wire_type": null,
+            "name": "sub_B41850",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0DD0F",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0DD4E",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 3,
+        "checkable": 3,
+        "pairs": [
+          {
+            "field": "f_0 ?",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB0DC45",
+            "kind": "read"
+          },
+          {
+            "field": "f_1 ?",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB0DC7D",
+            "kind": "bounded"
+          },
+          {
+            "field": "result",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB0DC9A",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB0DCCB",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32"
+          },
+          {
+            "va": "0xB0DCF2",
+            "kind": "bounded",
+            "width": 4,
+            "wire_type": null
+          },
+          {
+            "va": "0xB0DD0F",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32"
+          },
+          {
+            "va": "0xB0DD4E",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32"
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB0DC01",
+          "0xB0DD98"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 20,
+          "capacity": 428,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB0DC7D",
+              "kind": "bounded",
+              "name": "sub_B41850"
+            },
+            {
+              "va": "0xB0DCF2",
+              "kind": "bounded",
+              "name": "sub_B41850"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）20 / 容量 0x1ac"
+        }
+      },
+      "closer": {
+        "va": "0xB0DD77",
+        "kind": "jz",
+        "jcc_va": "0xB0DD7D",
+        "seq_va": "0xB0DD73",
+        "jcc_dst": "0xB0DD96",
+        "cmp": "cmp     ecx, [esp+1B3Ch+var_1B24]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0xE8]",
+        "slot_value": 232,
+        "va": "0xB0DF5A",
+        "mov_va": "0xB0DF45",
+        "host": "[edx+0E8h]",
+        "argc": 5,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB0DC5C",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "enable_worlds={",
+        "enable_pilots={",
+        "result="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0x07E9-battle-room_kick_vote_get_enable_pilots_r.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": "（长度闭合）",
+    "opcode_field_va": [
+      "0xB0DDBA"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "RoomKickVoteGetEnablePilotsR",
+      "role": "response",
+      "wire_length": "12+4*(A+B)",
+      "members": [
+        {
+          "name": "F0",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "f_0 ?"
+        },
+        {
+          "name": "EnableWorlds",
+          "wire_type": "array<u32,A>",
+          "length": "4*A",
+          "field_ref": "enable_worlds",
+          "element": "u32",
+          "element_length": "4",
+          "cap": null,
+          "count_field": "f_0 ?",
+          "count_field_source": "heuristic",
+          "count_var": "A",
+          "note": null
+        },
+        {
+          "name": "F1",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "f_1 ?"
+        },
+        {
+          "name": "EnablePilots",
+          "wire_type": "array<u32,B>",
+          "length": "4*B",
+          "field_ref": "enable_pilots",
+          "element": "u32",
+          "element_length": "4",
+          "cap": null,
+          "count_field": "f_1 ?",
+          "count_field_source": "heuristic",
+          "count_var": "B",
+          "note": null
+        },
+        {
+          "name": "Result",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "result"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "839366399d9e3697",
+  "check_fingerprint": "91cb7287628e391d"
+}

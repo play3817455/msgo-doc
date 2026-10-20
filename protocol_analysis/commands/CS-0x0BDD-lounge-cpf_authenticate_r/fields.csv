@@ -1,0 +1,3 @@
+序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+"1","0","4","u32","data_len","数据长度（上限 0x80=128，`cmp ebp,80h; ja 出错` @`0xBA4B7D`）","来源=入参 arg_4（`0xBA4B79 mov ebp,[esp+arg_4]`），内联 `mov [eax],ebp`","≤128","0xBA4B99","确证"
+"2","4","data_len","bytes","data","CPF 握手数据块（变长字节串，无 NUL 结尾）","来源=入参 arg_0（`0xBA4BB0 mov edx,[esp+arg_0]`），循环内联逐字节 `mov [esi],dl`","长度 = data_len","0xBA4BB7","确证"

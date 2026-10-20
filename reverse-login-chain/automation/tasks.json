@@ -1,0 +1,167 @@
+{
+  "chain": "reverse-login-chain",
+  "mechanism": "v3（2026-09-15）：会话不限时长，研究到完成当前工作项为止；会话【完成后】才 suggested create 下一个 once 任务（scheduledAt = now+10min）作为下一轮；严禁会话开头建/重复建",
+  "intervalMinutes": 20,
+  "maxDurationMinutes": 90,
+  "createdAt": "2026-09-14T01:35:36",
+  "tasks": [
+    {
+      "node": "N1",
+      "automationId": "n1",
+      "taskName": "登录链逆向·N1-登录界面与凭据",
+      "promptFile": "automation/prompts/node-01.md",
+      "createdBy": "user-session (2026-09-14T01:35:36)",
+      "scheduledAt": "2026-09-14T01:55",
+      "status": "completed",
+      "completedAt": "2026-09-14T02:07",
+      "result": "done · nodes/01-LoginUI与凭据.md"
+    },
+    {
+      "node": "N2",
+      "automationId": "n2-authsv",
+      "taskName": "登录链逆向·N2-平台认证authsv",
+      "promptFile": "automation/prompts/node-02.md",
+      "createdBy": "N1 (2026-09-14T02:07)",
+      "scheduledAt": "2026-09-14T02:27",
+      "status": "completed",
+      "completedAt": "2026-09-14T03:05",
+      "result": "done · nodes/02-平台认证authsv.md"
+    },
+    {
+      "node": "N3",
+      "automationId": "n3-access",
+      "taskName": "登录链逆向·N3-access握手与会话加密",
+      "promptFile": "automation/prompts/node-03.md",
+      "createdBy": "N2 (2026-09-14T03:05)",
+      "scheduledAt": "2026-09-14T03:25",
+      "status": "completed",
+      "completedAt": "2026-09-14T03:32",
+      "result": "done · nodes/03-access握手与会话加密.md"
+    },
+    {
+      "node": "N4",
+      "automationId": "n4",
+      "taskName": "登录链逆向·N4-认证连接协议链",
+      "promptFile": "automation/prompts/node-04.md",
+      "createdBy": "N3 (2026-09-14T03:32)",
+      "scheduledAt": "2026-09-14T03:52",
+      "status": "completed",
+      "completedAt": "2026-09-14T04:45",
+      "result": "done · nodes/04-认证连接协议链.md"
+    },
+    {
+      "node": "N5",
+      "automationId": "n5",
+      "taskName": "登录链逆向·N5-世界选择到大厅跳转",
+      "promptFile": "automation/prompts/node-05.md",
+      "createdBy": "N4 (2026-09-14T04:45)",
+      "scheduledAt": "2026-09-14T05:05",
+      "status": "completed",
+      "completedAt": "2026-09-14T05:30",
+      "result": "done · nodes/05-世界选择到大厅跳转.md"
+    },
+    {
+      "node": "N6",
+      "automationId": "n6",
+      "taskName": "登录链逆向·N6-大厅认证与数据表下载",
+      "promptFile": "automation/prompts/node-06.md",
+      "createdBy": "N5 (2026-09-14T05:30)",
+      "scheduledAt": "2026-09-14T05:50",
+      "status": "completed",
+      "completedAt": "2026-09-14T07:20",
+      "result": "done · nodes/06-大厅认证与数据表下载.md（N7 记录当时漏写，2026-09-14 由 N7 任务补记）"
+    },
+    {
+      "node": "N7",
+      "automationId": "n7",
+      "taskName": "登录链逆向·N7-机师列表创建选择",
+      "promptFile": "automation/prompts/node-07.md",
+      "createdBy": "N6 (2026-09-14T07:20) [记录由 N7 任务补写]",
+      "scheduledAt": "2026-09-14T07:40",
+      "status": "completed",
+      "completedAt": "2026-09-14T07:47",
+      "result": "done · nodes/07-机师列表创建选择.md（★推翻 0x063E=68B ⇒ 最小 51725B）",
+      "reopenedBy": "N9 (2026-09-14T08:57)：实跑判据未通过 —— 0x063E 体 51725B 的逐字段装配法未被任何一次运行证实，且比旧 68B 体更早触发客户端失败/退回；需按 N9 §5.1 复核（先 LEN=68 隔离变量 → STICKY_SELECT_BODY_HEX 逐段逼近 → 重点 pilot_detail/sub_B42640 段序/步长）"
+    },
+    {
+      "node": "N8",
+      "automationId": "n8-channel-login",
+      "taskName": "登录链逆向·N8-进频道channel_login",
+      "promptFile": "automation/prompts/node-08.md",
+      "createdBy": "N7 (2026-09-14T07:47)",
+      "scheduledAt": "2026-09-14T08:07",
+      "status": "completed",
+      "completedAt": "2026-09-14T08:02",
+      "result": "done · nodes/08-进频道channel_login.md（0xFB85 = recv_channel_list_select_r；0x3E0B→0xF11C→0x2830→0xFB85→连30002）"
+    },
+    {
+      "node": "N9",
+      "automationId": "n9-2",
+      "taskName": "登录链逆向·N9-进入游戏大厅",
+      "promptFile": "automation/prompts/node-09.md",
+      "createdBy": "N8 (2026-09-14T08:02) [记录由 N9 任务补写]",
+      "scheduledAt": "2026-09-14T08:35",
+      "status": "completed",
+      "completedAt": "2026-09-14T08:57",
+      "result": "partial · nodes/09-进入游戏大厅.md（30002 连接/握手层定案 + 首屏请求 ID 全表；应答 ID 仅候选；★第 0 步实跑判据未通过：0x3E0B 未出现，客户端在 0xF705↔0x063E 后立刻断开并退回『选择战区』⇒ 卡点回归 N7）"
+    }
+  ],
+  "pendingTasks": [
+    {
+      "node": "N7-refix",
+      "taskName": "登录链逆向·N7复核-0x063E体装配法",
+      "reason": "N9 第 0 步实跑判据未通过（0x3E0B 未出现），卡点回归 N7：51725B 只是『长度下界』的下界证明，逐字段装配法从未被运行证实；且旧 68B 体时客户端还会发 0x7C80、51725B 反而不发 ⇒ 该条失败处理不是静默丢弃。",
+      "promptFile": "automation/prompts/node-07.md",
+      "suggestedPrompt": "你在执行「登录链静态逆向」项目的节点 N7 复核（0x063E 体装配法）。请依次读取 common.md、node-07.md、progress.json，重点做：①用 STICKY_SELECT_BODY_LEN=68 复跑隔离变量（与 51725B 对照，看 0x7C80 是否再现）；②用 STICKY_SELECT_BODY_HEX 逐段逼近（先 result=0 + 全零 pilot_detail，再看是否必须给非零的 restore_channel/tuto_step 等）；③复核 pilot_detail(sub_B42640) 的段序/字节步长（尤其 favms_arr 720×66 与 '游标恰到底' 的正向验证）。判据：server\\logs\\sticky.log 出现 `报文ID=0x3E0B`。完成后按 common.md §6 收尾。",
+      "cwds": "f:/9ymsgo/9you",
+      "maxDurationMinutes": 90,
+      "status": "resolved-obsolete",
+      "note": "2026-09-14T21:45 用户会话续跑判定：本条**已作废** ✗ —— 0x063E 体(51725B)其实**已被客户端接受**（真凶是单帧明文上限 16366B；服务端改多帧连发后 round8 实测客户端随即发出 0x3E0B ✓）。N7 无需复核。真正待办 = 重启 Go 服务端、验证 30002 首屏 9 条骨架（体长已定案，见 nodes/09 §3.7）。"
+    }
+  ],
+  "notes": [
+    "automationId 由 automation_update 返回后回填；若为空说明任务尚未成功创建。",
+    "每个任务结束时必须：① 更新本文件（追加下一个节点的记录）② 更新 progress.json ③ 追加 automation/runs.log。",
+    "断链自愈：任务开头若发现 progress.json 的 currentNode 在 tasks 里没有对应记录，直接补建该节点任务。",
+    "N9 是最后一个节点 ⇒ 本轮未创建 N10（遵循 node-09 §6 / 自动化指令）。但 N9 判为 partial、progress.json 的 currentNode 仍为 N9、finished=false ⇒ 下一轮应做的是『N7 复核 0x063E 体』，再由其结果决定 N9 是否重跑；本轮已把 N7 记录标 reopenedBy。",
+    "2026-09-15 起机制改为 v2『workqueue 队列驱动 + 10 分钟/会话 + 自链式续跑』（见 reverse-login-chain/workqueue.json + prompts/common.md v2）；本文件下方的 v2 记录取代 N1..N9 节点记录。会话 prompt 是**通用模板**（运行时读 workqueue.json.currentItem），因此即使有重复触发，也只会推进当时的 currentItem，不会重复同一项。",
+    "2026-09-15 v3（定案）：会话不限时长（研究到完成当前工作项），会话【完成后】才 suggested create 下一个 once 任务（scheduledAt = now+10min）作为下一轮；严禁会话开头建/重复建。模板已同步改写：prompts/common.md §2/§6/§7 与 prompts/session.md（第一步改读进度、第三步改『完成后建下一个任务』）。"
+  ],
+  "v2Sessions": [
+    {
+      "session": 1,
+      "item": "W01",
+      "sessionCount": 1,
+      "taskName": "全链逆向·会话2（W02 authsv逐字段）",
+      "createdBy": "session1 (2026-09-15T00:20)",
+      "scheduledAt": "2026-09-15T01:27",
+      "maxDurationMinutes": 9,
+      "status": "completed-superseded",
+      "note": "该任务在 01:27 之前（约 01:20）即被主会话/上一轮触发执行完毕：W02 已 done（detail/W02-authsv-字段与格式.md）。若 01:27 仍会触发，因其 prompt 为通用模板，会自动改为推进当时的 currentItem（W03），无副作用。"
+    },
+    {
+      "session": 2,
+      "item": "W02",
+      "sessionCount": 2,
+      "taskName": "全链逆向·会话3（W03 握手与加密逐字节）",
+      "createdBy": "session2 (2026-09-15T01:20)",
+      "scheduledAt": "2026-09-15T01:30",
+      "maxDurationMinutes": 9,
+      "status": "completed",
+      "completedAt": "2026-09-15T01:35",
+      "result": "W02 done ⇒ detail/W02-authsv-字段与格式.md；currentItem → W03"
+    },
+    {
+      "session": 3,
+      "item": "W03",
+      "sessionCount": 3,
+      "taskName": "全链逆向·会话4（W04 认证协议链逐字段）",
+      "createdBy": "session3 (2026-09-15T01:35)",
+      "scheduledAt": "2026-09-15T01:50",
+      "maxDurationMinutes": 9,
+      "status": "created",
+      "result": "W03 done ⇒ detail/W03-握手与加密-逐字节.md；currentItem → W04",
+      "note": "★冗余任务提醒：`2-w02-authsv`（01:27）与 `3-w03`（01:30）相邻重叠。因会话 prompt 为通用模板（运行时读 workqueue.json.currentItem），重复触发只会推进当时的 currentItem，无副作用；建议用户手动把 `2-w02-authsv` 置 PAUSED。"
+    }
+  ]
+}

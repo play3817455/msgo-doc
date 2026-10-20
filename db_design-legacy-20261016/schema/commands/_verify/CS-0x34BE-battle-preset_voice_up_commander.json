@@ -1,0 +1,174 @@
+{
+ "id": "CS-0x34BE-battle-preset_voice_up_commander",
+ "verified_at": "2026-09-30 15:25:46",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "handler_func",
+ "block": [
+  "0xB34D20",
+  "0xB34F05"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 10,
+   "va": "0xB34D66",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xB34D63",
+   "call_va": "0xB34D68"
+  },
+  "field_window": {
+   "start_va": "0xB34D20",
+   "end_va": "0xB34E13",
+   "guard": null,
+   "closer_or_commit_va": "0xB34E13",
+   "within_model_block": true,
+   "range_from": "handler_func"
+  },
+  "primitive_widths": {
+   "direction": "CS",
+   "expected": [
+    {
+     "name": "voice_id",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB34DA9"
+     ]
+    },
+    {
+     "name": "AI_ent_id",
+     "wire_type": "u16",
+     "width": 2,
+     "seq": 2,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB34DB6"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB34D94",
+     "kind": "inline_store",
+     "width": 2,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB34DA9",
+     "kind": "inline_store",
+     "width": 4,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB34DB6",
+     "kind": "inline_store",
+     "width": 2,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB34DE9",
+     "kind": "composite",
+     "width": null,
+     "wire_type": null,
+     "name": "sub_B03020",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 2,
+   "checkable": 2,
+   "pairs": [
+    {
+     "field": "voice_id",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB34DA9",
+     "kind": "inline_store"
+    },
+    {
+     "field": "AI_ent_id",
+     "width": 2,
+     "shape": "scalar",
+     "va": "0xB34DB6",
+     "kind": "inline_store"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [
+    {
+     "va": "0xB34D94",
+     "kind": "inline_store",
+     "width": 2,
+     "wire_type": null
+    }
+   ],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB34D20",
+    "0xB34E13"
+   ],
+   "scalar_match_verifiable": false,
+   "capacity_relation": {
+    "observed_min": 8,
+    "capacity": 10,
+    "relation": "within",
+    "unknown_events": [
+     {
+      "va": "0xB34DE9",
+      "kind": "composite",
+      "name": "sub_B03020"
+     }
+    ],
+    "is_lower_bound": true,
+    "note": "观测线长（下界）8 / 容量 0xa"
+   }
+  },
+  "closer": {
+   "va": "0xB34E13",
+   "kind": "commit",
+   "jcc_va": null,
+   "seq_va": null,
+   "cmp": null,
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x58]",
+   "slot_value": 88,
+   "va": "0xB34E9F",
+   "mov_va": "0xB34E96",
+   "host": "[edx+58h]",
+   "argc": 2,
+   "form": "mov_then_call",
+   "error_slot": null
+  },
+  "log_strings": [
+   "voice_id=",
+   "AI_ent_id="
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "AI_ent_id",
+  "voice_id"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 15
+}

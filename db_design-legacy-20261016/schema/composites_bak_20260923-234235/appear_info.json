@@ -1,0 +1,519 @@
+{
+  "id": "appear_info",
+  "title": "部署武装出现 appear_info（86B 线 / 96B 槽）",
+  "length": 86,
+  "status": "complete",
+  "reader": "sub_B07EC0",
+  "printer": "sub_B0B4B0",
+  "memory_claim": 96,
+  "wire_layout": "2×u8+u32×7+u8+u32+snapshot39+u32+u16+2×u8+u32×2",
+  "evidence": {
+    "commands": [
+      "SC-0x057A-battle-entity_deploy_arms_appear"
+    ],
+    "protocol_paths": [
+      "protocol_analysis/commands/SC-0x057A-battle-entity_deploy_arms_appear/README.md"
+    ],
+    "note": "17 成员含嵌套 snapshot；claim 0x60=96（sub_B06020）≠ 线长 86；多处槽对齐 padding"
+  },
+  "members": [
+    {
+      "name": "team",
+      "offset": 0,
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "阵营/队伍",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x057A-battle-entity_deploy_arms_appear",
+          "struct": "appear_info",
+          "field_name": "team",
+          "offset": 0,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0x057A-battle-entity_deploy_arms_appear/README.md",
+          "section": "§3.1",
+          "reader": "sub_B07EC0",
+          "printer": "sub_B0B4B0",
+          "evidence_va": "B07ED3|B0B4D1"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "B07ED3|B0B4D1",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 0
+    },
+    {
+      "name": "troops",
+      "offset": 1,
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "部队/兵种",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x057A-battle-entity_deploy_arms_appear",
+          "struct": "appear_info",
+          "field_name": "troops",
+          "offset": 1,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0x057A-battle-entity_deploy_arms_appear/README.md",
+          "section": "§3.1",
+          "reader": "sub_B07EC0",
+          "printer": "sub_B0B4B0",
+          "evidence_va": "B07EED|B0B4F9"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "B07EED|B0B4F9",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 1
+    },
+    {
+      "name": "world_id",
+      "offset": 2,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "大区（世界）ID",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x057A-battle-entity_deploy_arms_appear",
+          "struct": "appear_info",
+          "field_name": "world_id",
+          "offset": 2,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x057A-battle-entity_deploy_arms_appear/README.md",
+          "section": "§3.1",
+          "reader": "sub_B07EC0",
+          "printer": "sub_B0B4B0",
+          "evidence_va": "B07F03|B0B520",
+          "notes": "槽 offset +4；线序 offset +2"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "B07F03|B0B520",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 4
+    },
+    {
+      "name": "pilot_id",
+      "offset": 6,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "驾驶员 ID",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x057A-battle-entity_deploy_arms_appear",
+          "struct": "appear_info",
+          "field_name": "pilot_id",
+          "offset": 6,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x057A-battle-entity_deploy_arms_appear/README.md",
+          "section": "§3.1",
+          "reader": "sub_B07EC0",
+          "printer": "sub_B0B4B0",
+          "evidence_va": "B07F19|B0B547"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "B07F19|B0B547",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 8
+    },
+    {
+      "name": "ent_id",
+      "offset": 10,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "实体 ID",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x057A-battle-entity_deploy_arms_appear",
+          "struct": "appear_info",
+          "field_name": "ent_id",
+          "offset": 10,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x057A-battle-entity_deploy_arms_appear/README.md",
+          "section": "§3.1",
+          "reader": "sub_B07EC0",
+          "printer": "sub_B0B4B0",
+          "evidence_va": "B07F26|B0B56E"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "B07F26|B0B56E",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 12
+    },
+    {
+      "name": "index",
+      "offset": 14,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "序号/槽位",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x057A-battle-entity_deploy_arms_appear",
+          "struct": "appear_info",
+          "field_name": "index",
+          "offset": 14,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x057A-battle-entity_deploy_arms_appear/README.md",
+          "section": "§3.1",
+          "reader": "sub_B07EC0",
+          "printer": "sub_B0B4B0",
+          "evidence_va": "B07F3B|B0B595"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "B07F3B|B0B595",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 16
+    },
+    {
+      "name": "msma_id",
+      "offset": 18,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "机体（msma）ID",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x057A-battle-entity_deploy_arms_appear",
+          "struct": "appear_info",
+          "field_name": "msma_id",
+          "offset": 18,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x057A-battle-entity_deploy_arms_appear/README.md",
+          "section": "§3.1",
+          "reader": "sub_B07EC0",
+          "printer": "sub_B0B4B0",
+          "evidence_va": "B07F50|B0B5BC"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "B07F50|B0B5BC",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 20
+    },
+    {
+      "name": "item_id",
+      "offset": 22,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "物品/装备 ID",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x057A-battle-entity_deploy_arms_appear",
+          "struct": "appear_info",
+          "field_name": "item_id",
+          "offset": 22,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x057A-battle-entity_deploy_arms_appear/README.md",
+          "section": "§3.1",
+          "reader": "sub_B07EC0",
+          "printer": "sub_B0B4B0",
+          "evidence_va": "B07F65|B0B5E3"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "B07F65|B0B5E3",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 24
+    },
+    {
+      "name": "type",
+      "offset": 26,
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "类型",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x057A-battle-entity_deploy_arms_appear",
+          "struct": "appear_info",
+          "field_name": "type",
+          "offset": 26,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0x057A-battle-entity_deploy_arms_appear/README.md",
+          "section": "§3.1",
+          "reader": "sub_B07EC0",
+          "printer": "sub_B0B4B0",
+          "evidence_va": "B07F7A|B0B60B"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "B07F7A|B0B60B",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 28
+    },
+    {
+      "name": "eff_range",
+      "offset": 27,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "有效射程/范围",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x057A-battle-entity_deploy_arms_appear",
+          "struct": "appear_info",
+          "field_name": "eff_range",
+          "offset": 27,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x057A-battle-entity_deploy_arms_appear/README.md",
+          "section": "§3.1",
+          "reader": "sub_B07EC0",
+          "printer": "sub_B0B4B0",
+          "evidence_va": "B07F8B|B0B632",
+          "notes": "槽 offset +0x20；线序 offset +0x1B"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "B07F8B|B0B632",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 32
+    },
+    {
+      "name": "snapshot",
+      "offset": 31,
+      "length": 39,
+      "wire_type": "snapshot",
+      "meaning": "实体状态快照（子结构 snapshot）",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x057A-battle-entity_deploy_arms_appear",
+          "struct": "appear_info",
+          "field_name": "snapshot",
+          "offset": 31,
+          "length": 39,
+          "wire_type": "struct<snapshot>",
+          "protocol_path": "protocol_analysis/commands/SC-0x057A-battle-entity_deploy_arms_appear/README.md",
+          "section": "§3.1",
+          "reader": "sub_B07EC0",
+          "printer": "sub_B0B4B0",
+          "evidence_va": "0xB07F9C",
+          "notes": "sub_B075A0/sub_B0A260；嵌套 composite_ref snapshot"
+        }
+      ],
+      "composite_ref": "snapshot",
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07F9C",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 36
+    },
+    {
+      "name": "arms_id",
+      "offset": 70,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "武装（arms）ID",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x057A-battle-entity_deploy_arms_appear",
+          "struct": "appear_info",
+          "field_name": "arms_id",
+          "offset": 70,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x057A-battle-entity_deploy_arms_appear/README.md",
+          "section": "§3.1",
+          "reader": "sub_B07EC0",
+          "printer": "sub_B0B4B0",
+          "evidence_va": "0xB07FAD",
+          "notes": "槽 offset +0x50；线序 offset +0x46"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07FAD",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 80
+    },
+    {
+      "name": "state_bit",
+      "offset": 74,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "状态位",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x057A-battle-entity_deploy_arms_appear",
+          "struct": "appear_info",
+          "field_name": "state_bit",
+          "offset": 74,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0x057A-battle-entity_deploy_arms_appear/README.md",
+          "section": "§3.1",
+          "reader": "sub_B07EC0",
+          "printer": "sub_B0B4B0",
+          "evidence_va": "0xB07FBE",
+          "notes": "槽 offset +0x54；线序 offset +0x4A"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07FBE",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 84
+    },
+    {
+      "name": "is_gmk",
+      "offset": 76,
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "是否 GMK",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x057A-battle-entity_deploy_arms_appear",
+          "struct": "appear_info",
+          "field_name": "is_gmk",
+          "offset": 76,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0x057A-battle-entity_deploy_arms_appear/README.md",
+          "section": "§3.1",
+          "reader": "sub_B07EC0",
+          "printer": "sub_B0B4B0",
+          "evidence_va": "0xB07FCF",
+          "notes": "槽 offset +0x56；线序 offset +0x4C"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07FCF",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 86
+    },
+    {
+      "name": "is_using_ss",
+      "offset": 77,
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "是否使用 SS",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x057A-battle-entity_deploy_arms_appear",
+          "struct": "appear_info",
+          "field_name": "is_using_ss",
+          "offset": 77,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0x057A-battle-entity_deploy_arms_appear/README.md",
+          "section": "§3.1",
+          "reader": "sub_B07EC0",
+          "printer": "sub_B0B4B0",
+          "evidence_va": "0xB07FE0"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07FE0",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 87
+    },
+    {
+      "name": "remain_msec",
+      "offset": 78,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "剩余时间（毫秒）",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x057A-battle-entity_deploy_arms_appear",
+          "struct": "appear_info",
+          "field_name": "remain_msec",
+          "offset": 78,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x057A-battle-entity_deploy_arms_appear/README.md",
+          "section": "§3.1",
+          "reader": "sub_B07EC0",
+          "printer": "sub_B0B4B0",
+          "evidence_va": "0xB07FF1"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07FF1",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 88
+    },
+    {
+      "name": "buildup_eff_range",
+      "offset": 82,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "强化后有效射程",
+      "disposition": "EVENT",
+      "wire_sources": [
+        {
+          "command": "SC-0x057A-battle-entity_deploy_arms_appear",
+          "struct": "appear_info",
+          "field_name": "buildup_eff_range",
+          "offset": 82,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x057A-battle-entity_deploy_arms_appear/README.md",
+          "section": "§3.1",
+          "reader": "sub_B07EC0",
+          "printer": "sub_B0B4B0",
+          "evidence_va": "0xB0800B",
+          "notes": "成功路径尾读 sub_B02DD0；槽 +0x5C / 线序 +0x52"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB0800B",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 92
+    }
+  ],
+  "asm_audit": {
+    "verified": "2026-09-20",
+    "reader": "sub_B07EC0",
+    "writer": null,
+    "total_bytes": 86,
+    "fields_ok": 17,
+    "fields_fail": 0,
+    "issues": [],
+    "status": "pass",
+    "memory": {
+      "manual_batch": 5,
+      "verified": "2026-09-20",
+      "status": "pass",
+      "mem_fields": 15,
+      "fields_ok": 15,
+      "fields_fail": 0,
+      "issues": [],
+      "note": "sub_B07EC0 调 sub_B075A0(a1+36) 嵌套 snapshot；提取器漏捕（已知假阳性）"
+    }
+  },
+  "wire_memory_remediated": "2026-09-20",
+  "oracle_audit": {
+    "date": "2026-09-23",
+    "tool": "emulab/oracle_fix.py",
+    "verdict_before": "GAP",
+    "verdict_after": "PASS",
+    "changes": [
+      "team: memory_offset None -> 0",
+      "troops: memory_offset None -> 1"
+    ]
+  }
+}

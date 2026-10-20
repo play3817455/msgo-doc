@@ -1,0 +1,184 @@
+{
+  "id": "srv.chargepoint_price",
+  "slug": "chargepoint_price",
+  "title": "充值价目表",
+  "kind": "server_config",
+  "status": "complete",
+  "ddl": "serverv/migrations/0012_srv_config.up.sql",
+  "generated_by": "db_design/tools/build_srv_docs.py",
+  "note": "本文件由 db_design/tools/build_srv_docs.py 从 serverv/migrations/0012_srv_config.up.sql 生成，勿手改：改 srv.* 请改迁移再重跑生成器",
+  "purpose": "充值价目表（单行，id=1）；SC-0x9397 chargepoint_price_list_get_r 的来源",
+  "primary_key": [
+    "id"
+  ],
+  "columns": [
+    {
+      "name": "id",
+      "sql_type": "SMALLINT",
+      "not_null": true,
+      "default": "1",
+      "checks": [
+        "id = 1"
+      ],
+      "meaning": "单行哨兵（恒为 1）"
+    },
+    {
+      "name": "strg_msma",
+      "sql_type": "BIGINT",
+      "not_null": true,
+      "default": "0,",
+      "checks": [],
+      "meaning": "储值-机体价 [u32] SC-0x9397@B6D19F"
+    },
+    {
+      "name": "strg_item",
+      "sql_type": "BIGINT",
+      "not_null": true,
+      "default": "0,",
+      "checks": [],
+      "meaning": "储值-道具价 [u32] SC-0x9397@B6D1E2"
+    },
+    {
+      "name": "clan_emblem",
+      "sql_type": "BIGINT",
+      "not_null": true,
+      "default": "0,",
+      "checks": [],
+      "meaning": "战队徽章价 [u32] SC-0x9397@B6D20C"
+    },
+    {
+      "name": "clan_npc",
+      "sql_type": "BIGINT",
+      "not_null": true,
+      "default": "0,",
+      "checks": [],
+      "meaning": "战队 NPC 价 [u32] SC-0x9397@B6D236"
+    },
+    {
+      "name": "msma_energy",
+      "sql_type": "BIGINT",
+      "not_null": true,
+      "default": "0,",
+      "checks": [],
+      "meaning": "机体能量价 [u32] SC-0x9397@B6D25E"
+    },
+    {
+      "name": "deckcost",
+      "sql_type": "BIGINT",
+      "not_null": true,
+      "default": "0,",
+      "checks": [],
+      "meaning": "编成费价 [u32] SC-0x9397@B6D286"
+    },
+    {
+      "name": "avatar_reset",
+      "sql_type": "BIGINT",
+      "not_null": true,
+      "default": "0,",
+      "checks": [],
+      "meaning": "头像重置价 [u32] SC-0x9397@B6D2AE"
+    },
+    {
+      "name": "periodpath_ticket_0_bc",
+      "sql_type": "INTEGER",
+      "not_null": true,
+      "default": "0",
+      "checks": [
+        "periodpath_ticket_0_bc BETWEEN 0 AND 65535"
+      ],
+      "meaning": "周期通行证 0 价 [u16] SC-0x9397@B6D2D6"
+    },
+    {
+      "name": "periodpath_ticket_1_bc",
+      "sql_type": "INTEGER",
+      "not_null": true,
+      "default": "0",
+      "checks": [
+        "periodpath_ticket_1_bc BETWEEN 0 AND 65535"
+      ],
+      "meaning": "周期通行证 1 价 [u16] SC-0x9397@B6D2FE"
+    },
+    {
+      "name": "periodpath_ticket_2_bc",
+      "sql_type": "INTEGER",
+      "not_null": true,
+      "default": "0",
+      "checks": [
+        "periodpath_ticket_2_bc BETWEEN 0 AND 65535"
+      ],
+      "meaning": "周期通行证 2 价 [u16] SC-0x9397@B6D326"
+    },
+    {
+      "name": "periodpath_ticket_0_days",
+      "sql_type": "SMALLINT",
+      "not_null": true,
+      "default": "0",
+      "checks": [
+        "periodpath_ticket_0_days BETWEEN 0 AND 255"
+      ],
+      "meaning": "周期通行证 0 天数 [u8] SC-0x9397@B6D34E"
+    },
+    {
+      "name": "periodpath_ticket_1_days",
+      "sql_type": "SMALLINT",
+      "not_null": true,
+      "default": "0",
+      "checks": [
+        "periodpath_ticket_1_days BETWEEN 0 AND 255"
+      ],
+      "meaning": "周期通行证 1 天数 [u8] SC-0x9397@B6D376"
+    },
+    {
+      "name": "periodpath_ticket_2_days",
+      "sql_type": "SMALLINT",
+      "not_null": true,
+      "default": "0",
+      "checks": [
+        "periodpath_ticket_2_days BETWEEN 0 AND 255"
+      ],
+      "meaning": "周期通行证 2 天数 [u8] SC-0x9397@B6D39E"
+    },
+    {
+      "name": "updated_at",
+      "sql_type": "TIMESTAMPTZ",
+      "not_null": true,
+      "default": "now()",
+      "checks": [],
+      "meaning": "本行最后修改时间（GM 改价目时更新）"
+    }
+  ],
+  "seed_columns": [
+    "id",
+    "strg_msma",
+    "strg_item",
+    "clan_emblem",
+    "clan_npc",
+    "msma_energy",
+    "deckcost",
+    "avatar_reset",
+    "periodpath_ticket_0_bc",
+    "periodpath_ticket_1_bc",
+    "periodpath_ticket_2_bc",
+    "periodpath_ticket_0_days",
+    "periodpath_ticket_1_days",
+    "periodpath_ticket_2_days"
+  ],
+  "seed_rows": [
+    {
+      "id": "1",
+      "strg_msma": "100",
+      "strg_item": "50",
+      "clan_emblem": "200",
+      "clan_npc": "300",
+      "msma_energy": "10",
+      "deckcost": "500",
+      "avatar_reset": "100",
+      "periodpath_ticket_0_bc": "800",
+      "periodpath_ticket_1_bc": "3000",
+      "periodpath_ticket_2_bc": "8000",
+      "periodpath_ticket_0_days": "7",
+      "periodpath_ticket_1_days": "30",
+      "periodpath_ticket_2_days": "90"
+    }
+  ]
+}

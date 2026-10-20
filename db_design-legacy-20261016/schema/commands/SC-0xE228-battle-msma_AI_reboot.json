@@ -1,0 +1,273 @@
+{
+  "id": "SC-0xE228-battle-msma_AI_reboot",
+  "opcode": "0xE228",
+  "direction": "SC",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "msma_AI_reboot",
+  "source_dir": "protocol_analysis/commands/SC-0xE228-battle-msma_AI_reboot",
+  "meta": {
+    "opcode": "`0xE228`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`battle_client`",
+    "命令名": "`msma_AI_reboot`",
+    "处理函数": "`sub_B0CC20`（battle 分发器）",
+    "处理块范围": "`0xB2E3E7`..`0xB2E55F`",
+    "名字串引用点": "`0xB2E497`",
+    "声明容量（解码缓冲）": "`0x2`（`0xB2E403`）",
+    "长度闭合点": "`0xB2E46A`",
+    "去向": "`vt[0x248]` @ `0xB2E543`（1 实参）"
+  },
+  "handler": "sub_B0CC20",
+  "handler_va": "0xB0CC20",
+  "block": [
+    "0xB2E3E7",
+    "0xB2E55F"
+  ],
+  "name_str": null,
+  "name_str_va": "0xB2E497",
+  "capacity": "0x2",
+  "capacity_va": "0xB2E403",
+  "closer_va": "0xB2E46A",
+  "dispatch": "`vt[0x248]` @ `0xB2E543`（1 实参）",
+  "dispatch_slot": "vt[0x248]",
+  "dispatch_va": "0xB2E543",
+  "wire": {
+    "length_expr": "2",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x2（容量记账口径，非线长）",
+    "field_count": 1,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：2。",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0xE228",
+      "evidence_va": [
+        "0xB2E497"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "AI_ent_id",
+      "meaning": "AI 实体 ID（日志串 `AI_ent_id=`）",
+      "purpose": "经 `vt[0x248]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB2E43E",
+        "0xB2E4E9"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0xE228（分发器 switch 选择子）",
+      "evidence_va": "0xB2E497"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB05DA0`（模块 id 183）→ 之后逐字段读线",
+      "evidence_va": "0xB2E3EE"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "AI_ent_id：`u16`（线长 2）—— AI 实体 ID（日志串 `AI_ent_id=`）",
+      "evidence_va": "0xB2E43E"
+    },
+    {
+      "step": 4,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jnz）",
+      "evidence_va": "0xB2E46A"
+    },
+    {
+      "step": 5,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x248]`，实参 1 个",
+      "evidence_va": "0xB2E543"
+    },
+    {
+      "step": 6,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB2E458"
+    }
+  ],
+  "capabilities": [
+    "unclassified",
+    "battle.ai_reboot"
+  ],
+  "capabilities_derived": [
+    "unclassified"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:48",
+    "batch": 20,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 2,
+        "va": "0xB2E403",
+        "reg": "eax",
+        "host": "[edx+78h]",
+        "alloc_va": "0xB2E400",
+        "call_va": "0xB2E405"
+      },
+      "field_window": {
+        "start_va": "0xB2E3EF",
+        "end_va": "0xB2E475",
+        "guard": {
+          "va": "0xB2E3EE",
+          "func": "0xB05DA0",
+          "module_id": 183,
+          "release_va": "0xB05D90"
+        },
+        "closer_or_commit_va": "0xB2E46A",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "AI_ent_id",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB2E43E",
+              "0xB2E4E9"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB2E43E",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 1,
+        "checkable": 1,
+        "pairs": [
+          {
+            "field": "AI_ent_id",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB2E43E",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB2E3EF",
+          "0xB2E475"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 2,
+          "capacity": 2,
+          "relation": "exact",
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）2 / 容量 0x2"
+        }
+      },
+      "closer": {
+        "va": "0xB2E46A",
+        "kind": "jnz",
+        "jcc_va": "0xB2E46E",
+        "seq_va": "0xB2E466",
+        "jcc_dst": "0xB2E44C",
+        "cmp": "cmp     ebx, [esp+1B3Ch+var_1B24]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x248]",
+        "slot_value": 584,
+        "va": "0xB2E543",
+        "mov_va": "0xB2E53A",
+        "host": "[edx+248h]",
+        "argc": 1,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB2E458",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "AI_ent_id="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0xE228-battle-msma_AI_reboot.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xB2E497"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "MsmaAIReboot",
+      "role": "response",
+      "wire_length": "2",
+      "members": [
+        {
+          "name": "AIEntId",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "AI_ent_id"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "a8ba5dccbd79147e",
+  "check_fingerprint": "7e73b8883e67700a"
+}

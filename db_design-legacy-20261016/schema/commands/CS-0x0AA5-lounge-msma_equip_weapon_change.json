@@ -1,0 +1,397 @@
+{
+  "id": "CS-0x0AA5-lounge-msma_equip_weapon_change",
+  "opcode": "0x0AA5",
+  "direction": "CS",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "msma_equip_weapon_change",
+  "source_dir": "protocol_analysis/commands/CS-0x0AA5-lounge-msma_equip_weapon_change",
+  "meta": {
+    "opcode": "`0x0AA5`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`msma_equip_weapon_change`",
+    "名字符串": "`)<-_proto_lounge_client::send_msma_equip_weapon_change( ` @ `0xeeb388`",
+    "代码位置": "sub_B933B0 @ `0xb933b0`（`0xb933b0`..`0xb935f6`）",
+    "opcode 写入/分发证据": "`0xb9342c`（opcode 写入指令）",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0x12`（18）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽 @`0x00B93584`）；`call vt[0x58](buf, 负载长度)`",
+    "配对命令（同 opcode 反向）": "（本批次内无同 opcode 反向命令）"
+  },
+  "handler": "sub_B933B0",
+  "handler_va": "0xb933b0",
+  "block": [
+    "0xB933B0",
+    "0xB935F6"
+  ],
+  "name_str": ")<-_proto_lounge_client::send_msma_equip_weapon_change(",
+  "name_str_va": "0xeeb388",
+  "capacity": "0x12",
+  "capacity_va": null,
+  "closer_va": "0xB934D4",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽 @`0x00B93584`）；`call vt[0x58](buf, 负载长度)`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": "0x00B93584",
+  "wire": {
+    "length_expr": "8 + 2 + 4",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x12（容量记账口径，非线长）",
+    "field_count": 3,
+    "length_source": "field_sum",
+    "readme_conclusion": "结论：3 字段 + opcode：机体武器更换（u64 机体 ID + 装备槽 + 道具 ID）。",
+    "readme_close": "容量 0x12=18 ≥ 线长 16 ✓。"
+  },
+  "fields": [
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "8",
+      "wire_type": "u64",
+      "name": "uniqid_ms",
+      "meaning": "机体唯一 ID（64 位）",
+      "purpose": "来源=入参 arg_0/arg_4（`0xB93438`/`0xB9343E`），内联 `mov [eax],esi` / `mov [eax+4],esi`（低 32 位在前）",
+      "enum": null,
+      "evidence_va": [
+        "0xB9343C,0xB93442"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 2,
+      "offset": "8",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "eq_slot",
+      "meaning": "装备槽位序号",
+      "purpose": "来源=入参 arg_8（`0xB93450 mov cx,word ptr [esp+arg_8]`），内联 `mov [edx],cx`",
+      "enum": null,
+      "evidence_va": [
+        "0xB93455"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 3,
+      "offset": "10",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "item_id",
+      "meaning": "要装备的道具 ID",
+      "purpose": "来源=入参 arg_C（`0xB93461 lea eax,[esp+arg_C]`）经写 u32 原语 `sub_B02D80`",
+      "enum": null,
+      "evidence_va": [
+        "0xB93466"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0x0AA5（分发器 switch 选择子）",
+      "evidence_va": "0xB9342C"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0x12 B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xB933F6"
+    },
+    {
+      "step": 3,
+      "kind": "write_scalar",
+      "detail": "uniqid_ms：`u64`（线长 8）—— 机体唯一 ID（64 位）",
+      "evidence_va": "0xB9343C"
+    },
+    {
+      "step": 4,
+      "kind": "write_scalar",
+      "detail": "eq_slot：`u16`（线长 2）—— 装备槽位序号",
+      "evidence_va": "0xB93455"
+    },
+    {
+      "step": 5,
+      "kind": "write_scalar",
+      "detail": "item_id：`u32`（线长 4）—— 要装备的道具 ID",
+      "evidence_va": "0xB93466"
+    },
+    {
+      "step": 6,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xB934D4"
+    },
+    {
+      "step": 7,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xB9358D"
+    }
+  ],
+  "capabilities": [
+    "battle_action",
+    "update"
+  ],
+  "capabilities_derived": [
+    "battle",
+    "update"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:42",
+    "batch": 2,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 18,
+        "va": "0xB933F6",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB933F3",
+        "call_va": "0xB933F8"
+      },
+      "field_window": {
+        "start_va": "0xB933B0",
+        "end_va": "0xB934D4",
+        "guard": null,
+        "closer_or_commit_va": "0xB934D4",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "uniqid_ms",
+            "wire_type": "u64",
+            "width": 8,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB9343C,0xB93442"
+            ]
+          },
+          {
+            "name": "eq_slot",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB93455"
+            ]
+          },
+          {
+            "name": "item_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB93466"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB9342C",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB9343C",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB93455",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB93466",
+            "kind": "write",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB934AA",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 2,
+        "checkable": 3,
+        "pairs": [
+          {
+            "field": "eq_slot",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB9342C",
+            "kind": "inline_store"
+          },
+          {
+            "field": "item_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB9343C",
+            "kind": "inline_store"
+          }
+        ],
+        "gaps": [
+          {
+            "field": "uniqid_ms",
+            "wire_type": "u64",
+            "width": 8,
+            "shape": "scalar",
+            "note": "汇编事件序列里找不到与之对位的读写点（缺字段或宽度不符）"
+          }
+        ],
+        "unmatched_actual": [
+          {
+            "va": "0xB93455",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          },
+          {
+            "va": "0xB93466",
+            "kind": "write",
+            "width": 4,
+            "wire_type": "u32"
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB933B0",
+          "0xB934D4"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 12,
+          "capacity": 18,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB934AA",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）12 / 容量 0x12"
+        }
+      },
+      "closer": {
+        "va": "0xB934D4",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xB9358D",
+        "mov_va": "0xB93584",
+        "host": "[edx+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "uniqid_ms=",
+        "eq_slot=",
+        "item_id="
+      ]
+    },
+    "mismatches": [],
+    "notes": [
+      {
+        "check": "primitive_widths",
+        "note": "定宽对位不可判定：C→S 写线在复合写入器内部 consumed 未知；缺口 uniqid_ms"
+      }
+    ],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0x0AA5-lounge-msma_equip_weapon_change.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0xb9342c",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": []
+  },
+  "structs": {
+    "request": {
+      "go_name": "MsmaEquipWeaponChange",
+      "role": "request",
+      "wire_length": "8 + 2 + 4",
+      "members": [
+        {
+          "name": "UniqidMs",
+          "wire_type": "u64",
+          "length": "8",
+          "field_ref": "uniqid_ms"
+        },
+        {
+          "name": "EqSlot",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "eq_slot"
+        },
+        {
+          "name": "ItemId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "item_id"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "71c76f2bcdea0a87",
+  "check_fingerprint": "88ff361a67b145bc"
+}

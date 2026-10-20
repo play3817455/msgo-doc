@@ -1,0 +1,574 @@
+{
+  "id": "avatar",
+  "title": "外观 avatar（18B）",
+  "length": 18,
+  "status": "complete",
+  "memory_claim": 24,
+  "wire_layout": "4+1+1+1+2+4+1+1+1+2",
+  "writer": "sub_B06290",
+  "reader": "sub_B068B0",
+  "printer": "sub_B08920",
+  "evidence": {
+    "protocol_paths": [
+      "protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md",
+      "protocol_analysis/commands/CS-0x43F2-lounge-pilot_avatar_edit/README.md"
+    ],
+    "note": "10 成员 sub_B08920；FD3E 创建 / 43F2 编辑写 / E536 编辑应答读",
+    "commands": [
+      "CS-0xFD3E-lounge-pilot_create",
+      "CS-0x43F2-lounge-pilot_avatar_edit",
+      "SC-0xE536-lounge-pilot_avatar_edit_r"
+    ]
+  },
+  "members": [
+    {
+      "name": "avatar_id",
+      "offset": 0,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "外观模板 ID",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "CS-0xFD3E-lounge-pilot_create",
+          "struct": "avatar",
+          "field_name": "avatar_id",
+          "offset": 0,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md",
+          "section": "§3.1",
+          "writer": "sub_B06290",
+          "printer": "sub_B08920",
+          "evidence_va": "0xB062AA"
+        },
+        {
+          "command": "CS-0x43F2-lounge-pilot_avatar_edit",
+          "struct": "avatar",
+          "field_name": "avatar_id",
+          "offset": 2,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/CS-0x43F2-lounge-pilot_avatar_edit/README.md",
+          "section": "§3",
+          "printer": "sub_B08920",
+          "evidence_va": "B8B96B|B8B96B",
+          "writer": "sub_B06290"
+        },
+        {
+          "command": "SC-0xE536-lounge-pilot_avatar_edit_r",
+          "struct": "avatar",
+          "field_name": "avatar_id",
+          "offset": 0,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0xE536-lounge-pilot_avatar_edit_r/README.md",
+          "section": "§3",
+          "printer": "sub_B08920",
+          "evidence_va": "0xB068CC",
+          "reader": "sub_B068B0",
+          "notes": "claim 0x18=24（sub_B411C0）/ 线长 18"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB068CC",
+      "asm_audit_date": "2026-09-20"
+    },
+    {
+      "name": "gender",
+      "offset": 4,
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "性别",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "CS-0xFD3E-lounge-pilot_create",
+          "struct": "avatar",
+          "field_name": "gender",
+          "offset": 4,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md",
+          "section": "§3.1",
+          "writer": "sub_B06290",
+          "printer": "sub_B08920",
+          "evidence_va": "0xb068e2"
+        },
+        {
+          "command": "CS-0x43F2-lounge-pilot_avatar_edit",
+          "struct": "avatar",
+          "field_name": "gender",
+          "offset": 6,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/CS-0x43F2-lounge-pilot_avatar_edit/README.md",
+          "section": "§3",
+          "printer": "sub_B08920",
+          "evidence_va": "B8B96B|B8B96B",
+          "writer": "sub_B06290"
+        },
+        {
+          "command": "SC-0xE536-lounge-pilot_avatar_edit_r",
+          "struct": "avatar",
+          "field_name": "gender",
+          "offset": 4,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0xE536-lounge-pilot_avatar_edit_r/README.md",
+          "section": "§3",
+          "printer": "sub_B08920",
+          "evidence_va": "0xB068E2",
+          "reader": "sub_B068B0"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB068E2",
+      "asm_audit_date": "2026-09-20"
+    },
+    {
+      "name": "face",
+      "offset": 5,
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "脸型",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "CS-0xFD3E-lounge-pilot_create",
+          "struct": "avatar",
+          "field_name": "face",
+          "offset": 5,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md",
+          "section": "§3.1",
+          "writer": "sub_B06290",
+          "printer": "sub_B08920",
+          "evidence_va": "0xb068f4"
+        },
+        {
+          "command": "CS-0x43F2-lounge-pilot_avatar_edit",
+          "struct": "avatar",
+          "field_name": "face",
+          "offset": 7,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/CS-0x43F2-lounge-pilot_avatar_edit/README.md",
+          "section": "§3",
+          "printer": "sub_B08920",
+          "evidence_va": "B8B96B|B8B96B",
+          "writer": "sub_B06290"
+        },
+        {
+          "command": "SC-0xE536-lounge-pilot_avatar_edit_r",
+          "struct": "avatar",
+          "field_name": "face",
+          "offset": 5,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0xE536-lounge-pilot_avatar_edit_r/README.md",
+          "section": "§3",
+          "printer": "sub_B08920",
+          "evidence_va": "0xB068F4",
+          "reader": "sub_B068B0"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB068F4",
+      "asm_audit_date": "2026-09-20"
+    },
+    {
+      "name": "skincolor",
+      "offset": 6,
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "肤色",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "CS-0xFD3E-lounge-pilot_create",
+          "struct": "avatar",
+          "field_name": "skincolor",
+          "offset": 6,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md",
+          "section": "§3.1",
+          "writer": "sub_B06290",
+          "printer": "sub_B08920",
+          "evidence_va": "0xb0690a"
+        },
+        {
+          "command": "CS-0x43F2-lounge-pilot_avatar_edit",
+          "struct": "avatar",
+          "field_name": "skincolor",
+          "offset": 8,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/CS-0x43F2-lounge-pilot_avatar_edit/README.md",
+          "section": "§3",
+          "printer": "sub_B08920",
+          "evidence_va": "B8B96B|B8B96B",
+          "writer": "sub_B06290"
+        },
+        {
+          "command": "SC-0xE536-lounge-pilot_avatar_edit_r",
+          "struct": "avatar",
+          "field_name": "skincolor",
+          "offset": 6,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0xE536-lounge-pilot_avatar_edit_r/README.md",
+          "section": "§3",
+          "printer": "sub_B08920",
+          "evidence_va": "0xB0690A",
+          "reader": "sub_B068B0"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB0690A",
+      "asm_audit_date": "2026-09-20"
+    },
+    {
+      "name": "clothes",
+      "offset": 7,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "服装",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "CS-0xFD3E-lounge-pilot_create",
+          "struct": "avatar",
+          "field_name": "clothes",
+          "offset": 7,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md",
+          "section": "§3.1",
+          "writer": "sub_B02DA0",
+          "printer": "sub_B08920",
+          "evidence_va": "0xb0690e"
+        },
+        {
+          "command": "CS-0x43F2-lounge-pilot_avatar_edit",
+          "struct": "avatar",
+          "field_name": "clothes",
+          "offset": 9,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/CS-0x43F2-lounge-pilot_avatar_edit/README.md",
+          "section": "§3",
+          "printer": "sub_B08920",
+          "evidence_va": "B8B96B|B8B96B",
+          "writer": "sub_B06290"
+        },
+        {
+          "command": "SC-0xE536-lounge-pilot_avatar_edit_r",
+          "struct": "avatar",
+          "field_name": "clothes",
+          "offset": 7,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0xE536-lounge-pilot_avatar_edit_r/README.md",
+          "section": "§3",
+          "printer": "sub_B08920",
+          "evidence_va": "0xB0690E",
+          "reader": "sub_B068B0"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB0690E",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 8
+    },
+    {
+      "name": "hair",
+      "offset": 9,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "发型",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "CS-0xFD3E-lounge-pilot_create",
+          "struct": "avatar",
+          "field_name": "hair",
+          "offset": 9,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md",
+          "section": "§3.1",
+          "writer": "sub_B02D80",
+          "printer": "sub_B08920",
+          "evidence_va": "0xb0691f"
+        },
+        {
+          "command": "CS-0x43F2-lounge-pilot_avatar_edit",
+          "struct": "avatar",
+          "field_name": "hair",
+          "offset": 11,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/CS-0x43F2-lounge-pilot_avatar_edit/README.md",
+          "section": "§3",
+          "printer": "sub_B08920",
+          "evidence_va": "B8B96B|B8B96B",
+          "writer": "sub_B06290"
+        },
+        {
+          "command": "SC-0xE536-lounge-pilot_avatar_edit_r",
+          "struct": "avatar",
+          "field_name": "hair",
+          "offset": 9,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0xE536-lounge-pilot_avatar_edit_r/README.md",
+          "section": "§3",
+          "printer": "sub_B08920",
+          "evidence_va": "0xB0691F",
+          "reader": "sub_B068B0"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB0691F",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 12
+    },
+    {
+      "name": "accessory",
+      "offset": 13,
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "饰品",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "CS-0xFD3E-lounge-pilot_create",
+          "struct": "avatar",
+          "field_name": "accessory",
+          "offset": 13,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md",
+          "section": "§3.1",
+          "writer": "sub_B061C0",
+          "printer": "sub_B08920",
+          "evidence_va": "0xb06930"
+        },
+        {
+          "command": "CS-0x43F2-lounge-pilot_avatar_edit",
+          "struct": "avatar",
+          "field_name": "accessory",
+          "offset": 15,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/CS-0x43F2-lounge-pilot_avatar_edit/README.md",
+          "section": "§3",
+          "printer": "sub_B08920",
+          "evidence_va": "B8B96B|B8B96B",
+          "writer": "sub_B06290"
+        },
+        {
+          "command": "SC-0xE536-lounge-pilot_avatar_edit_r",
+          "struct": "avatar",
+          "field_name": "accessory",
+          "offset": 13,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0xE536-lounge-pilot_avatar_edit_r/README.md",
+          "section": "§3",
+          "printer": "sub_B08920",
+          "evidence_va": "0xB06930",
+          "reader": "sub_B068B0"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB06930",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 16
+    },
+    {
+      "name": "frame",
+      "offset": 14,
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "边框",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "CS-0xFD3E-lounge-pilot_create",
+          "struct": "avatar",
+          "field_name": "frame",
+          "offset": 14,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md",
+          "section": "§3.1",
+          "writer": "sub_B061C0",
+          "printer": "sub_B08920",
+          "evidence_va": "0xb06941"
+        },
+        {
+          "command": "CS-0x43F2-lounge-pilot_avatar_edit",
+          "struct": "avatar",
+          "field_name": "frame",
+          "offset": 16,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/CS-0x43F2-lounge-pilot_avatar_edit/README.md",
+          "section": "§3",
+          "printer": "sub_B08920",
+          "evidence_va": "B8B96B|B8B96B",
+          "writer": "sub_B06290"
+        },
+        {
+          "command": "SC-0xE536-lounge-pilot_avatar_edit_r",
+          "struct": "avatar",
+          "field_name": "frame",
+          "offset": 14,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0xE536-lounge-pilot_avatar_edit_r/README.md",
+          "section": "§3",
+          "printer": "sub_B08920",
+          "evidence_va": "0xB06941",
+          "reader": "sub_B068B0"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB06941",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 17
+    },
+    {
+      "name": "voice",
+      "offset": 15,
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "语音",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "CS-0xFD3E-lounge-pilot_create",
+          "struct": "avatar",
+          "field_name": "voice",
+          "offset": 15,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md",
+          "section": "§3.1",
+          "writer": "sub_B061C0",
+          "printer": "sub_B08920",
+          "evidence_va": "0xb06952"
+        },
+        {
+          "command": "CS-0x43F2-lounge-pilot_avatar_edit",
+          "struct": "avatar",
+          "field_name": "voice",
+          "offset": 17,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/CS-0x43F2-lounge-pilot_avatar_edit/README.md",
+          "section": "§3",
+          "printer": "sub_B08920",
+          "evidence_va": "B8B96B|B8B96B",
+          "writer": "sub_B06290"
+        },
+        {
+          "command": "SC-0xE536-lounge-pilot_avatar_edit_r",
+          "struct": "avatar",
+          "field_name": "voice",
+          "offset": 15,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0xE536-lounge-pilot_avatar_edit_r/README.md",
+          "section": "§3",
+          "printer": "sub_B08920",
+          "evidence_va": "0xB06952",
+          "reader": "sub_B068B0"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB06952",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 18
+    },
+    {
+      "name": "byword",
+      "offset": 16,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "口头禅（外观内嵌 byword 表 ID）",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "CS-0xFD3E-lounge-pilot_create",
+          "struct": "avatar",
+          "field_name": "byword",
+          "offset": 16,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/CS-0xFD3E-lounge-pilot_create/README.md",
+          "section": "§3.1",
+          "writer": "sub_B02DA0",
+          "printer": "sub_B08920",
+          "evidence_va": "0xb0696c"
+        },
+        {
+          "command": "CS-0x43F2-lounge-pilot_avatar_edit",
+          "struct": "avatar",
+          "field_name": "byword",
+          "offset": 18,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/CS-0x43F2-lounge-pilot_avatar_edit/README.md",
+          "section": "§3",
+          "printer": "sub_B08920",
+          "evidence_va": "B8B96B|B8B96B",
+          "writer": "sub_B06290"
+        },
+        {
+          "command": "SC-0xE536-lounge-pilot_avatar_edit_r",
+          "struct": "avatar",
+          "field_name": "byword",
+          "offset": 16,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0xE536-lounge-pilot_avatar_edit_r/README.md",
+          "section": "§3",
+          "printer": "sub_B08920",
+          "evidence_va": "0xB0696C",
+          "reader": "sub_B068B0"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB0696C",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 20
+    }
+  ],
+  "asm_audit": {
+    "verified": "2026-09-20",
+    "reader": "sub_B068B0",
+    "writer": "sub_B06290",
+    "total_bytes": 18,
+    "fields_ok": 10,
+    "fields_fail": 0,
+    "issues": [],
+    "status": "pass",
+    "memory": {
+      "manual_batch": 5,
+      "verified": "2026-09-20",
+      "status": "pass",
+      "memory_claim": 24,
+      "mem_fields": 6,
+      "fields_ok": 6,
+      "fields_fail": 0,
+      "issues": [],
+      "note": "前缀 avatar_id/gender/face/skincolor wire==mem @0–6；u16/u32 后 1–4B pad；claim 0x18=24"
+    }
+  },
+  "wire_memory_remediated": "2026-09-20"
+}

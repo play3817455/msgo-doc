@@ -1,0 +1,305 @@
+{
+ "id": "SC-0x1908-lounge-msma_missionunit_store_r",
+ "verified_at": "2026-09-30 15:25:41",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "block",
+ "block": [
+  "0xB5696B",
+  "0xB56B50"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 16,
+   "va": "0xB56987",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xB56984",
+   "call_va": "0xB56989"
+  },
+  "field_window": {
+   "start_va": "0xB56973",
+   "end_va": "0xB56A39",
+   "guard": {
+    "va": "0xB56972",
+    "func": "0xB41120",
+    "module_id": 314,
+    "release_va": "0xB41110"
+   },
+   "closer_or_commit_va": "0xB56A12",
+   "within_model_block": true,
+   "range_from": "block"
+  },
+  "primitive_widths": {
+   "direction": "SC",
+   "expected": [
+    {
+     "name": "result",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB569C2",
+      "0xB56AB1"
+     ]
+    },
+    {
+     "name": "missionunit_set",
+     "wire_type": "struct{12}",
+     "width": 12,
+     "seq": 2,
+     "shape": "agg",
+     "evidence_va": [
+      "0xB56A02(读取器 sub_B43BE0 消费 12B)",
+      "0xB569F3(sub_B41460 预留 0x0C)",
+      "0xB56AD4"
+     ]
+    },
+    {
+     "name": "missionunit_set.deck_type",
+     "wire_type": "u16",
+     "width": 2,
+     "seq": 3,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB43BEE",
+      "sub_B4A970[+0]"
+     ]
+    },
+    {
+     "name": "missionunit_set.deck_set",
+     "wire_type": "u16",
+     "width": 2,
+     "seq": 4,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB43C06",
+      "sub_B4A970[+2]"
+     ]
+    },
+    {
+     "name": "missionunit_set.missionunit_id",
+     "wire_type": "u64",
+     "width": 8,
+     "seq": 5,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB43C20/0xB43C22(2×u32 内联读)",
+      "sub_B4A970[+4][+8]"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB43BEE",
+     "kind": "nested",
+     "width": 2,
+     "wire_type": null,
+     "name": "",
+     "consumed": 2,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB43C06",
+     "kind": "nested",
+     "width": 2,
+     "wire_type": null,
+     "name": "",
+     "consumed": 2,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB43C20",
+     "kind": "nested",
+     "width": 4,
+     "wire_type": null,
+     "name": "",
+     "consumed": 4,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB43C20",
+     "kind": "nested",
+     "width": 4,
+     "wire_type": null,
+     "name": "",
+     "consumed": 4,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB569C2",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB569F3",
+     "kind": "opaque",
+     "width": null,
+     "wire_type": null,
+     "name": "sub_B41460",
+     "consumed": 0,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB56A02",
+     "kind": "opaque",
+     "width": null,
+     "wire_type": null,
+     "name": "sub_B43BE0",
+     "consumed": null,
+     "consumed_effective": 12,
+     "nested_of": null
+    }
+   ],
+   "matched": 5,
+   "checkable": 5,
+   "pairs": [
+    {
+     "field": "result",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB569C2",
+     "kind": "read"
+    },
+    {
+     "field": "missionunit_set",
+     "width": 12,
+     "shape": "agg",
+     "va": "0xB56A02",
+     "kind": "opaque"
+    },
+    {
+     "field": "missionunit_set.deck_type",
+     "width": 2,
+     "shape": "scalar",
+     "va": "0xB43BEE",
+     "kind": "nested",
+     "vas": [
+      "0xB43BEE"
+     ],
+     "merged": 1,
+     "parent": "missionunit_set",
+     "call_va": "0xB56A02",
+     "parent_source": "parent_field"
+    },
+    {
+     "field": "missionunit_set.deck_set",
+     "width": 2,
+     "shape": "scalar",
+     "va": "0xB43C06",
+     "kind": "nested",
+     "vas": [
+      "0xB43C06"
+     ],
+     "merged": 1,
+     "parent": "missionunit_set",
+     "call_va": "0xB56A02",
+     "parent_source": "parent_field"
+    },
+    {
+     "field": "missionunit_set.missionunit_id",
+     "width": 8,
+     "shape": "scalar",
+     "va": "0xB43C20",
+     "kind": "nested",
+     "vas": [
+      "0xB43C20",
+      "0xB43C20"
+     ],
+     "merged": 2,
+     "parent": "missionunit_set",
+     "call_va": "0xB56A02",
+     "parent_source": "parent_field"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [
+    {
+     "va": "0xB569F3",
+     "kind": "opaque",
+     "width": null,
+     "wire_type": null
+    },
+    {
+     "va": "0xB43BEE",
+     "kind": "nested_run",
+     "width": 4,
+     "wire_type": null
+    },
+    {
+     "va": "0xB43C20",
+     "kind": "nested_run",
+     "width": 8,
+     "wire_type": null
+    }
+   ],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB56973",
+    "0xB56A39"
+   ],
+   "scalar_match_verifiable": true,
+   "capacity_relation": {
+    "observed_min": 4,
+    "capacity": 16,
+    "relation": "within",
+    "unknown_events": [
+     {
+      "va": "0xB56A02",
+      "kind": "opaque",
+      "name": "sub_B43BE0"
+     }
+    ],
+    "is_lower_bound": true,
+    "note": "观测线长（下界）4 / 容量 0x10"
+   }
+  },
+  "closer": {
+   "va": "0xB56A12",
+   "kind": "jz",
+   "jcc_va": "0xB56A18",
+   "seq_va": "0xB56A0E",
+   "jcc_dst": "0xB56A34",
+   "cmp": "cmp     ebx, [esp+2C5Ch+var_2C40]",
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x320]",
+   "slot_value": 800,
+   "va": "0xB56B34",
+   "mov_va": "0xB56B2B",
+   "host": "[eax+320h]",
+   "argc": 2,
+   "form": "mov_then_call",
+   "error_slot": {
+    "slot": "vt[0x64]",
+    "va": "0xB569DC",
+    "argc": 2
+   }
+  },
+  "log_strings": [
+   "result=",
+   "missionunit_set="
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "missionunit_set",
+  "result"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 1
+}

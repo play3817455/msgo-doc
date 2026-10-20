@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>协同波次结算 · db_design</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <h1><a href="../index.html">db_design</a></h1>
+      <p class="header-note">唯一证据源：<code>protocol_analysis/</code></p>
+      <nav><a href="../index.html">首页</a>
+      <a href="../homing/index.html">归位库</a>
+      <a href="../tables/index.html" class="active">旧表留档</a>
+      <a href="../commands/index.html">命令</a>
+      <a href="../cfg/index.html">配置表79</a>
+      <a href="../srv/index.html">服务端配置</a>
+      <a href="../asm-audit/index.html">ASM 审计</a>
+      <a href="../oracle-audit/index.html">Oracle 审计</a>
+      <a href="../entities/index.html">协议实体</a>
+      <a href="../fields/index.html">字段索引</a>
+      <a href="../relations.html">表关系</a></nav>
+    </div>
+  </header>
+  <main class="wrap">
+
+    <nav class="breadcrumb"><a href="index.html">表设计</a> / <span><code>tbl_wave_res</code></span></nav>
+    <h2>协同波次结算 <span class="badge" style="background:#2e7d32">complete</span> <span class="badge" style="background:#2e7d32">ASM ✓</span></h2>
+    <p>EVENT 快照 wave_res 34B 线；15 成员波次/通关/容器/敌基地得分（sub_B08020/sub_B0B770）</p>
+    <p class="muted">共 16 节点 · PERSIST 0 · TBD 0</p>
+    
+    <section class="asm-panel">
+      <h3>ASM 审计 <span class="badge" style="background:#2e7d32">ASM ✓</span> · memory <span class="badge" style="background:#2e7d32">ASM ✓</span></h3>
+      <dl class="asm-dl">
+        <dt>composite</dt><dd><code>wave_res</code></dd>
+        <dt>reader</dt><dd><code>sub_B08020</code></dd>
+        <dt>线长</dt><dd>34 B
+           / 槽 44 B</dd>
+        <dt>wire_layout</dt><dd><code>3×u8 + u32 + u8 + u32 + 2×u16 + u8 + u32 + 2×u16 + u8 + 2×u32</code></dd>
+        <dt>wire 字段</dt><dd>15 ok</dd>
+        <dt>memory 字段</dt><dd>15 audited · 15 ok</dd>
+        <dt>verified</dt><dd>wire 2026-09-20 · mem 2026-09-26</dd>
+      </dl>
+    </section>
+    <h3>证据命令</h3>
+    <ul><li><a href="../commands/SC-0x6475-battle-game_coopwave_result.html"><code>SC-0x6475-battle-game_coopwave_result</code></a> · <a href="../../../protocol_analysis/commands/SC-0x6475-battle-game_coopwave_result/README.md" target="_blank">protocol README</a></li></ul>
+
+    <h3 id="columns">列树（按分组）</h3>
+    <div class="tree-legend">
+      <span>列名</span><span>线类型</span><span>disposition</span><span>含义</span><span>→ protocol 证据</span>
+    </div>
+    
+    <section class="col-group">
+      <h3>wave_res（34B 线 · 15 成员）</h3>
+      <ul class="field-tree root-tree"><li class="tree-branch">
+      <details open>
+        <summary><code class='fname'>wave_res</code> <code class='ftype'>struct</code> <span class='offset'></span> <span class="badge" style="background:#455a64">COMPOSITE</span> <span class="muted">← <code>wave_res</code></span></summary>
+        <div class="tree-body">
+          <div class="tree-detail">协同波次结算结果（日志 `wave_res=`；claim 44 / 线长 34）</div>
+          <div class="evidence-line"><code>SC-0x6475-battle-game_coopwave_result</code> struct <code>wave_res</code> @0 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x6475-battle-game_coopwave_result/README.md" target="_blank">📄 protocol</a></div>
+          <ul class="field-tree"><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">wave</code>
+          <code class="ftype">u8</code>
+          <span class="offset">wire +0 1B</span>
+          <span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB0803A">✓</span>
+        </div>
+        <div class="tree-meaning">波次编号</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x6475-battle-game_coopwave_result</code> struct <code>wave_res</code> @0 §3 / notes.md <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x6475-battle-game_coopwave_result/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">wave_rank</code>
+          <code class="ftype">u8</code>
+          <span class="offset">wire +1 1B</span>
+          <span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB08052">✓</span>
+        </div>
+        <div class="tree-meaning">波次评级</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x6475-battle-game_coopwave_result</code> struct <code>wave_res</code> @1 §3 / notes.md <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x6475-battle-game_coopwave_result/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">result_coop</code>
+          <code class="ftype">u8</code>
+          <span class="offset">wire +2 1B</span>
+          <span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB08068">✓</span>
+        </div>
+        <div class="tree-meaning">协同结果码</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x6475-battle-game_coopwave_result</code> struct <code>wave_res</code> @2 §3 / notes.md <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x6475-battle-game_coopwave_result/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">cleartime_sec</code>
+          <code class="ftype">u32</code>
+          <span class="offset">wire +3 mem +4 4B</span>
+          <span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB08082">✓</span>
+        </div>
+        <div class="tree-meaning">通关用时（秒）</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x6475-battle-game_coopwave_result</code> struct <code>wave_res</code> @3 §3 / notes.md <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x6475-battle-game_coopwave_result/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">cleartime_rank</code>
+          <code class="ftype">u8</code>
+          <span class="offset">wire +7 mem +8 1B</span>
+          <span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB08086">✓</span>
+        </div>
+        <div class="tree-meaning">通关时间评级</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x6475-battle-game_coopwave_result</code> struct <code>wave_res</code> @7 §3 / notes.md <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x6475-battle-game_coopwave_result/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">cleartime_score</code>
+          <code class="ftype">u32</code>
+          <span class="offset">wire +8 mem +12 4B</span>
+          <span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB0809B">✓</span>
+        </div>
+        <div class="tree-meaning">通关时间得分</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x6475-battle-game_coopwave_result</code> struct <code>wave_res</code> @8 §3 / notes.md <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x6475-battle-game_coopwave_result/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">container_num</code>
+          <code class="ftype">u16</code>
+          <span class="offset">wire +12 mem +16 2B</span>
+          <span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB080B0">✓</span>
+        </div>
+        <div class="tree-meaning">容器达成数</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x6475-battle-game_coopwave_result</code> struct <code>wave_res</code> @12 §3 / notes.md <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x6475-battle-game_coopwave_result/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">container_max</code>
+          <code class="ftype">u16</code>
+          <span class="offset">wire +14 mem +18 2B</span>
+          <span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB080B0">✓</span>
+        </div>
+        <div class="tree-meaning">容器目标数</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x6475-battle-game_coopwave_result</code> struct <code>wave_res</code> @14 §3 / notes.md <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x6475-battle-game_coopwave_result/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">container_rank</code>
+          <code class="ftype">u8</code>
+          <span class="offset">wire +16 mem +20 1B</span>
+          <span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB080B0">✓</span>
+        </div>
+        <div class="tree-meaning">容器任务评级</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x6475-battle-game_coopwave_result</code> struct <code>wave_res</code> @16 §3 / notes.md <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x6475-battle-game_coopwave_result/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">container_score</code>
+          <code class="ftype">u32</code>
+          <span class="offset">wire +17 mem +24 4B</span>
+          <span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB080B0">✓</span>
+        </div>
+        <div class="tree-meaning">容器任务得分</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x6475-battle-game_coopwave_result</code> struct <code>wave_res</code> @17 §3 / notes.md <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x6475-battle-game_coopwave_result/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">enemybase_num</code>
+          <code class="ftype">u16</code>
+          <span class="offset">wire +21 mem +28 2B</span>
+          <span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB080B0">✓</span>
+        </div>
+        <div class="tree-meaning">敌基地击破数</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x6475-battle-game_coopwave_result</code> struct <code>wave_res</code> @21 §3 / notes.md <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x6475-battle-game_coopwave_result/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">enemybase_max</code>
+          <code class="ftype">u16</code>
+          <span class="offset">wire +23 mem +30 2B</span>
+          <span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB080B0">✓</span>
+        </div>
+        <div class="tree-meaning">敌基地目标数</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x6475-battle-game_coopwave_result</code> struct <code>wave_res</code> @23 §3 / notes.md <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x6475-battle-game_coopwave_result/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">enemybase_rank</code>
+          <code class="ftype">u8</code>
+          <span class="offset">wire +25 mem +32 1B</span>
+          <span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB080B0">✓</span>
+        </div>
+        <div class="tree-meaning">敌基地任务评级</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x6475-battle-game_coopwave_result</code> struct <code>wave_res</code> @25 §3 / notes.md <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x6475-battle-game_coopwave_result/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">enemybase_score</code>
+          <code class="ftype">u32</code>
+          <span class="offset">wire +26 mem +36 4B</span>
+          <span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB080B0">✓</span>
+        </div>
+        <div class="tree-meaning">敌基地任务得分</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x6475-battle-game_coopwave_result</code> struct <code>wave_res</code> @26 §3 / notes.md <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x6475-battle-game_coopwave_result/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">total_score</code>
+          <code class="ftype">u32</code>
+          <span class="offset">wire +30 mem +40 4B</span>
+          <span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB0811E">✓</span>
+        </div>
+        <div class="tree-meaning">总得分</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0x6475-battle-game_coopwave_result</code> struct <code>wave_res</code> @30 §3 / notes.md <a class="ev-link" href="../../../protocol_analysis/commands/SC-0x6475-battle-game_coopwave_result/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li></ul>
+        </div>
+      </details>
+    </li></ul>
+    </section>
+
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">生成于 2026-10-12 · 改 JSON 后重跑 build_site.py · HTML 只读</div>
+  </footer>
+</body>
+</html>

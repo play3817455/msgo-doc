@@ -1,0 +1,40 @@
+{
+  "id": "roominfo",
+  "title": "对战房间信息",
+  "description": "对战房间 roominfo。两条命令（0x244E / 0x6B15）同为 135B 全量；读取 sub_B44880，打印 sub_B4C0D0。",
+  "table_ref": "tbl_roominfo",
+  "disposition": "PERSIST",
+  "wire_forms": [
+    {
+      "name": "roominfo_full",
+      "length": 135,
+      "memory_claim": 144,
+      "struct_type": "struct{135/槽144}",
+      "commands": [
+        "SC-0x244E-lounge-btlroom_info_one",
+        "SC-0x6B15-lounge-btlroom_member_detail_get_r"
+      ],
+      "reader": "sub_B44880",
+      "printer": "sub_B4C0D0",
+      "protocol_path": "protocol_analysis/commands/SC-0x244E-lounge-btlroom_info_one/README.md",
+      "notes": "15 成员全量；0xB58BF0（244E）与 0xB65688（6B15）调的是同一个读取器、同一个 sub_B41440(0x90) 预留槽，故两条命令线长同为 135B。原记的 95B「短形」见 composites/roominfo_short.json（已撤）"
+    }
+  ],
+  "fields": [
+    { "name": "room_id", "offset": 0, "length": 4, "wire_type": "u32", "disposition": "PERSIST" },
+    { "name": "room_name", "offset": 4, "length": 73, "wire_type": "bytes[73]", "disposition": "PERSIST" },
+    { "name": "room_type", "offset": 77, "length": 4, "wire_type": "u32", "disposition": "PERSIST" },
+    { "name": "room_stat", "offset": 81, "length": 1, "wire_type": "i8", "disposition": "PERSIST" },
+    { "name": "play_elapsed", "offset": 82, "length": 4, "wire_type": "u32", "disposition": "PERSIST" },
+    { "name": "mission_id", "offset": 86, "length": 4, "wire_type": "u32", "disposition": "PERSIST" },
+    { "name": "extrule_id", "offset": 90, "length": 4, "wire_type": "u32", "disposition": "PERSIST" },
+    { "name": "is_lock", "offset": 94, "length": 1, "wire_type": "i8", "disposition": "PERSIST" },
+    { "name": "is_vsclan", "offset": 95, "length": 1, "wire_type": "i8", "disposition": "PERSIST" },
+    { "name": "count_eff", "offset": 96, "length": 2, "wire_type": "u16", "disposition": "PERSIST" },
+    { "name": "count_zeon", "offset": 98, "length": 2, "wire_type": "u16", "disposition": "PERSIST" },
+    { "name": "count_max", "offset": 100, "length": 2, "wire_type": "u16", "disposition": "PERSIST" },
+    { "name": "master_pilotid", "offset": 102, "length": 4, "wire_type": "u32", "disposition": "PERSIST" },
+    { "name": "master_worldid", "offset": 106, "length": 4, "wire_type": "u32", "disposition": "PERSIST" },
+    { "name": "master_name", "offset": 110, "length": 25, "wire_type": "bytes[25]", "disposition": "PERSIST" }
+  ]
+}

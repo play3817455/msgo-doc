@@ -1,0 +1,7 @@
+序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+0,"0","2","u16","opcode","命令号","分发给 battle 协议类处理块（C→S 无 case 块）","0x5456","0xB3CEE4","确证"
+1,"2","2","u16","AI_ent_id","AI 实体 id","来源=入参 arg_0 的低 16 位（@0xB3CEF6）；内联 `mov [eax],cx`；经 `vt[0x58]` 发送","-","0xB3CEFB","确证"
+2,"4","4","u32","idx_num","idx 数组元素数（**上限校验 ≤ 10**）","来源=入参 arg_8（@0xB3CEF8）；写线原语 `sub_B02D80`(u32)；上限 `cmp ebp,0Ah`@0xB3CEF3","0..10","0xB3CF12","确证"
+3,"8","var","array<u32,N>","idx","idx 数组（N = `idx_num`，N ≤ 10）","来源=入参 arg_4 指向的 u32 数组（@0xB3CF3B `mov ebx,[arg_4]`→`[ebx+eax*4]`）；循环内联 `mov [ecx],ebx`；经 `vt[0x58]` 发送","元素 u32，逐个写入","0xB3CF42","确证"
+4,"var","4","u32","num_num","num 数组元素数（**上限校验 ≤ 10**）","来源=入参 arg_10（@0xB3CF55）；写线原语 `sub_B02D80`(u32)；上限 `cmp ebx,0Ah`@0xB3CF59","0..10","0xB3CF6C","确证"
+5,"var","var","array<u32,N>","num","num 数组（N = `num_num`，N ≤ 10）","来源=入参 arg_C 指向的 u32 数组（@0xB3CF9A `mov esi,[arg_C]`→`[esi+eax*4]`）；循环内联 `mov [ecx],esi`；经 `vt[0x58]` 发送","元素 u32，逐个写入","0xB3CFA1","确证"

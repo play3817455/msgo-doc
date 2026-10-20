@@ -1,0 +1,333 @@
+{
+  "id": "SC-0x8AF0-lounge-deckcost_extend_info_notice",
+  "opcode": "0x8AF0",
+  "direction": "SC",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "deckcost_extend_info_notice",
+  "source_dir": "protocol_analysis/commands/SC-0x8AF0-lounge-deckcost_extend_info_notice",
+  "meta": {
+    "opcode": "`0x8AF0`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`deckcost_extend_info_notice`",
+    "处理块范围": "`B6B10E`..`B6B2F2`",
+    "名字串引用点": "`B6B1F7`",
+    "声明容量（解码缓冲）": "`0x4`（`B6B123`）",
+    "长度闭合点": "`B6B1AE`",
+    "收尾函数": "`sub_B41110`（lounge 口径）",
+    "去向": "`vt[0x4C4]` @ `B6B2C9`（2 实参）"
+  },
+  "handler": null,
+  "handler_va": null,
+  "block": [
+    "0xB6B10E",
+    "0xB6B2F2"
+  ],
+  "name_str": null,
+  "name_str_va": "0xB6B1F7",
+  "capacity": "0x4",
+  "capacity_va": "0xB6B123",
+  "closer_va": "0xB6B1AE",
+  "dispatch": "`vt[0x4C4]` @ `B6B2C9`（2 实参）",
+  "dispatch_slot": "vt[0x4C4]",
+  "dispatch_va": "0xB6B2C9",
+  "wire": {
+    "length_expr": "2 + 2",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x4（容量记账口径，非线长）",
+    "field_count": 2,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：4。",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0x8AF0",
+      "evidence_va": [
+        "B6B1F7"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "deckcost",
+      "meaning": "卡组费用上限（日志串 `deckcost=`）",
+      "purpose": "经 `vt[0x4C4]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B6B15E",
+        "B6B24E"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "2",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "remain",
+      "meaning": "剩余时间（日志串 `remain=`）",
+      "purpose": "经 `vt[0x4C4]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B6B19E",
+        "B6B274"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0x8AF0（分发器 switch 选择子）",
+      "evidence_va": "0xB6B1F7"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB41120`（模块 id None）→ 之后逐字段读线",
+      "evidence_va": "0xB6B10E"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "deckcost：`u16`（线长 2）—— 卡组费用上限（日志串 `deckcost=`）",
+      "evidence_va": "0xB6B15E"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "remain：`u16`（线长 2）—— 剩余时间（日志串 `remain=`）",
+      "evidence_va": "0xB6B19E"
+    },
+    {
+      "step": 5,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB6B1AE"
+    },
+    {
+      "step": 6,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x4C4]`，实参 2 个",
+      "evidence_va": "0xB6B2D6"
+    },
+    {
+      "step": 7,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB6B178"
+    }
+  ],
+  "capabilities": [
+    "notify",
+    "query",
+    "lounge.deckcost_extend"
+  ],
+  "capabilities_derived": [
+    "notify"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:44",
+    "batch": 9,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 4,
+        "va": "0xB6B123",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB6B120",
+        "call_va": "0xB6B125"
+      },
+      "field_window": {
+        "start_va": "0xB6B10F",
+        "end_va": "0xB6B1D5",
+        "guard": {
+          "va": "0xB6B10E",
+          "func": "0xB41120",
+          "module_id": null,
+          "release_va": "0xB41110"
+        },
+        "closer_or_commit_va": "0xB6B1AE",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "deckcost",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "B6B15E",
+              "B6B24E"
+            ]
+          },
+          {
+            "name": "remain",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "B6B19E",
+              "B6B274"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB6B15E",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB6B19E",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 2,
+        "checkable": 2,
+        "pairs": [
+          {
+            "field": "deckcost",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB6B15E",
+            "kind": "read"
+          },
+          {
+            "field": "remain",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB6B19E",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB6B10F",
+          "0xB6B1D5"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 4,
+          "capacity": 4,
+          "relation": "exact",
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）4 / 容量 0x4"
+        }
+      },
+      "closer": {
+        "va": "0xB6B1AE",
+        "kind": "jz",
+        "jcc_va": "0xB6B1B4",
+        "seq_va": "0xB6B1AA",
+        "jcc_dst": "0xB6B1D0",
+        "cmp": "cmp     ebx, [esp+2C5Ch+var_2C40]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x4C4]",
+        "slot_value": 1220,
+        "va": "0xB6B2D6",
+        "mov_va": "0xB6B2C9",
+        "host": "[edx+4C4h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB6B178",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "deckcost=",
+        "remain="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0x8AF0-lounge-deckcost_extend_info_notice.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "B6B1F7"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "DeckcostExtendInfoNotice",
+      "role": "response",
+      "wire_length": "2 + 2",
+      "members": [
+        {
+          "name": "Deckcost",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "deckcost"
+        },
+        {
+          "name": "Remain",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "remain"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "d821bb07c0c314c7",
+  "check_fingerprint": "a99870e39b0a9897"
+}

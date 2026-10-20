@@ -1,0 +1,414 @@
+{
+  "id": "CS-0x9226-lounge-party_info_edit",
+  "opcode": "0x9226",
+  "direction": "CS",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "party_info_edit",
+  "source_dir": "protocol_analysis/commands/CS-0x9226-lounge-party_info_edit",
+  "meta": {
+    "opcode": "`0x9226`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`party_info_edit`",
+    "名字符串": "`)<-_proto_lounge_client::send_party_info_edit(` @ `0xeeb210`",
+    "代码位置": "sub_B92650 @ `0xb92650`（`0xb92650`..`0xb928a7`）",
+    "opcode 写入证据": "`0xb926cc`",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0x4A`（74）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)`",
+    "配对命令": "S→C `SC-0x07E8-lounge-party_info_edit_notice`（已 DONE）"
+  },
+  "handler": "sub_B92650",
+  "handler_va": "0xb92650",
+  "block": [
+    "0xB92650",
+    "0xB928A7"
+  ],
+  "name_str": ")<-_proto_lounge_client::send_party_info_edit(",
+  "name_str_va": "0xeeb210",
+  "capacity": "0x4A",
+  "capacity_va": null,
+  "closer_va": "0xB92776",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": null,
+  "wire": {
+    "length_expr": "1 + var + 4",
+    "fixed": false,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x4A（容量记账口径，非线长）",
+    "field_count": 3,
+    "length_source": "field_sum",
+    "readme_conclusion": "结论：编辑队伍招募信息：是否招募中 + 招募留言（串）+ 队伍类型。",
+    "readme_close": "2 + 1 + 61(串槽) + 4 = 68 ≤ 容量 0x4A = 74（富余 6）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "写入 buf+0，供服务端分发；无 case 块（C→S）",
+      "enum": "0x9226",
+      "evidence_va": [
+        "0xb926cc"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "2",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "is_recruiting",
+      "meaning": "是否招募中",
+      "purpose": "来源=入参 arg_0；内联 `mov [eax],cl`；服务端据此开/关招募状态",
+      "enum": "0/1",
+      "evidence_va": [
+        "0xB926E6"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "3",
+      "length": "var",
+      "wire_type": "bytes",
+      "name": "comment",
+      "meaning": "招募留言（NUL 结尾）",
+      "purpose": "来源=入参 arg_4；写线原语 `sub_B02B40`；服务端据此更新队伍公告",
+      "enum": "串槽预算 61（push 3Dh，紧邻 sub_B02B40）",
+      "evidence_va": [
+        "0xB926EE"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "var",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "party_type",
+      "meaning": "队伍类型",
+      "purpose": "来源=入参 arg_8；写线原语 `sub_B02D80`(u32)",
+      "enum": "取值域 {0,1}（布尔，比较结果直送）",
+      "evidence_va": [
+        "0xB92708"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0x9226（分发器 switch 选择子）",
+      "evidence_va": "0xB926CC"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0x4A B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xB92696"
+    },
+    {
+      "step": 3,
+      "kind": "write_count",
+      "detail": "is_recruiting：`u8`（线长 1）—— 是否招募中",
+      "evidence_va": "0xB926E6"
+    },
+    {
+      "step": 4,
+      "kind": "write_scalar",
+      "detail": "comment：`bytes`（线长 var）—— 招募留言（NUL 结尾）",
+      "evidence_va": "0xB926EE"
+    },
+    {
+      "step": 5,
+      "kind": "write_scalar",
+      "detail": "party_type：`u32`（线长 4）—— 队伍类型",
+      "evidence_va": "0xB92708"
+    },
+    {
+      "step": 6,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xB92776"
+    },
+    {
+      "step": 7,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xB9283E"
+    }
+  ],
+  "capabilities": [
+    "update",
+    "query",
+    "lounge.party"
+  ],
+  "capabilities_derived": [
+    "update"
+  ],
+  "db_effects": [],
+  "pair": "SC-0x07E8-lounge-party_info_edit_notice",
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:44",
+    "batch": 9,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 74,
+        "va": "0xB92696",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB92693",
+        "call_va": "0xB92698"
+      },
+      "field_window": {
+        "start_va": "0xB92650",
+        "end_va": "0xB92776",
+        "guard": null,
+        "closer_or_commit_va": "0xB92776",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "is_recruiting",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB926E6"
+            ]
+          },
+          {
+            "name": "comment",
+            "wire_type": "bytes",
+            "width": null,
+            "seq": 2,
+            "shape": "agg",
+            "evidence_va": [
+              "0xB926EE"
+            ]
+          },
+          {
+            "name": "party_type",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB92708"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB926CC",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB926E6",
+            "kind": "inline_store",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB926EE",
+            "kind": "write",
+            "width": null,
+            "wire_type": "str",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB92708",
+            "kind": "write",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB9274C",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 2,
+        "checkable": 2,
+        "pairs": [
+          {
+            "field": "is_recruiting",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB926E6",
+            "kind": "inline_store"
+          },
+          {
+            "field": "party_type",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB92708",
+            "kind": "write"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB926CC",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          },
+          {
+            "va": "0xB926EE",
+            "kind": "write",
+            "width": null,
+            "wire_type": "str"
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB92650",
+          "0xB92776"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 7,
+          "capacity": 74,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB926EE",
+              "kind": "write",
+              "name": ""
+            },
+            {
+              "va": "0xB9274C",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）7 / 容量 0x4a"
+        }
+      },
+      "closer": {
+        "va": "0xB92776",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xB9283E",
+        "mov_va": "0xB92833",
+        "host": "[eax+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "is_recruiting=",
+        "comment=\"",
+        "party_type="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0x9226-lounge-party_info_edit.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0xb926cc",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xb926cc"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "PartyInfoEdit",
+      "role": "request",
+      "wire_length": "1 + var + 4",
+      "members": [
+        {
+          "name": "IsRecruiting",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "is_recruiting"
+        },
+        {
+          "name": "Comment",
+          "wire_type": "bytes",
+          "length": "var",
+          "field_ref": "comment",
+          "element": null,
+          "element_length": null,
+          "cap": null,
+          "count_field": "is_recruiting",
+          "count_field_source": "nearest_scalar",
+          "note": "元素成员未建模（composites/ 无此结构），须以 IDA 复核补"
+        },
+        {
+          "name": "PartyType",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "party_type"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "ec9e95af011cebd1",
+  "check_fingerprint": "dd762a1669c05f1b"
+}

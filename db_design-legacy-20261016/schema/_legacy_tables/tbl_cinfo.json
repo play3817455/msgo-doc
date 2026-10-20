@@ -1,0 +1,63 @@
+{
+  "id": "tbl_cinfo",
+  "title": "战队信息",
+  "status": "complete",
+  "table_disposition": "PERSIST",
+  "purpose": "持久化 cinfo 639B 战队主体；25 成员（sub_B4E240）；槽步进 648",
+  "entity_ref": "cinfo",
+  "evidence_commands": [
+    "SC-0x8E92-lounge-clan_info_get_self_r",
+    "SC-0x5800-lounge-clan_info_get_other_r"
+  ],
+  "column_groups": [
+    {
+      "name": "cinfo（639B）",
+      "columns": [
+        "cinfo"
+      ]
+    }
+  ],
+  "columns": [
+    {
+      "name": "cinfo",
+      "disposition": "COMPOSITE",
+      "composite_ref": "cinfo",
+      "meaning": "战队信息结构（读取 sub_B45940，639B 线长）",
+      "wire_sources": [
+        {
+          "command": "SC-0x8E92-lounge-clan_info_get_self_r",
+          "struct": "cinfo",
+          "field_name": "cinfo",
+          "offset": 5,
+          "length": 639,
+          "wire_type": "struct<cinfo>",
+          "protocol_path": "protocol_analysis/commands/SC-0x8E92-lounge-clan_info_get_self_r/README.md",
+          "section": "§3",
+          "reader": "sub_B45940",
+          "evidence_va": "0xB6BDA6"
+        },
+        {
+          "command": "SC-0x5800-lounge-clan_info_get_other_r",
+          "struct": "cinfo",
+          "field_name": "cinfo",
+          "offset": 4,
+          "length": 639,
+          "wire_type": "struct<cinfo>",
+          "protocol_path": "protocol_analysis/commands/SC-0x5800-lounge-clan_info_get_other_r/README.md",
+          "section": "§3",
+          "reader": "sub_B45940",
+          "evidence_va": "0xB623EE",
+          "notes": "README 记 643 为旧口径；以 639B 重算为准"
+        }
+      ],
+      "asm_verified": true
+    }
+  ],
+  "asm_audit": {
+    "composite_ref": "cinfo",
+    "status": "pass",
+    "issues_count": 0,
+    "memory_status": "pass",
+    "memory_issues_count": 0
+  }
+}

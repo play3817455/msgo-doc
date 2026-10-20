@@ -1,0 +1,70 @@
+{
+  "id": "tbl_unlockw",
+  "title": "解锁武器",
+  "status": "complete",
+  "table_disposition": "PERSIST",
+  "purpose": "持久化 unlockw 30B 线格式；6 成员（sub_B439D0/sub_B4A580）；槽 32B",
+  "entity_ref": "unlockw",
+  "row_key": {
+    "columns": [
+      "uniqid_ms",
+      "db_index"
+    ],
+    "external": {
+      "uniqid_ms": {
+        "wire_type": "u64",
+        "pg_type": "BIGINT",
+        "go_type": "uint64",
+        "go_name": "UniqidMs",
+        "go_arg": "uniqidMs",
+        "meaning": "机体唯一 id（行键；A832 里是 unlockw 数组**之外**的兄弟字段 `ms` 的 `uniqid`——`ms_lounge` 是 `ms_rokaku` 的前 303B，不在 unlockw 复合体内）"
+      }
+    },
+    "reason": "解锁武器是**逐机体逐条**的：SC-0xA832 一台机体发一个 `ms` 块（`ms.uniqid`）再跟 `unlockw_num`(≤30) + N 条 30B `unlockw`；SC-0x45E4 / SC-0x81FB 的解锁回执又同时带 `uniqid_ms`(u64) + `item_id`(u32) + `db_index`（`db_index` 就是本复合体的成员，客户端用它回指刚建的那条）⇒ 一行 = 某台机体的一把解锁武器，键 = (uniqid_ms, db_index)。若只按 (world_id, pilot_id) 建唯一索引，一台机体的第 2 把解锁武器会把第 1 把 upsert 掉（与 ms_set / equip_set / buildup_info 同一类静默覆盖，见 docs/01「成员行键」）。",
+    "evidence_va": "B70CEC|B70CFB|0xB5DF66|0xB5E0A3|0xB5DFCA|0xB5E0F0|0xB6A10C|0xB6A170",
+    "verified": "2026-09-21"
+  },
+  "evidence_commands": [
+    "SC-0xA832-lounge-msma_add"
+  ],
+  "column_groups": [
+    {
+      "name": "unlockw（30B · 6 成员）",
+      "columns": [
+        "unlockw"
+      ]
+    }
+  ],
+  "columns": [
+    {
+      "name": "unlockw",
+      "disposition": "COMPOSITE",
+      "composite_ref": "unlockw",
+      "meaning": "解锁武器列表元素（线长 30 / 槽步进 32；上限 30 条）",
+      "wire_sources": [
+        {
+          "command": "SC-0xA832-lounge-msma_add",
+          "struct": "unlockw",
+          "field_name": "unlockw",
+          "offset": null,
+          "length": 30,
+          "wire_type": "array<struct,30>",
+          "protocol_path": "protocol_analysis/commands/SC-0xA832-lounge-msma_add/README.md",
+          "section": "§3",
+          "reader": "sub_B439D0",
+          "printer": "sub_B4A580",
+          "evidence_va": "0xB70D6B",
+          "notes": "变长数组，由 unlockw_num 驱动"
+        }
+      ],
+      "asm_verified": true
+    }
+  ],
+  "asm_audit": {
+    "composite_ref": "unlockw",
+    "status": "pass",
+    "issues_count": 0,
+    "memory_status": "pass",
+    "memory_issues_count": 0
+  }
+}

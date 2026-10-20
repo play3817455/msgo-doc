@@ -1,0 +1,219 @@
+{
+ "id": "SC-0x5C61-lounge-party_invite_to",
+ "verified_at": "2026-09-30 15:25:43",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "block",
+ "block": [
+  "0xB639AD",
+  "0xB63C37"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 37,
+   "va": "0xB639C2",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xB639BF",
+   "call_va": "0xB639C4"
+  },
+  "field_window": {
+   "start_va": "0xB639AE",
+   "end_va": "0xB63AB0",
+   "guard": {
+    "va": "0xB639AD",
+    "func": "0xB41120",
+    "module_id": null,
+    "release_va": "0xB41110"
+   },
+   "closer_or_commit_va": "0xB63AA5",
+   "within_model_block": true,
+   "range_from": "block"
+  },
+  "primitive_widths": {
+   "direction": "SC",
+   "expected": [
+    {
+     "name": "party_id",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB639FD",
+      "0xB63B28"
+     ]
+    },
+    {
+     "name": "channel_id",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 2,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB63A3D",
+      "0xB63B52"
+     ]
+    },
+    {
+     "name": "pilot_id",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 3,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB63A61",
+      "0xB63B7C"
+     ]
+    },
+    {
+     "name": "pilot_name",
+     "wire_type": "str",
+     "width": null,
+     "seq": 4,
+     "shape": "str",
+     "evidence_va": [
+      "0xB63A79",
+      "0xB63BA4"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB639FD",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB63A3D",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB63A61",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB63A79",
+     "kind": "read",
+     "width": null,
+     "wire_type": "str",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 4,
+   "checkable": 4,
+   "pairs": [
+    {
+     "field": "party_id",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB639FD",
+     "kind": "read"
+    },
+    {
+     "field": "channel_id",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB63A3D",
+     "kind": "read"
+    },
+    {
+     "field": "pilot_id",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB63A61",
+     "kind": "read"
+    },
+    {
+     "field": "pilot_name",
+     "width": null,
+     "shape": "str",
+     "va": "0xB63A79",
+     "kind": "read"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB639AE",
+    "0xB63AB0"
+   ],
+   "scalar_match_verifiable": true,
+   "capacity_relation": {
+    "observed_min": 12,
+    "capacity": 37,
+    "relation": "within",
+    "unknown_events": [
+     {
+      "va": "0xB63A79",
+      "kind": "read",
+      "name": ""
+     }
+    ],
+    "is_lower_bound": true,
+    "note": "观测线长（下界）12 / 容量 0x25"
+   }
+  },
+  "closer": {
+   "va": "0xB63AA5",
+   "kind": "jnz",
+   "jcc_va": "0xB63AA9",
+   "seq_va": "0xB63AA1",
+   "jcc_dst": "0xB63A87",
+   "cmp": "cmp     ebx, [esp+2C5Ch+var_2C40]",
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x200]",
+   "slot_value": 512,
+   "va": "0xB63C1B",
+   "mov_va": "0xB63C12",
+   "host": "[eax+200h]",
+   "argc": 4,
+   "form": "mov_then_call",
+   "error_slot": {
+    "slot": "vt[0x64]",
+    "va": "0xB63A17",
+    "argc": 2
+   }
+  },
+  "log_strings": [
+   "party_id=",
+   "channel_id=",
+   "pilot_id=",
+   "pilot_name=\""
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "channel_id",
+  "party_id",
+  "pilot_id",
+  "pilot_name"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 7
+}

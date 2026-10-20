@@ -1,0 +1,104 @@
+{
+  "id": "srv.xwar_forcegauge",
+  "slug": "xwar_forcegauge",
+  "title": "战力槽（XWar）",
+  "kind": "server_config",
+  "status": "complete",
+  "ddl": "serverv/migrations/0030_xwar_booking_and_forcegauge.up.sql",
+  "generated_by": "db_design/tools/build_srv_docs.py",
+  "note": "本文件由 db_design/tools/build_srv_docs.py 从 serverv/migrations/0030_xwar_booking_and_forcegauge.up.sql 生成，勿手改：改 srv.* 请改迁移再重跑生成器",
+  "purpose": "XWar 战力槽（单行 id=1）：SC-0x0124 xwar_forcegauge_get_r 的六格来源；CS-0x4E88 是零负载读，本服没有写方 ⇒ 由运营/GM 维护",
+  "primary_key": [
+    "id"
+  ],
+  "columns": [
+    {
+      "name": "id",
+      "sql_type": "SMALLINT",
+      "not_null": true,
+      "default": "1",
+      "checks": [
+        "id = 1"
+      ],
+      "meaning": "单行哨兵（恒为 1）"
+    },
+    {
+      "name": "e_fgauge",
+      "sql_type": "BIGINT",
+      "not_null": true,
+      "default": "0,",
+      "checks": [],
+      "meaning": "战力槽数值（E 路 = 地球联邦侧）[u32] SC-0x0124@0xB51EF4（`sub_B02DD0`；`add dword ptr [eax], 4`@0xB02DE9）"
+    },
+    {
+      "name": "z_fgauge",
+      "sql_type": "BIGINT",
+      "not_null": true,
+      "default": "0,",
+      "checks": [],
+      "meaning": "战力槽数值（Z 路 = 吉翁侧）[u32] SC-0x0124@0xB51F34（`sub_B02DD0`）"
+    },
+    {
+      "name": "ranking_term_now",
+      "sql_type": "TEXT",
+      "not_null": true,
+      "default": "'',",
+      "checks": [],
+      "meaning": "当前排名赛期串 [NUL 结尾串，槽预算 65B 含终止符] SC-0x0124@0xB51F55（`sub_B02BA0`，`push 41h`@0xB51F46）：读进客户端后交 vt[0x1D4] 第 3 实参显示；空串 = 本服没有赛季赛期"
+    },
+    {
+      "name": "ranking_term_last",
+      "sql_type": "TEXT",
+      "not_null": true,
+      "default": "'',",
+      "checks": [],
+      "meaning": "上期排名赛期串 [NUL 结尾串，槽预算 65B 含终止符] SC-0x0124@0xB51F76（`push 41h`@0xB51F63）：同上，第 4 实参；空串 = 本服没有上期"
+    },
+    {
+      "name": "lose_troops",
+      "sql_type": "BIGINT",
+      "not_null": true,
+      "default": "0,",
+      "checks": [],
+      "meaning": "损失部队数 [u32] SC-0x0124@0xB51F9E（`sub_B02DD0`）：单位/累计口径未取证，照数下发"
+    },
+    {
+      "name": "expup_fgauge",
+      "sql_type": "INT",
+      "not_null": true,
+      "default": "0",
+      "checks": [
+        "expup_fgauge BETWEEN 0 AND 65535"
+      ],
+      "meaning": "经验加成后的战力槽值 [u16，硬上限 65535] SC-0x0124@0xB51FC6（`sub_B02DF0`；`add dword ptr [eax], 2`@0xB02E0B）"
+    },
+    {
+      "name": "updated_at",
+      "sql_type": "TIMESTAMPTZ",
+      "not_null": true,
+      "default": "now()",
+      "checks": [],
+      "meaning": "本行最后修改时间（运营改槽值时更新）"
+    }
+  ],
+  "seed_columns": [
+    "id",
+    "e_fgauge",
+    "z_fgauge",
+    "ranking_term_now",
+    "ranking_term_last",
+    "lose_troops",
+    "expup_fgauge"
+  ],
+  "seed_rows": [
+    {
+      "id": "1",
+      "e_fgauge": "0",
+      "z_fgauge": "0",
+      "ranking_term_now": "''",
+      "ranking_term_last": "''",
+      "lose_troops": "0",
+      "expup_fgauge": "0"
+    }
+  ]
+}

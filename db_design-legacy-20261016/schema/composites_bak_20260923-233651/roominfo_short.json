@@ -1,0 +1,58 @@
+{
+  "id": "roominfo_short",
+  "title": "对战房间 roominfo 短形（95B）——【已撤销】",
+  "status": "retracted",
+  "retracted_at": "2026-09-22",
+  "length": 95,
+  "prefix_of": "roominfo",
+  "prefix_length": 95,
+  "reader": "sub_B44880",
+  "printer": "sub_B4C0D0",
+  "memory_claim": 144,
+  "wire_layout": "4+73+4+1+4+4+4+1",
+  "evidence": {
+    "commands": [
+      "SC-0x244E-lounge-btlroom_info_one"
+    ],
+    "protocol_paths": [
+      "protocol_analysis/commands/SC-0x244E-lounge-btlroom_info_one/README.md"
+    ],
+    "note": "**本线形不存在，已撤销。** 2026-09-22 按 IDA 汇编复核：0x244E 与 0x6B15 调的是同一个读取器 sub_B44880、同一个预留 sub_B41440(0x90)，而 sub_B44880 内部逐字节读完 4+73+4+1+4+4+4+1+1+2+2+2+4+4+25 = 135B，且不存在数据相关的跳读分支（每步失败即 retn 0）⇒ 0x244E 的 roominfo 也是 135B 全量。原「95B 短形」来自 0x244E 的 README 只列到 is_lock，属漏列 7 个成员。请用 composites/roominfo.json。"
+  },
+  "members": [],
+  "retraction": {
+    "reason": "与读取器/预留器的汇编证据矛盾：同读取器不可能一处消费 95B、另一处消费 135B",
+    "evidence_va": [
+      "0xB58BF0",
+      "0xB65688",
+      "0xB4489C",
+      "0xB449B8",
+      "0xB58C4C"
+    ],
+    "detail": "0xB58BF0（244E）与 0xB65688（6B15）都是 `call sub_B44880`；读取器最后一次读取在 0xB449B8（master_name 循环 0x19 次）；244E 闭合点 0xB58C4C 要求游标恰好到报文末尾（1 + 135 + 11 + 11 = 158），若 roominfo 只有 95B 则游标对不上、闭合必失败。",
+    "replaced_by": "roominfo"
+  },
+  "asm_audit": {
+    "verified": "2026-09-22",
+    "reader": "sub_B44880",
+    "writer": null,
+    "total_bytes": 135,
+    "fields_ok": 15,
+    "fields_fail": 0,
+    "issues": [
+      "原 95B/8 成员结论作废"
+    ],
+    "status": "retracted",
+    "memory": {
+      "manual_batch": 1,
+      "verified": "2026-09-22",
+      "status": "retracted",
+      "memory_claim": 144,
+      "mem_fields": 15,
+      "fields_ok": 15,
+      "fields_fail": 0,
+      "issues": [],
+      "note": "sub_B44880 消费 135B（room_id..master_name）；不存在止于 is_lock 的线形"
+    }
+  }
+}

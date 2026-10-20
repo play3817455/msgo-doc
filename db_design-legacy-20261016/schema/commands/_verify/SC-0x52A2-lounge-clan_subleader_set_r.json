@@ -1,0 +1,213 @@
+{
+ "id": "SC-0x52A2-lounge-clan_subleader_set_r",
+ "verified_at": "2026-09-30 15:25:43",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "block",
+ "block": [
+  "0xB60F3A",
+  "0xB611D0"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 13,
+   "va": "0xB60F56",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xB60F53",
+   "call_va": "0xB60F58"
+  },
+  "field_window": {
+   "start_va": "0xB60F42",
+   "end_va": "0xB61054",
+   "guard": {
+    "va": "0xB60F41",
+    "func": "0xB41120",
+    "module_id": 445,
+    "release_va": "0xB41110"
+   },
+   "closer_or_commit_va": "0xB6102D",
+   "within_model_block": true,
+   "range_from": "block"
+  },
+  "primitive_widths": {
+   "direction": "SC",
+   "expected": [
+    {
+     "name": "result",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB60F91",
+      "0xB610CC"
+     ]
+    },
+    {
+     "name": "pilot_id_sub",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 2,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB60FD1",
+      "0xB610F6"
+     ]
+    },
+    {
+     "name": "is_set",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 3,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB60FF5",
+      "0xB61120"
+     ]
+    },
+    {
+     "name": "clan_kind",
+     "wire_type": "u8",
+     "width": 1,
+     "seq": 4,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB61019",
+      "0xB61143"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB60F91",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB60FD1",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB60FF5",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB61019",
+     "kind": "read",
+     "width": 1,
+     "wire_type": "u8",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 4,
+   "checkable": 4,
+   "pairs": [
+    {
+     "field": "result",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB60F91",
+     "kind": "read"
+    },
+    {
+     "field": "pilot_id_sub",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB60FD1",
+     "kind": "read"
+    },
+    {
+     "field": "is_set",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB60FF5",
+     "kind": "read"
+    },
+    {
+     "field": "clan_kind",
+     "width": 1,
+     "shape": "scalar",
+     "va": "0xB61019",
+     "kind": "read"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB60F42",
+    "0xB61054"
+   ],
+   "scalar_match_verifiable": true,
+   "capacity_relation": {
+    "observed_min": 13,
+    "capacity": 13,
+    "relation": "exact",
+    "unknown_events": [],
+    "is_lower_bound": false,
+    "note": "观测线长（下界）13 / 容量 0xd"
+   }
+  },
+  "closer": {
+   "va": "0xB6102D",
+   "kind": "jz",
+   "jcc_va": "0xB61033",
+   "seq_va": "0xB61029",
+   "jcc_dst": "0xB6104F",
+   "cmp": "cmp     ebx, [esp+2C5Ch+var_2C40]",
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x43C]",
+   "slot_value": 1084,
+   "va": "0xB611B4",
+   "mov_va": "0xB6119A",
+   "host": "[edx+43Ch]",
+   "argc": 4,
+   "form": "mov_then_call",
+   "error_slot": {
+    "slot": "vt[0x64]",
+    "va": "0xB60FAB",
+    "argc": 2
+   }
+  },
+  "log_strings": [
+   "result=",
+   "pilot_id_sub=",
+   "is_set=",
+   "clan_kind="
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "clan_kind",
+  "is_set",
+  "pilot_id_sub",
+  "result"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 7
+}

@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MISSION_COOP · db_design</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <h1><a href="../index.html">db_design</a></h1>
+      <p class="header-note">唯一证据源：<code>protocol_analysis/</code></p>
+      <nav><a href="../index.html">首页</a>
+      <a href="../homing/index.html">归位库</a>
+      <a href="../tables/index.html">旧表留档</a>
+      <a href="../commands/index.html">命令</a>
+      <a href="../cfg/index.html" class="active">配置表79</a>
+      <a href="../srv/index.html">服务端配置</a>
+      <a href="../asm-audit/index.html">ASM 审计</a>
+      <a href="../oracle-audit/index.html">Oracle 审计</a>
+      <a href="../entities/index.html">协议实体</a>
+      <a href="../fields/index.html">字段索引</a>
+      <a href="../relations.html">表关系</a></nav>
+    </div>
+  </header>
+  <main class="wrap">
+
+    <p class="breadcrumb"><a href="index.html">配置表79</a> / <code>MISSION_COOP</code></p>
+    <h2><code>MISSION_COOP</code> <span class="badge" style="background:#1565c0">DOWNLOAD</span> <span class="badge" style="background:#2e7d32">确证</span></h2>
+    <dl class="asm-dl">
+      <dt>CSV</dt><dd><code>mission/mission_coop.csv</code></dd>
+      <dt>用途</dt><dd>协作战任务定义</dd>
+      <dt>读表函数</dt><dd><code>sub_59DC00</code></dd>
+      <dt>表ID</dt><dd>25</dd>
+      <dt>下载序</dt><dd>25</dd>
+      <dt>类名</dt><dd><code>CMissionCoopTable</code></dd>
+      <dt>列统计</dt><dd>25 列 · 确证 25 · 已映射 0 · 间隙 28</dd>
+      <dt>证据</dt><dd><a href="../../../datatables/01-列注释/25-25-MISSION_COOP.md" target="_blank">datatables/01-列注释/25-25-MISSION_COOP.md</a></dd>
+    </dl>
+    <section>
+      <h3>列定案</h3>
+      <p class="muted"><code>db_column</code> = PostgreSQL 列名（确证/有语义的 partial 用订案名；<code>unknown_*</code> 暂保留 colN）</p>
+      <table class="wide">
+        <thead>
+          <tr>
+            <th>CSV#</th><th>DB列</th><th>订案名</th><th>中文摘要</th><th>类型</th>
+            <th>状态</th><th>读表</th><th>偏移/VA</th><th>语义详情</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><code>0</code></td>
+      <td><code>mission_id</code></td>
+      <td><code>mission_id</code></td>
+      <td>主键；协作战任务 ID（与 AI 脚本 mission id 对应）</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 0 · +4 · 0x59dc42</td>
+      <td class="meaning-cell">主键；协作战任务 ID（与 AI 脚本 mission id 对应）</td>
+    </tr>
+    <tr>
+      <td><code>1</code></td>
+      <td><code>map_id</code></td>
+      <td><code>map_id</code></td>
+      <td>地图 ID（u32 @+8；关联 map 资源）</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 1 · +8 · 0x59dc4d</td>
+      <td class="meaning-cell">地图 ID（u32 @+8；关联 map 资源）</td>
+    </tr>
+    <tr>
+      <td><code>2</code></td>
+      <td><code>thumbnail_id</code></td>
+      <td><code>thumbnail_id</code></td>
+      <td>缩略图/图标 ID（u32 @+40）</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 2 · +40 · 0x59dc58</td>
+      <td class="meaning-cell">缩略图/图标 ID（u32 @+40）</td>
+    </tr>
+    <tr>
+      <td><code>3</code></td>
+      <td><code>faction</code></td>
+      <td><code>faction</code></td>
+      <td>势力限制：EFF/ZEON（sub_40CE20 @+80；空=不限）</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 3 · +80 · 0x59dc6f</td>
+      <td class="meaning-cell">势力限制：EFF/ZEON（sub_40CE20 @+80；空=不限）<div class="enum-vals"><a class="enum-chip" href="enums/sub_40ce20.html#v-EFF" title="地球联邦"><code>EFF</code>=0<span class="enum-zh">地球联邦</span></a> <a class="enum-chip" href="enums/sub_40ce20.html#v-ZEON" title="吉翁"><code>ZEON</code>=1<span class="enum-zh">吉翁</span></a> <a class="enum-conv-link" href="enums/sub_40ce20.html" title="字符串相等比较">↗ sub_40CE20</a></div></td>
+    </tr>
+    <tr>
+      <td><code>4</code></td>
+      <td><code>rule_param</code></td>
+      <td><code>rule_param</code></td>
+      <td>规则参数 u32（@+84；col49=1 时强制写入 256）</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 4 · +84 · 0x59dcd1</td>
+      <td class="meaning-cell">规则参数 u32（@+84；col49=1 时强制写入 256）</td>
+    </tr>
+    <tr>
+      <td><code>5</code></td>
+      <td><code>min_players</code></td>
+      <td><code>min_players</code></td>
+      <td>最少玩家数（u32 @+44）</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 5 · +44 · 0x59dce3</td>
+      <td class="meaning-cell">最少玩家数（u32 @+44）</td>
+    </tr>
+    <tr>
+      <td><code>6</code></td>
+      <td><code>flag_ranked</code></td>
+      <td><code>flag_ranked</code></td>
+      <td>排位战标志（bool bit0 @+56）</td>
+      <td><code>bool</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 6 · +56 · 0x59dcf8</td>
+      <td class="meaning-cell">排位战标志（bool bit0 @+56）</td>
+    </tr>
+    <tr>
+      <td><code>7</code></td>
+      <td><code>flag_private</code></td>
+      <td><code>flag_private</code></td>
+      <td>私人房间标志（bool bit1 @+56）</td>
+      <td><code>bool</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 7 · +56 · 0x59dd10</td>
+      <td class="meaning-cell">私人房间标志（bool bit1 @+56）</td>
+    </tr>
+    <tr>
+      <td><code>8</code></td>
+      <td><code>col8</code></td>
+      <td><code>col8</code></td>
+      <td>标志位2（csv8→+56 bit2）</td>
+      <td><code>bool</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 8 · +56 · 0x59dd2d</td>
+      <td class="meaning-cell">reader 真读（`push 8` @0x59dd0b → `call sub_BBB370` @0x59dd14）：结果写入 +56 的 bit2（`add al,al`×2 → `and al,4` → `xor [esi+38h],al` @0x59dd2d）；与 col6=bit0(flag_ranked)、col7=bit1(flag_private) 同一位域；原标 gap 系仿真静默截断</td>
+    </tr>
+    <tr>
+      <td><code>9</code></td>
+      <td><code>coop_mode</code></td>
+      <td><code>coop_mode</code></td>
+      <td>协作模式：COOP_CORE_DESTROY/COOP_WAVE（enum @+48）</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 9 · +48 · 0x59dd3a</td>
+      <td class="meaning-cell">协作模式：COOP_CORE_DESTROY/COOP_WAVE（enum @+48）<div class="enum-vals"><a class="enum-chip" href="enums/sub_40ce20.html#v-COOP_CORE_DESTROY" title="合作·核心破坏"><code>COOP_CORE_DESTROY</code>=11<span class="enum-zh">合作·核心破坏</span></a> <a class="enum-chip" href="enums/sub_40ce20.html#v-COOP_WAVE" title="合作波次"><code>COOP_WAVE</code>=12<span class="enum-zh">合作波次</span></a> <a class="enum-chip" href="enums/sub_40ce20.html#v-COOP_WAVE_ALT" title="合作波次(备用)"><code>COOP_WAVE_ALT</code>=10<span class="enum-zh">合作波次(备用)</span></a> <a class="enum-conv-link" href="enums/sub_40ce20.html" title="字符串相等比较">↗ sub_40CE20</a></div></td>
+    </tr>
+    <tr>
+      <td><code>10</code></td>
+      <td><code>coop_subtype</code></td>
+      <td><code>coop_subtype</code></td>
+      <td>子模式：BASE_DEFENSE/TIME_ATTACK（enum @+52）</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 10 · +52 · 0x59ddac</td>
+      <td class="meaning-cell">子模式：BASE_DEFENSE/TIME_ATTACK（enum @+52）<div class="enum-vals"><a class="enum-chip" href="enums/sub_40ce20.html#v-BASE_DEFENSE" title="基地防御"><code>BASE_DEFENSE</code>=1<span class="enum-zh">基地防御</span></a> <a class="enum-chip" href="enums/sub_40ce20.html#v-TIME_ATTACK" title="竞速"><code>TIME_ATTACK</code>=0<span class="enum-zh">竞速</span></a> <a class="enum-chip" href="enums/sub_40ce20.html#v-TIME_ATTACK_ALT" title="竞速(备用)"><code>TIME_ATTACK_ALT</code>=2<span class="enum-zh">竞速(备用)</span></a> <a class="enum-conv-link" href="enums/sub_40ce20.html" title="字符串相等比较">↗ sub_40CE20</a></div></td>
+    </tr>
+    <tr>
+      <td><code>11</code></td>
+      <td><code>script_bundle_id</code></td>
+      <td><code>script_bundle_id</code></td>
+      <td>脚本资源包 ID（u32 @+200；sub_744680 查关联）</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 11 · +200 · 0x59de19</td>
+      <td class="meaning-cell">脚本资源包 ID（u32 @+200；sub_744680 查关联）</td>
+    </tr>
+    <tr>
+      <td><code>12</code></td>
+      <td><code>mission_name</code></td>
+      <td><code>mission_name</code></td>
+      <td>任务名称（wstring @+88）</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 12 · +88 · 0x59de28</td>
+      <td class="meaning-cell">任务名称（wstring @+88）</td>
+    </tr>
+    <tr>
+      <td><code>13</code></td>
+      <td><code>recommended_rank</code></td>
+      <td><code>recommended_rank</code></td>
+      <td>推荐等级/军衔（u16 @+208）</td>
+      <td><code>u16</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 13 · +208 · 0x59de68</td>
+      <td class="meaning-cell">推荐等级/军衔（u16 @+208）</td>
+    </tr>
+    <tr>
+      <td><code>14</code></td>
+      <td><code>min_rank</code></td>
+      <td><code>min_rank</code></td>
+      <td>最低等级（u16 @+58）</td>
+      <td><code>u16</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 14 · +58 · 0x59de77</td>
+      <td class="meaning-cell">最低等级（u16 @+58）</td>
+    </tr>
+    <tr>
+      <td><code>15</code></td>
+      <td><code>max_rank</code></td>
+      <td><code>max_rank</code></td>
+      <td>最高等级（u16 @+60）</td>
+      <td><code>u16</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 15 · +60 · 0x59de83</td>
+      <td class="meaning-cell">最高等级（u16 @+60）</td>
+    </tr>
+    <tr>
+      <td><code>16</code></td>
+      <td><code>time_limit_sec</code></td>
+      <td><code>time_limit_sec</code></td>
+      <td>时间限制秒（u32 @+68）</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 16 · +68 · 0x59de8f</td>
+      <td class="meaning-cell">时间限制秒（u32 @+68）</td>
+    </tr>
+    <tr>
+      <td><code>17</code></td>
+      <td><code>col17</code></td>
+      <td><code>col17</code></td>
+      <td>CSV col17 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 17</td>
+      <td class="meaning-cell">CSV col17 预留（sub_59DC00 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>18</code></td>
+      <td><code>col18</code></td>
+      <td><code>col18</code></td>
+      <td>CSV col18 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 18</td>
+      <td class="meaning-cell">CSV col18 预留（sub_59DC00 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>19</code></td>
+      <td><code>respawn_limit</code></td>
+      <td><code>respawn_limit</code></td>
+      <td>重生次数上限（u16 @+72）</td>
+      <td><code>u16</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 19 · +72 · 0x59dea3</td>
+      <td class="meaning-cell">重生次数上限（u16 @+72）</td>
+    </tr>
+    <tr>
+      <td><code>20</code></td>
+      <td><code>col20</code></td>
+      <td><code>col20</code></td>
+      <td>CSV col20 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 20</td>
+      <td class="meaning-cell">CSV col20 预留（sub_59DC00 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>21</code></td>
+      <td><code>col21</code></td>
+      <td><code>col21</code></td>
+      <td>CSV col21 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 21</td>
+      <td class="meaning-cell">CSV col21 预留（sub_59DC00 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>22</code></td>
+      <td><code>col22</code></td>
+      <td><code>col22</code></td>
+      <td>CSV col22 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 22</td>
+      <td class="meaning-cell">CSV col22 预留（sub_59DC00 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>23</code></td>
+      <td><code>col23</code></td>
+      <td><code>col23</code></td>
+      <td>CSV col23 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 23</td>
+      <td class="meaning-cell">CSV col23 预留（sub_59DC00 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>24</code></td>
+      <td><code>col24</code></td>
+      <td><code>col24</code></td>
+      <td>CSV col24 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 24</td>
+      <td class="meaning-cell">CSV col24 预留（sub_59DC00 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>25</code></td>
+      <td><code>col25</code></td>
+      <td><code>col25</code></td>
+      <td>CSV col25 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 25</td>
+      <td class="meaning-cell">CSV col25 预留（sub_59DC00 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>26</code></td>
+      <td><code>col26</code></td>
+      <td><code>col26</code></td>
+      <td>CSV col26 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 26</td>
+      <td class="meaning-cell">CSV col26 预留（sub_59DC00 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>27</code></td>
+      <td><code>col27</code></td>
+      <td><code>col27</code></td>
+      <td>CSV col27 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 27</td>
+      <td class="meaning-cell">CSV col27 预留（sub_59DC00 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>28</code></td>
+      <td><code>col28</code></td>
+      <td><code>col28</code></td>
+      <td>CSV col28 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 28</td>
+      <td class="meaning-cell">CSV col28 预留（sub_59DC00 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>29</code></td>
+      <td><code>col29</code></td>
+      <td><code>col29</code></td>
+      <td>CSV col29 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 29</td>
+      <td class="meaning-cell">CSV col29 预留（sub_59DC00 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>30</code></td>
+      <td><code>col30</code></td>
+      <td><code>col30</code></td>
+      <td>CSV col30 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 30</td>
+      <td class="meaning-cell">CSV col30 预留（sub_59DC00 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>31</code></td>
+      <td><code>col31</code></td>
+      <td><code>col31</code></td>
+      <td>CSV col31 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 31</td>
+      <td class="meaning-cell">CSV col31 预留（sub_59DC00 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>32</code></td>
+      <td><code>col32</code></td>
+      <td><code>col32</code></td>
+      <td>CSV col32 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 32</td>
+      <td class="meaning-cell">CSV col32 预留（sub_59DC00 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>33</code></td>
+      <td><code>col33</code></td>
+      <td><code>col33</code></td>
+      <td>CSV col33 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 33</td>
+      <td class="meaning-cell">CSV col33 预留（sub_59DC00 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>34</code></td>
+      <td><code>col34</code></td>
+      <td><code>col34</code></td>
+      <td>CSV col34 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 34</td>
+      <td class="meaning-cell">CSV col34 预留（sub_59DC00 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>35</code></td>
+      <td><code>col35</code></td>
+      <td><code>col35</code></td>
+      <td>CSV col35 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 35</td>
+      <td class="meaning-cell">CSV col35 预留（sub_59DC00 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>36</code></td>
+      <td><code>col36</code></td>
+      <td><code>col36</code></td>
+      <td>CSV col36 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 36</td>
+      <td class="meaning-cell">CSV col36 预留（sub_59DC00 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>37</code></td>
+      <td><code>briefing_text</code></td>
+      <td><code>briefing_text</code></td>
+      <td>任务简报文本（wstring col37 @+116）</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 37 · +116 · 0x59dea7</td>
+      <td class="meaning-cell">任务简报文本（wstring col37 @+116）</td>
+    </tr>
+    <tr>
+      <td><code>38</code></td>
+      <td><code>objective_text</code></td>
+      <td><code>objective_text</code></td>
+      <td>目标说明文本（wstring col38 @+144）</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 38 · +144 · 0x59dee0</td>
+      <td class="meaning-cell">目标说明文本（wstring col38 @+144）</td>
+    </tr>
+    <tr>
+      <td><code>39</code></td>
+      <td><code>result_text</code></td>
+      <td><code>result_text</code></td>
+      <td>结算说明文本（wstring col39 @+172）</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 39 · +172 · 0x59df1c</td>
+      <td class="meaning-cell">结算说明文本（wstring col39 @+172）</td>
+    </tr>
+    <tr>
+      <td><code>40</code></td>
+      <td><code>col40</code></td>
+      <td><code>col40</code></td>
+      <td>CSV col40 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 40</td>
+      <td class="meaning-cell">CSV col40 预留（sub_59DC00 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>41</code></td>
+      <td><code>col41</code></td>
+      <td><code>col41</code></td>
+      <td>CSV col41 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 41</td>
+      <td class="meaning-cell">CSV col41 预留（sub_59DC00 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>42</code></td>
+      <td><code>col42</code></td>
+      <td><code>col42</code></td>
+      <td>CSV col42 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 42</td>
+      <td class="meaning-cell">CSV col42 预留（sub_59DC00 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>43</code></td>
+      <td><code>col43</code></td>
+      <td><code>col43</code></td>
+      <td>CSV col43 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 43</td>
+      <td class="meaning-cell">CSV col43 预留（sub_59DC00 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>44</code></td>
+      <td><code>col44</code></td>
+      <td><code>col44</code></td>
+      <td>CSV col44 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 44</td>
+      <td class="meaning-cell">CSV col44 预留（sub_59DC00 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>45</code></td>
+      <td><code>col45</code></td>
+      <td><code>col45</code></td>
+      <td>CSV col45 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 45</td>
+      <td class="meaning-cell">CSV col45 预留（sub_59DC00 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>46</code></td>
+      <td><code>col46</code></td>
+      <td><code>col46</code></td>
+      <td>CSV col46 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 46</td>
+      <td class="meaning-cell">CSV col46 预留（sub_59DC00 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>47</code></td>
+      <td><code>flag_tutorial</code></td>
+      <td><code>flag_tutorial</code></td>
+      <td>教程任务标志（bool @+204）</td>
+      <td><code>bool</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 47 · +204 · 0x59df5f</td>
+      <td class="meaning-cell">教程任务标志（bool @+204）</td>
+    </tr>
+    <tr>
+      <td><code>48</code></td>
+      <td><code>flag_event</code></td>
+      <td><code>flag_event</code></td>
+      <td>活动任务标志（bool @+205）</td>
+      <td><code>bool</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 48 · +205 · 0x59df72</td>
+      <td class="meaning-cell">活动任务标志（bool @+205）</td>
+    </tr>
+    <tr>
+      <td><code>49</code></td>
+      <td><code>flag_force_rule256</code></td>
+      <td><code>flag_force_rule256</code></td>
+      <td>强制规则 256 标志（bool @+206→col4=256）</td>
+      <td><code>bool</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 49 · +206 · 0x59df82</td>
+      <td class="meaning-cell">强制规则 256 标志（bool @+206→col4=256）</td>
+    </tr>
+    <tr>
+      <td><code>50</code></td>
+      <td><code>col50</code></td>
+      <td><code>col50</code></td>
+      <td>CSV col50 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 50</td>
+      <td class="meaning-cell">CSV col50 预留（sub_59DC00 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>51</code></td>
+      <td><code>col51</code></td>
+      <td><code>col51</code></td>
+      <td>CSV col51 预留</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 51</td>
+      <td class="meaning-cell">CSV col51 预留（sub_59DC00 不读本列；保持 CSV 列位对齐；内存不映射；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>52</code></td>
+      <td><code>flag_allow_spectate</code></td>
+      <td><code>flag_allow_spectate</code></td>
+      <td>允许观战标志（bool @+210；需 col47=1）</td>
+      <td><code>bool</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_59DC00</code></td>
+      <td class="muted">csv 52 · +210 · 0x59df99</td>
+      <td class="meaning-cell">允许观战标志（bool @+210；需 col47=1）</td>
+    </tr></tbody>
+      </table>
+    </section>
+
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">生成于 2026-10-12 · 改 JSON 后重跑 build_site.py · HTML 只读</div>
+  </footer>
+</body>
+</html>

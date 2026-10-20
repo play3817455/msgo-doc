@@ -1,0 +1,801 @@
+{
+  "id": "CS-0x3AF6-battle-weapon_fire__hand_throw_bound",
+  "opcode": "0x3AF6",
+  "direction": "CS",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "weapon_fire__hand_throw_bound",
+  "source_dir": "protocol_analysis/commands/CS-0x3AF6-battle-weapon_fire__hand_throw_bound",
+  "meta": {
+    "opcode": "`0x3AF6`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`battle_client`",
+    "命令名": "`weapon_fire__hand_throw_bound`",
+    "名字符串": "`)<-_proto_battle_client::send_weapon_fire__hand_throw_bound(` @ `0xee0dc4`",
+    "代码位置": "sub_B37F60 @ `0x00b37f60`（`0x00b37f60`..`0x00b38365`）",
+    "opcode 写入/分发证据": "`0xb37fdc`（opcode 写入指令）",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0x2A`（42）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽 @`0xB382F6`）；`call vt[0x58](buf, 负载长度)`",
+    "配对命令（同 opcode 反向）": "（本批次内无同 opcode 反向命令）"
+  },
+  "handler": "sub_B37F60",
+  "handler_va": "0x00b37f60",
+  "block": [
+    "0xB37F60",
+    "0xB38365"
+  ],
+  "name_str": ")<-_proto_battle_client::send_weapon_fire__hand_throw_bound(",
+  "name_str_va": "0xee0dc4",
+  "capacity": "0x2A",
+  "capacity_va": null,
+  "closer_va": "0xB38133",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽 @`0xB382F6`）；`call vt[0x58](buf, 负载长度)`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": "0xB382F6",
+  "wire": {
+    "length_expr": "4 + 4 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x2A（容量记账口径，非线长）",
+    "field_count": 10,
+    "length_source": "field_sum",
+    "readme_conclusion": "结论：武器发射：投掷（着弹反弹）。",
+    "readme_close": "2 + 4 + 4 + 8×2 = **26** ≤ 容量 0x2A=42（富余 16）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发给对应协议类的处理块（C→S 无 case 块）",
+      "enum": "0x3AF6",
+      "evidence_va": [
+        "0xB37FDC"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "2",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "frame_count",
+      "meaning": "客户端帧号（发包时的游戏帧计数）",
+      "purpose": "来源=入参 arg_0（`0xB37FE8`）；内联 `mov [游标], reg`；服务端按帧号对齐/丢弃过期输入",
+      "enum": null,
+      "evidence_va": [
+        "0xB37FEC"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "6",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "grenade_id",
+      "meaning": "投掷物（手雷）ID",
+      "purpose": "来源=入参 arg_4（`0xB37FFB`）；内联 `mov [游标], reg`；服务端按 ID 生成弹道/爆炸",
+      "enum": null,
+      "evidence_va": [
+        "0xB38007"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "10",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "hit_x",
+      "meaning": "命中点 X 坐标",
+      "purpose": "来源=入参 arg_8（`0xB3800A`）；经写原语 `sub_B02DA0`；服务端结算爆炸位置",
+      "enum": null,
+      "evidence_va": [
+        "0xB3800F"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 4,
+      "offset": "12",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "hit_y",
+      "meaning": "命中点 Y 坐标",
+      "purpose": "来源=入参 arg_C（`0xB38024`）；经写原语 `sub_B02DA0`；服务端结算爆炸位置",
+      "enum": null,
+      "evidence_va": [
+        "0xB38029"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    },
+    {
+      "seq": 5,
+      "offset": "14",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "hit_z",
+      "meaning": "命中点 Z 坐标",
+      "purpose": "来源=入参 arg_10（`0xB3803E`）；经写原语 `sub_B02DA0`；服务端结算爆炸位置",
+      "enum": null,
+      "evidence_va": [
+        "0xB38043"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 7
+    },
+    {
+      "seq": 6,
+      "offset": "16",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "vec_x",
+      "meaning": "投掷方向向量 X",
+      "purpose": "来源=入参 arg_14（`0xB38058`）；经写原语 `sub_B02DA0`；服务端结算弹道",
+      "enum": null,
+      "evidence_va": [
+        "0xB3805D"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 8
+    },
+    {
+      "seq": 7,
+      "offset": "18",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "vec_y",
+      "meaning": "投掷方向向量 Y",
+      "purpose": "来源=入参 arg_18（`0xB38072`）；经写原语 `sub_B02DA0`；服务端结算弹道",
+      "enum": null,
+      "evidence_va": [
+        "0xB38077"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 9
+    },
+    {
+      "seq": 8,
+      "offset": "20",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "vec_z",
+      "meaning": "投掷方向向量 Z",
+      "purpose": "来源=入参 arg_1C（`0xB3808C`）；经写原语 `sub_B02DA0`；服务端结算弹道",
+      "enum": null,
+      "evidence_va": [
+        "0xB38091"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 10
+    },
+    {
+      "seq": 9,
+      "offset": "22",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "vec_power",
+      "meaning": "投掷力度",
+      "purpose": "来源=入参 arg_20（`0xB380A6`）；经写原语 `sub_B02DA0`；服务端结算弹道初速",
+      "enum": null,
+      "evidence_va": [
+        "0xB380AB"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 11
+    },
+    {
+      "seq": 10,
+      "offset": "24",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "AI_ent_id",
+      "meaning": "AI 机体实体 ID",
+      "purpose": "来源=入参 arg_24（`0xB380C0`）；经写原语 `sub_B02DA0`；服务端定位该机体实体",
+      "enum": null,
+      "evidence_va": [
+        "0xB380C5"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 12
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0x3AF6（分发器 switch 选择子）",
+      "evidence_va": "0xB37FDC"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0x2A B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xB37FA6"
+    },
+    {
+      "step": 3,
+      "kind": "write_scalar",
+      "detail": "frame_count：`u32`（线长 4）—— 客户端帧号（发包时的游戏帧计数）",
+      "evidence_va": "0xB37FEC"
+    },
+    {
+      "step": 4,
+      "kind": "write_scalar",
+      "detail": "grenade_id：`u32`（线长 4）—— 投掷物（手雷）ID",
+      "evidence_va": "0xB38007"
+    },
+    {
+      "step": 5,
+      "kind": "write_scalar",
+      "detail": "hit_x：`u16`（线长 2）—— 命中点 X 坐标",
+      "evidence_va": "0xB3800F"
+    },
+    {
+      "step": 6,
+      "kind": "write_scalar",
+      "detail": "hit_y：`u16`（线长 2）—— 命中点 Y 坐标",
+      "evidence_va": "0xB38029"
+    },
+    {
+      "step": 7,
+      "kind": "write_scalar",
+      "detail": "hit_z：`u16`（线长 2）—— 命中点 Z 坐标",
+      "evidence_va": "0xB38043"
+    },
+    {
+      "step": 8,
+      "kind": "write_scalar",
+      "detail": "vec_x：`u16`（线长 2）—— 投掷方向向量 X",
+      "evidence_va": "0xB3805D"
+    },
+    {
+      "step": 9,
+      "kind": "write_scalar",
+      "detail": "vec_y：`u16`（线长 2）—— 投掷方向向量 Y",
+      "evidence_va": "0xB38077"
+    },
+    {
+      "step": 10,
+      "kind": "write_scalar",
+      "detail": "vec_z：`u16`（线长 2）—— 投掷方向向量 Z",
+      "evidence_va": "0xB38091"
+    },
+    {
+      "step": 11,
+      "kind": "write_scalar",
+      "detail": "vec_power：`u16`（线长 2）—— 投掷力度",
+      "evidence_va": "0xB380AB"
+    },
+    {
+      "step": 12,
+      "kind": "write_scalar",
+      "detail": "AI_ent_id：`u16`（线长 2）—— AI 机体实体 ID",
+      "evidence_va": "0xB380C5"
+    },
+    {
+      "step": 13,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xB38133"
+    },
+    {
+      "step": 14,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xB382FF"
+    }
+  ],
+  "capabilities": [
+    "battle_action"
+  ],
+  "capabilities_derived": [
+    "battle"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:46",
+    "batch": 17,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 42,
+        "va": "0xB37FA6",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB37FA3",
+        "call_va": "0xB37FA8"
+      },
+      "field_window": {
+        "start_va": "0xB37F60",
+        "end_va": "0xB38133",
+        "guard": null,
+        "closer_or_commit_va": "0xB38133",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "frame_count",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB37FEC"
+            ]
+          },
+          {
+            "name": "grenade_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB38007"
+            ]
+          },
+          {
+            "name": "hit_x",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB3800F"
+            ]
+          },
+          {
+            "name": "hit_y",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 4,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB38029"
+            ]
+          },
+          {
+            "name": "hit_z",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 5,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB38043"
+            ]
+          },
+          {
+            "name": "vec_x",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 6,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB3805D"
+            ]
+          },
+          {
+            "name": "vec_y",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 7,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB38077"
+            ]
+          },
+          {
+            "name": "vec_z",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 8,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB38091"
+            ]
+          },
+          {
+            "name": "vec_power",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 9,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB380AB"
+            ]
+          },
+          {
+            "name": "AI_ent_id",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 10,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB380C5"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB37FDC",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB37FEC",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB38007",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB3800F",
+            "kind": "write",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB38029",
+            "kind": "write",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB38043",
+            "kind": "write",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB3805D",
+            "kind": "write",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB38077",
+            "kind": "write",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB38091",
+            "kind": "write",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB380AB",
+            "kind": "write",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB380C5",
+            "kind": "write",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB38109",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 10,
+        "checkable": 10,
+        "pairs": [
+          {
+            "field": "frame_count",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB37FEC",
+            "kind": "inline_store"
+          },
+          {
+            "field": "grenade_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB38007",
+            "kind": "inline_store"
+          },
+          {
+            "field": "hit_x",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB3800F",
+            "kind": "write"
+          },
+          {
+            "field": "hit_y",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB38029",
+            "kind": "write"
+          },
+          {
+            "field": "hit_z",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB38043",
+            "kind": "write"
+          },
+          {
+            "field": "vec_x",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB3805D",
+            "kind": "write"
+          },
+          {
+            "field": "vec_y",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB38077",
+            "kind": "write"
+          },
+          {
+            "field": "vec_z",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB38091",
+            "kind": "write"
+          },
+          {
+            "field": "vec_power",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB380AB",
+            "kind": "write"
+          },
+          {
+            "field": "AI_ent_id",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB380C5",
+            "kind": "write"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB37FDC",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB37F60",
+          "0xB38133"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 26,
+          "capacity": 42,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB38109",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）26 / 容量 0x2a"
+        }
+      },
+      "closer": {
+        "va": "0xB38133",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xB382FF",
+        "mov_va": "0xB382F6",
+        "host": "[edx+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "frame_count=",
+        "grenade_id=",
+        "hit_x=",
+        "hit_y=",
+        "hit_z=",
+        "vec_x=",
+        "vec_y=",
+        "vec_z=",
+        "vec_power=",
+        "AI_ent_id="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0x3AF6-battle-weapon_fire__hand_throw_bound.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0xb37fdc",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xB37FDC"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "WeaponFireHandThrowBound",
+      "role": "request",
+      "wire_length": "4 + 4 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2",
+      "members": [
+        {
+          "name": "FrameCount",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "frame_count"
+        },
+        {
+          "name": "GrenadeId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "grenade_id"
+        },
+        {
+          "name": "HitX",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "hit_x"
+        },
+        {
+          "name": "HitY",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "hit_y"
+        },
+        {
+          "name": "HitZ",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "hit_z"
+        },
+        {
+          "name": "VecX",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "vec_x"
+        },
+        {
+          "name": "VecY",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "vec_y"
+        },
+        {
+          "name": "VecZ",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "vec_z"
+        },
+        {
+          "name": "VecPower",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "vec_power"
+        },
+        {
+          "name": "AIEntId",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "AI_ent_id"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "69dd2c18f8b37a6c",
+  "check_fingerprint": "56b9b148daa52796"
+}

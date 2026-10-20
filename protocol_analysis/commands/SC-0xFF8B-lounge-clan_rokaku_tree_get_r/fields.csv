@@ -1,0 +1,8 @@
+﻿序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+"1","0","4","u32","clan_id","战队 ID","`sub_B02DD0`（`0xB88CF7`）读 u32；去向 `vt[0x484]` 第 7 实参（`0xB890D4 push eax`）","-","0xB88CF7","确证"
+"2","4","4","u32","page_count","页码条目数（`cmp ebx,8; ja 出错` 上限 8）","`sub_B02DD0`（`0xB88D22`）读 u32；去向 `vt[0x484]` 第 5 实参（`0xB890D0 push ebx`）","≤8","0xB88D22","确证"
+"3","8","page_count×4","array<u32>","page","页码列表（元素 u32，槽步进 4）","阵列预留 `sub_B41850`（`0xB88D59`，按 count 申请，4B/槽）；循环 `sub_B02DD0`（步进 4）；去向 `vt[0x484]` 第 6 实参（`0xB890D1 push eax`）","元素 4B / 槽 4B","0xB88D59,0xB88D70","确证"
+"4","var","4","u32","node_count","节点条目数（`cmp [var_2C2C],15h; ja 出错` 上限 21）","`sub_B02DD0`（`0xB88DAE`）读 u32；去向 `vt[0x484]` 第 4 实参（`0xB890C3 push eax`）","≤21","0xB88DAE","确证"
+"5","var","node_count×60","array<rokaku_node_entry,N>","node","节点列表（元素线长 60，槽步进 0x40=64）","阵列预留 `sub_B41AC0`（`0xB88DD7`，按 count 申请，0x40/槽）；元素读取器 `sub_B46300`（`0xB46300`，线长 60 = 4×u32 + 7×u32 + u64），循环 count 次（步进 0x40）；去向 `vt[0x484]` 第 3 实参（`0xB890CB push ecx`）","元素线长 60 / 槽步进 64","0xB88DD7,0xB88DFA","确证"
+"6","var","4","u32","point_use","已消耗点数","`sub_B02DD0`（`0xB88E3E`）读 u32；去向 `vt[0x484]` 第 2 实参（`0xB890BE push ecx`）","-","0xB88E3E","确证"
+"7","var","4","u32","point_pool","点数池","`sub_B02DD0`（`0xB88E66`）读 u32；去向 `vt[0x484]` 第 1 实参（`0xB890B7 push ecx`）","-","0xB88E66","确证"

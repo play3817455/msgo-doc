@@ -1,0 +1,79 @@
+{
+  "id": "srv.inventory_box",
+  "slug": "inventory_box",
+  "title": "背包四栏容量",
+  "kind": "server_config",
+  "status": "complete",
+  "ddl": "serverv/migrations/0012_srv_config.up.sql",
+  "generated_by": "db_design/tools/build_srv_docs.py",
+  "note": "本文件由 db_design/tools/build_srv_docs.py 从 serverv/migrations/0012_srv_config.up.sql 生成，勿手改：改 srv.* 请改迁移再重跑生成器",
+  "purpose": "背包四栏容量（box 0=main 1=consume 2=trash 3=plan）；同时是 game.item.inv_place 的分区边界",
+  "primary_key": [
+    "box"
+  ],
+  "columns": [
+    {
+      "name": "box",
+      "sql_type": "SMALLINT",
+      "not_null": true,
+      "default": null,
+      "checks": [
+        "box BETWEEN 0 AND 3"
+      ],
+      "meaning": "栏位序号：0=main 1=consume 2=trash 3=plan [SC-0x02EE 字段序]"
+    },
+    {
+      "name": "name",
+      "sql_type": "TEXT",
+      "not_null": true,
+      "default": null,
+      "checks": [],
+      "meaning": "栏位英文名（main/consume/trash/plan）—— 供 GM/运维阅读，不入线"
+    },
+    {
+      "name": "capacity",
+      "sql_type": "INTEGER",
+      "not_null": true,
+      "default": null,
+      "checks": [
+        "capacity BETWEEN 0 AND 65535"
+      ],
+      "meaning": "该栏槽位数 [u16] SC-0x02EE-lounge-item_init_get_r@0xB52550|0xB52590|0xB525B4|0xB525D8"
+    },
+    {
+      "name": "updated_at",
+      "sql_type": "TIMESTAMPTZ",
+      "not_null": true,
+      "default": "now()",
+      "checks": [],
+      "meaning": "本行最后修改时间（GM 改容量时更新）"
+    }
+  ],
+  "seed_columns": [
+    "box",
+    "name",
+    "capacity"
+  ],
+  "seed_rows": [
+    {
+      "box": "0",
+      "name": "'main'",
+      "capacity": "100"
+    },
+    {
+      "box": "1",
+      "name": "'consume'",
+      "capacity": "100"
+    },
+    {
+      "box": "2",
+      "name": "'trash'",
+      "capacity": "50"
+    },
+    {
+      "box": "3",
+      "name": "'plan'",
+      "capacity": "50"
+    }
+  ]
+}

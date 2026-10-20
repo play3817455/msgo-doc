@@ -1,0 +1,467 @@
+{
+  "id": "SC-0x0E85-battle-commander_list_get_r",
+  "opcode": "0x0E85",
+  "direction": "SC",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "commander_list_get_r",
+  "source_dir": "protocol_analysis/commands/SC-0x0E85-battle-commander_list_get_r",
+  "meta": {
+    "opcode": "`0x0E85`",
+    "方向": "SC（服务端 → 客户端（recv））",
+    "协议类": "`battle_client`",
+    "命令名": "`commander_list_get_r`",
+    "名字字符串": "`)->_proto_battle_client::recv_commander_list_get_r( `，引用点 `0xB0ED77`（`push offset aProtoBattleCli_11`）",
+    "处理函数": "`sub_B0CC20` @ `0xB0CC20`（battle 分发器）",
+    "处理块范围": "`0xB0EC1F` .. `0xB0EF02`（块首即 `push 0D2h`，错误码 `0xD2`）",
+    "错误码": "`0xD2`（`0xB0EC89 push 0D2h` → `vt[0x64](1, 0xD2)`）",
+    "关联命令": "配对请求 `../CS-0xDAE0-battle-commander_list_get/`（`0xDAE0`，容量 `0xA`）"
+  },
+  "handler": "sub_B0CC20",
+  "handler_va": "0xB0CC20",
+  "block": [
+    "0xB0EC1F",
+    "0xB0EF02"
+  ],
+  "name_str": ")->_proto_battle_client::recv_commander_list_get_r(",
+  "name_str_va": "0xB0ED77",
+  "capacity": "0x18",
+  "capacity_va": "0xB0EC3B",
+  "closer_va": "0xB0ED2E",
+  "dispatch": null,
+  "dispatch_slot": "vt[0x290]",
+  "dispatch_va": "0xB0EEA1",
+  "wire": {
+    "length_expr": "8+4N",
+    "fixed": false,
+    "var_drivers": [
+      "N"
+    ],
+    "capacity_note": "声明容量 0x18（容量记账口径，非线长）",
+    "field_count": 3,
+    "length_source": "closure_row",
+    "readme_conclusion": "**报文体总长：变长 = 8 + 4N**（result u32 + count u32 + commander_id[count] u32；N ≤ 4）。",
+    "readme_close": "4 + 4 + 4N = 8 + 4N；闭合点 0xB0ED2E/0xB0ED34 要求「游标 == 末尾」✓"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "battle 分发的 switch 选择子",
+      "enum": "0x0E85",
+      "evidence_va": [
+        "0xB0ED77"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "result",
+      "meaning": "指挥官列表查询结果码",
+      "purpose": "交 vt[0x290] 第1实参；日志 result=",
+      "enum": "?",
+      "evidence_va": [
+        "0xB0EC76",
+        "0xB0EC67",
+        "0xB02DE9",
+        "0xB0EDCD",
+        "0xB0EE9E"
+      ],
+      "confidence": "类型确证/枚举待定",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "count",
+      "meaning": "指挥官 ID 列表元素个数",
+      "purpose": "上限检查 cmp 4；交 vt[0x290] 第3实参；驱动数组循环",
+      "enum": "0..4",
+      "evidence_va": [
+        "0xB0ECA8",
+        "0xB0ECD4",
+        "0xB0ECD7",
+        "0xB0EE9A"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "8",
+      "length": "4·N",
+      "wire_type": "array<u32,N>",
+      "name": "commander_id",
+      "meaning": "可选指挥官 ID 列表",
+      "purpose": "交 vt[0x290] 第2实参=数组基址；日志 commander_id={...}",
+      "enum": "元素线长 4（标量 u32，非结构体）",
+      "evidence_va": [
+        "0xB0ECE3",
+        "0xB0ED00",
+        "0xB0ED0C"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5,
+      "override_verified": true
+    },
+    {
+      "seq": -1,
+      "offset": "8+4N",
+      "length": "0",
+      "wire_type": "-",
+      "name": "（长度闭合）",
+      "meaning": "游标必须==报文末尾",
+      "purpose": "容量 0x18=24 为 N=4 的上限场景线长",
+      "enum": null,
+      "evidence_va": [
+        "0xB0ED2E",
+        "0xB0ED34"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6,
+      "is_closure": true
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0x0E85（分发器 switch 选择子）",
+      "evidence_va": "0xB0ED77"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB05DA0`（模块 id 210）→ 之后逐字段读线",
+      "evidence_va": "0xB0EC26"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "result：`u32`（线长 4）—— 指挥官列表查询结果码",
+      "evidence_va": "0xB0EC76"
+    },
+    {
+      "step": 4,
+      "kind": "read_count",
+      "detail": "count：`u32`（线长 4）—— 指挥官 ID 列表元素个数",
+      "evidence_va": "0xB0ECA8"
+    },
+    {
+      "step": 5,
+      "kind": "read_array",
+      "detail": "commander_id：`array<u32,N>`（线长 4·N）—— 可选指挥官 ID 列表",
+      "evidence_va": "0xB0ECE3"
+    },
+    {
+      "step": 6,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB0ED2E"
+    },
+    {
+      "step": 7,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x290]`，实参 3 个",
+      "evidence_va": "0xB0EEA1"
+    },
+    {
+      "step": 8,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB0EC90"
+    }
+  ],
+  "capabilities": [
+    "query",
+    "battle.commander"
+  ],
+  "capabilities_derived": [
+    "query"
+  ],
+  "db_effects": [],
+  "pair": "CS-0xDAE0-battle-commander_list_get",
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:46",
+    "batch": 15,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 24,
+        "va": "0xB0EC3B",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB0EC38",
+        "call_va": "0xB0EC3D"
+      },
+      "field_window": {
+        "start_va": "0xB0EC27",
+        "end_va": "0xB0ED55",
+        "guard": {
+          "va": "0xB0EC26",
+          "func": "0xB05DA0",
+          "module_id": 210,
+          "release_va": "0xB05D90"
+        },
+        "closer_or_commit_va": "0xB0ED2E",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "result",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB0EC76",
+              "0xB0EC67",
+              "0xB02DE9",
+              "0xB0EDCD",
+              "0xB0EE9E"
+            ]
+          },
+          {
+            "name": "count",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB0ECA8",
+              "0xB0ECD4",
+              "0xB0ECD7",
+              "0xB0EE9A"
+            ]
+          },
+          {
+            "name": "commander_id",
+            "wire_type": "array<u32,N>",
+            "width": null,
+            "seq": 3,
+            "shape": "agg",
+            "evidence_va": [
+              "0xB0ECE3",
+              "0xB0ED00",
+              "0xB0ED0C"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB0EC76",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0ECA8",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0ECE3",
+            "kind": "bounded",
+            "width": 4,
+            "wire_type": null,
+            "name": "sub_B41850",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0ED00",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 2,
+        "checkable": 2,
+        "pairs": [
+          {
+            "field": "result",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB0EC76",
+            "kind": "read"
+          },
+          {
+            "field": "count",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB0ECA8",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB0ECE3",
+            "kind": "bounded",
+            "width": 4,
+            "wire_type": null
+          },
+          {
+            "va": "0xB0ED00",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32"
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB0EC27",
+          "0xB0ED55"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 12,
+          "capacity": 24,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB0ECE3",
+              "kind": "bounded",
+              "name": "sub_B41850"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）12 / 容量 0x18"
+        }
+      },
+      "closer": {
+        "va": "0xB0ED2E",
+        "kind": "jz",
+        "jcc_va": "0xB0ED34",
+        "seq_va": "0xB0ED2A",
+        "jcc_dst": "0xB0ED50",
+        "cmp": "cmp     ecx, [esp+1B3Ch+var_1B24]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x290]",
+        "slot_value": 656,
+        "va": "0xB0EEA1",
+        "mov_va": "0xB0EE94",
+        "host": "[edx+290h]",
+        "argc": 3,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB0EC90",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "result=",
+        "commander_id={"
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0x0E85-battle-commander_list_get_r.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [
+      "0xB0EC89"
+    ],
+    "dispatcher": null,
+    "closure_field": "（长度闭合）",
+    "opcode_field_va": [
+      "0xB0ED77"
+    ]
+  },
+  "field_override": {
+    "revision": 1,
+    "verified_at": "2026-09-22",
+    "reason": "`array<u32 N>` 是记法问题：元素是标量 u32，规范成 `array<u32,N>`（4·N）。读取器为内联 u32 直读、循环步进 4（`0xB0ED0C`）。",
+    "evidence_file": "schema/commands/_overrides/SC-0x0E85-battle-commander_list_get_r.json",
+    "meta_keys": [],
+    "notes": [
+      "override_patch:1"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "CommanderListGetR",
+      "role": "response",
+      "wire_length": "8+4N",
+      "members": [
+        {
+          "name": "Result",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "result"
+        },
+        {
+          "name": "Count",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "count"
+        },
+        {
+          "name": "CommanderId",
+          "wire_type": "array<u32,N>",
+          "length": "4·N",
+          "field_ref": "commander_id",
+          "element": "u32",
+          "element_length": "4",
+          "cap": null,
+          "count_field": "count",
+          "count_field_source": "heuristic",
+          "count_var": "N",
+          "note": null
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "1463e33c13f9c844",
+  "check_fingerprint": "7a7b9878e1163285",
+  "import_repairs": [
+    "override_patch:1"
+  ]
+}

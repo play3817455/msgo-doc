@@ -1,0 +1,328 @@
+{
+  "id": "SC-0xFE02-battle-daily_record_progress_r",
+  "opcode": "0xFE02",
+  "direction": "SC",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "daily_record_progress_r",
+  "source_dir": "protocol_analysis/commands/SC-0xFE02-battle-daily_record_progress_r",
+  "meta": {
+    "opcode": "`0xFE02`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`battle_client`",
+    "命令名": "`daily_record_progress_r`",
+    "名字符串": "`)->_proto_battle_client::recv_daily_record_progress_r( ` @ `0xedd848`",
+    "代码位置": "sub_B0CC20 @ `0xb0cc20`　块 `0xb3106e`..`0xb31273`",
+    "opcode 写入/分发证据": "`0xb3113d`（命令名字符串引用点 = case 归属锚点）",
+    "处理块范围": "`0xB3106E`..`0xB31273`",
+    "声明容量": "`0x3C`（60）",
+    "配对命令（同 opcode 反向）": "（本批次内无同 opcode 反向命令）"
+  },
+  "handler": "sub_B0CC20",
+  "handler_va": "0xb0cc20",
+  "block": [
+    "0xB3106E",
+    "0xB31273"
+  ],
+  "name_str": ")->_proto_battle_client::recv_daily_record_progress_r(",
+  "name_str_va": "0xedd848",
+  "capacity": "0x3C",
+  "capacity_va": null,
+  "closer_va": "0xB310F4",
+  "dispatch": null,
+  "dispatch_slot": "vt[0x340]",
+  "dispatch_va": null,
+  "wire": {
+    "length_expr": "39",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x3C（容量记账口径，非线长）",
+    "field_count": 1,
+    "length_source": "field_sum",
+    "readme_conclusion": "结论：单字段：daily_record_info 固定 3 元数组（元素线长 13 / 槽步进 20，claim 60）；容量 60 == 3×20 精确相等。",
+    "readme_close": "闭合点：0x00B310F4（游标寄存器与报文末尾比较，jz/jnz 走成功分支）。"
+  },
+  "fields": [
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "39",
+      "wire_type": "array<challenge_info,3>",
+      "name": "daily_record_info",
+      "meaning": "每日战斗记录（固定 3 项，**无线上 count**）",
+      "purpose": "阵列预留 `sub_B06160`（claim 0x3C=60 = 3×20）；元素读取器 `sub_B07540`（`0xB07540`）= 3×u32+u8 = 13B，循环 3 次（`cmp edi,3`，步进 0x14）；去向 `vt[0x340]` 唯一实参（`0xB31223 push ecx`）",
+      "enum": "元素线长 13 / 槽步进 20 / 上限 3",
+      "evidence_va": [
+        "0xB310B6,0xB310C7"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2,
+      "element_composite_ref_source": "name",
+      "element_composite_ref": "challenge_info"
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0xFE02（分发器 switch 选择子）",
+      "evidence_va": "0xB3113D"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB05DA0`（模块 id 273）→ 之后逐字段读线",
+      "evidence_va": "0xB31075"
+    },
+    {
+      "step": 3,
+      "kind": "read_array",
+      "detail": "daily_record_info：`array<challenge_info,3>`（线长 39）—— 每日战斗记录（固定 3 项，**无线上 count**）；元素线长 13 / 槽步进 20 / 上限 3",
+      "evidence_va": "0xB310B6"
+    },
+    {
+      "step": 4,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB310F4"
+    },
+    {
+      "step": 5,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x340]`，实参 1 个",
+      "evidence_va": "0xB31226"
+    },
+    {
+      "step": 6,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB310EE"
+    }
+  ],
+  "capabilities": [
+    "report",
+    "battle.daily"
+  ],
+  "capabilities_derived": [
+    "unclassified"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:46",
+    "batch": 16,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 60,
+        "va": "0xB3108A",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB31087",
+        "call_va": "0xB3108C"
+      },
+      "field_window": {
+        "start_va": "0xB31076",
+        "end_va": "0xB3111B",
+        "guard": {
+          "va": "0xB31075",
+          "func": "0xB05DA0",
+          "module_id": 273,
+          "release_va": "0xB05D90"
+        },
+        "closer_or_commit_va": "0xB310F4",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "daily_record_info",
+            "wire_type": "array<challenge_info,3>",
+            "width": null,
+            "seq": 1,
+            "shape": "agg",
+            "evidence_va": [
+              "0xB310B6,0xB310C7"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB0754E",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB07564",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB07576",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB07588",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB310B6",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B06160",
+            "consumed": 0,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB310C7",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B07540",
+            "consumed": 13,
+            "consumed_effective": 13,
+            "nested_of": null
+          }
+        ],
+        "matched": 0,
+        "checkable": 0,
+        "pairs": [],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB310B6",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null
+          },
+          {
+            "va": "0xB310C7",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null
+          },
+          {
+            "va": "0xB0754E",
+            "kind": "nested_run",
+            "width": 12,
+            "wire_type": null
+          },
+          {
+            "va": "0xB07588",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB31076",
+          "0xB3111B"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 13,
+          "capacity": 60,
+          "relation": "within",
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）13 / 容量 0x3c"
+        },
+        "zero_load": true
+      },
+      "closer": {
+        "va": "0xB310F4",
+        "kind": "jz",
+        "jcc_va": "0xB310FA",
+        "seq_va": "0xB310F0",
+        "jcc_dst": "0xB31116",
+        "cmp": "cmp     eax, [esp+1B3Ch+var_1B24]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x340]",
+        "slot_value": 832,
+        "va": "0xB31226",
+        "mov_va": "0xB3121D",
+        "host": "[eax+340h]",
+        "argc": 1,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB310EE",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "daily_record_info={"
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0xFE02-battle-daily_record_progress_r.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0xb3113d",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": []
+  },
+  "structs": {
+    "response": {
+      "go_name": "DailyRecordProgressR",
+      "role": "response",
+      "wire_length": "39",
+      "members": [
+        {
+          "name": "DailyRecordInfo",
+          "wire_type": "array<challenge_info,3>",
+          "length": "39",
+          "field_ref": "daily_record_info",
+          "element": "challenge_info",
+          "element_composite_ref": "challenge_info",
+          "element_length": "13",
+          "cap": 3,
+          "count_field": null,
+          "count_field_source": "fixed"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "90a59597a0999a24",
+  "check_fingerprint": "8c912a3e1b282846"
+}

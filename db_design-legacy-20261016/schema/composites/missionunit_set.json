@@ -1,0 +1,185 @@
+{
+  "id": "missionunit_set",
+  "title": "任务编成 missionunit_set（12B）",
+  "length": 12,
+  "status": "complete",
+  "wire_layout": "2+2+8",
+  "writer": "sub_B41BF0",
+  "reader": "sub_B43BE0",
+  "printer": "sub_B4A970",
+  "evidence": {
+    "commands": [
+      "CS-0x33CC-lounge-msma_missionunit_store",
+      "SC-0x1908-lounge-msma_missionunit_store_r",
+      "SC-0x36D9-lounge-msma_missionunit_get_list_r"
+    ],
+    "protocol_paths": [
+      "protocol_analysis/commands/CS-0x33CC-lounge-msma_missionunit_store/README.md",
+      "protocol_analysis/commands/SC-0x1908-lounge-msma_missionunit_store_r/README.md"
+    ],
+    "note": "12B = u16 + u16 + u64（线上为 2×u32 内联读）；成员名 sub_B4A970"
+  },
+  "members": [
+    {
+      "name": "deck_type",
+      "offset": 0,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "编成卡组类型",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "CS-0x33CC-lounge-msma_missionunit_store",
+          "struct": "missionunit_set",
+          "field_name": "deck_type",
+          "offset": 0,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/CS-0x33CC-lounge-msma_missionunit_store/README.md",
+          "section": "§3",
+          "writer": "sub_B41BF0",
+          "evidence_va": "0xB41C06"
+        },
+        {
+          "command": "SC-0x1908-lounge-msma_missionunit_store_r",
+          "struct": "missionunit_set",
+          "field_name": "deck_type",
+          "offset": 0,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0x1908-lounge-msma_missionunit_store_r/README.md",
+          "section": "§3",
+          "reader": "sub_B43BE0",
+          "printer": "sub_B4A970",
+          "evidence_va": "0xB43BEE"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB43BEE",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 0
+    },
+    {
+      "name": "deck_set",
+      "offset": 2,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "编成卡组套编号",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "CS-0x33CC-lounge-msma_missionunit_store",
+          "struct": "missionunit_set",
+          "field_name": "deck_set",
+          "offset": 2,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/CS-0x33CC-lounge-msma_missionunit_store/README.md",
+          "section": "§3",
+          "writer": "sub_B41BF0",
+          "evidence_va": "0xB41C1A"
+        },
+        {
+          "command": "SC-0x1908-lounge-msma_missionunit_store_r",
+          "struct": "missionunit_set",
+          "field_name": "deck_set",
+          "offset": 2,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0x1908-lounge-msma_missionunit_store_r/README.md",
+          "section": "§3",
+          "reader": "sub_B43BE0",
+          "evidence_va": "0xB43C06"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB43C06",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 2
+    },
+    {
+      "name": "missionunit_id",
+      "offset": 4,
+      "length": 8,
+      "wire_type": "u64",
+      "meaning": "任务单元唯一 ID（线上 2×u32 内联读/写；打印器分低/高 32 位）",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "CS-0x33CC-lounge-msma_missionunit_store",
+          "struct": "missionunit_set",
+          "field_name": "missionunit_id",
+          "offset": 4,
+          "length": 8,
+          "wire_type": "u64",
+          "protocol_path": "protocol_analysis/commands/CS-0x33CC-lounge-msma_missionunit_store/README.md",
+          "section": "§3",
+          "writer": "sub_B41BF0",
+          "evidence_va": "0xB41C32"
+        },
+        {
+          "command": "SC-0x1908-lounge-msma_missionunit_store_r",
+          "struct": "missionunit_set",
+          "field_name": "missionunit_id",
+          "offset": 4,
+          "length": 8,
+          "wire_type": "u64",
+          "protocol_path": "protocol_analysis/commands/SC-0x1908-lounge-msma_missionunit_store_r/README.md",
+          "section": "§3",
+          "reader": "sub_B43BE0",
+          "printer": "sub_B4A970",
+          "evidence_va": "0xB43C20"
+        },
+        {
+          "command": "SC-0x36D9-lounge-msma_missionunit_get_list_r",
+          "struct": "missionunit_set",
+          "field_name": "missionunit_id",
+          "offset": 4,
+          "length": 8,
+          "wire_type": "u64",
+          "protocol_path": "protocol_analysis/commands/SC-0x36D9-lounge-msma_missionunit_get_list_r/README.md",
+          "section": "§3",
+          "notes": "数组元素，线长 12 / 槽步进 12",
+          "evidence_va": "0xb41c34"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB43C20",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 4
+    }
+  ],
+  "asm_audit": {
+    "verified": "2026-09-20",
+    "reader": "sub_B43BE0",
+    "writer": "sub_B41BF0",
+    "total_bytes": 12,
+    "fields_ok": 3,
+    "fields_fail": 0,
+    "issues": [],
+    "status": "pass",
+    "memory": {
+      "verified": "2026-09-26",
+      "status": "pass",
+      "mem_fields": 3,
+      "fields_ok": 3,
+      "fields_fail": 0,
+      "issues": [],
+      "manual_batch": 1,
+      "wire_eq_mem_prefix": true,
+      "memory_claim": 12,
+      "note": "sub_B43BE0/sub_B41BF0 全长 wire==mem"
+    }
+  },
+  "oracle_audit": {
+    "date": "2026-09-23",
+    "tool": "emulab/oracle_fix.py",
+    "verdict_before": "GAP",
+    "verdict_after": "PASS",
+    "changes": [
+      "deck_type: memory_offset None -> 0",
+      "deck_set: memory_offset None -> 2",
+      "missionunit_id: memory_offset None -> 4"
+    ]
+  }
+}

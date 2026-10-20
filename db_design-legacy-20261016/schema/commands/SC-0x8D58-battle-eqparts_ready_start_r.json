@@ -1,0 +1,510 @@
+{
+  "id": "SC-0x8D58-battle-eqparts_ready_start_r",
+  "opcode": "0x8D58",
+  "direction": "SC",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "eqparts_ready_start_r",
+  "source_dir": "protocol_analysis/commands/SC-0x8D58-battle-eqparts_ready_start_r",
+  "meta": {
+    "opcode": "`0x8D58`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`battle_client`",
+    "命令名": "`eqparts_ready_start_r`",
+    "处理块范围": "`B22F9E`..`B23291`",
+    "名字串引用点": "`B23102`",
+    "声明容量（解码缓冲）": "`0xD`（`B22FBA`）",
+    "长度闭合点": "`B230B9`",
+    "收尾函数": "`sub_B05D90`（battle 口径）",
+    "去向": "`vt[0x214]` @ `B23252`（5 实参）"
+  },
+  "handler": null,
+  "handler_va": null,
+  "block": [
+    "0xB22F9E",
+    "0xB23291"
+  ],
+  "name_str": null,
+  "name_str_va": "0xB23102",
+  "capacity": "0xD",
+  "capacity_va": "0xB22FBA",
+  "closer_va": "0xB230B9",
+  "dispatch": "`vt[0x214]` @ `B23252`（5 实参）",
+  "dispatch_slot": "vt[0x214]",
+  "dispatch_va": "0xB23252",
+  "wire": {
+    "length_expr": "4 + 4 + 2 + 2 + 1",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0xD（容量记账口径，非线长）",
+    "field_count": 5,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：13。",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0x8D58",
+      "evidence_va": [
+        "B23102"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "result",
+      "meaning": "结果码（日志串 `result=`）",
+      "purpose": "经 `vt[0x214]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B22FF5",
+        "B23158"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "frame_count",
+      "meaning": "帧数（日志串 `frame_count=`）",
+      "purpose": "经 `vt[0x214]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B23035",
+        "B23182"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "8",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "AI_ent_id",
+      "meaning": "AI 实体 ID（日志串 `AI_ent_id=`）",
+      "purpose": "经 `vt[0x214]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B23059",
+        "B231AD"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 4,
+      "offset": "10",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "group_id",
+      "meaning": "分组 ID（日志串 `group_id=`）",
+      "purpose": "经 `vt[0x214]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B2307D",
+        "B231D8"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    },
+    {
+      "seq": 5,
+      "offset": "12",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "reason",
+      "meaning": "原因（日志串 `reason=`）",
+      "purpose": "经 `vt[0x214]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B230A5",
+        "B231FB"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 7
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0x8D58（分发器 switch 选择子）",
+      "evidence_va": "0xB23102"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB05DA0`（模块 id 166）→ 之后逐字段读线",
+      "evidence_va": "0xB22FA5"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "result：`u32`（线长 4）—— 结果码（日志串 `result=`）",
+      "evidence_va": "0xB22FF5"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "frame_count：`u32`（线长 4）—— 帧数（日志串 `frame_count=`）",
+      "evidence_va": "0xB23035"
+    },
+    {
+      "step": 5,
+      "kind": "read_scalar",
+      "detail": "AI_ent_id：`u16`（线长 2）—— AI 实体 ID（日志串 `AI_ent_id=`）",
+      "evidence_va": "0xB23059"
+    },
+    {
+      "step": 6,
+      "kind": "read_scalar",
+      "detail": "group_id：`u16`（线长 2）—— 分组 ID（日志串 `group_id=`）",
+      "evidence_va": "0xB2307D"
+    },
+    {
+      "step": 7,
+      "kind": "read_scalar",
+      "detail": "reason：`u8`（线长 1）—— 原因（日志串 `reason=`）",
+      "evidence_va": "0xB230A5"
+    },
+    {
+      "step": 8,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB230B9"
+    },
+    {
+      "step": 9,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x214]`，实参 5 个",
+      "evidence_va": "0xB23275"
+    },
+    {
+      "step": 10,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB2300F"
+    }
+  ],
+  "capabilities": [
+    "flow",
+    "query",
+    "battle.eqparts"
+  ],
+  "capabilities_derived": [
+    "flow"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:47",
+    "batch": 18,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 13,
+        "va": "0xB22FBA",
+        "reg": "eax",
+        "host": "[edx+78h]",
+        "alloc_va": "0xB22FB7",
+        "call_va": "0xB22FBC"
+      },
+      "field_window": {
+        "start_va": "0xB22FA6",
+        "end_va": "0xB230E0",
+        "guard": {
+          "va": "0xB22FA5",
+          "func": "0xB05DA0",
+          "module_id": 166,
+          "release_va": "0xB05D90"
+        },
+        "closer_or_commit_va": "0xB230B9",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "result",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "B22FF5",
+              "B23158"
+            ]
+          },
+          {
+            "name": "frame_count",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "B23035",
+              "B23182"
+            ]
+          },
+          {
+            "name": "AI_ent_id",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "B23059",
+              "B231AD"
+            ]
+          },
+          {
+            "name": "group_id",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 4,
+            "shape": "scalar",
+            "evidence_va": [
+              "B2307D",
+              "B231D8"
+            ]
+          },
+          {
+            "name": "reason",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 5,
+            "shape": "scalar",
+            "evidence_va": [
+              "B230A5",
+              "B231FB"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB22FF5",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB23035",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB23059",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB2307D",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB230A5",
+            "kind": "read",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 5,
+        "checkable": 5,
+        "pairs": [
+          {
+            "field": "result",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB22FF5",
+            "kind": "read"
+          },
+          {
+            "field": "frame_count",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB23035",
+            "kind": "read"
+          },
+          {
+            "field": "AI_ent_id",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB23059",
+            "kind": "read"
+          },
+          {
+            "field": "group_id",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB2307D",
+            "kind": "read"
+          },
+          {
+            "field": "reason",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB230A5",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB22FA6",
+          "0xB230E0"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 13,
+          "capacity": 13,
+          "relation": "exact",
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）13 / 容量 0xd"
+        }
+      },
+      "closer": {
+        "va": "0xB230B9",
+        "kind": "jz",
+        "jcc_va": "0xB230BF",
+        "seq_va": "0xB230B5",
+        "jcc_dst": "0xB230DB",
+        "cmp": "cmp     ebx, [esp+1B3Ch+var_1B24]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x214]",
+        "slot_value": 532,
+        "va": "0xB23275",
+        "mov_va": "0xB23252",
+        "host": "[eax+214h]",
+        "argc": 5,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB2300F",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "result=",
+        "frame_count=",
+        "AI_ent_id=",
+        "group_id=",
+        "reason="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0x8D58-battle-eqparts_ready_start_r.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "B23102"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "EqpartsReadyStartR",
+      "role": "response",
+      "wire_length": "4 + 4 + 2 + 2 + 1",
+      "members": [
+        {
+          "name": "Result",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "result"
+        },
+        {
+          "name": "FrameCount",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "frame_count"
+        },
+        {
+          "name": "AIEntId",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "AI_ent_id"
+        },
+        {
+          "name": "GroupId",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "group_id"
+        },
+        {
+          "name": "Reason",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "reason"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "f0ae6e03594fbd9c",
+  "check_fingerprint": "e2cff2d8deab6f79"
+}

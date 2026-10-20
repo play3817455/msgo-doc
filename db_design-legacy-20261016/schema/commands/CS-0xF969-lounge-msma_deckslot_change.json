@@ -1,0 +1,418 @@
+{
+  "id": "CS-0xF969-lounge-msma_deckslot_change",
+  "opcode": "0xF969",
+  "direction": "CS",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "msma_deckslot_change",
+  "source_dir": "protocol_analysis/commands/CS-0xF969-lounge-msma_deckslot_change",
+  "meta": {
+    "opcode": "`0xF969`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`msma_deckslot_change`",
+    "名字符串": "`)<-_proto_lounge_client::send_msma_deckslot_change( ` @ `0x00EEB350`",
+    "代码位置": "`sub_B93160` @ `0x00B93160`（`0x00B93160`..`0x00B933A6`）",
+    "opcode 写入证据": "`0x00B931DC`",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0x12`（18）",
+    "容量申请证据": "`0x00B931A6`（分配器 `[obj+0Ch]` 的 `vt[0x78]`）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)` @ `0x00B93334`",
+    "提交": "`sub_B02FF0` @ `0x00B93284`",
+    "附加通知回调": "`[obj+79A8h]`（模块 id `0xD1`）",
+    "配对命令": "S→C `SC-0xD6BC-lounge-msma_deckslot_change_r`"
+  },
+  "handler": "sub_B93160",
+  "handler_va": "0x00B93160",
+  "block": [
+    "0xB93160",
+    "0xB933A6"
+  ],
+  "name_str": ")<-_proto_lounge_client::send_msma_deckslot_change(",
+  "name_str_va": "0x00EEB350",
+  "capacity": "0x12",
+  "capacity_va": "0x00B931A6",
+  "closer_va": "0xB93284",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)` @ `0x00B93334`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": "0x00B93334",
+  "wire": {
+    "length_expr": "8 + 2 + 2",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x12（容量记账口径，非线长）",
+    "field_count": 3,
+    "length_source": "field_sum",
+    "readme_conclusion": "字段数：**4**（含 opcode 第 0 项）",
+    "readme_close": "2 + 8 + 2 + 2 = 14 ≤ 容量 0x12 = 18（富余 4）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "写入 `buf+0`，供服务端分发；无 case 块（C→S）",
+      "enum": "0xF969",
+      "evidence_va": [
+        "`00B931DC`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "8",
+      "wire_type": "u64",
+      "name": "uniqid",
+      "meaning": "所持机体唯一 ID",
+      "purpose": "来源=入参 `arg_0`(低 32 位) + `arg_4`(高 32 位)：`mov [eax],esi`(@`0xB931EC`) + `mov [eax+4],esi`(@`0xB931F2`)，**低 32 位在前**",
+      "enum": null,
+      "evidence_va": [
+        "`0xB931EC`,`0xB931F2`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "8",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "decktype",
+      "meaning": "编成（卡组）类型",
+      "purpose": "来源=入参 `arg_8`（word）→ 内联写 `mov [edx],cx`(@`0xB93205`)",
+      "enum": null,
+      "evidence_va": [
+        "`0xB93205`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "10",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "deckslot",
+      "meaning": "编成槽位序号",
+      "purpose": "来源=入参 `arg_C` → 写原语 `sub_B02DA0`(@`0xB93216`)",
+      "enum": null,
+      "evidence_va": [
+        "`0xB93216`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0xF969（分发器 switch 选择子）",
+      "evidence_va": "0x00B931DC"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0x12 B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xB931A6"
+    },
+    {
+      "step": 3,
+      "kind": "write_scalar",
+      "detail": "uniqid：`u64`（线长 8）—— 所持机体唯一 ID",
+      "evidence_va": "0xB931EC"
+    },
+    {
+      "step": 4,
+      "kind": "write_scalar",
+      "detail": "decktype：`u16`（线长 2）—— 编成（卡组）类型",
+      "evidence_va": "0xB93205"
+    },
+    {
+      "step": 5,
+      "kind": "write_scalar",
+      "detail": "deckslot：`u16`（线长 2）—— 编成槽位序号",
+      "evidence_va": "0xB93216"
+    },
+    {
+      "step": 6,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xB93284"
+    },
+    {
+      "step": 7,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xB9333D"
+    }
+  ],
+  "capabilities": [
+    "update",
+    "lounge.deckslot"
+  ],
+  "capabilities_derived": [
+    "update"
+  ],
+  "db_effects": [],
+  "pair": "SC-0xD6BC-lounge-msma_deckslot_change_r",
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:46",
+    "batch": 14,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 18,
+        "va": "0xB931A6",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB931A3",
+        "call_va": "0xB931A8"
+      },
+      "field_window": {
+        "start_va": "0xB93160",
+        "end_va": "0xB93284",
+        "guard": null,
+        "closer_or_commit_va": "0xB93284",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "uniqid",
+            "wire_type": "u64",
+            "width": 8,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "`0xB931EC`,`0xB931F2`"
+            ]
+          },
+          {
+            "name": "decktype",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "`0xB93205`"
+            ]
+          },
+          {
+            "name": "deckslot",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "`0xB93216`"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB931DC",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB931EC",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB93205",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB93216",
+            "kind": "write",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB9325A",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 2,
+        "checkable": 3,
+        "pairs": [
+          {
+            "field": "decktype",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB931DC",
+            "kind": "inline_store"
+          },
+          {
+            "field": "deckslot",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB93205",
+            "kind": "inline_store"
+          }
+        ],
+        "gaps": [
+          {
+            "field": "uniqid",
+            "wire_type": "u64",
+            "width": 8,
+            "shape": "scalar",
+            "note": "汇编事件序列里找不到与之对位的读写点（缺字段或宽度不符）"
+          }
+        ],
+        "unmatched_actual": [
+          {
+            "va": "0xB931EC",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null
+          },
+          {
+            "va": "0xB93216",
+            "kind": "write",
+            "width": 2,
+            "wire_type": "u16"
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB93160",
+          "0xB93284"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 10,
+          "capacity": 18,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB9325A",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）10 / 容量 0x12"
+        }
+      },
+      "closer": {
+        "va": "0xB93284",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xB9333D",
+        "mov_va": "0xB93334",
+        "host": "[edx+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "uniqid=",
+        "decktype=",
+        "deckslot="
+      ]
+    },
+    "mismatches": [],
+    "notes": [
+      {
+        "check": "primitive_widths",
+        "note": "定宽对位不可判定：C→S 写线在复合写入器内部 consumed 未知；缺口 uniqid"
+      }
+    ],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0xF969-lounge-msma_deckslot_change.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0x00B931DC",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "`00B931DC`"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "MsmaDeckslotChange",
+      "role": "request",
+      "wire_length": "8 + 2 + 2",
+      "members": [
+        {
+          "name": "Uniqid",
+          "wire_type": "u64",
+          "length": "8",
+          "field_ref": "uniqid"
+        },
+        {
+          "name": "Decktype",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "decktype"
+        },
+        {
+          "name": "Deckslot",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "deckslot"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "e45ec20694af3b03",
+  "check_fingerprint": "307406d3be7d40f6"
+}

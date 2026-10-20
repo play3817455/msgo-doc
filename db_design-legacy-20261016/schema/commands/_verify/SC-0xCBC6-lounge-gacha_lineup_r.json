@@ -1,0 +1,235 @@
+{
+ "id": "SC-0xCBC6-lounge-gacha_lineup_r",
+ "verified_at": "2026-09-30 15:25:45",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "block",
+ "block": [
+  "0xB7AB17",
+  "0xB7ADBE"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 1608,
+   "va": "0xB7AB2C",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xB7AB29",
+   "call_va": "0xB7AB31"
+  },
+  "field_window": {
+   "start_va": "0xB7AB18",
+   "end_va": "0xB7AC50",
+   "guard": {
+    "va": "0xB7AB17",
+    "func": "0xB41120",
+    "module_id": null,
+    "release_va": "0xB41110"
+   },
+   "closer_or_commit_va": "0xB7AC29",
+   "within_model_block": true,
+   "range_from": "block"
+  },
+  "primitive_widths": {
+   "direction": "SC",
+   "expected": [
+    {
+     "name": "result",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xb7ab5b",
+      "0xb7ab6a"
+     ]
+    },
+    {
+     "name": "quantity_num",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 2,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xb7ab9c",
+      "0xb7abc8"
+     ]
+    },
+    {
+     "name": "quantity",
+     "wire_type": "array<gacha_lineup,n>",
+     "width": null,
+     "seq": 3,
+     "shape": "agg",
+     "evidence_va": [
+      "0xb7abda",
+      "0xb7abfb"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB46ABE",
+     "kind": "nested",
+     "width": 4,
+     "wire_type": null,
+     "name": "",
+     "consumed": 4,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB46AD5",
+     "kind": "nested",
+     "width": 2,
+     "wire_type": null,
+     "name": "",
+     "consumed": 2,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB7AB6A",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB7AB9C",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB7ABDA",
+     "kind": "bounded",
+     "width": 8,
+     "wire_type": null,
+     "name": "sub_B41690",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB7ABFB",
+     "kind": "opaque",
+     "width": null,
+     "wire_type": null,
+     "name": "sub_B46AB0",
+     "consumed": 6,
+     "consumed_effective": 6,
+     "nested_of": null
+    }
+   ],
+   "matched": 2,
+   "checkable": 2,
+   "pairs": [
+    {
+     "field": "result",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB7AB6A",
+     "kind": "read"
+    },
+    {
+     "field": "quantity_num",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB7AB9C",
+     "kind": "read"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [
+    {
+     "va": "0xB7ABDA",
+     "kind": "bounded",
+     "width": 8,
+     "wire_type": null
+    },
+    {
+     "va": "0xB7ABFB",
+     "kind": "opaque",
+     "width": null,
+     "wire_type": null
+    },
+    {
+     "va": "0xB46ABE",
+     "kind": "nested",
+     "width": 4,
+     "wire_type": null
+    },
+    {
+     "va": "0xB46AD5",
+     "kind": "nested",
+     "width": 2,
+     "wire_type": null
+    }
+   ],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB7AB18",
+    "0xB7AC50"
+   ],
+   "scalar_match_verifiable": true,
+   "capacity_relation": {
+    "observed_min": 14,
+    "capacity": 1608,
+    "relation": "within",
+    "unknown_events": [
+     {
+      "va": "0xB7ABDA",
+      "kind": "bounded",
+      "name": "sub_B41690"
+     }
+    ],
+    "is_lower_bound": true,
+    "note": "观测线长（下界）14 / 容量 0x648"
+   }
+  },
+  "closer": {
+   "va": "0xB7AC29",
+   "kind": "jz",
+   "jcc_va": "0xB7AC2F",
+   "seq_va": "0xB7AC25",
+   "jcc_dst": "0xB7AC4B",
+   "cmp": "cmp     ecx, [esp+2C5Ch+var_2C40]",
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x3D8]",
+   "slot_value": 984,
+   "va": "0xB7ADA2",
+   "mov_va": "0xB7AD95",
+   "host": "[edx+3D8h]",
+   "argc": 3,
+   "form": "mov_then_call",
+   "error_slot": {
+    "slot": "vt[0x64]",
+    "va": "0xB7AB84",
+    "argc": 2
+   }
+  },
+  "log_strings": [
+   "result=",
+   "quantity={"
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "quantity",
+  "result"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 12
+}

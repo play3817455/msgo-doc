@@ -1,0 +1,448 @@
+{
+  "id": "SC-0xD5AA-lounge-bonus_event_now_update",
+  "opcode": "0xD5AA",
+  "direction": "SC",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "bonus_event_now_update",
+  "source_dir": "protocol_analysis/commands/SC-0xD5AA-lounge-bonus_event_now_update",
+  "meta": {
+    "opcode": "`0xD5AA`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`bonus_event_now_update`",
+    "处理块范围": "`0xb7d1d5`..`0xb7d3a2`",
+    "名字串引用点": "`0xee663c`",
+    "声明容量（解码缓冲）": "`0x100`（`B7D1EE`）",
+    "长度闭合点": "`B7D277`",
+    "报错码": "`0x5C`（块内 `push 1; push 5Ch; vt[0x64]`）",
+    "去向": "`vt[0x138]` @`B7D386`（1 实参）"
+  },
+  "handler": null,
+  "handler_va": null,
+  "block": [
+    "0xb7d1d5",
+    "0xb7d3a2"
+  ],
+  "name_str": null,
+  "name_str_va": "0xee663c",
+  "capacity": "0x100",
+  "capacity_va": "0xB7D1EE",
+  "closer_va": "0xB7D258",
+  "dispatch": "`vt[0x138]` @`B7D386`（1 实参）",
+  "dispatch_slot": "vt[0x138]",
+  "dispatch_va": "0xB7D386",
+  "wire": {
+    "length_expr": "256",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x100（容量记账口径，非线长）",
+    "field_count": 1,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：256",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "256",
+      "wire_type": "array<bonus_event,4>",
+      "name": "events",
+      "meaning": "当期加成活动列表（固定 4 元；日志串 `events={`）",
+      "purpose": "经 `vt[0x138]` 交业务（1 实参，元素指针）；元素成员（元素打印器 `sub_B499F0`，16×u32）：`main_rate`/`main_priority`/`gp_rate`/`reward_rate`/`raredrop_rate`/`accump_rate`/`over_custom_rate`/`gp_offset`/`reward_num`/`accump_offset`/`over_custom_offset`/`buildup_odds_offset`/`bonus_target`/`game_type`/`begin_time`/`end_time`",
+      "enum": null,
+      "evidence_va": [
+        "0xb7d21d",
+        "0xb7d22e",
+        "0xb7d240",
+        "0xb7d2e5"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2,
+      "element_composite_ref_source": "name",
+      "element_composite_ref": "bonus_event"
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0xD5AA（分发器 switch 选择子）",
+      "evidence_va": "0x0000"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB41120`（模块 id 92）→ 之后逐字段读线",
+      "evidence_va": "0xB7D1D9"
+    },
+    {
+      "step": 3,
+      "kind": "read_array",
+      "detail": "events：`array<bonus_event,4>`（线长 256）—— 当期加成活动列表（固定 4 元；日志串 `events={`）",
+      "evidence_va": "0xB7D21D"
+    },
+    {
+      "step": 4,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB7D258"
+    },
+    {
+      "step": 5,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x138]`，实参 1 个",
+      "evidence_va": "0xB7D386"
+    },
+    {
+      "step": 6,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB7D252"
+    }
+  ],
+  "capabilities": [
+    "update",
+    "lounge.bonus_event"
+  ],
+  "capabilities_derived": [
+    "notify"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:45",
+    "batch": 12,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 256,
+        "va": "0xB7D1EE",
+        "reg": "eax",
+        "host": "[edx+78h]",
+        "alloc_va": "0xB7D1EB",
+        "call_va": "0xB7D1F3"
+      },
+      "field_window": {
+        "start_va": "0xB7D1DA",
+        "end_va": "0xB7D279",
+        "guard": {
+          "va": "0xB7D1D9",
+          "func": "0xB41120",
+          "module_id": 92,
+          "release_va": "0xB41110"
+        },
+        "closer_or_commit_va": "0xB7D258",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "events",
+            "wire_type": "array<bonus_event,4>",
+            "width": null,
+            "seq": 1,
+            "shape": "agg",
+            "evidence_va": [
+              "0xb7d21d",
+              "0xb7d22e",
+              "0xb7d240",
+              "0xb7d2e5"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB43373",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB4338D",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB433A3",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB433B9",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB433C6",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB433DB",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB433F0",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB43405",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB43416",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB43427",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB43438",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB43449",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB4345A",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB4346B",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB4347C",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB43496",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB7D21D",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B412E0",
+            "consumed": 0,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB7D22E",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B43360",
+            "consumed": 64,
+            "consumed_effective": 64,
+            "nested_of": null
+          }
+        ],
+        "matched": 0,
+        "checkable": 0,
+        "pairs": [],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB7D21D",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null
+          },
+          {
+            "va": "0xB7D22E",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null
+          },
+          {
+            "va": "0xB43373",
+            "kind": "nested_run",
+            "width": 64,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB7D1DA",
+          "0xB7D279"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 64,
+          "capacity": 256,
+          "relation": "within",
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）64 / 容量 0x100"
+        },
+        "zero_load": true
+      },
+      "closer": {
+        "va": "0xB7D258",
+        "kind": "jz",
+        "jcc_va": "0xB7D25E",
+        "seq_va": "0xB7D254",
+        "jcc_dst": "0xB7D277",
+        "cmp": "cmp     ecx, [esp+2C5Ch+var_2C40]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x138]",
+        "slot_value": 312,
+        "va": "0xB7D386",
+        "mov_va": "0xB7D37D",
+        "host": "[eax+138h]",
+        "argc": 1,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB7D252",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "events={"
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0xD5AA-lounge-bonus_event_now_update.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": []
+  },
+  "structs": {
+    "response": {
+      "go_name": "BonusEventNowUpdate",
+      "role": "response",
+      "wire_length": "256",
+      "members": [
+        {
+          "name": "Events",
+          "wire_type": "array<bonus_event,4>",
+          "length": "256",
+          "field_ref": "events",
+          "element": "bonus_event",
+          "element_composite_ref": "bonus_event",
+          "element_length": "64",
+          "cap": 4,
+          "count_field": null,
+          "count_field_source": "fixed"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "415a46fcc1ab4d32",
+  "check_fingerprint": "23c276c9b0bc8a75"
+}

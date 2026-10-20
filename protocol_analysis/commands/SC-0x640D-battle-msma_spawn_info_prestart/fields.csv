@@ -1,0 +1,11 @@
+序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+0,-,2,u16,opcode,命令号,分发器 switch 选择子,`0x640D`,`0xb1bb10`,确证
+1,0,4,u32,remain_sec,开场剩余秒数（日志串 `remain_sec=`）,`vt[0x140]` 实参,-,0xb1b8ac,确证
+2,4,4,u32,mstype_count,"`mstype` 列表计数（上限检查 `cmp ebx,33h` @`0xb1b904`）",驱动随后的循环（上限 51）,≤51,0xb1b8db,确证
+3,8,1,"array<u8,N>",mstype,出场机型分类列表（日志串 `mstype={`）,`vt[0x140]` 实参（指针），元素由 `sub_B06230` 逐字节读,-,0xb1b930,确证
+4,,4,u32,post_index_count,"`post_index` 计数（`cmp ebx,33h` @`0xb1b970`）",驱动循环（≤51）,≤51,0xb1b95c,确证
+5,,2,"array<u16,N>",post_index,出场点位索引列表（日志串 `post_index={`）,同上,-,0xb1b9aa,确证
+6,,4,u32,spt_spot_index_count,"`spt_spot_index` 计数（`cmp ebx,33h` @`0xb1b9ef`）",驱动循环（≤51）,≤51,0xb1b9db,确证
+7,,2,"array<u16,N>",spt_spot_index,支援点索引列表（日志串 `spt_spot_index={`）,同上,-,0xb1ba2a,确证
+8,,4,u32,stghold_entid_count,"`stghold_entid` 计数（`cmp ebx,33h` @`0xb1ba6f`）",驱动循环（≤51）,≤51,0xb1ba5b,确证
+9,,2,"array<u16,N>",stghold_entid,据点保持实体 id 列表（日志串 `stghold_entid={`）,同上,-,0xb1baa2,确证

@@ -1,0 +1,422 @@
+{
+  "id": "CS-0x5C82-auth-authenticate_you9otp_input_r",
+  "opcode": "0x5C82",
+  "direction": "CS",
+  "proto": "auth",
+  "proto_class": "auth_client",
+  "name": "authenticate_you9otp_input_r",
+  "source_dir": "protocol_analysis/commands/CS-0x5C82-auth-authenticate_you9otp_input_r",
+  "meta": {
+    "opcode": "`0x5C82`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`auth_client`",
+    "命令名": "`authenticate_you9otp_input_r`",
+    "名字符串": "`)<-_proto_auth_client::send_authenticate_you9otp_input_r(` @ `0xedb048`",
+    "代码位置": "sub_B05370 @ `0xb05370`（`0xb05370`..`0xb055cf`）",
+    "opcode 写入证据": "`0xb053e9`",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0x26`（38）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)`",
+    "配对命令（同 opcode 反向）": "见 §4.3 与其他命令的关联 / INDEX 反向表"
+  },
+  "handler": "sub_B05370",
+  "handler_va": "0xb05370",
+  "block": [
+    "0xB05370",
+    "0xB055CF"
+  ],
+  "name_str": ")<-_proto_auth_client::send_authenticate_you9otp_input_r(",
+  "name_str_va": "0xedb048",
+  "capacity": "0x26",
+  "capacity_va": null,
+  "closer_va": "0xB05495",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": null,
+  "wire": {
+    "length_expr": "4 + var + var",
+    "fixed": false,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x26（容量记账口径，非线长）",
+    "field_count": 3,
+    "length_source": "field_sum",
+    "readme_conclusion": "结论：auth 阶段 you9 OTP 输入：OTP 类型 + 矩阵码 + 输入码。",
+    "readme_close": "2 + 4 + 17 + 9 = 32 ≤ 容量 0x26=38（富余 6）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发给 auth 协议类处理块（C→S 无 case 块）",
+      "enum": "0x5C82",
+      "evidence_va": [
+        "0xB053E9"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "2",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "otp_type",
+      "meaning": "OTP 类型",
+      "purpose": "来源=入参 arg_0（@0xB053F5）；内联 `mov [eax],ecx`（4 字节目标）；经 `vt[0x58]` 发送",
+      "enum": null,
+      "evidence_va": [
+        "0xB05403"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "6",
+      "length": "var",
+      "wire_type": "bytes",
+      "name": "otp_matrix_code",
+      "meaning": "OTP 矩阵码串（NUL 结尾）",
+      "purpose": "来源=入参 arg_4（@0xB05405）；写线原语 `sub_B02B40`；服务端据此还原矩阵",
+      "enum": "slot 预算 17（push 0x11@0xB053FD）",
+      "evidence_va": [
+        "0xB0540B"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "var",
+      "length": "var",
+      "wire_type": "bytes",
+      "name": "input_otp",
+      "meaning": "用户输入的 OTP 串（NUL 结尾）",
+      "purpose": "来源=入参 arg_8（@0xB0541B）；写线原语 `sub_B02B40`；服务端据此校验",
+      "enum": "slot 预算 9（push 9@0xB0541F）",
+      "evidence_va": [
+        "0xB05427"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0x5C82（分发器 switch 选择子）",
+      "evidence_va": "0xB053E9"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0x26 B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xB053B3"
+    },
+    {
+      "step": 3,
+      "kind": "write_count",
+      "detail": "otp_type：`u32`（线长 4）—— OTP 类型",
+      "evidence_va": "0xB05403"
+    },
+    {
+      "step": 4,
+      "kind": "write_scalar",
+      "detail": "otp_matrix_code：`bytes`（线长 var）—— OTP 矩阵码串（NUL 结尾）",
+      "evidence_va": "0xB0540B"
+    },
+    {
+      "step": 5,
+      "kind": "write_scalar",
+      "detail": "input_otp：`bytes`（线长 var）—— 用户输入的 OTP 串（NUL 结尾）",
+      "evidence_va": "0xB05427"
+    },
+    {
+      "step": 6,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xB05495"
+    },
+    {
+      "step": 7,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xB05569"
+    }
+  ],
+  "capabilities": [
+    "validate"
+  ],
+  "capabilities_derived": [
+    "unclassified"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:42",
+    "batch": 2,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 38,
+        "va": "0xB053B3",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB053B0",
+        "call_va": "0xB053B5"
+      },
+      "field_window": {
+        "start_va": "0xB05370",
+        "end_va": "0xB05495",
+        "guard": null,
+        "closer_or_commit_va": "0xB05495",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "otp_type",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB05403"
+            ]
+          },
+          {
+            "name": "otp_matrix_code",
+            "wire_type": "bytes",
+            "width": null,
+            "seq": 2,
+            "shape": "agg",
+            "evidence_va": [
+              "0xB0540B"
+            ]
+          },
+          {
+            "name": "input_otp",
+            "wire_type": "bytes",
+            "width": null,
+            "seq": 3,
+            "shape": "agg",
+            "evidence_va": [
+              "0xB05427"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB053E9",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB05403",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0540B",
+            "kind": "write",
+            "width": null,
+            "wire_type": "str",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB05427",
+            "kind": "write",
+            "width": null,
+            "wire_type": "str",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0546B",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 1,
+        "checkable": 1,
+        "pairs": [
+          {
+            "field": "otp_type",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB05403",
+            "kind": "inline_store"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB053E9",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          },
+          {
+            "va": "0xB0540B",
+            "kind": "write",
+            "width": null,
+            "wire_type": "str"
+          },
+          {
+            "va": "0xB05427",
+            "kind": "write",
+            "width": null,
+            "wire_type": "str"
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB05370",
+          "0xB05495"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 6,
+          "capacity": 38,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB0540B",
+              "kind": "write",
+              "name": ""
+            },
+            {
+              "va": "0xB05427",
+              "kind": "write",
+              "name": ""
+            },
+            {
+              "va": "0xB0546B",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）6 / 容量 0x26"
+        }
+      },
+      "closer": {
+        "va": "0xB05495",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xB05569",
+        "mov_va": "0xB05560",
+        "host": "[eax+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "otp_type=",
+        "otp_matrix_code=\"",
+        "input_otp=\""
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0x5C82-auth-authenticate_you9otp_input_r.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0xb053e9",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xB053E9"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "AuthenticateYou9otpInputR",
+      "role": "request",
+      "wire_length": "4 + var + var",
+      "members": [
+        {
+          "name": "OtpType",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "otp_type"
+        },
+        {
+          "name": "OtpMatrixCode",
+          "wire_type": "bytes",
+          "length": "var",
+          "field_ref": "otp_matrix_code",
+          "element": null,
+          "element_length": null,
+          "cap": null,
+          "count_field": "otp_type",
+          "count_field_source": "nearest_scalar",
+          "note": "元素成员未建模（composites/ 无此结构），须以 IDA 复核补"
+        },
+        {
+          "name": "InputOtp",
+          "wire_type": "bytes",
+          "length": "var",
+          "field_ref": "input_otp",
+          "element": null,
+          "element_length": null,
+          "cap": null,
+          "count_field": "otp_type",
+          "count_field_source": "nearest_scalar",
+          "note": "元素成员未建模（composites/ 无此结构），须以 IDA 复核补"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "e12a1f8444878f2c",
+  "check_fingerprint": "51a26accdcb87bb2"
+}

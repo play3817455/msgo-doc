@@ -1,0 +1,403 @@
+{
+  "id": "CS-0x6BCD-battle-msma_AI_hate_control",
+  "opcode": "0x6BCD",
+  "direction": "CS",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "msma_AI_hate_control",
+  "source_dir": "protocol_analysis/commands/CS-0x6BCD-battle-msma_AI_hate_control",
+  "meta": {
+    "opcode": "`0x6BCD`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`battle_client`",
+    "命令名": "`msma_AI_hate_control`",
+    "名字符串": "`)<-_proto_battle_client::send_msma_AI_hate_control(` @ `0xee1298`",
+    "代码位置": "sub_B3D210 @ `0xb3d210`（`0xb3d210`..`0xb3d44e`）",
+    "opcode 写入证据": "`0xb3d28c`",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0xE`（14）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)`",
+    "配对命令（同 opcode 反向）": "见 §4.3 与其他命令的关联 / INDEX 反向表"
+  },
+  "handler": "sub_B3D210",
+  "handler_va": "0xb3d210",
+  "block": [
+    "0xB3D210",
+    "0xB3D44E"
+  ],
+  "name_str": ")<-_proto_battle_client::send_msma_AI_hate_control(",
+  "name_str_va": "0xee1298",
+  "capacity": "0xE",
+  "capacity_va": null,
+  "closer_va": "0xB3D331",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": null,
+  "wire": {
+    "length_expr": "2 + 2 + 2",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0xE（容量记账口径，非线长）",
+    "field_count": 3,
+    "length_source": "field_sum",
+    "readme_conclusion": "结论：AI 仇恨控制：AI 实体 id + 目标实体 id + 仇恨调整量。",
+    "readme_close": "2 + 2 + 2 + 2 = 8 ≤ 容量 0xE=14（富余 6）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发给 battle 协议类处理块（C→S 无 case 块）",
+      "enum": "0x6BCD",
+      "evidence_va": [
+        "0xB3D28C"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "2",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "AI_ent_id",
+      "meaning": "AI 实体 id",
+      "purpose": "来源=入参 arg_0 的低 16 位（@0xB3D298）；内联 `mov [eax],si`；经 `vt[0x58]` 发送",
+      "enum": null,
+      "evidence_va": [
+        "0xB3D29D"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "target_ent_id",
+      "meaning": "目标实体 id",
+      "purpose": "来源=入参 arg_4 的低 16 位（@0xB3D2AD）；内联 `mov [eax],cx`；经 `vt[0x58]` 发送",
+      "enum": null,
+      "evidence_va": [
+        "0xB3D2BA"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "6",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "hate_adjust",
+      "meaning": "仇恨调整量",
+      "purpose": "来源=入参 arg_8（@0xB3D2BE）；写线原语 `sub_B02DA0`(u16)；经 `vt[0x58]` 发送",
+      "enum": null,
+      "evidence_va": [
+        "0xB3D2C3"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0x6BCD（分发器 switch 选择子）",
+      "evidence_va": "0xB3D28C"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0xE B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xB3D256"
+    },
+    {
+      "step": 3,
+      "kind": "write_scalar",
+      "detail": "AI_ent_id：`u16`（线长 2）—— AI 实体 id",
+      "evidence_va": "0xB3D29D"
+    },
+    {
+      "step": 4,
+      "kind": "write_scalar",
+      "detail": "target_ent_id：`u16`（线长 2）—— 目标实体 id",
+      "evidence_va": "0xB3D2BA"
+    },
+    {
+      "step": 5,
+      "kind": "write_scalar",
+      "detail": "hate_adjust：`u16`（线长 2）—— 仇恨调整量",
+      "evidence_va": "0xB3D2C3"
+    },
+    {
+      "step": 6,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xB3D331"
+    },
+    {
+      "step": 7,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xB3D3E5"
+    }
+  ],
+  "capabilities": [
+    "unclassified",
+    "battle.ai_hate"
+  ],
+  "capabilities_derived": [
+    "unclassified"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:47",
+    "batch": 18,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 14,
+        "va": "0xB3D256",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB3D253",
+        "call_va": "0xB3D258"
+      },
+      "field_window": {
+        "start_va": "0xB3D210",
+        "end_va": "0xB3D331",
+        "guard": null,
+        "closer_or_commit_va": "0xB3D331",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "AI_ent_id",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB3D29D"
+            ]
+          },
+          {
+            "name": "target_ent_id",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB3D2BA"
+            ]
+          },
+          {
+            "name": "hate_adjust",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB3D2C3"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB3D28C",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB3D29D",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB3D2BA",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB3D2C3",
+            "kind": "write",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB3D307",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 3,
+        "checkable": 3,
+        "pairs": [
+          {
+            "field": "AI_ent_id",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB3D28C",
+            "kind": "inline_store"
+          },
+          {
+            "field": "target_ent_id",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB3D29D",
+            "kind": "inline_store"
+          },
+          {
+            "field": "hate_adjust",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB3D2BA",
+            "kind": "inline_store"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB3D2C3",
+            "kind": "write",
+            "width": 2,
+            "wire_type": "u16"
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB3D210",
+          "0xB3D331"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 8,
+          "capacity": 14,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB3D307",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）8 / 容量 0xe"
+        }
+      },
+      "closer": {
+        "va": "0xB3D331",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xB3D3E5",
+        "mov_va": "0xB3D3DC",
+        "host": "[edx+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "AI_ent_id=",
+        "target_ent_id=",
+        "hate_adjust="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0x6BCD-battle-msma_AI_hate_control.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0xb3d28c",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xB3D28C"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "MsmaAIHateControl",
+      "role": "request",
+      "wire_length": "2 + 2 + 2",
+      "members": [
+        {
+          "name": "AIEntId",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "AI_ent_id"
+        },
+        {
+          "name": "TargetEntId",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "target_ent_id"
+        },
+        {
+          "name": "HateAdjust",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "hate_adjust"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "d57ade81175b52fe",
+  "check_fingerprint": "70818783254b9d7b"
+}

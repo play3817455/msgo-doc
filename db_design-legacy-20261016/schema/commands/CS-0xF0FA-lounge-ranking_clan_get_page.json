@@ -1,0 +1,410 @@
+{
+  "id": "CS-0xF0FA-lounge-ranking_clan_get_page",
+  "opcode": "0xF0FA",
+  "direction": "CS",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "ranking_clan_get_page",
+  "source_dir": "protocol_analysis/commands/CS-0xF0FA-lounge-ranking_clan_get_page",
+  "meta": {
+    "opcode": "`0xF0FA`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`ranking_clan_get_page`",
+    "名字符串": "`)<-_proto_lounge_client::send_ranking_clan_get_page(` @ `0x00EECE94`",
+    "代码位置": "`sub_BA3C40` @ `0x00BA3C40`（`0x00BA3C40`..`0x00BA3E8F`）",
+    "opcode 写入证据": "`0x00BA3CC1`",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0x016`（22）",
+    "容量申请证据": "`0x00BA3C86`（分配器 `[obj+0Ch]` 的 `vt[0x78]`）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)` @ `0x00BA3E1D`",
+    "提交": "`sub_B02FF0` @ `0x00BA3D6E`",
+    "配对命令": "（无同名 S→C 应答，见 `notes.md`）"
+  },
+  "handler": "sub_BA3C40",
+  "handler_va": "0x00BA3C40",
+  "block": [
+    "0xBA3C40",
+    "0xBA3E8F"
+  ],
+  "name_str": ")<-_proto_lounge_client::send_ranking_clan_get_page(",
+  "name_str_va": "0x00EECE94",
+  "capacity": "0x16",
+  "capacity_va": "0xBA3C86",
+  "closer_va": "0xBA3D6E",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)` @ `0x00BA3E1D`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": "0x00BA3E1D",
+  "wire": {
+    "length_expr": "10 + 4 + 1",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x16（容量记账口径，非线长）",
+    "field_count": 3,
+    "length_source": "field_sum",
+    "readme_conclusion": "字段数：**4**（含 opcode 第 0 项）",
+    "readme_close": "2 + 10(order) + 4 + 1 = 17 ≤ 容量 0x16 = 22（富余 5）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "写入 `buf+0`，供服务端分发；无 case 块（C→S）",
+      "enum": "0xF0FA",
+      "evidence_va": [
+        "`00BA3CC1`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "10",
+      "wire_type": "bytes",
+      "name": "order",
+      "meaning": "排序条件结构（10B = 5×u16：kind/term/filter/reason/troops）",
+      "purpose": "来源=入参 `arg_0`（结构体指针）→ 写入器 `sub_B42060`（@`0xBA3CCB`）逐字段写线",
+      "enum": null,
+      "evidence_va": [
+        "`0xBA3CCB`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "10",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "page",
+      "meaning": "页码",
+      "purpose": "来源=入参 `arg_4`（`mov edx,[esp+arg_4]` @`0xBA3CEC`）→ 内联写 `[ecx],edx`（@`0xBA3CF8`）",
+      "enum": null,
+      "evidence_va": [
+        "`0xBA3CEC`;`0xBA3CF8`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "14",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "clan_kind",
+      "meaning": "氏族种类",
+      "purpose": "来源=入参 `arg_8` → 写原语 `sub_B061C0`（u8 @`0xBA3D00`）",
+      "enum": "取值域 {0,1}（0=部隊 1=大会チーム）",
+      "evidence_va": [
+        "`0xBA3D00`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0xF0FA（分发器 switch 选择子）",
+      "evidence_va": "0x00BA3CC1"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0x16 B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xBA3C86"
+    },
+    {
+      "step": 3,
+      "kind": "write_scalar",
+      "detail": "order：`bytes`（线长 10）—— 排序条件结构（10B = 5×u16：kind/term/filter/reason/troops）",
+      "evidence_va": "0xBA3CCB"
+    },
+    {
+      "step": 4,
+      "kind": "write_scalar",
+      "detail": "page：`u32`（线长 4）—— 页码",
+      "evidence_va": "0xBA3CEC"
+    },
+    {
+      "step": 5,
+      "kind": "write_scalar",
+      "detail": "clan_kind：`u8`（线长 1）—— 氏族种类",
+      "evidence_va": "0xBA3D00"
+    },
+    {
+      "step": 6,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xBA3D6E"
+    },
+    {
+      "step": 7,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xBA3E26"
+    }
+  ],
+  "capabilities": [
+    "settle",
+    "query"
+  ],
+  "capabilities_derived": [
+    "unclassified"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:45",
+    "batch": 14,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 22,
+        "va": "0xBA3C86",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xBA3C83",
+        "call_va": "0xBA3C88"
+      },
+      "field_window": {
+        "start_va": "0xBA3C40",
+        "end_va": "0xBA3D6E",
+        "guard": null,
+        "closer_or_commit_va": "0xBA3D6E",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "order",
+            "wire_type": "bytes",
+            "width": null,
+            "seq": 1,
+            "shape": "agg",
+            "evidence_va": [
+              "`0xBA3CCB`"
+            ]
+          },
+          {
+            "name": "page",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "`0xBA3CEC`;`0xBA3CF8`"
+            ]
+          },
+          {
+            "name": "clan_kind",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "`0xBA3D00`"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xBA3CC1",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xBA3CCB",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B42060",
+            "consumed": 10,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xBA3CF8",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xBA3D00",
+            "kind": "write",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xBA3D44",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 2,
+        "checkable": 2,
+        "pairs": [
+          {
+            "field": "page",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xBA3CF8",
+            "kind": "inline_store"
+          },
+          {
+            "field": "clan_kind",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xBA3D00",
+            "kind": "write"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xBA3CC1",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          },
+          {
+            "va": "0xBA3CCB",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xBA3C40",
+          "0xBA3D6E"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 17,
+          "capacity": 22,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xBA3D44",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）17 / 容量 0x16"
+        }
+      },
+      "closer": {
+        "va": "0xBA3D6E",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xBA3E26",
+        "mov_va": "0xBA3E1D",
+        "host": "[eax+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "order=",
+        "page=",
+        "clan_kind="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0xF0FA-lounge-ranking_clan_get_page.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0x00BA3CC1",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "`00BA3CC1`"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "RankingClanGetPage",
+      "role": "request",
+      "wire_length": "10 + 4 + 1",
+      "members": [
+        {
+          "name": "Order",
+          "wire_type": "bytes",
+          "length": "10",
+          "field_ref": "order",
+          "element": null,
+          "element_length": "10",
+          "cap": null,
+          "count_field": null,
+          "count_field_source": "fixed",
+          "note": "元素成员未建模（composites/ 无此结构），须以 IDA 复核补"
+        },
+        {
+          "name": "Page",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "page"
+        },
+        {
+          "name": "ClanKind",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "clan_kind"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "4d4f6f519f93b8af",
+  "check_fingerprint": "72f3736f38cea0c8"
+}

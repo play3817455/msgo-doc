@@ -1,0 +1,237 @@
+{
+  "id": "CS-0x2EE8-lounge-pilot_dailyrecord_collect_complete",
+  "opcode": "0x2EE8",
+  "direction": "CS",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "pilot_dailyrecord_collect_complete",
+  "source_dir": "protocol_analysis/commands/CS-0x2EE8-lounge-pilot_dailyrecord_collect_complete",
+  "meta": {
+    "opcode": "`0x2EE8`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`pilot_dailyrecord_collect_complete`",
+    "名字符串": "`)<-_proto_lounge_client::send_pilot_dailyrecord_collect_complete(` @ `0xeeab30`",
+    "代码位置": "sub_B8E850 @ `0x00b8e850`（`0x00b8e850`..`0x00b8e9d3`）",
+    "opcode 写入/分发证据": "`0xb8e8a9`（opcode 写入指令）",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0x2`（2）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽 @`0xB8E954`）；`call vt[0x58](buf, 负载长度)`",
+    "配对命令（同 opcode 反向）": "（本批次内无同 opcode 反向命令）"
+  },
+  "handler": "sub_B8E850",
+  "handler_va": "0x00b8e850",
+  "block": [
+    "0xB8E850",
+    "0xB8E9D3"
+  ],
+  "name_str": ")<-_proto_lounge_client::send_pilot_dailyrecord_collect_complete(",
+  "name_str_va": "0xeeab30",
+  "capacity": "0x2",
+  "capacity_va": null,
+  "closer_va": "0xB8E913",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽 @`0xB8E954`）；`call vt[0x58](buf, 负载长度)`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": "0xB8E954",
+  "wire": {
+    "length_expr": "0",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x2（容量记账口径，非线长）",
+    "field_count": 0,
+    "length_source": "zero_load",
+    "readme_conclusion": "结论：**零负载**：每日记录收集完成通知。",
+    "readme_close": "2（仅 opcode）= **2** == 容量 0x2（零负载）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发给对应协议类的处理块（C→S 无 case 块）",
+      "enum": "0x2EE8",
+      "evidence_va": [
+        "0xB8E8A9"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0x2EE8（分发器 switch 选择子）",
+      "evidence_va": "0xB8E8A9"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0x2 B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xB8E896"
+    },
+    {
+      "step": 3,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xB8E913"
+    },
+    {
+      "step": 4,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xB8E95D"
+    },
+    {
+      "step": 5,
+      "kind": "write_scalar",
+      "detail": "零负载：无报文体字段，仅 opcode + 去向",
+      "evidence_va": "0xB8E913"
+    }
+  ],
+  "capabilities": [
+    "unclassified",
+    "lounge.pilot_dailyrecord"
+  ],
+  "capabilities_derived": [
+    "unclassified"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:43",
+    "batch": 6,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 2,
+        "va": "0xB8E896",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB8E893",
+        "call_va": "0xB8E898"
+      },
+      "field_window": {
+        "start_va": "0xB8E850",
+        "end_va": "0xB8E913",
+        "guard": null,
+        "closer_or_commit_va": "0xB8E913",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [],
+        "actual": [
+          {
+            "va": "0xB8E8A9",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB8E8E9",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 0,
+        "checkable": 0,
+        "pairs": [],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB8E8A9",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB8E850",
+          "0xB8E913"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 2,
+          "capacity": 2,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB8E8E9",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）2 / 容量 0x2"
+        }
+      },
+      "closer": {
+        "va": "0xB8E913",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xB8E95D",
+        "mov_va": "0xB8E954",
+        "host": "[edx+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "]byte",
+        " ) ["
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0x2EE8-lounge-pilot_dailyrecord_collect_complete.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0xb8e8a9",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xB8E8A9"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "PilotDailyrecordCollectComplete",
+      "role": "request",
+      "wire_length": "0",
+      "members": []
+    }
+  },
+  "wire_fingerprint": "5035ce6ffb52f6ff",
+  "check_fingerprint": "a4e170aa13eeb818"
+}

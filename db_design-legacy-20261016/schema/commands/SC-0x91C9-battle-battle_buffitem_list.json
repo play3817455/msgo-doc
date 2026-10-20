@@ -1,0 +1,516 @@
+{
+  "id": "SC-0x91C9-battle-battle_buffitem_list",
+  "opcode": "0x91C9",
+  "direction": "SC",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "battle_buffitem_list",
+  "source_dir": "protocol_analysis/commands/SC-0x91C9-battle-battle_buffitem_list",
+  "meta": {
+    "opcode": "`0x91C9`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`battle_client`",
+    "命令名": "`battle_buffitem_list`",
+    "处理块范围": "`0xb249e4`..`0xb24c67`",
+    "名字串引用点": "`0xb24aff`",
+    "声明容量（解码缓冲）": "`0xE0`（`B249FD`）",
+    "长度闭合点": "`B24AB6`",
+    "报错码": "`0x10D`（块内 `push 1; push <errcode>; vt[0x64]`）",
+    "去向": "`vt[0x338]` @`B24C4B`（2 实参）"
+  },
+  "handler": null,
+  "handler_va": null,
+  "block": [
+    "0xb249e4",
+    "0xb24c67"
+  ],
+  "name_str": null,
+  "name_str_va": "0xb24aff",
+  "capacity": "0xE0",
+  "capacity_va": "0xB249FD",
+  "closer_va": "0xB24AB6",
+  "dispatch": "`vt[0x338]` @`B24C4B`（2 实参）",
+  "dispatch_slot": "vt[0x338]",
+  "dispatch_va": "0xB24C4B",
+  "wire": {
+    "length_expr": "6×14=84 + 6×14=84",
+    "fixed": false,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0xE0（容量记账口径，非线长）",
+    "field_count": 2,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：**168**（= 2 × 14 × 6）。",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0x91C9",
+      "evidence_va": [
+        "0xb24aff"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "6×14=84",
+      "wire_type": "array<buffitem,14>",
+      "name": "buffitem",
+      "meaning": "战斗增益道具列表（14 元定长；日志 `buffitem={itemid=,is_used=,is_usable=}`）",
+      "purpose": "经 `vt[0x338]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B24A2F",
+        "B24A46",
+        "B24B49"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3,
+      "wire_type_draft": "array<struct,14>",
+      "element_composite_ref_source": "name",
+      "element_composite_ref": "buffitem"
+    },
+    {
+      "seq": 2,
+      "offset": "var",
+      "length": "6×14=84",
+      "wire_type": "array<buffitem_ex,14>",
+      "name": "buffitem_ex",
+      "meaning": "战斗增益道具附加列表（14 元定长；日志 `buffitem_ex={...}`）",
+      "purpose": "经 `vt[0x338]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B24A78",
+        "B24A89",
+        "B24BAB"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4,
+      "wire_type_draft": "array<struct,14>",
+      "element_composite_ref_source": "name",
+      "element_composite_ref": "buffitem_ex"
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0x91C9（分发器 switch 选择子）",
+      "evidence_va": "0xB24AFF"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB05DA0`（模块 id 269）→ 之后逐字段读线",
+      "evidence_va": "0xB249EB"
+    },
+    {
+      "step": 3,
+      "kind": "read_array",
+      "detail": "buffitem：`array<buffitem,14>`（线长 6×14=84）—— 战斗增益道具列表（14 元定长；日志 `buffitem={itemid=,is_used=,is_usable=}`）",
+      "evidence_va": "0xB24A2F"
+    },
+    {
+      "step": 4,
+      "kind": "read_array",
+      "detail": "buffitem_ex：`array<buffitem_ex,14>`（线长 6×14=84）—— 战斗增益道具附加列表（14 元定长；日志 `buffitem_ex={...}`）",
+      "evidence_va": "0xB24A78"
+    },
+    {
+      "step": 5,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB24AB6"
+    },
+    {
+      "step": 6,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x338]`，实参 2 个",
+      "evidence_va": "0xB24C4B"
+    },
+    {
+      "step": 7,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB24A6D"
+    }
+  ],
+  "capabilities": [
+    "battle_action",
+    "query"
+  ],
+  "capabilities_derived": [
+    "unclassified"
+  ],
+  "db_effects": [
+    {
+      "entity": "buffitem",
+      "table_ref": "tbl_buffitem",
+      "op": "update",
+      "fields": [
+        "buffitem"
+      ],
+      "disposition": "COMPOSITE",
+      "evidence_va": "0xB24A2F"
+    },
+    {
+      "entity": "buffitem_ex",
+      "table_ref": "tbl_buffitem_ex",
+      "op": "update",
+      "fields": [
+        "buffitem_ex"
+      ],
+      "disposition": "COMPOSITE",
+      "evidence_va": "0xB24A78"
+    },
+    {
+      "entity": "buffitem",
+      "table_ref": "tbl_buffitem",
+      "op": "update",
+      "fields": [
+        "battle_buffitem_list"
+      ],
+      "disposition": "EVENT",
+      "evidence_va": "0xB07E70"
+    },
+    {
+      "entity": "buffitem_ex",
+      "table_ref": "tbl_buffitem_ex",
+      "op": "update",
+      "fields": [
+        "battle_buffitem_list"
+      ],
+      "disposition": "EVENT",
+      "evidence_va": "0xB07E70"
+    }
+  ],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:41",
+    "batch": 1,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 224,
+        "va": "0xB24A00",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB249FD",
+        "call_va": "0xB24A05"
+      },
+      "field_window": {
+        "start_va": "0xB249EC",
+        "end_va": "0xB24ADD",
+        "guard": {
+          "va": "0xB249EB",
+          "func": "0xB05DA0",
+          "module_id": 269,
+          "release_va": "0xB05D90"
+        },
+        "closer_or_commit_va": "0xB24AB6",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "buffitem",
+            "wire_type": "array<buffitem,14>",
+            "width": null,
+            "seq": 1,
+            "shape": "agg",
+            "evidence_va": [
+              "B24A2F",
+              "B24A46",
+              "B24B49"
+            ]
+          },
+          {
+            "name": "buffitem_ex",
+            "wire_type": "array<buffitem_ex,14>",
+            "width": null,
+            "seq": 2,
+            "shape": "agg",
+            "evidence_va": [
+              "B24A78",
+              "B24A89",
+              "B24BAB"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB07E7E",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB07E7E",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB07E94",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB07E94",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB07EA6",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB07EA6",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB24A2F",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B06140",
+            "consumed": 112,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB24A46",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B07E70",
+            "consumed": 6,
+            "consumed_effective": 6,
+            "nested_of": null
+          },
+          {
+            "va": "0xB24A78",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B06140",
+            "consumed": 112,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB24A89",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B07E70",
+            "consumed": 6,
+            "consumed_effective": 6,
+            "nested_of": null
+          }
+        ],
+        "matched": 0,
+        "checkable": 0,
+        "pairs": [],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB24A2F",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null
+          },
+          {
+            "va": "0xB24A46",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null
+          },
+          {
+            "va": "0xB07E7E",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null
+          },
+          {
+            "va": "0xB07E94",
+            "kind": "nested_run",
+            "width": 2,
+            "wire_type": null
+          },
+          {
+            "va": "0xB24A78",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null
+          },
+          {
+            "va": "0xB24A89",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null
+          },
+          {
+            "va": "0xB07E7E",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null
+          },
+          {
+            "va": "0xB07E94",
+            "kind": "nested_run",
+            "width": 2,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB249EC",
+          "0xB24ADD"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 12,
+          "capacity": 224,
+          "relation": "within",
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）12 / 容量 0xe0"
+        },
+        "zero_load": true
+      },
+      "closer": {
+        "va": "0xB24AB6",
+        "kind": "jz",
+        "jcc_va": "0xB24ABC",
+        "seq_va": "0xB24AB2",
+        "jcc_dst": "0xB24AD8",
+        "cmp": "cmp     ecx, [esp+1B3Ch+var_1B24]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x338]",
+        "slot_value": 824,
+        "va": "0xB24C4B",
+        "mov_va": "0xB24C41",
+        "host": "[eax+338h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB24A6D",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "buffitem={",
+        "buffitem_ex={"
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0x91C9-battle-battle_buffitem_list.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xb24aff"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "BattleBuffitemList",
+      "role": "response",
+      "wire_length": "6×14=84 + 6×14=84",
+      "members": [
+        {
+          "name": "Buffitem",
+          "wire_type": "array<buffitem,14>",
+          "length": "6×14=84",
+          "field_ref": "buffitem",
+          "element": "buffitem",
+          "element_composite_ref": "buffitem",
+          "element_length": "6",
+          "cap": 14,
+          "count_field": null,
+          "count_field_source": null,
+          "note": "未找到计数字段（须以 IDA 复核确认）"
+        },
+        {
+          "name": "BuffitemEx",
+          "wire_type": "array<buffitem_ex,14>",
+          "length": "6×14=84",
+          "field_ref": "buffitem_ex",
+          "element": "buffitem_ex",
+          "element_composite_ref": "buffitem_ex",
+          "element_length": "6",
+          "cap": 14,
+          "count_field": null,
+          "count_field_source": null,
+          "note": "未找到计数字段（须以 IDA 复核确认）"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "8e9bbbe572ec99b6",
+  "check_fingerprint": "edd9a8c50a9ee0ee",
+  "import_repairs": [
+    "elem_wt_normalized:buffitem(array<struct,14> → array<buffitem,14>)",
+    "elem_wt_normalized:buffitem_ex(array<struct,14> → array<buffitem_ex,14>)"
+  ]
+}

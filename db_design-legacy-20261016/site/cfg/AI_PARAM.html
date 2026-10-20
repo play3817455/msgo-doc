@@ -1,0 +1,1457 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI_PARAM · db_design</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <h1><a href="../index.html">db_design</a></h1>
+      <p class="header-note">唯一证据源：<code>protocol_analysis/</code></p>
+      <nav><a href="../index.html">首页</a>
+      <a href="../homing/index.html">归位库</a>
+      <a href="../tables/index.html">旧表留档</a>
+      <a href="../commands/index.html">命令</a>
+      <a href="../cfg/index.html" class="active">配置表79</a>
+      <a href="../srv/index.html">服务端配置</a>
+      <a href="../asm-audit/index.html">ASM 审计</a>
+      <a href="../oracle-audit/index.html">Oracle 审计</a>
+      <a href="../entities/index.html">协议实体</a>
+      <a href="../fields/index.html">字段索引</a>
+      <a href="../relations.html">表关系</a></nav>
+    </div>
+  </header>
+  <main class="wrap">
+
+    <p class="breadcrumb"><a href="index.html">配置表79</a> / <code>AI_PARAM</code></p>
+    <h2><code>AI_PARAM</code> <span class="badge" style="background:#1565c0">DOWNLOAD</span> <span class="badge" style="background:#2e7d32">确证</span></h2>
+    <dl class="asm-dl">
+      <dt>CSV</dt><dd><code>npc/ai_param.csv</code></dd>
+      <dt>用途</dt><dd>NPC AI 参数</dd>
+      <dt>读表函数</dt><dd><code>sub_56EA00</code></dd>
+      <dt>表ID</dt><dd>42</dd>
+      <dt>下载序</dt><dd>42</dd>
+      <dt>类名</dt><dd><code>CAIParam</code></dd>
+      <dt>列统计</dt><dd>127 列 · 确证 127 · 已映射 0 · 间隙 0</dd>
+      <dt>证据</dt><dd><a href="../../../datatables/01-列注释/42-42-AI_PARAM.md" target="_blank">datatables/01-列注释/42-42-AI_PARAM.md</a></dd>
+    </dl>
+    <section>
+      <h3>列定案</h3>
+      <p class="muted"><code>db_column</code> = PostgreSQL 列名（确证/有语义的 partial 用订案名；<code>unknown_*</code> 暂保留 colN）</p>
+      <table class="wide">
+        <thead>
+          <tr>
+            <th>CSV#</th><th>DB列</th><th>订案名</th><th>中文摘要</th><th>类型</th>
+            <th>状态</th><th>读表</th><th>偏移/VA</th><th>语义详情</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><code>0</code></td>
+      <td><code>ai_param_id</code></td>
+      <td><code>ai_param_id</code></td>
+      <td>ai_param_id</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 0 · +0 · 0x56ea45</td>
+      <td class="meaning-cell">主键；AI 参数 ID（u32 @+0；★本表索引键 = vtable[5] `sub_A564D0` 读 csv0）</td>
+    </tr>
+    <tr>
+      <td><code>1</code></td>
+      <td><code>ai_archetype</code></td>
+      <td><code>ai_archetype</code></td>
+      <td>ai_archetype</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 1 · +4 · 0x56ea4e</td>
+      <td class="meaning-cell">NPC 战斗原型（@+4；`sub_56E570` 窄串→枚举，名表 `0xD77428`）<div class="enum-vals"><a class="enum-chip" href="enums/sub_56e570.html#v-NORMAL" title="普通"><code>NORMAL</code>=1<span class="enum-zh">普通</span></a> <a class="enum-chip" href="enums/sub_56e570.html#v-SHIELD" title="护盾"><code>SHIELD</code>=2<span class="enum-zh">护盾</span></a> <a class="enum-chip" href="enums/sub_56e570.html#v-UNDERWATER" title="水中"><code>UNDERWATER</code>=3<span class="enum-zh">水中</span></a> <a class="enum-chip" href="enums/sub_56e570.html#v-AMPHIBIAN" title="水陆两用"><code>AMPHIBIAN</code>=4<span class="enum-zh">水陆两用</span></a> <a class="enum-chip" href="enums/sub_56e570.html#v-SHOTGUN" title="霰弹枪"><code>SHOTGUN</code>=5<span class="enum-zh">霰弹枪</span></a> <a class="enum-chip" href="enums/sub_56e570.html#v-GATLINGGUN" title="加特林"><code>GATLINGGUN</code>=6<span class="enum-zh">加特林</span></a> <a class="enum-chip" href="enums/sub_56e570.html#v-REPAIR" title="修理"><code>REPAIR</code>=7<span class="enum-zh">修理</span></a> <a class="enum-chip" href="enums/sub_56e570.html#v-SUPPORT" title="支援"><code>SUPPORT</code>=8<span class="enum-zh">支援</span></a> <a class="enum-chip" href="enums/sub_56e570.html#v-CAMERAGUN" title="摄像枪"><code>CAMERAGUN</code>=9<span class="enum-zh">摄像枪</span></a> <a class="enum-chip" href="enums/sub_56e570.html#v-CANNON" title="炮击"><code>CANNON</code>=10<span class="enum-zh">炮击</span></a> <a class="enum-chip" href="enums/sub_56e570.html#v-SNIPER" title="狙击"><code>SNIPER</code>=11<span class="enum-zh">狙击</span></a> <a class="enum-chip" href="enums/sub_56e570.html#v-TANK" title="坦克"><code>TANK</code>=12<span class="enum-zh">坦克</span></a> <a class="enum-conv-link" href="enums/sub_56e570.html" title="AI 原则">↗ sub_56E570</a> <span class="muted">…共 17 项</span></div></td>
+    </tr>
+    <tr>
+      <td><code>2</code></td>
+      <td><code>mobility_class</code></td>
+      <td><code>mobility_class</code></td>
+      <td>mobility_class</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 2 · +8 · 0x56ea94</td>
+      <td class="meaning-cell">地形/机动类别（@+8；`sub_56E610` 窄串→枚举，名表 `0xD77558`）<div class="enum-vals"><a class="enum-chip" href="enums/sub_56e610.html#v-NORMAL" title="普通"><code>NORMAL</code>=0<span class="enum-zh">普通</span></a> <a class="enum-chip" href="enums/sub_56e610.html#v-LANDLUBBERLY" title="旱鸭子/陆地"><code>LANDLUBBERLY</code>=1<span class="enum-zh">旱鸭子/陆地</span></a> <a class="enum-chip" href="enums/sub_56e610.html#v-UNDERWATER" title="水中"><code>UNDERWATER</code>=2<span class="enum-zh">水中</span></a> <a class="enum-chip" href="enums/sub_56e610.html#v-AMPHIBIAN" title="水陆两用"><code>AMPHIBIAN</code>=3<span class="enum-zh">水陆两用</span></a> <a class="enum-chip" href="enums/sub_56e610.html#v-TANK" title="坦克"><code>TANK</code>=4<span class="enum-zh">坦克</span></a> <a class="enum-chip" href="enums/sub_56e610.html#v-AIRCRAFT" title="飞行器"><code>AIRCRAFT</code>=5<span class="enum-zh">飞行器</span></a> <a class="enum-chip" href="enums/sub_56e610.html#v-MINOVSKYCRAFT" title="米诺夫斯基飞行器"><code>MINOVSKYCRAFT</code>=6<span class="enum-zh">米诺夫斯基飞行器</span></a> <a class="enum-chip" href="enums/sub_56e610.html#v-FIXED" title="固定组合"><code>FIXED</code>=7<span class="enum-zh">固定组合</span></a> <a class="enum-chip" href="enums/sub_56e610.html#v-BROADWAYONLY" title="仅Broadway"><code>BROADWAYONLY</code>=8<span class="enum-zh">仅Broadway</span></a> <a class="enum-conv-link" href="enums/sub_56e610.html" title="回避倾向">↗ sub_56E610</a></div></td>
+    </tr>
+    <tr>
+      <td><code>3</code></td>
+      <td><code>custom_aim_cone</code></td>
+      <td><code>custom_aim_cone</code></td>
+      <td>custom_aim_cone</td>
+      <td><code>bool</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 3 · +44 · 0x56eada</td>
+      <td class="meaning-cell">启用 CSV 照准角覆盖（csv3!=0→@+44；否则用机体默认锥）</td>
+    </tr>
+    <tr>
+      <td><code>4</code></td>
+      <td><code>aim_pitch_min_deg</code></td>
+      <td><code>aim_pitch_min_deg</code></td>
+      <td>aim_pitch_min_deg</td>
+      <td><code>str_float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 4 · +12 · 0x56eaed</td>
+      <td class="meaning-cell">照准俯仰下限（CSV 度数×π/180 取负 → @+12）</td>
+    </tr>
+    <tr>
+      <td><code>5</code></td>
+      <td><code>aim_pitch_max_deg</code></td>
+      <td><code>aim_pitch_max_deg</code></td>
+      <td>aim_pitch_max_deg</td>
+      <td><code>str_float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 5 · +16 · 0x56eafe</td>
+      <td class="meaning-cell">照准俯仰上限（度→弧度 @+16）</td>
+    </tr>
+    <tr>
+      <td><code>6</code></td>
+      <td><code>aim_yaw_min_deg</code></td>
+      <td><code>aim_yaw_min_deg</code></td>
+      <td>aim_yaw_min_deg</td>
+      <td><code>str_float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 6 · +20 · 0x56eb0f</td>
+      <td class="meaning-cell">照准偏航下限（度→弧度 @+20）</td>
+    </tr>
+    <tr>
+      <td><code>7</code></td>
+      <td><code>aim_yaw_max_neg_deg</code></td>
+      <td><code>aim_yaw_max_neg_deg</code></td>
+      <td>aim_yaw_max_neg_deg</td>
+      <td><code>str_float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 7 · +24 · 0x56eb22</td>
+      <td class="meaning-cell">照准偏航上限（度→弧度 取负 @+24）</td>
+    </tr>
+    <tr>
+      <td><code>8</code></td>
+      <td><code>aim_yaw_max_deg</code></td>
+      <td><code>aim_yaw_max_deg</code></td>
+      <td>aim_yaw_max_deg</td>
+      <td><code>str_float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 8 · +28 · 0x56eb33</td>
+      <td class="meaning-cell">照准偏航上限（度→弧度 @+28）</td>
+    </tr>
+    <tr>
+      <td><code>9</code></td>
+      <td><code>spread_timing_a</code></td>
+      <td><code>spread_timing_a</code></td>
+      <td>spread_timing_a</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 9 · +32 · 0x56eb44</td>
+      <td class="meaning-cell">集弾/散布计时系数 A（@+32）</td>
+    </tr>
+    <tr>
+      <td><code>10</code></td>
+      <td><code>score_weight_x100</code></td>
+      <td><code>score_weight_x100</code></td>
+      <td>score_weight_x100</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 10 · +36 · 0x56eb55</td>
+      <td class="meaning-cell">目标评分权重 ×100（csv10×100 → @+36）</td>
+    </tr>
+    <tr>
+      <td><code>11</code></td>
+      <td><code>warning_shot_range_deg</code></td>
+      <td><code>warning_shot_range_deg</code></td>
+      <td>warning_shot_range_deg</td>
+      <td><code>str_float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 11 · +40 · 0x56eb58</td>
+      <td class="meaning-cell">警告射击阈值角（度→弧度 @+40；CSV &lt;0 时写 `flt_D6D398`=FLT_MIN）</td>
+    </tr>
+    <tr>
+      <td><code>12</code></td>
+      <td><code>use_default_spread</code></td>
+      <td><code>use_default_spread</code></td>
+      <td>use_default_spread</td>
+      <td><code>bool</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 12 · +520 · 0x56eb98</td>
+      <td class="meaning-cell">使用内置散布默认值（csv12→@+520 bit0）</td>
+    </tr>
+    <tr>
+      <td><code>13</code></td>
+      <td><code>move_wait_flag</code></td>
+      <td><code>move_wait_flag</code></td>
+      <td>move_wait_flag</td>
+      <td><code>bool</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 13 · +520 · 0x56ebc1</td>
+      <td class="meaning-cell">移动-射击等待标志（csv13→@+520 bit2）</td>
+    </tr>
+    <tr>
+      <td><code>14</code></td>
+      <td><code>burst_fire_flag</code></td>
+      <td><code>burst_fire_flag</code></td>
+      <td>burst_fire_flag</td>
+      <td><code>bool</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 14 · +520 · 0x56ebe0</td>
+      <td class="meaning-cell">连射/点射行为标志（csv14→@+520 bit1）</td>
+    </tr>
+    <tr>
+      <td><code>15</code></td>
+      <td><code>near_range_weight</code></td>
+      <td><code>near_range_weight</code></td>
+      <td>near_range_weight</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 15 · +76 · 0x56ec0a</td>
+      <td class="meaning-cell">近距离段权重（atof → @+76）</td>
+    </tr>
+    <tr>
+      <td><code>16</code></td>
+      <td><code>mid_range_weight</code></td>
+      <td><code>mid_range_weight</code></td>
+      <td>mid_range_weight</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 16 · +80 · 0x56ec14</td>
+      <td class="meaning-cell">中距离段权重（atof → @+80）</td>
+    </tr>
+    <tr>
+      <td><code>17</code></td>
+      <td><code>sniper_mode_flag</code></td>
+      <td><code>sniper_mode_flag</code></td>
+      <td>sniper_mode_flag</td>
+      <td><code>bool</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 17 · +520 · 0x56ec43</td>
+      <td class="meaning-cell">狙击/精密射击模式（csv17→@+520 bit3）</td>
+    </tr>
+    <tr>
+      <td><code>18</code></td>
+      <td><code>band_edge_1_x100</code></td>
+      <td><code>band_edge_1_x100</code></td>
+      <td>band_edge_1_x100</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 18 · +84 · 0x56e8d3</td>
+      <td class="meaning-cell">距离带边界 1（×100 存 @+84；`sub_56E890` 另算 @+100/+104/+108/+112 = 各值平方，并按 csv22 选一对写 @+116(起)/@+120(止)/@+124(中点)）</td>
+    </tr>
+    <tr>
+      <td><code>19</code></td>
+      <td><code>band_edge_2_x100</code></td>
+      <td><code>band_edge_2_x100</code></td>
+      <td>band_edge_2_x100</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 19 · +88 · 0x56e8e6</td>
+      <td class="meaning-cell">距离带边界 2（×100 存 @+88；`sub_56E890` 另算 @+100/+104/+108/+112 = 各值平方，并按 csv22 选一对写 @+116(起)/@+120(止)/@+124(中点)）</td>
+    </tr>
+    <tr>
+      <td><code>20</code></td>
+      <td><code>band_edge_3_x100</code></td>
+      <td><code>band_edge_3_x100</code></td>
+      <td>band_edge_3_x100</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 20 · +92 · 0x56e8fa</td>
+      <td class="meaning-cell">距离带边界 3（×100 存 @+92；`sub_56E890` 另算 @+100/+104/+108/+112 = 各值平方，并按 csv22 选一对写 @+116(起)/@+120(止)/@+124(中点)）</td>
+    </tr>
+    <tr>
+      <td><code>21</code></td>
+      <td><code>band_edge_4_x100</code></td>
+      <td><code>band_edge_4_x100</code></td>
+      <td>band_edge_4_x100</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 21 · +96 · 0x56e90e</td>
+      <td class="meaning-cell">距离带边界 4（×100 存 @+96；`sub_56E890` 另算 @+100/+104/+108/+112 = 各值平方，并按 csv22 选一对写 @+116(起)/@+120(止)/@+124(中点)）</td>
+    </tr>
+    <tr>
+      <td><code>22</code></td>
+      <td><code>band_select</code></td>
+      <td><code>band_select</code></td>
+      <td>band_select</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 22 · +128 · 0x56e92d</td>
+      <td class="meaning-cell">选带枚举（@+128；`sub_56E6B0` 窄串→枚举，名表 `0xD775EC`）—— 决定 @+116/+120/+124 用哪一对边界<div class="enum-vals"><a class="enum-chip" href="enums/sub_56e6b0.html#v-NEAR" title="近距"><code>NEAR</code>=2<span class="enum-zh">近距</span></a> <a class="enum-chip" href="enums/sub_56e6b0.html#v-MIDDLE" title="中距"><code>MIDDLE</code>=3<span class="enum-zh">中距</span></a> <a class="enum-chip" href="enums/sub_56e6b0.html#v-FAR" title="远距"><code>FAR</code>=4<span class="enum-zh">远距</span></a> <a class="enum-conv-link" href="enums/sub_56e6b0.html" title="band_select">↗ sub_56E6B0</a></div></td>
+    </tr>
+    <tr>
+      <td><code>23</code></td>
+      <td><code>near_hdr_1</code></td>
+      <td><code>near_hdr_1</code></td>
+      <td>near_hdr_1</td>
+      <td><code>u8</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 23 · +132 · 0x56e22d</td>
+      <td class="meaning-cell">NEAR（推定） 带块 3 个字节参数之 1（u8 @+132；`sub_56E220` 用 atoi 读、按字节存）</td>
+    </tr>
+    <tr>
+      <td><code>24</code></td>
+      <td><code>near_hdr_2</code></td>
+      <td><code>near_hdr_2</code></td>
+      <td>near_hdr_2</td>
+      <td><code>u8</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 24 · +133 · 0x56e22d</td>
+      <td class="meaning-cell">NEAR（推定） 带块 3 个字节参数之 2（u8 @+133；`sub_56E220` 用 atoi 读、按字节存）</td>
+    </tr>
+    <tr>
+      <td><code>25</code></td>
+      <td><code>near_hdr_3</code></td>
+      <td><code>near_hdr_3</code></td>
+      <td>near_hdr_3</td>
+      <td><code>u8</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 25 · +134 · 0x56e22d</td>
+      <td class="meaning-cell">NEAR（推定） 带块 3 个字节参数之 3（u8 @+134；`sub_56E220` 用 atoi 读、按字节存）</td>
+    </tr>
+    <tr>
+      <td><code>26</code></td>
+      <td><code>near_pct_02</code></td>
+      <td><code>near_pct_02</code></td>
+      <td>near_pct_02</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 26 · +140 · 0x56e273</td>
+      <td class="meaning-cell">NEAR（推定） 带权重数组下标 1（@+140；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>27</code></td>
+      <td><code>near_pct_03</code></td>
+      <td><code>near_pct_03</code></td>
+      <td>near_pct_03</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 27 · +144 · 0x56e273</td>
+      <td class="meaning-cell">NEAR（推定） 带权重数组下标 2（@+144；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>28</code></td>
+      <td><code>near_pct_04</code></td>
+      <td><code>near_pct_04</code></td>
+      <td>near_pct_04</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 28 · +148 · 0x56e273</td>
+      <td class="meaning-cell">NEAR（推定） 带权重数组下标 3（@+148；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>29</code></td>
+      <td><code>near_pct_05</code></td>
+      <td><code>near_pct_05</code></td>
+      <td>near_pct_05</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 29 · +152 · 0x56e273</td>
+      <td class="meaning-cell">NEAR（推定） 带权重数组下标 4（@+152；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>30</code></td>
+      <td><code>near_pct_06</code></td>
+      <td><code>near_pct_06</code></td>
+      <td>near_pct_06</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 30 · +156 · 0x56e273</td>
+      <td class="meaning-cell">NEAR（推定） 带权重数组下标 5（@+156；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>31</code></td>
+      <td><code>near_pct_07</code></td>
+      <td><code>near_pct_07</code></td>
+      <td>near_pct_07</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 31 · +160 · 0x56e273</td>
+      <td class="meaning-cell">NEAR（推定） 带权重数组下标 6（@+160；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>32</code></td>
+      <td><code>near_pct_08</code></td>
+      <td><code>near_pct_08</code></td>
+      <td>near_pct_08</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 32 · +164 · 0x56e273</td>
+      <td class="meaning-cell">NEAR（推定） 带权重数组下标 7（@+164；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>33</code></td>
+      <td><code>near_pct_09</code></td>
+      <td><code>near_pct_09</code></td>
+      <td>near_pct_09</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 33 · +168 · 0x56e273</td>
+      <td class="meaning-cell">NEAR（推定） 带权重数组下标 8（@+168；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>34</code></td>
+      <td><code>near_pct_10</code></td>
+      <td><code>near_pct_10</code></td>
+      <td>near_pct_10</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 34 · +172 · 0x56e273</td>
+      <td class="meaning-cell">NEAR（推定） 带权重数组下标 9（@+172；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>35</code></td>
+      <td><code>near_pct_11</code></td>
+      <td><code>near_pct_11</code></td>
+      <td>near_pct_11</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 35 · +176 · 0x56e273</td>
+      <td class="meaning-cell">NEAR（推定） 带权重数组下标 10（@+176；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>36</code></td>
+      <td><code>near_pct_12</code></td>
+      <td><code>near_pct_12</code></td>
+      <td>near_pct_12</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 36 · +180 · 0x56e273</td>
+      <td class="meaning-cell">NEAR（推定） 带权重数组下标 11（@+180；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>37</code></td>
+      <td><code>near_pct_13</code></td>
+      <td><code>near_pct_13</code></td>
+      <td>near_pct_13</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 37 · +184 · 0x56e273</td>
+      <td class="meaning-cell">NEAR（推定） 带权重数组下标 12（@+184；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>38</code></td>
+      <td><code>near_pct_14</code></td>
+      <td><code>near_pct_14</code></td>
+      <td>near_pct_14</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 38 · +188 · 0x56e273</td>
+      <td class="meaning-cell">NEAR（推定） 带权重数组下标 13（@+188；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>39</code></td>
+      <td><code>near_pct_15</code></td>
+      <td><code>near_pct_15</code></td>
+      <td>near_pct_15</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 39 · +192 · 0x56e273</td>
+      <td class="meaning-cell">NEAR（推定） 带权重数组下标 14（@+192；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>40</code></td>
+      <td><code>near_pct_16</code></td>
+      <td><code>near_pct_16</code></td>
+      <td>near_pct_16</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 40 · +196 · 0x56e273</td>
+      <td class="meaning-cell">NEAR（推定） 带权重数组下标 15（@+196；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>41</code></td>
+      <td><code>near_pct_17</code></td>
+      <td><code>near_pct_17</code></td>
+      <td>near_pct_17</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 41 · +200 · 0x56e273</td>
+      <td class="meaning-cell">NEAR（推定） 带权重数组下标 16（@+200；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>42</code></td>
+      <td><code>near_pct_18</code></td>
+      <td><code>near_pct_18</code></td>
+      <td>near_pct_18</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 42 · +204 · 0x56e273</td>
+      <td class="meaning-cell">NEAR（推定） 带权重数组下标 17（@+204；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>43</code></td>
+      <td><code>near_pct_19</code></td>
+      <td><code>near_pct_19</code></td>
+      <td>near_pct_19</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 43 · +208 · 0x56e273</td>
+      <td class="meaning-cell">NEAR（推定） 带权重数组下标 18（@+208；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>44</code></td>
+      <td><code>near_pct_20</code></td>
+      <td><code>near_pct_20</code></td>
+      <td>near_pct_20</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 44 · +212 · 0x56e273</td>
+      <td class="meaning-cell">NEAR（推定） 带权重数组下标 19（@+212；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>45</code></td>
+      <td><code>near_pct_21</code></td>
+      <td><code>near_pct_21</code></td>
+      <td>near_pct_21</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 45 · +216 · 0x56e273</td>
+      <td class="meaning-cell">NEAR（推定） 带权重数组下标 20（@+216；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>46</code></td>
+      <td><code>near_pct_22</code></td>
+      <td><code>near_pct_22</code></td>
+      <td>near_pct_22</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 46 · +220 · 0x56e273</td>
+      <td class="meaning-cell">NEAR（推定） 带权重数组下标 21（@+220；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>47</code></td>
+      <td><code>near_pct_23</code></td>
+      <td><code>near_pct_23</code></td>
+      <td>near_pct_23</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 47 · +224 · 0x56e273</td>
+      <td class="meaning-cell">NEAR（推定） 带权重数组下标 22（@+224；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>48</code></td>
+      <td><code>near_pct_01</code></td>
+      <td><code>near_pct_01</code></td>
+      <td>near_pct_01</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 48 · +136 · 0x56ec7c</td>
+      <td class="meaning-cell">NEAR（推定） 带权重数组下标 0（@+136；★本列在块循环之外单独读：`v42[0] = atof(csv48)`；MIDDLE/FAR 两块此处是常量 0，CSV 不读）</td>
+    </tr>
+    <tr>
+      <td><code>49</code></td>
+      <td><code>near_extra_1</code></td>
+      <td><code>near_extra_1</code></td>
+      <td>near_extra_1</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 49 · +228 · 0x56ecdc</td>
+      <td class="meaning-cell">NEAR（推定） 带块尾随参数 1（atof → @+228；本项不乘 100）</td>
+    </tr>
+    <tr>
+      <td><code>50</code></td>
+      <td><code>near_extra_2</code></td>
+      <td><code>near_extra_2</code></td>
+      <td>near_extra_2</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 50 · +232 · 0x56ecdc</td>
+      <td class="meaning-cell">NEAR（推定） 带块尾随参数 2（atof → @+232；×100）</td>
+    </tr>
+    <tr>
+      <td><code>51</code></td>
+      <td><code>near_extra_3</code></td>
+      <td><code>near_extra_3</code></td>
+      <td>near_extra_3</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 51 · +236 · 0x56ecdc</td>
+      <td class="meaning-cell">NEAR（推定） 带块尾随参数 3（atof → @+236；×100）</td>
+    </tr>
+    <tr>
+      <td><code>52</code></td>
+      <td><code>mid_hdr_1</code></td>
+      <td><code>mid_hdr_1</code></td>
+      <td>mid_hdr_1</td>
+      <td><code>u8</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 52 · +240 · 0x56e22d</td>
+      <td class="meaning-cell">MIDDLE（推定） 带块 3 个字节参数之 1（u8 @+240；`sub_56E220` 用 atoi 读、按字节存）</td>
+    </tr>
+    <tr>
+      <td><code>53</code></td>
+      <td><code>mid_hdr_2</code></td>
+      <td><code>mid_hdr_2</code></td>
+      <td>mid_hdr_2</td>
+      <td><code>u8</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 53 · +241 · 0x56e22d</td>
+      <td class="meaning-cell">MIDDLE（推定） 带块 3 个字节参数之 2（u8 @+241；`sub_56E220` 用 atoi 读、按字节存）</td>
+    </tr>
+    <tr>
+      <td><code>54</code></td>
+      <td><code>mid_hdr_3</code></td>
+      <td><code>mid_hdr_3</code></td>
+      <td>mid_hdr_3</td>
+      <td><code>u8</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 54 · +242 · 0x56e22d</td>
+      <td class="meaning-cell">MIDDLE（推定） 带块 3 个字节参数之 3（u8 @+242；`sub_56E220` 用 atoi 读、按字节存）</td>
+    </tr>
+    <tr>
+      <td><code>55</code></td>
+      <td><code>mid_pct_02</code></td>
+      <td><code>mid_pct_02</code></td>
+      <td>mid_pct_02</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 55 · +248 · 0x56e273</td>
+      <td class="meaning-cell">MIDDLE（推定） 带权重数组下标 1（@+248；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>56</code></td>
+      <td><code>mid_pct_03</code></td>
+      <td><code>mid_pct_03</code></td>
+      <td>mid_pct_03</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 56 · +252 · 0x56e273</td>
+      <td class="meaning-cell">MIDDLE（推定） 带权重数组下标 2（@+252；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>57</code></td>
+      <td><code>mid_pct_04</code></td>
+      <td><code>mid_pct_04</code></td>
+      <td>mid_pct_04</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 57 · +256 · 0x56e273</td>
+      <td class="meaning-cell">MIDDLE（推定） 带权重数组下标 3（@+256；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>58</code></td>
+      <td><code>mid_pct_05</code></td>
+      <td><code>mid_pct_05</code></td>
+      <td>mid_pct_05</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 58 · +260 · 0x56e273</td>
+      <td class="meaning-cell">MIDDLE（推定） 带权重数组下标 4（@+260；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>59</code></td>
+      <td><code>mid_pct_06</code></td>
+      <td><code>mid_pct_06</code></td>
+      <td>mid_pct_06</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 59 · +264 · 0x56e273</td>
+      <td class="meaning-cell">MIDDLE（推定） 带权重数组下标 5（@+264；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>60</code></td>
+      <td><code>mid_pct_07</code></td>
+      <td><code>mid_pct_07</code></td>
+      <td>mid_pct_07</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 60 · +268 · 0x56e273</td>
+      <td class="meaning-cell">MIDDLE（推定） 带权重数组下标 6（@+268；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>61</code></td>
+      <td><code>mid_pct_08</code></td>
+      <td><code>mid_pct_08</code></td>
+      <td>mid_pct_08</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 61 · +272 · 0x56e273</td>
+      <td class="meaning-cell">MIDDLE（推定） 带权重数组下标 7（@+272；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>62</code></td>
+      <td><code>mid_pct_09</code></td>
+      <td><code>mid_pct_09</code></td>
+      <td>mid_pct_09</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 62 · +276 · 0x56e273</td>
+      <td class="meaning-cell">MIDDLE（推定） 带权重数组下标 8（@+276；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>63</code></td>
+      <td><code>mid_pct_10</code></td>
+      <td><code>mid_pct_10</code></td>
+      <td>mid_pct_10</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 63 · +280 · 0x56e273</td>
+      <td class="meaning-cell">MIDDLE（推定） 带权重数组下标 9（@+280；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>64</code></td>
+      <td><code>mid_pct_11</code></td>
+      <td><code>mid_pct_11</code></td>
+      <td>mid_pct_11</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 64 · +284 · 0x56e273</td>
+      <td class="meaning-cell">MIDDLE（推定） 带权重数组下标 10（@+284；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>65</code></td>
+      <td><code>mid_pct_12</code></td>
+      <td><code>mid_pct_12</code></td>
+      <td>mid_pct_12</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 65 · +288 · 0x56e273</td>
+      <td class="meaning-cell">MIDDLE（推定） 带权重数组下标 11（@+288；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>66</code></td>
+      <td><code>mid_pct_13</code></td>
+      <td><code>mid_pct_13</code></td>
+      <td>mid_pct_13</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 66 · +292 · 0x56e273</td>
+      <td class="meaning-cell">MIDDLE（推定） 带权重数组下标 12（@+292；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>67</code></td>
+      <td><code>mid_pct_14</code></td>
+      <td><code>mid_pct_14</code></td>
+      <td>mid_pct_14</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 67 · +296 · 0x56e273</td>
+      <td class="meaning-cell">MIDDLE（推定） 带权重数组下标 13（@+296；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>68</code></td>
+      <td><code>mid_pct_15</code></td>
+      <td><code>mid_pct_15</code></td>
+      <td>mid_pct_15</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 68 · +300 · 0x56e273</td>
+      <td class="meaning-cell">MIDDLE（推定） 带权重数组下标 14（@+300；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>69</code></td>
+      <td><code>mid_pct_16</code></td>
+      <td><code>mid_pct_16</code></td>
+      <td>mid_pct_16</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 69 · +304 · 0x56e273</td>
+      <td class="meaning-cell">MIDDLE（推定） 带权重数组下标 15（@+304；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>70</code></td>
+      <td><code>mid_pct_17</code></td>
+      <td><code>mid_pct_17</code></td>
+      <td>mid_pct_17</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 70 · +308 · 0x56e273</td>
+      <td class="meaning-cell">MIDDLE（推定） 带权重数组下标 16（@+308；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>71</code></td>
+      <td><code>mid_pct_18</code></td>
+      <td><code>mid_pct_18</code></td>
+      <td>mid_pct_18</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 71 · +312 · 0x56e273</td>
+      <td class="meaning-cell">MIDDLE（推定） 带权重数组下标 17（@+312；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>72</code></td>
+      <td><code>mid_pct_19</code></td>
+      <td><code>mid_pct_19</code></td>
+      <td>mid_pct_19</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 72 · +316 · 0x56e273</td>
+      <td class="meaning-cell">MIDDLE（推定） 带权重数组下标 18（@+316；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>73</code></td>
+      <td><code>mid_pct_20</code></td>
+      <td><code>mid_pct_20</code></td>
+      <td>mid_pct_20</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 73 · +320 · 0x56e273</td>
+      <td class="meaning-cell">MIDDLE（推定） 带权重数组下标 19（@+320；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>74</code></td>
+      <td><code>mid_pct_21</code></td>
+      <td><code>mid_pct_21</code></td>
+      <td>mid_pct_21</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 74 · +324 · 0x56e273</td>
+      <td class="meaning-cell">MIDDLE（推定） 带权重数组下标 20（@+324；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>75</code></td>
+      <td><code>mid_pct_22</code></td>
+      <td><code>mid_pct_22</code></td>
+      <td>mid_pct_22</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 75 · +328 · 0x56e273</td>
+      <td class="meaning-cell">MIDDLE（推定） 带权重数组下标 21（@+328；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>76</code></td>
+      <td><code>mid_pct_23</code></td>
+      <td><code>mid_pct_23</code></td>
+      <td>mid_pct_23</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 76 · +332 · 0x56e273</td>
+      <td class="meaning-cell">MIDDLE（推定） 带权重数组下标 22（@+332；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>77</code></td>
+      <td><code>mid_extra_1</code></td>
+      <td><code>mid_extra_1</code></td>
+      <td>mid_extra_1</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 77 · +340 · 0x56ecdc</td>
+      <td class="meaning-cell">MIDDLE（推定） 带块尾随参数 1（atof → @+340；本项不乘 100）</td>
+    </tr>
+    <tr>
+      <td><code>78</code></td>
+      <td><code>mid_extra_2</code></td>
+      <td><code>mid_extra_2</code></td>
+      <td>mid_extra_2</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 78 · +344 · 0x56ecdc</td>
+      <td class="meaning-cell">MIDDLE（推定） 带块尾随参数 2（atof → @+344；×100）</td>
+    </tr>
+    <tr>
+      <td><code>79</code></td>
+      <td><code>far_hdr_1</code></td>
+      <td><code>far_hdr_1</code></td>
+      <td>far_hdr_1</td>
+      <td><code>u8</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 79 · +348 · 0x56e22d</td>
+      <td class="meaning-cell">FAR（推定） 带块 3 个字节参数之 1（u8 @+348；`sub_56E220` 用 atoi 读、按字节存）</td>
+    </tr>
+    <tr>
+      <td><code>80</code></td>
+      <td><code>far_hdr_2</code></td>
+      <td><code>far_hdr_2</code></td>
+      <td>far_hdr_2</td>
+      <td><code>u8</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 80 · +349 · 0x56e22d</td>
+      <td class="meaning-cell">FAR（推定） 带块 3 个字节参数之 2（u8 @+349；`sub_56E220` 用 atoi 读、按字节存）</td>
+    </tr>
+    <tr>
+      <td><code>81</code></td>
+      <td><code>far_hdr_3</code></td>
+      <td><code>far_hdr_3</code></td>
+      <td>far_hdr_3</td>
+      <td><code>u8</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 81 · +350 · 0x56e22d</td>
+      <td class="meaning-cell">FAR（推定） 带块 3 个字节参数之 3（u8 @+350；`sub_56E220` 用 atoi 读、按字节存）</td>
+    </tr>
+    <tr>
+      <td><code>82</code></td>
+      <td><code>far_pct_02</code></td>
+      <td><code>far_pct_02</code></td>
+      <td>far_pct_02</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 82 · +356 · 0x56e273</td>
+      <td class="meaning-cell">FAR（推定） 带权重数组下标 1（@+356；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>83</code></td>
+      <td><code>far_pct_03</code></td>
+      <td><code>far_pct_03</code></td>
+      <td>far_pct_03</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 83 · +360 · 0x56e273</td>
+      <td class="meaning-cell">FAR（推定） 带权重数组下标 2（@+360；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>84</code></td>
+      <td><code>far_pct_04</code></td>
+      <td><code>far_pct_04</code></td>
+      <td>far_pct_04</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 84 · +364 · 0x56e273</td>
+      <td class="meaning-cell">FAR（推定） 带权重数组下标 3（@+364；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>85</code></td>
+      <td><code>far_pct_05</code></td>
+      <td><code>far_pct_05</code></td>
+      <td>far_pct_05</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 85 · +368 · 0x56e273</td>
+      <td class="meaning-cell">FAR（推定） 带权重数组下标 4（@+368；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>86</code></td>
+      <td><code>far_pct_06</code></td>
+      <td><code>far_pct_06</code></td>
+      <td>far_pct_06</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 86 · +372 · 0x56e273</td>
+      <td class="meaning-cell">FAR（推定） 带权重数组下标 5（@+372；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>87</code></td>
+      <td><code>far_pct_07</code></td>
+      <td><code>far_pct_07</code></td>
+      <td>far_pct_07</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 87 · +376 · 0x56e273</td>
+      <td class="meaning-cell">FAR（推定） 带权重数组下标 6（@+376；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>88</code></td>
+      <td><code>far_pct_08</code></td>
+      <td><code>far_pct_08</code></td>
+      <td>far_pct_08</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 88 · +380 · 0x56e273</td>
+      <td class="meaning-cell">FAR（推定） 带权重数组下标 7（@+380；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>89</code></td>
+      <td><code>far_pct_09</code></td>
+      <td><code>far_pct_09</code></td>
+      <td>far_pct_09</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 89 · +384 · 0x56e273</td>
+      <td class="meaning-cell">FAR（推定） 带权重数组下标 8（@+384；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>90</code></td>
+      <td><code>far_pct_10</code></td>
+      <td><code>far_pct_10</code></td>
+      <td>far_pct_10</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 90 · +388 · 0x56e273</td>
+      <td class="meaning-cell">FAR（推定） 带权重数组下标 9（@+388；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>91</code></td>
+      <td><code>far_pct_11</code></td>
+      <td><code>far_pct_11</code></td>
+      <td>far_pct_11</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 91 · +392 · 0x56e273</td>
+      <td class="meaning-cell">FAR（推定） 带权重数组下标 10（@+392；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>92</code></td>
+      <td><code>far_pct_12</code></td>
+      <td><code>far_pct_12</code></td>
+      <td>far_pct_12</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 92 · +396 · 0x56e273</td>
+      <td class="meaning-cell">FAR（推定） 带权重数组下标 11（@+396；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>93</code></td>
+      <td><code>far_pct_13</code></td>
+      <td><code>far_pct_13</code></td>
+      <td>far_pct_13</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 93 · +400 · 0x56e273</td>
+      <td class="meaning-cell">FAR（推定） 带权重数组下标 12（@+400；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>94</code></td>
+      <td><code>far_pct_14</code></td>
+      <td><code>far_pct_14</code></td>
+      <td>far_pct_14</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 94 · +404 · 0x56e273</td>
+      <td class="meaning-cell">FAR（推定） 带权重数组下标 13（@+404；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>95</code></td>
+      <td><code>far_pct_15</code></td>
+      <td><code>far_pct_15</code></td>
+      <td>far_pct_15</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 95 · +408 · 0x56e273</td>
+      <td class="meaning-cell">FAR（推定） 带权重数组下标 14（@+408；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>96</code></td>
+      <td><code>far_pct_16</code></td>
+      <td><code>far_pct_16</code></td>
+      <td>far_pct_16</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 96 · +412 · 0x56e273</td>
+      <td class="meaning-cell">FAR（推定） 带权重数组下标 15（@+412；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>97</code></td>
+      <td><code>far_pct_17</code></td>
+      <td><code>far_pct_17</code></td>
+      <td>far_pct_17</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 97 · +416 · 0x56e273</td>
+      <td class="meaning-cell">FAR（推定） 带权重数组下标 16（@+416；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>98</code></td>
+      <td><code>far_pct_18</code></td>
+      <td><code>far_pct_18</code></td>
+      <td>far_pct_18</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 98 · +420 · 0x56e273</td>
+      <td class="meaning-cell">FAR（推定） 带权重数组下标 17（@+420；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>99</code></td>
+      <td><code>far_pct_19</code></td>
+      <td><code>far_pct_19</code></td>
+      <td>far_pct_19</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 99 · +424 · 0x56e273</td>
+      <td class="meaning-cell">FAR（推定） 带权重数组下标 18（@+424；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>100</code></td>
+      <td><code>far_pct_20</code></td>
+      <td><code>far_pct_20</code></td>
+      <td>far_pct_20</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 100 · +428 · 0x56e273</td>
+      <td class="meaning-cell">FAR（推定） 带权重数组下标 19（@+428；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>101</code></td>
+      <td><code>far_pct_21</code></td>
+      <td><code>far_pct_21</code></td>
+      <td>far_pct_21</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 101 · +432 · 0x56e273</td>
+      <td class="meaning-cell">FAR（推定） 带权重数组下标 20（@+432；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>102</code></td>
+      <td><code>far_pct_22</code></td>
+      <td><code>far_pct_22</code></td>
+      <td>far_pct_22</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 102 · +436 · 0x56e273</td>
+      <td class="meaning-cell">FAR（推定） 带权重数组下标 21（@+436；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>103</code></td>
+      <td><code>far_pct_23</code></td>
+      <td><code>far_pct_23</code></td>
+      <td>far_pct_23</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 103 · +440 · 0x56e273</td>
+      <td class="meaning-cell">FAR（推定） 带权重数组下标 22（@+440；`sub_56E220` atof；整块 23 个 float 随后被 `sub_56E450` 归一化（和 = 1））</td>
+    </tr>
+    <tr>
+      <td><code>104</code></td>
+      <td><code>far_extra_1</code></td>
+      <td><code>far_extra_1</code></td>
+      <td>far_extra_1</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 104 · +448 · 0x56ecdc</td>
+      <td class="meaning-cell">FAR（推定） 带块尾随参数 1（atof → @+448；本项不乘 100）</td>
+    </tr>
+    <tr>
+      <td><code>105</code></td>
+      <td><code>far_extra_2</code></td>
+      <td><code>far_extra_2</code></td>
+      <td>far_extra_2</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 105 · +452 · 0x56ecdc</td>
+      <td class="meaning-cell">FAR（推定） 带块尾随参数 2（atof → @+452；×100）</td>
+    </tr>
+    <tr>
+      <td><code>106</code></td>
+      <td><code>weight4_1</code></td>
+      <td><code>weight4_1</code></td>
+      <td>weight4_1</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 106 · +456 · 0x56ee5b</td>
+      <td class="meaning-cell">4 值权重组第 1 项（atof → @+456；`sub_56E510` 把 @+456..+468 归一化，和 = 1）</td>
+    </tr>
+    <tr>
+      <td><code>107</code></td>
+      <td><code>weight4_2</code></td>
+      <td><code>weight4_2</code></td>
+      <td>weight4_2</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 107 · +460 · 0x56ee5b</td>
+      <td class="meaning-cell">4 值权重组第 2 项（@+460）</td>
+    </tr>
+    <tr>
+      <td><code>108</code></td>
+      <td><code>weight4_3</code></td>
+      <td><code>weight4_3</code></td>
+      <td>weight4_3</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 108 · +464 · 0x56ee5b</td>
+      <td class="meaning-cell">4 值权重组第 3 项（@+464）</td>
+    </tr>
+    <tr>
+      <td><code>109</code></td>
+      <td><code>weight4_4</code></td>
+      <td><code>weight4_4</code></td>
+      <td>weight4_4</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 109 · +468 · 0x56ee5b</td>
+      <td class="meaning-cell">4 值权重组第 4 项（@+468）</td>
+    </tr>
+    <tr>
+      <td><code>110</code></td>
+      <td><code>flag_bit4</code></td>
+      <td><code>flag_bit4</code></td>
+      <td>flag_bit4</td>
+      <td><code>bool</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 110 · +520 · 0x56ee5b</td>
+      <td class="meaning-cell">开关位（csv110!=0 → @+520 bit4）</td>
+    </tr>
+    <tr>
+      <td><code>111</code></td>
+      <td><code>flag_bit7</code></td>
+      <td><code>flag_bit7</code></td>
+      <td>flag_bit7</td>
+      <td><code>bool</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 111 · +520 · 0x56ee5b</td>
+      <td class="meaning-cell">开关位（csv111!=0 → @+520 bit7）</td>
+    </tr>
+    <tr>
+      <td><code>112</code></td>
+      <td><code>flag_bit5</code></td>
+      <td><code>flag_bit5</code></td>
+      <td>flag_bit5</td>
+      <td><code>bool</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 112 · +520 · 0x56ee5b</td>
+      <td class="meaning-cell">开关位（csv112!=0 → @+520 bit5）</td>
+    </tr>
+    <tr>
+      <td><code>113</code></td>
+      <td><code>flag_bit6</code></td>
+      <td><code>flag_bit6</code></td>
+      <td>flag_bit6</td>
+      <td><code>bool</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 113 · +520 · 0x56ee5b</td>
+      <td class="meaning-cell">开关位（csv113!=0 → @+520 bit6）</td>
+    </tr>
+    <tr>
+      <td><code>114</code></td>
+      <td><code>tail_f1</code></td>
+      <td><code>tail_f1</code></td>
+      <td>tail_f1</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 114 · +472 · 0x56ee5b</td>
+      <td class="meaning-cell">尾段浮点 1（atof → @+472）</td>
+    </tr>
+    <tr>
+      <td><code>115</code></td>
+      <td><code>tail_norm_1</code></td>
+      <td><code>tail_norm_1</code></td>
+      <td>tail_norm_1</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 115 · +476 · 0x56ee5b</td>
+      <td class="meaning-cell">归一化三元组第 1 项（@+476；与 @+480、@+484 一起按三者和归一化）</td>
+    </tr>
+    <tr>
+      <td><code>116</code></td>
+      <td><code>tail_norm_2</code></td>
+      <td><code>tail_norm_2</code></td>
+      <td>tail_norm_2</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 116 · +480 · 0x56ee5b</td>
+      <td class="meaning-cell">归一化三元组第 2 项（@+480）</td>
+    </tr>
+    <tr>
+      <td><code>117</code></td>
+      <td><code>tail_norm_3</code></td>
+      <td><code>tail_norm_3</code></td>
+      <td>tail_norm_3</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 117 · +484 · 0x56ee5b</td>
+      <td class="meaning-cell">归一化三元组第 3 项（@+484）</td>
+    </tr>
+    <tr>
+      <td><code>118</code></td>
+      <td><code>tail_f2</code></td>
+      <td><code>tail_f2</code></td>
+      <td>tail_f2</td>
+      <td><code>float</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 118 · +488 · 0x56ee5b</td>
+      <td class="meaning-cell">尾段浮点 2（atof → @+488）</td>
+    </tr>
+    <tr>
+      <td><code>119</code></td>
+      <td><code>tail_i1</code></td>
+      <td><code>tail_i1</code></td>
+      <td>tail_i1</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 119 · +492 · 0x56ee5b</td>
+      <td class="meaning-cell">尾段整数 1（atoi → @+492）</td>
+    </tr>
+    <tr>
+      <td><code>120</code></td>
+      <td><code>tail_i2</code></td>
+      <td><code>tail_i2</code></td>
+      <td>tail_i2</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 120 · +496 · 0x56ee5b</td>
+      <td class="meaning-cell">尾段整数 2（atoi → @+496）</td>
+    </tr>
+    <tr>
+      <td><code>121</code></td>
+      <td><code>tail_i3</code></td>
+      <td><code>tail_i3</code></td>
+      <td>tail_i3</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 121 · +500 · 0x56ee5b</td>
+      <td class="meaning-cell">尾段整数 3（atoi → @+500）</td>
+    </tr>
+    <tr>
+      <td><code>122</code></td>
+      <td><code>tail_b1</code></td>
+      <td><code>tail_b1</code></td>
+      <td>tail_b1</td>
+      <td><code>u8</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 122 · +504 · 0x56ee5b</td>
+      <td class="meaning-cell">尾段字节 1（`sub_56E3F0` atoi → 按 u8 存 @+504）</td>
+    </tr>
+    <tr>
+      <td><code>123</code></td>
+      <td><code>tail_i4</code></td>
+      <td><code>tail_i4</code></td>
+      <td>tail_i4</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 123 · +508 · 0x56ee5b</td>
+      <td class="meaning-cell">尾段整数 4（`sub_56E3F0` atoi → @+508）</td>
+    </tr>
+    <tr>
+      <td><code>124</code></td>
+      <td><code>tail_i5</code></td>
+      <td><code>tail_i5</code></td>
+      <td>tail_i5</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 124 · +512 · 0x56ee5b</td>
+      <td class="meaning-cell">尾段整数 5（`sub_56E3F0` atoi → @+512）</td>
+    </tr>
+    <tr>
+      <td><code>125</code></td>
+      <td><code>tail_i6</code></td>
+      <td><code>tail_i6</code></td>
+      <td>tail_i6</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 125 · +516 · 0x56ee5b</td>
+      <td class="meaning-cell">尾段整数 6（`sub_56E3F0` atoi → @+516）</td>
+    </tr>
+    <tr>
+      <td><code>126</code></td>
+      <td><code>tail_flag1</code></td>
+      <td><code>tail_flag1</code></td>
+      <td>tail_flag1</td>
+      <td><code>bool</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_56EA00</code></td>
+      <td class="muted">csv 126 · +521 · 0x56f039</td>
+      <td class="meaning-cell">尾标志（csv126!=0 → @+521 bit0）</td>
+    </tr></tbody>
+      </table>
+    </section>
+
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">生成于 2026-10-12 · 改 JSON 后重跑 build_site.py · HTML 只读</div>
+  </footer>
+</body>
+</html>

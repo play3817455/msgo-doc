@@ -1,0 +1,8 @@
+序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+0,-,2,u16,opcode,命令号,分发器 switch 选择子,0xB0A3,0xb72d2c,确证
+1,0,4,u32,room_num,房间数量（上限 10240）,"驱动 room_ids 数组循环（`cmp ebx,2800h`）",0..10240,B72B5C|B72B88,确证
+2,4,4·n₁,"array<u32,10240>",room_ids,房间 ID 列表（日志串 `room_ids={...}`）,经 `vt[0x1A4]` 交业务（6 实参）,-,B72B9D|B72BBD|B72BC9,确证
+3,var,4,u32,eff_num,联邦方计数条目数（上限 10240）,"驱动 count_effs 数组循环（`cmp ebx,2800h`）",0..10240,B72BF1|B72C05,确证
+4,var,2·n₂,"array<u16,10240>",count_effs,联邦方人数计数（日志串 `count_effs={...}`）,经 `vt[0x1A4]` 交业务,-,B72C1B|B72C3A|B72C46,确证
+5,var,4,u32,zeon_num,吉翁方计数条目数（上限 10240）,"驱动 count_zeons 数组循环（`cmp ebx,2800h`）",0..10240,B72C6E|B72C82,确证
+6,var,2·n₃,"array<u16,10240>",count_zeons,吉翁方人数计数（日志串 `count_zeons={...}`）,经 `vt[0x1A4]` 交业务,-,B72C98|B72CB5|B72CC1,确证

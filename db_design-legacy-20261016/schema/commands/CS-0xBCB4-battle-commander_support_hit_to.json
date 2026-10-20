@@ -1,0 +1,702 @@
+{
+  "id": "CS-0xBCB4-battle-commander_support_hit_to",
+  "opcode": "0xBCB4",
+  "direction": "CS",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "commander_support_hit_to",
+  "source_dir": "protocol_analysis/commands/CS-0xBCB4-battle-commander_support_hit_to",
+  "meta": {
+    "opcode": "`0xBCB4`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`battle_client`",
+    "命令名": "`commander_support_hit_to`",
+    "名字符串": "`)<-_proto_battle_client::send_commander_support_hit_to(` @ `0xEE1500`",
+    "代码位置": "`0xB3E890`（`0xB3E890`..`0xB3ECBE`）",
+    "opcode 写入证据": "`0xB3E91A`",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0x041A`（1050）",
+    "容量申请证据": "`0xB3E8DA`（分配器 `[obj+0Ch]` 的 `vt[0x78]`）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)` @ `0xB3EC4C`",
+    "提交": "`sub_B02FF0` @ `0xB3EA88`",
+    "配对命令": "S→C `0x56CF-battle-commander_support_hit_from`（已 DONE）"
+  },
+  "handler": null,
+  "handler_va": "0xB3E890",
+  "block": [
+    "0xB3E890",
+    "0xB3ECBE"
+  ],
+  "name_str": ")<-_proto_battle_client::send_commander_support_hit_to(",
+  "name_str_va": "0xEE1500",
+  "capacity": "0x041A",
+  "capacity_va": "0xB3E8DA",
+  "closer_va": "0xB3EA88",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)` @ `0xB3EC4C`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": "0xB3EC4C",
+  "wire": {
+    "length_expr": "2 + 1 + 1 + 4 + 4 + 2 (N≤256) + 4 + 2 (N≤256)",
+    "fixed": false,
+    "var_drivers": [
+      "N"
+    ],
+    "capacity_note": "声明容量 0x041A（容量记账口径，非线长）",
+    "field_count": 8,
+    "length_source": "field_sum",
+    "readme_conclusion": "字段数：**9**（含 opcode 第 0 项）",
+    "readme_close": "线长公式 2 + (2+1+1+4) + (4+2N) + (4+2M)；上限场景（N=M=0x100）：2+8+516+516 = 1042 ≤ 1048（容量 0x41A = 1050，富余 6）。"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "写入 `buf+0`，供服务端分发；无 case 块（C→S）",
+      "enum": "0xBCB4",
+      "evidence_va": [
+        "`0xB3E91A`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "ent_id",
+      "meaning": "实体ID",
+      "purpose": "来源=入参 `arg_0`（写线指令见证据列）→ `vt[0x58](buf,len)` 发送至服务端",
+      "enum": null,
+      "evidence_va": [
+        "`0xB3E92A`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "2",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "hit_team",
+      "meaning": "受击方队伍",
+      "purpose": "来源=入参 `arg_4`（写线指令见证据列）→ `vt[0x58](buf,len)` 发送至服务端",
+      "enum": null,
+      "evidence_va": [
+        "`0xB3E944`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "3",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "hit_troops",
+      "meaning": "受击方部队（阵营）",
+      "purpose": "来源=入参 `arg_8`（写线指令见证据列）→ `vt[0x58](buf,len)` 发送至服务端",
+      "enum": null,
+      "evidence_va": [
+        "`0xB3E94C`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 4,
+      "offset": "4",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "support_type",
+      "meaning": "支援类型",
+      "purpose": "来源=入参 `arg_C`（写线指令见证据列）→ `vt[0x58](buf,len)` 发送至服务端",
+      "enum": null,
+      "evidence_va": [
+        "`0xB3E966`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    },
+    {
+      "seq": 5,
+      "offset": "8",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "ent_ids_num",
+      "meaning": "ent_ids 元素个数（≤0x100）",
+      "purpose": "来源=入参 `arg_14`（写线指令见证据列）→ `vt[0x58](buf,len)` 发送至服务端",
+      "enum": null,
+      "evidence_va": [
+        "`0xB3E990`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 7
+    },
+    {
+      "seq": 6,
+      "offset": "12",
+      "length": "2 (N≤256)",
+      "wire_type": "u16[N]",
+      "name": "ent_ids",
+      "meaning": "支援实体ID列表（N=ent_ids_num，≤0x100）",
+      "purpose": "来源=入参 `arg_10`；循环写入（循环上界由前一个计数 `ent_ids_num` 驱动）→ `vt[0x58](buf,len)` 发送至服务端",
+      "enum": null,
+      "evidence_va": [
+        "`0xB3E9B6`;`0xB3E990`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 8
+    },
+    {
+      "seq": 7,
+      "offset": "-",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "hit_dirs_num",
+      "meaning": "hit_dirs 元素个数（≤0x100）",
+      "purpose": "来源=入参 `arg_1C`（写线指令见证据列）→ `vt[0x58](buf,len)` 发送至服务端",
+      "enum": null,
+      "evidence_va": [
+        "`0xB3E9EA`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 9
+    },
+    {
+      "seq": 8,
+      "offset": "-",
+      "length": "2 (N≤256)",
+      "wire_type": "u16[N]",
+      "name": "hit_dirs",
+      "meaning": "受击方向列表（N=hit_dirs_num，≤0x100）",
+      "purpose": "来源=入参 `arg_18`；循环写入（循环上界由前一个计数 `hit_dirs_num` 驱动）→ `vt[0x58](buf,len)` 发送至服务端",
+      "enum": null,
+      "evidence_va": [
+        "`0xB3EA12`;`0xB3E9EA`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 10
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0xBCB4（分发器 switch 选择子）",
+      "evidence_va": "0xB3E91A"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0x041A B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xB3E8DA"
+    },
+    {
+      "step": 3,
+      "kind": "write_scalar",
+      "detail": "ent_id：`u16`（线长 2）—— 实体ID",
+      "evidence_va": "0xB3E92A"
+    },
+    {
+      "step": 4,
+      "kind": "write_scalar",
+      "detail": "hit_team：`u8`（线长 1）—— 受击方队伍",
+      "evidence_va": "0xB3E944"
+    },
+    {
+      "step": 5,
+      "kind": "write_scalar",
+      "detail": "hit_troops：`u8`（线长 1）—— 受击方部队（阵营）",
+      "evidence_va": "0xB3E94C"
+    },
+    {
+      "step": 6,
+      "kind": "write_scalar",
+      "detail": "support_type：`u32`（线长 4）—— 支援类型",
+      "evidence_va": "0xB3E966"
+    },
+    {
+      "step": 7,
+      "kind": "write_count",
+      "detail": "ent_ids_num：`u32`（线长 4）—— ent_ids 元素个数（≤0x100）",
+      "evidence_va": "0xB3E990"
+    },
+    {
+      "step": 8,
+      "kind": "write_scalar",
+      "detail": "ent_ids：`u16[N]`（线长 2 (N≤256)）—— 支援实体ID列表（N=ent_ids_num，≤0x100）",
+      "evidence_va": "0xB3E9B6"
+    },
+    {
+      "step": 9,
+      "kind": "write_count",
+      "detail": "hit_dirs_num：`u32`（线长 4）—— hit_dirs 元素个数（≤0x100）",
+      "evidence_va": "0xB3E9EA"
+    },
+    {
+      "step": 10,
+      "kind": "write_scalar",
+      "detail": "hit_dirs：`u16[N]`（线长 2 (N≤256)）—— 受击方向列表（N=hit_dirs_num，≤0x100）",
+      "evidence_va": "0xB3EA12"
+    },
+    {
+      "step": 11,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xB3EA88"
+    },
+    {
+      "step": 12,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xB3EC55"
+    }
+  ],
+  "capabilities": [
+    "unclassified",
+    "battle.commander_support"
+  ],
+  "capabilities_derived": [
+    "unclassified"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:49",
+    "batch": 26,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 1050,
+        "va": "0xB3E8DA",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB3E8D7",
+        "call_va": "0xB3E8DF"
+      },
+      "field_window": {
+        "start_va": "0xB3E890",
+        "end_va": "0xB3EA88",
+        "guard": null,
+        "closer_or_commit_va": "0xB3EA88",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "ent_id",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "`0xB3E92A`"
+            ]
+          },
+          {
+            "name": "hit_team",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "`0xB3E944`"
+            ]
+          },
+          {
+            "name": "hit_troops",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "`0xB3E94C`"
+            ]
+          },
+          {
+            "name": "support_type",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 4,
+            "shape": "scalar",
+            "evidence_va": [
+              "`0xB3E966`"
+            ]
+          },
+          {
+            "name": "ent_ids_num",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 5,
+            "shape": "scalar",
+            "evidence_va": [
+              "`0xB3E990`"
+            ]
+          },
+          {
+            "name": "ent_ids",
+            "wire_type": "u16[N]",
+            "width": null,
+            "seq": 6,
+            "shape": "agg",
+            "evidence_va": [
+              "`0xB3E9B6`;`0xB3E990`"
+            ]
+          },
+          {
+            "name": "hit_dirs_num",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 7,
+            "shape": "scalar",
+            "evidence_va": [
+              "`0xB3E9EA`"
+            ]
+          },
+          {
+            "name": "hit_dirs",
+            "wire_type": "u16[N]",
+            "width": null,
+            "seq": 8,
+            "shape": "agg",
+            "evidence_va": [
+              "`0xB3EA12`;`0xB3E9EA`"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB3E91A",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB3E92A",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB3E944",
+            "kind": "inline_store",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB3E94C",
+            "kind": "write",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB3E966",
+            "kind": "write",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB3E990",
+            "kind": "write",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB3E9B6",
+            "kind": "write",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB3E9EA",
+            "kind": "write",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB3EA12",
+            "kind": "write",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB3EA5E",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 6,
+        "checkable": 6,
+        "pairs": [
+          {
+            "field": "ent_id",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB3E91A",
+            "kind": "inline_store"
+          },
+          {
+            "field": "hit_team",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB3E944",
+            "kind": "inline_store"
+          },
+          {
+            "field": "hit_troops",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB3E94C",
+            "kind": "write"
+          },
+          {
+            "field": "support_type",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB3E966",
+            "kind": "write"
+          },
+          {
+            "field": "ent_ids_num",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB3E990",
+            "kind": "write"
+          },
+          {
+            "field": "hit_dirs_num",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB3E9EA",
+            "kind": "write"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB3E92A",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          },
+          {
+            "va": "0xB3E9B6",
+            "kind": "write",
+            "width": 2,
+            "wire_type": "u16"
+          },
+          {
+            "va": "0xB3EA12",
+            "kind": "write",
+            "width": 2,
+            "wire_type": "u16"
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB3E890",
+          "0xB3EA88"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 22,
+          "capacity": 1050,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB3EA5E",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）22 / 容量 0x41a"
+        }
+      },
+      "closer": {
+        "va": "0xB3EA88",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xB3EC55",
+        "mov_va": "0xB3EC4C",
+        "host": "[edx+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "ent_id=",
+        "hit_team=",
+        "hit_troops=",
+        "support_type=",
+        "ent_ids={",
+        "hit_dirs={"
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0xBCB4-battle-commander_support_hit_to.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0xB3E91A",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "`0xB3E91A`"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "CommanderSupportHitTo",
+      "role": "request",
+      "wire_length": "2 + 1 + 1 + 4 + 4 + 2 (N≤256) + 4 + 2 (N≤256)",
+      "members": [
+        {
+          "name": "EntId",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "ent_id"
+        },
+        {
+          "name": "HitTeam",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "hit_team"
+        },
+        {
+          "name": "HitTroops",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "hit_troops"
+        },
+        {
+          "name": "SupportType",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "support_type"
+        },
+        {
+          "name": "EntIdsNum",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "ent_ids_num"
+        },
+        {
+          "name": "EntIds",
+          "wire_type": "u16[N]",
+          "length": "2 (N≤256)",
+          "field_ref": "ent_ids",
+          "element": "u16",
+          "element_length": "2",
+          "cap": null,
+          "count_field": "ent_ids_num",
+          "count_field_source": "heuristic",
+          "count_var": "N",
+          "note": null
+        },
+        {
+          "name": "HitDirsNum",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "hit_dirs_num"
+        },
+        {
+          "name": "HitDirs",
+          "wire_type": "u16[N]",
+          "length": "2 (N≤256)",
+          "field_ref": "hit_dirs",
+          "element": "u16",
+          "element_length": "2",
+          "cap": null,
+          "count_field": "hit_dirs_num",
+          "count_field_source": "heuristic",
+          "count_var": "N",
+          "note": null
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "09d82095ff4684dc",
+  "check_fingerprint": "5c7173517e0d69f2"
+}

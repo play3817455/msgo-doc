@@ -1,0 +1,12 @@
+﻿序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+0,-,2,u16,opcode,命令号,battle 分发的 switch 选择子,0x16AA,0xB107C8,确证
+1,0,2,u16,ent_id,施加部件效果的实体 ID,交 vt[0x20C] 第1实参；日志 ent_id=,-,0xB106C4|0xB10816|0xB1081F|0xB108F3,确证
+2,2,4,u32,parts_num,部件效果条目数 N（= parts_exec 元素个数）,上限检查 cmp 1A0h；驱动数组循环与打印循环；交 vt[0x20C] 第3实参,0..416,0xB106F6|0xB10722|0xB10728|0xB108E8,确证
+3,6,17N,"array<parts_exec_entry,N>",parts_exec,部件效果列表（N 个元素，每元素 17 字节；缓冲槽步进 20）,数组基址交 vt[0x20C] 第2实参；日志 parts_exec={...},元素线长 17/槽步进 20,0xB10730|0xB10751|0xB1075D|0xB10852,确证
+3.1,+0,4,u32,parts_exec.item_id,部件（道具）ID,元素成员 [elem+0]；日志 item_id=,-,0xB06CFF|0xB09150,确证
+3.2,+4,4,u32,parts_exec.effect_msec,效果持续时间（毫秒）,元素成员 [elem+4]；日志 effect_msec=,-,0xB06D15|0xB06D17|0xB09177,确证
+3.3,+8,1,i8,parts_exec.effect_catego,效果类别,元素成员 [elem+8]；日志 effect_catego=（打印器 movsx ⇒ 有符号）,?（类别枚举未交叉）,0xB06D27|0xB06D29|0xB09192,类型确证/枚举待定
+3.4,+10,2,u16,parts_exec.effect_param,效果参数,元素成员 [elem+0xA]；日志 effect_param=,-,0xB06D39|0xB06D40|0xB091BA,确证
+3.5,+12,4,u32,parts_exec.effect_value,效果数值（主）,元素成员 [elem+0xC]；日志 effect_value=,-,0xB06D48|0xB091E2,确证
+3.6,+16,2,u16,parts_exec.effect_value2,效果数值（副）,元素成员 [elem+0x10]；日志 effect_value2=,-,0xB06D62|0xB09209,确证
+-,6+17N,0,-,（长度闭合）,游标必须==报文末尾,容量 0x2086 == 2+4+416x20（上限场景；元素线长 17 ≠ 槽步进 20）,-,0xB1077F|0xB10785,确证

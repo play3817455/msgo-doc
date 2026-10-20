@@ -1,0 +1,219 @@
+{
+ "id": "SC-0x54AF-lounge-present_add_dialog_show",
+ "verified_at": "2026-09-30 15:25:43",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "block",
+ "block": [
+  "0xB61A4C",
+  "0xB61D00"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 205,
+   "va": "0xB61A68",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xB61A65",
+   "call_va": "0xB61A6D"
+  },
+  "field_window": {
+   "start_va": "0xB61A54",
+   "end_va": "0xB61B5C",
+   "guard": {
+    "va": "0xB61A53",
+    "func": "0xB41120",
+    "module_id": 373,
+    "release_va": "0xB41110"
+   },
+   "closer_or_commit_va": "0xB61B51",
+   "within_model_block": true,
+   "range_from": "block"
+  },
+  "primitive_widths": {
+   "direction": "SC",
+   "expected": [
+    {
+     "name": "attach_type",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB61AA6",
+      "0xB61BD4"
+     ]
+    },
+    {
+     "name": "attach_id",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 2,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB61AE6",
+      "0xB61BFE"
+     ]
+    },
+    {
+     "name": "amount",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 3,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB61B0A",
+      "0xB61C28"
+     ]
+    },
+    {
+     "name": "message",
+     "wire_type": "str",
+     "width": null,
+     "seq": 4,
+     "shape": "str",
+     "evidence_va": [
+      "0xB61B25",
+      "0xB61C50"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB61AA6",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB61AE6",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB61B0A",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB61B25",
+     "kind": "read",
+     "width": null,
+     "wire_type": "str",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 4,
+   "checkable": 4,
+   "pairs": [
+    {
+     "field": "attach_type",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB61AA6",
+     "kind": "read"
+    },
+    {
+     "field": "attach_id",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB61AE6",
+     "kind": "read"
+    },
+    {
+     "field": "amount",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB61B0A",
+     "kind": "read"
+    },
+    {
+     "field": "message",
+     "width": null,
+     "shape": "str",
+     "va": "0xB61B25",
+     "kind": "read"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB61A54",
+    "0xB61B5C"
+   ],
+   "scalar_match_verifiable": true,
+   "capacity_relation": {
+    "observed_min": 12,
+    "capacity": 205,
+    "relation": "within",
+    "unknown_events": [
+     {
+      "va": "0xB61B25",
+      "kind": "read",
+      "name": ""
+     }
+    ],
+    "is_lower_bound": true,
+    "note": "观测线长（下界）12 / 容量 0xcd"
+   }
+  },
+  "closer": {
+   "va": "0xB61B51",
+   "kind": "jnz",
+   "jcc_va": "0xB61B55",
+   "seq_va": "0xB61B4D",
+   "jcc_dst": "0xB61B33",
+   "cmp": "cmp     ebx, [esp+2C5Ch+var_2C40]",
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x3A4]",
+   "slot_value": 932,
+   "va": "0xB61CC7",
+   "mov_va": "0xB61CBE",
+   "host": "[eax+3A4h]",
+   "argc": 4,
+   "form": "mov_then_call",
+   "error_slot": {
+    "slot": "vt[0x64]",
+    "va": "0xB61AC0",
+    "argc": 2
+   }
+  },
+  "log_strings": [
+   "attach_type=",
+   "attach_id=",
+   "amount=",
+   "message=\""
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "amount",
+  "attach_id",
+  "attach_type",
+  "message"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 7
+}

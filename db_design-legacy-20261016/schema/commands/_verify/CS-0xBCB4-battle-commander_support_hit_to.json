@@ -1,0 +1,342 @@
+{
+ "id": "CS-0xBCB4-battle-commander_support_hit_to",
+ "verified_at": "2026-09-30 15:25:49",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "handler_func",
+ "block": [
+  "0xB3E890",
+  "0xB3ECBE"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 1050,
+   "va": "0xB3E8DA",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xB3E8D7",
+   "call_va": "0xB3E8DF"
+  },
+  "field_window": {
+   "start_va": "0xB3E890",
+   "end_va": "0xB3EA88",
+   "guard": null,
+   "closer_or_commit_va": "0xB3EA88",
+   "within_model_block": true,
+   "range_from": "handler_func"
+  },
+  "primitive_widths": {
+   "direction": "CS",
+   "expected": [
+    {
+     "name": "ent_id",
+     "wire_type": "u16",
+     "width": 2,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "`0xB3E92A`"
+     ]
+    },
+    {
+     "name": "hit_team",
+     "wire_type": "u8",
+     "width": 1,
+     "seq": 2,
+     "shape": "scalar",
+     "evidence_va": [
+      "`0xB3E944`"
+     ]
+    },
+    {
+     "name": "hit_troops",
+     "wire_type": "u8",
+     "width": 1,
+     "seq": 3,
+     "shape": "scalar",
+     "evidence_va": [
+      "`0xB3E94C`"
+     ]
+    },
+    {
+     "name": "support_type",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 4,
+     "shape": "scalar",
+     "evidence_va": [
+      "`0xB3E966`"
+     ]
+    },
+    {
+     "name": "ent_ids_num",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 5,
+     "shape": "scalar",
+     "evidence_va": [
+      "`0xB3E990`"
+     ]
+    },
+    {
+     "name": "ent_ids",
+     "wire_type": "u16[N]",
+     "width": null,
+     "seq": 6,
+     "shape": "agg",
+     "evidence_va": [
+      "`0xB3E9B6`;`0xB3E990`"
+     ]
+    },
+    {
+     "name": "hit_dirs_num",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 7,
+     "shape": "scalar",
+     "evidence_va": [
+      "`0xB3E9EA`"
+     ]
+    },
+    {
+     "name": "hit_dirs",
+     "wire_type": "u16[N]",
+     "width": null,
+     "seq": 8,
+     "shape": "agg",
+     "evidence_va": [
+      "`0xB3EA12`;`0xB3E9EA`"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB3E91A",
+     "kind": "inline_store",
+     "width": 2,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB3E92A",
+     "kind": "inline_store",
+     "width": 2,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB3E944",
+     "kind": "inline_store",
+     "width": 1,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB3E94C",
+     "kind": "write",
+     "width": 1,
+     "wire_type": "u8",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB3E966",
+     "kind": "write",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB3E990",
+     "kind": "write",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB3E9B6",
+     "kind": "write",
+     "width": 2,
+     "wire_type": "u16",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB3E9EA",
+     "kind": "write",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB3EA12",
+     "kind": "write",
+     "width": 2,
+     "wire_type": "u16",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB3EA5E",
+     "kind": "composite",
+     "width": null,
+     "wire_type": null,
+     "name": "sub_B03020",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 6,
+   "checkable": 6,
+   "pairs": [
+    {
+     "field": "ent_id",
+     "width": 2,
+     "shape": "scalar",
+     "va": "0xB3E91A",
+     "kind": "inline_store"
+    },
+    {
+     "field": "hit_team",
+     "width": 1,
+     "shape": "scalar",
+     "va": "0xB3E944",
+     "kind": "inline_store"
+    },
+    {
+     "field": "hit_troops",
+     "width": 1,
+     "shape": "scalar",
+     "va": "0xB3E94C",
+     "kind": "write"
+    },
+    {
+     "field": "support_type",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB3E966",
+     "kind": "write"
+    },
+    {
+     "field": "ent_ids_num",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB3E990",
+     "kind": "write"
+    },
+    {
+     "field": "hit_dirs_num",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB3E9EA",
+     "kind": "write"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [
+    {
+     "va": "0xB3E92A",
+     "kind": "inline_store",
+     "width": 2,
+     "wire_type": null
+    },
+    {
+     "va": "0xB3E9B6",
+     "kind": "write",
+     "width": 2,
+     "wire_type": "u16"
+    },
+    {
+     "va": "0xB3EA12",
+     "kind": "write",
+     "width": 2,
+     "wire_type": "u16"
+    }
+   ],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB3E890",
+    "0xB3EA88"
+   ],
+   "scalar_match_verifiable": false,
+   "capacity_relation": {
+    "observed_min": 22,
+    "capacity": 1050,
+    "relation": "within",
+    "unknown_events": [
+     {
+      "va": "0xB3EA5E",
+      "kind": "composite",
+      "name": "sub_B03020"
+     }
+    ],
+    "is_lower_bound": true,
+    "note": "观测线长（下界）22 / 容量 0x41a"
+   }
+  },
+  "closer": {
+   "va": "0xB3EA88",
+   "kind": "commit",
+   "jcc_va": null,
+   "seq_va": null,
+   "cmp": null,
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x58]",
+   "slot_value": 88,
+   "va": "0xB3EC55",
+   "mov_va": "0xB3EC4C",
+   "host": "[edx+58h]",
+   "argc": 2,
+   "form": "mov_then_call",
+   "error_slot": null
+  },
+  "log_strings": [
+   "ent_id=",
+   "hit_team=",
+   "hit_troops=",
+   "support_type=",
+   "ent_ids={",
+   "hit_dirs={"
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "ent_id",
+  "ent_ids",
+  "hit_dirs",
+  "hit_team",
+  "hit_troops",
+  "support_type"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 26
+}

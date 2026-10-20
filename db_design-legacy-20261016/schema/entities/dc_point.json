@@ -1,0 +1,76 @@
+{
+  "id": "dc_point",
+  "title": "dc_point",
+  "description": "断线杯积分；41B/68B",
+  "table_ref": "tbl_dc_point",
+  "disposition": "PERSIST",
+  "wire_forms": [
+    {
+      "name": "get_point",
+      "length": 65,
+      "memory_claim": 68,
+      "commands": [
+        "SC-0x2AAF-lounge-dailycup_get_point_r"
+      ],
+      "protocol_path": "protocol_analysis/commands/SC-0x2AAF-lounge-dailycup_get_point_r/README.md"
+    }
+  ],
+  "fields": [
+    {
+      "name": "is_dc",
+      "offset": 0,
+      "length": 1,
+      "wire_type": "i8",
+      "meaning": "本次是否掉线（DC）",
+      "disposition": "PERSIST"
+    },
+    {
+      "name": "bef_dcpoint",
+      "offset": 1,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "掉线前积分",
+      "disposition": "PERSIST"
+    },
+    {
+      "name": "aft_dcpoint",
+      "offset": 5,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "掉线后积分",
+      "disposition": "PERSIST"
+    },
+    {
+      "name": "reward_item_ids",
+      "offset": 9,
+      "length": 16,
+      "wire_type": "u32[4]",
+      "meaning": "奖励道具 ID 列表（固定 4 项）",
+      "disposition": "PERSIST"
+    },
+    {
+      "name": "reward_item_nums",
+      "offset": 25,
+      "length": 16,
+      "wire_type": "u32[4]",
+      "meaning": "奖励道具数量列表（固定 4 项）",
+      "disposition": "PERSIST"
+    },
+    {
+      "name": "bef_next",
+      "offset": 12,
+      "length": 12,
+      "wire_type": "struct",
+      "meaning": "下阶段奖励预览（掉线前）",
+      "disposition": "PERSIST"
+    },
+    {
+      "name": "aft_next",
+      "offset": 24,
+      "length": 12,
+      "wire_type": "struct",
+      "meaning": "下阶段奖励预览（掉线后）",
+      "disposition": "PERSIST"
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "id": "gacha_lineup",
+  "title": "扭蛋阵容元素 gacha_lineup（6B 线 / 8B 槽）",
+  "length": 6,
+  "status": "complete",
+  "reader": "sub_B46AB0",
+  "printer": "sub_B502F0",
+  "memory_claim": 8,
+  "wire_layout": "4+2",
+  "evidence": {
+    "commands": [
+      "SC-0xCBC6-lounge-gacha_lineup_r"
+    ],
+    "protocol_paths": [
+      "protocol_analysis/commands/SC-0xCBC6-lounge-gacha_lineup_r/README.md"
+    ],
+    "note": "元素线长 6（读取器 sub_B46AB0：u32 + u16）≠ 槽步进 8（sub_B41690，上限 200 由 `cmp ebx,0C8h`@0xB7ABC8）。成员名取自元素打印器 sub_B502F0。"
+  },
+  "members": [
+    {
+      "name": "gacha_id",
+      "offset": 0,
+      "memory_offset": 0,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "扭蛋 ID",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0xCBC6-lounge-gacha_lineup_r",
+          "struct": "gacha_lineup",
+          "field_name": "gacha_id",
+          "offset": 0,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0xCBC6-lounge-gacha_lineup_r/README.md",
+          "section": "§3 字段 2",
+          "reader": "sub_B46AB0",
+          "printer": null,
+          "evidence_va": "0xB46AB6"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB46AB6",
+      "asm_audit_date": "2026-09-22"
+    },
+    {
+      "name": "stock",
+      "offset": 4,
+      "memory_offset": 4,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "库存/剩余数",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0xCBC6-lounge-gacha_lineup_r",
+          "struct": "gacha_lineup",
+          "field_name": "stock",
+          "offset": 4,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0xCBC6-lounge-gacha_lineup_r/README.md",
+          "section": "§3 字段 2",
+          "reader": "sub_B46AB0",
+          "printer": null,
+          "evidence_va": "0xB46ACC"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB46ACC",
+      "asm_audit_date": "2026-09-22"
+    }
+  ],
+  "asm_audit": {
+    "verified": "2026-09-22",
+    "reader": "sub_B46AB0",
+    "writer": null,
+    "total_bytes": 6,
+    "fields_ok": 2,
+    "fields_fail": 0,
+    "issues": [],
+    "status": "pass",
+    "memory": {
+      "verified": "2026-09-22",
+      "status": "pass",
+      "memory_claim": 8,
+      "mem_fields": 2,
+      "fields_ok": 2,
+      "fields_fail": 0,
+      "issues": []
+    }
+  }
+}

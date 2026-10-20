@@ -1,0 +1,460 @@
+{
+  "id": "CS-0x800A-battle-msma_spawn_warp_select",
+  "opcode": "0x800A",
+  "direction": "CS",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "msma_spawn_warp_select",
+  "source_dir": "protocol_analysis/commands/CS-0x800A-battle-msma_spawn_warp_select",
+  "meta": {
+    "opcode": "`0x800A`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`battle_client`",
+    "命令名": "`msma_spawn_warp_select`",
+    "名字符串": "`)<-_proto_battle_client::send_msma_spawn_warp_select(` @ `0xee0a2c`",
+    "代码位置": "sub_B343F0 @ `0xb343f0`（`0xb343f0`..`0xb3466b`）",
+    "opcode 写入证据": "`0xb3446c`",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0x12`（18）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)`",
+    "配对命令": "无同名 S→C 应答；同族见 `SC-0xD1B3-battle-game_respawn_post_update`（已 DONE）"
+  },
+  "handler": "sub_B343F0",
+  "handler_va": "0xb343f0",
+  "block": [
+    "0xB343F0",
+    "0xB3466B"
+  ],
+  "name_str": ")<-_proto_battle_client::send_msma_spawn_warp_select(",
+  "name_str_va": "0xee0a2c",
+  "capacity": "0x12",
+  "capacity_va": null,
+  "closer_va": "0xB34527",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": null,
+  "wire": {
+    "length_expr": "4 + 4 + 1 + 2",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x12（容量记账口径，非线长）",
+    "field_count": 4,
+    "length_source": "field_sum",
+    "readme_conclusion": "结论：选择机体出击传送点：出击点索引 + 出生点索引 + 是否乘战舰 + 重生实体 id。",
+    "readme_close": "2 + 4 + 4 + 1 + 2 = 13 ≤ 容量 0x12 = 18（富余 5）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "写入 buf+0，供服务端分发；无 case 块（C→S）",
+      "enum": "0x800A",
+      "evidence_va": [
+        "0xb3446c"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "2",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "post_index",
+      "meaning": "出击点（post）索引",
+      "purpose": "来源=入参 arg_0；内联 `mov [eax],esi`；服务端据此定位出击点",
+      "enum": null,
+      "evidence_va": [
+        "0xB3447C"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "6",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "spt_spot_index",
+      "meaning": "出生点索引",
+      "purpose": "来源=入参 arg_4；内联 `mov [eax],ecx`",
+      "enum": null,
+      "evidence_va": [
+        "0xB34497"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "10",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "is_btlship_ride",
+      "meaning": "是否搭乘战舰出击",
+      "purpose": "来源=入参 arg_8；写线原语 `sub_B061C0`(u8)",
+      "enum": "0/1",
+      "evidence_va": [
+        "0xB3449F"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 4,
+      "offset": "11",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "respawn_ent_id",
+      "meaning": "重生实体 id",
+      "purpose": "来源=入参 arg_C；写线原语 `sub_B02DA0`(u16)",
+      "enum": null,
+      "evidence_va": [
+        "0xB344B9"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0x800A（分发器 switch 选择子）",
+      "evidence_va": "0xB3446C"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0x12 B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xB34436"
+    },
+    {
+      "step": 3,
+      "kind": "write_scalar",
+      "detail": "post_index：`u32`（线长 4）—— 出击点（post）索引",
+      "evidence_va": "0xB3447C"
+    },
+    {
+      "step": 4,
+      "kind": "write_scalar",
+      "detail": "spt_spot_index：`u32`（线长 4）—— 出生点索引",
+      "evidence_va": "0xB34497"
+    },
+    {
+      "step": 5,
+      "kind": "write_scalar",
+      "detail": "is_btlship_ride：`u8`（线长 1）—— 是否搭乘战舰出击",
+      "evidence_va": "0xB3449F"
+    },
+    {
+      "step": 6,
+      "kind": "write_scalar",
+      "detail": "respawn_ent_id：`u16`（线长 2）—— 重生实体 id",
+      "evidence_va": "0xB344B9"
+    },
+    {
+      "step": 7,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xB34527"
+    },
+    {
+      "step": 8,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xB34605"
+    }
+  ],
+  "capabilities": [
+    "create",
+    "query"
+  ],
+  "capabilities_derived": [
+    "battle"
+  ],
+  "db_effects": [],
+  "pair": "SC-0xD1B3-battle-game_respawn_post_update",
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:47",
+    "batch": 18,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 18,
+        "va": "0xB34436",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB34433",
+        "call_va": "0xB34438"
+      },
+      "field_window": {
+        "start_va": "0xB343F0",
+        "end_va": "0xB34527",
+        "guard": null,
+        "closer_or_commit_va": "0xB34527",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "post_index",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB3447C"
+            ]
+          },
+          {
+            "name": "spt_spot_index",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB34497"
+            ]
+          },
+          {
+            "name": "is_btlship_ride",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB3449F"
+            ]
+          },
+          {
+            "name": "respawn_ent_id",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 4,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB344B9"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB3446C",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB3447C",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB34497",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB3449F",
+            "kind": "write",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB344B9",
+            "kind": "write",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB344FD",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 4,
+        "checkable": 4,
+        "pairs": [
+          {
+            "field": "post_index",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB3447C",
+            "kind": "inline_store"
+          },
+          {
+            "field": "spt_spot_index",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB34497",
+            "kind": "inline_store"
+          },
+          {
+            "field": "is_btlship_ride",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB3449F",
+            "kind": "write"
+          },
+          {
+            "field": "respawn_ent_id",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB344B9",
+            "kind": "write"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB3446C",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB343F0",
+          "0xB34527"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 13,
+          "capacity": 18,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB344FD",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）13 / 容量 0x12"
+        }
+      },
+      "closer": {
+        "va": "0xB34527",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xB34605",
+        "mov_va": "0xB345FC",
+        "host": "[edx+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "post_index=",
+        "spt_spot_index=",
+        "is_btlship_ride=",
+        "respawn_ent_id="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0x800A-battle-msma_spawn_warp_select.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0xb3446c",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xb3446c"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "MsmaSpawnWarpSelect",
+      "role": "request",
+      "wire_length": "4 + 4 + 1 + 2",
+      "members": [
+        {
+          "name": "PostIndex",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "post_index"
+        },
+        {
+          "name": "SptSpotIndex",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "spt_spot_index"
+        },
+        {
+          "name": "IsBtlshipRide",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "is_btlship_ride"
+        },
+        {
+          "name": "RespawnEntId",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "respawn_ent_id"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "f68169f1eeae6dd8",
+  "check_fingerprint": "6153922d887918ac"
+}

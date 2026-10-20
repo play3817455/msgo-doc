@@ -1,0 +1,215 @@
+{
+ "id": "CS-0x2E33-lounge-msma_color_unlock",
+ "verified_at": "2026-09-30 15:25:43",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "handler_func",
+ "block": [
+  "0xB98050",
+  "0xB98294"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 18,
+   "va": "0xB98096",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xB98093",
+   "call_va": "0xB98098"
+  },
+  "field_window": {
+   "start_va": "0xB98050",
+   "end_va": "0xB98172",
+   "guard": null,
+   "closer_or_commit_va": "0xB98172",
+   "within_model_block": true,
+   "range_from": "handler_func"
+  },
+  "primitive_widths": {
+   "direction": "CS",
+   "expected": [
+    {
+     "name": "uniqid_ms",
+     "wire_type": "u64",
+     "width": 8,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB980DC"
+     ]
+    },
+    {
+     "name": "color_id",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 2,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB980F4"
+     ]
+    },
+    {
+     "name": "use_gp",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 3,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB98104"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB980CC",
+     "kind": "inline_store",
+     "width": 2,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB980DC",
+     "kind": "inline_store",
+     "width": 4,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB980F4",
+     "kind": "inline_store",
+     "width": 4,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB98104",
+     "kind": "write",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB98148",
+     "kind": "composite",
+     "width": null,
+     "wire_type": null,
+     "name": "sub_B03020",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 2,
+   "checkable": 3,
+   "pairs": [
+    {
+     "field": "color_id",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB980DC",
+     "kind": "inline_store"
+    },
+    {
+     "field": "use_gp",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB980F4",
+     "kind": "inline_store"
+    }
+   ],
+   "gaps": [
+    {
+     "field": "uniqid_ms",
+     "wire_type": "u64",
+     "width": 8,
+     "shape": "scalar",
+     "note": "汇编事件序列里找不到与之对位的读写点（缺字段或宽度不符）"
+    }
+   ],
+   "unmatched_actual": [
+    {
+     "va": "0xB980CC",
+     "kind": "inline_store",
+     "width": 2,
+     "wire_type": null
+    },
+    {
+     "va": "0xB98104",
+     "kind": "write",
+     "width": 4,
+     "wire_type": "u32"
+    }
+   ],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB98050",
+    "0xB98172"
+   ],
+   "scalar_match_verifiable": false,
+   "capacity_relation": {
+    "observed_min": 14,
+    "capacity": 18,
+    "relation": "within",
+    "unknown_events": [
+     {
+      "va": "0xB98148",
+      "kind": "composite",
+      "name": "sub_B03020"
+     }
+    ],
+    "is_lower_bound": true,
+    "note": "观测线长（下界）14 / 容量 0x12"
+   }
+  },
+  "closer": {
+   "va": "0xB98172",
+   "kind": "commit",
+   "jcc_va": null,
+   "seq_va": null,
+   "cmp": null,
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x58]",
+   "slot_value": 88,
+   "va": "0xB9822B",
+   "mov_va": "0xB98222",
+   "host": "[edx+58h]",
+   "argc": 2,
+   "form": "mov_then_call",
+   "error_slot": null
+  },
+  "log_strings": [
+   "uniqid_ms=",
+   "color_id=",
+   "use_gp="
+  ]
+ },
+ "mismatches": [],
+ "notes": [
+  {
+   "check": "primitive_widths",
+   "note": "定宽对位不可判定：C→S 写线在复合写入器内部 consumed 未知；缺口 uniqid_ms"
+  }
+ ],
+ "log_name_hits": [
+  "color_id",
+  "uniqid_ms",
+  "use_gp"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 6
+}

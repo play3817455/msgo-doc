@@ -1,0 +1,8 @@
+﻿序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+0,-,2,u16,opcode,命令号,battle 分发的 switch 选择子,0x1159,0xB0F00A,确证
+1,0,4,u32,count,地图机关（gimmick）进度条目数,上限检查 cmp 0x20；交 vt[0x11C] 第2实参；驱动数组循环,0..32,0xB0EF47|0xB0EF70|0xB0EF73|0xB0F107,确证
+2,4,7N,"array<gimmick_progress_entry,N>",gimmick_progress,地图机关进度列表,交 vt[0x11C] 第1实参=数组基址；日志 gimmick_progress={...},元素线长 7/缓冲步进 32,0xB0EF7F|0xB0EF9C|0xB0EFA8|0xB0EFB0|0xB0F108,确证
+2.1,+0,4,u32,gimmick_progress.gauge_now,机关当前计量值（槽值）,数组元素 [elem+0]；日志 gauge_now=,-,0xB07DBE|0xB07DC4|0xB0B295|0xB0B2A0,确证
+2.2,+4,1,i8,gimmick_progress.stat,机关状态,数组元素 [elem+4]；日志 stat=（movsx 符号扩展）,?（状态枚举未交叉）,0xB07DD4|0xB0B2BB,类型确证/枚举待定
+2.3,+6,2,u16,gimmick_progress.access_ent_id,触发/访问该机关的实体 ID,数组元素 [elem+6]；日志 access_ent_id=,-,0xB07DE6|0xB07DE9|0xB0B2E3|0xB0B2EB,确证
+-,4+7N,0,-,（长度闭合）,游标必须==报文末尾,容量 0x404=1028=4+32x32（结构体跨度；线长 4+7N<=228）,-,0xB0EFC7|0xB0EFCD,确证

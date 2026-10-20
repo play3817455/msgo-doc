@@ -1,0 +1,14 @@
+﻿序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+0,-,2,u16,opcode,命令号,分发器 switch 选择子,0x298E,0xB03EF6,确证
+1,0,4,u32,result,大区列表查询结果码,经 `vt[0x7C]`；日志 `result=`,-,0xB03E0D|0xB03F49,确证
+2,4,4,u32,last_world,上次登录的大区 ID,经 `vt[0x7C]`；日志 `last_world=`,-,0xB03E4E|0xB03F73,确证
+3,8,4,u32,worlds_num,大区条目数 N,"上限 `cmp ebx,20h`（32）；驱动数组；经 `vt[0x7C]`",0..32,0xB03E6D|0xB03E7D,确证
+4,12,309·N,array<world_entry,N>,worlds,大区列表（N ≤ 32；元素线上 309B / 缓冲槽步进 316B）,数组基址经 `vt[0x7C]`；日志 `worlds={…}`（打印器 `sub_B03830`）,元素线长 309 / 槽 316,0xB03EA6(元素读取器 sub_B02E20)|0xB03E8C(sub_B02D40 预留 0x13C/槽)|0xB03E7D(上限)|0xB03F8E(日志),确证
+5,+0,4,u32,worlds.worldid,大区 ID,数组元素成员 `[+0x0]`；打印器 `sub_B03830` 打印 `worldid=`,-,sub_B02E20(读入位)|sub_B03830[+0],确证
+6,+4,49,bytes[49],worlds.name,大区名（定长 49B）,数组元素成员 `[+0x4]`；打印器 `sub_B03830` 打印 `name=`,-,sub_B02E20(读入位)|sub_B03830[+4],确证
+7,+53,49,bytes[49],worlds.name_en,大区英文名（定长 49B）,数组元素成员 `[+0x35]`；打印器 `sub_B03830` 打印 `name_en=`,-,sub_B02E20(读入位)|sub_B03830[+35],确证
+8,+102,193,bytes[193],worlds.desc,大区说明（定长串；读取器循环上界 0xC1=193，打印器偏移反推 194，见 notes）,数组元素成员 `[+0x66]`；打印器 `sub_B03830` 打印 `desc=`,-,sub_B02E20(读入位)|sub_B03830[+66],确证
+9,+295,4,u32,worlds.stat,状态,数组元素成员 `[+0x127]`；打印器 `sub_B03830` 打印 `stat=`,-,sub_B02E20(读入位)|sub_B03830[+127],确证
+10,+299,2,u16,worlds.icon_id,图标 ID,数组元素成员 `[+0x12B]`；打印器 `sub_B03830` 打印 `icon_id=`,-,sub_B02E20(读入位)|sub_B03830[+12B],确证
+11,+301,4,u32,worlds.client_now,当前在线客户端数,数组元素成员 `[+0x12D]`；打印器 `sub_B03830` 打印 `client_now=`,-,sub_B02E20(读入位)|sub_B03830[+12D],确证
+12,+305,4,u32,worlds.client_max,在线上限,数组元素成员 `[+0x131]`；打印器 `sub_B03830` 打印 `client_max=`,-,sub_B02E20(读入位)|sub_B03830[+131],确证

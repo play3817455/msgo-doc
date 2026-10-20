@@ -1,0 +1,346 @@
+{
+  "id": "CS-0x5F28-lounge-speedhack_check_response",
+  "opcode": "0x5F28",
+  "direction": "CS",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "speedhack_check_response",
+  "source_dir": "protocol_analysis/commands/CS-0x5F28-lounge-speedhack_check_response",
+  "meta": {
+    "opcode": "`0x5F28`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`speedhack_check_response`",
+    "名字符串": "`)<-_proto_lounge_client::send_speedhack_check_response(` @ `0xeed04c`",
+    "代码位置": "sub_BA4D50 @ `0xba4d50`（`0xba4d50`..`0xba4f3a`）",
+    "opcode 写入证据": "`0xba4dc4`",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0xA`（10）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)`",
+    "配对命令（同 opcode 反向）": "见 §4.3 与其他命令的关联 / INDEX 反向表"
+  },
+  "handler": "sub_BA4D50",
+  "handler_va": "0xba4d50",
+  "block": [
+    "0xBA4D50",
+    "0xBA4F3A"
+  ],
+  "name_str": ")<-_proto_lounge_client::send_speedhack_check_response(",
+  "name_str_va": "0xeed04c",
+  "capacity": "0xA",
+  "capacity_va": null,
+  "closer_va": "0xBA4E45",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": null,
+  "wire": {
+    "length_expr": "2 + 2",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0xA（容量记账口径，非线长）",
+    "field_count": 2,
+    "length_source": "field_sum",
+    "readme_conclusion": "结论：反外挂速度检测回执：是否检出调试器 + 进程引用计数。",
+    "readme_close": "2 + 2 + 2 = 6 ≤ 容量 0xA=10（富余 4）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发给 lounge 协议类处理块（C→S 无 case 块）",
+      "enum": "0x5F28",
+      "evidence_va": [
+        "0xBA4DC4"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "2",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "debugger_found",
+      "meaning": "是否检出调试器",
+      "purpose": "来源=入参 arg_0 的低 16 位（@0xBA4DD0）；内联 `mov [eax],si`；经 `vt[0x58]` 发送",
+      "enum": "0/1",
+      "evidence_va": [
+        "0xBA4DDA"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "proc_ref_count",
+      "meaning": "相关进程引用计数",
+      "purpose": "来源=入参 arg_4 的低 16 位（@0xBA4DE3）；内联 `mov [edx],cx`；经 `vt[0x58]` 发送",
+      "enum": null,
+      "evidence_va": [
+        "0xBA4DE8"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0x5F28（分发器 switch 选择子）",
+      "evidence_va": "0xBA4DC4"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0xA B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xBA4D96"
+    },
+    {
+      "step": 3,
+      "kind": "write_scalar",
+      "detail": "debugger_found：`u16`（线长 2）—— 是否检出调试器",
+      "evidence_va": "0xBA4DDA"
+    },
+    {
+      "step": 4,
+      "kind": "write_scalar",
+      "detail": "proc_ref_count：`u16`（线长 2）—— 相关进程引用计数",
+      "evidence_va": "0xBA4DE8"
+    },
+    {
+      "step": 5,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xBA4E45"
+    },
+    {
+      "step": 6,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xBA4ED1"
+    }
+  ],
+  "capabilities": [
+    "query",
+    "lounge.speedhack"
+  ],
+  "capabilities_derived": [
+    "validate"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:43",
+    "batch": 7,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 10,
+        "va": "0xBA4D96",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xBA4D93",
+        "call_va": "0xBA4D98"
+      },
+      "field_window": {
+        "start_va": "0xBA4D50",
+        "end_va": "0xBA4E45",
+        "guard": null,
+        "closer_or_commit_va": "0xBA4E45",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "debugger_found",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xBA4DDA"
+            ]
+          },
+          {
+            "name": "proc_ref_count",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xBA4DE8"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xBA4DC4",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xBA4DDA",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xBA4DE8",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xBA4E1B",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 2,
+        "checkable": 2,
+        "pairs": [
+          {
+            "field": "debugger_found",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xBA4DC4",
+            "kind": "inline_store"
+          },
+          {
+            "field": "proc_ref_count",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xBA4DDA",
+            "kind": "inline_store"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xBA4DE8",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xBA4D50",
+          "0xBA4E45"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 6,
+          "capacity": 10,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xBA4E1B",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）6 / 容量 0xa"
+        }
+      },
+      "closer": {
+        "va": "0xBA4E45",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xBA4ED1",
+        "mov_va": "0xBA4EC8",
+        "host": "[edx+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "debugger_found=",
+        "proc_ref_count="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0x5F28-lounge-speedhack_check_response.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0xba4dc4",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xBA4DC4"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "SpeedhackCheckResponse",
+      "role": "request",
+      "wire_length": "2 + 2",
+      "members": [
+        {
+          "name": "DebuggerFound",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "debugger_found"
+        },
+        {
+          "name": "ProcRefCount",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "proc_ref_count"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "92770f5d1fe96274",
+  "check_fingerprint": "74609aba7dfa29b5"
+}

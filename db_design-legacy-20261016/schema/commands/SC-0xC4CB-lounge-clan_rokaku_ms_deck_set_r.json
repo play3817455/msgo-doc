@@ -1,0 +1,372 @@
+{
+  "id": "SC-0xC4CB-lounge-clan_rokaku_ms_deck_set_r",
+  "opcode": "0xC4CB",
+  "direction": "SC",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "clan_rokaku_ms_deck_set_r",
+  "source_dir": "protocol_analysis/commands/SC-0xC4CB-lounge-clan_rokaku_ms_deck_set_r",
+  "meta": {
+    "opcode": "`0xC4CB`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`clan_rokaku_ms_deck_set_r`",
+    "处理块范围": "`0xb78459`..`0xb7869d`",
+    "名字串引用点": "`0xb7856d`",
+    "声明容量（解码缓冲）": "`0x10`（`B78477`）",
+    "长度闭合点": "`B78524`",
+    "报错码": "`0x1E6`（块内 `push 1; push <0x1E6>; vt[0x64]`）",
+    "去向": "`vt[0x494]` @`B78681`（4 实参）"
+  },
+  "handler": null,
+  "handler_va": null,
+  "block": [
+    "0xb78459",
+    "0xb7869d"
+  ],
+  "name_str": null,
+  "name_str_va": "0xb7856d",
+  "capacity": "0x10",
+  "capacity_va": "0xB78477",
+  "closer_va": "0xB78524",
+  "dispatch": "`vt[0x494]` @`B78681`（4 实参）",
+  "dispatch_slot": "vt[0x494]",
+  "dispatch_va": "0xB78681",
+  "wire": {
+    "length_expr": "4 + 8 + 4",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x10（容量记账口径，非线长）",
+    "field_count": 3,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：16",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "result",
+      "meaning": "结果码（日志串 `result=`）",
+      "purpose": "经 `vt[0x494]`（4 实参）交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xb784a1",
+        "0xb784b0"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "8",
+      "wire_type": "u64",
+      "name": "uniq_msid",
+      "meaning": "机体唯一序列号（日志串 `uniq_msid=`）",
+      "purpose": "同上（拆低/高 32 位）",
+      "enum": null,
+      "evidence_va": [
+        "0xb784e1",
+        "0xb784f0"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 3,
+      "offset": "12",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "decktype",
+      "meaning": "卡组类型（日志串 `decktype=`）",
+      "purpose": "同上",
+      "enum": null,
+      "evidence_va": [
+        "0xb78505",
+        "0xb78514"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0xC4CB（分发器 switch 选择子）",
+      "evidence_va": "0x0000"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB41120`（模块 id 486）→ 之后逐字段读线",
+      "evidence_va": "0xB78460"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "result：`u32`（线长 4）—— 结果码（日志串 `result=`）",
+      "evidence_va": "0xB784A1"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "uniq_msid：`u64`（线长 8）—— 机体唯一序列号（日志串 `uniq_msid=`）",
+      "evidence_va": "0xB784E1"
+    },
+    {
+      "step": 5,
+      "kind": "read_scalar",
+      "detail": "decktype：`u32`（线长 4）—— 卡组类型（日志串 `decktype=`）",
+      "evidence_va": "0xB78505"
+    },
+    {
+      "step": 6,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB78524"
+    },
+    {
+      "step": 7,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x494]`，实参 4 个",
+      "evidence_va": "0xB78681"
+    },
+    {
+      "step": 8,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB784CA"
+    }
+  ],
+  "capabilities": [
+    "update",
+    "lounge.clan_rokaku"
+  ],
+  "capabilities_derived": [
+    "update"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:45",
+    "batch": 11,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 16,
+        "va": "0xB78475",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB78472",
+        "call_va": "0xB78477"
+      },
+      "field_window": {
+        "start_va": "0xB78461",
+        "end_va": "0xB7854B",
+        "guard": {
+          "va": "0xB78460",
+          "func": "0xB41120",
+          "module_id": 486,
+          "release_va": "0xB41110"
+        },
+        "closer_or_commit_va": "0xB78524",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "result",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb784a1",
+              "0xb784b0"
+            ]
+          },
+          {
+            "name": "uniq_msid",
+            "wire_type": "u64",
+            "width": 8,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb784e1",
+              "0xb784f0"
+            ]
+          },
+          {
+            "name": "decktype",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb78505",
+              "0xb78514"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB784B0",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB784F0",
+            "kind": "read",
+            "width": 8,
+            "wire_type": "u64",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB78514",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 3,
+        "checkable": 3,
+        "pairs": [
+          {
+            "field": "result",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB784B0",
+            "kind": "read"
+          },
+          {
+            "field": "uniq_msid",
+            "width": 8,
+            "shape": "scalar",
+            "va": "0xB784F0",
+            "kind": "read"
+          },
+          {
+            "field": "decktype",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB78514",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB78461",
+          "0xB7854B"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 16,
+          "capacity": 16,
+          "relation": "exact",
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）16 / 容量 0x10"
+        }
+      },
+      "closer": {
+        "va": "0xB78524",
+        "kind": "jz",
+        "jcc_va": "0xB7852A",
+        "seq_va": "0xB78520",
+        "jcc_dst": "0xB78546",
+        "cmp": "cmp     ebx, [esp+2C5Ch+var_2C40]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x494]",
+        "slot_value": 1172,
+        "va": "0xB78681",
+        "mov_va": "0xB7866A",
+        "host": "[edx+494h]",
+        "argc": 4,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB784CA",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "result=",
+        "uniq_msid=",
+        "decktype="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0xC4CB-lounge-clan_rokaku_ms_deck_set_r.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": []
+  },
+  "structs": {
+    "response": {
+      "go_name": "ClanRokakuMsDeckSetR",
+      "role": "response",
+      "wire_length": "4 + 8 + 4",
+      "members": [
+        {
+          "name": "Result",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "result"
+        },
+        {
+          "name": "UniqMsid",
+          "wire_type": "u64",
+          "length": "8",
+          "field_ref": "uniq_msid"
+        },
+        {
+          "name": "Decktype",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "decktype"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "3fcdc35e8695190a",
+  "check_fingerprint": "5f8e00b517acb787"
+}

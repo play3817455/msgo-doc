@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CS-0x421B-battle-pos_move · db_design</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <h1><a href="../index.html">db_design</a></h1>
+      <p class="header-note">唯一证据源：<code>protocol_analysis/</code></p>
+      <nav><a href="../index.html">首页</a>
+      <a href="../homing/index.html">归位库</a>
+      <a href="../tables/index.html">旧表留档</a>
+      <a href="../commands/index.html" class="active">命令</a>
+      <a href="../cfg/index.html">配置表79</a>
+      <a href="../srv/index.html">服务端配置</a>
+      <a href="../asm-audit/index.html">ASM 审计</a>
+      <a href="../oracle-audit/index.html">Oracle 审计</a>
+      <a href="../entities/index.html">协议实体</a>
+      <a href="../fields/index.html">字段索引</a>
+      <a href="../relations.html">表关系</a></nav>
+    </div>
+  </header>
+  <main class="wrap">
+
+    <nav class="breadcrumb"><a href="index.html">命令</a> / <span><code>CS-0x421B-battle-pos_move</code></span></nav>
+    <h2>CS-0x421B-battle-pos_move
+      <span class="badge" style="background:#455a64">CS</span>
+      <span class="badge" style="background:#1565c0">battle</span>
+      <span class="badge" style="background:#757575">IMPORTED</span></h2>
+    
+      <dl class="asm-dl">
+        <dt>opcode</dt><dd><code>0x421B</code> · CS · battle</dd>
+        <dt>协议类</dt><dd><code>battle_client</code></dd>
+        <dt>处理函数</dt><dd><code>sub_B351D0</code> <code>0x00b351d0</code></dd>
+        <dt>处理块</dt><dd><span class="muted">—</span></dd>
+        <dt>名字串</dt><dd><code>)&lt;-_proto_battle_client::send_pos_move(</code> <code>0xee0b38</code></dd>
+        <dt>声明容量</dt><dd>0xAA <span class="muted">—</span>
+          <span class="muted">（缓冲 claim，非线长）</span></dd>
+        <dt>长度闭合点</dt><dd><span class="muted">—</span></dd>
+        <dt>去向槽</dt><dd><code>vt[0x58]</code> <code>0xB35926</code></dd>
+        <dt>配对 / 同族</dt><dd><span class="muted">—</span></dd>
+        <dt>证据目录</dt><dd><a href="../../../protocol_analysis/commands/CS-0x421B-battle-pos_move/README.md" target="_blank">README.md</a> · <a href="../../../protocol_analysis/commands/CS-0x421B-battle-pos_move/fields.csv" target="_blank">fields.csv</a> · <a href="../../../protocol_analysis/commands/CS-0x421B-battle-pos_move/asm.md" target="_blank">asm.md</a> · <a href="../../../protocol_analysis/commands/CS-0x421B-battle-pos_move/notes.md" target="_blank">notes.md</a></dd>
+      </dl>
+    <p class="muted">opcode 写入/分发证据 <code>0xb3525f</code></p>
+
+    <section>
+      <h3>线长</h3>
+      <dl class="asm-dl">
+        <dt>报文体线长</dt><dd><code>4 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 4 + 2 + 2 + 1 + 1 + 2 + 2 + 2 + 2 + 2 + 2 + 1 + 4 + 79*N (N&lt;=1)</code>
+          <span class="badge" style="background:#e65100">变长</span>
+          <span class="muted">来源 field_sum</span></dd>
+        <dt>变长驱动</dt><dd><code>N</code></dd>
+        <dt>负载字段数</dt><dd>23</dd>
+        <dt>容量口径</dt><dd class="muted">声明容量 0xAA（容量记账口径，非线长）</dd>
+        <dt>README 结论</dt><dd class="muted">结论：机体位置/姿态全量同步（含反作弊自检项数组）。</dd>
+        <dt>README 闭合</dt><dd class="muted">2 + 47 + 4 + 1×79 = **132** ≤ 容量 0xAA=170（富余 38；上限场景：hack_check ≤1 项）</dd>
+        
+      </dl>
+    </section>
+
+    <section>
+      <h3>包结构体</h3>
+      <p class="muted">由 <code>fields[]</code> 归并而成；线序即字段行序，可复用的聚合体只在
+        <code>element</code> 里引用 <code>schema/composites/</code>。</p>
+      
+      <div class="struct-block">
+        <h4><code>PosMove</code> <span class="muted">(request · 角色 request)</span>
+          <span class="muted">线长 4 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 4 + 2 + 2 + 1 + 1 + 2 + 2 + 2 + 2 + 2 + 2 + 1 + 4 + 79*N (N&lt;=1)</span></h4>
+        <table class="srv-table">
+          <thead><tr><th>Go 成员</th><th>线类型</th><th>线长</th><th>字段引用</th><th>元素 / 计数</th></tr></thead>
+          <tbody><tr>
+          <td><code class="fname">FrameCount</code></td>
+          <td><code>u32</code></td>
+          <td><code>4</code></td>
+          <td>frame_count</td>
+          <td class="muted">—</td>
+        </tr><tr>
+          <td><code class="fname">PosX</code></td>
+          <td><code>u16</code></td>
+          <td><code>2</code></td>
+          <td>pos_x</td>
+          <td class="muted">—</td>
+        </tr><tr>
+          <td><code class="fname">PosY</code></td>
+          <td><code>u16</code></td>
+          <td><code>2</code></td>
+          <td>pos_y</td>
+          <td class="muted">—</td>
+        </tr><tr>
+          <td><code class="fname">PosZ</code></td>
+          <td><code>u16</code></td>
+          <td><code>2</code></td>
+          <td>pos_z</td>
+          <td class="muted">—</td>
+        </tr><tr>
+          <td><code class="fname">Dir</code></td>
+          <td><code>u16</code></td>
+          <td><code>2</code></td>
+          <td>dir</td>
+          <td class="muted">—</td>
+        </tr><tr>
+          <td><code class="fname">DirEye</code></td>
+          <td><code>u16</code></td>
+          <td><code>2</code></td>
+          <td>dir_eye</td>
+          <td class="muted">—</td>
+        </tr><tr>
+          <td><code class="fname">TargetX</code></td>
+          <td><code>u16</code></td>
+          <td><code>2</code></td>
+          <td>target_x</td>
+          <td class="muted">—</td>
+        </tr><tr>
+          <td><code class="fname">TargetY</code></td>
+          <td><code>u16</code></td>
+          <td><code>2</code></td>
+          <td>target_y</td>
+          <td class="muted">—</td>
+        </tr><tr>
+          <td><code class="fname">TargetZ</code></td>
+          <td><code>u16</code></td>
+          <td><code>2</code></td>
+          <td>target_z</td>
+          <td class="muted">—</td>
+        </tr><tr>
+          <td><code class="fname">Spbits</code></td>
+          <td><code>u32</code></td>
+          <td><code>4</code></td>
+          <td>spbits</td>
+          <td class="muted">—</td>
+        </tr><tr>
+          <td><code class="fname">Spbits2</code></td>
+          <td><code>u16</code></td>
+          <td><code>2</code></td>
+          <td>spbits2</td>
+          <td class="muted">—</td>
+        </tr><tr>
+          <td><code class="fname">LockonEntId</code></td>
+          <td><code>u16</code></td>
+          <td><code>2</code></td>
+          <td>lockon_ent_id</td>
+          <td class="muted">—</td>
+        </tr><tr>
+          <td><code class="fname">InWaterIndex</code></td>
+          <td><code>u8</code></td>
+          <td><code>1</code></td>
+          <td>in_water_index</td>
+          <td class="muted">—</td>
+        </tr><tr>
+          <td><code class="fname">LayerIndex</code></td>
+          <td><code>u8</code></td>
+          <td><code>1</code></td>
+          <td>layer_index</td>
+          <td class="muted">—</td>
+        </tr><tr>
+          <td><code class="fname">AccessEntId1</code></td>
+          <td><code>u16</code></td>
+          <td><code>2</code></td>
+          <td>access_ent_id1</td>
+          <td class="muted">—</td>
+        </tr><tr>
+          <td><code class="fname">AccessEntId2</code></td>
+          <td><code>u16</code></td>
+          <td><code>2</code></td>
+          <td>access_ent_id2</td>
+          <td class="muted">—</td>
+        </tr><tr>
+          <td><code class="fname">RideonEntId</code></td>
+          <td><code>u16</code></td>
+          <td><code>2</code></td>
+          <td>rideon_ent_id</td>
+          <td class="muted">—</td>
+        </tr><tr>
+          <td><code class="fname">SpotEntId</code></td>
+          <td><code>u16</code></td>
+          <td><code>2</code></td>
+          <td>spot_ent_id</td>
+          <td class="muted">—</td>
+        </tr><tr>
+          <td><code class="fname">AIEntId</code></td>
+          <td><code>u16</code></td>
+          <td><code>2</code></td>
+          <td>AI_ent_id</td>
+          <td class="muted">—</td>
+        </tr><tr>
+          <td><code class="fname">OperateEntId</code></td>
+          <td><code>u16</code></td>
+          <td><code>2</code></td>
+          <td>operate_ent_id</td>
+          <td class="muted">—</td>
+        </tr><tr>
+          <td><code class="fname">IsUnderWater</code></td>
+          <td><code>u8</code></td>
+          <td><code>1</code></td>
+          <td>is_under_water</td>
+          <td class="muted">—</td>
+        </tr><tr>
+          <td><code class="fname">HackCheckCount</code></td>
+          <td><code>u32</code></td>
+          <td><code>4</code></td>
+          <td>hack_check_count</td>
+          <td class="muted">—</td>
+        </tr><tr>
+          <td><code class="fname">HackCheck</code></td>
+          <td><code>array&lt;hack_check,N&gt;</code></td>
+          <td><code>79*N (N&lt;=1)</code></td>
+          <td>hack_check</td>
+          <td class="muted">元素 <div class="composite-inline"><span class="muted">30 个成员：</span><code>move_spd</code> u16 · <code>boost_gauge</code> u16 · <code>boost_recov</code> u16 · <code>boost_consume</code> u16 · <code>clcheck_result</code> i8 · <code>weapon_itemid</code> u32 · <code>weapon_cooltime</code> u32 · <code>weapon_rapidtime</code> u32 · <code>weapon_reload</code> u32 · <code>debugger_found</code> u8 · <code>proc_ref_count</code> u8 · <code>reserved1</code> u8 · <code>reserved2</code> u8 · <code>weapon_bullet_speed</code> f32 · <code>weapon_range</code> u16 · <code>weapon_charge_time</code> u16 · <code>weapon_bullet_mgz</code> u16 · <code>weapon_bullet_all</code> u16 · <code>weapon_batch_fire</code> u16 · <code>weapon_fired</code> f32 · <code>wrestle_size</code> u16 · <code>wrestle_hack_check_ex</code> u8 · <code>fps</code> f32 · <code>ai_num</code> u8 · <code>perf_pre_chara</code> f32 · <code>perf_chara</code> f32 · <code>perf_ai</code> f32 · <code>perf_last</code> f32 · <code>perf_if</code> f32 · <code>perf_rdr</code> f32</div> · 条数 ← <code>hack_check_count</code> · <span class="muted">heuristic</span></td>
+        </tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h3>字段解剖</h3>
+      <table class="wide">
+        <thead><tr>
+          <th>序</th><th>偏移</th><th>线长</th><th>线类型</th><th>字段名</th>
+          <th>含义</th><th>用途（来源/去向）</th><th>取值/枚举</th><th>去向</th><th>证据 VA</th><th>置信度</th>
+        </tr></thead>
+        <tbody><tr>
+          <td>0</td>
+          <td><code>0</code></td>
+          <td><code>2</code></td>
+          <td><code>u16</code></td>
+          <td><code class="fname">opcode</code></td>
+          <td>命令号</td>
+          <td>分发给对应协议类的处理块（C→S 无 case 块）</td>
+          <td class="muted">0x421B</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB3525F</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>1</td>
+          <td><code>2</code></td>
+          <td><code>4</code></td>
+          <td><code>u32</code></td>
+          <td><code class="fname">frame_count</code></td>
+          <td>客户端帧号（发包时的游戏帧计数）</td>
+          <td>内联 `mov [游标], reg`；服务端按帧号对齐/丢弃过期输入</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB3526D</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>2</td>
+          <td><code>6</code></td>
+          <td><code>2</code></td>
+          <td><code>u16</code></td>
+          <td><code class="fname">pos_x</code></td>
+          <td>机体 X 坐标</td>
+          <td>内联 `mov [游标], reg`；服务端位置同步（u16 定点）</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB35286</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>3</td>
+          <td><code>8</code></td>
+          <td><code>2</code></td>
+          <td><code>u16</code></td>
+          <td><code class="fname">pos_y</code></td>
+          <td>机体 Y 坐标</td>
+          <td>经写原语 `sub_B02DA0`；服务端位置同步（u16 定点）</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB3528E</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>4</td>
+          <td><code>10</code></td>
+          <td><code>2</code></td>
+          <td><code>u16</code></td>
+          <td><code class="fname">pos_z</code></td>
+          <td>机体 Z 坐标</td>
+          <td>经写原语 `sub_B02DA0`；服务端位置同步（u16 定点）</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB352A7</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>5</td>
+          <td><code>12</code></td>
+          <td><code>2</code></td>
+          <td><code>u16</code></td>
+          <td><code class="fname">dir</code></td>
+          <td>水平朝向角</td>
+          <td>经写原语 `sub_B02DA0`；服务端位置同步</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB352C0</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>6</td>
+          <td><code>14</code></td>
+          <td><code>2</code></td>
+          <td><code>u16</code></td>
+          <td><code class="fname">dir_eye</code></td>
+          <td>视点（镜头）朝向角</td>
+          <td>经写原语 `sub_B02DA0`；服务端位置同步</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB352D9</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>7</td>
+          <td><code>16</code></td>
+          <td><code>2</code></td>
+          <td><code>u16</code></td>
+          <td><code class="fname">target_x</code></td>
+          <td>注视/目标点 X 坐标</td>
+          <td>经写原语 `sub_B02DA0`；服务端位置同步</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB352F2</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>8</td>
+          <td><code>18</code></td>
+          <td><code>2</code></td>
+          <td><code>u16</code></td>
+          <td><code class="fname">target_y</code></td>
+          <td>注视/目标点 Y 坐标</td>
+          <td>经写原语 `sub_B02DA0`；服务端位置同步</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB3530B</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>9</td>
+          <td><code>20</code></td>
+          <td><code>2</code></td>
+          <td><code>u16</code></td>
+          <td><code class="fname">target_z</code></td>
+          <td>注视/目标点 Z 坐标</td>
+          <td>经写原语 `sub_B02DA0`；服务端位置同步</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB35324</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>10</td>
+          <td><code>22</code></td>
+          <td><code>4</code></td>
+          <td><code>u32</code></td>
+          <td><code class="fname">spbits</code></td>
+          <td>特殊状态位（主）</td>
+          <td>经写原语 `sub_B02D80`；服务端同步机体特殊状态位</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB3533D</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>11</td>
+          <td><code>26</code></td>
+          <td><code>2</code></td>
+          <td><code>u16</code></td>
+          <td><code class="fname">spbits2</code></td>
+          <td>特殊状态位（副）</td>
+          <td>经写原语 `sub_B02DA0`；服务端同步机体特殊状态位</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB35356</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>12</td>
+          <td><code>28</code></td>
+          <td><code>2</code></td>
+          <td><code>u16</code></td>
+          <td><code class="fname">lockon_ent_id</code></td>
+          <td>锁定目标实体 ID</td>
+          <td>经写原语 `sub_B02DA0`；服务端同步锁定关系</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB3536F</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>13</td>
+          <td><code>30</code></td>
+          <td><code>1</code></td>
+          <td><code>u8</code></td>
+          <td><code class="fname">in_water_index</code></td>
+          <td>所处水域索引</td>
+          <td>经写原语 `sub_B061C0`；服务端同步环境（涉水）状态</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB35388</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>14</td>
+          <td><code>31</code></td>
+          <td><code>1</code></td>
+          <td><code>u8</code></td>
+          <td><code class="fname">layer_index</code></td>
+          <td>所处图层索引（地面/空中）</td>
+          <td>经写原语 `sub_B061C0`；服务端同步机体所在图层</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB353A1</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>15</td>
+          <td><code>32</code></td>
+          <td><code>2</code></td>
+          <td><code>u16</code></td>
+          <td><code class="fname">access_ent_id1</code></td>
+          <td>交互目标实体 ID 1</td>
+          <td>经写原语 `sub_B02DA0`；服务端同步交战/交互关系</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB353BA</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>16</td>
+          <td><code>34</code></td>
+          <td><code>2</code></td>
+          <td><code>u16</code></td>
+          <td><code class="fname">access_ent_id2</code></td>
+          <td>交互目标实体 ID 2</td>
+          <td>经写原语 `sub_B02DA0`；服务端同步交战/交互关系</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB353D3</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>17</td>
+          <td><code>36</code></td>
+          <td><code>2</code></td>
+          <td><code>u16</code></td>
+          <td><code class="fname">rideon_ent_id</code></td>
+          <td>所骑乘（搭载）实体 ID</td>
+          <td>经写原语 `sub_B02DA0`；服务端同步搭载关系</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB353EC</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>18</td>
+          <td><code>38</code></td>
+          <td><code>2</code></td>
+          <td><code>u16</code></td>
+          <td><code class="fname">spot_ent_id</code></td>
+          <td>CMoveControlSelfTargetView的vtable+0x3C0 getter在sub_475620(controller)结果低于this+0x1254浮点值时复制this+0x124C共享指针，caller从非空候选的+4读取u16；比较值量纲、候选对象类别与+4字段类型未知</td>
+          <td>send_pos_move周期状态字段；发送值来自vtable+0x3C0 getter及caller空指针检查。比较值业务含义、目标对象类别和服务端玩法消费语义待验证</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB35405</code> <code>0x4D43EF</code> <code>0x4D4402</code> <code>0x4D4410</code> <code>0x4D4E40</code> <code>0x4D4E44</code> <code>0x4E6CE0</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>19</td>
+          <td><code>40</code></td>
+          <td><code>2</code></td>
+          <td><code>u16</code></td>
+          <td><code class="fname">AI_ent_id</code></td>
+          <td>AI 机体实体 ID</td>
+          <td>经写原语 `sub_B02DA0`；服务端定位该机体实体</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB3541E</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>20</td>
+          <td><code>42</code></td>
+          <td><code>2</code></td>
+          <td><code>u16</code></td>
+          <td><code class="fname">operate_ent_id</code></td>
+          <td>操作的设施/载具实体 ID</td>
+          <td>经写原语 `sub_B02DA0`；服务端同步操作关系</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB35437</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>21</td>
+          <td><code>44</code></td>
+          <td><code>1</code></td>
+          <td><code>u8</code></td>
+          <td><code class="fname">is_under_water</code></td>
+          <td>是否处于水中（1 字节，**i8**）</td>
+          <td>经写原语 `sub_B061C0`；服务端同步环境状态</td>
+          <td class="muted">0=否 1=是</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB35450</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>22</td>
+          <td><code>45</code></td>
+          <td><code>4</code></td>
+          <td><code>u32</code></td>
+          <td><code class="fname">hack_check_count</code></td>
+          <td>反作弊自检项数量</td>
+          <td>经写原语 `sub_B02D80`；服务端按数量解析随后的自检项数组；自检项个数，上限 1（`cmp ebx,1; ja 失败`）；命名推定</td>
+          <td class="muted">0~1（cmp ebx,1; ja 失败）</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB35475</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>23</td>
+          <td><code>49</code></td>
+          <td><code>79*N (N&lt;=1)</code></td>
+          <td><code>array&lt;hack_check,N&gt;</code></td>
+          <td><code class="fname">hack_check</code></td>
+          <td>反作弊自检项（结构数组）</td>
+          <td>0xB35475 写 hack_check_count；0xB35489 为零跳过，非零按数量调用 sub_B065D0；元素线长 79，槽步进 0x58=88；日志头 hack_check={</td>
+          <td class="muted">N=hack_check_count；0~1 项；元素线长 79 / 槽步进 88</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB35475;0xB35489;0xB354A6</code></td>
+          <td class="muted">确证</td>
+        </tr><tr class="row-members"><td colspan="11"><div class="composite-block"><div class="composite-head"><code>hack_check</code> <span class="muted">数组元素</span> <span class="muted">线长 79B · 槽 88B · ASM pass</span> <span class="muted">定义 <code>schema/composites/hack_check.json</code></span></div><table class="srv-table composite-table"><thead><tr><th>成员</th><th>线类型</th><th>线偏移 / 线长</th><th>disposition</th><th>含义</th></tr></thead><tbody><tr><td><code class="fname">move_spd</code></td><td><code>u16</code></td><td class="muted">线 +0 2B</td><td><span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB065EB|B0B9E0">✓</span></td><td>移动速度</td></tr><tr><td><code class="fname">boost_gauge</code></td><td><code>u16</code></td><td class="muted">线 +2 2B</td><td><span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB06606|B0B9E0">✓</span></td><td>推进剂槽</td></tr><tr><td><code class="fname">boost_recov</code></td><td><code>u16</code></td><td class="muted">线 +4 2B</td><td><span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB0661E|B0B9E0">✓</span></td><td>推进恢复</td></tr><tr><td><code class="fname">boost_consume</code></td><td><code>u16</code></td><td class="muted">线 +6 2B</td><td><span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB06636|B0B9E0">✓</span></td><td>推进消耗</td></tr><tr><td><code class="fname">clcheck_result</code></td><td><code>i8</code></td><td class="muted">线 +8 1B</td><td><span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB0663E|B0B9E0">✓</span></td><td>客户端校验结果</td></tr><tr><td><code class="fname">weapon_itemid</code></td><td><code>u32</code></td><td class="muted">线 +9 mem +12 4B</td><td><span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB06653|B0B9E0">✓</span></td><td>武器道具 ID</td></tr><tr><td><code class="fname">weapon_cooltime</code></td><td><code>u32</code></td><td class="muted">线 +13 mem +16 4B</td><td><span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB06668|B0B9E0">✓</span></td><td>武器冷却</td></tr><tr><td><code class="fname">weapon_rapidtime</code></td><td><code>u32</code></td><td class="muted">线 +17 mem +20 4B</td><td><span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB0667D|B0B9E0">✓</span></td><td>武器连射时间</td></tr><tr><td><code class="fname">weapon_reload</code></td><td><code>u32</code></td><td class="muted">线 +21 mem +24 4B</td><td><span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB06692|B0B9E0">✓</span></td><td>武器装填</td></tr><tr><td><code class="fname">debugger_found</code></td><td><code>u8</code></td><td class="muted">线 +25 mem +28 1B</td><td><span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB066A7|B0B9E0">✓</span></td><td>检测到调试器</td></tr><tr><td><code class="fname">proc_ref_count</code></td><td><code>u8</code></td><td class="muted">线 +26 mem +29 1B</td><td><span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB066BC|B0B9E0">✓</span></td><td>进程引用计数</td></tr><tr><td><code class="fname">reserved1</code></td><td><code>u8</code></td><td class="muted">线 +27 mem +30 1B</td><td><span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB066D1|B0B9E0">✓</span></td><td>保留字节 1</td></tr><tr><td><code class="fname">reserved2</code></td><td><code>u8</code></td><td class="muted">线 +28 mem +31 1B</td><td><span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB066E6|B0B9E0">✓</span></td><td>保留字节 2</td></tr><tr><td><code class="fname">weapon_bullet_speed</code></td><td><code>f32</code></td><td class="muted">线 +29 mem +32 4B</td><td><span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB066FB|B0B9E0">✓</span></td><td>弹速</td></tr><tr><td><code class="fname">weapon_range</code></td><td><code>u16</code></td><td class="muted">线 +33 mem +36 2B</td><td><span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB06710|B0B9E0">✓</span></td><td>射程</td></tr><tr><td><code class="fname">weapon_charge_time</code></td><td><code>u16</code></td><td class="muted">线 +35 mem +38 2B</td><td><span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB06725|B0B9E0">✓</span></td><td>蓄力时间</td></tr><tr><td><code class="fname">weapon_bullet_mgz</code></td><td><code>u16</code></td><td class="muted">线 +37 mem +40 2B</td><td><span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB0673A|B0B9E0">✓</span></td><td>弹匣容量</td></tr><tr><td><code class="fname">weapon_bullet_all</code></td><td><code>u16</code></td><td class="muted">线 +39 mem +42 2B</td><td><span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB0674F|B0B9E0">✓</span></td><td>总弹药</td></tr><tr><td><code class="fname">weapon_batch_fire</code></td><td><code>u16</code></td><td class="muted">线 +41 mem +44 2B</td><td><span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB06764|B0B9E0">✓</span></td><td>连射批次</td></tr><tr><td><code class="fname">weapon_fired</code></td><td><code>f32</code></td><td class="muted">线 +43 mem +48 4B</td><td><span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB06779|B0B9E0">✓</span></td><td>已发射弹量</td></tr><tr><td><code class="fname">wrestle_size</code></td><td><code>u16</code></td><td class="muted">线 +47 mem +52 2B</td><td><span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB0678E|B0B9E0">✓</span></td><td>格斗尺寸</td></tr><tr><td><code class="fname">wrestle_hack_check_ex</code></td><td><code>u8</code></td><td class="muted">线 +49 mem +54 1B</td><td><span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB067A3|B0B9E0">✓</span></td><td>格斗反作弊扩展</td></tr><tr><td><code class="fname">fps</code></td><td><code>f32</code></td><td class="muted">线 +50 mem +56 4B</td><td><span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB067B4|B0B9E0">✓</span></td><td>帧率</td></tr><tr><td><code class="fname">ai_num</code></td><td><code>u8</code></td><td class="muted">线 +54 mem +60 1B</td><td><span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB067C5|B0B9E0">✓</span></td><td>AI 数量</td></tr><tr><td><code class="fname">perf_pre_chara</code></td><td><code>f32</code></td><td class="muted">线 +55 mem +64 4B</td><td><span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB067D6|B0B9E0">✓</span></td><td>性能：角色前</td></tr><tr><td><code class="fname">perf_chara</code></td><td><code>f32</code></td><td class="muted">线 +59 mem +68 4B</td><td><span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB067E7|B0B9E0">✓</span></td><td>性能：角色</td></tr><tr><td><code class="fname">perf_ai</code></td><td><code>f32</code></td><td class="muted">线 +63 mem +72 4B</td><td><span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB067F8|B0B9E0">✓</span></td><td>性能：AI</td></tr><tr><td><code class="fname">perf_last</code></td><td><code>f32</code></td><td class="muted">线 +67 mem +76 4B</td><td><span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB06809|B0B9E0">✓</span></td><td>性能：末段</td></tr><tr><td><code class="fname">perf_if</code></td><td><code>f32</code></td><td class="muted">线 +71 mem +80 4B</td><td><span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB0681A|B0B9E0">✓</span></td><td>性能：接口</td></tr><tr><td><code class="fname">perf_rdr</code></td><td><code>f32</code></td><td class="muted">线 +75 mem +84 4B</td><td><span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB06830|B0B9E0">✓</span></td><td>性能：渲染</td></tr></tbody></table></div></td></tr></tbody>
+      </table>
+    </section>
+
+    <section>
+      <h3>客户端行为</h3>
+      <table class="srv-table">
+        <thead><tr><th>步</th><th>类别</th><th>动作</th><th>证据 VA</th></tr></thead>
+        <tbody><tr>
+          <td>1</td>
+          <td><code>write_scalar</code></td>
+          <td>opcode 0x421B（分发器 switch 选择子）</td>
+          <td><code>0xB3525F</code></td>
+        </tr><tr>
+          <td>2</td>
+          <td><code>alloc</code></td>
+          <td>分配发送缓冲 0xAA B（`[X+78h]` 分配器 + `push IMM`）</td>
+          <td><code>0xB3521F</code></td>
+        </tr><tr>
+          <td>3</td>
+          <td><code>write_scalar</code></td>
+          <td>frame_count：`u32`（线长 4）—— 客户端帧号（发包时的游戏帧计数）</td>
+          <td><code>0xB3526D</code></td>
+        </tr><tr>
+          <td>4</td>
+          <td><code>write_scalar</code></td>
+          <td>pos_x：`u16`（线长 2）—— 机体 X 坐标</td>
+          <td><code>0xB35286</code></td>
+        </tr><tr>
+          <td>5</td>
+          <td><code>write_scalar</code></td>
+          <td>pos_y：`u16`（线长 2）—— 机体 Y 坐标</td>
+          <td><code>0xB3528E</code></td>
+        </tr><tr>
+          <td>6</td>
+          <td><code>write_scalar</code></td>
+          <td>pos_z：`u16`（线长 2）—— 机体 Z 坐标</td>
+          <td><code>0xB352A7</code></td>
+        </tr><tr>
+          <td>7</td>
+          <td><code>write_scalar</code></td>
+          <td>dir：`u16`（线长 2）—— 水平朝向角</td>
+          <td><code>0xB352C0</code></td>
+        </tr><tr>
+          <td>8</td>
+          <td><code>write_scalar</code></td>
+          <td>dir_eye：`u16`（线长 2）—— 视点（镜头）朝向角</td>
+          <td><code>0xB352D9</code></td>
+        </tr><tr>
+          <td>9</td>
+          <td><code>write_scalar</code></td>
+          <td>target_x：`u16`（线长 2）—— 注视/目标点 X 坐标</td>
+          <td><code>0xB352F2</code></td>
+        </tr><tr>
+          <td>10</td>
+          <td><code>write_scalar</code></td>
+          <td>target_y：`u16`（线长 2）—— 注视/目标点 Y 坐标</td>
+          <td><code>0xB3530B</code></td>
+        </tr><tr>
+          <td>11</td>
+          <td><code>write_scalar</code></td>
+          <td>target_z：`u16`（线长 2）—— 注视/目标点 Z 坐标</td>
+          <td><code>0xB35324</code></td>
+        </tr><tr>
+          <td>12</td>
+          <td><code>write_scalar</code></td>
+          <td>spbits：`u32`（线长 4）—— 特殊状态位（主）</td>
+          <td><code>0xB3533D</code></td>
+        </tr><tr>
+          <td>13</td>
+          <td><code>write_scalar</code></td>
+          <td>spbits2：`u16`（线长 2）—— 特殊状态位（副）</td>
+          <td><code>0xB35356</code></td>
+        </tr><tr>
+          <td>14</td>
+          <td><code>write_scalar</code></td>
+          <td>lockon_ent_id：`u16`（线长 2）—— 锁定目标实体 ID</td>
+          <td><code>0xB3536F</code></td>
+        </tr><tr>
+          <td>15</td>
+          <td><code>write_scalar</code></td>
+          <td>in_water_index：`u8`（线长 1）—— 所处水域索引</td>
+          <td><code>0xB35388</code></td>
+        </tr><tr>
+          <td>16</td>
+          <td><code>write_scalar</code></td>
+          <td>layer_index：`u8`（线长 1）—— 所处图层索引（地面/空中）</td>
+          <td><code>0xB353A1</code></td>
+        </tr><tr>
+          <td>17</td>
+          <td><code>write_scalar</code></td>
+          <td>access_ent_id1：`u16`（线长 2）—— 交互目标实体 ID 1</td>
+          <td><code>0xB353BA</code></td>
+        </tr><tr>
+          <td>18</td>
+          <td><code>write_scalar</code></td>
+          <td>access_ent_id2：`u16`（线长 2）—— 交互目标实体 ID 2</td>
+          <td><code>0xB353D3</code></td>
+        </tr><tr>
+          <td>19</td>
+          <td><code>write_scalar</code></td>
+          <td>rideon_ent_id：`u16`（线长 2）—— 所骑乘（搭载）实体 ID</td>
+          <td><code>0xB353EC</code></td>
+        </tr><tr>
+          <td>20</td>
+          <td><code>write_scalar</code></td>
+          <td>spot_ent_id：`u16`（线长 2）—— SelfTargetView vtable+0x3C0（sub_4E6CE0）在sub_475620(controller)结果低于this+0x1254浮点值时复制this+0x124C共享候选，caller取candidate+4发送。比较值量纲、目标类别和+4字段语义未知；manager+0xB0候选属于access_ent_id1</td>
+          <td><code>0xB35405</code></td>
+        </tr><tr>
+          <td>21</td>
+          <td><code>write_scalar</code></td>
+          <td>AI_ent_id：`u16`（线长 2）—— AI 机体实体 ID</td>
+          <td><code>0xB3541E</code></td>
+        </tr><tr>
+          <td>22</td>
+          <td><code>write_scalar</code></td>
+          <td>operate_ent_id：`u16`（线长 2）—— 操作的设施/载具实体 ID</td>
+          <td><code>0xB35437</code></td>
+        </tr><tr>
+          <td>23</td>
+          <td><code>write_scalar</code></td>
+          <td>is_under_water：`u8`（线长 1）—— 是否处于水中（1 字节，**i8**）</td>
+          <td><code>0xB35450</code></td>
+        </tr><tr>
+          <td>24</td>
+          <td><code>write_scalar</code></td>
+          <td>hack_check_count：`u32`（线长 4）—— 反作弊自检项数量</td>
+          <td><code>0xB35475</code></td>
+        </tr><tr>
+          <td>25</td>
+          <td><code>write_array</code></td>
+          <td>hack_check：`array&lt;hack_check,1&gt;`（线长 79）—— 反作弊自检项（结构数组）；元素线长 79 / 槽步进 88；上限 1 项</td>
+          <td><code>0xB3549C</code></td>
+        </tr><tr>
+          <td>26</td>
+          <td><code>commit</code></td>
+          <td>提交/发送 `sub_B02FF0(buf)`：定长报文提交点</td>
+          <td><code>0xB35512</code></td>
+        </tr><tr>
+          <td>27</td>
+          <td><code>send</code></td>
+          <td>去向 `vt[0x58](buf, 负载长度)`，实参 2 个</td>
+          <td><code>0xB3592F</code></td>
+        </tr></tbody>
+      </table>
+    </section>
+
+    <section>
+      <h3>能力</h3>
+      <span class="cap-chip">update</span><span class="cap-chip">battle.pos</span><div class="muted">命名学推断（非证据）：<span class="cap-chip cap-derived">unclassified</span></div>
+    </section>
+
+    <section>
+      <h3>DB 影响</h3>
+      <table class="srv-table">
+        <thead><tr><th>实体 / 表</th><th>op</th><th>业务字段</th><th>disposition</th><th>证据 VA</th></tr></thead>
+        <tbody><tr>
+          <td><a href="../entities/hack_check.html"><code>hack_check</code></a> <a href="../tables/tbl_hack_check.html"><code>tbl_hack_check</code></a></td>
+          <td><code>update</code></td>
+          <td>hack_check</td>
+          <td><span class="badge" style="background:#455a64">COMPOSITE</span></td>
+          <td><code>0xB3549C</code></td>
+        </tr><tr>
+          <td><a href="../entities/hack_check.html"><code>hack_check</code></a> <a href="../tables/tbl_hack_check.html"><code>tbl_hack_check</code></a></td>
+          <td><code>update</code></td>
+          <td>pos_move_hack_check</td>
+          <td><span class="badge" style="background:#c62828">EVENT</span></td>
+          <td><code>0xB0B9E0</code></td>
+        </tr></tbody>
+      </table>
+    </section>
+
+    <section>
+      <h3>导入期 CSV 修复记录</h3>
+      <ul><li><code>elem_wt_normalized:hack_check(array&lt;struct,N&gt; → array&lt;hack_check,N&gt;)</code></li></ul>
+      <p class="muted">这些行的 <code>fields.csv</code> 列数畸形（线类型被逗号切开 / 文本内含 ASCII 逗号），
+        导入时按启发式还原，<strong>必须由 IDA 汇编复核后才能当结论用</strong>。</p>
+    </section>
+
+    <section>
+      <h3>汇编复核（IDA asm 为唯一权威）</h3>
+      
+      <dl class="asm-dl">
+        <dt>状态</dt><dd><span class="badge" style="background:#757575">IMPORTED</span></dd>
+        <dt>复核批次</dt><dd>—</dd>
+        <dt>复核时间</dt><dd>—</dd>
+        <dt>提取器</dt><dd><code>—</code></dd>
+      </dl>
+      <table class="srv-table">
+        <thead><tr><th>检查项</th><th>键</th><th>结果</th></tr></thead>
+        <tbody><tr><td>容量指纹</td><td><code>capacity</code></td><td><span class="muted">未复核</span></td></tr><tr><td>字段窗口</td><td><code>field_window</code></td><td><span class="muted">未复核</span></td></tr><tr><td>原语宽度</td><td><code>primitive_widths</code></td><td><span class="muted">未复核</span></td></tr><tr><td>闭合点</td><td><code>closer</code></td><td><span class="muted">未复核</span></td></tr><tr><td>去向槽+实参</td><td><code>dispatch_slot</code></td><td><span class="muted">未复核</span></td></tr><tr><td>日志串</td><td><code>log_strings</code></td><td><span class="muted">未复核</span></td></tr></tbody>
+      </table>
+      <p class="muted">尚无差异记录（未复核）。</p>
+      
+    </section>
+
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">生成于 2026-10-12 · 改 JSON 后重跑 build_site.py · HTML 只读</div>
+  </footer>
+</body>
+</html>

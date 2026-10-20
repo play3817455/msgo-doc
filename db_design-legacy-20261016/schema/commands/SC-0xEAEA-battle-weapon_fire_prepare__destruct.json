@@ -1,0 +1,390 @@
+{
+  "id": "SC-0xEAEA-battle-weapon_fire_prepare__destruct",
+  "opcode": "0xEAEA",
+  "direction": "SC",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "weapon_fire_prepare__destruct",
+  "source_dir": "protocol_analysis/commands/SC-0xEAEA-battle-weapon_fire_prepare__destruct",
+  "meta": {
+    "opcode": "`0xEAEA`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`battle_client`",
+    "命令名": "`weapon_fire_prepare__destruct`",
+    "处理函数": "`sub_B0CC20`（battle 分发器）",
+    "处理块范围": "`0xB2F913`..`0xB2FB4A`",
+    "名字串引用点": "`0xB2FA20`",
+    "声明容量（解码缓冲）": "`0xa`（`0xB2F928`）",
+    "长度闭合点": "`0xB2F9D7`",
+    "去向": "`vt[0x1D0]` @ `0xB2FB2E`（3 实参）"
+  },
+  "handler": "sub_B0CC20",
+  "handler_va": "0xB0CC20",
+  "block": [
+    "0xB2F913",
+    "0xB2FB4A"
+  ],
+  "name_str": null,
+  "name_str_va": "0xB2FA20",
+  "capacity": "0xA",
+  "capacity_va": "0xB2F928",
+  "closer_va": "0xB2F9D7",
+  "dispatch": "`vt[0x1D0]` @ `0xB2FB2E`（3 实参）",
+  "dispatch_slot": "vt[0x1D0]",
+  "dispatch_va": "0xB2FB2E",
+  "wire": {
+    "length_expr": "2 + 4 + 4",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0xA（容量记账口径，非线长）",
+    "field_count": 3,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：10。",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0xEAEA",
+      "evidence_va": [
+        "0xB2FA20"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "ent_id",
+      "meaning": "实体 ID（日志串 `ent_id=`）",
+      "purpose": "经 `vt[0x1D0]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB2F963",
+        "0xB2FA77"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "2",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "weapon_itemid",
+      "meaning": "武器道具 ID（日志串 `weapon_itemid=`）",
+      "purpose": "经 `vt[0x1D0]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB2F9A3",
+        "0xB2FAA1"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "6",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "fire_id",
+      "meaning": "开火 ID（日志串 `fire_id=`）",
+      "purpose": "经 `vt[0x1D0]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB2F9C7",
+        "0xB2FAC6"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0xEAEA（分发器 switch 选择子）",
+      "evidence_va": "0xB2FA20"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB05DA0`（模块 id None）→ 之后逐字段读线",
+      "evidence_va": "0xB2F913"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "ent_id：`u16`（线长 2）—— 实体 ID（日志串 `ent_id=`）",
+      "evidence_va": "0xB2F963"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "weapon_itemid：`u32`（线长 4）—— 武器道具 ID（日志串 `weapon_itemid=`）",
+      "evidence_va": "0xB2F9A3"
+    },
+    {
+      "step": 5,
+      "kind": "read_scalar",
+      "detail": "fire_id：`u32`（线长 4）—— 开火 ID（日志串 `fire_id=`）",
+      "evidence_va": "0xB2F9C7"
+    },
+    {
+      "step": 6,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB2F9D7"
+    },
+    {
+      "step": 7,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x1D0]`，实参 3 个",
+      "evidence_va": "0xB2FB2E"
+    },
+    {
+      "step": 8,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB2F97D"
+    }
+  ],
+  "capabilities": [
+    "battle_action"
+  ],
+  "capabilities_derived": [
+    "battle"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:48",
+    "batch": 20,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 10,
+        "va": "0xB2F928",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB2F925",
+        "call_va": "0xB2F92A"
+      },
+      "field_window": {
+        "start_va": "0xB2F914",
+        "end_va": "0xB2F9FE",
+        "guard": {
+          "va": "0xB2F913",
+          "func": "0xB05DA0",
+          "module_id": null,
+          "release_va": "0xB05D90"
+        },
+        "closer_or_commit_va": "0xB2F9D7",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "ent_id",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB2F963",
+              "0xB2FA77"
+            ]
+          },
+          {
+            "name": "weapon_itemid",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB2F9A3",
+              "0xB2FAA1"
+            ]
+          },
+          {
+            "name": "fire_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB2F9C7",
+              "0xB2FAC6"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB2F963",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB2F9A3",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB2F9C7",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 3,
+        "checkable": 3,
+        "pairs": [
+          {
+            "field": "ent_id",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB2F963",
+            "kind": "read"
+          },
+          {
+            "field": "weapon_itemid",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB2F9A3",
+            "kind": "read"
+          },
+          {
+            "field": "fire_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB2F9C7",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB2F914",
+          "0xB2F9FE"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 10,
+          "capacity": 10,
+          "relation": "exact",
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）10 / 容量 0xa"
+        }
+      },
+      "closer": {
+        "va": "0xB2F9D7",
+        "kind": "jz",
+        "jcc_va": "0xB2F9DD",
+        "seq_va": "0xB2F9D3",
+        "jcc_dst": "0xB2F9F9",
+        "cmp": "cmp     ebx, [esp+1B3Ch+var_1B24]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x1D0]",
+        "slot_value": 464,
+        "va": "0xB2FB2E",
+        "mov_va": "0xB2FB1A",
+        "host": "[eax+1D0h]",
+        "argc": 3,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB2F97D",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "ent_id=",
+        "weapon_itemid=",
+        "fire_id="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0xEAEA-battle-weapon_fire_prepare__destruct.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xB2FA20"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "WeaponFirePrepareDestruct",
+      "role": "response",
+      "wire_length": "2 + 4 + 4",
+      "members": [
+        {
+          "name": "EntId",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "ent_id"
+        },
+        {
+          "name": "WeaponItemid",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "weapon_itemid"
+        },
+        {
+          "name": "FireId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "fire_id"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "ed9f82f194a54b43",
+  "check_fingerprint": "0f9b11348d2e4953"
+}

@@ -1,0 +1,114 @@
+{
+  "id": "srv.channel",
+  "slug": "channel",
+  "title": "频道登记本",
+  "kind": "server_config",
+  "status": "complete",
+  "ddl": "serverv/migrations/0012_srv_config.up.sql",
+  "generated_by": "db_design/tools/build_srv_docs.py",
+  "note": "本文件由 db_design/tools/build_srv_docs.py 从 serverv/migrations/0012_srv_config.up.sql 生成，勿手改：改 srv.* 请改迁移再重跑生成器",
+  "purpose": "频道登记本；SC-0xF11C channel_list_get_r 的 list_chnl 来源（元素 54B，sub_B420E0）",
+  "primary_key": [
+    "channel_id"
+  ],
+  "columns": [
+    {
+      "name": "channel_id",
+      "sql_type": "BIGINT",
+      "not_null": true,
+      "default": null,
+      "checks": [],
+      "meaning": "频道 ID [u32] channel@offset0；CS-0x2830 channel_list_select 的选择子"
+    },
+    {
+      "name": "name",
+      "sql_type": "TEXT",
+      "not_null": true,
+      "default": "'',",
+      "checks": [],
+      "meaning": "频道名 [char[37] NUL 结尾] channel@offset4"
+    },
+    {
+      "name": "chnl_type",
+      "sql_type": "SMALLINT",
+      "not_null": true,
+      "default": "0",
+      "checks": [
+        "chnl_type BETWEEN 0 AND 255"
+      ],
+      "meaning": "频道类型 [u8] channel@offset41"
+    },
+    {
+      "name": "pilot_lv_min",
+      "sql_type": "SMALLINT",
+      "not_null": true,
+      "default": "0",
+      "checks": [
+        "pilot_lv_min BETWEEN 0 AND 255"
+      ],
+      "meaning": "可入最低驾驶员等级 [u8] channel@offset42"
+    },
+    {
+      "name": "pilot_lv_max",
+      "sql_type": "SMALLINT",
+      "not_null": true,
+      "default": "0",
+      "checks": [
+        "pilot_lv_max BETWEEN 0 AND 255"
+      ],
+      "meaning": "可入最高驾驶员等级 [u8] channel@offset43"
+    },
+    {
+      "name": "user_max",
+      "sql_type": "INTEGER",
+      "not_null": true,
+      "default": "0",
+      "checks": [
+        "user_max BETWEEN 0 AND 65535"
+      ],
+      "meaning": "人数上限 [u16] channel@offset48"
+    },
+    {
+      "name": "sort_order",
+      "sql_type": "INTEGER",
+      "not_null": true,
+      "default": "0,",
+      "checks": [],
+      "meaning": "下发次序（ORDER BY sort_order, channel_id；越小越靠前）"
+    },
+    {
+      "name": "enabled",
+      "sql_type": "BOOLEAN",
+      "not_null": true,
+      "default": "TRUE,",
+      "checks": [],
+      "meaning": "是否下发（FALSE = 停用该频道，不发进 list_chnl）"
+    },
+    {
+      "name": "updated_at",
+      "sql_type": "TIMESTAMPTZ",
+      "not_null": true,
+      "default": "now()",
+      "checks": [],
+      "meaning": "本行最后修改时间（GM 改频道登记本时更新）"
+    }
+  ],
+  "seed_columns": [
+    "channel_id",
+    "name",
+    "pilot_lv_min",
+    "pilot_lv_max",
+    "user_max",
+    "sort_order"
+  ],
+  "seed_rows": [
+    {
+      "channel_id": "1",
+      "name": "'频道1'",
+      "pilot_lv_min": "1",
+      "pilot_lv_max": "99",
+      "user_max": "1000",
+      "sort_order": "0"
+    }
+  ]
+}

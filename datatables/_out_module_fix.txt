@@ -1,0 +1,28 @@
+A. 库列序 vs schema
+   schema csv_index 顺序: ['module_id', 'reserved_u32_1', 'linked_item_id', 'slot_index', 'param_a', 'param_b', 'reserved_u32_6', 'param_c', 'module_category', 'unlock_level']
+   库 actual  : ['module_id', 'reserved_u32_1', 'linked_item_id', 'slot_index', 'param_a', 'param_b', 'reserved_u32_6', 'param_c', 'module_category', 'unlock_level']
+   ==> OK 一致
+
+B. manifest.raw_csv（客户端收到的字节）
+   row_count=8  数据行=8
+   字段数!=10 的行: 无
+
+C. 复现客户端 sub_5A2DB0 的读取结果
+   push 常量->偏移: [(0, 0), (2, 20), (3, 4), (4, 8), (5, 16), (7, 12), (8, 24), (9, 28)]
+   [1] +0=4011301 +20=1 +4=1 +8=1 +16=0 +12=0 +24=ATTACK (raw='ATTACK') +28=1  OK
+   [2] +0=4011501 +20=1 +4=1 +8=1 +16=0 +12=0 +24=ATTACK (raw='ATTACK') +28=1  OK
+   [3] +0=4011503 +20=1 +4=1 +8=1 +16=0 +12=0 +24=DEFENSE (raw='DEFENSE') +28=1  OK
+   [4] +0=4011601 +20=1 +4=1 +8=1 +16=0 +12=0 +24=MOVE (raw='MOVE') +28=1  OK
+   [5] +0=4011701 +20=1 +4=1 +8=1 +16=0 +12=0 +24=ATTACK (raw='ATTACK') +28=1  OK
+   [6] +0=4011901 +20=1 +4=1 +8=1 +16=0 +12=0 +24=ATTACK (raw='ATTACK') +28=1  OK
+   [7] +0=4012001 +20=1 +4=1 +8=1 +16=0 +12=0 +24=DEFENSE (raw='DEFENSE') +28=1  OK
+   [8] +0=4012201 +20=1 +4=1 +8=1 +16=0 +12=0 +24=ATTACK (raw='ATTACK') +28=1  OK
+
+   ==> 失败行: 无
+
+D. 种子文件
+   种子行=8 manifest行=8
+   只种子有: 无
+   只manifest有: 无
+
+VERDICT: PASS

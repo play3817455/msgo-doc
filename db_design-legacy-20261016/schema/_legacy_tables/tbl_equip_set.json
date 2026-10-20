@@ -1,0 +1,59 @@
+{
+  "id": "tbl_equip_set",
+  "title": "装备套组",
+  "status": "complete",
+  "table_disposition": "PERSIST",
+  "purpose": "持久化 equip_set 121B 结构；证据 CS-0x9527 / SC-0x7172",
+  "entity_ref": "equip_set",
+  "row_key": {
+    "columns": [
+      "uniq_id",
+      "equip_set_slot"
+    ],
+    "reason": "一套装备组隶属「某台机体（uniq_id）+ 该机体的槽位（线成员 slot）」：C→S `msma_equipset_del`(0xE410) 与 `msma_equipset_switch`(0xF5AC) 带的都是 `uniqid_ms`(u64)+`slot`(u16)，`msma_equipset_store`(0x9527) 更是把这两个成员原样放在 121B 结构体的头部（偏移 0/8）。若只用 slot 做行键，不同机体的同一槽位会互相 upsert 覆盖。列名用 `equip_set_slot`：线成员叫 `slot`，而 `slot` 是合成行键列的保留名（plan.py 的 KEY_ONLY），成员列因此带表名前缀。",
+    "evidence_va": "B99544|B9954F|B9955D|B99124|B9912F|B9913D",
+    "verified": "2026-09-21"
+  },
+  "evidence_commands": [
+    "CS-0x9527-lounge-msma_equipset_store",
+    "SC-0x7172-lounge-msma_equipset_store_r",
+    "CS-0xE410-lounge-msma_equipset_del",
+    "CS-0xF5AC-lounge-msma_equipset_switch"
+  ],
+  "column_groups": [
+    {
+      "name": "equip_set（121B）",
+      "columns": [
+        "equip_set"
+      ]
+    }
+  ],
+  "columns": [
+    {
+      "name": "equip_set",
+      "disposition": "COMPOSITE",
+      "composite_ref": "equip_set",
+      "meaning": "装备编成结构（121B）",
+      "wire_sources": [
+        {
+          "command": "CS-0x9527-lounge-msma_equipset_store",
+          "struct": "equip_set",
+          "offset": 10,
+          "length": 121,
+          "wire_type": "struct(equip_set)",
+          "protocol_path": "protocol_analysis/commands/CS-0x9527-lounge-msma_equipset_store/README.md",
+          "section": "§3",
+          "writer": "sub_B41C60"
+        }
+      ],
+      "asm_verified": true
+    }
+  ],
+  "asm_audit": {
+    "composite_ref": "equip_set",
+    "status": "pass",
+    "issues_count": 0,
+    "memory_status": "pass",
+    "memory_issues_count": 0
+  }
+}

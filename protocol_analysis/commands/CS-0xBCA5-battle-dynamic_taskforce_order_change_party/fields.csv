@@ -1,0 +1,4 @@
+序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+0,0,2,u16,opcode,命令号,写入 `buf+0`，供服务端分发；无 case 块（C→S）,0xBCA5,0xB3F7F4,确证
+1,2,1,u8,order_kind,指令种类,"来源=入参 `arg_0`（`mov dl,byte ptr [esp+40h+arg_0]` → 内联 `mov [ecx],dl`）","取值域 {1..15}（战术指挥指令种类；取值点 `sub_62D010(a1,a2)` 的 `switch` 返回 15 个不同值 1..15，@`0x62D030`..`0x62D0F7`）",0xB3F809,确证
+2,3,4,u32,order_param,指令参数（队伍/编成 id）,"来源=入参 `arg_4`（`mov eax,[esp+40h+arg_4]` → 内联写 u32 `mov [reg],eax`）",-,0xB3F815,确证

@@ -1,0 +1,347 @@
+{
+  "id": "CS-0x6007-battle-wrestle_chase_move_end",
+  "opcode": "0x6007",
+  "direction": "CS",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "wrestle_chase_move_end",
+  "source_dir": "protocol_analysis/commands/CS-0x6007-battle-wrestle_chase_move_end",
+  "meta": {
+    "opcode": "`0x6007`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`battle_client`",
+    "命令名": "`wrestle_chase_move_end`",
+    "名字符串": "`)<-_proto_battle_client::send_wrestle_chase_move_end(` @ `0xee191c`",
+    "代码位置": "sub_B40F20 @ `0xb40f20`（`0xb40f20`..`0xb41108`）",
+    "opcode 写入证据": "`0xb40f94`",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0xA`（10）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)`",
+    "配对命令（同 opcode 反向）": "见 §4.3 与其他命令的关联 / INDEX 反向表"
+  },
+  "handler": "sub_B40F20",
+  "handler_va": "0xb40f20",
+  "block": [
+    "0xB40F20",
+    "0xB41108"
+  ],
+  "name_str": ")<-_proto_battle_client::send_wrestle_chase_move_end(",
+  "name_str_va": "0xee191c",
+  "capacity": "0xA",
+  "capacity_va": null,
+  "closer_va": "0xB41013",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": null,
+  "wire": {
+    "length_expr": "4 + 2",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0xA（容量记账口径，非线长）",
+    "field_count": 2,
+    "length_source": "field_sum",
+    "readme_conclusion": "结论：格斗追击移动结束：帧号 + AI 实体 id。",
+    "readme_close": "2 + 4 + 2 = 8 ≤ 容量 0xA=10（富余 2）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发给 battle 协议类处理块（C→S 无 case 块）",
+      "enum": "0x6007",
+      "evidence_va": [
+        "0xB40F94"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "2",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "frame_count",
+      "meaning": "帧号",
+      "purpose": "来源=入参 arg_0（@0xB40FA0）；内联 `mov [ecx],esi`（4 字节目标）；经 `vt[0x58]` 发送",
+      "enum": null,
+      "evidence_va": [
+        "0xB40FA9"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "6",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "AI_ent_id",
+      "meaning": "AI 实体 id",
+      "purpose": "来源=入参 arg_4 的低 16 位（@0xB40FB1）；内联 `mov [edx],cx`；经 `vt[0x58]` 发送",
+      "enum": null,
+      "evidence_va": [
+        "0xB40FB6"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0x6007（分发器 switch 选择子）",
+      "evidence_va": "0xB40F94"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0xA B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xB40F66"
+    },
+    {
+      "step": 3,
+      "kind": "write_scalar",
+      "detail": "frame_count：`u32`（线长 4）—— 帧号",
+      "evidence_va": "0xB40FA9"
+    },
+    {
+      "step": 4,
+      "kind": "write_scalar",
+      "detail": "AI_ent_id：`u16`（线长 2）—— AI 实体 id",
+      "evidence_va": "0xB40FB6"
+    },
+    {
+      "step": 5,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xB41013"
+    },
+    {
+      "step": 6,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xB4109F"
+    }
+  ],
+  "capabilities": [
+    "update",
+    "flow",
+    "battle.wrestle_chase"
+  ],
+  "capabilities_derived": [
+    "flow"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:46",
+    "batch": 17,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 10,
+        "va": "0xB40F66",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB40F63",
+        "call_va": "0xB40F68"
+      },
+      "field_window": {
+        "start_va": "0xB40F20",
+        "end_va": "0xB41013",
+        "guard": null,
+        "closer_or_commit_va": "0xB41013",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "frame_count",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB40FA9"
+            ]
+          },
+          {
+            "name": "AI_ent_id",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB40FB6"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB40F94",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB40FA9",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB40FB6",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB40FE9",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 2,
+        "checkable": 2,
+        "pairs": [
+          {
+            "field": "frame_count",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB40FA9",
+            "kind": "inline_store"
+          },
+          {
+            "field": "AI_ent_id",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB40FB6",
+            "kind": "inline_store"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB40F94",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB40F20",
+          "0xB41013"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 8,
+          "capacity": 10,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB40FE9",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）8 / 容量 0xa"
+        }
+      },
+      "closer": {
+        "va": "0xB41013",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xB4109F",
+        "mov_va": "0xB41096",
+        "host": "[edx+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "frame_count=",
+        "AI_ent_id="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0x6007-battle-wrestle_chase_move_end.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0xb40f94",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xB40F94"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "WrestleChaseMoveEnd",
+      "role": "request",
+      "wire_length": "4 + 2",
+      "members": [
+        {
+          "name": "FrameCount",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "frame_count"
+        },
+        {
+          "name": "AIEntId",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "AI_ent_id"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "a656d5e409c43231",
+  "check_fingerprint": "73d6d9514a58bf62"
+}

@@ -1,0 +1,213 @@
+{
+ "id": "SC-0x60E0-auth-authenticate_you9otp_input",
+ "verified_at": "2026-09-30 15:25:42",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "block",
+ "block": [
+  "0xB044D6",
+  "0xB04667"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 21,
+   "va": "0xB044EB",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xB044E8",
+   "call_va": "0xB044ED"
+  },
+  "field_window": {
+   "start_va": "0xB044D7",
+   "end_va": "0xB04652",
+   "guard": {
+    "va": "0xB044D6",
+    "func": "0xB02C90",
+    "module_id": null,
+    "release_va": null
+   },
+   "closer_or_commit_va": "0xB04545",
+   "within_model_block": true,
+   "range_from": "block"
+  },
+  "primitive_widths": {
+   "direction": "SC",
+   "expected": [
+    {
+     "name": "otp_type",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xb04518"
+     ]
+    },
+    {
+     "name": "otp_matrix_code",
+     "wire_type": "bytes",
+     "width": null,
+     "seq": 2,
+     "shape": "agg",
+     "evidence_va": [
+      "0xb04535"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB04518",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB04535",
+     "kind": "read",
+     "width": null,
+     "wire_type": "str",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB04581",
+     "kind": "composite",
+     "width": null,
+     "wire_type": null,
+     "name": "sub_B03020",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB045D2",
+     "kind": "composite",
+     "width": null,
+     "wire_type": null,
+     "name": "sub_B03580",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB04623",
+     "kind": "composite",
+     "width": null,
+     "wire_type": null,
+     "name": "sub_B03580",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB04637",
+     "kind": "composite",
+     "width": null,
+     "wire_type": null,
+     "name": "sub_B036E0",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 1,
+   "checkable": 1,
+   "pairs": [
+    {
+     "field": "otp_type",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB04518",
+     "kind": "read"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [
+    {
+     "va": "0xB04535",
+     "kind": "read",
+     "width": null,
+     "wire_type": "str"
+    }
+   ],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB044D7",
+    "0xB04652"
+   ],
+   "scalar_match_verifiable": true,
+   "capacity_relation": {
+    "observed_min": 4,
+    "capacity": 21,
+    "relation": "within",
+    "unknown_events": [
+     {
+      "va": "0xB04535",
+      "kind": "read",
+      "name": ""
+     },
+     {
+      "va": "0xB04581",
+      "kind": "composite",
+      "name": "sub_B03020"
+     },
+     {
+      "va": "0xB045D2",
+      "kind": "composite",
+      "name": "sub_B03580"
+     },
+     {
+      "va": "0xB04623",
+      "kind": "composite",
+      "name": "sub_B03580"
+     },
+     {
+      "va": "0xB04637",
+      "kind": "composite",
+      "name": "sub_B036E0"
+     }
+    ],
+    "is_lower_bound": true,
+    "note": "观测线长（下界）4 / 容量 0x15"
+   }
+  },
+  "closer": {
+   "va": "0xB04545",
+   "kind": "jnz",
+   "jcc_va": "0xB04549",
+   "seq_va": "0xB04541",
+   "jcc_dst": "0xB04524",
+   "cmp": "cmp     ebx, [esp+124h+var_108]",
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x74]",
+   "slot_value": 116,
+   "va": "0xB04652",
+   "mov_va": "0xB0464B",
+   "host": "[edx+74h]",
+   "argc": 2,
+   "form": "mov_then_call",
+   "error_slot": null
+  },
+  "log_strings": [
+   "otp_type=",
+   "otp_matrix_code=\""
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "otp_matrix_code",
+  "otp_type"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 2
+}

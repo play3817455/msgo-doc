@@ -1,0 +1,649 @@
+{
+  "id": "SC-0xDDB4-lounge-datafile_reload",
+  "opcode": "0xDDB4",
+  "direction": "SC",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "datafile_reload",
+  "source_dir": "protocol_analysis/commands/SC-0xDDB4-lounge-datafile_reload",
+  "meta": {
+    "opcode": "`0xDDB4`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`datafile_reload`",
+    "处理块范围": "`0xb8103d`..`0xb81441`",
+    "名字串引用点": "`0xee6c84`",
+    "声明容量（解码缓冲）": "`0x8000112`（`B81052`）",
+    "长度闭合点": "`B811E2`（`cmp`）→ `B811E8 jz`",
+    "报错码": "`0xA`（块内 4 处 `push 1; push 0Ah; vt[0x64]`）",
+    "去向": "`vt[0x7C]` @`B81425`（7 实参）"
+  },
+  "handler": null,
+  "handler_va": null,
+  "block": [
+    "0xb8103d",
+    "0xb81441"
+  ],
+  "name_str": null,
+  "name_str_va": "0xee6c84",
+  "capacity": "0x8000112",
+  "capacity_va": "0xB81052",
+  "closer_va": "0xB811E2",
+  "dispatch": "`vt[0x7C]` @`B81425`（7 实参）",
+  "dispatch_slot": "vt[0x7C]",
+  "dispatch_va": "0xB81425",
+  "wire": {
+    "length_expr": "4 + L+1 + 4 + 4 + 2 + 4 + n",
+    "fixed": false,
+    "var_drivers": [
+      "n",
+      "L"
+    ],
+    "capacity_note": "声明容量 0x8000112（容量记账口径，非线长）",
+    "field_count": 7,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：4 + (strlen(filepath)+1) + 4 + 4 + 2 + 4 + n",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "result",
+      "meaning": "重载结果码（日志串 `result=`）",
+      "purpose": "经 `vt[0x7C]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xb81090",
+        "0xb8127b"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "L+1",
+      "wire_type": "str",
+      "name": "filepath",
+      "meaning": "数据文件路径（NUL 串；日志串 `filepath=\"`）",
+      "purpose": "经 `vt[0x7C]` 交业务；槽预算 256（`push 100h`@`B810BB`）",
+      "enum": null,
+      "evidence_va": [
+        "0xb810d3",
+        "0xb810bb",
+        "0xb812a8"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 3,
+      "offset": "var",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "hashval",
+      "meaning": "数据哈希值（日志串 `hashval=`）",
+      "purpose": "经 `vt[0x7C]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xb81110",
+        "0xb812dd"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 4,
+      "offset": "var",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "src_bytes",
+      "meaning": "源字节数（日志串 `src_bytes=`）",
+      "purpose": "经 `vt[0x7C]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xb81134",
+        "0xb81307"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 5,
+      "offset": "var",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "compress",
+      "meaning": "压缩方式（日志串 `compress=`）",
+      "purpose": "经 `vt[0x7C]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xb81158",
+        "0xb81332"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    },
+    {
+      "seq": 6,
+      "offset": "var",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "bin_num",
+      "meaning": "数据体字节数（上限 `0x8000000`，`cmp ebx，8000000h; ja`@`B81186`）",
+      "purpose": "驱动 `bin` 字节数组循环（`cmp edi，ebx`@`B811C8`）",
+      "enum": "0..134217728",
+      "evidence_va": [
+        "0xb81172",
+        "0xb81186",
+        "0xb811c8"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 7
+    },
+    {
+      "seq": 7,
+      "offset": "var",
+      "length": "n",
+      "wire_type": "bytes[bin_num]",
+      "name": "bin",
+      "meaning": "数据体原始字节（日志串 `bin={`）",
+      "purpose": "经 `vt[0x7C]` 交业务；槽步进 1 = `sub_B05EA0`（按 count 推进）",
+      "enum": null,
+      "evidence_va": [
+        "0xb8119c",
+        "0xb811bc",
+        "0xb8134d"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 8
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0xDDB4（分发器 switch 选择子）",
+      "evidence_va": "0x0000"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB41120`（模块 id None）→ 之后逐字段读线",
+      "evidence_va": "0xB8103D"
+    },
+    {
+      "step": 3,
+      "kind": "read_count",
+      "detail": "result：`u32`（线长 4）—— 重载结果码（日志串 `result=`）",
+      "evidence_va": "0xB81090"
+    },
+    {
+      "step": 4,
+      "kind": "read_string",
+      "detail": "filepath：`str`（线长 L+1）—— 数据文件路径（NUL 串；日志串 `filepath=\"`）",
+      "evidence_va": "0xB810D3"
+    },
+    {
+      "step": 5,
+      "kind": "read_scalar",
+      "detail": "hashval：`u32`（线长 4）—— 数据哈希值（日志串 `hashval=`）",
+      "evidence_va": "0xB81110"
+    },
+    {
+      "step": 6,
+      "kind": "read_scalar",
+      "detail": "src_bytes：`u32`（线长 4）—— 源字节数（日志串 `src_bytes=`）",
+      "evidence_va": "0xB81134"
+    },
+    {
+      "step": 7,
+      "kind": "read_scalar",
+      "detail": "compress：`u16`（线长 2）—— 压缩方式（日志串 `compress=`）",
+      "evidence_va": "0xB81158"
+    },
+    {
+      "step": 8,
+      "kind": "read_scalar",
+      "detail": "bin_num：`u32`（线长 4）—— 数据体字节数（上限 `0x8000000`，`cmp ebx，8000000h; ja`@`B81186`）",
+      "evidence_va": "0xB81172"
+    },
+    {
+      "step": 9,
+      "kind": "read_scalar",
+      "detail": "bin：`bytes[bin_num]`（线长 n）—— 数据体原始字节（日志串 `bin={`）",
+      "evidence_va": "0xB8119C"
+    },
+    {
+      "step": 10,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB811E2"
+    },
+    {
+      "step": 11,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x7C]`，实参 7 个",
+      "evidence_va": "0xB81425"
+    },
+    {
+      "step": 12,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB810A7"
+    }
+  ],
+  "capabilities": [
+    "unclassified",
+    "lounge.datafile_reload"
+  ],
+  "capabilities_derived": [
+    "unclassified"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:45",
+    "batch": 13,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 134218002,
+        "va": "0xB81052",
+        "reg": "eax",
+        "host": "[edx+78h]",
+        "alloc_va": "0xB8104F",
+        "call_va": "0xB81057"
+      },
+      "field_window": {
+        "start_va": "0xB8103E",
+        "end_va": "0xB81203",
+        "guard": {
+          "va": "0xB8103D",
+          "func": "0xB41120",
+          "module_id": null,
+          "release_va": "0xB41110"
+        },
+        "closer_or_commit_va": "0xB811E2",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "result",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb81090",
+              "0xb8127b"
+            ]
+          },
+          {
+            "name": "filepath",
+            "wire_type": "str",
+            "width": null,
+            "seq": 2,
+            "shape": "str",
+            "evidence_va": [
+              "0xb810d3",
+              "0xb810bb",
+              "0xb812a8"
+            ]
+          },
+          {
+            "name": "hashval",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb81110",
+              "0xb812dd"
+            ]
+          },
+          {
+            "name": "src_bytes",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 4,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb81134",
+              "0xb81307"
+            ]
+          },
+          {
+            "name": "compress",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 5,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb81158",
+              "0xb81332"
+            ]
+          },
+          {
+            "name": "bin_num",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 6,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb81172",
+              "0xb81186",
+              "0xb811c8"
+            ]
+          },
+          {
+            "name": "bin",
+            "wire_type": "bytes[bin_num]",
+            "width": null,
+            "seq": 7,
+            "shape": "agg",
+            "evidence_va": [
+              "0xb8119c",
+              "0xb811bc",
+              "0xb8134d"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB81090",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB810D3",
+            "kind": "read",
+            "width": null,
+            "wire_type": "str",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB81110",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB81134",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB81158",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB81172",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB8119C",
+            "kind": "bounded",
+            "width": 1,
+            "wire_type": null,
+            "name": "sub_B05EA0",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB811BC",
+            "kind": "read",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 6,
+        "checkable": 6,
+        "pairs": [
+          {
+            "field": "result",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB81090",
+            "kind": "read"
+          },
+          {
+            "field": "filepath",
+            "width": null,
+            "shape": "str",
+            "va": "0xB810D3",
+            "kind": "read"
+          },
+          {
+            "field": "hashval",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB81110",
+            "kind": "read"
+          },
+          {
+            "field": "src_bytes",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB81134",
+            "kind": "read"
+          },
+          {
+            "field": "compress",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB81158",
+            "kind": "read"
+          },
+          {
+            "field": "bin_num",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB81172",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB8119C",
+            "kind": "bounded",
+            "width": 1,
+            "wire_type": null
+          },
+          {
+            "va": "0xB811BC",
+            "kind": "read",
+            "width": 1,
+            "wire_type": "u8"
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB8103E",
+          "0xB81203"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 19,
+          "capacity": 134218002,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB810D3",
+              "kind": "read",
+              "name": ""
+            },
+            {
+              "va": "0xB8119C",
+              "kind": "bounded",
+              "name": "sub_B05EA0"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）19 / 容量 0x8000112"
+        }
+      },
+      "closer": {
+        "va": "0xB811E2",
+        "kind": "jz",
+        "jcc_va": "0xB811E8",
+        "seq_va": "0xB811DE",
+        "jcc_dst": "0xB81201",
+        "cmp": "cmp     ecx, [esp+2C5Ch+var_2C40]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x7C]",
+        "slot_value": 124,
+        "va": "0xB81425",
+        "mov_va": "0xB81400",
+        "host": "[eax+7Ch]",
+        "argc": 7,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB810A7",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "result=",
+        "filepath=\"",
+        "hashval=",
+        "src_bytes=",
+        "compress=",
+        "bin={"
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0xDDB4-lounge-datafile_reload.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": []
+  },
+  "structs": {
+    "response": {
+      "go_name": "DatafileReload",
+      "role": "response",
+      "wire_length": "4 + L+1 + 4 + 4 + 2 + 4 + n",
+      "members": [
+        {
+          "name": "Result",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "result"
+        },
+        {
+          "name": "Filepath",
+          "wire_type": "str",
+          "length": "L+1",
+          "field_ref": "filepath",
+          "element": null,
+          "element_length": null,
+          "cap": null,
+          "count_field": "result",
+          "count_field_source": "nearest_scalar",
+          "note": "元素成员未建模（composites/ 无此结构），须以 IDA 复核补"
+        },
+        {
+          "name": "Hashval",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "hashval"
+        },
+        {
+          "name": "SrcBytes",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "src_bytes"
+        },
+        {
+          "name": "Compress",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "compress"
+        },
+        {
+          "name": "BinNum",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "bin_num"
+        },
+        {
+          "name": "Bin",
+          "wire_type": "bytes[bin_num]",
+          "length": "n",
+          "field_ref": "bin"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "6868eff91aec04eb",
+  "check_fingerprint": "90cc7287d9c1344a"
+}

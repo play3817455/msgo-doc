@@ -1,0 +1,292 @@
+{
+  "id": "CS-0xFC4B-lounge-xwar_booking_info_get",
+  "opcode": "0xFC4B",
+  "direction": "CS",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "xwar_booking_info_get",
+  "source_dir": "protocol_analysis/commands/CS-0xFC4B-lounge-xwar_booking_info_get",
+  "meta": {
+    "opcode": "`0xFC4B`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`xwar_booking_info_get`",
+    "名字符串": "`)<-_proto_lounge_client::send_xwar_booking_info_get( ` @ `0x00EEB018`",
+    "代码位置": "`sub_B91230` @ `0x00B91230`（`0x00B91230`..`0x00B913DD`）",
+    "opcode 写入证据": "`0x00B912A4`",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0x6`（6）",
+    "容量申请证据": "`0x00B91276`（分配器 `[obj+0Ch]` 的 `vt[0x78]`）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)` @ `0x00B9136B`",
+    "提交": "`sub_B02FF0` @ `0x00B91310`",
+    "附加通知回调": "`[obj+79A8h]`（模块 id `0xA5`）",
+    "配对命令": "S→C `SC-0xEA2C-lounge-xwar_booking_info_get_r`"
+  },
+  "handler": "sub_B91230",
+  "handler_va": "0x00B91230",
+  "block": [
+    "0xB91230",
+    "0xB913DD"
+  ],
+  "name_str": ")<-_proto_lounge_client::send_xwar_booking_info_get(",
+  "name_str_va": "0x00EEB018",
+  "capacity": "0x6",
+  "capacity_va": "0x00B91276",
+  "closer_va": "0xB91310",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)` @ `0x00B9136B`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": "0x00B9136B",
+  "wire": {
+    "length_expr": "4",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x6（容量记账口径，非线长）",
+    "field_count": 1,
+    "length_source": "field_sum",
+    "readme_conclusion": "字段数：**2**（含 opcode 第 0 项）",
+    "readme_close": "2 + 4 = 6 == 容量 0x6 = 6（**精确相等**）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "写入 `buf+0`，供服务端分发；无 case 块（C→S）",
+      "enum": "0xFC4B",
+      "evidence_va": [
+        "`00B912A4`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "matching_type",
+      "meaning": "跨服战（xwar）预约匹配类型",
+      "purpose": "来源=入参 `arg_0` → 内联写 `[eax],ecx`(@`0xB912B4`)；去向=经 `vt[0x58]` 发往服务端",
+      "enum": "取值域 {0}（客户端只送 0：唯一生产者 sub_AFF0E0 的调用点 @0x72AADF 为 push 0）",
+      "evidence_va": [
+        "`0xB912B4`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0xFC4B（分发器 switch 选择子）",
+      "evidence_va": "0x00B912A4"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0x6 B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xB91276"
+    },
+    {
+      "step": 3,
+      "kind": "write_scalar",
+      "detail": "matching_type：`u32`（线长 4）—— 跨服战（xwar）预约匹配类型",
+      "evidence_va": "0xB912B4"
+    },
+    {
+      "step": 4,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xB91310"
+    },
+    {
+      "step": 5,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xB91374"
+    }
+  ],
+  "capabilities": [
+    "query",
+    "lounge.xwar_booking"
+  ],
+  "capabilities_derived": [
+    "query"
+  ],
+  "db_effects": [],
+  "pair": "SC-0xEA2C-lounge-xwar_booking_info_get_r",
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:46",
+    "batch": 14,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 6,
+        "va": "0xB91276",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB91273",
+        "call_va": "0xB91278"
+      },
+      "field_window": {
+        "start_va": "0xB91230",
+        "end_va": "0xB91310",
+        "guard": null,
+        "closer_or_commit_va": "0xB91310",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "matching_type",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "`0xB912B4`"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB912A4",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB912B4",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB912E6",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 1,
+        "checkable": 1,
+        "pairs": [
+          {
+            "field": "matching_type",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB912B4",
+            "kind": "inline_store"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB912A4",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB91230",
+          "0xB91310"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 6,
+          "capacity": 6,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB912E6",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）6 / 容量 0x6"
+        }
+      },
+      "closer": {
+        "va": "0xB91310",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xB91374",
+        "mov_va": "0xB9136B",
+        "host": "[edx+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "matching_type="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0xFC4B-lounge-xwar_booking_info_get.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0x00B912A4",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "`00B912A4`"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "XwarBookingInfoGet",
+      "role": "request",
+      "wire_length": "4",
+      "members": [
+        {
+          "name": "MatchingType",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "matching_type"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "6bfcebfed45e4df0",
+  "check_fingerprint": "a32b0d7435611a3f"
+}

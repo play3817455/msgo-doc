@@ -1,0 +1,402 @@
+{
+  "id": "CS-0x6921-lounge-msma_create_estimate",
+  "opcode": "0x6921",
+  "direction": "CS",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "msma_create_estimate",
+  "source_dir": "protocol_analysis/commands/CS-0x6921-lounge-msma_create_estimate",
+  "meta": {
+    "opcode": "`0x6921`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`msma_create_estimate`",
+    "名字符串": "`)<-_proto_lounge_client::send_msma_create_estimate(` @ `0xeeb7f0`",
+    "代码位置": "sub_B95C80 @ `0xb95c80`（`0xb95c80`..`0xb95eba`）",
+    "opcode 写入证据": "`0xb95cfc`",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0xE`（14）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)`",
+    "配对命令（同 opcode 反向）": "见 §4.3 与其他命令的关联 / INDEX 反向表"
+  },
+  "handler": "sub_B95C80",
+  "handler_va": "0xb95c80",
+  "block": [
+    "0xB95C80",
+    "0xB95EBA"
+  ],
+  "name_str": ")<-_proto_lounge_client::send_msma_create_estimate(",
+  "name_str_va": "0xeeb7f0",
+  "capacity": "0xE",
+  "capacity_va": null,
+  "closer_va": "0xB95D9D",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": null,
+  "wire": {
+    "length_expr": "4 + 4 + 2",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0xE（容量记账口径，非线长）",
+    "field_count": 3,
+    "length_source": "field_sum",
+    "readme_conclusion": "结论：机体创建估价：生产计划 id + 票 id + 用量。",
+    "readme_close": "2 + 4 + 4 + 2 = 12 ≤ 容量 0xE=14（富余 2）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发给 lounge 协议类处理块（C→S 无 case 块）",
+      "enum": "0x6921",
+      "evidence_va": [
+        "0xB95CFC"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "2",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "ms_plan_id",
+      "meaning": "机体生产计划 id",
+      "purpose": "来源=入参 arg_0（@0xB95D08）；内联 `mov [eax],esi`；经 `vt[0x58]` 发送",
+      "enum": null,
+      "evidence_va": [
+        "0xB95D0C"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "6",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "ticket_id",
+      "meaning": "使用的票 id",
+      "purpose": "来源=入参 arg_4（@0xB95D1B）；内联 `mov [eax],ecx`；经 `vt[0x58]` 发送",
+      "enum": null,
+      "evidence_va": [
+        "0xB95D27"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "10",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "usenum",
+      "meaning": "使用数量",
+      "purpose": "来源=入参 arg_8（@0xB95D2A）；写线原语 `sub_B02DA0`(u16)；经 `vt[0x58]` 发送",
+      "enum": null,
+      "evidence_va": [
+        "0xB95D2F"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0x6921（分发器 switch 选择子）",
+      "evidence_va": "0xB95CFC"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0xE B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xB95CC6"
+    },
+    {
+      "step": 3,
+      "kind": "write_scalar",
+      "detail": "ms_plan_id：`u32`（线长 4）—— 机体生产计划 id",
+      "evidence_va": "0xB95D0C"
+    },
+    {
+      "step": 4,
+      "kind": "write_scalar",
+      "detail": "ticket_id：`u32`（线长 4）—— 使用的票 id",
+      "evidence_va": "0xB95D27"
+    },
+    {
+      "step": 5,
+      "kind": "write_scalar",
+      "detail": "usenum：`u16`（线长 2）—— 使用数量",
+      "evidence_va": "0xB95D2F"
+    },
+    {
+      "step": 6,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xB95D9D"
+    },
+    {
+      "step": 7,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xB95E51"
+    }
+  ],
+  "capabilities": [
+    "create"
+  ],
+  "capabilities_derived": [
+    "create"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:44",
+    "batch": 8,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 14,
+        "va": "0xB95CC6",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB95CC3",
+        "call_va": "0xB95CC8"
+      },
+      "field_window": {
+        "start_va": "0xB95C80",
+        "end_va": "0xB95D9D",
+        "guard": null,
+        "closer_or_commit_va": "0xB95D9D",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "ms_plan_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB95D0C"
+            ]
+          },
+          {
+            "name": "ticket_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB95D27"
+            ]
+          },
+          {
+            "name": "usenum",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB95D2F"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB95CFC",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB95D0C",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB95D27",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB95D2F",
+            "kind": "write",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB95D73",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 3,
+        "checkable": 3,
+        "pairs": [
+          {
+            "field": "ms_plan_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB95D0C",
+            "kind": "inline_store"
+          },
+          {
+            "field": "ticket_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB95D27",
+            "kind": "inline_store"
+          },
+          {
+            "field": "usenum",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB95D2F",
+            "kind": "write"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB95CFC",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB95C80",
+          "0xB95D9D"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 12,
+          "capacity": 14,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB95D73",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）12 / 容量 0xe"
+        }
+      },
+      "closer": {
+        "va": "0xB95D9D",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xB95E51",
+        "mov_va": "0xB95E48",
+        "host": "[edx+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "ms_plan_id=",
+        "ticket_id=",
+        "usenum="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0x6921-lounge-msma_create_estimate.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0xb95cfc",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xB95CFC"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "MsmaCreateEstimate",
+      "role": "request",
+      "wire_length": "4 + 4 + 2",
+      "members": [
+        {
+          "name": "MsPlanId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "ms_plan_id"
+        },
+        {
+          "name": "TicketId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "ticket_id"
+        },
+        {
+          "name": "Usenum",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "usenum"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "911df80db0b4e2db",
+  "check_fingerprint": "ce283bbc95b1c258"
+}

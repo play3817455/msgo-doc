@@ -1,0 +1,53 @@
+# 机器草案：线格式 —— SC-0x049D-battle-wrestle_chase_move_start_r
+
+> 本文件由 `tools/ida_draft_wire.py` 生成，**不要手工编辑**。
+> 类型/偏移/长度/证据均来自汇编；**含义/用途一律待人工补齐**（规范 §7）。
+> 定稿请写 `README.md` 的帧格式表 + `fields.csv`，并把状态改为 `WIP`/`DONE`。
+
+## 命令
+
+| 项 | 值 |
+|---|---|
+| opcode | `0x049D` |
+| 方向 | SC |
+| 协议类 | `battle_client` |
+| 命令名 | `wrestle_chase_move_start_r` |
+| 代码位置 | `0xb0d48f`..`0xb0d8ac` |
+| 声明容量 | `0x14` |
+| 字段总长 | **20** 字节 |
+| **自校验** | **PASS**（全定长时：S→C「容量 == 负载长」；C→S「容量 ≥ 负载长 + 2」）
+
+## 草案字段表（机器提取）
+
+| # | 偏移 | 长度 | 线类型 | 证据VA |
+|---|---|---|---|---|
+| 1 | 0 | 2 | u16 | `0xb0d4e6` |
+| 2 | 2 | 4 | u32 | `0xb0d526` |
+| 3 | 6 | 2 | u16 | `0xb0d54a` |
+| 4 | 8 | 4 | u32 | `0xb0d56e` |
+| 5 | 12 | 2 | u16 | `0xb0d596` |
+| 6 | 14 | 2 | u16 | `0xb0d5be` |
+| 7 | 16 | 2 | u16 | `0xb0d5e6` |
+| 8 | 18 | 2 | u16 | `0xb0d60e` |
+
+## 汇编证据序列（按线序）
+
+```asm
+; 0xb0d4d7  call sub_B413B0 → 解码缓冲预留 u16（非字段）
+; 0xb0d4e6  call sub_B02DF0 → 读 u16
+; 0xb0d517  call sub_B41470 → 解码缓冲预留 u32（非字段）
+; 0xb0d526  call sub_B02DD0 → 读 u32
+; 0xb0d53b  call sub_B413B0 → 解码缓冲预留 u16（非字段）
+; 0xb0d54a  call sub_B02DF0 → 读 u16
+; 0xb0d55f  call sub_B41470 → 解码缓冲预留 u32（非字段）
+; 0xb0d56e  call sub_B02DD0 → 读 u32
+; 0xb0d587  call sub_B413B0 → 解码缓冲预留 u16（非字段）
+; 0xb0d596  call sub_B02DF0 → 读 u16
+; 0xb0d5af  call sub_B413B0 → 解码缓冲预留 u16（非字段）
+; 0xb0d5be  call sub_B02DF0 → 读 u16
+; 0xb0d5d7  call sub_B413B0 → 解码缓冲预留 u16（非字段）
+; 0xb0d5e6  call sub_B02DF0 → 读 u16
+; 0xb0d5ff  call sub_B413B0 → 解码缓冲预留 u16（非字段）
+; 0xb0d60e  call sub_B02DF0 → 读 u16
+; —— 扫描停止于 0xb0d636：call （非 IO）
+```

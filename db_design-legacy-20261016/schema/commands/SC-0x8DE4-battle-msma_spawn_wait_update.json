@@ -1,0 +1,392 @@
+{
+  "id": "SC-0x8DE4-battle-msma_spawn_wait_update",
+  "opcode": "0x8DE4",
+  "direction": "SC",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "msma_spawn_wait_update",
+  "source_dir": "protocol_analysis/commands/SC-0x8DE4-battle-msma_spawn_wait_update",
+  "meta": {
+    "opcode": "`0x8DE4`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`battle_client`",
+    "命令名": "`msma_spawn_wait_update`",
+    "处理块范围": "`B22A18`..`B22C4D`",
+    "名字串引用点": "`B22B20`",
+    "声明容量（解码缓冲）": "`0x5`（`B22A31`）",
+    "长度闭合点": "`B22ADD`",
+    "收尾函数": "`sub_B05D90`（battle 口径）",
+    "去向": "`vt[0x138]` @ `B22C1C`（3 实参）"
+  },
+  "handler": null,
+  "handler_va": null,
+  "block": [
+    "0xB22A18",
+    "0xB22C4D"
+  ],
+  "name_str": null,
+  "name_str_va": "0xB22B20",
+  "capacity": "0x5",
+  "capacity_va": "0xB22A31",
+  "closer_va": "0xB22ADD",
+  "dispatch": "`vt[0x138]` @ `B22C1C`（3 实参）",
+  "dispatch_slot": "vt[0x138]",
+  "dispatch_va": "0xB22C1C",
+  "wire": {
+    "length_expr": "1 + 2 + 2",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x5（容量记账口径，非线长）",
+    "field_count": 3,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：5。",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0x8DE4",
+      "evidence_va": [
+        "B22B20"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "deck_index",
+      "meaning": "卡组槽序号（日志串 `deck_index=`）",
+      "purpose": "经 `vt[0x138]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B22A6C",
+        "B22B74"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "1",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "respawn_wait_sec",
+      "meaning": "重出等待秒数（日志串 `respawn_wait_sec=`）",
+      "purpose": "经 `vt[0x138]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B22AA9",
+        "B22BA1"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "3",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "respawn_wait_max",
+      "meaning": "重出等待上限（日志串 `respawn_wait_max=`）",
+      "purpose": "经 `vt[0x138]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B22ACD",
+        "B22BC7"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0x8DE4（分发器 switch 选择子）",
+      "evidence_va": "0xB22B20"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB05DA0`（模块 id 74）→ 之后逐字段读线",
+      "evidence_va": "0xB22A1C"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "deck_index：`u8`（线长 1）—— 卡组槽序号（日志串 `deck_index=`）",
+      "evidence_va": "0xB22A6C"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "respawn_wait_sec：`u16`（线长 2）—— 重出等待秒数（日志串 `respawn_wait_sec=`）",
+      "evidence_va": "0xB22AA9"
+    },
+    {
+      "step": 5,
+      "kind": "read_scalar",
+      "detail": "respawn_wait_max：`u16`（线长 2）—— 重出等待上限（日志串 `respawn_wait_max=`）",
+      "evidence_va": "0xB22ACD"
+    },
+    {
+      "step": 6,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB22ADD"
+    },
+    {
+      "step": 7,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x138]`，实参 3 个",
+      "evidence_va": "0xB22C31"
+    },
+    {
+      "step": 8,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB22A83"
+    }
+  ],
+  "capabilities": [
+    "create",
+    "update"
+  ],
+  "capabilities_derived": [
+    "battle",
+    "notify"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:47",
+    "batch": 18,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 5,
+        "va": "0xB22A31",
+        "reg": "eax",
+        "host": "[edx+78h]",
+        "alloc_va": "0xB22A2E",
+        "call_va": "0xB22A33"
+      },
+      "field_window": {
+        "start_va": "0xB22A1D",
+        "end_va": "0xB22AFE",
+        "guard": {
+          "va": "0xB22A1C",
+          "func": "0xB05DA0",
+          "module_id": 74,
+          "release_va": "0xB05D90"
+        },
+        "closer_or_commit_va": "0xB22ADD",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "deck_index",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "B22A6C",
+              "B22B74"
+            ]
+          },
+          {
+            "name": "respawn_wait_sec",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "B22AA9",
+              "B22BA1"
+            ]
+          },
+          {
+            "name": "respawn_wait_max",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "B22ACD",
+              "B22BC7"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB22A6C",
+            "kind": "read",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB22AA9",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB22ACD",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 3,
+        "checkable": 3,
+        "pairs": [
+          {
+            "field": "deck_index",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB22A6C",
+            "kind": "read"
+          },
+          {
+            "field": "respawn_wait_sec",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB22AA9",
+            "kind": "read"
+          },
+          {
+            "field": "respawn_wait_max",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB22ACD",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB22A1D",
+          "0xB22AFE"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 5,
+          "capacity": 5,
+          "relation": "exact",
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）5 / 容量 0x5"
+        }
+      },
+      "closer": {
+        "va": "0xB22ADD",
+        "kind": "jz",
+        "jcc_va": "0xB22AE3",
+        "seq_va": "0xB22AD9",
+        "jcc_dst": "0xB22AFC",
+        "cmp": "cmp     ebx, [esp+1B3Ch+var_1B24]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x138]",
+        "slot_value": 312,
+        "va": "0xB22C31",
+        "mov_va": "0xB22C1C",
+        "host": "[edx+138h]",
+        "argc": 3,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB22A83",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "deck_index=",
+        "respawn_wait_sec=",
+        "respawn_wait_max="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0x8DE4-battle-msma_spawn_wait_update.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "B22B20"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "MsmaSpawnWaitUpdate",
+      "role": "response",
+      "wire_length": "1 + 2 + 2",
+      "members": [
+        {
+          "name": "DeckIndex",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "deck_index"
+        },
+        {
+          "name": "RespawnWaitSec",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "respawn_wait_sec"
+        },
+        {
+          "name": "RespawnWaitMax",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "respawn_wait_max"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "c23250268928b2c0",
+  "check_fingerprint": "72f3e3e085257f8f"
+}

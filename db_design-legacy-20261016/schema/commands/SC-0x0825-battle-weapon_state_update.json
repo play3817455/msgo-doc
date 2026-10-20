@@ -1,0 +1,417 @@
+{
+  "id": "SC-0x0825-battle-weapon_state_update",
+  "opcode": "0x0825",
+  "direction": "SC",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "weapon_state_update",
+  "source_dir": "protocol_analysis/commands/SC-0x0825-battle-weapon_state_update",
+  "meta": {
+    "opcode": "`0x0825`",
+    "方向": "SC（服务端 → 客户端（recv））",
+    "协议类": "`battle_client`",
+    "命令名": "`weapon_state_update`",
+    "名字符串": "`)->_proto_battle_client::recv_weapon_state_update( ` @ `0xEE0320`，引用点 `0xB0E2D9`",
+    "处理函数": "`sub_B0CC20` @ `0xB0CC20`（battle 分发器）",
+    "处理块范围": "`0xB0E1D1` .. `0xB0E407`（块首 `0xB0E1D1 push 73h; call sub_B05DA0`，错误码 `0x73`）",
+    "关联命令": "同族（武器状态）：`../SC-0x03CC-battle-weapon_fire__air_bomb_r/`、`../SC-0x1A13-battle-weapon_fire__hand_throw_r/`、`../SC-0x6D20-battle-weapon_fire__deploy_arms_r/`；本命令**无同名发送侧**"
+  },
+  "handler": "sub_B0CC20",
+  "handler_va": "0xB0CC20",
+  "block": [
+    "0xB0E1D1",
+    "0xB0E407"
+  ],
+  "name_str": ")->_proto_battle_client::recv_weapon_state_update(",
+  "name_str_va": "0xEE0320",
+  "capacity": "0x6",
+  "capacity_va": "0xB0E1EA",
+  "closer_va": "0xB0E296",
+  "dispatch": null,
+  "dispatch_slot": "vt[0x1A0]",
+  "dispatch_va": "0xB0E3EB",
+  "wire": {
+    "length_expr": "6",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x6（容量记账口径，非线长）",
+    "field_count": 3,
+    "length_source": "closure_row",
+    "readme_conclusion": "**报文体总长：定长 6 字节** = 2+2+2（三个 u16）。",
+    "readme_close": "2 + 2 + 2 = 6；闭合点 0xB0E296 要求「游标 == 末尾」；声明容量 6 ⇒ 一致 ✓。"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "battle 分发的 switch 选择子",
+      "enum": "0x0825",
+      "evidence_va": [
+        "0xB0E2D9"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "ent_id",
+      "meaning": "实体 ID",
+      "purpose": "交 vt[0x1A0] 第1实参；日志 ent_id=",
+      "enum": null,
+      "evidence_va": [
+        "0xB0E225",
+        "0xB02E0B",
+        "0xB0E330"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "2",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "weapon_state",
+      "meaning": "武器状态",
+      "purpose": "交 vt[0x1A0] 第2实参；日志 weapon_state=",
+      "enum": "?",
+      "evidence_va": [
+        "0xB0E262",
+        "0xB02E0B",
+        "0xB0E35B"
+      ],
+      "confidence": "类型确证/枚举待定",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "4",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "weapon_change_flag",
+      "meaning": "武器切换标志",
+      "purpose": "交 vt[0x1A0] 第3实参；日志 weapon_change_flag=",
+      "enum": "?",
+      "evidence_va": [
+        "0xB0E286",
+        "0xB02E0B",
+        "0xB0E381"
+      ],
+      "confidence": "类型确证/位义待定",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": -1,
+      "offset": "6",
+      "length": "0",
+      "wire_type": "-",
+      "name": "（长度闭合）",
+      "meaning": "游标必须==报文末尾",
+      "purpose": "-",
+      "enum": null,
+      "evidence_va": [
+        "0xB0E296",
+        "0xB0E29C"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6,
+      "is_closure": true
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0x0825（分发器 switch 选择子）",
+      "evidence_va": "0xB0E2D9"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB05DA0`（模块 id 115）→ 之后逐字段读线",
+      "evidence_va": "0xB0E1D5"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "ent_id：`u16`（线长 2）—— 实体 ID",
+      "evidence_va": "0xB0E225"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "weapon_state：`u16`（线长 2）—— 武器状态",
+      "evidence_va": "0xB0E262"
+    },
+    {
+      "step": 5,
+      "kind": "read_scalar",
+      "detail": "weapon_change_flag：`u16`（线长 2）—— 武器切换标志",
+      "evidence_va": "0xB0E286"
+    },
+    {
+      "step": 6,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB0E296"
+    },
+    {
+      "step": 7,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x1A0]`，实参 3 个",
+      "evidence_va": "0xB0E3EB"
+    },
+    {
+      "step": 8,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB0E23C"
+    }
+  ],
+  "capabilities": [
+    "battle_action",
+    "update"
+  ],
+  "capabilities_derived": [
+    "notify"
+  ],
+  "db_effects": [],
+  "pair": "SC-0x03CC-battle-weapon_fire__air_bomb_r",
+  "related": [
+    "SC-0x1A13-battle-weapon_fire__hand_throw_r",
+    "SC-0x6D20-battle-weapon_fire__deploy_arms_r"
+  ],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:46",
+    "batch": 14,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 6,
+        "va": "0xB0E1EA",
+        "reg": "eax",
+        "host": "[edx+78h]",
+        "alloc_va": "0xB0E1E7",
+        "call_va": "0xB0E1EC"
+      },
+      "field_window": {
+        "start_va": "0xB0E1D6",
+        "end_va": "0xB0E2B7",
+        "guard": {
+          "va": "0xB0E1D5",
+          "func": "0xB05DA0",
+          "module_id": 115,
+          "release_va": "0xB05D90"
+        },
+        "closer_or_commit_va": "0xB0E296",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "ent_id",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB0E225",
+              "0xB02E0B",
+              "0xB0E330"
+            ]
+          },
+          {
+            "name": "weapon_state",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB0E262",
+              "0xB02E0B",
+              "0xB0E35B"
+            ]
+          },
+          {
+            "name": "weapon_change_flag",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB0E286",
+              "0xB02E0B",
+              "0xB0E381"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB0E225",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0E262",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0E286",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 3,
+        "checkable": 3,
+        "pairs": [
+          {
+            "field": "ent_id",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB0E225",
+            "kind": "read"
+          },
+          {
+            "field": "weapon_state",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB0E262",
+            "kind": "read"
+          },
+          {
+            "field": "weapon_change_flag",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB0E286",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB0E1D6",
+          "0xB0E2B7"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 6,
+          "capacity": 6,
+          "relation": "exact",
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）6 / 容量 0x6"
+        }
+      },
+      "closer": {
+        "va": "0xB0E296",
+        "kind": "jz",
+        "jcc_va": "0xB0E29C",
+        "seq_va": "0xB0E292",
+        "jcc_dst": "0xB0E2B5",
+        "cmp": "cmp     ebx, [esp+1B3Ch+var_1B24]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x1A0]",
+        "slot_value": 416,
+        "va": "0xB0E3EB",
+        "mov_va": "0xB0E3D6",
+        "host": "[eax+1A0h]",
+        "argc": 3,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB0E23C",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "ent_id=",
+        "weapon_state=",
+        "weapon_change_flag="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0x0825-battle-weapon_state_update.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": "（长度闭合）",
+    "opcode_field_va": [
+      "0xB0E2D9"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "WeaponStateUpdate",
+      "role": "response",
+      "wire_length": "6",
+      "members": [
+        {
+          "name": "EntId",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "ent_id"
+        },
+        {
+          "name": "WeaponState",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "weapon_state"
+        },
+        {
+          "name": "WeaponChangeFlag",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "weapon_change_flag"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "6c30cecac53aa4cc",
+  "check_fingerprint": "e23d40b6e067920d"
+}

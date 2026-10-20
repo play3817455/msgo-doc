@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SC-0xFB85-lounge-channel_list_select_r · db_design</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <h1><a href="../index.html">db_design</a></h1>
+      <p class="header-note">唯一证据源：<code>protocol_analysis/</code></p>
+      <nav><a href="../index.html">首页</a>
+      <a href="../homing/index.html">归位库</a>
+      <a href="../tables/index.html">旧表留档</a>
+      <a href="../commands/index.html" class="active">命令</a>
+      <a href="../cfg/index.html">配置表79</a>
+      <a href="../srv/index.html">服务端配置</a>
+      <a href="../asm-audit/index.html">ASM 审计</a>
+      <a href="../oracle-audit/index.html">Oracle 审计</a>
+      <a href="../entities/index.html">协议实体</a>
+      <a href="../fields/index.html">字段索引</a>
+      <a href="../relations.html">表关系</a></nav>
+    </div>
+  </header>
+  <main class="wrap">
+
+    <nav class="breadcrumb"><a href="index.html">命令</a> / <span><code>SC-0xFB85-lounge-channel_list_select_r</code></span></nav>
+    <h2>SC-0xFB85-lounge-channel_list_select_r
+      <span class="badge" style="background:#455a64">SC</span>
+      <span class="badge" style="background:#1565c0">lounge</span>
+      <span class="badge" style="background:#1565c0">BEHAVIOR-DONE</span></h2>
+    
+      <dl class="asm-dl">
+        <dt>opcode</dt><dd><code>0xFB85</code> · SC · lounge</dd>
+        <dt>协议类</dt><dd><code>lounge_client</code></dd>
+        <dt>处理函数</dt><dd><code>sub_B51930</code> <code>0xb51930</code></dd>
+        <dt>处理块</dt><dd>0xB87E8F .. 0xB88255</dd>
+        <dt>名字串</dt><dd><code>)-&gt;_proto_lounge_client::recv_channel_list_select_r(</code> <code>0xee55e8</code></dd>
+        <dt>声明容量</dt><dd>0xBE <span class="muted">—</span>
+          <span class="muted">（缓冲 claim，非线长）</span></dd>
+        <dt>长度闭合点</dt><dd><code>0xB88002</code></dd>
+        <dt>去向槽</dt><dd><code>vt[0x74]</code> <span class="muted">—</span></dd>
+        <dt>配对 / 同族</dt><dd><span class="muted">—</span></dd>
+        <dt>证据目录</dt><dd><a href="../../../protocol_analysis/commands/SC-0xFB85-lounge-channel_list_select_r/README.md" target="_blank">README.md</a> · <a href="../../../protocol_analysis/commands/SC-0xFB85-lounge-channel_list_select_r/fields.csv" target="_blank">fields.csv</a> · <a href="../../../protocol_analysis/commands/SC-0xFB85-lounge-channel_list_select_r/asm.md" target="_blank">asm.md</a> · <a href="../../../protocol_analysis/commands/SC-0xFB85-lounge-channel_list_select_r/notes.md" target="_blank">notes.md</a></dd>
+      </dl>
+    <p class="muted">opcode 写入/分发证据 <code>0xb88045</code></p>
+
+    <section>
+      <h3>线长</h3>
+      <dl class="asm-dl">
+        <dt>报文体线长</dt><dd><code>4 + 4 + var + 4 + 4 + 4 + var</code>
+          <span class="badge" style="background:#e65100">变长</span>
+          <span class="muted">来源 field_sum</span></dd>
+        <dt>变长驱动</dt><dd><span class="muted">—</span></dd>
+        <dt>负载字段数</dt><dd>7</dd>
+        <dt>容量口径</dt><dd class="muted">声明容量 0xBE（容量记账口径，非线长）</dd>
+        <dt>README 结论</dt><dd class="muted">结论：7 字段；含两个 NUL 串（loungesv_host 槽预算 129、otp 槽预算 41）。</dd>
+        <dt>README 闭合</dt><dd class="muted">闭合点：0x00B88002（游标寄存器与报文末尾比较，jz/jnz 走成功分支）。</dd>
+        
+      </dl>
+    </section>
+
+    <section>
+      <h3>包结构体</h3>
+      <p class="muted">由 <code>fields[]</code> 归并而成；线序即字段行序，可复用的聚合体只在
+        <code>element</code> 里引用 <code>schema/composites/</code>。</p>
+      
+      <div class="struct-block">
+        <h4><code>ChannelListSelectR</code> <span class="muted">(response · 角色 response)</span>
+          <span class="muted">线长 4 + 4 + var + 4 + 4 + 4 + var</span></h4>
+        <table class="srv-table">
+          <thead><tr><th>Go 成员</th><th>线类型</th><th>线长</th><th>字段引用</th><th>元素 / 计数</th></tr></thead>
+          <tbody><tr>
+          <td><code class="fname">Result</code></td>
+          <td><code>u32</code></td>
+          <td><code>4</code></td>
+          <td>result</td>
+          <td class="muted">—</td>
+        </tr><tr>
+          <td><code class="fname">ChannelId</code></td>
+          <td><code>u32</code></td>
+          <td><code>4</code></td>
+          <td>channel_id</td>
+          <td class="muted">—</td>
+        </tr><tr>
+          <td><code class="fname">LoungesvHost</code></td>
+          <td><code>str</code></td>
+          <td><code>var</code></td>
+          <td>loungesv_host</td>
+          <td class="muted">条数 ← <code>channel_id</code> · <span class="muted">nearest_scalar</span> · <span class="muted">元素成员未建模（composites/ 无此结构），须以 IDA 复核补</span></td>
+        </tr><tr>
+          <td><code class="fname">LoungesvPort</code></td>
+          <td><code>u32</code></td>
+          <td><code>4</code></td>
+          <td>loungesv_port</td>
+          <td class="muted">—</td>
+        </tr><tr>
+          <td><code class="fname">Userid</code></td>
+          <td><code>u32</code></td>
+          <td><code>4</code></td>
+          <td>userid</td>
+          <td class="muted">—</td>
+        </tr><tr>
+          <td><code class="fname">PilotId</code></td>
+          <td><code>u32</code></td>
+          <td><code>4</code></td>
+          <td>pilot_id</td>
+          <td class="muted">—</td>
+        </tr><tr>
+          <td><code class="fname">Otp</code></td>
+          <td><code>str</code></td>
+          <td><code>var</code></td>
+          <td>otp</td>
+          <td class="muted">条数 ← <code>pilot_id</code> · <span class="muted">nearest_scalar</span> · <span class="muted">元素成员未建模（composites/ 无此结构），须以 IDA 复核补</span></td>
+        </tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h3>字段解剖</h3>
+      <table class="wide">
+        <thead><tr>
+          <th>序</th><th>偏移</th><th>线长</th><th>线类型</th><th>字段名</th>
+          <th>含义</th><th>用途（来源/去向）</th><th>取值/枚举</th><th>去向</th><th>证据 VA</th><th>置信度</th>
+        </tr></thead>
+        <tbody><tr>
+          <td>1</td>
+          <td><code>0</code></td>
+          <td><code>4</code></td>
+          <td><code>u32</code></td>
+          <td><code class="fname">result</code></td>
+          <td>结果码</td>
+          <td>`sub_B02DD0`（`0xB87EE6`）读 u32；去向 `vt[0x74]` 末实参（`0xB88227 push edx`）</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB87EE6</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>2</td>
+          <td><code>4</code></td>
+          <td><code>4</code></td>
+          <td><code>u32</code></td>
+          <td><code class="fname">channel_id</code></td>
+          <td>频道 ID</td>
+          <td>`sub_B02DD0`（`0xB87F23`）读 u32；去向 `vt[0x74]` 第 6 实参（`0xB88224 push edx`）</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB87F23</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>3</td>
+          <td><code>8</code></td>
+          <td><code>var</code></td>
+          <td><code>str</code></td>
+          <td><code class="fname">loungesv_host</code></td>
+          <td>大厅服务器主机名（NUL 结尾）</td>
+          <td>`sub_B02BA0`（`0xB87F4D`，`push 81h`=129）读串；去向 `vt[0x74]` 第 5 实参（`0xB8821D push edx`）</td>
+          <td class="muted">串槽预算 129</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB87F4D</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>4</td>
+          <td><code>var</code></td>
+          <td><code>4</code></td>
+          <td><code>u32</code></td>
+          <td><code class="fname">loungesv_port</code></td>
+          <td>大厅服务器端口</td>
+          <td>`sub_B02DD0`（`0xB87F8A`）读 u32；去向 `vt[0x74]` 第 4 实参（`0xB88218 push ecx`）</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB87F8A</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>5</td>
+          <td><code>var</code></td>
+          <td><code>4</code></td>
+          <td><code>u32</code></td>
+          <td><code class="fname">userid</code></td>
+          <td>用户 ID</td>
+          <td>`sub_B02DD0`（`0xB87FAE`）读 u32；去向 `vt[0x74]` 第 3 实参（`0xB88211 push ecx`）</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB87FAE</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>6</td>
+          <td><code>var</code></td>
+          <td><code>4</code></td>
+          <td><code>u32</code></td>
+          <td><code class="fname">pilot_id</code></td>
+          <td>角色 ID</td>
+          <td>`sub_B02DD0`（`0xB87FD2`）读 u32；去向 `vt[0x74]` 第 2 实参（`0xB8820A push ecx`）</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB87FD2</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>7</td>
+          <td><code>var</code></td>
+          <td><code>var</code></td>
+          <td><code>str</code></td>
+          <td><code class="fname">otp</code></td>
+          <td>一次性口令（NUL 结尾）</td>
+          <td>`sub_B02BA0`（`0xB87FEE`，`push 29h`=41）读串；去向 `vt[0x74]` 首实参（`0xB88203 push ecx`）</td>
+          <td class="muted">串槽预算 41</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB87FEE</code></td>
+          <td class="muted">确证</td>
+        </tr></tbody>
+      </table>
+    </section>
+
+    <section>
+      <h3>客户端行为</h3>
+      <table class="srv-table">
+        <thead><tr><th>步</th><th>类别</th><th>动作</th><th>证据 VA</th></tr></thead>
+        <tbody><tr>
+          <td>1</td>
+          <td><code>read_scalar</code></td>
+          <td>opcode 0xFB85（分发器 switch 选择子）</td>
+          <td><code>0xB88045</code></td>
+        </tr><tr>
+          <td>2</td>
+          <td><code>guard</code></td>
+          <td>进入解码窗口：守卫 `0xB41120`（模块 id 7）→ 之后逐字段读线</td>
+          <td><code>0xB87E93</code></td>
+        </tr><tr>
+          <td>3</td>
+          <td><code>read_scalar</code></td>
+          <td>result：`u32`（线长 4）—— 结果码</td>
+          <td><code>0xB87EE6</code></td>
+        </tr><tr>
+          <td>4</td>
+          <td><code>read_count</code></td>
+          <td>channel_id：`u32`（线长 4）—— 频道 ID</td>
+          <td><code>0xB87F23</code></td>
+        </tr><tr>
+          <td>5</td>
+          <td><code>read_string</code></td>
+          <td>loungesv_host：`str`（线长 var）—— 大厅服务器主机名（NUL 结尾）</td>
+          <td><code>0xB87F4D</code></td>
+        </tr><tr>
+          <td>6</td>
+          <td><code>read_scalar</code></td>
+          <td>loungesv_port：`u32`（线长 4）—— 大厅服务器端口</td>
+          <td><code>0xB87F8A</code></td>
+        </tr><tr>
+          <td>7</td>
+          <td><code>read_scalar</code></td>
+          <td>userid：`u32`（线长 4）—— 用户 ID</td>
+          <td><code>0xB87FAE</code></td>
+        </tr><tr>
+          <td>8</td>
+          <td><code>read_count</code></td>
+          <td>pilot_id：`u32`（线长 4）—— 角色 ID</td>
+          <td><code>0xB87FD2</code></td>
+        </tr><tr>
+          <td>9</td>
+          <td><code>read_string</code></td>
+          <td>otp：`str`（线长 var）—— 一次性口令（NUL 结尾）</td>
+          <td><code>0xB87FEE</code></td>
+        </tr><tr>
+          <td>10</td>
+          <td><code>close_check</code></td>
+          <td>闭合校验：读游标 == 报文末尾（jz）</td>
+          <td><code>0xB88002</code></td>
+        </tr><tr>
+          <td>11</td>
+          <td><code>dispatch</code></td>
+          <td>交业务 `vt[0x74]`，实参 7 个</td>
+          <td><code>0xB8822A</code></td>
+        </tr><tr>
+          <td>12</td>
+          <td><code>error_path</code></td>
+          <td>失败路径 `vt[0x64](1, 错误码)`（不是业务去向）</td>
+          <td><code>0xB87EFD</code></td>
+        </tr></tbody>
+      </table>
+    </section>
+
+    <section>
+      <h3>能力</h3>
+      <span class="cap-chip">query</span><span class="cap-chip">lounge.channel</span><div class="muted">命名学推断（非证据）：<span class="cap-chip cap-derived">query</span></div>
+    </section>
+
+    <section>
+      <h3>DB 影响</h3>
+      <p class="muted">未补。CS 的 op 需服务端语义确认；SC 的 op 由去向槽 <code>vt[0xNNN]</code> 的实参决定。</p>
+    </section>
+
+    
+
+    <section>
+      <h3>汇编复核（IDA asm 为唯一权威）</h3>
+      
+      <dl class="asm-dl">
+        <dt>状态</dt><dd><span class="badge" style="background:#1565c0">BEHAVIOR-DONE</span></dd>
+        <dt>复核批次</dt><dd>14</dd>
+        <dt>复核时间</dt><dd>2026-09-30 15:25:46</dd>
+        <dt>提取器</dt><dd><code>tools/verify_commands_ida.py</code></dd>
+      </dl>
+      <table class="srv-table">
+        <thead><tr><th>检查项</th><th>键</th><th>结果</th></tr></thead>
+        <tbody><tr><td>容量指纹</td><td><code>capacity</code></td><td><code>{&quot;value&quot;: 190, &quot;va&quot;: &quot;0xB87EA8&quot;, &quot;reg&quot;: &quot;edx&quot;, &quot;host&quot;: &quot;[eax+78h]&quot;, &quot;alloc_va&quot;: &quot;0xB87EA5&quot;, &quot;call_va&quot;: &quot;0xB87EAD&quot;}</code></td></tr><tr><td>字段窗口</td><td><code>field_window</code></td><td><code>{&quot;start_va&quot;: &quot;0xB87E94&quot;, &quot;end_va&quot;: &quot;0xB88023&quot;, &quot;guard&quot;: {&quot;va&quot;: &quot;0xB87E93&quot;, &quot;func&quot;: &quot;0xB41120&quot;, &quot;module_id&quot;: 7, &quot;release_va&quot;: &quot;0xB41110&quot;}, &quot;closer_or_commit_va&quot;: &quot;0xB88002&quot;, &quot;within_model_block&quot;: true, &quot;range_from&quot;: &quot;block&quot;}</code></td></tr><tr><td>原语宽度</td><td><code>primitive_widths</code></td><td><code>{&quot;direction&quot;: &quot;SC&quot;, &quot;expected&quot;: [{&quot;name&quot;: &quot;result&quot;, &quot;wire_type&quot;: &quot;u32&quot;, &quot;width&quot;: 4, &quot;seq&quot;: 1, &quot;shape&quot;: &quot;scalar&quot;, &quot;evidence_va&quot;: [&quot;0xB87EE6&quot;]}, {&quot;name&quot;: &quot;channel_id&quot;, &quot;wire_type&quot;: &quot;u32&quot;, &quot;width&quot;: 4, &quot;seq&quot;: 2, &quot;shape&quot;: &quot;scalar&quot;, &quot;evidence_va&quot;: [&quot;0xB87F23&quot;]}, {&quot;name&quot;: &quot;loungesv_host&quot;, &quot;wire_type&quot;: &quot;str&quot;, &quot;width&quot;: null, &quot;seq&quot;: 3, &quot;shape&quot;: &quot;str&quot;, &quot;evidence_va&quot;: [&quot;0xB87F4D&quot;]}, {&quot;name&quot;: &quot;loungesv_port&quot;, &quot;wire_type&quot;: &quot;u32&quot;, &quot;width&quot;: 4, &quot;seq&quot;: 4, &quot;shape&quot;: &quot;scalar&quot;, &quot;evidence_va&quot;: [&quot;0xB87F8A&quot;]}, {&quot;name&quot;: &quot;userid&quot;, &quot;wire_type&quot;: &quot;u32&quot;, &quot;width&quot;: 4, &quot;seq&quot;: 5, &quot;shape&quot;: &quot;scalar&quot;, &quot;evidence_va&quot;: [&quot;0xB87FAE&quot;]}, {&quot;name&quot;: &quot;pilot_id&quot;, &quot;wire_type&quot;: &quot;u32&quot;, &quot;width&quot;: 4, &quot;seq&quot;: 6, &quot;shape&quot;: &quot;scalar&quot;, &quot;evidence_va&quot;: [&quot;0xB87FD2&quot;]}, {&quot;name&quot;: &quot;otp&quot;, &quot;wire_type&quot;: &quot;str&quot;, &quot;width&quot;: null, &quot;seq&quot;: 7, &quot;shape&quot;: &quot;str&quot;, &quot;evidence_va&quot;: [&quot;0xB87FEE&quot;]}], &quot;actual&quot;: [{&quot;va&quot;: &quot;0xB87EE6&quot;, &quot;kind&quot;: &quot;read&quot;, &quot;width&quot;: 4, &quot;wire_type&quot;: &quot;u32&quot;, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: null, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB87F23&quot;, &quot;kind&quot;: &quot;read&quot;, &quot;width&quot;: 4, &quot;wire_type&quot;: &quot;u32&quot;, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: null, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB87F4D&quot;, &quot;kind&quot;: &quot;read&quot;, &quot;width&quot;: null, &quot;wire_type&quot;: &quot;str&quot;, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: null, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB87F8A&quot;, &quot;kind&quot;: &quot;read&quot;, &quot;width&quot;: 4, &quot;wire_type&quot;: &quot;u32&quot;, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: null, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB87FAE&quot;, &quot;kind&quot;: &quot;read&quot;, &quot;width&quot;: 4, &quot;wire_type&quot;: &quot;u32&quot;, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: null, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB87FD2&quot;, &quot;kind&quot;: &quot;read&quot;, &quot;width&quot;: 4, &quot;wire_type&quot;: &quot;u32&quot;, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: null, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB87FEE&quot;, &quot;kind&quot;: &quot;read&quot;, &quot;width&quot;: null, &quot;wire_type&quot;: &quot;str&quot;, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: null, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}], &quot;matched&quot;: 7, &quot;checkable&quot;: 7, &quot;pairs&quot;: [{&quot;field&quot;: &quot;result&quot;, &quot;width&quot;: 4, &quot;shape&quot;: &quot;scalar&quot;, &quot;va&quot;: &quot;0xB87EE6&quot;, &quot;kind&quot;: &quot;read&quot;}, {&quot;field&quot;: &quot;channel_id&quot;, &quot;width&quot;: 4, &quot;shape&quot;: &quot;scalar&quot;, &quot;va&quot;: &quot;0xB87F23&quot;, &quot;kind&quot;: &quot;read&quot;}, {&quot;field&quot;: &quot;loungesv_host&quot;, &quot;width&quot;: null, &quot;shape&quot;: &quot;str&quot;, &quot;va&quot;: &quot;0xB87F4D&quot;, &quot;kind&quot;: &quot;read&quot;}, {&quot;field&quot;: &quot;loungesv_port&quot;, &quot;width&quot;: 4, &quot;shape&quot;: &quot;scalar&quot;, &quot;va&quot;: &quot;0xB87F8A&quot;, &quot;kind&quot;: &quot;read&quot;}, {&quot;field&quot;: &quot;userid&quot;, &quot;width&quot;: 4, &quot;shape&quot;: &quot;scalar&quot;, &quot;va&quot;: &quot;0xB87FAE&quot;, &quot;kind&quot;: &quot;read&quot;}, {&quot;field&quot;: &quot;pilot_id&quot;, &quot;width&quot;: 4, &quot;shape&quot;: &quot;scalar&quot;, &quot;va&quot;: &quot;0xB87FD2&quot;, &quot;kind&quot;: &quot;read&quot;}, {&quot;field&quot;: &quot;otp&quot;, &quot;width&quot;: null, &quot;shape&quot;: &quot;str&quot;, &quot;va&quot;: &quot;0xB87FEE&quot;, &quot;kind&quot;: &quot;read&quot;}], &quot;gaps&quot;: [], &quot;unmatched_actual&quot;: [], &quot;nested_unmatchable&quot;: [], &quot;window&quot;: [&quot;0xB87E94&quot;, &quot;0xB88023&quot;], &quot;scalar_match_verifiable&quot;: true, &quot;capacity_relation&quot;: {&quot;observed_min&quot;: 20, &quot;capacity&quot;: 190, &quot;relation&quot;: &quot;within&quot;, &quot;unknown_events&quot;: [{&quot;va&quot;: &quot;0xB87F4D&quot;, &quot;kind&quot;: &quot;read&quot;, &quot;name&quot;: &quot;&quot;}, {&quot;va&quot;: &quot;0xB87FEE&quot;, &quot;kind&quot;: &quot;read&quot;, &quot;name&quot;: &quot;&quot;}], &quot;is_lower_bound&quot;: true, &quot;note&quot;: &quot;观测线长（下界）20 / 容量 0xbe&quot;}}</code></td></tr><tr><td>闭合点</td><td><code>closer</code></td><td><code>{&quot;va&quot;: &quot;0xB88002&quot;, &quot;kind&quot;: &quot;jz&quot;, &quot;jcc_va&quot;: &quot;0xB88008&quot;, &quot;seq_va&quot;: &quot;0xB87FFE&quot;, &quot;jcc_dst&quot;: &quot;0xB88021&quot;, &quot;cmp&quot;: &quot;cmp     ebx, [esp+2C5Ch+var_2C40]&quot;, &quot;va_convention&quot;: &quot;cmp&quot;}</code></td></tr><tr><td>去向槽+实参</td><td><code>dispatch_slot</code></td><td><code>{&quot;slot&quot;: &quot;vt[0x74]&quot;, &quot;slot_value&quot;: 116, &quot;va&quot;: &quot;0xB8822A&quot;, &quot;mov_va&quot;: &quot;0xB88200&quot;, &quot;host&quot;: &quot;[eax+74h]&quot;, &quot;argc&quot;: 7, &quot;form&quot;: &quot;mov_then_call&quot;, &quot;error_slot&quot;: {&quot;slot&quot;: &quot;vt[0x64]&quot;, &quot;va&quot;: &quot;0xB87EFD&quot;, &quot;argc&quot;: 2}}</code></td></tr><tr><td>日志串</td><td><code>log_strings</code></td><td><code>[&quot;result=&quot;, &quot;channel_id=&quot;, &quot;loungesv_host=\&quot;&quot;, &quot;loungesv_port=&quot;, &quot;userid=&quot;, &quot;pilot_id=&quot;, &quot;otp=\&quot;&quot;]</code></td></tr></tbody>
+      </table>
+      <p>无差异。</p>
+      <p>原始证据切片：<a href="../../../db_design/schema/commands/_verify/SC-0xFB85-lounge-channel_list_select_r.json" target="_blank"><code>commands/_verify/SC-0xFB85-lounge-channel_list_select_r.json</code></a></p>
+    </section>
+
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">生成于 2026-10-12 · 改 JSON 后重跑 build_site.py · HTML 只读</div>
+  </footer>
+</body>
+</html>

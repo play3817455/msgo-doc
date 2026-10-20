@@ -1,0 +1,500 @@
+{
+  "id": "CS-0xEB98-lounge-msma_equip_all_change",
+  "opcode": "0xEB98",
+  "direction": "CS",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "msma_equip_all_change",
+  "source_dir": "protocol_analysis/commands/CS-0xEB98-lounge-msma_equip_all_change",
+  "meta": {
+    "opcode": "`0xEB98`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`msma_equip_all_change`",
+    "名字符串": "`)<-_proto_lounge_client::send_msma_equip_all_change(` @ `0x00EEBD1C`",
+    "代码位置": "`sub_B992A0` @ `0x00B992A0`（`0x00B992A0`..`0x00B994B3`）",
+    "opcode 写入证据": "`0x00B99322`",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0x086`（134）",
+    "容量申请证据": "`0x00B992E6`（分配器 `[obj+0Ch]` 的 `vt[0x78]`）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)` @ `0x00B99441`",
+    "提交": "`sub_B02FF0` @ `0x00B993B7`",
+    "配对命令": "S→C `SC-0x548D-lounge-msma_equip_all_change_r`"
+  },
+  "handler": "sub_B992A0",
+  "handler_va": "0x00B992A0",
+  "block": [
+    "0xB992A0",
+    "0xB994B3"
+  ],
+  "name_str": ")<-_proto_lounge_client::send_msma_equip_all_change(",
+  "name_str_va": "0x00EEBD1C",
+  "capacity": "0x86",
+  "capacity_va": "0xB992E6",
+  "closer_va": "0xB993B7",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)` @ `0x00B99441`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": "0x00B99441",
+  "wire": {
+    "length_expr": "8 + 121",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x86（容量记账口径，非线长）",
+    "field_count": 2,
+    "length_source": "field_sum",
+    "readme_conclusion": "字段数：**3**（含 opcode 第 0 项）",
+    "readme_close": "2 + 8 + 121(equip_set) = 131 ≤ 容量 0x86 = 134（富余 3）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "写入 `buf+0`，供服务端分发；无 case 块（C→S）",
+      "enum": "0xEB98",
+      "evidence_va": [
+        "`00B99322`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "8",
+      "wire_type": "u64",
+      "name": "uniqid_ms",
+      "meaning": "机体唯一 ID（u64）",
+      "purpose": "来源=入参 `arg_0/arg_4` → 两次内联 `mov [eax],ecx`（低 @`0xB99332`）+ `mov [eax+4],ecx`（高 @`0xB99340`）",
+      "enum": null,
+      "evidence_va": [
+        "`0xB99332`;`0xB99340`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "8",
+      "length": "121",
+      "wire_type": "bytes",
+      "name": "equip_set",
+      "meaning": "装备编成结构（121B）",
+      "purpose": "来源=入参 `arg_8`（结构体指针）→ 写入器 `sub_B41C60`（@`0xB99349`）逐字段写线",
+      "enum": null,
+      "evidence_va": [
+        "`0xB99349`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0xEB98（分发器 switch 选择子）",
+      "evidence_va": "0x00B99322"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0x86 B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xB992E6"
+    },
+    {
+      "step": 3,
+      "kind": "write_scalar",
+      "detail": "uniqid_ms：`u64`（线长 8）—— 机体唯一 ID（u64）",
+      "evidence_va": "0xB99332"
+    },
+    {
+      "step": 4,
+      "kind": "write_scalar",
+      "detail": "equip_set：`bytes`（线长 121）—— 装备编成结构（121B）",
+      "evidence_va": "0xB99349"
+    },
+    {
+      "step": 5,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xB993B7"
+    },
+    {
+      "step": 6,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xB9944A"
+    }
+  ],
+  "capabilities": [
+    "update"
+  ],
+  "capabilities_derived": [
+    "update"
+  ],
+  "db_effects": [],
+  "pair": "SC-0x548D-lounge-msma_equip_all_change_r",
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:45",
+    "batch": 13,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 134,
+        "va": "0xB992E6",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB992E3",
+        "call_va": "0xB992EB"
+      },
+      "field_window": {
+        "start_va": "0xB992A0",
+        "end_va": "0xB993B7",
+        "guard": null,
+        "closer_or_commit_va": "0xB993B7",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "uniqid_ms",
+            "wire_type": "u64",
+            "width": 8,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "`0xB99332`;`0xB99340`"
+            ]
+          },
+          {
+            "name": "equip_set",
+            "wire_type": "bytes",
+            "width": null,
+            "seq": 2,
+            "shape": "agg",
+            "evidence_va": [
+              "`0xB99349`"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB41D0C",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB41D0C",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB41D0C",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB41D0C",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB41D0C",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB41D0C",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB41D0C",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB41D0C",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB41D0C",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB41D0C",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB41D2D",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB41D4E",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB99322",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB99332",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB99349",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B41C60",
+            "consumed": null,
+            "consumed_effective": 48,
+            "nested_of": null
+          },
+          {
+            "va": "0xB9938D",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 0,
+        "checkable": 1,
+        "pairs": [],
+        "gaps": [
+          {
+            "field": "uniqid_ms",
+            "wire_type": "u64",
+            "width": 8,
+            "shape": "scalar",
+            "note": "汇编事件序列里找不到与之对位的读写点（缺字段或宽度不符）"
+          }
+        ],
+        "unmatched_actual": [
+          {
+            "va": "0xB99322",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          },
+          {
+            "va": "0xB99332",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null
+          },
+          {
+            "va": "0xB99349",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null
+          },
+          {
+            "va": "0xB41D0C",
+            "kind": "nested_run",
+            "width": 40,
+            "wire_type": null
+          },
+          {
+            "va": "0xB41D2D",
+            "kind": "nested_run",
+            "width": 8,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB992A0",
+          "0xB993B7"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 6,
+          "capacity": 134,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB99349",
+              "kind": "opaque",
+              "name": "sub_B41C60"
+            },
+            {
+              "va": "0xB9938D",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）6 / 容量 0x86"
+        }
+      },
+      "closer": {
+        "va": "0xB993B7",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xB9944A",
+        "mov_va": "0xB99441",
+        "host": "[edx+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "uniqid_ms=",
+        "equip_set="
+      ]
+    },
+    "mismatches": [],
+    "notes": [
+      {
+        "check": "primitive_widths",
+        "note": "定宽对位不可判定：C→S 写线在复合写入器内部 consumed 未知；缺口 uniqid_ms"
+      }
+    ],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0xEB98-lounge-msma_equip_all_change.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0x00B99322",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "`00B99322`"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "MsmaEquipAllChange",
+      "role": "request",
+      "wire_length": "8 + 121",
+      "members": [
+        {
+          "name": "UniqidMs",
+          "wire_type": "u64",
+          "length": "8",
+          "field_ref": "uniqid_ms"
+        },
+        {
+          "name": "EquipSet",
+          "wire_type": "bytes",
+          "length": "121",
+          "field_ref": "equip_set",
+          "element": null,
+          "element_length": "121",
+          "cap": null,
+          "count_field": null,
+          "count_field_source": "fixed",
+          "note": "元素成员未建模（composites/ 无此结构），须以 IDA 复核补"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "4807ec05a8ffe0b9",
+  "check_fingerprint": "7c9dbc40d5f4c736"
+}

@@ -1,0 +1,584 @@
+{
+  "id": "CS-0x61AF-lounge-btlroom_enter",
+  "opcode": "0x61AF",
+  "direction": "CS",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "btlroom_enter",
+  "source_dir": "protocol_analysis/commands/CS-0x61AF-lounge-btlroom_enter",
+  "meta": {
+    "opcode": "`0x61AF`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`btlroom_enter`",
+    "名字符串": "`)<-_proto_lounge_client::send_btlroom_enter(` @ `0xeeade8`",
+    "代码位置": "sub_B8FE80 @ `0xb8fe80`（`0xb8fe80`..`0xb90196`）",
+    "opcode 写入证据": "`0xb8fefc`",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0x32`（50）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)`",
+    "配对命令（同 opcode 反向）": "见 §4.3 与其他命令的关联 / INDEX 反向表"
+  },
+  "handler": "sub_B8FE80",
+  "handler_va": "0xb8fe80",
+  "block": [
+    "0xB8FE80",
+    "0xB90196"
+  ],
+  "name_str": ")<-_proto_lounge_client::send_btlroom_enter(",
+  "name_str_va": "0xeeade8",
+  "capacity": "0x32",
+  "capacity_va": null,
+  "closer_va": "0xB8FFED",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": null,
+  "wire": {
+    "length_expr": "4 + 4 + var + 1 + 1 + 4",
+    "fixed": false,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x32（容量记账口径，非线长）",
+    "field_count": 6,
+    "length_source": "field_sum",
+    "readme_conclusion": "结论：进入对战房间：匹配类型 + 房间 id + 房间密码 + 是否观众 + 观众侧 + 扩展规则 id。",
+    "readme_close": "2 + 4 + 4 + 25 + 1 + 1 + 4 = 41 ≤ 容量 0x32=50（富余 9）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发给 lounge 协议类处理块（C→S 无 case 块）",
+      "enum": "0x61AF",
+      "evidence_va": [
+        "0xB8FEFC"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "2",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "matching_type",
+      "meaning": "匹配类型",
+      "purpose": "来源=入参 arg_0（@0xB8FF08）；内联 `mov [eax],esi`；经 `vt[0x58]` 发送",
+      "enum": null,
+      "evidence_va": [
+        "0xB8FF0C"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "6",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "room_id",
+      "meaning": "房间 id",
+      "purpose": "来源=入参 arg_4（@0xB8FF1B）；内联 `mov [eax],ecx`；经 `vt[0x58]` 发送",
+      "enum": null,
+      "evidence_va": [
+        "0xB8FF29"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "10",
+      "length": "var",
+      "wire_type": "bytes",
+      "name": "room_pw",
+      "meaning": "房间密码（NUL 结尾）",
+      "purpose": "来源=入参 arg_8（@0xB8FF2B）；写线原语 `sub_B02B40`；服务端据此校验入房密码",
+      "enum": "slot 预算 25（push 0x19@0xB8FF23）",
+      "evidence_va": [
+        "0xB8FF31"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 4,
+      "offset": "var",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "is_audience",
+      "meaning": "是否以观众身份进入",
+      "purpose": "来源=入参 arg_C（@0xB8FF46）；写线原语 `sub_B061C0`(u8)；经 `vt[0x58]` 发送",
+      "enum": "0/1",
+      "evidence_va": [
+        "0xB8FF4B"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    },
+    {
+      "seq": 5,
+      "offset": "var",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "audience_teamside",
+      "meaning": "观众所属阵营侧",
+      "purpose": "来源=入参 arg_10（@0xB8FF60）；写线原语 `sub_B061C0`(u8)；经 `vt[0x58]` 发送",
+      "enum": null,
+      "evidence_va": [
+        "0xB8FF65"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 7
+    },
+    {
+      "seq": 6,
+      "offset": "var",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "extrule_id",
+      "meaning": "扩展规则 id",
+      "purpose": "来源=入参 arg_14（@0xB8FF7A）；写线原语 `sub_B02D80`(u32)；经 `vt[0x58]` 发送",
+      "enum": null,
+      "evidence_va": [
+        "0xB8FF7F"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 8
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0x61AF（分发器 switch 选择子）",
+      "evidence_va": "0xB8FEFC"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0x32 B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xB8FEC6"
+    },
+    {
+      "step": 3,
+      "kind": "write_scalar",
+      "detail": "matching_type：`u32`（线长 4）—— 匹配类型",
+      "evidence_va": "0xB8FF0C"
+    },
+    {
+      "step": 4,
+      "kind": "write_count",
+      "detail": "room_id：`u32`（线长 4）—— 房间 id",
+      "evidence_va": "0xB8FF29"
+    },
+    {
+      "step": 5,
+      "kind": "write_scalar",
+      "detail": "room_pw：`bytes`（线长 var）—— 房间密码（NUL 结尾）",
+      "evidence_va": "0xB8FF31"
+    },
+    {
+      "step": 6,
+      "kind": "write_scalar",
+      "detail": "is_audience：`u8`（线长 1）—— 是否以观众身份进入",
+      "evidence_va": "0xB8FF4B"
+    },
+    {
+      "step": 7,
+      "kind": "write_scalar",
+      "detail": "audience_teamside：`u8`（线长 1）—— 观众所属阵营侧",
+      "evidence_va": "0xB8FF65"
+    },
+    {
+      "step": 8,
+      "kind": "write_scalar",
+      "detail": "extrule_id：`u32`（线长 4）—— 扩展规则 id",
+      "evidence_va": "0xB8FF7F"
+    },
+    {
+      "step": 9,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xB8FFED"
+    },
+    {
+      "step": 10,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xB9012D"
+    }
+  ],
+  "capabilities": [
+    "flow",
+    "lounge.btlroom"
+  ],
+  "capabilities_derived": [
+    "flow"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:43",
+    "batch": 8,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 50,
+        "va": "0xB8FEC6",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB8FEC3",
+        "call_va": "0xB8FEC8"
+      },
+      "field_window": {
+        "start_va": "0xB8FE80",
+        "end_va": "0xB8FFED",
+        "guard": null,
+        "closer_or_commit_va": "0xB8FFED",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "matching_type",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB8FF0C"
+            ]
+          },
+          {
+            "name": "room_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB8FF29"
+            ]
+          },
+          {
+            "name": "room_pw",
+            "wire_type": "bytes",
+            "width": null,
+            "seq": 3,
+            "shape": "agg",
+            "evidence_va": [
+              "0xB8FF31"
+            ]
+          },
+          {
+            "name": "is_audience",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 4,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB8FF4B"
+            ]
+          },
+          {
+            "name": "audience_teamside",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 5,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB8FF65"
+            ]
+          },
+          {
+            "name": "extrule_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 6,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB8FF7F"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB8FEFC",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB8FF0C",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB8FF29",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB8FF31",
+            "kind": "write",
+            "width": null,
+            "wire_type": "str",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB8FF4B",
+            "kind": "write",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB8FF65",
+            "kind": "write",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB8FF7F",
+            "kind": "write",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB8FFC3",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 5,
+        "checkable": 5,
+        "pairs": [
+          {
+            "field": "matching_type",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB8FF0C",
+            "kind": "inline_store"
+          },
+          {
+            "field": "room_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB8FF29",
+            "kind": "inline_store"
+          },
+          {
+            "field": "is_audience",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB8FF4B",
+            "kind": "write"
+          },
+          {
+            "field": "audience_teamside",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB8FF65",
+            "kind": "write"
+          },
+          {
+            "field": "extrule_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB8FF7F",
+            "kind": "write"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB8FEFC",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          },
+          {
+            "va": "0xB8FF31",
+            "kind": "write",
+            "width": null,
+            "wire_type": "str"
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB8FE80",
+          "0xB8FFED"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 16,
+          "capacity": 50,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB8FF31",
+              "kind": "write",
+              "name": ""
+            },
+            {
+              "va": "0xB8FFC3",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）16 / 容量 0x32"
+        }
+      },
+      "closer": {
+        "va": "0xB8FFED",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xB9012D",
+        "mov_va": "0xB90124",
+        "host": "[edx+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "matching_type=",
+        "room_id=",
+        "room_pw=\"",
+        "is_audience=",
+        "audience_teamside=",
+        "extrule_id="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0x61AF-lounge-btlroom_enter.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0xb8fefc",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xB8FEFC"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "BtlroomEnter",
+      "role": "request",
+      "wire_length": "4 + 4 + var + 1 + 1 + 4",
+      "members": [
+        {
+          "name": "MatchingType",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "matching_type"
+        },
+        {
+          "name": "RoomId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "room_id"
+        },
+        {
+          "name": "RoomPw",
+          "wire_type": "bytes",
+          "length": "var",
+          "field_ref": "room_pw",
+          "element": null,
+          "element_length": null,
+          "cap": null,
+          "count_field": "room_id",
+          "count_field_source": "nearest_scalar",
+          "note": "元素成员未建模（composites/ 无此结构），须以 IDA 复核补"
+        },
+        {
+          "name": "IsAudience",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "is_audience"
+        },
+        {
+          "name": "AudienceTeamside",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "audience_teamside"
+        },
+        {
+          "name": "ExtruleId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "extrule_id"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "489bd2ea0f496b8b",
+  "check_fingerprint": "ced0b84d127d704b"
+}

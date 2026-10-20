@@ -1,0 +1,334 @@
+{
+  "id": "SC-0xA5DA-lounge-authenticate_r",
+  "opcode": "0xA5DA",
+  "direction": "SC",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "authenticate_r",
+  "source_dir": "protocol_analysis/commands/SC-0xA5DA-lounge-authenticate_r",
+  "meta": {
+    "opcode": "`0xA5DA`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`authenticate_r`",
+    "处理块范围": "`0xb70147`..`0xb7031b`",
+    "名字串引用点": "`0xb70227`",
+    "声明容量（解码缓冲）": "`0x8`（`B70159`）",
+    "长度闭合点": "`B701E4`",
+    "报错码": "`0x3`（块内 `push 1; push <errcode>; vt[0x64]`）",
+    "去向": "`vt[0x6C]` @`B702FF`（2 实参）"
+  },
+  "handler": null,
+  "handler_va": null,
+  "block": [
+    "0xb70147",
+    "0xb7031b"
+  ],
+  "name_str": null,
+  "name_str_va": "0xb70227",
+  "capacity": "0x8",
+  "capacity_va": "0xB70159",
+  "closer_va": "0xB701E4",
+  "dispatch": "`vt[0x6C]` @`B702FF`（2 实参）",
+  "dispatch_slot": "vt[0x6C]",
+  "dispatch_va": "0xB702FF",
+  "wire": {
+    "length_expr": "4 + 4",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x8（容量记账口径，非线长）",
+    "field_count": 2,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：**8**（全定长）。",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0xA5DA",
+      "evidence_va": [
+        "0xb70227"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "result",
+      "meaning": "认证结果码（日志串 `result=`）",
+      "purpose": "经 `vt[0x6C]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B70197",
+        "B7027D"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "admin_lv",
+      "meaning": "管理员等级（日志串 `admin_lv=`）",
+      "purpose": "经 `vt[0x6C]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B701D4",
+        "B702A2"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0xA5DA（分发器 switch 选择子）",
+      "evidence_va": "0xB70227"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB41120`（模块 id None）→ 之后逐字段读线",
+      "evidence_va": "0xB70147"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "result：`u32`（线长 4）—— 认证结果码（日志串 `result=`）",
+      "evidence_va": "0xB70197"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "admin_lv：`u32`（线长 4）—— 管理员等级（日志串 `admin_lv=`）",
+      "evidence_va": "0xB701D4"
+    },
+    {
+      "step": 5,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB701E4"
+    },
+    {
+      "step": 6,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x6C]`，实参 2 个",
+      "evidence_va": "0xB702FF"
+    },
+    {
+      "step": 7,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB701AE"
+    }
+  ],
+  "capabilities": [
+    "validate"
+  ],
+  "capabilities_derived": [
+    "unclassified"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [
+    "SC-0xA5DA-auth-authenticate_r",
+    "SC-0xA5DA-battle-authenticate_r"
+  ],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:44",
+    "batch": 10,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 8,
+        "va": "0xB7015C",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB70159",
+        "call_va": "0xB7015E"
+      },
+      "field_window": {
+        "start_va": "0xB70148",
+        "end_va": "0xB70205",
+        "guard": {
+          "va": "0xB70147",
+          "func": "0xB41120",
+          "module_id": null,
+          "release_va": "0xB41110"
+        },
+        "closer_or_commit_va": "0xB701E4",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "result",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "B70197",
+              "B7027D"
+            ]
+          },
+          {
+            "name": "admin_lv",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "B701D4",
+              "B702A2"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB70197",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB701D4",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 2,
+        "checkable": 2,
+        "pairs": [
+          {
+            "field": "result",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB70197",
+            "kind": "read"
+          },
+          {
+            "field": "admin_lv",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB701D4",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB70148",
+          "0xB70205"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 8,
+          "capacity": 8,
+          "relation": "exact",
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）8 / 容量 0x8"
+        }
+      },
+      "closer": {
+        "va": "0xB701E4",
+        "kind": "jz",
+        "jcc_va": "0xB701EA",
+        "seq_va": "0xB701E0",
+        "jcc_dst": "0xB70203",
+        "cmp": "cmp     ebx, [esp+2C5Ch+var_2C40]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x6C]",
+        "slot_value": 108,
+        "va": "0xB702FF",
+        "mov_va": "0xB702F6",
+        "host": "[edx+6Ch]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB701AE",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "result=",
+        "admin_lv="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0xA5DA-lounge-authenticate_r.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xb70227"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "AuthenticateR",
+      "role": "response",
+      "wire_length": "4 + 4",
+      "members": [
+        {
+          "name": "Result",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "result"
+        },
+        {
+          "name": "AdminLv",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "admin_lv"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "da408d20f892115a",
+  "check_fingerprint": "cc17976cd179a52a"
+}

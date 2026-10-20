@@ -1,0 +1,526 @@
+{
+  "id": "SC-0x8C6E-lounge-mail_get_body_r",
+  "opcode": "0x8C6E",
+  "direction": "SC",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "mail_get_body_r",
+  "source_dir": "protocol_analysis/commands/SC-0x8C6E-lounge-mail_get_body_r",
+  "meta": {
+    "opcode": "`0x8C6E`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`mail_get_body_r`",
+    "处理块范围": "`B6B59B`..`B6B8C8`",
+    "名字串引用点": "`B6B711`",
+    "声明容量（解码缓冲）": "`0x312`（`B6B5B7`）",
+    "长度闭合点": "`B6B6C8`",
+    "收尾函数": "`sub_B41110`（lounge 口径）",
+    "去向": "`vt[0x390]` @ `B6B886`（6 实参）"
+  },
+  "handler": null,
+  "handler_va": null,
+  "block": [
+    "0xB6B59B",
+    "0xB6B8C8"
+  ],
+  "name_str": null,
+  "name_str_va": "0xB6B711",
+  "capacity": "0x312",
+  "capacity_va": "0xB6B5B7",
+  "closer_va": "0xB6B6C8",
+  "dispatch": "`vt[0x390]` @ `B6B886`（6 实参）",
+  "dispatch_slot": "vt[0x390]",
+  "dispatch_va": "0xB6B886",
+  "wire": {
+    "length_expr": "4 + 4 + 4 + 8 + var(≤766)",
+    "fixed": false,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x312（容量记账口径，非线长）",
+    "field_count": 5,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：4+4+4+8+(L+1)。",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0x8C6E",
+      "evidence_va": [
+        "B6B711"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "result",
+      "meaning": "结果码（日志串 `result=`）",
+      "purpose": "经 `vt[0x390]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B6B5F5",
+        "B6B767"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "from_pilotid",
+      "meaning": "发件飞行员 ID（日志串 `from_pilotid=`）",
+      "purpose": "经 `vt[0x390]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B6B635",
+        "B6B791"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "8",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "from_clan_id",
+      "meaning": "发件战队 ID（日志串 `from_clan_id=`）",
+      "purpose": "经 `vt[0x390]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B6B659",
+        "B6B7BB"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 4,
+      "offset": "12",
+      "length": "8",
+      "wire_type": "u64",
+      "name": "mailid",
+      "meaning": "邮件 ID（日志串 `mailid=`）",
+      "purpose": "经 `vt[0x390]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B6B67D",
+        "B6B7E5"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    },
+    {
+      "seq": 5,
+      "offset": "20",
+      "length": "var(≤766)",
+      "wire_type": "str",
+      "name": "body",
+      "meaning": "邮件正文（日志串 `body=\"`）",
+      "purpose": "NUL 串，槽位预算 **766**（`push 2FEh` @`0xB6B6A9`），线长 = 串长+1",
+      "enum": null,
+      "evidence_va": [
+        "B6B6B4",
+        "B6B80D"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 7,
+      "slot_budget": 766
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0x8C6E（分发器 switch 选择子）",
+      "evidence_va": "0xB6B711"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB41120`（模块 id 365）→ 之后逐字段读线",
+      "evidence_va": "0xB6B5A2"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "result：`u32`（线长 4）—— 结果码（日志串 `result=`）",
+      "evidence_va": "0xB6B5F5"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "from_pilotid：`u32`（线长 4）—— 发件飞行员 ID（日志串 `from_pilotid=`）",
+      "evidence_va": "0xB6B635"
+    },
+    {
+      "step": 5,
+      "kind": "read_count",
+      "detail": "from_clan_id：`u32`（线长 4）—— 发件战队 ID（日志串 `from_clan_id=`）",
+      "evidence_va": "0xB6B659"
+    },
+    {
+      "step": 6,
+      "kind": "read_scalar",
+      "detail": "mailid：`u64`（线长 8）—— 邮件 ID（日志串 `mailid=`）",
+      "evidence_va": "0xB6B67D"
+    },
+    {
+      "step": 7,
+      "kind": "read_string",
+      "detail": "body：`str`（线长 var(≤766)）—— 邮件正文（日志串 `body=\"`）",
+      "evidence_va": "0xB6B6B4"
+    },
+    {
+      "step": 8,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB6B6C8"
+    },
+    {
+      "step": 9,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x390]`，实参 6 个",
+      "evidence_va": "0xB6B88F"
+    },
+    {
+      "step": 10,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB6B60F"
+    }
+  ],
+  "capabilities": [
+    "query",
+    "lounge.mail"
+  ],
+  "capabilities_derived": [
+    "unclassified"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:44",
+    "batch": 9,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 786,
+        "va": "0xB6B5B7",
+        "reg": "eax",
+        "host": "[edx+78h]",
+        "alloc_va": "0xB6B5B4",
+        "call_va": "0xB6B5BC"
+      },
+      "field_window": {
+        "start_va": "0xB6B5A3",
+        "end_va": "0xB6B6EF",
+        "guard": {
+          "va": "0xB6B5A2",
+          "func": "0xB41120",
+          "module_id": 365,
+          "release_va": "0xB41110"
+        },
+        "closer_or_commit_va": "0xB6B6C8",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "result",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "B6B5F5",
+              "B6B767"
+            ]
+          },
+          {
+            "name": "from_pilotid",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "B6B635",
+              "B6B791"
+            ]
+          },
+          {
+            "name": "from_clan_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "B6B659",
+              "B6B7BB"
+            ]
+          },
+          {
+            "name": "mailid",
+            "wire_type": "u64",
+            "width": 8,
+            "seq": 4,
+            "shape": "scalar",
+            "evidence_va": [
+              "B6B67D",
+              "B6B7E5"
+            ]
+          },
+          {
+            "name": "body",
+            "wire_type": "str",
+            "width": null,
+            "seq": 5,
+            "shape": "str",
+            "evidence_va": [
+              "B6B6B4",
+              "B6B80D"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB6B5F5",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB6B635",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB6B659",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB6B67D",
+            "kind": "read",
+            "width": 8,
+            "wire_type": "u64",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB6B6B4",
+            "kind": "read",
+            "width": null,
+            "wire_type": "str",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 5,
+        "checkable": 5,
+        "pairs": [
+          {
+            "field": "result",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB6B5F5",
+            "kind": "read"
+          },
+          {
+            "field": "from_pilotid",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB6B635",
+            "kind": "read"
+          },
+          {
+            "field": "from_clan_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB6B659",
+            "kind": "read"
+          },
+          {
+            "field": "mailid",
+            "width": 8,
+            "shape": "scalar",
+            "va": "0xB6B67D",
+            "kind": "read"
+          },
+          {
+            "field": "body",
+            "width": null,
+            "shape": "str",
+            "va": "0xB6B6B4",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB6B5A3",
+          "0xB6B6EF"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 20,
+          "capacity": 786,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB6B6B4",
+              "kind": "read",
+              "name": ""
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）20 / 容量 0x312"
+        }
+      },
+      "closer": {
+        "va": "0xB6B6C8",
+        "kind": "jz",
+        "jcc_va": "0xB6B6CE",
+        "seq_va": "0xB6B6C4",
+        "jcc_dst": "0xB6B6EA",
+        "cmp": "cmp     ecx, [esp+2C5Ch+var_2C40]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x390]",
+        "slot_value": 912,
+        "va": "0xB6B88F",
+        "mov_va": "0xB6B886",
+        "host": "[eax+390h]",
+        "argc": 6,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB6B60F",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "result=",
+        "from_pilotid=",
+        "from_clan_id=",
+        "mailid=",
+        "body=\""
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0x8C6E-lounge-mail_get_body_r.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "B6B711"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "MailGetBodyR",
+      "role": "response",
+      "wire_length": "4 + 4 + 4 + 8 + var(≤766)",
+      "members": [
+        {
+          "name": "Result",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "result"
+        },
+        {
+          "name": "FromPilotid",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "from_pilotid"
+        },
+        {
+          "name": "FromClanId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "from_clan_id"
+        },
+        {
+          "name": "Mailid",
+          "wire_type": "u64",
+          "length": "8",
+          "field_ref": "mailid"
+        },
+        {
+          "name": "Body",
+          "wire_type": "str",
+          "length": "var(≤766)",
+          "field_ref": "body",
+          "element": null,
+          "element_length": null,
+          "cap": null,
+          "count_field": "from_clan_id",
+          "count_field_source": "nearest_scalar",
+          "note": "元素成员未建模（composites/ 无此结构），须以 IDA 复核补"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "37c6e807cdf7e17d",
+  "check_fingerprint": "61e84f1c28b4c505",
+  "import_repairs": [
+    "str_slot_budget:body(766 → var(≤766)；线上实写 strlen+1)",
+    "wire_len_member_rows_folded:4 + 4 + 4 + 8 + 766 → 4 + 4 + 4 + 8 + var(≤766)"
+  ]
+}

@@ -1,0 +1,584 @@
+{
+  "id": "CS-0x692B-battle-dynamic_taskforce_order_issue",
+  "opcode": "0x692B",
+  "direction": "CS",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "dynamic_taskforce_order_issue",
+  "source_dir": "protocol_analysis/commands/CS-0x692B-battle-dynamic_taskforce_order_issue",
+  "meta": {
+    "opcode": "`0x692B`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`battle_client`",
+    "命令名": "`dynamic_taskforce_order_issue`",
+    "名字符串": "`)<-_proto_battle_client::send_dynamic_taskforce_order_issue(` @ `0xee1644`",
+    "代码位置": "sub_B3F3F0 @ `0xb3f3f0`（`0xb3f3f0`..`0xb3f77e`）",
+    "opcode 写入证据": "`0xb3f46f`",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0x5E`（94）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)`",
+    "配对命令（同 opcode 反向）": "见 §4.3 与其他命令的关联 / INDEX 反向表"
+  },
+  "handler": "sub_B3F3F0",
+  "handler_va": "0xb3f3f0",
+  "block": [
+    "0xB3F3F0",
+    "0xB3F77E"
+  ],
+  "name_str": ")<-_proto_battle_client::send_dynamic_taskforce_order_issue(",
+  "name_str_va": "0xee1644",
+  "capacity": "0x5E",
+  "capacity_va": null,
+  "closer_va": "0xB3F5A0",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": null,
+  "wire": {
+    "length_expr": "1 + 4 + 4 + var + 4 + var",
+    "fixed": false,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x5E（容量记账口径，非线长）",
+    "field_count": 6,
+    "length_source": "field_sum",
+    "readme_conclusion": "结论：下达动态任务部队指令：指令类型/参数 + 两组「计数 + 数组」（成员 u8 / NPC u16）。",
+    "readme_close": "2 + 1 + 4 + 4 + 51×1 + 4 + 12×2 = 90 ≤ 容量 0x5E=94（上限场景，富余 4）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发给 battle 协议类处理块（C→S 无 case 块）",
+      "enum": "0x692B",
+      "evidence_va": [
+        "0xB3F46F"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "2",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "order_kind",
+      "meaning": "指令种类",
+      "purpose": "来源=入参 arg_0 的低字节（@0xB3F47F）；内联 `mov [ecx],dl`；经 `vt[0x58]` 发送",
+      "enum": null,
+      "evidence_va": [
+        "0xB3F483"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "3",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "order_param",
+      "meaning": "指令参数",
+      "purpose": "来源=入参 arg_4（@0xB3F497）；内联 `mov [esi],eax`；经 `vt[0x58]` 发送",
+      "enum": null,
+      "evidence_va": [
+        "0xB3F49B"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "7",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "select_members_num",
+      "meaning": "成员数组元素数（**上限校验 ≤ 0x33=51**）",
+      "purpose": "来源=入参 arg_C（@0xB3F490）；写线原语 `sub_B02D80`(u32)；上限 `cmp ebp,33h`@0xB3F494",
+      "enum": "0..51",
+      "evidence_va": [
+        "0xB3F4B1"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 4,
+      "offset": "11",
+      "length": "var",
+      "wire_type": "array<u8,N>",
+      "name": "select_members",
+      "meaning": "成员列表（N = `select_members_num`，N ≤ 51，每元素 u8）",
+      "purpose": "来源=入参 arg_8 指向的字节数组（@0xB3F4C7 `mov ecx,[arg_8]`→`lea edx,[esi+ecx]`）；循环内 `sub_B061C0`(u8)；经 `vt[0x58]` 发送",
+      "enum": "元素 u8，逐个写入",
+      "evidence_va": [
+        "0xB3F4D4"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    },
+    {
+      "seq": 5,
+      "offset": "var",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "select_npcs_num",
+      "meaning": "NPC 数组元素数（**上限校验 ≤ 0x0C=12**）",
+      "purpose": "来源=入参 arg_14（@0xB3F4EB）；写线原语 `sub_B02D80`(u32)；上限 `cmp ebx,0Ch`@0xB3F4EF",
+      "enum": "0..12",
+      "evidence_va": [
+        "0xB3F502"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 7
+    },
+    {
+      "seq": 6,
+      "offset": "var",
+      "length": "var",
+      "wire_type": "array<u16,N>",
+      "name": "select_npcs",
+      "meaning": "NPC 列表（N = `select_npcs_num`，N ≤ 12，每元素 u16）",
+      "purpose": "来源=入参 arg_10 指向的 u16 数组（@0xB3F518 `mov edx,[arg_10]`，步进 +2）；循环内 `sub_B02DA0`(u16)；经 `vt[0x58]` 发送",
+      "enum": "元素 u16，逐个写入",
+      "evidence_va": [
+        "0xB3F52A"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 8
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0x692B（分发器 switch 选择子）",
+      "evidence_va": "0xB3F46F"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0x5E B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xB3F43A"
+    },
+    {
+      "step": 3,
+      "kind": "write_scalar",
+      "detail": "order_kind：`u8`（线长 1）—— 指令种类",
+      "evidence_va": "0xB3F483"
+    },
+    {
+      "step": 4,
+      "kind": "write_scalar",
+      "detail": "order_param：`u32`（线长 4）—— 指令参数",
+      "evidence_va": "0xB3F49B"
+    },
+    {
+      "step": 5,
+      "kind": "write_count",
+      "detail": "select_members_num：`u32`（线长 4）—— 成员数组元素数（**上限校验 ≤ 0x33=51**）",
+      "evidence_va": "0xB3F4B1"
+    },
+    {
+      "step": 6,
+      "kind": "write_array",
+      "detail": "select_members：`array<u8,N>`（线长 var）—— 成员列表（N = `select_members_num`，N ≤ 51，每元素 u8）",
+      "evidence_va": "0xB3F4D4"
+    },
+    {
+      "step": 7,
+      "kind": "write_count",
+      "detail": "select_npcs_num：`u32`（线长 4）—— NPC 数组元素数（**上限校验 ≤ 0x0C=12**）",
+      "evidence_va": "0xB3F502"
+    },
+    {
+      "step": 8,
+      "kind": "write_array",
+      "detail": "select_npcs：`array<u16,N>`（线长 var）—— NPC 列表（N = `select_npcs_num`，N ≤ 12，每元素 u16）",
+      "evidence_va": "0xB3F52A"
+    },
+    {
+      "step": 9,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xB3F5A0"
+    },
+    {
+      "step": 10,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xB3F715"
+    }
+  ],
+  "capabilities": [
+    "unclassified",
+    "battle.dynamic_taskforce"
+  ],
+  "capabilities_derived": [
+    "unclassified"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:47",
+    "batch": 17,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 94,
+        "va": "0xB3F43A",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB3F437",
+        "call_va": "0xB3F43C"
+      },
+      "field_window": {
+        "start_va": "0xB3F3F0",
+        "end_va": "0xB3F5A0",
+        "guard": null,
+        "closer_or_commit_va": "0xB3F5A0",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "order_kind",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB3F483"
+            ]
+          },
+          {
+            "name": "order_param",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB3F49B"
+            ]
+          },
+          {
+            "name": "select_members_num",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB3F4B1"
+            ]
+          },
+          {
+            "name": "select_members",
+            "wire_type": "array<u8,N>",
+            "width": null,
+            "seq": 4,
+            "shape": "agg",
+            "evidence_va": [
+              "0xB3F4D4"
+            ]
+          },
+          {
+            "name": "select_npcs_num",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 5,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB3F502"
+            ]
+          },
+          {
+            "name": "select_npcs",
+            "wire_type": "array<u16,N>",
+            "width": null,
+            "seq": 6,
+            "shape": "agg",
+            "evidence_va": [
+              "0xB3F52A"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB3F46F",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB3F483",
+            "kind": "inline_store",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB3F49B",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB3F4B1",
+            "kind": "write",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB3F4D4",
+            "kind": "write",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB3F502",
+            "kind": "write",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB3F52A",
+            "kind": "write",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB3F576",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 4,
+        "checkable": 4,
+        "pairs": [
+          {
+            "field": "order_kind",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB3F483",
+            "kind": "inline_store"
+          },
+          {
+            "field": "order_param",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB3F49B",
+            "kind": "inline_store"
+          },
+          {
+            "field": "select_members_num",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB3F4B1",
+            "kind": "write"
+          },
+          {
+            "field": "select_npcs_num",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB3F502",
+            "kind": "write"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB3F46F",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          },
+          {
+            "va": "0xB3F4D4",
+            "kind": "write",
+            "width": 1,
+            "wire_type": "u8"
+          },
+          {
+            "va": "0xB3F52A",
+            "kind": "write",
+            "width": 2,
+            "wire_type": "u16"
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB3F3F0",
+          "0xB3F5A0"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 18,
+          "capacity": 94,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB3F576",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）18 / 容量 0x5e"
+        }
+      },
+      "closer": {
+        "va": "0xB3F5A0",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xB3F715",
+        "mov_va": "0xB3F70C",
+        "host": "[edx+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "order_kind=",
+        "order_param=",
+        "select_members={",
+        "select_npcs={"
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0x692B-battle-dynamic_taskforce_order_issue.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0xb3f46f",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xB3F46F"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "DynamicTaskforceOrderIssue",
+      "role": "request",
+      "wire_length": "1 + 4 + 4 + var + 4 + var",
+      "members": [
+        {
+          "name": "OrderKind",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "order_kind"
+        },
+        {
+          "name": "OrderParam",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "order_param"
+        },
+        {
+          "name": "SelectMembersNum",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "select_members_num"
+        },
+        {
+          "name": "SelectMembers",
+          "wire_type": "array<u8,N>",
+          "length": "var",
+          "field_ref": "select_members",
+          "element": "u8",
+          "element_length": "1",
+          "cap": null,
+          "count_field": "select_members_num",
+          "count_field_source": "heuristic",
+          "count_var": "N",
+          "note": null
+        },
+        {
+          "name": "SelectNpcsNum",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "select_npcs_num"
+        },
+        {
+          "name": "SelectNpcs",
+          "wire_type": "array<u16,N>",
+          "length": "var",
+          "field_ref": "select_npcs",
+          "element": "u16",
+          "element_length": "2",
+          "cap": null,
+          "count_field": "select_npcs_num",
+          "count_field_source": "heuristic",
+          "count_var": "N",
+          "note": null
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "5ec2fcb5ea68f7f4",
+  "check_fingerprint": "c8e8504c392afe28"
+}

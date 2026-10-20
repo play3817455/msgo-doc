@@ -1,0 +1,503 @@
+{
+  "id": "CS-0x2C1A-auth-authenticate_you9channeling",
+  "opcode": "0x2C1A",
+  "direction": "CS",
+  "proto": "auth",
+  "proto_class": "auth_client",
+  "name": "authenticate_you9channeling",
+  "source_dir": "protocol_analysis/commands/CS-0x2C1A-auth-authenticate_you9channeling",
+  "meta": {
+    "opcode": "`0x2C1A`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`auth_client`",
+    "命令名": "`authenticate_you9channeling`",
+    "名字符串": "`)<-_proto_auth_client::send_authenticate_you9channeling(` @ `0xedb084`",
+    "代码位置": "sub_B055D0 @ `0x00b055d0`（`0x00b055d0`..`0x00b058aa`）",
+    "opcode 写入/分发证据": "`0xb05656`（opcode 写入指令）",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0x146`（326）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽 @`0xB0583B`）；`call vt[0x58](buf, 负载长度)`",
+    "配对命令（同 opcode 反向）": "（本批次内无同 opcode 反向命令）"
+  },
+  "handler": "sub_B055D0",
+  "handler_va": "0x00b055d0",
+  "block": [
+    "0xB055D0",
+    "0xB058AA"
+  ],
+  "name_str": ")<-_proto_auth_client::send_authenticate_you9channeling(",
+  "name_str_va": "0xedb084",
+  "capacity": "0x146",
+  "capacity_va": null,
+  "closer_va": "0xB05728",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽 @`0xB0583B`）；`call vt[0x58](buf, 负载长度)`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": "0xB0583B",
+  "wire": {
+    "length_expr": "var + var + var + var",
+    "fixed": false,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x146（容量记账口径，非线长）",
+    "field_count": 4,
+    "length_source": "field_sum",
+    "readme_conclusion": "结论：通道鉴权（票据 + 频道 + 磁盘卷号 + MAC 地址 4 个串）。",
+    "readme_close": "2 + 32 + 33 + 128 + 128 = **323** ≤ 容量 0x146=326（富余 3）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发给对应协议类的处理块（C→S 无 case 块）",
+      "enum": "0x2C1A",
+      "evidence_va": [
+        "0xB05656"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "-",
+      "length": "var",
+      "wire_type": "str",
+      "name": "ticket",
+      "meaning": "登录票据（NUL 结尾串）",
+      "purpose": "经写原语 `sub_B02B40`；服务端校验票据完成鉴权；串槽预算 32（`push 20h`）",
+      "enum": "串槽预算 32",
+      "evidence_va": [
+        "0xB05660"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "-",
+      "length": "var",
+      "wire_type": "str",
+      "name": "channel",
+      "meaning": "频道标识（NUL 结尾串）",
+      "purpose": "经写原语 `sub_B02B40`；服务端把连接归入该频道；串槽预算 33（`push 21h`）",
+      "enum": "串槽预算 33",
+      "evidence_va": [
+        "0xB0567C"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "-",
+      "length": "var",
+      "wire_type": "str",
+      "name": "disk_uuid",
+      "meaning": "磁盘卷序列号（NUL 结尾串）",
+      "purpose": "经写原语 `sub_B02B40`；服务端用于设备指纹；串槽预算 128（`push 80h`）",
+      "enum": "串槽预算 128",
+      "evidence_va": [
+        "0xB0569B"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 4,
+      "offset": "-",
+      "length": "var",
+      "wire_type": "str",
+      "name": "mac_addr",
+      "meaning": "网卡 MAC 地址（NUL 结尾串）",
+      "purpose": "经写原语 `sub_B02B40`；服务端用于设备指纹；串槽预算 128（`push 80h`）",
+      "enum": "串槽预算 128",
+      "evidence_va": [
+        "0xB056BA"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0x2C1A（分发器 switch 选择子）",
+      "evidence_va": "0xB05656"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0x146 B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xB05613"
+    },
+    {
+      "step": 3,
+      "kind": "write_string",
+      "detail": "ticket：`str`（线长 var）—— 登录票据（NUL 结尾串）",
+      "evidence_va": "0xB05660"
+    },
+    {
+      "step": 4,
+      "kind": "write_string",
+      "detail": "channel：`str`（线长 var）—— 频道标识（NUL 结尾串）",
+      "evidence_va": "0xB0567C"
+    },
+    {
+      "step": 5,
+      "kind": "write_string",
+      "detail": "disk_uuid：`str`（线长 var）—— 磁盘卷序列号（NUL 结尾串）",
+      "evidence_va": "0xB0569B"
+    },
+    {
+      "step": 6,
+      "kind": "write_string",
+      "detail": "mac_addr：`str`（线长 var）—— 网卡 MAC 地址（NUL 结尾串）",
+      "evidence_va": "0xB056BA"
+    },
+    {
+      "step": 7,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xB05728"
+    },
+    {
+      "step": 8,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xB05844"
+    }
+  ],
+  "capabilities": [
+    "validate"
+  ],
+  "capabilities_derived": [
+    "unclassified"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:42",
+    "batch": 2,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 326,
+        "va": "0xB05613",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB05610",
+        "call_va": "0xB05618"
+      },
+      "field_window": {
+        "start_va": "0xB055D0",
+        "end_va": "0xB05728",
+        "guard": null,
+        "closer_or_commit_va": "0xB05728",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "ticket",
+            "wire_type": "str",
+            "width": null,
+            "seq": 1,
+            "shape": "str",
+            "evidence_va": [
+              "0xB05660"
+            ]
+          },
+          {
+            "name": "channel",
+            "wire_type": "str",
+            "width": null,
+            "seq": 2,
+            "shape": "str",
+            "evidence_va": [
+              "0xB0567C"
+            ]
+          },
+          {
+            "name": "disk_uuid",
+            "wire_type": "str",
+            "width": null,
+            "seq": 3,
+            "shape": "str",
+            "evidence_va": [
+              "0xB0569B"
+            ]
+          },
+          {
+            "name": "mac_addr",
+            "wire_type": "str",
+            "width": null,
+            "seq": 4,
+            "shape": "str",
+            "evidence_va": [
+              "0xB056BA"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB05656",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB05660",
+            "kind": "write",
+            "width": null,
+            "wire_type": "str",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0567C",
+            "kind": "write",
+            "width": null,
+            "wire_type": "str",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0569B",
+            "kind": "write",
+            "width": null,
+            "wire_type": "str",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB056BA",
+            "kind": "write",
+            "width": null,
+            "wire_type": "str",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB056FE",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 4,
+        "checkable": 4,
+        "pairs": [
+          {
+            "field": "ticket",
+            "width": null,
+            "shape": "str",
+            "va": "0xB05660",
+            "kind": "write"
+          },
+          {
+            "field": "channel",
+            "width": null,
+            "shape": "str",
+            "va": "0xB0567C",
+            "kind": "write"
+          },
+          {
+            "field": "disk_uuid",
+            "width": null,
+            "shape": "str",
+            "va": "0xB0569B",
+            "kind": "write"
+          },
+          {
+            "field": "mac_addr",
+            "width": null,
+            "shape": "str",
+            "va": "0xB056BA",
+            "kind": "write"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB05656",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB055D0",
+          "0xB05728"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 2,
+          "capacity": 326,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB05660",
+              "kind": "write",
+              "name": ""
+            },
+            {
+              "va": "0xB0567C",
+              "kind": "write",
+              "name": ""
+            },
+            {
+              "va": "0xB0569B",
+              "kind": "write",
+              "name": ""
+            },
+            {
+              "va": "0xB056BA",
+              "kind": "write",
+              "name": ""
+            },
+            {
+              "va": "0xB056FE",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）2 / 容量 0x146"
+        }
+      },
+      "closer": {
+        "va": "0xB05728",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xB05844",
+        "mov_va": "0xB0583B",
+        "host": "[edx+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "ticket=\"",
+        "channel=\"",
+        "disk_uuid=\"",
+        "mac_addr=\""
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0x2C1A-auth-authenticate_you9channeling.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0xb05656",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xB05656"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "AuthenticateYou9channeling",
+      "role": "request",
+      "wire_length": "var + var + var + var",
+      "members": [
+        {
+          "name": "Ticket",
+          "wire_type": "str",
+          "length": "var",
+          "field_ref": "ticket",
+          "element": null,
+          "element_length": null,
+          "cap": null,
+          "count_field": null,
+          "count_field_source": null,
+          "note": "元素成员未建模（composites/ 无此结构），须以 IDA 复核补"
+        },
+        {
+          "name": "Channel",
+          "wire_type": "str",
+          "length": "var",
+          "field_ref": "channel",
+          "element": null,
+          "element_length": null,
+          "cap": null,
+          "count_field": null,
+          "count_field_source": null,
+          "note": "元素成员未建模（composites/ 无此结构），须以 IDA 复核补"
+        },
+        {
+          "name": "DiskUuid",
+          "wire_type": "str",
+          "length": "var",
+          "field_ref": "disk_uuid",
+          "element": null,
+          "element_length": null,
+          "cap": null,
+          "count_field": null,
+          "count_field_source": null,
+          "note": "元素成员未建模（composites/ 无此结构），须以 IDA 复核补"
+        },
+        {
+          "name": "MacAddr",
+          "wire_type": "str",
+          "length": "var",
+          "field_ref": "mac_addr",
+          "element": null,
+          "element_length": null,
+          "cap": null,
+          "count_field": null,
+          "count_field_source": null,
+          "note": "元素成员未建模（composites/ 无此结构），须以 IDA 复核补"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "9be1f1189a96c06f",
+  "check_fingerprint": "1d9d8de0009e8cf1"
+}

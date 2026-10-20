@@ -1,0 +1,66 @@
+{
+  "id": "tbl_config",
+  "title": "对战配置",
+  "status": "complete",
+  "table_disposition": "EVENT",
+  "purpose": "EVENT 快照 config 34B 线；10 成员 A/B 军兵力·点数·回合等（sub_B077B0/sub_B0A670）",
+  "entity_ref": "config",
+  "evidence_commands": [
+    "SC-0x1365-battle-game_begin",
+    "SC-0xA5DA-battle-authenticate_r"
+  ],
+  "column_groups": [
+    {
+      "name": "config（34B 线 · 10 成员）",
+      "columns": [
+        "config"
+      ]
+    }
+  ],
+  "columns": [
+    {
+      "name": "config",
+      "disposition": "COMPOSITE",
+      "composite_ref": "config",
+      "meaning": "对战配置（日志 `config=`；claim 40 / 线长 34）",
+      "wire_sources": [
+        {
+          "command": "SC-0x1365-battle-game_begin",
+          "struct": "config",
+          "field_name": "config",
+          "offset": 46,
+          "length": 34,
+          "wire_type": "struct",
+          "protocol_path": "protocol_analysis/commands/SC-0x1365-battle-game_begin/README.md",
+          "section": "§3 / §3.1",
+          "reader": "sub_B077B0",
+          "printer": "sub_B0A670",
+          "evidence_va": "B0FE43|B0FE52|B1032E",
+          "notes": "字段 #14；sub_B418C0 预留 0x28=40 槽"
+        },
+        {
+          "command": "SC-0xA5DA-battle-authenticate_r",
+          "struct": "config",
+          "field_name": "config",
+          "offset": null,
+          "length": 34,
+          "wire_type": "struct",
+          "protocol_path": "protocol_analysis/commands/SC-0xA5DA-battle-authenticate_r/README.md",
+          "section": "§3 / §4.3",
+          "reader": "sub_B077B0",
+          "printer": "sub_B0A670",
+          "evidence_va": "B25D1F|B25D2E|B26104",
+          "notes": "字段 #15；偏移随 room_name 变长浮动；claim 40 / 线长 34"
+        }
+      ],
+      "asm_verified": true
+    }
+  ],
+  "asm_audit": {
+    "composite_ref": "config",
+    "status": "pass",
+    "issues_count": 0,
+    "memory_status": "pass",
+    "memory_issues_count": 0
+  }
+}

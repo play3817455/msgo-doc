@@ -1,0 +1,598 @@
+{
+  "id": "SC-0x5383-lounge-btlroom_enter_r",
+  "opcode": "0x5383",
+  "direction": "SC",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "btlroom_enter_r",
+  "source_dir": "protocol_analysis/commands/SC-0x5383-lounge-btlroom_enter_r",
+  "meta": {
+    "opcode": "`0x5383`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`btlroom_enter_r`",
+    "处理函数": "`sub_B51930` @ `0xB51930`（lounge 分发器）",
+    "处理块范围": "`0xB616DC`..`0xB61A4C`",
+    "名字串引用点": "`0xB61879`",
+    "声明容量（解码缓冲）": "`0xBA`（`0xB616F8`）",
+    "长度闭合点": "`0xB61830`",
+    "去向": "`vt[0x1B0]` @ `0xB61A30`（6 实参）"
+  },
+  "handler": "sub_B51930",
+  "handler_va": "0xB51930",
+  "block": [
+    "0xB616DC",
+    "0xB61A4C"
+  ],
+  "name_str": null,
+  "name_str_va": "0xB61879",
+  "capacity": "0xBA",
+  "capacity_va": "0xB616F8",
+  "closer_va": "0xB61830",
+  "dispatch": "`vt[0x1B0]` @ `0xB61A30`（6 实参）",
+  "dispatch_slot": "vt[0x1B0]",
+  "dispatch_va": "0xB61A30",
+  "wire": {
+    "length_expr": "4 + 4 + var(≤129) + 4 + 4 + var(≤41)",
+    "fixed": false,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0xBA（容量记账口径，非线长）",
+    "field_count": 6,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：22 + L1 + L2（两串变长）。",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0x5383",
+      "evidence_va": [
+        "0xB61879"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "result",
+      "meaning": "结果码",
+      "purpose": "经 `vt[0x1B0]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB61736",
+        "0xB618CF"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "matching_type",
+      "meaning": "匹配类型",
+      "purpose": "经 `vt[0x1B0]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB61776",
+        "0xB618F9"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "8",
+      "length": "var(≤129)",
+      "wire_type": "str",
+      "name": "battlesv_host",
+      "meaning": "对战服务器主机（槽位预算 `0x81`=129）",
+      "purpose": "经 `vt[0x1B0]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB617A0",
+        "0xB61926"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5,
+      "slot_budget": 129
+    },
+    {
+      "seq": 4,
+      "offset": "137",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "battlesv_port",
+      "meaning": "对战服务器端口",
+      "purpose": "经 `vt[0x1B0]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB617E0",
+        "0xB6195B"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    },
+    {
+      "seq": 5,
+      "offset": "141",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "room_id",
+      "meaning": "房间 ID",
+      "purpose": "经 `vt[0x1B0]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB61804",
+        "0xB61985"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 7
+    },
+    {
+      "seq": 6,
+      "offset": "145",
+      "length": "var(≤41)",
+      "wire_type": "str",
+      "name": "otp_battle",
+      "meaning": "对战 OTP（槽位预算 `0x29`=41）",
+      "purpose": "经 `vt[0x1B0]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB6181C",
+        "0xB619AD"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 8,
+      "slot_budget": 41
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0x5383（分发器 switch 选择子）",
+      "evidence_va": "0xB61879"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB41120`（模块 id 143）→ 之后逐字段读线",
+      "evidence_va": "0xB616E3"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "result：`u32`（线长 4）—— 结果码",
+      "evidence_va": "0xB61736"
+    },
+    {
+      "step": 4,
+      "kind": "read_count",
+      "detail": "matching_type：`u32`（线长 4）—— 匹配类型",
+      "evidence_va": "0xB61776"
+    },
+    {
+      "step": 5,
+      "kind": "read_string",
+      "detail": "battlesv_host：`str`（线长 var(≤129)）—— 对战服务器主机（槽位预算 `0x81`=129）",
+      "evidence_va": "0xB617A0"
+    },
+    {
+      "step": 6,
+      "kind": "read_scalar",
+      "detail": "battlesv_port：`u32`（线长 4）—— 对战服务器端口",
+      "evidence_va": "0xB617E0"
+    },
+    {
+      "step": 7,
+      "kind": "read_count",
+      "detail": "room_id：`u32`（线长 4）—— 房间 ID",
+      "evidence_va": "0xB61804"
+    },
+    {
+      "step": 8,
+      "kind": "read_string",
+      "detail": "otp_battle：`str`（线长 var(≤41)）—— 对战 OTP（槽位预算 `0x29`=41）",
+      "evidence_va": "0xB6181C"
+    },
+    {
+      "step": 9,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB61830"
+    },
+    {
+      "step": 10,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x1B0]`，实参 6 个",
+      "evidence_va": "0xB61A30"
+    },
+    {
+      "step": 11,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB61750"
+    }
+  ],
+  "capabilities": [
+    "flow",
+    "lounge.btlroom"
+  ],
+  "capabilities_derived": [
+    "flow"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:43",
+    "batch": 7,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 186,
+        "va": "0xB616F8",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB616F5",
+        "call_va": "0xB616FD"
+      },
+      "field_window": {
+        "start_va": "0xB616E4",
+        "end_va": "0xB61857",
+        "guard": {
+          "va": "0xB616E3",
+          "func": "0xB41120",
+          "module_id": 143,
+          "release_va": "0xB41110"
+        },
+        "closer_or_commit_va": "0xB61830",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "result",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB61736",
+              "0xB618CF"
+            ]
+          },
+          {
+            "name": "matching_type",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB61776",
+              "0xB618F9"
+            ]
+          },
+          {
+            "name": "battlesv_host",
+            "wire_type": "str",
+            "width": null,
+            "seq": 3,
+            "shape": "str",
+            "evidence_va": [
+              "0xB617A0",
+              "0xB61926"
+            ]
+          },
+          {
+            "name": "battlesv_port",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 4,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB617E0",
+              "0xB6195B"
+            ]
+          },
+          {
+            "name": "room_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 5,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB61804",
+              "0xB61985"
+            ]
+          },
+          {
+            "name": "otp_battle",
+            "wire_type": "str",
+            "width": null,
+            "seq": 6,
+            "shape": "str",
+            "evidence_va": [
+              "0xB6181C",
+              "0xB619AD"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB61736",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB61776",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB617A0",
+            "kind": "read",
+            "width": null,
+            "wire_type": "str",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB617E0",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB61804",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB6181C",
+            "kind": "read",
+            "width": null,
+            "wire_type": "str",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 6,
+        "checkable": 6,
+        "pairs": [
+          {
+            "field": "result",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB61736",
+            "kind": "read"
+          },
+          {
+            "field": "matching_type",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB61776",
+            "kind": "read"
+          },
+          {
+            "field": "battlesv_host",
+            "width": null,
+            "shape": "str",
+            "va": "0xB617A0",
+            "kind": "read"
+          },
+          {
+            "field": "battlesv_port",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB617E0",
+            "kind": "read"
+          },
+          {
+            "field": "room_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB61804",
+            "kind": "read"
+          },
+          {
+            "field": "otp_battle",
+            "width": null,
+            "shape": "str",
+            "va": "0xB6181C",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB616E4",
+          "0xB61857"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 16,
+          "capacity": 186,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB617A0",
+              "kind": "read",
+              "name": ""
+            },
+            {
+              "va": "0xB6181C",
+              "kind": "read",
+              "name": ""
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）16 / 容量 0xba"
+        }
+      },
+      "closer": {
+        "va": "0xB61830",
+        "kind": "jz",
+        "jcc_va": "0xB61836",
+        "seq_va": "0xB6182C",
+        "jcc_dst": "0xB61852",
+        "cmp": "cmp     ebx, [esp+2C5Ch+var_2C40]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x1B0]",
+        "slot_value": 432,
+        "va": "0xB61A30",
+        "mov_va": "0xB61A0A",
+        "host": "[edx+1B0h]",
+        "argc": 6,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB61750",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "result=",
+        "matching_type=",
+        "battlesv_host=\"",
+        "battlesv_port=",
+        "room_id=",
+        "otp_battle=\""
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0x5383-lounge-btlroom_enter_r.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xB61879"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "BtlroomEnterR",
+      "role": "response",
+      "wire_length": "4 + 4 + var(≤129) + 4 + 4 + var(≤41)",
+      "members": [
+        {
+          "name": "Result",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "result"
+        },
+        {
+          "name": "MatchingType",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "matching_type"
+        },
+        {
+          "name": "BattlesvHost",
+          "wire_type": "str",
+          "length": "var(≤129)",
+          "field_ref": "battlesv_host",
+          "element": null,
+          "element_length": null,
+          "cap": null,
+          "count_field": "matching_type",
+          "count_field_source": "nearest_scalar",
+          "note": "元素成员未建模（composites/ 无此结构），须以 IDA 复核补"
+        },
+        {
+          "name": "BattlesvPort",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "battlesv_port"
+        },
+        {
+          "name": "RoomId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "room_id"
+        },
+        {
+          "name": "OtpBattle",
+          "wire_type": "str",
+          "length": "var(≤41)",
+          "field_ref": "otp_battle",
+          "element": null,
+          "element_length": null,
+          "cap": null,
+          "count_field": "room_id",
+          "count_field_source": "nearest_scalar",
+          "note": "元素成员未建模（composites/ 无此结构），须以 IDA 复核补"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "be977881bffdac73",
+  "check_fingerprint": "2b5dd9cfd02dc9e7",
+  "import_repairs": [
+    "str_slot_budget:battlesv_host(129 → var(≤129)；线上实写 strlen+1)",
+    "str_slot_budget:otp_battle(41 → var(≤41)；线上实写 strlen+1)",
+    "wire_len_member_rows_folded:4 + 4 + 129 + 4 + 4 + 41 → 4 + 4 + var(≤129) + 4 + 4 + var(≤41)"
+  ]
+}

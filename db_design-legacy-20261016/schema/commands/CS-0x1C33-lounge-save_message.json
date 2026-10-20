@@ -1,0 +1,396 @@
+{
+  "id": "CS-0x1C33-lounge-save_message",
+  "opcode": "0x1C33",
+  "direction": "CS",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "save_message",
+  "source_dir": "protocol_analysis/commands/CS-0x1C33-lounge-save_message",
+  "meta": {
+    "opcode": "`0x1C33`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`save_message`",
+    "名字符串": "`)<-_proto_lounge_client::send_save_message( ` @ `0xeed334`",
+    "代码位置": "sub_BA6890 @ `0xba6890`（`0xba6890`..`0xba6af8`）",
+    "opcode 写入/分发证据": "`0xba691c`（opcode 写入指令）",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0x30E`（782）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽 @`0x00BA6A86`）；`call vt[0x58](buf, 负载长度)`",
+    "配对命令（同 opcode 反向）": "（本批次内无同 opcode 反向命令）"
+  },
+  "handler": "sub_BA6890",
+  "handler_va": "0xba6890",
+  "block": [
+    "0xBA6890",
+    "0xBA6AF8"
+  ],
+  "name_str": ")<-_proto_lounge_client::send_save_message(",
+  "name_str_va": "0xeed334",
+  "capacity": "0x30E",
+  "capacity_va": null,
+  "closer_va": "0xBA69C9",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽 @`0x00BA6A86`）；`call vt[0x58](buf, 负载长度)`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": "0x00BA6A86",
+  "wire": {
+    "length_expr": "var + 4 + 1",
+    "fixed": false,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x30E（容量记账口径，非线长）",
+    "field_count": 3,
+    "length_source": "field_sum",
+    "readme_conclusion": "结论：3 字段 + opcode：大厅保存留言（lounge 协议类版本，多留言类型与入库开关）。",
+    "readme_close": "容量 0x30E=782 ≥ 2 + 770 + 4 + 1 = 777 ✓。"
+  },
+  "fields": [
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "var",
+      "wire_type": "str",
+      "name": "msg",
+      "meaning": "留言文本（NUL 结尾）",
+      "purpose": "来源=入参 arg_0（`0xBA690D mov edx,[esp+arg_0]`），写串原语 `sub_B02B40`",
+      "enum": "串槽预算 769（push 301h）",
+      "evidence_va": [
+        "0xBA6926"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 2,
+      "offset": "var",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "type",
+      "meaning": "留言类型",
+      "purpose": "来源=入参 arg_4（`0xBA6947 mov edx,dword ptr [esp+arg_4]`），内联 `mov [ecx],edx`",
+      "enum": null,
+      "evidence_va": [
+        "0xBA6953"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 3,
+      "offset": "var",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "is_save_db",
+      "meaning": "是否写入数据库",
+      "purpose": "来源=入参 arg_8（`0xBA6956 lea ecx,[esp+arg_8]`）经写 u8 原语 `sub_B061C0`",
+      "enum": null,
+      "evidence_va": [
+        "0xBA695B"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0x1C33（分发器 switch 选择子）",
+      "evidence_va": "0xBA691C"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0x30E B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xBA68D6"
+    },
+    {
+      "step": 3,
+      "kind": "write_string",
+      "detail": "msg：`str`（线长 var）—— 留言文本（NUL 结尾）",
+      "evidence_va": "0xBA6926"
+    },
+    {
+      "step": 4,
+      "kind": "write_scalar",
+      "detail": "type：`u32`（线长 4）—— 留言类型",
+      "evidence_va": "0xBA6953"
+    },
+    {
+      "step": 5,
+      "kind": "write_scalar",
+      "detail": "is_save_db：`u8`（线长 1）—— 是否写入数据库",
+      "evidence_va": "0xBA695B"
+    },
+    {
+      "step": 6,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xBA69C9"
+    },
+    {
+      "step": 7,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xBA6A8F"
+    }
+  ],
+  "capabilities": [
+    "update"
+  ],
+  "capabilities_derived": [
+    "communicate"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [
+    "CS-0x1C33-battle-save_message"
+  ],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:43",
+    "batch": 5,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 782,
+        "va": "0xBA68D6",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xBA68D3",
+        "call_va": "0xBA68DB"
+      },
+      "field_window": {
+        "start_va": "0xBA6890",
+        "end_va": "0xBA69C9",
+        "guard": null,
+        "closer_or_commit_va": "0xBA69C9",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "msg",
+            "wire_type": "str",
+            "width": null,
+            "seq": 1,
+            "shape": "str",
+            "evidence_va": [
+              "0xBA6926"
+            ]
+          },
+          {
+            "name": "type",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xBA6953"
+            ]
+          },
+          {
+            "name": "is_save_db",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xBA695B"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xBA691C",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xBA6926",
+            "kind": "write",
+            "width": null,
+            "wire_type": "str",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xBA6953",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xBA695B",
+            "kind": "write",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xBA699F",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 3,
+        "checkable": 3,
+        "pairs": [
+          {
+            "field": "msg",
+            "width": null,
+            "shape": "str",
+            "va": "0xBA6926",
+            "kind": "write"
+          },
+          {
+            "field": "type",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xBA6953",
+            "kind": "inline_store"
+          },
+          {
+            "field": "is_save_db",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xBA695B",
+            "kind": "write"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xBA691C",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xBA6890",
+          "0xBA69C9"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 7,
+          "capacity": 782,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xBA6926",
+              "kind": "write",
+              "name": ""
+            },
+            {
+              "va": "0xBA699F",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）7 / 容量 0x30e"
+        }
+      },
+      "closer": {
+        "va": "0xBA69C9",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xBA6A8F",
+        "mov_va": "0xBA6A86",
+        "host": "[eax+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "msg=\"",
+        "type=",
+        "is_save_db="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0x1C33-lounge-save_message.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0xba691c",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": []
+  },
+  "structs": {
+    "request": {
+      "go_name": "SaveMessage",
+      "role": "request",
+      "wire_length": "var + 4 + 1",
+      "members": [
+        {
+          "name": "Msg",
+          "wire_type": "str",
+          "length": "var",
+          "field_ref": "msg",
+          "element": null,
+          "element_length": null,
+          "cap": null,
+          "count_field": null,
+          "count_field_source": null,
+          "note": "元素成员未建模（composites/ 无此结构），须以 IDA 复核补"
+        },
+        {
+          "name": "Type_",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "type"
+        },
+        {
+          "name": "IsSaveDb",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "is_save_db"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "15720a2d854c639b",
+  "check_fingerprint": "ebfb3ff558e31008"
+}

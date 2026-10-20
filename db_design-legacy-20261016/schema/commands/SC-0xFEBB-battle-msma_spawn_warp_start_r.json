@@ -1,0 +1,424 @@
+{
+  "id": "SC-0xFEBB-battle-msma_spawn_warp_start_r",
+  "opcode": "0xFEBB",
+  "direction": "SC",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "msma_spawn_warp_start_r",
+  "source_dir": "protocol_analysis/commands/SC-0xFEBB-battle-msma_spawn_warp_start_r",
+  "meta": {
+    "opcode": "`0xFEBB`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`battle_client`",
+    "命令名": "`msma_spawn_warp_start_r`",
+    "名字符串": "`)->_proto_battle_client::recv_msma_spawn_warp_start_r( ` @ `0xedd810`",
+    "代码位置": "sub_B0CC20 @ `0xb0cc20`　块 `0xb31273`..`0xb314fe`",
+    "opcode 写入/分发证据": "`0xb313a3`（命令名字符串引用点 = case 归属锚点）",
+    "处理块范围": "`0xB31273`..`0xB314FE`",
+    "声明容量": "`0xE`（14）",
+    "配对命令（同 opcode 反向）": "（本批次内无同 opcode 反向命令）"
+  },
+  "handler": "sub_B0CC20",
+  "handler_va": "0xb0cc20",
+  "block": [
+    "0xB31273",
+    "0xB314FE"
+  ],
+  "name_str": ")->_proto_battle_client::recv_msma_spawn_warp_start_r(",
+  "name_str_va": "0xedd810",
+  "capacity": "0xE",
+  "capacity_va": null,
+  "closer_va": "0xB31360",
+  "dispatch": null,
+  "dispatch_slot": "vt[0x144]",
+  "dispatch_va": null,
+  "wire": {
+    "length_expr": "4 + 4 + 2 + 4",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0xE（容量记账口径，非线长）",
+    "field_count": 4,
+    "length_source": "field_sum",
+    "readme_conclusion": "结论：4 字段（u32/u32/u16/u32），容量 14 == 线长 14 精确相等。",
+    "readme_close": "闭合点：0x00B31360（游标寄存器与报文末尾比较，jz/jnz 走成功分支）。"
+  },
+  "fields": [
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "result",
+      "meaning": "结果码",
+      "purpose": "`sub_B02DD0`（`0xB312C7`）读 u32；去向 `vt[0x144]` 第 4 实参（`0xB314DF push ecx`）",
+      "enum": null,
+      "evidence_va": [
+        "0xB312C7"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "is_cancel",
+      "meaning": "是否取消",
+      "purpose": "`sub_B02DD0`（`0xB31304`）读 u32；去向 `vt[0x144]` 第 3 实参（`0xB314DC push ecx`）",
+      "enum": null,
+      "evidence_va": [
+        "0xB31304"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 3,
+      "offset": "8",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "ent_id",
+      "meaning": "实体 ID",
+      "purpose": "`sub_B02DF0`（`0xB31328`）读 u16；去向 `vt[0x144]` 第 2 实参（`0xB314D5 push ecx`，`movzx` 取用）",
+      "enum": null,
+      "evidence_va": [
+        "0xB31328"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 4,
+      "offset": "10",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "countdown_msec",
+      "meaning": "倒计时（毫秒）",
+      "purpose": "`sub_B02DD0`（`0xB3134C`）读 u32；去向 `vt[0x144]` 第 1 实参（`0xB314CD push ecx`）",
+      "enum": null,
+      "evidence_va": [
+        "0xB3134C"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0xFEBB（分发器 switch 选择子）",
+      "evidence_va": "0xB313A3"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB05DA0`（模块 id 79）→ 之后逐字段读线",
+      "evidence_va": "0xB31277"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "result：`u32`（线长 4）—— 结果码",
+      "evidence_va": "0xB312C7"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "is_cancel：`u32`（线长 4）—— 是否取消",
+      "evidence_va": "0xB31304"
+    },
+    {
+      "step": 5,
+      "kind": "read_scalar",
+      "detail": "ent_id：`u16`（线长 2）—— 实体 ID",
+      "evidence_va": "0xB31328"
+    },
+    {
+      "step": 6,
+      "kind": "read_scalar",
+      "detail": "countdown_msec：`u32`（线长 4）—— 倒计时（毫秒）",
+      "evidence_va": "0xB3134C"
+    },
+    {
+      "step": 7,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB31360"
+    },
+    {
+      "step": 8,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x144]`，实参 4 个",
+      "evidence_va": "0xB314E2"
+    },
+    {
+      "step": 9,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB312DE"
+    }
+  ],
+  "capabilities": [
+    "create",
+    "flow"
+  ],
+  "capabilities_derived": [
+    "battle",
+    "flow"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:46",
+    "batch": 16,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 14,
+        "va": "0xB3128C",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB31289",
+        "call_va": "0xB3128E"
+      },
+      "field_window": {
+        "start_va": "0xB31278",
+        "end_va": "0xB31381",
+        "guard": {
+          "va": "0xB31277",
+          "func": "0xB05DA0",
+          "module_id": 79,
+          "release_va": "0xB05D90"
+        },
+        "closer_or_commit_va": "0xB31360",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "result",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB312C7"
+            ]
+          },
+          {
+            "name": "is_cancel",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB31304"
+            ]
+          },
+          {
+            "name": "ent_id",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB31328"
+            ]
+          },
+          {
+            "name": "countdown_msec",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 4,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB3134C"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB312C7",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB31304",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB31328",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB3134C",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 4,
+        "checkable": 4,
+        "pairs": [
+          {
+            "field": "result",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB312C7",
+            "kind": "read"
+          },
+          {
+            "field": "is_cancel",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB31304",
+            "kind": "read"
+          },
+          {
+            "field": "ent_id",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB31328",
+            "kind": "read"
+          },
+          {
+            "field": "countdown_msec",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB3134C",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB31278",
+          "0xB31381"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 14,
+          "capacity": 14,
+          "relation": "exact",
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）14 / 容量 0xe"
+        }
+      },
+      "closer": {
+        "va": "0xB31360",
+        "kind": "jz",
+        "jcc_va": "0xB31366",
+        "seq_va": "0xB3135C",
+        "jcc_dst": "0xB3137F",
+        "cmp": "cmp     ebx, [esp+1B3Ch+var_1B24]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x144]",
+        "slot_value": 324,
+        "va": "0xB314E2",
+        "mov_va": "0xB314C7",
+        "host": "[edx+144h]",
+        "argc": 4,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB312DE",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "result=",
+        "is_cancel=",
+        "ent_id=",
+        "countdown_msec="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0xFEBB-battle-msma_spawn_warp_start_r.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0xb313a3",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": []
+  },
+  "structs": {
+    "response": {
+      "go_name": "MsmaSpawnWarpStartR",
+      "role": "response",
+      "wire_length": "4 + 4 + 2 + 4",
+      "members": [
+        {
+          "name": "Result",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "result"
+        },
+        {
+          "name": "IsCancel",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "is_cancel"
+        },
+        {
+          "name": "EntId",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "ent_id"
+        },
+        {
+          "name": "CountdownMsec",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "countdown_msec"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "eb4ecdffc72a3052",
+  "check_fingerprint": "8c9bfd4870891003"
+}

@@ -1,0 +1,254 @@
+{
+ "id": "SC-0x816F-lounge-btlroom_invite_to",
+ "verified_at": "2026-09-30 15:25:44",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "block",
+ "block": [
+  "0xB6975D",
+  "0xB69A82"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 59,
+   "va": "0xB69779",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xB69776",
+   "call_va": "0xB6977B"
+  },
+  "field_window": {
+   "start_va": "0xB69765",
+   "end_va": "0xB698BD",
+   "guard": {
+    "va": "0xB69764",
+    "func": "0xB41120",
+    "module_id": 146,
+    "release_va": "0xB41110"
+   },
+   "closer_or_commit_va": "0xB69896",
+   "within_model_block": true,
+   "range_from": "block"
+  },
+  "primitive_widths": {
+   "direction": "SC",
+   "expected": [
+    {
+     "name": "room_id",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "B697B4",
+      "B69935"
+     ]
+    },
+    {
+     "name": "room_pw",
+     "wire_type": "str",
+     "width": null,
+     "seq": 2,
+     "shape": "str",
+     "evidence_va": [
+      "B697F5",
+      "B69962"
+     ]
+    },
+    {
+     "name": "pilot_id",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 3,
+     "shape": "scalar",
+     "evidence_va": [
+      "B69835",
+      "B69997"
+     ]
+    },
+    {
+     "name": "pilot_name",
+     "wire_type": "str",
+     "width": null,
+     "seq": 4,
+     "shape": "str",
+     "evidence_va": [
+      "B6985A",
+      "B699C4"
+     ]
+    },
+    {
+     "name": "is_gm_camera",
+     "wire_type": "u8",
+     "width": 1,
+     "seq": 5,
+     "shape": "scalar",
+     "evidence_va": [
+      "B69882",
+      "B699F2"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB697B4",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB697F5",
+     "kind": "read",
+     "width": null,
+     "wire_type": "str",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB69835",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB6985A",
+     "kind": "read",
+     "width": null,
+     "wire_type": "str",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB69882",
+     "kind": "read",
+     "width": 1,
+     "wire_type": "u8",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 5,
+   "checkable": 5,
+   "pairs": [
+    {
+     "field": "room_id",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB697B4",
+     "kind": "read"
+    },
+    {
+     "field": "room_pw",
+     "width": null,
+     "shape": "str",
+     "va": "0xB697F5",
+     "kind": "read"
+    },
+    {
+     "field": "pilot_id",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB69835",
+     "kind": "read"
+    },
+    {
+     "field": "pilot_name",
+     "width": null,
+     "shape": "str",
+     "va": "0xB6985A",
+     "kind": "read"
+    },
+    {
+     "field": "is_gm_camera",
+     "width": 1,
+     "shape": "scalar",
+     "va": "0xB69882",
+     "kind": "read"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB69765",
+    "0xB698BD"
+   ],
+   "scalar_match_verifiable": true,
+   "capacity_relation": {
+    "observed_min": 9,
+    "capacity": 59,
+    "relation": "within",
+    "unknown_events": [
+     {
+      "va": "0xB697F5",
+      "kind": "read",
+      "name": ""
+     },
+     {
+      "va": "0xB6985A",
+      "kind": "read",
+      "name": ""
+     }
+    ],
+    "is_lower_bound": true,
+    "note": "观测线长（下界）9 / 容量 0x3b"
+   }
+  },
+  "closer": {
+   "va": "0xB69896",
+   "kind": "jz",
+   "jcc_va": "0xB6989C",
+   "seq_va": "0xB69892",
+   "jcc_dst": "0xB698B8",
+   "cmp": "cmp     ebx, [esp+2C5Ch+var_2C40]",
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x1B8]",
+   "slot_value": 440,
+   "va": "0xB69A66",
+   "mov_va": "0xB69A49",
+   "host": "[edx+1B8h]",
+   "argc": 5,
+   "form": "mov_then_call",
+   "error_slot": {
+    "slot": "vt[0x64]",
+    "va": "0xB697CE",
+    "argc": 2
+   }
+  },
+  "log_strings": [
+   "room_id=",
+   "room_pw=\"",
+   "pilot_id=",
+   "pilot_name=\"",
+   "is_gm_camera="
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "is_gm_camera",
+  "pilot_id",
+  "pilot_name",
+  "room_id",
+  "room_pw"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 9
+}

@@ -1,0 +1,9 @@
+﻿序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+0,-,2,u16,opcode,命令号,分发器 switch 选择子,0x2AAF,0xB59E7B,确证
+1,0,4,u32,result,每日杯（dailycup）积分查询结果码,经 `vt[0x56C]`；日志 `result=`,-,0xB59DE2|0xB59ED1,确证
+2,4,65,struct{65/槽68},dc_point,每日杯积分明细（线上 65B；缓冲槽 68）,结构体经 `vt[0x56C]`；日志 `dc_point={…}`（打印器 `sub_B50F80`）,线上 65 / 槽 68,0xB59E22(读取器 sub_B47120 消费 1+4+4+12+12+16+16=65（含字段 6/7 两个 12B 成员）)|0xB59E13(sub_B41750 预留 0x44),确证
+3,+0,1,i8,dc_point.is_dc,本次是否掉线（DC）,结构成员；打印器 `is_dc=`（`movsx`）,-,0xB47120 首读|sub_B50F80[+0],确证
+4,+1,4,u32,dc_point.bef_dcpoint,掉线前积分,结构成员；打印器 `bef_dcpoint=`,-,0xB47120|sub_B50F80[+4],确证
+5,+5,4,u32,dc_point.aft_dcpoint,掉线后积分,结构成员；打印器 `aft_dcpoint=`,-,0xB47120|sub_B50F80[+8],确证
+6,+9,16,u32[4],dc_point.reward_item_ids,奖励道具 ID 列表（固定 4 项）,结构成员；打印器 `reward_item_ids={…}`,固定 4 项,0xB47120(4×u32)|sub_B50F80[+24h],确证
+7,+25,16,u32[4],dc_point.reward_item_nums,奖励道具数量列表（固定 4 项）,结构成员；打印器 `reward_item_nums={…}`,固定 4 项,0xB47120(4×u32)|sub_B50F80[+34h],确证

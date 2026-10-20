@@ -1,0 +1,283 @@
+{
+  "id": "respawn_post",
+  "title": "重生点进度元素 respawn_post（game_respawn_post_update）（25B 线 / 40B 槽）",
+  "length": 25,
+  "status": "complete",
+  "reader": "sub_B07B00",
+  "printer": "sub_B0AD10",
+  "memory_claim": 40,
+  "wire_layout": "2+2+4+4+1+1+1+2+8",
+  "evidence": {
+    "commands": [
+      "SC-0xD1B3-battle-game_respawn_post_update"
+    ],
+    "protocol_paths": [
+      "protocol_analysis/commands/SC-0xD1B3-battle-game_respawn_post_update/README.md"
+    ],
+    "note": "元素线长 25（读取器 sub_B07B00：u16 + u16 + u32 + u32 + i8×3 + 2×u8 + f64）≠ 槽步进 40（sub_B05F90 的 0x28）。成员名取自元素打印器 sub_B0AD10；conquer_remain_sec 用 f64 读取原语 sub_B06270（步进 8）。"
+  },
+  "members": [
+    {
+      "name": "team",
+      "offset": 0,
+      "memory_offset": 0,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "势力",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0xD1B3-battle-game_respawn_post_update",
+          "struct": "respawn_post",
+          "field_name": "team",
+          "offset": 0,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0xD1B3-battle-game_respawn_post_update/README.md",
+          "section": "§3 字段 2",
+          "reader": "sub_B07B00",
+          "printer": null,
+          "evidence_va": "0xB07B07"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07B07",
+      "asm_audit_date": "2026-09-22"
+    },
+    {
+      "name": "troops",
+      "offset": 2,
+      "memory_offset": 2,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "兵力",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0xD1B3-battle-game_respawn_post_update",
+          "struct": "respawn_post",
+          "field_name": "troops",
+          "offset": 2,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0xD1B3-battle-game_respawn_post_update/README.md",
+          "section": "§3 字段 2",
+          "reader": "sub_B07B00",
+          "printer": null,
+          "evidence_va": "0xB07B1F"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07B1F",
+      "asm_audit_date": "2026-09-22"
+    },
+    {
+      "name": "gauge_A",
+      "offset": 4,
+      "memory_offset": 4,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "A 计量值；客户端把运行 GaugeA 与 game_begin respawn_post_entry.gauge_max(+24→运行+44)相除，显示为十格比例；占点/兵力业务语义未完全证实。",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0xD1B3-battle-game_respawn_post_update",
+          "struct": "respawn_post",
+          "field_name": "gauge_A",
+          "offset": 4,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0xD1B3-battle-game_respawn_post_update/README.md",
+          "section": "§3 字段 2",
+          "reader": "sub_B07B00",
+          "printer": null,
+          "evidence_va": "0xB07B33"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07B33",
+      "asm_audit_date": "2026-09-22"
+    },
+    {
+      "name": "gauge_B",
+      "offset": 8,
+      "memory_offset": 8,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "B 计量值；客户端把运行 GaugeB 与 game_begin respawn_post_entry.gauge_max(+24→运行+44)相除，显示为十格比例；占点/兵力业务语义未完全证实。",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0xD1B3-battle-game_respawn_post_update",
+          "struct": "respawn_post",
+          "field_name": "gauge_B",
+          "offset": 8,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0xD1B3-battle-game_respawn_post_update/README.md",
+          "section": "§3 字段 2",
+          "reader": "sub_B07B00",
+          "printer": null,
+          "evidence_va": "0xB07B45"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07B45",
+      "asm_audit_date": "2026-09-22"
+    },
+    {
+      "name": "is_visible",
+      "offset": 12,
+      "memory_offset": 12,
+      "length": 1,
+      "wire_type": "i8",
+      "meaning": "是否可见",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0xD1B3-battle-game_respawn_post_update",
+          "struct": "respawn_post",
+          "field_name": "is_visible",
+          "offset": 12,
+          "length": 1,
+          "wire_type": "i8",
+          "protocol_path": "protocol_analysis/commands/SC-0xD1B3-battle-game_respawn_post_update/README.md",
+          "section": "§3 字段 2",
+          "reader": "sub_B07B00",
+          "printer": null,
+          "evidence_va": "0xB07B5A"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07B5A",
+      "asm_audit_date": "2026-09-22"
+    },
+    {
+      "name": "is_lock",
+      "offset": 13,
+      "memory_offset": 13,
+      "length": 1,
+      "wire_type": "i8",
+      "meaning": "是否锁定",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0xD1B3-battle-game_respawn_post_update",
+          "struct": "respawn_post",
+          "field_name": "is_lock",
+          "offset": 13,
+          "length": 1,
+          "wire_type": "i8",
+          "protocol_path": "protocol_analysis/commands/SC-0xD1B3-battle-game_respawn_post_update/README.md",
+          "section": "§3 字段 2",
+          "reader": "sub_B07B00",
+          "printer": null,
+          "evidence_va": "0xB07B66"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07B66",
+      "asm_audit_date": "2026-09-22"
+    },
+    {
+      "name": "is_keep",
+      "offset": 14,
+      "memory_offset": 14,
+      "length": 1,
+      "wire_type": "i8",
+      "meaning": "Keep状态。正确v15客户端42CD50要求type=2投放点的运行Keep(+0x69)>0才进入该队伍的出击候选；42CD80在另一运行时候选上下文中反向要求Keep<=0。不得脱离消费者把字段名解释成通用占领/保持状态。",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0xD1B3-battle-game_respawn_post_update",
+          "struct": "respawn_post",
+          "field_name": "is_keep",
+          "offset": 14,
+          "length": 1,
+          "wire_type": "i8",
+          "protocol_path": "protocol_analysis/commands/SC-0xD1B3-battle-game_respawn_post_update/README.md",
+          "section": "§3 字段 2",
+          "reader": "sub_B07B00",
+          "printer": null,
+          "evidence_va": "0xB07B77"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07B77",
+      "asm_audit_date": "2026-09-22"
+    },
+    {
+      "name": "near_ms_num",
+      "offset": 15,
+      "memory_offset": 15,
+      "length": 2,
+      "wire_type": "u8[2]",
+      "meaning": "附近机体数（2 元）",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0xD1B3-battle-game_respawn_post_update",
+          "struct": "respawn_post",
+          "field_name": "near_ms_num",
+          "offset": 15,
+          "length": 2,
+          "wire_type": "u8[2]",
+          "protocol_path": "protocol_analysis/commands/SC-0xD1B3-battle-game_respawn_post_update/README.md",
+          "section": "§3 字段 2",
+          "reader": "sub_B07B00",
+          "printer": null,
+          "evidence_va": "0xB07BA9"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07BA9",
+      "asm_audit_date": "2026-09-22"
+    },
+    {
+      "name": "conquer_remain_sec",
+      "offset": 17,
+      "memory_offset": 24,
+      "length": 8,
+      "wire_type": "f64",
+      "meaning": "协议字段名为占领剩余秒(f64)；v15客户端0x447450/0x693C60更新器会解析准备行对象中的该值但未再使用，回写时保留运行记录旧值；目前未证实其显示/逻辑消费者，不应仅按字段名实现倒计时。",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0xD1B3-battle-game_respawn_post_update",
+          "struct": "respawn_post",
+          "field_name": "conquer_remain_sec",
+          "offset": 17,
+          "length": 8,
+          "wire_type": "f64",
+          "protocol_path": "protocol_analysis/commands/SC-0xD1B3-battle-game_respawn_post_update/README.md",
+          "section": "§3 字段 2",
+          "reader": "sub_B07B00",
+          "printer": null,
+          "evidence_va": "0xB07BB3"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB07BB3",
+      "asm_audit_date": "2026-09-22"
+    }
+  ],
+  "asm_audit": {
+    "verified": "2026-09-22",
+    "reader": "sub_B07B00",
+    "writer": null,
+    "total_bytes": 25,
+    "fields_ok": 9,
+    "fields_fail": 0,
+    "issues": [],
+    "status": "pass",
+    "memory": {
+      "verified": "2026-09-26",
+      "status": "pass",
+      "mem_fields": 9,
+      "fields_ok": 9,
+      "fields_fail": 0,
+      "issues": [],
+      "memory_claim": 40
+    }
+  }
+}

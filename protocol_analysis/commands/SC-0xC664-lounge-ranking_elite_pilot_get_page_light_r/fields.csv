@@ -1,0 +1,5 @@
+序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+1,0,4,u32,result,结果码（日志串 `result=`）,经 `vt[0x598]`（4 实参）交业务,-,0xb78c1f|0xb78c2e,确证
+2,4,10,struct(10),order,排序条件（日志串 `order=`；`sub_B46420` = 10B）,同上,-,0xb78c5f|0xb78c6e,确证
+3,14,4,u32,ranking_num,名次条目数（上限 200）,"驱动 `ranking` 数组循环（`cmp edi,ebx`）",0..200,0xb78c84|0xb78cb0,确证
+4,18,73n,"array<rank_pilot_light,200>",ranking,精英机师排行榜（轻量版 日志串 `ranking={`）,经 `vt[0x598]`（指针 + 计数）交业务,-,0xb78cc2|0xb78cdf,确证

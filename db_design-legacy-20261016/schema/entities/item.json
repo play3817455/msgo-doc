@@ -1,0 +1,35 @@
+{
+  "id": "item",
+  "title": "背包道具实例",
+  "description": "玩家背包中的道具实例。线宽 22B；读取器 sub_B434F0；打印器 sub_B49CF0。",
+  "table_ref": "tbl_item",
+  "disposition": "PERSIST",
+  "wire_forms": [
+    {
+      "name": "item_add",
+      "length": 22,
+      "struct_type": "struct<item>",
+      "commands": ["SC-0xF72A-lounge-item_add"],
+      "reader": "sub_B434F0",
+      "protocol_path": "protocol_analysis/commands/SC-0xF72A-lounge-item_add/README.md",
+      "notes": "单条追加；前置 inv_place u16"
+    },
+    {
+      "name": "item_list_element",
+      "length": 22,
+      "struct_type": "struct<item>",
+      "commands": ["SC-0x02EE-lounge-item_init_get_r"],
+      "reader": "sub_B434F0",
+      "printer": "sub_B49CF0",
+      "protocol_path": "protocol_analysis/commands/SC-0x02EE-lounge-item_init_get_r/README.md",
+      "notes": "§3.1 成员表已确证；缓冲槽步进 24B（含 2B 填充，不在线上）"
+    }
+  ],
+  "fields": [
+    { "name": "uniqid", "offset": 0, "length": 8, "wire_type": "u64", "disposition": "PERSIST" },
+    { "name": "item_id", "offset": 8, "length": 4, "wire_type": "u32", "disposition": "PERSIST" },
+    { "name": "tm_sec", "offset": 12, "length": 4, "wire_type": "u32", "disposition": "PERSIST" },
+    { "name": "tm_usec", "offset": 16, "length": 4, "wire_type": "u32", "disposition": "PERSIST" },
+    { "name": "stack", "offset": 20, "length": 2, "wire_type": "u16", "disposition": "PERSIST" }
+  ]
+}

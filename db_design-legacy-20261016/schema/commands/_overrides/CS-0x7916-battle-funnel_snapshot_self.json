@@ -1,0 +1,39 @@
+{
+  "id": "CS-0x7916-battle-funnel_snapshot_self",
+  "revision": 1,
+  "verified_at": "2026-09-22",
+  "verifier": "人工（IDA 汇编整函数扫描：元素读取器 + 元素打印器 + 数组预留步进三方对齐）",
+  "reason": "客户端上报的单条漏斗快照：`fields.csv` 直接把元素成员摊成三行 `snapshot.ent_id` / `snapshot.wslot_idx` / `snapshot.move_info`，没有父行，站点于是看不到「这是一个 10B 结构体」。改法：删掉三行，补一行 `snapshot`（`struct<funnel_snapshot_entry>`，10B），复用 SC 侧同一元素的读取器证据（sub_B081C0，u32 + i8 + u8[5] = 10B）在 composites 里承载成员。",
+  "evidence": [
+    {
+      "what": "元素读取器/打印器与预留步进三方对齐（见 schema/composites 对应文件）",
+      "va": [
+        "0xB1110A",
+        "0xB081C0"
+      ],
+      "detail": "本批共 26 行未建模数组字段，逐条进 IDA 扫描元素读取器整函数取线宽，再与元素打印器成员名/内存偏移、数组预留器槽步进交叉验证。"
+    }
+  ],
+  "patch": {},
+  "drop": [
+    "snapshot.*"
+  ],
+  "add": [
+    {
+      "name": "snapshot",
+      "offset": "2",
+      "length": "10",
+      "wire_type": "struct<funnel_snapshot_entry>",
+      "meaning": "漏斗快照（元素线长 10 / 槽 12）",
+      "purpose": "经 `vt[?]` 交业务；结构体成员：`ent_id` u32（实体 ID）、`wslot_idx` i8（武器槽序号）、`move_info` u8[5]（移动信息 5 元字节），线上 10B / 槽 12B",
+      "enum": "元素线长 10：u32 + i8 + u8[5]",
+      "evidence_va": [
+        "0xB1110A",
+        "0xB081C0",
+        "0xB0BF80"
+      ],
+      "confidence": "确证",
+      "after": "opcode"
+    }
+  ]
+}

@@ -1,0 +1,232 @@
+{
+ "id": "CS-0x800A-battle-msma_spawn_warp_select",
+ "verified_at": "2026-09-30 15:25:47",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "handler_func",
+ "block": [
+  "0xB343F0",
+  "0xB3466B"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 18,
+   "va": "0xB34436",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xB34433",
+   "call_va": "0xB34438"
+  },
+  "field_window": {
+   "start_va": "0xB343F0",
+   "end_va": "0xB34527",
+   "guard": null,
+   "closer_or_commit_va": "0xB34527",
+   "within_model_block": true,
+   "range_from": "handler_func"
+  },
+  "primitive_widths": {
+   "direction": "CS",
+   "expected": [
+    {
+     "name": "post_index",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB3447C"
+     ]
+    },
+    {
+     "name": "spt_spot_index",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 2,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB34497"
+     ]
+    },
+    {
+     "name": "is_btlship_ride",
+     "wire_type": "u8",
+     "width": 1,
+     "seq": 3,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB3449F"
+     ]
+    },
+    {
+     "name": "respawn_ent_id",
+     "wire_type": "u16",
+     "width": 2,
+     "seq": 4,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB344B9"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB3446C",
+     "kind": "inline_store",
+     "width": 2,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB3447C",
+     "kind": "inline_store",
+     "width": 4,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB34497",
+     "kind": "inline_store",
+     "width": 4,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB3449F",
+     "kind": "write",
+     "width": 1,
+     "wire_type": "u8",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB344B9",
+     "kind": "write",
+     "width": 2,
+     "wire_type": "u16",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB344FD",
+     "kind": "composite",
+     "width": null,
+     "wire_type": null,
+     "name": "sub_B03020",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 4,
+   "checkable": 4,
+   "pairs": [
+    {
+     "field": "post_index",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB3447C",
+     "kind": "inline_store"
+    },
+    {
+     "field": "spt_spot_index",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB34497",
+     "kind": "inline_store"
+    },
+    {
+     "field": "is_btlship_ride",
+     "width": 1,
+     "shape": "scalar",
+     "va": "0xB3449F",
+     "kind": "write"
+    },
+    {
+     "field": "respawn_ent_id",
+     "width": 2,
+     "shape": "scalar",
+     "va": "0xB344B9",
+     "kind": "write"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [
+    {
+     "va": "0xB3446C",
+     "kind": "inline_store",
+     "width": 2,
+     "wire_type": null
+    }
+   ],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB343F0",
+    "0xB34527"
+   ],
+   "scalar_match_verifiable": false,
+   "capacity_relation": {
+    "observed_min": 13,
+    "capacity": 18,
+    "relation": "within",
+    "unknown_events": [
+     {
+      "va": "0xB344FD",
+      "kind": "composite",
+      "name": "sub_B03020"
+     }
+    ],
+    "is_lower_bound": true,
+    "note": "观测线长（下界）13 / 容量 0x12"
+   }
+  },
+  "closer": {
+   "va": "0xB34527",
+   "kind": "commit",
+   "jcc_va": null,
+   "seq_va": null,
+   "cmp": null,
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x58]",
+   "slot_value": 88,
+   "va": "0xB34605",
+   "mov_va": "0xB345FC",
+   "host": "[edx+58h]",
+   "argc": 2,
+   "form": "mov_then_call",
+   "error_slot": null
+  },
+  "log_strings": [
+   "post_index=",
+   "spt_spot_index=",
+   "is_btlship_ride=",
+   "respawn_ent_id="
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "is_btlship_ride",
+  "post_index",
+  "respawn_ent_id",
+  "spt_spot_index"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 18
+}

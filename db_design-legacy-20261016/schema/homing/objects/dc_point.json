@@ -1,0 +1,489 @@
+{
+  "id": "dc_point",
+  "title": "每日杯积分明细 dc_point（65B 线 / 68B 槽）",
+  "domain": "lounge",
+  "domain_votes": {
+    "lounge": 1
+  },
+  "folded_composites": [
+    "dc_point"
+  ],
+  "anchored_by": "",
+  "legacy_table": "tbl_dc_point",
+  "row_key": [],
+  "views": [
+    {
+      "composite": "dc_point",
+      "length": 65,
+      "memory_claim": 68,
+      "reader": "sub_B47120",
+      "printer": "sub_B50F80",
+      "commands": [
+        "SC-0x2AAF-lounge-dailycup_get_point_r"
+      ]
+    }
+  ],
+  "members": [
+    {
+      "name": "aft_dcpoint",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "掉线后积分",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "dc_point"
+        ]
+      },
+      "views": [
+        "dc_point"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "B4715D|B50FF7",
+      "evidence_ref": {
+        "command": "SC-0x2AAF-lounge-dailycup_get_point_r",
+        "struct": "dc_point",
+        "field": "aft_dcpoint",
+        "reader": "sub_B47120",
+        "printer": "sub_B50F80",
+        "protocol_path": "protocol_analysis/commands/SC-0x2AAF-lounge-dailycup_get_point_r/README.md",
+        "section": "§3 / notes.md"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "aft_next",
+      "wire_type": "u32[3]",
+      "length": 12,
+      "meaning": "下阶段奖励预览（掉线后）｜Oracle 实测：线上 3×u32（写记录流 3 次 4 字节写），并非仅内存成员",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "dc_point"
+        ]
+      },
+      "views": [
+        "dc_point"
+      ],
+      "composite_ref": "special_a_next",
+      "element_composite_ref": null,
+      "link_kind": "nested",
+      "link_composite": "special_a_next",
+      "memory_only": false,
+      "evidence_va": "B47175|B51047",
+      "evidence_ref": {
+        "command": "SC-0x2AAF-lounge-dailycup_get_point_r",
+        "struct": "dc_point",
+        "field": "aft_next",
+        "reader": "sub_B46CD0",
+        "printer": "sub_B506E0",
+        "protocol_path": "protocol_analysis/commands/SC-0x2AAF-lounge-dailycup_get_point_r/README.md",
+        "section": "notes.md"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "bef_dcpoint",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "掉线前积分",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "dc_point"
+        ]
+      },
+      "views": [
+        "dc_point"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "B47147|B50FD0",
+      "evidence_ref": {
+        "command": "SC-0x2AAF-lounge-dailycup_get_point_r",
+        "struct": "dc_point",
+        "field": "bef_dcpoint",
+        "reader": "sub_B47120",
+        "printer": "sub_B50F80",
+        "protocol_path": "protocol_analysis/commands/SC-0x2AAF-lounge-dailycup_get_point_r/README.md",
+        "section": "§3 / notes.md"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "bef_next",
+      "wire_type": "u32[3]",
+      "length": 12,
+      "meaning": "下阶段奖励预览（掉线前）｜Oracle 实测：线上 3×u32（写记录流 3 次 4 字节写），并非仅内存成员",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "dc_point"
+        ]
+      },
+      "views": [
+        "dc_point"
+      ],
+      "composite_ref": "special_a_next",
+      "element_composite_ref": null,
+      "link_kind": "nested",
+      "link_composite": "special_a_next",
+      "memory_only": false,
+      "evidence_va": "B47164|B5101E",
+      "evidence_ref": {
+        "command": "SC-0x2AAF-lounge-dailycup_get_point_r",
+        "struct": "dc_point",
+        "field": "bef_next",
+        "reader": "sub_B46CD0",
+        "printer": "sub_B506E0",
+        "protocol_path": "protocol_analysis/commands/SC-0x2AAF-lounge-dailycup_get_point_r/README.md",
+        "section": "notes.md"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "is_dc",
+      "wire_type": "i8",
+      "length": 1,
+      "meaning": "本次是否掉线（DC）",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "dc_point"
+        ]
+      },
+      "views": [
+        "dc_point"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "B47136|B50FA9",
+      "evidence_ref": {
+        "command": "SC-0x2AAF-lounge-dailycup_get_point_r",
+        "struct": "dc_point",
+        "field": "is_dc",
+        "reader": "sub_B47120",
+        "printer": "sub_B50F80",
+        "protocol_path": "protocol_analysis/commands/SC-0x2AAF-lounge-dailycup_get_point_r/README.md",
+        "section": "§3 / notes.md"
+      },
+      "role": "flag"
+    },
+    {
+      "name": "reward_item_ids",
+      "wire_type": "u32[4]",
+      "length": 16,
+      "meaning": "奖励道具 ID 列表（固定 4 项）",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "dc_point"
+        ]
+      },
+      "views": [
+        "dc_point"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "B4719C|B5106B",
+      "evidence_ref": {
+        "command": "SC-0x2AAF-lounge-dailycup_get_point_r",
+        "struct": "dc_point",
+        "field": "reward_item_ids",
+        "reader": "sub_B47120",
+        "printer": "sub_B50F80",
+        "protocol_path": "protocol_analysis/commands/SC-0x2AAF-lounge-dailycup_get_point_r/README.md",
+        "section": "§3 / notes.md"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "reward_item_nums",
+      "wire_type": "u32[4]",
+      "length": 16,
+      "meaning": "奖励道具数量列表（固定 4 项）",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "dc_point"
+        ]
+      },
+      "views": [
+        "dc_point"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "B471BD|B510C8",
+      "evidence_ref": {
+        "command": "SC-0x2AAF-lounge-dailycup_get_point_r",
+        "struct": "dc_point",
+        "field": "reward_item_nums",
+        "reader": "sub_B47120",
+        "printer": "sub_B50F80",
+        "protocol_path": "protocol_analysis/commands/SC-0x2AAF-lounge-dailycup_get_point_r/README.md",
+        "section": "§3 / notes.md"
+      },
+      "role": "attribute"
+    }
+  ],
+  "wire_body": "dc_point",
+  "writes": [],
+  "reads": [
+    {
+      "command": "SC-0x2AAF-lounge-dailycup_get_point_r",
+      "op": "read",
+      "via": "dc_point"
+    }
+  ],
+  "db_effects": [
+    {
+      "command": "SC-0x2AAF-lounge-dailycup_get_point_r",
+      "entity": "dc_point",
+      "op": "read",
+      "fields": [
+        "dc_point"
+      ],
+      "table_ref": "tbl_dc_point"
+    },
+    {
+      "command": "SC-0x2AAF-lounge-dailycup_get_point_r",
+      "entity": "dc_point",
+      "op": "read",
+      "fields": [
+        "get_point"
+      ],
+      "table_ref": "tbl_dc_point"
+    }
+  ],
+  "pk_members": [],
+  "pk_kind": "scope_only",
+  "is_root": true,
+  "identity": [],
+  "singleton_reason": "旧库 uq_game_dc_point (world_id,pilot_id) 逐列一致",
+  "multi": false,
+  "array_parents": [],
+  "inline_parents": [],
+  "shape": "root",
+  "parent": "",
+  "parents": [],
+  "has_scope": false,
+  "disposition": "PERSIST",
+  "table": "game.dc_point",
+  "columns_excluded": [],
+  "columns": [
+    {
+      "member": "aft_dcpoint",
+      "column": "aft_dcpoint",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "掉线后积分",
+      "evidence_va": "B4715D|B50FF7",
+      "pk": false
+    },
+    {
+      "member": "bef_dcpoint",
+      "column": "bef_dcpoint",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "掉线前积分",
+      "evidence_va": "B47147|B50FD0",
+      "pk": false
+    },
+    {
+      "member": "is_dc",
+      "column": "is_dc",
+      "role": "flag",
+      "wire_type": "i8",
+      "synthetic": false,
+      "meaning": "本次是否掉线（DC）",
+      "evidence_va": "B47136|B50FA9",
+      "pk": false
+    },
+    {
+      "member": "reward_item_ids",
+      "column": "reward_item_ids",
+      "role": "attribute",
+      "wire_type": "u32[4]",
+      "synthetic": false,
+      "meaning": "奖励道具 ID 列表（固定 4 项）",
+      "evidence_va": "B4719C|B5106B",
+      "pk": false
+    },
+    {
+      "member": "reward_item_nums",
+      "column": "reward_item_nums",
+      "role": "attribute",
+      "wire_type": "u32[4]",
+      "synthetic": false,
+      "meaning": "奖励道具数量列表（固定 4 项）",
+      "evidence_va": "B471BD|B510C8",
+      "pk": false
+    }
+  ],
+  "columns_expected": 5,
+  "keys": {
+    "scope": [
+      "world_id",
+      "pilot_id"
+    ],
+    "own": [],
+    "inherited": [],
+    "primary_key": [
+      "world_id",
+      "pilot_id"
+    ],
+    "pk_kind": "scope_only",
+    "children": [],
+    "nested": [
+      "aft_next",
+      "bef_next"
+    ],
+    "child_key": [
+      "elem_index"
+    ]
+  },
+  "tables": [
+    {
+      "name": "game.dc_point",
+      "shape": "root",
+      "parent": "",
+      "parent_table": "",
+      "via_member": "",
+      "key_extra": [],
+      "scope": [
+        "world_id",
+        "pilot_id"
+      ],
+      "links": [
+        {
+          "member": "aft_next",
+          "column": "aft_next",
+          "kind": "nested",
+          "composite": "special_a_next",
+          "child_object": "special_a_next",
+          "child_table": "game.dc_point__aft_next",
+          "count": 3,
+          "length": 12,
+          "evidence_va": "B47175|B51047"
+        },
+        {
+          "member": "bef_next",
+          "column": "bef_next",
+          "kind": "nested",
+          "composite": "special_a_next",
+          "child_object": "special_a_next",
+          "child_table": "game.dc_point__bef_next",
+          "count": 3,
+          "length": 12,
+          "evidence_va": "B47164|B5101E"
+        }
+      ],
+      "child_tables": [
+        "game.dc_point__aft_next",
+        "game.dc_point__bef_next"
+      ],
+      "columns": [
+        {
+          "member": "aft_dcpoint",
+          "column": "aft_dcpoint",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "掉线后积分",
+          "evidence_va": "B4715D|B50FF7",
+          "pk": false
+        },
+        {
+          "member": "bef_dcpoint",
+          "column": "bef_dcpoint",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "掉线前积分",
+          "evidence_va": "B47147|B50FD0",
+          "pk": false
+        },
+        {
+          "member": "is_dc",
+          "column": "is_dc",
+          "role": "flag",
+          "wire_type": "i8",
+          "synthetic": false,
+          "meaning": "本次是否掉线（DC）",
+          "evidence_va": "B47136|B50FA9",
+          "pk": false
+        },
+        {
+          "member": "reward_item_ids",
+          "column": "reward_item_ids",
+          "role": "attribute",
+          "wire_type": "u32[4]",
+          "synthetic": false,
+          "meaning": "奖励道具 ID 列表（固定 4 项）",
+          "evidence_va": "B4719C|B5106B",
+          "pk": false
+        },
+        {
+          "member": "reward_item_nums",
+          "column": "reward_item_nums",
+          "role": "attribute",
+          "wire_type": "u32[4]",
+          "synthetic": false,
+          "meaning": "奖励道具数量列表（固定 4 项）",
+          "evidence_va": "B471BD|B510C8",
+          "pk": false
+        }
+      ],
+      "key_members": [
+        "world_id",
+        "pilot_id"
+      ],
+      "primary_key": [
+        "world_id",
+        "pilot_id"
+      ]
+    }
+  ],
+  "links": [
+    {
+      "member": "aft_next",
+      "column": "aft_next",
+      "kind": "nested",
+      "composite": "special_a_next",
+      "child_object": "special_a_next",
+      "child_table": "game.dc_point__aft_next",
+      "count": 3,
+      "length": 12,
+      "evidence_va": "B47175|B51047"
+    },
+    {
+      "member": "bef_next",
+      "column": "bef_next",
+      "kind": "nested",
+      "composite": "special_a_next",
+      "child_object": "special_a_next",
+      "child_table": "game.dc_point__bef_next",
+      "count": 3,
+      "length": 12,
+      "evidence_va": "B47164|B5101E"
+    }
+  ]
+}

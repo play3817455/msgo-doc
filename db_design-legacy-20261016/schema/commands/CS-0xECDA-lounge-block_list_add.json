@@ -1,0 +1,474 @@
+{
+  "id": "CS-0xECDA-lounge-block_list_add",
+  "opcode": "0xECDA",
+  "direction": "CS",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "block_list_add",
+  "source_dir": "protocol_analysis/commands/CS-0xECDA-lounge-block_list_add",
+  "meta": {
+    "opcode": "`0xECDA`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`block_list_add`",
+    "名字符串": "`)<-_proto_lounge_client::send_block_list_add(` @ `0x00EEC138`",
+    "代码位置": "`sub_B9B490` @ `0x00B9B490`（`0x00B9B490`..`0x00B9B71E`）",
+    "opcode 写入证据": "`0x00B9B50C`",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0x02A`（42）",
+    "容量申请证据": "`0x00B9B4D6`（分配器 `[obj+0Ch]` 的 `vt[0x78]`）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)` @ `0x00B9B6AC`",
+    "提交": "`sub_B02FF0` @ `0x00B9B5C9`",
+    "配对命令": "S→C `SC-0x9B54-lounge-block_list_add_r`"
+  },
+  "handler": "sub_B9B490",
+  "handler_va": "0x00B9B490",
+  "block": [
+    "0xB9B490",
+    "0xB9B71E"
+  ],
+  "name_str": ")<-_proto_lounge_client::send_block_list_add(",
+  "name_str_va": "0x00EEC138",
+  "capacity": "0x2A",
+  "capacity_va": "0xB9B4D6",
+  "closer_va": "0xB9B5C9",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)` @ `0x00B9B6AC`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": "0x00B9B6AC",
+  "wire": {
+    "length_expr": "4 + 4 + var + 4",
+    "fixed": false,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x2A（容量记账口径，非线长）",
+    "field_count": 4,
+    "length_source": "field_sum",
+    "readme_conclusion": "字段数：**5**（含 opcode 第 0 项）",
+    "readme_close": "2 + 4 + 4 + 25(to_pilot_name 槽预算) + 4 = 39 ≤ 容量 0x2A = 42（富余 3）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "写入 `buf+0`，供服务端分发；无 case 块（C→S）",
+      "enum": "0xECDA",
+      "evidence_va": [
+        "`00B9B50C`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "pilotid",
+      "meaning": "被屏蔽驾驶员 ID",
+      "purpose": "来源=入参 `arg_0`（`mov esi,[esp+arg_0]` @`0xB9B518`）→ 内联写 `[eax],esi`（@`0xB9B51C`）",
+      "enum": null,
+      "evidence_va": [
+        "`0xB9B518`;`0xB9B51C`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "world_id",
+      "meaning": "大区 ID",
+      "purpose": "来源=入参 `arg_4`（`mov ecx,[esp+arg_4]` @`0xB9B52B`）→ 内联写 `[eax],ecx`（@`0xB9B539`）",
+      "enum": null,
+      "evidence_va": [
+        "`0xB9B52B`;`0xB9B539`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "8",
+      "length": "var",
+      "wire_type": "str",
+      "name": "to_pilot_name",
+      "meaning": "被屏蔽驾驶员名（NUL 结尾串，槽位预算 25）",
+      "purpose": "来源=入参 `arg_8` → 写原语 `sub_B02B40`（@`0xB9B541`，`push 19h`=25 槽预算 @`0xB9B533`）",
+      "enum": "槽预算 25",
+      "evidence_va": [
+        "`0xB9B533`;`0xB9B541`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 4,
+      "offset": "var",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "send_sysmes",
+      "meaning": "是否发送系统提示",
+      "purpose": "来源=入参 `arg_C` → 写原语 `sub_B02D80`（u32 @`0xB9B55B`）",
+      "enum": null,
+      "evidence_va": [
+        "`0xB9B55B`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0xECDA（分发器 switch 选择子）",
+      "evidence_va": "0x00B9B50C"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0x2A B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xB9B4D6"
+    },
+    {
+      "step": 3,
+      "kind": "write_scalar",
+      "detail": "pilotid：`u32`（线长 4）—— 被屏蔽驾驶员 ID",
+      "evidence_va": "0xB9B518"
+    },
+    {
+      "step": 4,
+      "kind": "write_count",
+      "detail": "world_id：`u32`（线长 4）—— 大区 ID",
+      "evidence_va": "0xB9B52B"
+    },
+    {
+      "step": 5,
+      "kind": "write_string",
+      "detail": "to_pilot_name：`str`（线长 var）—— 被屏蔽驾驶员名（NUL 结尾串，槽位预算 25）",
+      "evidence_va": "0xB9B533"
+    },
+    {
+      "step": 6,
+      "kind": "write_scalar",
+      "detail": "send_sysmes：`u32`（线长 4）—— 是否发送系统提示",
+      "evidence_va": "0xB9B55B"
+    },
+    {
+      "step": 7,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xB9B5C9"
+    },
+    {
+      "step": 8,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xB9B6B5"
+    }
+  ],
+  "capabilities": [
+    "create",
+    "query",
+    "lounge.block"
+  ],
+  "capabilities_derived": [
+    "create"
+  ],
+  "db_effects": [],
+  "pair": "SC-0x9B54-lounge-block_list_add_r",
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:45",
+    "batch": 13,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 42,
+        "va": "0xB9B4D6",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB9B4D3",
+        "call_va": "0xB9B4D8"
+      },
+      "field_window": {
+        "start_va": "0xB9B490",
+        "end_va": "0xB9B5C9",
+        "guard": null,
+        "closer_or_commit_va": "0xB9B5C9",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "pilotid",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "`0xB9B518`;`0xB9B51C`"
+            ]
+          },
+          {
+            "name": "world_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "`0xB9B52B`;`0xB9B539`"
+            ]
+          },
+          {
+            "name": "to_pilot_name",
+            "wire_type": "str",
+            "width": null,
+            "seq": 3,
+            "shape": "str",
+            "evidence_va": [
+              "`0xB9B533`;`0xB9B541`"
+            ]
+          },
+          {
+            "name": "send_sysmes",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 4,
+            "shape": "scalar",
+            "evidence_va": [
+              "`0xB9B55B`"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB9B50C",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB9B51C",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB9B539",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB9B541",
+            "kind": "write",
+            "width": null,
+            "wire_type": "str",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB9B55B",
+            "kind": "write",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB9B59F",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 4,
+        "checkable": 4,
+        "pairs": [
+          {
+            "field": "pilotid",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB9B51C",
+            "kind": "inline_store"
+          },
+          {
+            "field": "world_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB9B539",
+            "kind": "inline_store"
+          },
+          {
+            "field": "to_pilot_name",
+            "width": null,
+            "shape": "str",
+            "va": "0xB9B541",
+            "kind": "write"
+          },
+          {
+            "field": "send_sysmes",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB9B55B",
+            "kind": "write"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB9B50C",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB9B490",
+          "0xB9B5C9"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 14,
+          "capacity": 42,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB9B541",
+              "kind": "write",
+              "name": ""
+            },
+            {
+              "va": "0xB9B59F",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）14 / 容量 0x2a"
+        }
+      },
+      "closer": {
+        "va": "0xB9B5C9",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xB9B6B5",
+        "mov_va": "0xB9B6AC",
+        "host": "[edx+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "pilotid=",
+        "world_id=",
+        "to_pilot_name=\"",
+        "send_sysmes="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0xECDA-lounge-block_list_add.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0x00B9B50C",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "`00B9B50C`"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "BlockListAdd",
+      "role": "request",
+      "wire_length": "4 + 4 + var + 4",
+      "members": [
+        {
+          "name": "Pilotid",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "pilotid"
+        },
+        {
+          "name": "WorldId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "world_id"
+        },
+        {
+          "name": "ToPilotName",
+          "wire_type": "str",
+          "length": "var",
+          "field_ref": "to_pilot_name",
+          "element": null,
+          "element_length": null,
+          "cap": null,
+          "count_field": "world_id",
+          "count_field_source": "nearest_scalar",
+          "note": "元素成员未建模（composites/ 无此结构），须以 IDA 复核补"
+        },
+        {
+          "name": "SendSysmes",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "send_sysmes"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "511104989ba1695b",
+  "check_fingerprint": "8bf197fcbd8455ee"
+}

@@ -1,0 +1,289 @@
+{
+  "id": "CS-0x34C8-battle-roomlobby_ban_vote_cancel",
+  "opcode": "0x34C8",
+  "direction": "CS",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "roomlobby_ban_vote_cancel",
+  "source_dir": "protocol_analysis/commands/CS-0x34C8-battle-roomlobby_ban_vote_cancel",
+  "meta": {
+    "opcode": "`0x34C8`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`battle_client`",
+    "命令名": "`roomlobby_ban_vote_cancel`",
+    "名字符串": "`)<-_proto_battle_client::send_roomlobby_ban_vote_cancel(` @ `0xee06f8`",
+    "代码位置": "sub_B327E0 @ `0x00b327e0`（`0x00b327e0`..`0x00b32987`）",
+    "opcode 写入/分发证据": "`0xb32851`（opcode 写入指令）",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0x6`（6）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽 @`0xB32918`）；`call vt[0x58](buf, 负载长度)`",
+    "配对命令（同 opcode 反向）": "（本批次内无同 opcode 反向命令）"
+  },
+  "handler": "sub_B327E0",
+  "handler_va": "0x00b327e0",
+  "block": [
+    "0xB327E0",
+    "0xB32987"
+  ],
+  "name_str": ")<-_proto_battle_client::send_roomlobby_ban_vote_cancel(",
+  "name_str_va": "0xee06f8",
+  "capacity": "0x6",
+  "capacity_va": null,
+  "closer_va": "0xB328BD",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽 @`0xB32918`）；`call vt[0x58](buf, 负载长度)`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": "0xB32918",
+  "wire": {
+    "length_expr": "4",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x6（容量记账口径，非线长）",
+    "field_count": 1,
+    "length_source": "field_sum",
+    "readme_conclusion": "结论：取消禁言投票。",
+    "readme_close": "2 + 4 = **6** == 容量 0x6（精确相等）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发给对应协议类的处理块（C→S 无 case 块）",
+      "enum": "0x34C8",
+      "evidence_va": [
+        "0xB32851"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "2",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "msma_id",
+      "meaning": "机体实体 ID",
+      "purpose": "来源=入参 arg_0（`0xB3285D`）；内联 `mov [游标], reg`；服务端撤销该机体的投票/记录",
+      "enum": null,
+      "evidence_va": [
+        "0xB32861"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0x34C8（分发器 switch 选择子）",
+      "evidence_va": "0xB32851"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0x6 B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xB32823"
+    },
+    {
+      "step": 3,
+      "kind": "write_scalar",
+      "detail": "msma_id：`u32`（线长 4）—— 机体实体 ID",
+      "evidence_va": "0xB32861"
+    },
+    {
+      "step": 4,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xB328BD"
+    },
+    {
+      "step": 5,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xB32921"
+    }
+  ],
+  "capabilities": [
+    "delete",
+    "battle.roomlobby_ban"
+  ],
+  "capabilities_derived": [
+    "delete"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:46",
+    "batch": 15,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 6,
+        "va": "0xB32823",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB32820",
+        "call_va": "0xB32825"
+      },
+      "field_window": {
+        "start_va": "0xB327E0",
+        "end_va": "0xB328BD",
+        "guard": null,
+        "closer_or_commit_va": "0xB328BD",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "msma_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB32861"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB32851",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB32861",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB32893",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 1,
+        "checkable": 1,
+        "pairs": [
+          {
+            "field": "msma_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB32861",
+            "kind": "inline_store"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB32851",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB327E0",
+          "0xB328BD"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 6,
+          "capacity": 6,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB32893",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）6 / 容量 0x6"
+        }
+      },
+      "closer": {
+        "va": "0xB328BD",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xB32921",
+        "mov_va": "0xB32918",
+        "host": "[edx+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "msma_id="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0x34C8-battle-roomlobby_ban_vote_cancel.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0xb32851",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xB32851"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "RoomlobbyBanVoteCancel",
+      "role": "request",
+      "wire_length": "4",
+      "members": [
+        {
+          "name": "MsmaId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "msma_id"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "a920ba30b2e23435",
+  "check_fingerprint": "9e1f38cc4ffb297c"
+}

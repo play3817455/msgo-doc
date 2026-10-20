@@ -1,0 +1,441 @@
+{
+  "id": "SC-0x6B2C-battle-roomlobby_cupteam_notice",
+  "opcode": "0x6B2C",
+  "direction": "SC",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "roomlobby_cupteam_notice",
+  "source_dir": "protocol_analysis/commands/SC-0x6B2C-battle-roomlobby_cupteam_notice",
+  "meta": {
+    "opcode": "`0x6B2C`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`battle_client`",
+    "命令名": "`roomlobby_cupteam_notice`",
+    "处理块范围": "`0xb1d3fd`..`0xb1d687`",
+    "名字串引用点": "`0xb1d52d`",
+    "声明容量（解码缓冲）": "`0xD`（`0xb1d418`）",
+    "长度闭合点": "`0xb1d4e6`",
+    "去向": "`vt[0xA0]` @ `0xb1d66b`（4 实参）"
+  },
+  "handler": null,
+  "handler_va": null,
+  "block": [
+    "0xb1d3fd",
+    "0xb1d687"
+  ],
+  "name_str": null,
+  "name_str_va": "0xb1d52d",
+  "capacity": "0xD",
+  "capacity_va": "0xb1d418",
+  "closer_va": "0xB1D4EA",
+  "dispatch": "`vt[0xA0]` @ `0xb1d66b`（4 实参）",
+  "dispatch_slot": "vt[0xA0]",
+  "dispatch_va": "0xb1d66b",
+  "wire": {
+    "length_expr": "1 + 4 + 4 + 4",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0xD（容量记账口径，非线长）",
+    "field_count": 4,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：13。",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0x6B2C",
+      "evidence_va": [
+        "`0xb1d52d`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "team",
+      "meaning": "阵营（日志串 `team=`）",
+      "purpose": "`vt[0xA0]` 实参（`movzx ecx,byte ptr [eax]` @`0xb1d665`）",
+      "enum": null,
+      "evidence_va": [
+        "0xb1d451"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "1",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "cupteam_id",
+      "meaning": "杯赛队伍 id（日志串 `cupteam_id=`）",
+      "purpose": "`vt[0xA0]` 实参",
+      "enum": null,
+      "evidence_va": [
+        "0xb1d48e"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "5",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "cupteam_rate",
+      "meaning": "杯赛队伍积分率（日志串 `cupteam_rate=`）",
+      "purpose": "`vt[0xA0]` 实参",
+      "enum": null,
+      "evidence_va": [
+        "0xb1d4b2"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 4,
+      "offset": "9",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "tournament_vs_type",
+      "meaning": "锦标赛对战类型（日志串 `tournament_vs_type=`）",
+      "purpose": "`vt[0xA0]` 实参",
+      "enum": null,
+      "evidence_va": [
+        "0xb1d4d6"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0x6B2C（分发器 switch 选择子）",
+      "evidence_va": "0xB1D52D"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB05DA0`（模块 id 17）→ 之后逐字段读线",
+      "evidence_va": "0xB1D401"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "team：`u8`（线长 1）—— 阵营（日志串 `team=`）",
+      "evidence_va": "0xB1D451"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "cupteam_id：`u32`（线长 4）—— 杯赛队伍 id（日志串 `cupteam_id=`）",
+      "evidence_va": "0xB1D48E"
+    },
+    {
+      "step": 5,
+      "kind": "read_scalar",
+      "detail": "cupteam_rate：`u32`（线长 4）—— 杯赛队伍积分率（日志串 `cupteam_rate=`）",
+      "evidence_va": "0xB1D4B2"
+    },
+    {
+      "step": 6,
+      "kind": "read_scalar",
+      "detail": "tournament_vs_type：`u32`（线长 4）—— 锦标赛对战类型（日志串 `tournament_vs_type=`）",
+      "evidence_va": "0xB1D4D6"
+    },
+    {
+      "step": 7,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB1D4EA"
+    },
+    {
+      "step": 8,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0xA0]`，实参 4 个",
+      "evidence_va": "0xB1D66B"
+    },
+    {
+      "step": 9,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB1D468"
+    }
+  ],
+  "capabilities": [
+    "notify",
+    "battle.roomlobby_cupteam"
+  ],
+  "capabilities_derived": [
+    "notify"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:47",
+    "batch": 18,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 13,
+        "va": "0xB1D416",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB1D413",
+        "call_va": "0xB1D418"
+      },
+      "field_window": {
+        "start_va": "0xB1D402",
+        "end_va": "0xB1D50B",
+        "guard": {
+          "va": "0xB1D401",
+          "func": "0xB05DA0",
+          "module_id": 17,
+          "release_va": "0xB05D90"
+        },
+        "closer_or_commit_va": "0xB1D4EA",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "team",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb1d451"
+            ]
+          },
+          {
+            "name": "cupteam_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb1d48e"
+            ]
+          },
+          {
+            "name": "cupteam_rate",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb1d4b2"
+            ]
+          },
+          {
+            "name": "tournament_vs_type",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 4,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb1d4d6"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB1D451",
+            "kind": "read",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB1D48E",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB1D4B2",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB1D4D6",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 4,
+        "checkable": 4,
+        "pairs": [
+          {
+            "field": "team",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB1D451",
+            "kind": "read"
+          },
+          {
+            "field": "cupteam_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB1D48E",
+            "kind": "read"
+          },
+          {
+            "field": "cupteam_rate",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB1D4B2",
+            "kind": "read"
+          },
+          {
+            "field": "tournament_vs_type",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB1D4D6",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB1D402",
+          "0xB1D50B"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 13,
+          "capacity": 13,
+          "relation": "exact",
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）13 / 容量 0xd"
+        }
+      },
+      "closer": {
+        "va": "0xB1D4EA",
+        "kind": "jz",
+        "jcc_va": "0xB1D4F0",
+        "seq_va": "0xB1D4E6",
+        "jcc_dst": "0xB1D509",
+        "cmp": "cmp     ebx, [esp+1B3Ch+var_1B24]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0xA0]",
+        "slot_value": 160,
+        "va": "0xB1D66B",
+        "mov_va": "0xB1D650",
+        "host": "[edx+0A0h]",
+        "argc": 4,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB1D468",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "team=",
+        "cupteam_id=",
+        "cupteam_rate=",
+        "tournament_vs_type="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0x6B2C-battle-roomlobby_cupteam_notice.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "`0xb1d52d`"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "RoomlobbyCupteamNotice",
+      "role": "response",
+      "wire_length": "1 + 4 + 4 + 4",
+      "members": [
+        {
+          "name": "Team",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "team"
+        },
+        {
+          "name": "CupteamId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "cupteam_id"
+        },
+        {
+          "name": "CupteamRate",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "cupteam_rate"
+        },
+        {
+          "name": "TournamentVsType",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "tournament_vs_type"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "652985a28881f22b",
+  "check_fingerprint": "04ffe95b408c24b7"
+}

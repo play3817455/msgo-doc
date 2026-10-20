@@ -1,0 +1,332 @@
+{
+  "id": "SC-0xEC71-lounge-season_rankerbattle_set_event_flag",
+  "opcode": "0xEC71",
+  "direction": "SC",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "season_rankerbattle_set_event_flag",
+  "source_dir": "protocol_analysis/commands/SC-0xEC71-lounge-season_rankerbattle_set_event_flag",
+  "meta": {
+    "opcode": "`0xEC71`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`season_rankerbattle_set_event_flag`",
+    "处理函数": "`sub_B51930`（lounge 分发器）",
+    "处理块范围": "`0xB85361`..`0xB85566`",
+    "名字串引用点": "`0xB85451`",
+    "声明容量（解码缓冲）": "`0x8`（`0xB8537D`）",
+    "长度闭合点": "`0xB85408`",
+    "去向": "`vt[0x5B0]` @ `0xB8552C`（2 实参）"
+  },
+  "handler": "sub_B51930",
+  "handler_va": "0xB51930",
+  "block": [
+    "0xB85361",
+    "0xB85566"
+  ],
+  "name_str": null,
+  "name_str_va": "0xB85451",
+  "capacity": "0x8",
+  "capacity_va": "0xB8537D",
+  "closer_va": "0xB85408",
+  "dispatch": "`vt[0x5B0]` @ `0xB8552C`（2 实参）",
+  "dispatch_slot": "vt[0x5B0]",
+  "dispatch_va": "0xB8552C",
+  "wire": {
+    "length_expr": "4 + 4",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x8（容量记账口径，非线长）",
+    "field_count": 2,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：8。",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0xEC71",
+      "evidence_va": [
+        "0xB85451"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "event_flag",
+      "meaning": "活动标志（日志串 `event_flag=`）",
+      "purpose": "经 `vt[0x5B0]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB853B8",
+        "0xB854A7"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "is_set",
+      "meaning": "是否置位（日志串 `is_set=`）",
+      "purpose": "经 `vt[0x5B0]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB853F8",
+        "0xB854CC"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0xEC71（分发器 switch 选择子）",
+      "evidence_va": "0xB85451"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB41120`（模块 id 602）→ 之后逐字段读线",
+      "evidence_va": "0xB85368"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "event_flag：`u32`（线长 4）—— 活动标志（日志串 `event_flag=`）",
+      "evidence_va": "0xB853B8"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "is_set：`u32`（线长 4）—— 是否置位（日志串 `is_set=`）",
+      "evidence_va": "0xB853F8"
+    },
+    {
+      "step": 5,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB85408"
+    },
+    {
+      "step": 6,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x5B0]`，实参 2 个",
+      "evidence_va": "0xB8552C"
+    },
+    {
+      "step": 7,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB853D2"
+    }
+  ],
+  "capabilities": [
+    "update",
+    "lounge.season_rankerbattle"
+  ],
+  "capabilities_derived": [
+    "update"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:45",
+    "batch": 13,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 8,
+        "va": "0xB8537D",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB8537A",
+        "call_va": "0xB8537F"
+      },
+      "field_window": {
+        "start_va": "0xB85369",
+        "end_va": "0xB8542F",
+        "guard": {
+          "va": "0xB85368",
+          "func": "0xB41120",
+          "module_id": 602,
+          "release_va": "0xB41110"
+        },
+        "closer_or_commit_va": "0xB85408",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "event_flag",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB853B8",
+              "0xB854A7"
+            ]
+          },
+          {
+            "name": "is_set",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB853F8",
+              "0xB854CC"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB853B8",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB853F8",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 2,
+        "checkable": 2,
+        "pairs": [
+          {
+            "field": "event_flag",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB853B8",
+            "kind": "read"
+          },
+          {
+            "field": "is_set",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB853F8",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB85369",
+          "0xB8542F"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 8,
+          "capacity": 8,
+          "relation": "exact",
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）8 / 容量 0x8"
+        }
+      },
+      "closer": {
+        "va": "0xB85408",
+        "kind": "jz",
+        "jcc_va": "0xB8540E",
+        "seq_va": "0xB85404",
+        "jcc_dst": "0xB8542A",
+        "cmp": "cmp     ebx, [esp+2C5Ch+var_2C40]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x5B0]",
+        "slot_value": 1456,
+        "va": "0xB8552C",
+        "mov_va": "0xB85520",
+        "host": "[edx+5B0h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB853D2",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "event_flag=",
+        "is_set="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0xEC71-lounge-season_rankerbattle_set_event_flag.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xB85451"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "SeasonRankerbattleSetEventFlag",
+      "role": "response",
+      "wire_length": "4 + 4",
+      "members": [
+        {
+          "name": "EventFlag",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "event_flag"
+        },
+        {
+          "name": "IsSet",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "is_set"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "14ae7e4a49d67b96",
+  "check_fingerprint": "48e0f95bfc4cfd9c"
+}

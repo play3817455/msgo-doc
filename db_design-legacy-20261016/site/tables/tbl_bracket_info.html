@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>对阵表信息 · db_design</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <h1><a href="../index.html">db_design</a></h1>
+      <p class="header-note">唯一证据源：<code>protocol_analysis/</code></p>
+      <nav><a href="../index.html">首页</a>
+      <a href="../homing/index.html">归位库</a>
+      <a href="../tables/index.html" class="active">旧表留档</a>
+      <a href="../commands/index.html">命令</a>
+      <a href="../cfg/index.html">配置表79</a>
+      <a href="../srv/index.html">服务端配置</a>
+      <a href="../asm-audit/index.html">ASM 审计</a>
+      <a href="../oracle-audit/index.html">Oracle 审计</a>
+      <a href="../entities/index.html">协议实体</a>
+      <a href="../fields/index.html">字段索引</a>
+      <a href="../relations.html">表关系</a></nav>
+    </div>
+  </header>
+  <main class="wrap">
+
+    <nav class="breadcrumb"><a href="index.html">表设计</a> / <span><code>tbl_bracket_info</code></span></nav>
+    <h2>对阵表信息 <span class="badge" style="background:#2e7d32">complete</span> <span class="badge" style="background:#2e7d32">ASM ✓</span></h2>
+    <p>持久化 bracket_info 46B 线；11 成员杯赛对阵元数据（sub_B46D80/sub_B50840）</p>
+    <p class="muted">共 12 节点 · PERSIST 11 · TBD 0</p>
+    
+    <section class="asm-panel">
+      <h3>ASM 审计 <span class="badge" style="background:#2e7d32">ASM ✓</span> · memory <span class="badge" style="background:#2e7d32">ASM ✓</span></h3>
+      <dl class="asm-dl">
+        <dt>composite</dt><dd><code>bracket_info</code></dd>
+        <dt>reader</dt><dd><code>sub_B46D80</code></dd>
+        <dt>线长</dt><dd>46 B
+           / 槽 52 B</dd>
+        <dt>wire_layout</dt><dd><code>i8+3×u32+9×u8+5×u32</code></dd>
+        <dt>wire 字段</dt><dd>11 ok</dd>
+        <dt>memory 字段</dt><dd>11 audited · 11 ok</dd>
+        <dt>verified</dt><dd>wire 2026-09-20 · mem 2026-09-26</dd>
+      </dl>
+    </section>
+    <h3>证据命令</h3>
+    <ul><li><a href="../commands/SC-0xD784-lounge-cupteam_party_status_update.html"><code>SC-0xD784-lounge-cupteam_party_status_update</code></a> · <a href="../../../protocol_analysis/commands/SC-0xD784-lounge-cupteam_party_status_update/README.md" target="_blank">protocol README</a></li></ul>
+
+    <h3 id="columns">列树（按分组）</h3>
+    <div class="tree-legend">
+      <span>列名</span><span>线类型</span><span>disposition</span><span>含义</span><span>→ protocol 证据</span>
+    </div>
+    
+    <section class="col-group">
+      <h3>bracket_info（46B 线 · 11 成员）</h3>
+      <ul class="field-tree root-tree"><li class="tree-branch">
+      <details open>
+        <summary><code class='fname'>bracket_info</code> <code class='ftype'>struct</code> <span class='offset'></span> <span class="badge" style="background:#455a64">COMPOSITE</span> <span class="muted">← <code>bracket_info</code></span></summary>
+        <div class="tree-body">
+          <div class="tree-detail">对阵表信息（日志 `bracket=`；claim 52 / 线长 46）</div>
+          <div class="evidence-line"><code>SC-0xD784-lounge-cupteam_party_status_update</code> struct <code>bracket_info</code> @21 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xD784-lounge-cupteam_party_status_update/README.md" target="_blank">📄 protocol</a></div>
+          <ul class="field-tree"><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">phase</code>
+          <code class="ftype">i8</code>
+          <span class="offset">wire +0 1B</span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="B46D9A|B50860">✓</span>
+        </div>
+        <div class="tree-meaning">赛程阶段编号（打印器 movsx）</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0xD784-lounge-cupteam_party_status_update</code> struct <code>bracket_info</code> @0 §3 / notes.md <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xD784-lounge-cupteam_party_status_update/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">round</code>
+          <code class="ftype">u32</code>
+          <span class="offset">wire +1 mem +4 4B</span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="B46DAF|B50887">✓</span>
+        </div>
+        <div class="tree-meaning">轮次</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0xD784-lounge-cupteam_party_status_update</code> struct <code>bracket_info</code> @1 §3 / notes.md <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xD784-lounge-cupteam_party_status_update/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">mission_id</code>
+          <code class="ftype">u32</code>
+          <span class="offset">wire +5 mem +8 4B</span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="B46DC5|B508AE">✓</span>
+        </div>
+        <div class="tree-meaning">任务 ID</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0xD784-lounge-cupteam_party_status_update</code> struct <code>bracket_info</code> @5 §3 / notes.md <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xD784-lounge-cupteam_party_status_update/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">bracket_id</code>
+          <code class="ftype">u32</code>
+          <span class="offset">wire +9 mem +12 4B</span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="B46DD7|B508D5">✓</span>
+        </div>
+        <div class="tree-meaning">括号组 ID</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0xD784-lounge-cupteam_party_status_update</code> struct <code>bracket_info</code> @9 §3 / notes.md <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xD784-lounge-cupteam_party_status_update/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">bracket_name</code>
+          <code class="ftype">bytes</code>
+          <span class="offset">wire +13 mem +16 9B</span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="B46DEC|B5090C">✓</span>
+        </div>
+        <div class="tree-meaning">对阵表名称（定长 9 字节，无 NUL 前缀）</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0xD784-lounge-cupteam_party_status_update</code> struct <code>bracket_info</code> @13 §3 / notes.md <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xD784-lounge-cupteam_party_status_update/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">winners_bracket_id</code>
+          <code class="ftype">u32</code>
+          <span class="offset">wire +22 mem +28 4B</span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xB46E07">✓</span>
+        </div>
+        <div class="tree-meaning">胜者组括号 ID</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0xD784-lounge-cupteam_party_status_update</code> struct <code>bracket_info</code> @22 §3 / notes.md <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xD784-lounge-cupteam_party_status_update/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">losers_bracket_id</code>
+          <code class="ftype">u32</code>
+          <span class="offset">wire +26 mem +32 4B</span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xB46E19">✓</span>
+        </div>
+        <div class="tree-meaning">败者组括号 ID</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0xD784-lounge-cupteam_party_status_update</code> struct <code>bracket_info</code> @26 §3 / notes.md <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xD784-lounge-cupteam_party_status_update/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">open_time</code>
+          <code class="ftype">u32</code>
+          <span class="offset">wire +30 mem +36 4B</span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xB46E2F">✓</span>
+        </div>
+        <div class="tree-meaning">开放时间</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0xD784-lounge-cupteam_party_status_update</code> struct <code>bracket_info</code> @30 §3 / notes.md <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xD784-lounge-cupteam_party_status_update/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">close_time</code>
+          <code class="ftype">u32</code>
+          <span class="offset">wire +34 mem +40 4B</span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xB46E36">✓</span>
+        </div>
+        <div class="tree-meaning">关闭时间</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0xD784-lounge-cupteam_party_status_update</code> struct <code>bracket_info</code> @34 §3 / notes.md <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xD784-lounge-cupteam_party_status_update/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">cupteam_id_a</code>
+          <code class="ftype">u32</code>
+          <span class="offset">wire +38 mem +44 4B</span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xB46E47">✓</span>
+        </div>
+        <div class="tree-meaning">杯赛队伍 A ID</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0xD784-lounge-cupteam_party_status_update</code> struct <code>bracket_info</code> @38 §3 / notes.md <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xD784-lounge-cupteam_party_status_update/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">cupteam_id_b</code>
+          <code class="ftype">u32</code>
+          <span class="offset">wire +42 mem +48 4B</span>
+          <span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xB46E6C">✓</span>
+        </div>
+        <div class="tree-meaning">杯赛队伍 B ID</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0xD784-lounge-cupteam_party_status_update</code> struct <code>bracket_info</code> @42 §3 / notes.md <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xD784-lounge-cupteam_party_status_update/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li></ul>
+        </div>
+      </details>
+    </li></ul>
+    </section>
+
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">生成于 2026-10-12 · 改 JSON 后重跑 build_site.py · HTML 只读</div>
+  </footer>
+</body>
+</html>

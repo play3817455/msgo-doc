@@ -1,0 +1,50 @@
+{
+  "id": "tbl_dc_point",
+  "title": "断线杯积分",
+  "status": "complete",
+  "table_disposition": "PERSIST",
+  "purpose": "持久化 dc_point 41B 线 + 内存嵌套 bef_next/aft_next",
+  "entity_ref": "dc_point",
+  "evidence_commands": [
+    "SC-0x2AAF-lounge-dailycup_get_point_r"
+  ],
+  "column_groups": [
+    {
+      "name": "dc_point（41B 线 / 68B 槽）",
+      "columns": [
+        "dc_point"
+      ]
+    }
+  ],
+  "columns": [
+    {
+      "name": "dc_point",
+      "disposition": "COMPOSITE",
+      "composite_ref": "dc_point",
+      "meaning": "每日杯积分明细（日志 dc_point=；线 41 / 槽 68）",
+      "wire_sources": [
+        {
+          "command": "SC-0x2AAF-lounge-dailycup_get_point_r",
+          "struct": "dc_point",
+          "field_name": "dc_point",
+          "offset": null,
+          "length": 41,
+          "wire_type": "struct",
+          "protocol_path": "protocol_analysis/commands/SC-0x2AAF-lounge-dailycup_get_point_r/README.md",
+          "section": "§3",
+          "reader": "sub_B47120",
+          "printer": "sub_B50F80",
+          "evidence_va": "B5A8F8|B50F80"
+        }
+      ],
+      "asm_verified": true
+    }
+  ],
+  "asm_audit": {
+    "composite_ref": "dc_point",
+    "status": "pass",
+    "issues_count": 0,
+    "memory_status": "pass",
+    "memory_issues_count": 0
+  }
+}

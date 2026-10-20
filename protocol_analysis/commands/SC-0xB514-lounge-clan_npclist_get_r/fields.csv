@@ -1,0 +1,8 @@
+序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+0,-,2,u16,opcode,命令号,分发器 switch 选择子,0xB514,0xb74680,确证
+1,0,4,u32,id_num,NPC 列表 ID 条目数（上限 24）,"驱动 npclist_id 数组循环（`cmp ebx,18h`）",0..24,B744BD|B744E9,确证
+2,4,4·n₁,"array<u32,24>",npclist_id,NPC 列表 ID（日志串 `npclist_id={...}`）,经 `vt[0x41C]` 交业务（6 实参）,-,B744FB|B7451B|B74527,确证
+3,var,4,u32,is_ex_num,扩展标志条目数（上限 24）,"驱动 npclist_is_ex 数组循环（`cmp ebx,18h`）",0..24,B7454F|B74563,确证
+4,var,n₂,"array<u8,24>",npclist_is_ex,是否为扩展 NPC（日志串 `npclist_is_ex={...}`，十六进制打印）,经 `vt[0x41C]` 交业务,-,B74576|B7458D,确证
+5,var,4,u32,unlock_num,解锁等级条目数（上限 24）,"驱动 npclist_unlock_lv 数组循环（`cmp ebx,18h`）",0..24,B745BC|B745E8,确证
+6,var,n₃,"array<u8,24>",npclist_unlock_lv,解锁等级（日志串 `npclist_unlock_lv={...}`，十六进制打印）,经 `vt[0x41C]` 交业务,-,B745F7|B7460E,确证

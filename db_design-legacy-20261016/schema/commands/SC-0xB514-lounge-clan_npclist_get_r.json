@@ -1,0 +1,646 @@
+{
+  "id": "SC-0xB514-lounge-clan_npclist_get_r",
+  "opcode": "0xB514",
+  "direction": "SC",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "clan_npclist_get_r",
+  "source_dir": "protocol_analysis/commands/SC-0xB514-lounge-clan_npclist_get_r",
+  "meta": {
+    "opcode": "`0xB514`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`clan_npclist_get_r`",
+    "处理块范围": "`0xb74471`..`0xb748c2`",
+    "名字串引用点": "`0xb74680`",
+    "声明容量（解码缓冲）": "`0x9C`（`B7448A`）",
+    "长度闭合点": "`B74637`",
+    "报错码": "`0x1AD`（块内 `push 1; push <errcode>; vt[0x64]`）",
+    "去向": "`vt[0x41C]` @`B74878`（6 实参）"
+  },
+  "handler": null,
+  "handler_va": null,
+  "block": [
+    "0xb74471",
+    "0xb748c2"
+  ],
+  "name_str": null,
+  "name_str_va": "0xb74680",
+  "capacity": "0x9C",
+  "capacity_va": "0xB7448A",
+  "closer_va": "0xB74637",
+  "dispatch": "`vt[0x41C]` @`B74878`（6 实参）",
+  "dispatch_slot": "vt[0x41C]",
+  "dispatch_va": "0xB74878",
+  "wire": {
+    "length_expr": "4 + 4·n₁ + 4 + n₂ + 4 + n₃",
+    "fixed": false,
+    "var_drivers": [
+      "n"
+    ],
+    "capacity_note": "声明容量 0x9C（容量记账口径，非线长）",
+    "field_count": 6,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：12 + 4·n₁ + n₂ + n₃。",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0xB514",
+      "evidence_va": [
+        "0xb74680"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "id_num",
+      "meaning": "NPC 列表 ID 条目数（上限 24）",
+      "purpose": "驱动 npclist_id 数组循环（`cmp ebx,18h`）",
+      "enum": "0..24",
+      "evidence_va": [
+        "B744BD",
+        "B744E9"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "4·n₁",
+      "wire_type": "array<u32,24>",
+      "name": "npclist_id",
+      "meaning": "NPC 列表 ID（日志串 `npclist_id={...}`）",
+      "purpose": "经 `vt[0x41C]` 交业务（6 实参）",
+      "enum": null,
+      "evidence_va": [
+        "B744FB",
+        "B7451B",
+        "B74527"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "var",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "is_ex_num",
+      "meaning": "扩展标志条目数（上限 24）",
+      "purpose": "驱动 npclist_is_ex 数组循环（`cmp ebx,18h`）",
+      "enum": "0..24",
+      "evidence_va": [
+        "B7454F",
+        "B74563"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 4,
+      "offset": "var",
+      "length": "n₂",
+      "wire_type": "array<u8,24>",
+      "name": "npclist_is_ex",
+      "meaning": "是否为扩展 NPC（日志串 `npclist_is_ex={...}`，十六进制打印）",
+      "purpose": "经 `vt[0x41C]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B74576",
+        "B7458D"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    },
+    {
+      "seq": 5,
+      "offset": "var",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "unlock_num",
+      "meaning": "解锁等级条目数（上限 24）",
+      "purpose": "驱动 npclist_unlock_lv 数组循环（`cmp ebx,18h`）",
+      "enum": "0..24",
+      "evidence_va": [
+        "B745BC",
+        "B745E8"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 7
+    },
+    {
+      "seq": 6,
+      "offset": "var",
+      "length": "n₃",
+      "wire_type": "array<u8,24>",
+      "name": "npclist_unlock_lv",
+      "meaning": "解锁等级（日志串 `npclist_unlock_lv={...}`，十六进制打印）",
+      "purpose": "经 `vt[0x41C]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B745F7",
+        "B7460E"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 8
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0xB514（分发器 switch 选择子）",
+      "evidence_va": "0xB74680"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB41120`（模块 id 429）→ 之后逐字段读线",
+      "evidence_va": "0xB74478"
+    },
+    {
+      "step": 3,
+      "kind": "read_count",
+      "detail": "id_num：`u32`（线长 4）—— NPC 列表 ID 条目数（上限 24）",
+      "evidence_va": "0xB744BD"
+    },
+    {
+      "step": 4,
+      "kind": "read_array",
+      "detail": "npclist_id：`array<u32,24>`（线长 4·n₁）—— NPC 列表 ID（日志串 `npclist_id={...}`）",
+      "evidence_va": "0xB744FB"
+    },
+    {
+      "step": 5,
+      "kind": "read_count",
+      "detail": "is_ex_num：`u32`（线长 4）—— 扩展标志条目数（上限 24）",
+      "evidence_va": "0xB7454F"
+    },
+    {
+      "step": 6,
+      "kind": "read_array",
+      "detail": "npclist_is_ex：`array<u8,24>`（线长 n₂）—— 是否为扩展 NPC（日志串 `npclist_is_ex={...}`，十六进制打印）",
+      "evidence_va": "0xB74576"
+    },
+    {
+      "step": 7,
+      "kind": "read_count",
+      "detail": "unlock_num：`u32`（线长 4）—— 解锁等级条目数（上限 24）",
+      "evidence_va": "0xB745BC"
+    },
+    {
+      "step": 8,
+      "kind": "read_array",
+      "detail": "npclist_unlock_lv：`array<u8,24>`（线长 n₃）—— 解锁等级（日志串 `npclist_unlock_lv={...}`，十六进制打印）",
+      "evidence_va": "0xB745F7"
+    },
+    {
+      "step": 9,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB74637"
+    },
+    {
+      "step": 10,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x41C]`，实参 6 个",
+      "evidence_va": "0xB74878"
+    },
+    {
+      "step": 11,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB744D7"
+    }
+  ],
+  "capabilities": [
+    "query",
+    "lounge.clan_npclist"
+  ],
+  "capabilities_derived": [
+    "query"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:44",
+    "batch": 11,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 156,
+        "va": "0xB7448D",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB7448A",
+        "call_va": "0xB74492"
+      },
+      "field_window": {
+        "start_va": "0xB74479",
+        "end_va": "0xB7465E",
+        "guard": {
+          "va": "0xB74478",
+          "func": "0xB41120",
+          "module_id": 429,
+          "release_va": "0xB41110"
+        },
+        "closer_or_commit_va": "0xB74637",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "id_num",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "B744BD",
+              "B744E9"
+            ]
+          },
+          {
+            "name": "npclist_id",
+            "wire_type": "array<u32,24>",
+            "width": null,
+            "seq": 2,
+            "shape": "agg",
+            "evidence_va": [
+              "B744FB",
+              "B7451B",
+              "B74527"
+            ]
+          },
+          {
+            "name": "is_ex_num",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "B7454F",
+              "B74563"
+            ]
+          },
+          {
+            "name": "npclist_is_ex",
+            "wire_type": "array<u8,24>",
+            "width": null,
+            "seq": 4,
+            "shape": "agg",
+            "evidence_va": [
+              "B74576",
+              "B7458D"
+            ]
+          },
+          {
+            "name": "unlock_num",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 5,
+            "shape": "scalar",
+            "evidence_va": [
+              "B745BC",
+              "B745E8"
+            ]
+          },
+          {
+            "name": "npclist_unlock_lv",
+            "wire_type": "array<u8,24>",
+            "width": null,
+            "seq": 6,
+            "shape": "agg",
+            "evidence_va": [
+              "B745F7",
+              "B7460E"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB744BD",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB744FB",
+            "kind": "bounded",
+            "width": 4,
+            "wire_type": null,
+            "name": "sub_B41850",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB7451B",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB7454F",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB74576",
+            "kind": "bounded",
+            "width": 1,
+            "wire_type": null,
+            "name": "sub_B05EA0",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB7458D",
+            "kind": "read",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB745BC",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB745F7",
+            "kind": "bounded",
+            "width": 1,
+            "wire_type": null,
+            "name": "sub_B05EA0",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB7460E",
+            "kind": "read",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 3,
+        "checkable": 3,
+        "pairs": [
+          {
+            "field": "id_num",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB744BD",
+            "kind": "read"
+          },
+          {
+            "field": "is_ex_num",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB744FB",
+            "kind": "bounded"
+          },
+          {
+            "field": "unlock_num",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB7451B",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB7454F",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32"
+          },
+          {
+            "va": "0xB74576",
+            "kind": "bounded",
+            "width": 1,
+            "wire_type": null
+          },
+          {
+            "va": "0xB7458D",
+            "kind": "read",
+            "width": 1,
+            "wire_type": "u8"
+          },
+          {
+            "va": "0xB745BC",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32"
+          },
+          {
+            "va": "0xB745F7",
+            "kind": "bounded",
+            "width": 1,
+            "wire_type": null
+          },
+          {
+            "va": "0xB7460E",
+            "kind": "read",
+            "width": 1,
+            "wire_type": "u8"
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB74479",
+          "0xB7465E"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 18,
+          "capacity": 156,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB744FB",
+              "kind": "bounded",
+              "name": "sub_B41850"
+            },
+            {
+              "va": "0xB74576",
+              "kind": "bounded",
+              "name": "sub_B05EA0"
+            },
+            {
+              "va": "0xB745F7",
+              "kind": "bounded",
+              "name": "sub_B05EA0"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）18 / 容量 0x9c"
+        }
+      },
+      "closer": {
+        "va": "0xB74637",
+        "kind": "jz",
+        "jcc_va": "0xB7463D",
+        "seq_va": "0xB74633",
+        "jcc_dst": "0xB74659",
+        "cmp": "cmp     ecx, [esp+2C5Ch+var_2C40]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x41C]",
+        "slot_value": 1052,
+        "va": "0xB74878",
+        "mov_va": "0xB7485B",
+        "host": "[edx+41Ch]",
+        "argc": 6,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB744D7",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "npclist_id={",
+        "npclist_is_ex={",
+        "npclist_unlock_lv={"
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0xB514-lounge-clan_npclist_get_r.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xb74680"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "ClanNpclistGetR",
+      "role": "response",
+      "wire_length": "4 + 4·n₁ + 4 + n₂ + 4 + n₃",
+      "members": [
+        {
+          "name": "IdNum",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "id_num"
+        },
+        {
+          "name": "NpclistId",
+          "wire_type": "array<u32,24>",
+          "length": "4·n₁",
+          "field_ref": "npclist_id",
+          "element": "u32",
+          "element_length": "4",
+          "cap": 24,
+          "count_field": "id_num",
+          "count_field_source": "heuristic"
+        },
+        {
+          "name": "IsExNum",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "is_ex_num"
+        },
+        {
+          "name": "NpclistIsEx",
+          "wire_type": "array<u8,24>",
+          "length": "n₂",
+          "field_ref": "npclist_is_ex",
+          "element": "u8",
+          "element_length": "1",
+          "cap": 24,
+          "count_field": "is_ex_num",
+          "count_field_source": "heuristic"
+        },
+        {
+          "name": "UnlockNum",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "unlock_num"
+        },
+        {
+          "name": "NpclistUnlockLv",
+          "wire_type": "array<u8,24>",
+          "length": "n₃",
+          "field_ref": "npclist_unlock_lv",
+          "element": "u8",
+          "element_length": "1",
+          "cap": 24,
+          "count_field": "unlock_num",
+          "count_field_source": "heuristic"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "5edef1dd3bfa91cb",
+  "check_fingerprint": "f7708dda8fd421bc"
+}

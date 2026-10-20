@@ -1,0 +1,392 @@
+{
+  "id": "SC-0x9D5E-lounge-quest_list_update",
+  "opcode": "0x9D5E",
+  "direction": "SC",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "quest_list_update",
+  "source_dir": "protocol_analysis/commands/SC-0x9D5E-lounge-quest_list_update",
+  "meta": {
+    "opcode": "`0x9D5E`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`quest_list_update`",
+    "处理块范围": "`0xb6e660`..`0xb6e8db`",
+    "名字串引用点": "`0xb6e774`",
+    "声明容量（解码缓冲）": "`0xC`（`B6E679`）",
+    "长度闭合点": "`B6E72B`",
+    "报错码": "`0x182`（块内 `push 1; push <errcode>; vt[0x64]`）",
+    "去向": "`vt[0x3C4]` @`B6E880`（3 实参）"
+  },
+  "handler": null,
+  "handler_va": null,
+  "block": [
+    "0xb6e660",
+    "0xb6e8db"
+  ],
+  "name_str": null,
+  "name_str_va": "0xb6e774",
+  "capacity": "0xC",
+  "capacity_va": "0xB6E679",
+  "closer_va": "0xB6E72B",
+  "dispatch": "`vt[0x3C4]` @`B6E880`（3 实参）",
+  "dispatch_slot": "vt[0x3C4]",
+  "dispatch_va": "0xB6E880",
+  "wire": {
+    "length_expr": "4 + 4 + 4",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0xC（容量记账口径，非线长）",
+    "field_count": 3,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：**12**（全定长）。",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0x9D5E",
+      "evidence_va": [
+        "0xb6e774"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "quest_id",
+      "meaning": "任务 ID（日志串 `quest_id=`）",
+      "purpose": "经 `vt[0x3C4]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B6E6B7",
+        "B6E7CA"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "achieve_denom",
+      "meaning": "达成度分母（日志串 `achieve_denom=`）",
+      "purpose": "经 `vt[0x3C4]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B6E6F7",
+        "B6E7F4"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "8",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "achieve_num",
+      "meaning": "达成度分子（日志串 `achieve_num=`）",
+      "purpose": "经 `vt[0x3C4]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B6E71B",
+        "B6E819"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0x9D5E（分发器 switch 选择子）",
+      "evidence_va": "0xB6E774"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB41120`（模块 id 386）→ 之后逐字段读线",
+      "evidence_va": "0xB6E667"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "quest_id：`u32`（线长 4）—— 任务 ID（日志串 `quest_id=`）",
+      "evidence_va": "0xB6E6B7"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "achieve_denom：`u32`（线长 4）—— 达成度分母（日志串 `achieve_denom=`）",
+      "evidence_va": "0xB6E6F7"
+    },
+    {
+      "step": 5,
+      "kind": "read_scalar",
+      "detail": "achieve_num：`u32`（线长 4）—— 达成度分子（日志串 `achieve_num=`）",
+      "evidence_va": "0xB6E71B"
+    },
+    {
+      "step": 6,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB6E72B"
+    },
+    {
+      "step": 7,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x3C4]`，实参 3 个",
+      "evidence_va": "0xB6E880"
+    },
+    {
+      "step": 8,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB6E6D1"
+    }
+  ],
+  "capabilities": [
+    "update",
+    "query",
+    "lounge.quest"
+  ],
+  "capabilities_derived": [
+    "notify"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:44",
+    "batch": 10,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 12,
+        "va": "0xB6E67C",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB6E679",
+        "call_va": "0xB6E67E"
+      },
+      "field_window": {
+        "start_va": "0xB6E668",
+        "end_va": "0xB6E752",
+        "guard": {
+          "va": "0xB6E667",
+          "func": "0xB41120",
+          "module_id": 386,
+          "release_va": "0xB41110"
+        },
+        "closer_or_commit_va": "0xB6E72B",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "quest_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "B6E6B7",
+              "B6E7CA"
+            ]
+          },
+          {
+            "name": "achieve_denom",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "B6E6F7",
+              "B6E7F4"
+            ]
+          },
+          {
+            "name": "achieve_num",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "B6E71B",
+              "B6E819"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB6E6B7",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB6E6F7",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB6E71B",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 3,
+        "checkable": 3,
+        "pairs": [
+          {
+            "field": "quest_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB6E6B7",
+            "kind": "read"
+          },
+          {
+            "field": "achieve_denom",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB6E6F7",
+            "kind": "read"
+          },
+          {
+            "field": "achieve_num",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB6E71B",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB6E668",
+          "0xB6E752"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 12,
+          "capacity": 12,
+          "relation": "exact",
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）12 / 容量 0xc"
+        }
+      },
+      "closer": {
+        "va": "0xB6E72B",
+        "kind": "jz",
+        "jcc_va": "0xB6E731",
+        "seq_va": "0xB6E727",
+        "jcc_dst": "0xB6E74D",
+        "cmp": "cmp     ebx, [esp+2C5Ch+var_2C40]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x3C4]",
+        "slot_value": 964,
+        "va": "0xB6E880",
+        "mov_va": "0xB6E86D",
+        "host": "[eax+3C4h]",
+        "argc": 3,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB6E6D1",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "quest_id=",
+        "achieve_denom=",
+        "achieve_num="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0x9D5E-lounge-quest_list_update.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xb6e774"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "QuestListUpdate",
+      "role": "response",
+      "wire_length": "4 + 4 + 4",
+      "members": [
+        {
+          "name": "QuestId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "quest_id"
+        },
+        {
+          "name": "AchieveDenom",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "achieve_denom"
+        },
+        {
+          "name": "AchieveNum",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "achieve_num"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "6dbf26da51a45d5d",
+  "check_fingerprint": "39076c34eb1c8168"
+}

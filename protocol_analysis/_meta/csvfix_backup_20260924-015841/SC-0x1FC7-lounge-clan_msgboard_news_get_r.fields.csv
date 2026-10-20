@@ -1,0 +1,7 @@
+﻿序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+0,-,2,u16,opcode,命令号,分发器 switch 选择子,0x1FC7,0xB5830C,确证
+1,0,4,u32,result,战队留言板新闻查询结果码,经 `vt[0x46C]`；日志 `result=`,-,0xB581E0|0xB58368,确证
+2,4,4,u32,news_num,新闻条目数 N,上限（容量反推 ≤15）；驱动数组；经 `vt[0x46C]`,≤15,0xB58212,确证
+3,8,244·N,array<news,N>,news,战队新闻列表（元素线上 244B / 缓冲槽步进 248B）,数组基址经 `vt[0x46C]`；日志 `news={…}`（打印器 `sub_B4E900`）,元素线长 244 / 槽 248,0xB5826A(元素读取器 sub_B45D20)|0xB5824D(sub_B417D0 预留 0xF8/槽),确证
+4,元素,?,struct,news.*,成员名见打印器 `sub_B4E900`（`msg_id=`/`date=`/`kind=`/`nice_count=`/`child_count=`/`body=`/`pilot_id=`/`npc_id=`/`name=`）,结构体交付业务,-,sub_B4E900,推测
+5,数组后,1,u8,clan_kind,战队类别,经 `vt[0x46C]`；日志 `clan_kind=`,-,0xB582AF|0xB58406,确证

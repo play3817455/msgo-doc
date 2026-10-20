@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PLAY_BONUS_REWARD · db_design</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <h1><a href="../index.html">db_design</a></h1>
+      <p class="header-note">唯一证据源：<code>protocol_analysis/</code></p>
+      <nav><a href="../index.html">首页</a>
+      <a href="../homing/index.html">归位库</a>
+      <a href="../tables/index.html">旧表留档</a>
+      <a href="../commands/index.html">命令</a>
+      <a href="../cfg/index.html" class="active">配置表79</a>
+      <a href="../srv/index.html">服务端配置</a>
+      <a href="../asm-audit/index.html">ASM 审计</a>
+      <a href="../oracle-audit/index.html">Oracle 审计</a>
+      <a href="../entities/index.html">协议实体</a>
+      <a href="../fields/index.html">字段索引</a>
+      <a href="../relations.html">表关系</a></nav>
+    </div>
+  </header>
+  <main class="wrap">
+
+    <p class="breadcrumb"><a href="index.html">配置表79</a> / <code>PLAY_BONUS_REWARD</code></p>
+    <h2><code>PLAY_BONUS_REWARD</code> <span class="badge" style="background:#1565c0">DOWNLOAD</span> <span class="badge" style="background:#2e7d32">确证</span></h2>
+    <dl class="asm-dl">
+      <dt>CSV</dt><dd><code>reward/play_bonus_reward.csv</code></dd>
+      <dt>用途</dt><dd>游玩场次/时长奖励：按战斗模式过滤的发放规则</dd>
+      <dt>读表函数</dt><dd><code>sub_58C440</code></dd>
+      <dt>表ID</dt><dd>58</dd>
+      <dt>下载序</dt><dd>66</dd>
+      <dt>类名</dt><dd><code>CPlayBonusRewardTable</code></dd>
+      <dt>列统计</dt><dd>9 列 · 确证 9 · 已映射 0 · 间隙 1</dd>
+      <dt>证据</dt><dd><a href="../../../datatables/01-列注释/66-58-PLAY_BONUS_REWARD.md" target="_blank">datatables/01-列注释/66-58-PLAY_BONUS_REWARD.md</a></dd>
+    </dl>
+    <section>
+      <h3>列定案</h3>
+      <p class="muted"><code>db_column</code> = PostgreSQL 列名（确证/有语义的 partial 用订案名；<code>unknown_*</code> 暂保留 colN）</p>
+      <table class="wide">
+        <thead>
+          <tr>
+            <th>CSV#</th><th>DB列</th><th>订案名</th><th>中文摘要</th><th>类型</th>
+            <th>状态</th><th>读表</th><th>偏移/VA</th><th>语义详情</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><code>0</code></td>
+      <td><code>bonus_id</code></td>
+      <td><code>bonus_id</code></td>
+      <td>奖励 ID</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_58C440</code></td>
+      <td class="muted">csv 0 · 0x58c44a</td>
+      <td class="meaning-cell">游玩奖励 ID（主键）</td>
+    </tr>
+    <tr>
+      <td><code>1</code></td>
+      <td><code>play_count_min</code></td>
+      <td><code>play_count_min</code></td>
+      <td>最低场次</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_58C440</code></td>
+      <td class="muted">csv 1 · +8 · 0x58c458</td>
+      <td class="meaning-cell">最低游玩场次（u32 col1 → +8）</td>
+    </tr>
+    <tr>
+      <td><code>2</code></td>
+      <td><code>play_count_max</code></td>
+      <td><code>play_count_max</code></td>
+      <td>最高场次</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_58C440</code></td>
+      <td class="muted">csv 2 · +12 · 0x58c463</td>
+      <td class="meaning-cell">最高游玩场次（u32 col2）</td>
+    </tr>
+    <tr>
+      <td><code>3</code></td>
+      <td><code>time_minutes</code></td>
+      <td><code>time_minutes</code></td>
+      <td>最低时长(分)</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_58C440</code></td>
+      <td class="muted">csv 3 · +16 · 0x58c46e</td>
+      <td class="meaning-cell">最低游玩时长分钟（u32 col3）</td>
+    </tr>
+    <tr>
+      <td><code>4</code></td>
+      <td><code>reward_gp</code></td>
+      <td><code>reward_gp</code></td>
+      <td>奖励 GP</td>
+      <td><code>u16</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_58C440</code></td>
+      <td class="muted">csv 4 · +20 · 0x58c479</td>
+      <td class="meaning-cell">★同名不同义：客户端当 i16 计数表下标（vec.at((i16)(row+20))；vec = 50×u16 恒空 ⇒ 占位期必须写 65535 = i16 −1，写 0 会崩「交换所」）；本服当 GP 数量（≥0x8000 视为占位 ⇒ 整笔拒）。见 .codebuddy/memory/topics/20-客户端崩溃取证SOP.md §4.2</td>
+    </tr>
+    <tr>
+      <td><code>5</code></td>
+      <td><code>reward_item_qty</code></td>
+      <td><code>reward_item_qty</code></td>
+      <td>物品数量</td>
+      <td><code>u16</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_58C440</code></td>
+      <td class="muted">csv 5 · +22 · 0x58c485</td>
+      <td class="meaning-cell">奖励物品数量（u16 col5）</td>
+    </tr>
+    <tr>
+      <td><code>6</code></td>
+      <td><code>reward_item_id</code></td>
+      <td><code>reward_item_id</code></td>
+      <td>奖励物品 ID</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_58C440</code></td>
+      <td class="muted">csv 6 · +32 · 0x58c491</td>
+      <td class="meaning-cell">奖励物品 ID（u32 col6 → ITEM）</td>
+    </tr>
+    <tr>
+      <td><code>7</code></td>
+      <td><code>battle_mode_code</code></td>
+      <td><code>battle_mode_code</code></td>
+      <td>适用战斗模式编码</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_58C440</code></td>
+      <td class="muted">csv 7 · +24 · 0x58c49c</td>
+      <td class="meaning-cell">适用战斗模式编码（u32 col7 → +24；高 9 位解码写入 +4 为 1/5/6/99 模式过滤）</td>
+    </tr>
+    <tr>
+      <td><code>8</code></td>
+      <td><code>reserved_u32_8</code></td>
+      <td><code>reserved_u32_8</code></td>
+      <td>预留列 col8</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_58C440</code></td>
+      <td class="muted">csv 8</td>
+      <td class="meaning-cell">CSV col8 预留（sub_58C440 跳过；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>9</code></td>
+      <td><code>unknown_u32_9</code></td>
+      <td><code>unknown_u32_9</code></td>
+      <td>u32 col9（语义未定，占位 0）</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_58C440</code></td>
+      <td class="muted">csv 9 · +28</td>
+      <td class="meaning-cell">客户端 sub_58C440 取 csv9 → u32 @+28（push 9 @0x58c4a3 / call 0x58c4a9；Unicorn 仿真一致）；本函数取回后未再引用，语义未定。原版数据缺失 ⇒ 本服占位 0（缺列时客户端 sub_456D90 越界返回 &quot;&quot; ⇒ atoi 0，行为等价）</td>
+    </tr></tbody>
+      </table>
+    </section>
+
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">生成于 2026-10-12 · 改 JSON 后重跑 build_site.py · HTML 只读</div>
+  </footer>
+</body>
+</html>

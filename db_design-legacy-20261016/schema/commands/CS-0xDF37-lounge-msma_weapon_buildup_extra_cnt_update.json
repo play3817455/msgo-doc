@@ -1,0 +1,362 @@
+{
+  "id": "CS-0xDF37-lounge-msma_weapon_buildup_extra_cnt_update",
+  "opcode": "0xDF37",
+  "direction": "CS",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "msma_weapon_buildup_extra_cnt_update",
+  "source_dir": "protocol_analysis/commands/CS-0xDF37-lounge-msma_weapon_buildup_extra_cnt_update",
+  "meta": {
+    "opcode": "`0xDF37`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`msma_weapon_buildup_extra_cnt_update`",
+    "名字符串": "`)<-_proto_lounge_client::send_msma_weapon_buildup_extra_cnt_update(` @ `0x00EEB968`",
+    "代码位置": "`sub_B96C30` @ `0x00B96C30`（`0x00B96C30`..`0x00B96E24`）",
+    "opcode 写入证据": "`0x00B96CA4`",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0x00E`（14）",
+    "容量申请证据": "`0x00B96C76`（分配器 `[obj+0Ch]` 的 `vt[0x78]`）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)` @ `0x00B96DB2`",
+    "提交": "`sub_B02FF0` @ `0x00B96D2A`",
+    "配对命令": "S→C `SC-0x5B3F-lounge-msma_weapon_buildup_extra_cnt_update_r`"
+  },
+  "handler": "sub_B96C30",
+  "handler_va": "0x00B96C30",
+  "block": [
+    "0xB96C30",
+    "0xB96E24"
+  ],
+  "name_str": ")<-_proto_lounge_client::send_msma_weapon_buildup_extra_cnt_update(",
+  "name_str_va": "0x00EEB968",
+  "capacity": "0xE",
+  "capacity_va": "0xB96C76",
+  "closer_va": "0xB96D2A",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)` @ `0x00B96DB2`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": "0x00B96DB2",
+  "wire": {
+    "length_expr": "8 + 2",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0xE（容量记账口径，非线长）",
+    "field_count": 2,
+    "length_source": "field_sum",
+    "readme_conclusion": "字段数：**3**（含 opcode 第 0 项）",
+    "readme_close": "2 + 8 + 2 = 12 ≤ 容量 0xE = 14（富余 2）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "写入 `buf+0`，供服务端分发；无 case 块（C→S）",
+      "enum": "0xDF37",
+      "evidence_va": [
+        "`00B96CA4`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "8",
+      "wire_type": "u64",
+      "name": "uniqid_ms",
+      "meaning": "机体唯一 ID（u64）",
+      "purpose": "来源=入参 → 两次内联 `mov [eax],esi`（低 32 位 @`0xB96CB4`）+ `mov [eax+4],esi`（高 32 位 @`0xB96CBF`）",
+      "enum": null,
+      "evidence_va": [
+        "`0xB96CB4`;`0xB96CBF`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "8",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "weapon_buildup_extra_cnt",
+      "meaning": "武器强化附加次数",
+      "purpose": "来源=入参 → 内联写 `[edx],cx`（@`0xB96CCD`）",
+      "enum": null,
+      "evidence_va": [
+        "`0xB96CCD`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0xDF37（分发器 switch 选择子）",
+      "evidence_va": "0x00B96CA4"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0xE B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xB96C76"
+    },
+    {
+      "step": 3,
+      "kind": "write_scalar",
+      "detail": "uniqid_ms：`u64`（线长 8）—— 机体唯一 ID（u64）",
+      "evidence_va": "0xB96CB4"
+    },
+    {
+      "step": 4,
+      "kind": "write_scalar",
+      "detail": "weapon_buildup_extra_cnt：`u16`（线长 2）—— 武器强化附加次数",
+      "evidence_va": "0xB96CCD"
+    },
+    {
+      "step": 5,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xB96D2A"
+    },
+    {
+      "step": 6,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xB96DBB"
+    }
+  ],
+  "capabilities": [
+    "create",
+    "battle_action",
+    "update"
+  ],
+  "capabilities_derived": [
+    "battle",
+    "notify"
+  ],
+  "db_effects": [],
+  "pair": "SC-0x5B3F-lounge-msma_weapon_buildup_extra_cnt_update_r",
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:42",
+    "batch": 4,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 14,
+        "va": "0xB96C76",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB96C73",
+        "call_va": "0xB96C78"
+      },
+      "field_window": {
+        "start_va": "0xB96C30",
+        "end_va": "0xB96D2A",
+        "guard": null,
+        "closer_or_commit_va": "0xB96D2A",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "uniqid_ms",
+            "wire_type": "u64",
+            "width": 8,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "`0xB96CB4`;`0xB96CBF`"
+            ]
+          },
+          {
+            "name": "weapon_buildup_extra_cnt",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "`0xB96CCD`"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB96CA4",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB96CB4",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB96CCD",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB96D00",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 1,
+        "checkable": 2,
+        "pairs": [
+          {
+            "field": "weapon_buildup_extra_cnt",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB96CA4",
+            "kind": "inline_store"
+          }
+        ],
+        "gaps": [
+          {
+            "field": "uniqid_ms",
+            "wire_type": "u64",
+            "width": 8,
+            "shape": "scalar",
+            "note": "汇编事件序列里找不到与之对位的读写点（缺字段或宽度不符）"
+          }
+        ],
+        "unmatched_actual": [
+          {
+            "va": "0xB96CB4",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null
+          },
+          {
+            "va": "0xB96CCD",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB96C30",
+          "0xB96D2A"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 8,
+          "capacity": 14,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB96D00",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）8 / 容量 0xe"
+        }
+      },
+      "closer": {
+        "va": "0xB96D2A",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xB96DBB",
+        "mov_va": "0xB96DB2",
+        "host": "[eax+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "uniqid_ms=",
+        "weapon_buildup_extra_cnt="
+      ]
+    },
+    "mismatches": [],
+    "notes": [
+      {
+        "check": "primitive_widths",
+        "note": "定宽对位不可判定：C→S 写线在复合写入器内部 consumed 未知；缺口 uniqid_ms"
+      }
+    ],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0xDF37-lounge-msma_weapon_buildup_extra_cnt_update.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0x00B96CA4",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "`00B96CA4`"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "MsmaWeaponBuildupExtraCntUpdate",
+      "role": "request",
+      "wire_length": "8 + 2",
+      "members": [
+        {
+          "name": "UniqidMs",
+          "wire_type": "u64",
+          "length": "8",
+          "field_ref": "uniqid_ms"
+        },
+        {
+          "name": "WeaponBuildupExtraCnt",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "weapon_buildup_extra_cnt"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "2ae8aa8907c156b6",
+  "check_fingerprint": "00751f8e0a1a0813"
+}

@@ -1,0 +1,566 @@
+{
+  "id": "SC-0x9C14-battle-msma_AI_update_hate",
+  "opcode": "0x9C14",
+  "direction": "SC",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "msma_AI_update_hate",
+  "source_dir": "protocol_analysis/commands/SC-0x9C14-battle-msma_AI_update_hate",
+  "meta": {
+    "opcode": "`0x9C14`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`battle_client`",
+    "命令名": "`msma_AI_update_hate`",
+    "处理块范围": "`0xb24e9b`..`0xb25237`",
+    "名字串引用点": "`0xb25073`",
+    "声明容量（解码缓冲）": "`0x32`（`B24EAD`）",
+    "长度闭合点": "`B2502A`",
+    "报错码": "`0xBD`（块内 `push 1; push <errcode>; vt[0x64]`）",
+    "去向": "`vt[0x254]` @`B2521B`（5 实参）"
+  },
+  "handler": null,
+  "handler_va": null,
+  "block": [
+    "0xb24e9b",
+    "0xb25237"
+  ],
+  "name_str": null,
+  "name_str_va": "0xb25073",
+  "capacity": "0x32",
+  "capacity_va": "0xB24EAD",
+  "closer_va": "0xB2502A",
+  "dispatch": "`vt[0x254]` @`B2521B`（5 实参）",
+  "dispatch_slot": "vt[0x254]",
+  "dispatch_va": "0xB2521B",
+  "wire": {
+    "length_expr": "2 + 4 + 2×N1 + 4 + 2×N2",
+    "fixed": false,
+    "var_drivers": [
+      "N1",
+      "N2"
+    ],
+    "capacity_note": "声明容量 0x32（容量记账口径，非线长）",
+    "field_count": 5,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：**10 + 2(N1+N2)**（N1/N2 ≤ 10）。",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0x9C14",
+      "evidence_va": [
+        "0xb25073"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "AI_ent_id",
+      "meaning": "AI 实体 ID（日志串 `AI_ent_id=`）",
+      "purpose": "经 `vt[0x254]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B24EEB",
+        "B250CA"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "2",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "ent_id_cnt",
+      "meaning": "仇恨目标个数（上界 `cmp ebx,0Ah` @`B24F49` ⇒ ≤10）",
+      "purpose": "驱动 `ent_id_ary` 循环",
+      "enum": "0..10",
+      "evidence_va": [
+        "B24F1D"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "6",
+      "length": "2×N1",
+      "wire_type": "array<u16,N1>",
+      "name": "ent_id_ary",
+      "meaning": "仇恨目标实体 ID 列表（日志 `ent_id={...}`）",
+      "purpose": "经 `vt[0x254]` 交业务",
+      "enum": "N1 ≤ 10",
+      "evidence_va": [
+        "B24F5B",
+        "B24F7B",
+        "B250E5"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 4,
+      "offset": "var",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "val_cnt",
+      "meaning": "仇恨值个数（上界 `cmp …,0Ah` @`B24FBF` ⇒ ≤10）",
+      "purpose": "驱动 `val_ary` 循环",
+      "enum": "0..10",
+      "evidence_va": [
+        "B24FAF"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    },
+    {
+      "seq": 5,
+      "offset": "var",
+      "length": "2×N2",
+      "wire_type": "array<u16,N2>",
+      "name": "val_ary",
+      "meaning": "仇恨值列表（日志 `val={...}`）",
+      "purpose": "经 `vt[0x254]` 交业务",
+      "enum": "N2 ≤ 10",
+      "evidence_va": [
+        "B24FDB",
+        "B24FFA",
+        "B25157"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 7
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0x9C14（分发器 switch 选择子）",
+      "evidence_va": "0xB25073"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB05DA0`（模块 id None）→ 之后逐字段读线",
+      "evidence_va": "0xB24E9B"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "AI_ent_id：`u16`（线长 2）—— AI 实体 ID（日志串 `AI_ent_id=`）",
+      "evidence_va": "0xB24EEB"
+    },
+    {
+      "step": 4,
+      "kind": "read_count",
+      "detail": "ent_id_cnt：`u32`（线长 4）—— 仇恨目标个数（上界 `cmp ebx,0Ah` @`B24F49` ⇒ ≤10）",
+      "evidence_va": "0xB24F1D"
+    },
+    {
+      "step": 5,
+      "kind": "read_array",
+      "detail": "ent_id_ary：`array<u16,N1>`（线长 2×N1）—— 仇恨目标实体 ID 列表（日志 `ent_id={...}`）",
+      "evidence_va": "0xB24F5B"
+    },
+    {
+      "step": 6,
+      "kind": "read_count",
+      "detail": "val_cnt：`u32`（线长 4）—— 仇恨值个数（上界 `cmp …,0Ah` @`B24FBF` ⇒ ≤10）",
+      "evidence_va": "0xB24FAF"
+    },
+    {
+      "step": 7,
+      "kind": "read_array",
+      "detail": "val_ary：`array<u16,N2>`（线长 2×N2）—— 仇恨值列表（日志 `val={...}`）",
+      "evidence_va": "0xB24FDB"
+    },
+    {
+      "step": 8,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB2502A"
+    },
+    {
+      "step": 9,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x254]`，实参 5 个",
+      "evidence_va": "0xB2521B"
+    },
+    {
+      "step": 10,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB24F05"
+    }
+  ],
+  "capabilities": [
+    "update",
+    "battle.ai"
+  ],
+  "capabilities_derived": [
+    "notify"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:47",
+    "batch": 19,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 50,
+        "va": "0xB24EB0",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB24EAD",
+        "call_va": "0xB24EB2"
+      },
+      "field_window": {
+        "start_va": "0xB24E9C",
+        "end_va": "0xB25051",
+        "guard": {
+          "va": "0xB24E9B",
+          "func": "0xB05DA0",
+          "module_id": null,
+          "release_va": "0xB05D90"
+        },
+        "closer_or_commit_va": "0xB2502A",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "AI_ent_id",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "B24EEB",
+              "B250CA"
+            ]
+          },
+          {
+            "name": "ent_id_cnt",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "B24F1D"
+            ]
+          },
+          {
+            "name": "ent_id_ary",
+            "wire_type": "array<u16,N1>",
+            "width": null,
+            "seq": 3,
+            "shape": "agg",
+            "evidence_va": [
+              "B24F5B",
+              "B24F7B",
+              "B250E5"
+            ]
+          },
+          {
+            "name": "val_cnt",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 4,
+            "shape": "scalar",
+            "evidence_va": [
+              "B24FAF"
+            ]
+          },
+          {
+            "name": "val_ary",
+            "wire_type": "array<u16,N2>",
+            "width": null,
+            "seq": 5,
+            "shape": "agg",
+            "evidence_va": [
+              "B24FDB",
+              "B24FFA",
+              "B25157"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB24EEB",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB24F1D",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB24F5B",
+            "kind": "bounded",
+            "width": 2,
+            "wire_type": null,
+            "name": "sub_B05E40",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB24F7B",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB24FAF",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB24FDB",
+            "kind": "bounded",
+            "width": 2,
+            "wire_type": null,
+            "name": "sub_B05E40",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB24FFA",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 3,
+        "checkable": 3,
+        "pairs": [
+          {
+            "field": "AI_ent_id",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB24EEB",
+            "kind": "read"
+          },
+          {
+            "field": "ent_id_cnt",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB24F1D",
+            "kind": "read"
+          },
+          {
+            "field": "val_cnt",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB24FAF",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB24F5B",
+            "kind": "bounded",
+            "width": 2,
+            "wire_type": null
+          },
+          {
+            "va": "0xB24F7B",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16"
+          },
+          {
+            "va": "0xB24FDB",
+            "kind": "bounded",
+            "width": 2,
+            "wire_type": null
+          },
+          {
+            "va": "0xB24FFA",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16"
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB24E9C",
+          "0xB25051"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 14,
+          "capacity": 50,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB24F5B",
+              "kind": "bounded",
+              "name": "sub_B05E40"
+            },
+            {
+              "va": "0xB24FDB",
+              "kind": "bounded",
+              "name": "sub_B05E40"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）14 / 容量 0x32"
+        }
+      },
+      "closer": {
+        "va": "0xB2502A",
+        "kind": "jz",
+        "jcc_va": "0xB25030",
+        "seq_va": "0xB25026",
+        "jcc_dst": "0xB2504C",
+        "cmp": "cmp     ecx, [esp+1B3Ch+var_1B24]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x254]",
+        "slot_value": 596,
+        "va": "0xB2521B",
+        "mov_va": "0xB25200",
+        "host": "[edx+254h]",
+        "argc": 5,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB24F05",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "AI_ent_id=",
+        "ent_id={",
+        "val={"
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0x9C14-battle-msma_AI_update_hate.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xb25073"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "MsmaAIUpdateHate",
+      "role": "response",
+      "wire_length": "2 + 4 + 2×N1 + 4 + 2×N2",
+      "members": [
+        {
+          "name": "AIEntId",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "AI_ent_id"
+        },
+        {
+          "name": "EntIdCnt",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "ent_id_cnt"
+        },
+        {
+          "name": "EntIdAry",
+          "wire_type": "array<u16,N1>",
+          "length": "2×N1",
+          "field_ref": "ent_id_ary",
+          "element": "u16",
+          "element_length": "2",
+          "cap": null,
+          "count_field": "ent_id_cnt",
+          "count_field_source": "heuristic",
+          "count_var": "N1",
+          "note": null
+        },
+        {
+          "name": "ValCnt",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "val_cnt"
+        },
+        {
+          "name": "ValAry",
+          "wire_type": "array<u16,N2>",
+          "length": "2×N2",
+          "field_ref": "val_ary",
+          "element": "u16",
+          "element_length": "2",
+          "cap": null,
+          "count_field": "val_cnt",
+          "count_field_source": "heuristic",
+          "count_var": "N2",
+          "note": null
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "edafab49d261d67f",
+  "check_fingerprint": "42d73d5f5610e9bb"
+}

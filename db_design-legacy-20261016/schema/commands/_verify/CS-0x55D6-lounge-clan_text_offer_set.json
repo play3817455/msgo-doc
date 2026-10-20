@@ -1,0 +1,240 @@
+{
+ "id": "CS-0x55D6-lounge-clan_text_offer_set",
+ "verified_at": "2026-09-30 15:25:43",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "handler_func",
+ "block": [
+  "0xBA0F50",
+  "0xBA11F9"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 94,
+   "va": "0xBA0F96",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xBA0F93",
+   "call_va": "0xBA0F98"
+  },
+  "field_window": {
+   "start_va": "0xBA0F50",
+   "end_va": "0xBA1092",
+   "guard": null,
+   "closer_or_commit_va": "0xBA1092",
+   "within_model_block": true,
+   "range_from": "handler_func"
+  },
+  "primitive_widths": {
+   "direction": "CS",
+   "expected": [
+    {
+     "name": "is_active",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xBA0FE6"
+     ]
+    },
+    {
+     "name": "subj",
+     "wire_type": "bytes",
+     "width": null,
+     "seq": 2,
+     "shape": "agg",
+     "evidence_va": [
+      "0xBA0FEE"
+     ]
+    },
+    {
+     "name": "body",
+     "wire_type": "bytes",
+     "width": null,
+     "seq": 3,
+     "shape": "agg",
+     "evidence_va": [
+      "0xBA100A"
+     ]
+    },
+    {
+     "name": "clan_kind",
+     "wire_type": "u8",
+     "width": 1,
+     "seq": 4,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xBA1024"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xBA0FCC",
+     "kind": "inline_store",
+     "width": 2,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xBA0FE6",
+     "kind": "inline_store",
+     "width": 4,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xBA0FEE",
+     "kind": "write",
+     "width": null,
+     "wire_type": "str",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xBA100A",
+     "kind": "write",
+     "width": null,
+     "wire_type": "str",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xBA1024",
+     "kind": "write",
+     "width": 1,
+     "wire_type": "u8",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xBA1068",
+     "kind": "composite",
+     "width": null,
+     "wire_type": null,
+     "name": "sub_B03020",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 2,
+   "checkable": 2,
+   "pairs": [
+    {
+     "field": "is_active",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xBA0FE6",
+     "kind": "inline_store"
+    },
+    {
+     "field": "clan_kind",
+     "width": 1,
+     "shape": "scalar",
+     "va": "0xBA1024",
+     "kind": "write"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [
+    {
+     "va": "0xBA0FCC",
+     "kind": "inline_store",
+     "width": 2,
+     "wire_type": null
+    },
+    {
+     "va": "0xBA0FEE",
+     "kind": "write",
+     "width": null,
+     "wire_type": "str"
+    },
+    {
+     "va": "0xBA100A",
+     "kind": "write",
+     "width": null,
+     "wire_type": "str"
+    }
+   ],
+   "nested_unmatchable": [],
+   "window": [
+    "0xBA0F50",
+    "0xBA1092"
+   ],
+   "scalar_match_verifiable": false,
+   "capacity_relation": {
+    "observed_min": 7,
+    "capacity": 94,
+    "relation": "within",
+    "unknown_events": [
+     {
+      "va": "0xBA0FEE",
+      "kind": "write",
+      "name": ""
+     },
+     {
+      "va": "0xBA100A",
+      "kind": "write",
+      "name": ""
+     },
+     {
+      "va": "0xBA1068",
+      "kind": "composite",
+      "name": "sub_B03020"
+     }
+    ],
+    "is_lower_bound": true,
+    "note": "观测线长（下界）7 / 容量 0x5e"
+   }
+  },
+  "closer": {
+   "va": "0xBA1092",
+   "kind": "commit",
+   "jcc_va": null,
+   "seq_va": null,
+   "cmp": null,
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x58]",
+   "slot_value": 88,
+   "va": "0xBA1190",
+   "mov_va": "0xBA1187",
+   "host": "[edx+58h]",
+   "argc": 2,
+   "form": "mov_then_call",
+   "error_slot": null
+  },
+  "log_strings": [
+   "is_active=",
+   "subj=\"",
+   "body=\"",
+   "clan_kind="
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "body",
+  "clan_kind",
+  "is_active",
+  "subj"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 7
+}

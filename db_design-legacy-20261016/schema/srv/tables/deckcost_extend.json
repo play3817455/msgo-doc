@@ -1,0 +1,80 @@
+{
+  "id": "srv.deckcost_extend",
+  "slug": "deckcost_extend",
+  "title": "编制费用上限延长的策略值",
+  "kind": "server_config",
+  "status": "complete",
+  "ddl": "serverv/migrations/0024_deckcost_extend.up.sql",
+  "generated_by": "db_design/tools/build_srv_docs.py",
+  "note": "本文件由 db_design/tools/build_srv_docs.py 从 serverv/migrations/0024_deckcost_extend.up.sql 生成，勿手改：改 srv.* 请改迁移再重跑生成器",
+  "purpose": "编制费用上限延长的策略值（单行 id=1）：一次加多少上限、一次折多少 remain 单位、一单位多少小时、上限各多少",
+  "primary_key": [
+    "id"
+  ],
+  "columns": [
+    {
+      "name": "id",
+      "sql_type": "INT",
+      "not_null": true,
+      "default": null,
+      "checks": [],
+      "meaning": ""
+    },
+    {
+      "name": "extend_step",
+      "sql_type": "INTEGER",
+      "not_null": true,
+      "default": "0,",
+      "checks": [],
+      "meaning": "一次延长给 deckcost 上限加多少（**本服自定**：客户端里没有这个数，它只把服务端给的绝对值落槽）；0 = 停售（回失败、不扣费）"
+    },
+    {
+      "name": "extend_units",
+      "sql_type": "INTEGER",
+      "not_null": true,
+      "default": "30,",
+      "checks": [],
+      "meaning": "一次延长给 remain 加多少单位；30 有客户端判据（开窗前校验 remain+30<=9999，sub_809070 case 4 @0x809183）"
+    },
+    {
+      "name": "unit_hours",
+      "sql_type": "INTEGER",
+      "not_null": true,
+      "default": "24,",
+      "checks": [],
+      "meaning": "1 个 remain 单位 = 多少小时（**本服自定**：客户端只显示数字，时间单位在二进制里取不到）"
+    },
+    {
+      "name": "max_units",
+      "sql_type": "INTEGER",
+      "not_null": true,
+      "default": "9999,",
+      "checks": [],
+      "meaning": "remain 上限；9999 有客户端判据（sub_42E400 的无限哨兵回 270Fh）"
+    },
+    {
+      "name": "updated_at",
+      "sql_type": "TIMESTAMPTZ",
+      "not_null": true,
+      "default": "now()",
+      "checks": [],
+      "meaning": ""
+    }
+  ],
+  "seed_columns": [
+    "id",
+    "extend_step",
+    "extend_units",
+    "unit_hours",
+    "max_units"
+  ],
+  "seed_rows": [
+    {
+      "id": "1",
+      "extend_step": "50",
+      "extend_units": "30",
+      "unit_hours": "24",
+      "max_units": "9999"
+    }
+  ]
+}

@@ -1,0 +1,469 @@
+{
+  "id": "SC-0x30E2-lounge-pilot_cwchscore_reward_notice",
+  "opcode": "0x30E2",
+  "direction": "SC",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "pilot_cwchscore_reward_notice",
+  "source_dir": "protocol_analysis/commands/SC-0x30E2-lounge-pilot_cwchscore_reward_notice",
+  "meta": {
+    "opcode": "`0x30E2`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`pilot_cwchscore_reward_notice`",
+    "处理函数": "`sub_B51930` @ `0xB51930`（lounge 分发器）",
+    "处理块范围": "`0xB5B3D0`..`0xB5B691`",
+    "名字串引用点": "`0xB5B4FC`",
+    "声明容量（解码缓冲）": "`0x47`（`0xB5B3EC`）",
+    "长度闭合点": "`0xB5B4DA`",
+    "去向": "`vt[0x4F0]` @ `0xB5B647`（4 实参）"
+  },
+  "handler": "sub_B51930",
+  "handler_va": "0xB51930",
+  "block": [
+    "0xB5B3D0",
+    "0xB5B691"
+  ],
+  "name_str": null,
+  "name_str_va": "0xB5B4FC",
+  "capacity": "0x47",
+  "capacity_va": "0xB5B3EC",
+  "closer_va": "0xB5B4CF",
+  "dispatch": "`vt[0x4F0]` @ `0xB5B647`（4 实参）",
+  "dispatch_slot": "vt[0x4F0]",
+  "dispatch_va": "0xB5B647",
+  "wire": {
+    "length_expr": "1 + 1 + 4 + var(≤65)",
+    "fixed": false,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x47（容量记账口径，非线长）",
+    "field_count": 4,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体总长**：**71** 字节（== 容量 0x47）。",
+    "readme_close": "容量 0x47 与线长的关系：**相等**（全定长）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0x30E2",
+      "evidence_va": [
+        "0xB5B4FC"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "get_reward",
+      "meaning": "是否获得奖励",
+      "purpose": "经 `vt[0x4F0]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB5B427",
+        "0xB5B550"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "1",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "num_reward",
+      "meaning": "奖励数量",
+      "purpose": "经 `vt[0x4F0]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB5B467",
+        "0xB5B57A"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "2",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "highscore",
+      "meaning": "最高分",
+      "purpose": "经 `vt[0x4F0]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB5B48B",
+        "0xB5B5A6"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 4,
+      "offset": "6",
+      "length": "var(≤65)",
+      "wire_type": "str",
+      "name": "coopwave_score_term",
+      "meaning": "协作波次评分条件串（槽位预算 `0x41`=65）",
+      "purpose": "经 `vt[0x4F0]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB5B4A3",
+        "0xB5B5CE"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6,
+      "slot_budget": 65
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0x30E2（分发器 switch 选择子）",
+      "evidence_va": "0xB5B4FC"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB41120`（模块 id 524）→ 之后逐字段读线",
+      "evidence_va": "0xB5B3D7"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "get_reward：`u8`（线长 1）—— 是否获得奖励",
+      "evidence_va": "0xB5B427"
+    },
+    {
+      "step": 4,
+      "kind": "read_count",
+      "detail": "num_reward：`u8`（线长 1）—— 奖励数量",
+      "evidence_va": "0xB5B467"
+    },
+    {
+      "step": 5,
+      "kind": "read_scalar",
+      "detail": "highscore：`u32`（线长 4）—— 最高分",
+      "evidence_va": "0xB5B48B"
+    },
+    {
+      "step": 6,
+      "kind": "read_string",
+      "detail": "coopwave_score_term：`str`（线长 var(≤65)）—— 协作波次评分条件串（槽位预算 `0x41`=65）",
+      "evidence_va": "0xB5B4A3"
+    },
+    {
+      "step": 7,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jnz）",
+      "evidence_va": "0xB5B4CF"
+    },
+    {
+      "step": 8,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x4F0]`，实参 4 个",
+      "evidence_va": "0xB5B647"
+    },
+    {
+      "step": 9,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB5B441"
+    }
+  ],
+  "capabilities": [
+    "settle",
+    "notify",
+    "lounge.pilot_cwchscore"
+  ],
+  "capabilities_derived": [
+    "notify",
+    "settle"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:43",
+    "batch": 6,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 71,
+        "va": "0xB5B3EC",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB5B3E9",
+        "call_va": "0xB5B3EE"
+      },
+      "field_window": {
+        "start_va": "0xB5B3D8",
+        "end_va": "0xB5B4DA",
+        "guard": {
+          "va": "0xB5B3D7",
+          "func": "0xB41120",
+          "module_id": 524,
+          "release_va": "0xB41110"
+        },
+        "closer_or_commit_va": "0xB5B4CF",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "get_reward",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB5B427",
+              "0xB5B550"
+            ]
+          },
+          {
+            "name": "num_reward",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB5B467",
+              "0xB5B57A"
+            ]
+          },
+          {
+            "name": "highscore",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB5B48B",
+              "0xB5B5A6"
+            ]
+          },
+          {
+            "name": "coopwave_score_term",
+            "wire_type": "str",
+            "width": null,
+            "seq": 4,
+            "shape": "str",
+            "evidence_va": [
+              "0xB5B4A3",
+              "0xB5B5CE"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB5B427",
+            "kind": "read",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB5B467",
+            "kind": "read",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB5B48B",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB5B4A3",
+            "kind": "read",
+            "width": null,
+            "wire_type": "str",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 4,
+        "checkable": 4,
+        "pairs": [
+          {
+            "field": "get_reward",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB5B427",
+            "kind": "read"
+          },
+          {
+            "field": "num_reward",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB5B467",
+            "kind": "read"
+          },
+          {
+            "field": "highscore",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB5B48B",
+            "kind": "read"
+          },
+          {
+            "field": "coopwave_score_term",
+            "width": null,
+            "shape": "str",
+            "va": "0xB5B4A3",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB5B3D8",
+          "0xB5B4DA"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 6,
+          "capacity": 71,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB5B4A3",
+              "kind": "read",
+              "name": ""
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）6 / 容量 0x47"
+        }
+      },
+      "closer": {
+        "va": "0xB5B4CF",
+        "kind": "jnz",
+        "jcc_va": "0xB5B4D3",
+        "seq_va": "0xB5B4CB",
+        "jcc_dst": "0xB5B4B1",
+        "cmp": "cmp     ebx, [esp+2C5Ch+var_2C40]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x4F0]",
+        "slot_value": 1264,
+        "va": "0xB5B647",
+        "mov_va": "0xB5B62B",
+        "host": "[edx+4F0h]",
+        "argc": 4,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB5B441",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "get_reward=",
+        "num_reward=",
+        "highscore=",
+        "coopwave_score_term=\""
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0x30E2-lounge-pilot_cwchscore_reward_notice.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xB5B4FC"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "PilotCwchscoreRewardNotice",
+      "role": "response",
+      "wire_length": "1 + 1 + 4 + var(≤65)",
+      "members": [
+        {
+          "name": "GetReward",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "get_reward"
+        },
+        {
+          "name": "NumReward",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "num_reward"
+        },
+        {
+          "name": "Highscore",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "highscore"
+        },
+        {
+          "name": "CoopwaveScoreTerm",
+          "wire_type": "str",
+          "length": "var(≤65)",
+          "field_ref": "coopwave_score_term",
+          "element": null,
+          "element_length": null,
+          "cap": null,
+          "count_field": "num_reward",
+          "count_field_source": "heuristic",
+          "note": "元素成员未建模（composites/ 无此结构），须以 IDA 复核补"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "bca03500d3630575",
+  "check_fingerprint": "f18f73583990bb23",
+  "import_repairs": [
+    "str_slot_budget:coopwave_score_term(65 → var(≤65)；线上实写 strlen+1)",
+    "wire_len_member_rows_folded:1 + 1 + 4 + 65 → 1 + 1 + 4 + var(≤65)"
+  ]
+}

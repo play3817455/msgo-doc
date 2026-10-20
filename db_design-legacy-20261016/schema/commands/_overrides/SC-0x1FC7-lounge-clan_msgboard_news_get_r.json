@@ -1,0 +1,106 @@
+{
+  "id": "SC-0x1FC7-lounge-clan_msgboard_news_get_r",
+  "revision": 1,
+  "verified_at": "2026-09-22",
+  "verifier": "人工（IDA 汇编逐条核对，元素读取器 / 元素打印器 / 数组预留器三方对齐）",
+  "reason": "protocol_analysis 的 fields.csv 把 news 元素的线上长度记成 242B：元素读取器 sub_B45D20 实际消费 244B，草稿把 kind/nice_count/child_count 三个 u16（+0Ch/+0Eh/+10h）只计了两个，是求和笔误。同批的 `news.*` 行只是「成员名占位行」（长度 `?`、置信度「推测」），成员从未建模，也让长度闭合式带上了一个无意义的 `?`。本次进 IDA 把 9 个成员的线类型/偏移/长度补齐（见 schema/composites/news.json），并订正元素线长与总长表达式。",
+  "evidence": [
+    {
+      "what": "元素读取器 sub_B45D20 逐字段消费 244B（无分支跳读，任一步越界即 retn 0）",
+      "va": [
+        "0xB45D3A",
+        "0xB45D3F",
+        "0xB45D55",
+        "0xB45D6C",
+        "0xB45D88",
+        "0xB45D90",
+        "0xB45DAC",
+        "0xB45DC9",
+        "0xB45DDE",
+        "0xB45DFC"
+      ],
+      "detail": "u64 msg_id[mov [edi],edx @0xB45D3A + mov [edi+4],eax @0xB45D3F，游标 +8] → u32 date[[edi+8]@0xB45D55，+4] → u16 kind[[edi+0Ch]@0xB45D6C，+2] → u16 nice_count[[edi+0Eh]@0xB45D88，+2] → u16 child_count[[edi+10h] 经 sub_B02DF0@0xB45D90，+2] → 193B body[循环 @0xB45DA0..0xB45DBD] → u32 pilot_id[[edi+0D4h]@0xB45DC9，+4] → u32 npc_id[[edi+0D8h]@0xB45DDE，+4] → 25B name[循环 @0xB45DF0..0xB45E0C]。合计 8+4+2+2+2+193+4+4+25 = 244。"
+    },
+    {
+      "what": "3 个 u16 各自单列读取 ⇒ 草稿 242 漏计一个 u16",
+      "va": [
+        "0xB45D6C",
+        "0xB45D88",
+        "0xB45D90"
+      ],
+      "detail": "kind/nice_count 是两条独立的 2B 直读，child_count 走 sub_B02DF0（u16 读取器，见其内 `mov [edx],cx / add [eax],2`）。8+4+2+2+193+4+4+25 = 242 正是「只算两个 u16」的结果，与读取器实际步进不符。"
+    },
+    {
+      "what": "两个定长串的循环上界即元素内的字节数",
+      "va": [
+        "0xB45DB8",
+        "0xB45E09"
+      ],
+      "detail": "body 循环 `cmp eax,0C1h / jb`（0xC1=193），起点 [edi+12h]；name 循环 `cmp eax,19h / jb`（0x19=25），起点 [edi+0DCh]（打印器 `add edi,0DCh` @0xB4EA5E 印证）。"
+    },
+    {
+      "what": "元素打印器 sub_B4E900 列 9 个成员，内存偏移与读取器写入点一一对应",
+      "va": [
+        "0xB4E915",
+        "0xB4E918",
+        "0xB4E93F",
+        "0xB4E966",
+        "0xB4E98E",
+        "0xB4E9B6",
+        "0xB4E9E6",
+        "0xB4EA07",
+        "0xB4EA31",
+        "0xB4EA5E"
+      ],
+      "detail": "打印 msg_id=([edi]+[edi+4]) / date=([edi+8]) / kind=([edi+0Ch]) / nice_count=([edi+0Eh]) / child_count=([edi+10h]) / body=([edi+12h]) / pilot_id=([edi+0D4h]) / npc_id=([edi+0D8h]) / name=([edi+0DCh])，无第 10 个成员 —— 与读取器逐字段一致，可排除「读取器多读了一段无关数据」。"
+    },
+    {
+      "what": "248B 是落地槽步进（内存口径），不是元素线长",
+      "va": [
+        "0xB5824D",
+        "0xB58276"
+      ],
+      "detail": "0xB5824D `call sub_B417D0`（push ebx=N 预留 N 个元素）；数组循环 0xB58276 `add var_2C48,0F8h` 按 0xF8=248 步进。元素线长只能由读取器 sub_B45D20 的消费量（244）决定；body 结束于内存 211 ⇒ pilot_id 对齐到 212（1B 填充），name 结束于 245 ⇒ 槽 248（3B 填充）。"
+    },
+    {
+      "what": "上界 N ≤ 15 与闭合点位置",
+      "va": [
+        "0xB58212",
+        "0xB5823E",
+        "0xB5826A",
+        "0xB582AF",
+        "0xB582C3"
+      ],
+      "detail": "0xB58212 经 sub_B02DD0 读 u32 news_num；0xB5823E `cmp ebx,0Fh / ja` 判定 ≤15；0xB5826A 循环调 sub_B45D20；数组之后 0xB582AF 经 sub_B06230 再读 1B clan_kind；0xB582C3 `cmp ecx,[esp+var_2C40]` 要求线上游标 == 报文末尾 ⇒ 总长 = 4 + 4 + 244·N + 1。"
+    },
+    {
+      "what": "声明容量 0xE91 是槽口径上限，不是线长",
+      "va": [
+        "0xB581A2"
+      ],
+      "detail": "0xB581A2 `push 0E91h` = 3729 = 4 + 4 + 15×248 + 1（按槽 248 计）。按线长 244 计的上限是 4 + 4 + 15×244 + 1 = 3669 (0xE55) ≤ 0xE91，容量足够且口径不同，不矛盾。"
+    }
+  ],
+  "drop": [
+    "news.*"
+  ],
+  "patch": {
+    "news": {
+      "offset": "8",
+      "length": "244·news_num",
+      "wire_type": "array<news>",
+      "meaning": "战队新闻列表（元素线上 244B；落地槽步进 248B）",
+      "purpose": "数组基址经 vt[0x46C]；日志 `news={…}`（元素打印器 sub_B4E900）；元素读取器 sub_B45D20 消费 244B/元素；条数由 news_num 驱动（sub_B417D0 预留 N 槽）",
+      "enum": "元素线长 244 / 槽 248",
+      "evidence_va": [
+        "0xB5826A",
+        "0xB45D20",
+        "0xB5824D",
+        "0xB4E900"
+      ],
+      "confidence": "确证"
+    }
+  },
+  "wire_length_expr": "4 + 4 + 244·news_num + 1",
+  "wire_note": "报文体总长 4 + 4 + 244·news_num + 1（news_num ≤ 15，上界 0xE55）；草稿写的 `242·N + ? + 1` 有两处错：元素线长漏计一个 u16（242→244），且 `?` 来自占位行 `news.*`（已删）。声明容量 0xE91 = 4 + 4 + 15×248 + 1 是**落地槽口径**（槽 248 = 元素 245B 内存占用按 8 字节对齐），不要把槽步进当线长。"
+}

@@ -1,0 +1,390 @@
+{
+  "id": "SC-0xAC3D-battle-msma_change_team",
+  "opcode": "0xAC3D",
+  "direction": "SC",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "msma_change_team",
+  "source_dir": "protocol_analysis/commands/SC-0xAC3D-battle-msma_change_team",
+  "meta": {
+    "opcode": "`0xAC3D`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`battle_client`",
+    "命令名": "`msma_change_team`",
+    "处理块范围": "`0xb28550`..`0xb28790`",
+    "名字串引用点": "`0xb28664`",
+    "声明容量（解码缓冲）": "`0x4`（`B28569`）",
+    "长度闭合点": "`B2861B`",
+    "报错码": "`0xC8`（块内 `push 1; push <errcode>; vt[0x64]`）",
+    "去向": "`vt[0x274]` @`B28774`（3 实参）"
+  },
+  "handler": null,
+  "handler_va": null,
+  "block": [
+    "0xb28550",
+    "0xb28790"
+  ],
+  "name_str": null,
+  "name_str_va": "0xb28664",
+  "capacity": "0x4",
+  "capacity_va": "0xB28569",
+  "closer_va": "0xB2861B",
+  "dispatch": "`vt[0x274]` @`B28774`（3 实参）",
+  "dispatch_slot": "vt[0x274]",
+  "dispatch_va": "0xB28774",
+  "wire": {
+    "length_expr": "1 + 1 + 2",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x4（容量记账口径，非线长）",
+    "field_count": 3,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：4（全定长）。",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0xAC3D",
+      "evidence_va": [
+        "0xb28664"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "team",
+      "meaning": "新阵营（日志串 `team=`；顶层 1B 由 `movzx` ⇒ u8）",
+      "purpose": "经 `vt[0x274]` 交业务（3 实参）",
+      "enum": null,
+      "evidence_va": [
+        "B285A7",
+        "B28766"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "1",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "troops",
+      "meaning": "部队编号（日志串 `troops=`）",
+      "purpose": "经 `vt[0x274]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B285E7",
+        "B2876E"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "2",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "ent_id",
+      "meaning": "实体 ID（日志串 `ent_id=`）",
+      "purpose": "经 `vt[0x274]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B2860B",
+        "B28756"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0xAC3D（分发器 switch 选择子）",
+      "evidence_va": "0xB28664"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB05DA0`（模块 id 200）→ 之后逐字段读线",
+      "evidence_va": "0xB28557"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "team：`u8`（线长 1）—— 新阵营（日志串 `team=`；顶层 1B 由 `movzx` ⇒ u8）",
+      "evidence_va": "0xB285A7"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "troops：`u8`（线长 1）—— 部队编号（日志串 `troops=`）",
+      "evidence_va": "0xB285E7"
+    },
+    {
+      "step": 5,
+      "kind": "read_scalar",
+      "detail": "ent_id：`u16`（线长 2）—— 实体 ID（日志串 `ent_id=`）",
+      "evidence_va": "0xB2860B"
+    },
+    {
+      "step": 6,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB2861B"
+    },
+    {
+      "step": 7,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x274]`，实参 3 个",
+      "evidence_va": "0xB28774"
+    },
+    {
+      "step": 8,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB285C1"
+    }
+  ],
+  "capabilities": [
+    "update"
+  ],
+  "capabilities_derived": [
+    "update"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:47",
+    "batch": 19,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 4,
+        "va": "0xB2856C",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB28569",
+        "call_va": "0xB2856E"
+      },
+      "field_window": {
+        "start_va": "0xB28558",
+        "end_va": "0xB28642",
+        "guard": {
+          "va": "0xB28557",
+          "func": "0xB05DA0",
+          "module_id": 200,
+          "release_va": "0xB05D90"
+        },
+        "closer_or_commit_va": "0xB2861B",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "team",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "B285A7",
+              "B28766"
+            ]
+          },
+          {
+            "name": "troops",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "B285E7",
+              "B2876E"
+            ]
+          },
+          {
+            "name": "ent_id",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "B2860B",
+              "B28756"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB285A7",
+            "kind": "read",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB285E7",
+            "kind": "read",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB2860B",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 3,
+        "checkable": 3,
+        "pairs": [
+          {
+            "field": "team",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB285A7",
+            "kind": "read"
+          },
+          {
+            "field": "troops",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB285E7",
+            "kind": "read"
+          },
+          {
+            "field": "ent_id",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB2860B",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB28558",
+          "0xB28642"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 4,
+          "capacity": 4,
+          "relation": "exact",
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）4 / 容量 0x4"
+        }
+      },
+      "closer": {
+        "va": "0xB2861B",
+        "kind": "jz",
+        "jcc_va": "0xB28621",
+        "seq_va": "0xB28617",
+        "jcc_dst": "0xB2863D",
+        "cmp": "cmp     ebx, [esp+1B3Ch+var_1B24]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x274]",
+        "slot_value": 628,
+        "va": "0xB28774",
+        "mov_va": "0xB2875F",
+        "host": "[edx+274h]",
+        "argc": 3,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB285C1",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "team=",
+        "troops=",
+        "ent_id="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0xAC3D-battle-msma_change_team.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xb28664"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "MsmaChangeTeam",
+      "role": "response",
+      "wire_length": "1 + 1 + 2",
+      "members": [
+        {
+          "name": "Team",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "team"
+        },
+        {
+          "name": "Troops",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "troops"
+        },
+        {
+          "name": "EntId",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "ent_id"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "db4b780bcd0f5dbb",
+  "check_fingerprint": "38362b828e29b231"
+}

@@ -1,0 +1,59 @@
+{
+  "id": "tbl_unlocked_navi",
+  "title": "解锁导航",
+  "status": "complete",
+  "table_disposition": "PERSIST",
+  "purpose": "持久化 unlocked_navi 8B；navi_id + status",
+  "entity_ref": "unlocked_navi",
+  "row_key": {
+    "columns": [
+      "navi_id"
+    ],
+    "reason": "服务端按导航逐条落库：CS-0xFC2B 一次只带一个 navi_id（`[eax],esi` @0xBA7459），SC-0xA0BB 也只通知一条 unlocked_navi；一名飞行员的解锁导航是多条，若按 (world_id, pilot_id) 单行保存只会留下最后一条。",
+    "evidence_va": "B6F615|B6F6E7|BA7459",
+    "verified": "2026-09-21"
+  },
+  "evidence_commands": [
+    "SC-0xA0BB-lounge-player_navi_unlock_r"
+  ],
+  "column_groups": [
+    {
+      "name": "unlocked_navi（8B）",
+      "columns": [
+        "unlocked_navi"
+      ]
+    }
+  ],
+  "columns": [
+    {
+      "name": "unlocked_navi",
+      "disposition": "COMPOSITE",
+      "composite_ref": "unlocked_navi",
+      "meaning": "解锁的导航信息（日志 unlocked_navi=）",
+      "wire_sources": [
+        {
+          "command": "SC-0xA0BB-lounge-player_navi_unlock_r",
+          "struct": "unlocked_navi",
+          "field_name": "unlocked_navi",
+          "offset": 4,
+          "length": 8,
+          "wire_type": "struct",
+          "protocol_path": "protocol_analysis/commands/SC-0xA0BB-lounge-player_navi_unlock_r/README.md",
+          "section": "§3",
+          "reader": "sub_B434B0",
+          "printer": "sub_B49C80",
+          "evidence_va": "B6F615|B6F6E7",
+          "notes": "报文字段 #2"
+        }
+      ],
+      "asm_verified": true
+    }
+  ],
+  "asm_audit": {
+    "composite_ref": "unlocked_navi",
+    "status": "pass",
+    "issues_count": 0,
+    "memory_status": "pass",
+    "memory_issues_count": 0
+  }
+}

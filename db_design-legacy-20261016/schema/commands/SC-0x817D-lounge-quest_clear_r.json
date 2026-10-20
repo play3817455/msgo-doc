@@ -1,0 +1,408 @@
+{
+  "id": "SC-0x817D-lounge-quest_clear_r",
+  "opcode": "0x817D",
+  "direction": "SC",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "quest_clear_r",
+  "source_dir": "protocol_analysis/commands/SC-0x817D-lounge-quest_clear_r",
+  "meta": {
+    "opcode": "`0x817D`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`quest_clear_r`",
+    "处理块范围": "`B69522`..`B6975D`",
+    "名字串引用点": "`B69629`",
+    "声明容量（解码缓冲）": "`0x609`（`B69537`）",
+    "长度闭合点": "`B695FC`",
+    "收尾函数": "`sub_B41110`（lounge 口径）",
+    "去向": "`vt[0x3CC]` @ `B6972E`（3 实参）"
+  },
+  "handler": null,
+  "handler_va": null,
+  "block": [
+    "0xB69522",
+    "0xB6975D"
+  ],
+  "name_str": null,
+  "name_str_va": "0xB69629",
+  "capacity": "0x609",
+  "capacity_va": "0xB69537",
+  "closer_va": "0xB695FC",
+  "dispatch": "`vt[0x3CC]` @ `B6972E`（3 实参）",
+  "dispatch_slot": "vt[0x3CC]",
+  "dispatch_va": "0xB6972E",
+  "wire": {
+    "length_expr": "4 + 4 + var(≤1537)",
+    "fixed": false,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x609（容量记账口径，非线长）",
+    "field_count": 3,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：4+4+(L+1)。",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0x817D",
+      "evidence_va": [
+        "B69629"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "result",
+      "meaning": "结果码（日志串 `result=`）",
+      "purpose": "经 `vt[0x3CC]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B69575",
+        "B6967F"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "quest_id",
+      "meaning": "任务 ID（日志串 `quest_id=`）",
+      "purpose": "经 `vt[0x3CC]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B695B5",
+        "B696A9"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "8",
+      "length": "var(≤1537)",
+      "wire_type": "str",
+      "name": "pay_comment",
+      "meaning": "付酬备注（日志串 `pay_comment=\"`）",
+      "purpose": "NUL 串，槽位预算 **1537**（`push 601h` @`0xB695C5`），线长 = 串长+1",
+      "enum": null,
+      "evidence_va": [
+        "B695D0",
+        "B696D1"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5,
+      "slot_budget": 1537
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0x817D（分发器 switch 选择子）",
+      "evidence_va": "0xB69629"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB41120`（模块 id None）→ 之后逐字段读线",
+      "evidence_va": "0xB69522"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "result：`u32`（线长 4）—— 结果码（日志串 `result=`）",
+      "evidence_va": "0xB69575"
+    },
+    {
+      "step": 4,
+      "kind": "read_count",
+      "detail": "quest_id：`u32`（线长 4）—— 任务 ID（日志串 `quest_id=`）",
+      "evidence_va": "0xB695B5"
+    },
+    {
+      "step": 5,
+      "kind": "read_string",
+      "detail": "pay_comment：`str`（线长 var(≤1537)）—— 付酬备注（日志串 `pay_comment=\"`）",
+      "evidence_va": "0xB695D0"
+    },
+    {
+      "step": 6,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jnz）",
+      "evidence_va": "0xB695FC"
+    },
+    {
+      "step": 7,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x3CC]`，实参 3 个",
+      "evidence_va": "0xB69741"
+    },
+    {
+      "step": 8,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB6958F"
+    }
+  ],
+  "capabilities": [
+    "delete",
+    "lounge.quest"
+  ],
+  "capabilities_derived": [
+    "unclassified"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:44",
+    "batch": 9,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 1545,
+        "va": "0xB69537",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB69534",
+        "call_va": "0xB6953C"
+      },
+      "field_window": {
+        "start_va": "0xB69523",
+        "end_va": "0xB69607",
+        "guard": {
+          "va": "0xB69522",
+          "func": "0xB41120",
+          "module_id": null,
+          "release_va": "0xB41110"
+        },
+        "closer_or_commit_va": "0xB695FC",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "result",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "B69575",
+              "B6967F"
+            ]
+          },
+          {
+            "name": "quest_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "B695B5",
+              "B696A9"
+            ]
+          },
+          {
+            "name": "pay_comment",
+            "wire_type": "str",
+            "width": null,
+            "seq": 3,
+            "shape": "str",
+            "evidence_va": [
+              "B695D0",
+              "B696D1"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB69575",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB695B5",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB695D0",
+            "kind": "read",
+            "width": null,
+            "wire_type": "str",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 3,
+        "checkable": 3,
+        "pairs": [
+          {
+            "field": "result",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB69575",
+            "kind": "read"
+          },
+          {
+            "field": "quest_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB695B5",
+            "kind": "read"
+          },
+          {
+            "field": "pay_comment",
+            "width": null,
+            "shape": "str",
+            "va": "0xB695D0",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB69523",
+          "0xB69607"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 8,
+          "capacity": 1545,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB695D0",
+              "kind": "read",
+              "name": ""
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）8 / 容量 0x609"
+        }
+      },
+      "closer": {
+        "va": "0xB695FC",
+        "kind": "jnz",
+        "jcc_va": "0xB69600",
+        "seq_va": "0xB695F8",
+        "jcc_dst": "0xB695DE",
+        "cmp": "cmp     ebx, [esp+2C5Ch+var_2C40]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x3CC]",
+        "slot_value": 972,
+        "va": "0xB69741",
+        "mov_va": "0xB6972E",
+        "host": "[edx+3CCh]",
+        "argc": 3,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB6958F",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "result=",
+        "quest_id=",
+        "pay_comment=\""
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0x817D-lounge-quest_clear_r.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "B69629"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "QuestClearR",
+      "role": "response",
+      "wire_length": "4 + 4 + var(≤1537)",
+      "members": [
+        {
+          "name": "Result",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "result"
+        },
+        {
+          "name": "QuestId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "quest_id"
+        },
+        {
+          "name": "PayComment",
+          "wire_type": "str",
+          "length": "var(≤1537)",
+          "field_ref": "pay_comment",
+          "element": null,
+          "element_length": null,
+          "cap": null,
+          "count_field": "quest_id",
+          "count_field_source": "nearest_scalar",
+          "note": "元素成员未建模（composites/ 无此结构），须以 IDA 复核补"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "8eb97850458d0510",
+  "check_fingerprint": "624db1808fc98eaf",
+  "import_repairs": [
+    "str_slot_budget:pay_comment(1537 → var(≤1537)；线上实写 strlen+1)",
+    "wire_len_member_rows_folded:4 + 4 + 1537 → 4 + 4 + var(≤1537)"
+  ]
+}

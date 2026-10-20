@@ -1,0 +1,508 @@
+{
+  "id": "CS-0xF24B-auth-authenticate",
+  "opcode": "0xF24B",
+  "direction": "CS",
+  "proto": "auth",
+  "proto_class": "auth_client",
+  "name": "authenticate",
+  "source_dir": "protocol_analysis/commands/CS-0xF24B-auth-authenticate",
+  "meta": {
+    "opcode": "`0xF24B`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`auth_client`",
+    "命令名": "`authenticate`",
+    "名字符串": "`)<-_proto_auth_client::send_authenticate(` @ `0x00EDAFE0`",
+    "代码位置": "`sub_B04EB0` @ `0x00B04EB0`（`0x00B04EB0`..`0x00B05190`）",
+    "opcode 写入证据": "`0x00B04F39`",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0x50A`（1290）",
+    "容量申请证据": "`0x00B04EF3`（分配器 `[obj+0Ch]` 的 `vt[0x78]`）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)` @ `0x00B05121`",
+    "提交": "`sub_B02FF0` @ `0x00B0500E`",
+    "配对命令": "S→C `SC-0xA5DA-auth-authenticate_r`"
+  },
+  "handler": "sub_B04EB0",
+  "handler_va": "0x00B04EB0",
+  "block": [
+    "0xB04EB0",
+    "0xB05190"
+  ],
+  "name_str": ")<-_proto_auth_client::send_authenticate(",
+  "name_str_va": "0x00EDAFE0",
+  "capacity": "0x50A",
+  "capacity_va": "0x00B04EF3",
+  "closer_va": "0xB0500E",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)` @ `0x00B05121`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": "0x00B05121",
+  "wire": {
+    "length_expr": "var + var + var + var",
+    "fixed": false,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x50A（容量记账口径，非线长）",
+    "field_count": 4,
+    "length_source": "field_sum",
+    "readme_conclusion": "字段数：**5**（含 opcode 第 0 项）",
+    "readme_close": "2 + 513 + 513 + 128 + 128 = 1284 ≤ 容量 0x50A = 1290（富余 6）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "写入 `buf+0`，供服务端分发；无 case 块（C→S）",
+      "enum": "0xF24B",
+      "evidence_va": [
+        "`00B04F39`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "var",
+      "wire_type": "str",
+      "name": "login_id",
+      "meaning": "登录账号（NUL 结尾串，槽位预算 513）",
+      "purpose": "来源=入参 → 写原语 `sub_B02B40`（@`0xB04F43`，`push 201h`=513 槽预算 @`0xB04F2E`）",
+      "enum": "槽预算 513",
+      "evidence_va": [
+        "`0xB04F2E`;`0xB04F43`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "var",
+      "length": "var",
+      "wire_type": "str",
+      "name": "login_pw",
+      "meaning": "登录密码（NUL 结尾串，槽位预算 513）",
+      "purpose": "来源=入参 → 写原语 `sub_B02B40`（@`0xB04F62`，`push 201h`=513 @`0xB04F57`）",
+      "enum": "槽预算 513",
+      "evidence_va": [
+        "`0xB04F57`;`0xB04F62`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "var",
+      "length": "var",
+      "wire_type": "str",
+      "name": "disk_uuid",
+      "meaning": "磁盘 UUID 串（槽位预算 128）",
+      "purpose": "来源=入参 → 写原语 `sub_B02B40`（@`0xB04F81`，`push 80h`=128 @`0xB04F76`）",
+      "enum": "槽预算 128",
+      "evidence_va": [
+        "`0xB04F76`;`0xB04F81`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 4,
+      "offset": "var",
+      "length": "var",
+      "wire_type": "str",
+      "name": "mac_addr",
+      "meaning": "网卡 MAC 地址串（槽位预算 128）",
+      "purpose": "来源=入参 → 写原语 `sub_B02B40`（@`0xB04FA0`，`push 80h`=128 @`0xB04F95`）",
+      "enum": "槽预算 128",
+      "evidence_va": [
+        "`0xB04F95`;`0xB04FA0`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0xF24B（分发器 switch 选择子）",
+      "evidence_va": "0x00B04F39"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0x50A B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xB04EF3"
+    },
+    {
+      "step": 3,
+      "kind": "write_string",
+      "detail": "login_id：`str`（线长 var）—— 登录账号（NUL 结尾串，槽位预算 513）",
+      "evidence_va": "0xB04F2E"
+    },
+    {
+      "step": 4,
+      "kind": "write_string",
+      "detail": "login_pw：`str`（线长 var）—— 登录密码（NUL 结尾串，槽位预算 513）",
+      "evidence_va": "0xB04F57"
+    },
+    {
+      "step": 5,
+      "kind": "write_string",
+      "detail": "disk_uuid：`str`（线长 var）—— 磁盘 UUID 串（槽位预算 128）",
+      "evidence_va": "0xB04F76"
+    },
+    {
+      "step": 6,
+      "kind": "write_string",
+      "detail": "mac_addr：`str`（线长 var）—— 网卡 MAC 地址串（槽位预算 128）",
+      "evidence_va": "0xB04F95"
+    },
+    {
+      "step": 7,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xB0500E"
+    },
+    {
+      "step": 8,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xB0512A"
+    }
+  ],
+  "capabilities": [
+    "validate"
+  ],
+  "capabilities_derived": [
+    "unclassified"
+  ],
+  "db_effects": [],
+  "pair": "SC-0xA5DA-auth-authenticate_r",
+  "related": [
+    "CS-0xF24B-battle-authenticate",
+    "CS-0xF24B-lounge-authenticate"
+  ],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:42",
+    "batch": 2,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 1290,
+        "va": "0xB04EF3",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB04EF0",
+        "call_va": "0xB04EF8"
+      },
+      "field_window": {
+        "start_va": "0xB04EB0",
+        "end_va": "0xB0500E",
+        "guard": null,
+        "closer_or_commit_va": "0xB0500E",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "login_id",
+            "wire_type": "str",
+            "width": null,
+            "seq": 1,
+            "shape": "str",
+            "evidence_va": [
+              "`0xB04F2E`;`0xB04F43`"
+            ]
+          },
+          {
+            "name": "login_pw",
+            "wire_type": "str",
+            "width": null,
+            "seq": 2,
+            "shape": "str",
+            "evidence_va": [
+              "`0xB04F57`;`0xB04F62`"
+            ]
+          },
+          {
+            "name": "disk_uuid",
+            "wire_type": "str",
+            "width": null,
+            "seq": 3,
+            "shape": "str",
+            "evidence_va": [
+              "`0xB04F76`;`0xB04F81`"
+            ]
+          },
+          {
+            "name": "mac_addr",
+            "wire_type": "str",
+            "width": null,
+            "seq": 4,
+            "shape": "str",
+            "evidence_va": [
+              "`0xB04F95`;`0xB04FA0`"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB04F39",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB04F43",
+            "kind": "write",
+            "width": null,
+            "wire_type": "str",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB04F62",
+            "kind": "write",
+            "width": null,
+            "wire_type": "str",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB04F81",
+            "kind": "write",
+            "width": null,
+            "wire_type": "str",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB04FA0",
+            "kind": "write",
+            "width": null,
+            "wire_type": "str",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB04FE4",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 4,
+        "checkable": 4,
+        "pairs": [
+          {
+            "field": "login_id",
+            "width": null,
+            "shape": "str",
+            "va": "0xB04F43",
+            "kind": "write"
+          },
+          {
+            "field": "login_pw",
+            "width": null,
+            "shape": "str",
+            "va": "0xB04F62",
+            "kind": "write"
+          },
+          {
+            "field": "disk_uuid",
+            "width": null,
+            "shape": "str",
+            "va": "0xB04F81",
+            "kind": "write"
+          },
+          {
+            "field": "mac_addr",
+            "width": null,
+            "shape": "str",
+            "va": "0xB04FA0",
+            "kind": "write"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB04F39",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB04EB0",
+          "0xB0500E"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 2,
+          "capacity": 1290,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB04F43",
+              "kind": "write",
+              "name": ""
+            },
+            {
+              "va": "0xB04F62",
+              "kind": "write",
+              "name": ""
+            },
+            {
+              "va": "0xB04F81",
+              "kind": "write",
+              "name": ""
+            },
+            {
+              "va": "0xB04FA0",
+              "kind": "write",
+              "name": ""
+            },
+            {
+              "va": "0xB04FE4",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）2 / 容量 0x50a"
+        }
+      },
+      "closer": {
+        "va": "0xB0500E",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xB0512A",
+        "mov_va": "0xB05121",
+        "host": "[edx+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "login_id=\"",
+        "login_pw=\"",
+        "disk_uuid=\"",
+        "mac_addr=\""
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0xF24B-auth-authenticate.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0x00B04F39",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "`00B04F39`"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "Authenticate",
+      "role": "request",
+      "wire_length": "var + var + var + var",
+      "members": [
+        {
+          "name": "LoginId",
+          "wire_type": "str",
+          "length": "var",
+          "field_ref": "login_id",
+          "element": null,
+          "element_length": null,
+          "cap": null,
+          "count_field": null,
+          "count_field_source": null,
+          "note": "元素成员未建模（composites/ 无此结构），须以 IDA 复核补"
+        },
+        {
+          "name": "LoginPw",
+          "wire_type": "str",
+          "length": "var",
+          "field_ref": "login_pw",
+          "element": null,
+          "element_length": null,
+          "cap": null,
+          "count_field": null,
+          "count_field_source": null,
+          "note": "元素成员未建模（composites/ 无此结构），须以 IDA 复核补"
+        },
+        {
+          "name": "DiskUuid",
+          "wire_type": "str",
+          "length": "var",
+          "field_ref": "disk_uuid",
+          "element": null,
+          "element_length": null,
+          "cap": null,
+          "count_field": null,
+          "count_field_source": null,
+          "note": "元素成员未建模（composites/ 无此结构），须以 IDA 复核补"
+        },
+        {
+          "name": "MacAddr",
+          "wire_type": "str",
+          "length": "var",
+          "field_ref": "mac_addr",
+          "element": null,
+          "element_length": null,
+          "cap": null,
+          "count_field": null,
+          "count_field_source": null,
+          "note": "元素成员未建模（composites/ 无此结构），须以 IDA 复核补"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "273229340b74ec3f",
+  "check_fingerprint": "9b2e920fcedd48e5"
+}

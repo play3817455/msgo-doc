@@ -1,0 +1,244 @@
+{
+ "id": "SC-0xFD8A-battle-examination_progress_r",
+ "verified_at": "2026-09-30 15:25:46",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "block",
+ "block": [
+  "0xB30C68",
+  "0xB30EF6"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 88,
+   "va": "0xB30C7D",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xB30C7A",
+   "call_va": "0xB30C7F"
+  },
+  "field_window": {
+   "start_va": "0xB30C69",
+   "end_va": "0xB30D72",
+   "guard": {
+    "va": "0xB30C68",
+    "func": "0xB05DA0",
+    "module_id": null,
+    "release_va": "0xB05D90"
+   },
+   "closer_or_commit_va": "0xB30D4B",
+   "within_model_block": true,
+   "range_from": "block"
+  },
+  "primitive_widths": {
+   "direction": "SC",
+   "expected": [
+    {
+     "name": "examination_info",
+     "wire_type": "array<examination_info_entry,5>",
+     "width": null,
+     "seq": 1,
+     "shape": "agg",
+     "evidence_va": [
+      "0xB30CA9",
+      "0xB30CBA",
+      "0xB06BA0"
+     ]
+    },
+    {
+     "name": "examination_playscore",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 2,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB30CFB"
+     ]
+    },
+    {
+     "name": "examination_playsec_remain_msec",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 3,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB30D3B"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB06BAE",
+     "kind": "nested",
+     "width": 4,
+     "wire_type": null,
+     "name": "",
+     "consumed": 4,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB06BC4",
+     "kind": "nested",
+     "width": 4,
+     "wire_type": null,
+     "name": "",
+     "consumed": 4,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB06BD6",
+     "kind": "nested",
+     "width": 4,
+     "wire_type": null,
+     "name": "",
+     "consumed": 4,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB06BE8",
+     "kind": "nested",
+     "width": 4,
+     "wire_type": null,
+     "name": "",
+     "consumed": 4,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB30CA9",
+     "kind": "opaque",
+     "width": null,
+     "wire_type": null,
+     "name": "sub_B419B0",
+     "consumed": 0,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB30CBA",
+     "kind": "opaque",
+     "width": null,
+     "wire_type": null,
+     "name": "sub_B06BA0",
+     "consumed": 16,
+     "consumed_effective": 16,
+     "nested_of": null
+    },
+    {
+     "va": "0xB30CFB",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB30D3B",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 2,
+   "checkable": 2,
+   "pairs": [
+    {
+     "field": "examination_playscore",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB30CFB",
+     "kind": "read"
+    },
+    {
+     "field": "examination_playsec_remain_msec",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB30D3B",
+     "kind": "read"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [
+    {
+     "va": "0xB30CA9",
+     "kind": "opaque",
+     "width": null,
+     "wire_type": null
+    },
+    {
+     "va": "0xB30CBA",
+     "kind": "opaque",
+     "width": null,
+     "wire_type": null
+    },
+    {
+     "va": "0xB06BAE",
+     "kind": "nested_run",
+     "width": 16,
+     "wire_type": null
+    }
+   ],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB30C69",
+    "0xB30D72"
+   ],
+   "scalar_match_verifiable": true,
+   "capacity_relation": {
+    "observed_min": 24,
+    "capacity": 88,
+    "relation": "within",
+    "unknown_events": [],
+    "is_lower_bound": false,
+    "note": "观测线长（下界）24 / 容量 0x58"
+   }
+  },
+  "closer": {
+   "va": "0xB30D4B",
+   "kind": "jz",
+   "jcc_va": "0xB30D51",
+   "seq_va": "0xB30D47",
+   "jcc_dst": "0xB30D6D",
+   "cmp": "cmp     eax, [esp+1B3Ch+var_1B24]",
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x33C]",
+   "slot_value": 828,
+   "va": "0xB30EDA",
+   "mov_va": "0xB30EC9",
+   "host": "[edx+33Ch]",
+   "argc": 3,
+   "form": "mov_then_call",
+   "error_slot": {
+    "slot": "vt[0x64]",
+    "va": "0xB30CE1",
+    "argc": 2
+   }
+  },
+  "log_strings": [
+   "examination_info={",
+   "examination_playscore=",
+   "examination_playsec_remain_msec="
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "examination_info",
+  "examination_playscore",
+  "examination_playsec_remain_msec"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 16
+}

@@ -1,0 +1,261 @@
+{
+ "id": "CS-0xF705-lounge-pilot_select",
+ "verified_at": "2026-09-30 15:25:46",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "handler_func",
+ "block": [
+  "0xB8A8B0",
+  "0xB8AB6A"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 22,
+   "va": "0xB8A8F3",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xB8A8F0",
+   "call_va": "0xB8A8F5"
+  },
+  "field_window": {
+   "start_va": "0xB8A8B0",
+   "end_va": "0xB8A9FE",
+   "guard": null,
+   "closer_or_commit_va": "0xB8A9FE",
+   "within_model_block": true,
+   "range_from": "handler_func"
+  },
+  "primitive_widths": {
+   "direction": "CS",
+   "expected": [
+    {
+     "name": "troops",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "`0xB8A935`;`0xB8A939`"
+     ]
+    },
+    {
+     "name": "pilot_id",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 2,
+     "shape": "scalar",
+     "evidence_va": [
+      "`0xB8A948`;`0xB8A954`"
+     ]
+    },
+    {
+     "name": "is_tutorial_skip",
+     "wire_type": "u8",
+     "width": 1,
+     "seq": 3,
+     "shape": "scalar",
+     "evidence_va": [
+      "`0xB8A95C`"
+     ]
+    },
+    {
+     "name": "dbg_comeback_disable",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 4,
+     "shape": "scalar",
+     "evidence_va": [
+      "`0xB8A976`"
+     ]
+    },
+    {
+     "name": "channeling_type",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 5,
+     "shape": "scalar",
+     "evidence_va": [
+      "`0xB8A990`"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB8A929",
+     "kind": "inline_store",
+     "width": 2,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB8A939",
+     "kind": "inline_store",
+     "width": 4,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB8A954",
+     "kind": "inline_store",
+     "width": 4,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB8A95C",
+     "kind": "write",
+     "width": 1,
+     "wire_type": "u8",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB8A976",
+     "kind": "write",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB8A990",
+     "kind": "write",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB8A9D4",
+     "kind": "composite",
+     "width": null,
+     "wire_type": null,
+     "name": "sub_B03020",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 5,
+   "checkable": 5,
+   "pairs": [
+    {
+     "field": "troops",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB8A939",
+     "kind": "inline_store"
+    },
+    {
+     "field": "pilot_id",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB8A954",
+     "kind": "inline_store"
+    },
+    {
+     "field": "is_tutorial_skip",
+     "width": 1,
+     "shape": "scalar",
+     "va": "0xB8A95C",
+     "kind": "write"
+    },
+    {
+     "field": "dbg_comeback_disable",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB8A976",
+     "kind": "write"
+    },
+    {
+     "field": "channeling_type",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB8A990",
+     "kind": "write"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [
+    {
+     "va": "0xB8A929",
+     "kind": "inline_store",
+     "width": 2,
+     "wire_type": null
+    }
+   ],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB8A8B0",
+    "0xB8A9FE"
+   ],
+   "scalar_match_verifiable": false,
+   "capacity_relation": {
+    "observed_min": 19,
+    "capacity": 22,
+    "relation": "within",
+    "unknown_events": [
+     {
+      "va": "0xB8A9D4",
+      "kind": "composite",
+      "name": "sub_B03020"
+     }
+    ],
+    "is_lower_bound": true,
+    "note": "观测线长（下界）19 / 容量 0x16"
+   }
+  },
+  "closer": {
+   "va": "0xB8A9FE",
+   "kind": "commit",
+   "jcc_va": null,
+   "seq_va": null,
+   "cmp": null,
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x58]",
+   "slot_value": 88,
+   "va": "0xB8AB04",
+   "mov_va": "0xB8AAFB",
+   "host": "[edx+58h]",
+   "argc": 2,
+   "form": "mov_then_call",
+   "error_slot": null
+  },
+  "log_strings": [
+   "troops=",
+   "pilot_id=",
+   "is_tutorial_skip=",
+   "dbg_comeback_disable=",
+   "channeling_type="
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "channeling_type",
+  "dbg_comeback_disable",
+  "is_tutorial_skip",
+  "pilot_id",
+  "troops"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 14
+}

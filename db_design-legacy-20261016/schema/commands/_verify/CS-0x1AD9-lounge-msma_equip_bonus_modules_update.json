@@ -1,0 +1,184 @@
+{
+ "id": "CS-0x1AD9-lounge-msma_equip_bonus_modules_update",
+ "verified_at": "2026-09-30 15:25:43",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "handler_func",
+ "block": [
+  "0xB93C50",
+  "0xB93E70"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 14,
+   "va": "0xB93C96",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xB93C93",
+   "call_va": "0xB93C98"
+  },
+  "field_window": {
+   "start_va": "0xB93C50",
+   "end_va": "0xB93D68",
+   "guard": null,
+   "closer_or_commit_va": "0xB93D68",
+   "within_model_block": true,
+   "range_from": "handler_func"
+  },
+  "primitive_widths": {
+   "direction": "CS",
+   "expected": [
+    {
+     "name": "uniqid_ms",
+     "wire_type": "u64",
+     "width": 8,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB93CD7,0xB93CD9"
+     ]
+    },
+    {
+     "name": "eq_bonus_modules",
+     "wire_type": "array<u32,1>",
+     "width": null,
+     "seq": 2,
+     "shape": "agg",
+     "evidence_va": [
+      "0xB93CFB"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB93CC4",
+     "kind": "inline_store",
+     "width": 2,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB93CD7",
+     "kind": "inline_store",
+     "width": 4,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB93CFE",
+     "kind": "inline_store",
+     "width": 4,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB93D3E",
+     "kind": "composite",
+     "width": null,
+     "wire_type": null,
+     "name": "sub_B03020",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 0,
+   "checkable": 1,
+   "pairs": [],
+   "gaps": [
+    {
+     "field": "uniqid_ms",
+     "wire_type": "u64",
+     "width": 8,
+     "shape": "scalar",
+     "note": "汇编事件序列里找不到与之对位的读写点（缺字段或宽度不符）"
+    }
+   ],
+   "unmatched_actual": [
+    {
+     "va": "0xB93CC4",
+     "kind": "inline_store",
+     "width": 2,
+     "wire_type": null
+    },
+    {
+     "va": "0xB93CD7",
+     "kind": "inline_store",
+     "width": 4,
+     "wire_type": null
+    },
+    {
+     "va": "0xB93CFE",
+     "kind": "inline_store",
+     "width": 4,
+     "wire_type": null
+    }
+   ],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB93C50",
+    "0xB93D68"
+   ],
+   "scalar_match_verifiable": false,
+   "capacity_relation": {
+    "observed_min": 10,
+    "capacity": 14,
+    "relation": "within",
+    "unknown_events": [
+     {
+      "va": "0xB93D3E",
+      "kind": "composite",
+      "name": "sub_B03020"
+     }
+    ],
+    "is_lower_bound": true,
+    "note": "观测线长（下界）10 / 容量 0xe"
+   }
+  },
+  "closer": {
+   "va": "0xB93D68",
+   "kind": "commit",
+   "jcc_va": null,
+   "seq_va": null,
+   "cmp": null,
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x58]",
+   "slot_value": 88,
+   "va": "0xB93E07",
+   "mov_va": "0xB93DFE",
+   "host": "[edx+58h]",
+   "argc": 2,
+   "form": "mov_then_call",
+   "error_slot": null
+  },
+  "log_strings": [
+   "uniqid_ms=",
+   "eq_bonus_modules={"
+  ]
+ },
+ "mismatches": [],
+ "notes": [
+  {
+   "check": "primitive_widths",
+   "note": "定宽对位不可判定：C→S 写线在复合写入器内部 consumed 未知；缺口 uniqid_ms"
+  }
+ ],
+ "log_name_hits": [
+  "eq_bonus_modules",
+  "uniqid_ms"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 5
+}

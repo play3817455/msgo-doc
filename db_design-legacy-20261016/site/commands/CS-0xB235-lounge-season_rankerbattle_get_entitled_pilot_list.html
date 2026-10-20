@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CS-0xB235-lounge-season_rankerbattle_get_entitled_pilot_list · db_design</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <h1><a href="../index.html">db_design</a></h1>
+      <p class="header-note">唯一证据源：<code>protocol_analysis/</code></p>
+      <nav><a href="../index.html">首页</a>
+      <a href="../homing/index.html">归位库</a>
+      <a href="../tables/index.html">旧表留档</a>
+      <a href="../commands/index.html" class="active">命令</a>
+      <a href="../cfg/index.html">配置表79</a>
+      <a href="../srv/index.html">服务端配置</a>
+      <a href="../asm-audit/index.html">ASM 审计</a>
+      <a href="../oracle-audit/index.html">Oracle 审计</a>
+      <a href="../entities/index.html">协议实体</a>
+      <a href="../fields/index.html">字段索引</a>
+      <a href="../relations.html">表关系</a></nav>
+    </div>
+  </header>
+  <main class="wrap">
+
+    <nav class="breadcrumb"><a href="index.html">命令</a> / <span><code>CS-0xB235-lounge-season_rankerbattle_get_entitled_pilot_list</code></span></nav>
+    <h2>CS-0xB235-lounge-season_rankerbattle_get_entitled_pilot_list
+      <span class="badge" style="background:#455a64">CS</span>
+      <span class="badge" style="background:#1565c0">lounge</span>
+      <span class="badge" style="background:#1565c0">BEHAVIOR-DONE</span></h2>
+    
+      <dl class="asm-dl">
+        <dt>opcode</dt><dd><code>0xB235</code> · CS · lounge</dd>
+        <dt>协议类</dt><dd><code>lounge_client</code></dd>
+        <dt>处理函数</dt><dd><code>sub_BA7B10</code> <code>0xBA7B10</code></dd>
+        <dt>处理块</dt><dd>0xBA7B10 .. 0xBA7CD9</dd>
+        <dt>名字串</dt><dd><code>)&lt;-_proto_lounge_client::send_season_rankerbattle_get_entitled_pilot_list(</code> <code>0xEED548</code></dd>
+        <dt>声明容量</dt><dd>0xE <code>0xBA7B56</code>
+          <span class="muted">（缓冲 claim，非线长）</span></dd>
+        <dt>长度闭合点</dt><dd><code>0xBA7C08</code></dd>
+        <dt>去向槽</dt><dd><code>vt[0x58]</code> <code>0xBA7C65</code></dd>
+        <dt>配对 / 同族</dt><dd><a href="SC-0x9F9B-lounge-season_rankerbattle_get_entitled_pilot_list_r.html"><code>SC-0x9F9B-lounge-season_rankerbattle_get_entitled_pilot_list_r</code></a></dd>
+        <dt>证据目录</dt><dd><a href="../../../protocol_analysis/commands/CS-0xB235-lounge-season_rankerbattle_get_entitled_pilot_list/README.md" target="_blank">README.md</a> · <a href="../../../protocol_analysis/commands/CS-0xB235-lounge-season_rankerbattle_get_entitled_pilot_list/fields.csv" target="_blank">fields.csv</a> · <a href="../../../protocol_analysis/commands/CS-0xB235-lounge-season_rankerbattle_get_entitled_pilot_list/asm.md" target="_blank">asm.md</a> · <a href="../../../protocol_analysis/commands/CS-0xB235-lounge-season_rankerbattle_get_entitled_pilot_list/notes.md" target="_blank">notes.md</a></dd>
+      </dl>
+    <p class="muted">opcode 写入/分发证据 <code>0xBA7B91</code> · 附加通知 <code>0xBA7C82</code></p>
+
+    <section>
+      <h3>线长</h3>
+      <dl class="asm-dl">
+        <dt>报文体线长</dt><dd><code>10</code>
+          <span class="badge" style="background:#455a64">定长</span>
+          <span class="muted">来源 field_sum</span></dd>
+        <dt>变长驱动</dt><dd><span class="muted">—</span></dd>
+        <dt>负载字段数</dt><dd>6</dd>
+        <dt>容量口径</dt><dd class="muted">声明容量 0xE（容量记账口径，非线长）</dd>
+        <dt>README 结论</dt><dd class="muted">结论：请求获取赛季排位赛「有资格驾驶员」名单（带 5 字段排序/筛选条件）。</dd>
+        <dt>README 闭合</dt><dd class="muted">2 + 10(结构体) = 12 ≤ 容量 0xE = 14（富余 2）</dd>
+        
+      </dl>
+    </section>
+
+    <section>
+      <h3>包结构体</h3>
+      <p class="muted">由 <code>fields[]</code> 归并而成；线序即字段行序，可复用的聚合体只在
+        <code>element</code> 里引用 <code>schema/composites/</code>。</p>
+      
+      <div class="struct-block">
+        <h4><code>SeasonRankerbattleGetEntitledPilotList</code> <span class="muted">(request · 角色 request)</span>
+          <span class="muted">线长 10</span></h4>
+        <table class="srv-table">
+          <thead><tr><th>Go 成员</th><th>线类型</th><th>线长</th><th>字段引用</th><th>元素 / 计数</th></tr></thead>
+          <tbody><tr>
+          <td><code class="fname">Order</code></td>
+          <td><code>struct&lt;order&gt;</code></td>
+          <td><code>10</code></td>
+          <td>order</td>
+          <td class="muted">元素 <div class="composite-inline"><span class="muted">5 个成员：</span><code>kind</code> u16 · <code>term</code> u16 · <code>filter</code> u16 · <code>reason</code> u16 · <code>troops</code> u16</div></td>
+        </tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h3>字段解剖</h3>
+      <table class="wide">
+        <thead><tr>
+          <th>序</th><th>偏移</th><th>线长</th><th>线类型</th><th>字段名</th>
+          <th>含义</th><th>用途（来源/去向）</th><th>取值/枚举</th><th>去向</th><th>证据 VA</th><th>置信度</th>
+        </tr></thead>
+        <tbody><tr>
+          <td>0</td>
+          <td><code>0</code></td>
+          <td><code>2</code></td>
+          <td><code>u16</code></td>
+          <td><code class="fname">opcode</code></td>
+          <td>命令号</td>
+          <td>写入 `buf+0`，供服务端分发；无 case 块（C→S）</td>
+          <td class="muted">0xB235</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xBA7B91</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>1</td>
+          <td><code>2</code></td>
+          <td><code>10</code></td>
+          <td><code>struct&lt;order&gt;</code></td>
+          <td><code class="fname">order</code></td>
+          <td>排序 / 筛选条件（复合写入器 `sub_B42060` 消费 10B = 5×u16；打印器 `sub_B4F620`）</td>
+          <td>作为赛季排位「有资格驾驶员」名单的排序/筛选条件（服务端据此组装查询）</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#e65100">TRANSIENT</span> <span class="muted">—</span></td>
+          <td><code>0xB42060</code> <code>0xB4F620</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>2</td>
+          <td><code>2</code></td>
+          <td><code>2</code></td>
+          <td><code>u16</code></td>
+          <td><code class="fname">order.kind</code> <span class="badge" style="background:#546e7a">成员占位行</span></td>
+          <td>排序/筛选种类</td>
+          <td>复合写入器 `sub_B42060` 第 1 个 `mov [edx],si`（源 `[src+0]`；`sub_B42060` 前 4 个 u16 内联写、第 5 个走 `sub_B02DA0`）</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB42073</code></td>
+          <td class="muted">确证</td>
+        </tr><tr class="row-members"><td colspan="11"><div class="muted"><b>成员占位行</b>：这 2 字节已经算在父字段 <code>order</code> 的长度列里，成员清单由该父结构的 composite 展开；本行只作追溯，<b>不参与线长求和</b>（否则 §3.1 定长和式会双计）。</div></td></tr><tr>
+          <td>3</td>
+          <td><code>4</code></td>
+          <td><code>2</code></td>
+          <td><code>u16</code></td>
+          <td><code class="fname">order.term</code> <span class="badge" style="background:#546e7a">成员占位行</span></td>
+          <td>统计期间</td>
+          <td>复合写入器 `sub_B42060` 第 2 个 u16（源 `[src+2]`）</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB42086</code></td>
+          <td class="muted">确证</td>
+        </tr><tr class="row-members"><td colspan="11"><div class="muted"><b>成员占位行</b>：这 2 字节已经算在父字段 <code>order</code> 的长度列里，成员清单由该父结构的 composite 展开；本行只作追溯，<b>不参与线长求和</b>（否则 §3.1 定长和式会双计）。</div></td></tr><tr>
+          <td>4</td>
+          <td><code>6</code></td>
+          <td><code>2</code></td>
+          <td><code>u16</code></td>
+          <td><code class="fname">order.filter</code> <span class="badge" style="background:#546e7a">成员占位行</span></td>
+          <td>筛选条件</td>
+          <td>复合写入器 `sub_B42060` 第 3 个 u16（源 `[src+4]`）</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB4209A</code></td>
+          <td class="muted">确证</td>
+        </tr><tr class="row-members"><td colspan="11"><div class="muted"><b>成员占位行</b>：这 2 字节已经算在父字段 <code>order</code> 的长度列里，成员清单由该父结构的 composite 展开；本行只作追溯，<b>不参与线长求和</b>（否则 §3.1 定长和式会双计）。</div></td></tr><tr>
+          <td>5</td>
+          <td><code>8</code></td>
+          <td><code>2</code></td>
+          <td><code>u16</code></td>
+          <td><code class="fname">order.reason</code> <span class="badge" style="background:#546e7a">成员占位行</span></td>
+          <td>原因/依据</td>
+          <td>复合写入器 `sub_B42060` 第 4 个 u16（源 `[src+6]`）</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB420AE</code></td>
+          <td class="muted">确证</td>
+        </tr><tr class="row-members"><td colspan="11"><div class="muted"><b>成员占位行</b>：这 2 字节已经算在父字段 <code>order</code> 的长度列里，成员清单由该父结构的 composite 展开；本行只作追溯，<b>不参与线长求和</b>（否则 §3.1 定长和式会双计）。</div></td></tr><tr>
+          <td>6</td>
+          <td><code>10</code></td>
+          <td><code>2</code></td>
+          <td><code>u16</code></td>
+          <td><code class="fname">order.troops</code> <span class="badge" style="background:#546e7a">成员占位行</span></td>
+          <td>势力/阵营</td>
+          <td>复合写入器 `sub_B42060` 第 5 个 u16（源 `[src+8]`，走写线原语 `sub_B02DA0`）</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB420BD</code></td>
+          <td class="muted">确证</td>
+        </tr><tr class="row-members"><td colspan="11"><div class="muted"><b>成员占位行</b>：这 2 字节已经算在父字段 <code>order</code> 的长度列里，成员清单由该父结构的 composite 展开；本行只作追溯，<b>不参与线长求和</b>（否则 §3.1 定长和式会双计）。</div></td></tr></tbody>
+      </table>
+    </section>
+
+    <section>
+      <h3>客户端行为</h3>
+      <table class="srv-table">
+        <thead><tr><th>步</th><th>类别</th><th>动作</th><th>证据 VA</th></tr></thead>
+        <tbody><tr>
+          <td>1</td>
+          <td><code>write_scalar</code></td>
+          <td>opcode 0xB235（分发器 switch 选择子）</td>
+          <td><code>0xBA7B91</code></td>
+        </tr><tr>
+          <td>2</td>
+          <td><code>alloc</code></td>
+          <td>分配发送缓冲 0xE B（`[X+78h]` 分配器 + `push IMM`）</td>
+          <td><code>0xBA7B56</code></td>
+        </tr><tr>
+          <td>3</td>
+          <td><code>write_struct</code></td>
+          <td>order：`struct&lt;order&gt;`（线长 10）—— 排序 / 筛选条件（复合写入器 `sub_B42060` 消费 10B = 5×u16；打印器 `sub_B4F620`）</td>
+          <td><code>0xB42060</code></td>
+        </tr><tr>
+          <td>4</td>
+          <td><code>commit</code></td>
+          <td>提交/发送 `sub_B02FF0(buf)`：定长报文提交点</td>
+          <td><code>0xBA7C08</code></td>
+        </tr><tr>
+          <td>5</td>
+          <td><code>send</code></td>
+          <td>去向 `vt[0x58](buf, 负载长度)`，实参 2 个</td>
+          <td><code>0xBA7C70</code></td>
+        </tr><tr>
+          <td>6</td>
+          <td><code>notify</code></td>
+          <td>附加通知回调 `[obj+79A8h]`（模块 id，非字段）</td>
+          <td><code>0xBA7C82</code></td>
+        </tr></tbody>
+      </table>
+    </section>
+
+    <section>
+      <h3>能力</h3>
+      <span class="cap-chip">query</span><span class="cap-chip">lounge.season_rankerbattle</span><div class="muted">命名学推断（非证据）：<span class="cap-chip cap-derived">unclassified</span></div>
+    </section>
+
+    <section>
+      <h3>DB 影响</h3>
+      <p class="muted">未补。CS 的 op 需服务端语义确认；SC 的 op 由去向槽 <code>vt[0xNNN]</code> 的实参决定。</p>
+    </section>
+
+    <section>
+      <h3>导入期 CSV 修复记录</h3>
+      <ul><li><code>member_row_folded:order.kind(父 order = order，成员已由 composite 展开)</code></li><li><code>member_row_folded:order.term(父 order = order，成员已由 composite 展开)</code></li><li><code>member_row_folded:order.filter(父 order = order，成员已由 composite 展开)</code></li><li><code>member_row_folded:order.reason(父 order = order，成员已由 composite 展开)</code></li><li><code>member_row_folded:order.troops(父 order = order，成员已由 composite 展开)</code></li><li><code>wire_len_member_rows_folded:2 + 2 + 2 + 2 + 2 → 10</code></li></ul>
+      <p class="muted">这些行的 <code>fields.csv</code> 列数畸形（线类型被逗号切开 / 文本内含 ASCII 逗号），
+        导入时按启发式还原，<strong>必须由 IDA 汇编复核后才能当结论用</strong>。</p>
+    </section><section>
+      <h3>人工复核覆盖（订正 <code>fields.csv</code>）</h3>
+      <ul><li><code>override_add:1</code></li></ul>
+      <dl class="asm-dl">
+        <dt>修订版本</dt><dd>rev 1 · 2026-09-22</dd>
+        <dt>覆写文件</dt><dd><code>schema/commands/_overrides/CS-0xB235-lounge-season_rankerbattle_get_entitled_pilot_list.json</code></dd>
+        <dt>订正理由</dt><dd>fields.csv 把 10B 的 `order` 摊成 5 行成员（`order.kind` … `order.troops`）却没有父行 —— 与 `CS-0x9527` 同形。补父行 `order`（`struct&lt;order&gt;`，10B，偏移 2，插在 `order.kind` 之前），成员由 `composites/order.json` 承载（成员名取自打印器 `sub_B4F620`）。父行出现后那 5 行成为成员占位行，不再参与线长求和：线长仍是 `10`（= 5×u16），与 README 的 `2 + 10 = 12 ≤ 14` 容量等式一致；包结构体里也能看到「这是一个 10B 的排序/筛选结构」。</dd>
+      </dl>
+      <p class="muted">这些字段的口径由 IDA 汇编逐条核对后人工订正，<strong>不再等同</strong> <code>fields.csv</code> 原值
+        （覆盖行带 <code>override_verified: true</code>）；<code>revision</code> 变号会让旧汇编复核结论作废、
+        必须重跑 <code>verify_commands_ida.py ingest</code>。</p>
+    </section>
+
+    <section>
+      <h3>汇编复核（IDA asm 为唯一权威）</h3>
+      
+      <dl class="asm-dl">
+        <dt>状态</dt><dd><span class="badge" style="background:#1565c0">BEHAVIOR-DONE</span></dd>
+        <dt>复核批次</dt><dd>10</dd>
+        <dt>复核时间</dt><dd>2026-09-30 15:25:44</dd>
+        <dt>提取器</dt><dd><code>tools/verify_commands_ida.py</code></dd>
+      </dl>
+      <table class="srv-table">
+        <thead><tr><th>检查项</th><th>键</th><th>结果</th></tr></thead>
+        <tbody><tr><td>容量指纹</td><td><code>capacity</code></td><td><code>{&quot;value&quot;: 14, &quot;va&quot;: &quot;0xBA7B56&quot;, &quot;reg&quot;: &quot;edx&quot;, &quot;host&quot;: &quot;[eax+78h]&quot;, &quot;alloc_va&quot;: &quot;0xBA7B53&quot;, &quot;call_va&quot;: &quot;0xBA7B58&quot;}</code></td></tr><tr><td>字段窗口</td><td><code>field_window</code></td><td><code>{&quot;start_va&quot;: &quot;0xBA7B10&quot;, &quot;end_va&quot;: &quot;0xBA7C08&quot;, &quot;guard&quot;: null, &quot;closer_or_commit_va&quot;: &quot;0xBA7C08&quot;, &quot;within_model_block&quot;: true, &quot;range_from&quot;: &quot;handler_func&quot;}</code></td></tr><tr><td>原语宽度</td><td><code>primitive_widths</code></td><td><code>{&quot;direction&quot;: &quot;CS&quot;, &quot;expected&quot;: [{&quot;name&quot;: &quot;order&quot;, &quot;wire_type&quot;: &quot;struct&lt;order&gt;&quot;, &quot;width&quot;: null, &quot;seq&quot;: 1, &quot;shape&quot;: &quot;agg&quot;, &quot;evidence_va&quot;: [&quot;0xB42060&quot;, &quot;0xB4F620&quot;]}, {&quot;name&quot;: &quot;order.kind&quot;, &quot;wire_type&quot;: &quot;u16&quot;, &quot;width&quot;: 2, &quot;seq&quot;: 2, &quot;shape&quot;: &quot;scalar&quot;, &quot;evidence_va&quot;: [&quot;0xB42073&quot;]}, {&quot;name&quot;: &quot;order.term&quot;, &quot;wire_type&quot;: &quot;u16&quot;, &quot;width&quot;: 2, &quot;seq&quot;: 3, &quot;shape&quot;: &quot;scalar&quot;, &quot;evidence_va&quot;: [&quot;0xB42086&quot;]}, {&quot;name&quot;: &quot;order.filter&quot;, &quot;wire_type&quot;: &quot;u16&quot;, &quot;width&quot;: 2, &quot;seq&quot;: 4, &quot;shape&quot;: &quot;scalar&quot;, &quot;evidence_va&quot;: [&quot;0xB4209A&quot;]}, {&quot;name&quot;: &quot;order.reason&quot;, &quot;wire_type&quot;: &quot;u16&quot;, &quot;width&quot;: 2, &quot;seq&quot;: 5, &quot;shape&quot;: &quot;scalar&quot;, &quot;evidence_va&quot;: [&quot;0xB420AE&quot;]}, {&quot;name&quot;: &quot;order.troops&quot;, &quot;wire_type&quot;: &quot;u16&quot;, &quot;width&quot;: 2, &quot;seq&quot;: 6, &quot;shape&quot;: &quot;scalar&quot;, &quot;evidence_va&quot;: [&quot;0xB420BD&quot;]}], &quot;actual&quot;: [{&quot;va&quot;: &quot;0xBA7B91&quot;, &quot;kind&quot;: &quot;inline_store&quot;, &quot;width&quot;: 2, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: null, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xBA7B9A&quot;, &quot;kind&quot;: &quot;composite&quot;, &quot;width&quot;: null, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;sub_B42060&quot;, &quot;consumed&quot;: 10, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xBA7BDE&quot;, &quot;kind&quot;: &quot;composite&quot;, &quot;width&quot;: null, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;sub_B03020&quot;, &quot;consumed&quot;: null, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}], &quot;matched&quot;: 0, &quot;checkable&quot;: 5, &quot;pairs&quot;: [], &quot;gaps&quot;: [], &quot;unmatched_actual&quot;: [{&quot;va&quot;: &quot;0xBA7B91&quot;, &quot;kind&quot;: &quot;inline_store&quot;, &quot;width&quot;: 2, &quot;wire_type&quot;: null}, {&quot;va&quot;: &quot;0xBA7B9A&quot;, &quot;kind&quot;: &quot;composite&quot;, &quot;width&quot;: null, &quot;wire_type&quot;: null}], &quot;nested_unmatchable&quot;: [{&quot;parent&quot;: &quot;order&quot;, &quot;reason&quot;: &quot;找不到该成员组的父读取器调用点（父聚合未对位，且之前无已对位的聚合字段）&quot;}], &quot;window&quot;: [&quot;0xBA7B10&quot;, &quot;0xBA7C08&quot;], &quot;scalar_match_verifiable&quot;: false, &quot;capacity_relation&quot;: {&quot;observed_min&quot;: 12, &quot;capacity&quot;: 14, &quot;relation&quot;: &quot;within&quot;, &quot;unknown_events&quot;: [{&quot;va&quot;: &quot;0xBA7BDE&quot;, &quot;kind&quot;: &quot;composite&quot;, &quot;name&quot;: &quot;sub_B03020&quot;}], &quot;is_lower_bound&quot;: true, &quot;note&quot;: &quot;观测线长（下界）12 / 容量 0xe&quot;}}</code></td></tr><tr><td>闭合点</td><td><code>closer</code></td><td><code>{&quot;va&quot;: &quot;0xBA7C08&quot;, &quot;kind&quot;: &quot;commit&quot;, &quot;jcc_va&quot;: null, &quot;seq_va&quot;: null, &quot;cmp&quot;: null, &quot;va_convention&quot;: &quot;cmp&quot;}</code></td></tr><tr><td>去向槽+实参</td><td><code>dispatch_slot</code></td><td><code>{&quot;slot&quot;: &quot;vt[0x58]&quot;, &quot;slot_value&quot;: 88, &quot;va&quot;: &quot;0xBA7C70&quot;, &quot;mov_va&quot;: &quot;0xBA7C65&quot;, &quot;host&quot;: &quot;[edx+58h]&quot;, &quot;argc&quot;: 2, &quot;form&quot;: &quot;mov_then_call&quot;, &quot;error_slot&quot;: null}</code></td></tr><tr><td>日志串</td><td><code>log_strings</code></td><td><code>[&quot;order=&quot;]</code></td></tr></tbody>
+      </table>
+      <p>无差异。</p>
+      <p>原始证据切片：<a href="../../../db_design/schema/commands/_verify/CS-0xB235-lounge-season_rankerbattle_get_entitled_pilot_list.json" target="_blank"><code>commands/_verify/CS-0xB235-lounge-season_rankerbattle_get_entitled_pilot_list.json</code></a></p>
+    </section>
+
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">生成于 2026-10-12 · 改 JSON 后重跑 build_site.py · HTML 只读</div>
+  </footer>
+</body>
+</html>

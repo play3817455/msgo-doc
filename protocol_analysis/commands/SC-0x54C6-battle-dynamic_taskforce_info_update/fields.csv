@@ -1,0 +1,12 @@
+序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+0,-,2,u16,opcode,命令号,分发器 switch 选择子,0x54C6,0xB17CDD,确证
+1,0,54,u8[54],order_all_number,"全部指令编号（**定长数组**，无线上计数；预留 `sub_B060E0` 一次推进 `0x36`=54，循环上界字面量 `cmp edi,36h`@`0xB17A48`）",经 `vt[0x2FC]` 交业务,-,0xB17A23|0xB17D27,确证
+2,54,54,u8[54],order_all_kind,"全部指令种类（定长 54，`cmp edi,36h`@`0xB17A8B`）",经 `vt[0x2FC]` 交业务,-,0xB17A68|0xB17D84,确证
+3,108,216,u32[54],order_all_param,"全部指令参数（定长 54×u32；预留 `sub_B06100` 推进 `0xD8`=216，`cmp edi,36h`@`0xB17ACE`）",经 `vt[0x2FC]` 交业务,-,0xB17AAB|0xB17DE2,确证
+4,324,51,u8[51],members_order_idx,"成员指令序号（定长 51；预留 `sub_B06120` 推进 `0x33`=51，`cmp edi,33h`@`0xB17B18`）",经 `vt[0x2FC]` 交业务,-,0xB17AEE|0xB17E41,确证
+5,375,4,u32,npc_entid_count,"NPC 实体 ID 个数（上限 `0xC`=12，`cmp ebx,0Ch`@`0xB17B65`）",经 `vt[0x2FC]` 交业务,-,0xB17B39|0xB17EA0,确证
+6,379,2N,array<u16>,npc_entid[],NPC 实体 ID 列表（元素 2B / 槽步进 2B，预留 `sub_B05E40`）,经 `vt[0x2FC]` 交业务,-,0xB17B74|0xB17EA0,确证
+7,-,4,u32,npc_order_index_count,"NPC 指令序号个数（上限 `0xC`=12，`cmp ebx,0Ch`@`0xB17BF1`）",经 `vt[0x2FC]` 交业务,-,0xB17BC5|0xB17F10,确证
+8,-,N,array<u8>,npc_order_index[],NPC 指令序号列表（元素 1B / 槽步进 1B，预留 `sub_B05EA0`）,经 `vt[0x2FC]` 交业务,-,0xB17C00|0xB17F10,确证
+9,-,4,u32,party_worldid,队伍所属世界 ID,经 `vt[0x2FC]` 交业务,-,0xB17C58|0xB17F90,确证
+10,-,4,u32,party_pilotid,队伍飞行员 ID,经 `vt[0x2FC]` 交业务,-,0xB17C80|0xB17FB5,确证

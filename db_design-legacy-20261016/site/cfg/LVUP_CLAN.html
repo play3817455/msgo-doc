@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LVUP_CLAN · db_design</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <h1><a href="../index.html">db_design</a></h1>
+      <p class="header-note">唯一证据源：<code>protocol_analysis/</code></p>
+      <nav><a href="../index.html">首页</a>
+      <a href="../homing/index.html">归位库</a>
+      <a href="../tables/index.html">旧表留档</a>
+      <a href="../commands/index.html">命令</a>
+      <a href="../cfg/index.html" class="active">配置表79</a>
+      <a href="../srv/index.html">服务端配置</a>
+      <a href="../asm-audit/index.html">ASM 审计</a>
+      <a href="../oracle-audit/index.html">Oracle 审计</a>
+      <a href="../entities/index.html">协议实体</a>
+      <a href="../fields/index.html">字段索引</a>
+      <a href="../relations.html">表关系</a></nav>
+    </div>
+  </header>
+  <main class="wrap">
+
+    <p class="breadcrumb"><a href="index.html">配置表79</a> / <code>LVUP_CLAN</code></p>
+    <h2><code>LVUP_CLAN</code> <span class="badge" style="background:#1565c0">DOWNLOAD</span> <span class="badge" style="background:#2e7d32">确证</span></h2>
+    <dl class="asm-dl">
+      <dt>CSV</dt><dd><code>growth/lvup_clan.csv</code></dd>
+      <dt>用途</dt><dd>部队（Clan）等级成长</dd>
+      <dt>读表函数</dt><dd><code>sub_579960</code></dd>
+      <dt>表ID</dt><dd>15</dd>
+      <dt>下载序</dt><dd>15</dd>
+      <dt>类名</dt><dd><code>CLvupClanTable</code></dd>
+      <dt>列统计</dt><dd>12 列 · 确证 12 · 已映射 0 · 间隙 1</dd>
+      <dt>证据</dt><dd><a href="../../../datatables/01-列注释/15-15-LVUP_CLAN.md" target="_blank">datatables/01-列注释/15-15-LVUP_CLAN.md</a></dd>
+    </dl>
+    <section>
+      <h3>列定案</h3>
+      <p class="muted"><code>db_column</code> = PostgreSQL 列名（确证/有语义的 partial 用订案名；<code>unknown_*</code> 暂保留 colN）</p>
+      <table class="wide">
+        <thead>
+          <tr>
+            <th>CSV#</th><th>DB列</th><th>订案名</th><th>中文摘要</th><th>类型</th>
+            <th>状态</th><th>读表</th><th>偏移/VA</th><th>语义详情</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><code>0</code></td>
+      <td><code>clan_level</code></td>
+      <td><code>clan_level</code></td>
+      <td>部队等级</td>
+      <td><code>u8</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_579960</code></td>
+      <td class="muted">csv 0 · +8 · 0x57999a</td>
+      <td class="meaning-cell">部队等级（u8 col0 主键）</td>
+    </tr>
+    <tr>
+      <td><code>1</code></td>
+      <td><code>member_cap</code></td>
+      <td><code>member_cap</code></td>
+      <td>成员上限</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_579960</code></td>
+      <td class="muted">csv 1 · +0 · 0x5799a4</td>
+      <td class="meaning-cell">成员上限（u32 col1 → +0）</td>
+    </tr>
+    <tr>
+      <td><code>2</code></td>
+      <td><code>reserved_u32_2</code></td>
+      <td><code>reserved_u32_2</code></td>
+      <td>预留列 col2</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_579960</code></td>
+      <td class="muted">csv 2</td>
+      <td class="meaning-cell">CSV col2 预留（sub_579960 跳过；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>3</code></td>
+      <td><code>mechanic_level</code></td>
+      <td><code>mechanic_level</code></td>
+      <td>机械师等级档</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_579960</code></td>
+      <td class="muted">csv 3 · +24 · 0x5799ac</td>
+      <td class="meaning-cell">部队机械师等级档（enum col3；MECHANIC_LV0..LV10）<div class="enum-vals"><a class="enum-chip" href="enums/sub_578c50.html#v-MECHANIC_LV0" title="机械师等级0"><code>MECHANIC_LV0</code>=0<span class="enum-zh">机械师等级0</span></a> <a class="enum-chip" href="enums/sub_578c50.html#v-MECHANIC_LV1" title="机械师等级1"><code>MECHANIC_LV1</code>=1<span class="enum-zh">机械师等级1</span></a> <a class="enum-chip" href="enums/sub_578c50.html#v-MECHANIC_LV2" title="机械师等级2"><code>MECHANIC_LV2</code>=2<span class="enum-zh">机械师等级2</span></a> <a class="enum-chip" href="enums/sub_578c50.html#v-MECHANIC_LV3" title="机械师等级3"><code>MECHANIC_LV3</code>=3<span class="enum-zh">机械师等级3</span></a> <a class="enum-chip" href="enums/sub_578c50.html#v-MECHANIC_LV4" title="机械师等级4"><code>MECHANIC_LV4</code>=4<span class="enum-zh">机械师等级4</span></a> <a class="enum-chip" href="enums/sub_578c50.html#v-MECHANIC_LV5" title="机械师等级5"><code>MECHANIC_LV5</code>=5<span class="enum-zh">机械师等级5</span></a> <a class="enum-chip" href="enums/sub_578c50.html#v-MECHANIC_LV6" title="机械师等级6"><code>MECHANIC_LV6</code>=6<span class="enum-zh">机械师等级6</span></a> <a class="enum-chip" href="enums/sub_578c50.html#v-MECHANIC_LV7" title="机械师等级7"><code>MECHANIC_LV7</code>=7<span class="enum-zh">机械师等级7</span></a> <a class="enum-chip" href="enums/sub_578c50.html#v-MECHANIC_LV8" title="机械师等级8"><code>MECHANIC_LV8</code>=8<span class="enum-zh">机械师等级8</span></a> <a class="enum-chip" href="enums/sub_578c50.html#v-MECHANIC_LV9" title="机械师等级9"><code>MECHANIC_LV9</code>=9<span class="enum-zh">机械师等级9</span></a> <a class="enum-chip" href="enums/sub_578c50.html#v-MECHANIC_LV10" title="机械师等级10"><code>MECHANIC_LV10</code>=10<span class="enum-zh">机械师等级10</span></a> <a class="enum-conv-link" href="enums/sub_578c50.html" title="机械师等级项">↗ sub_578C50</a></div></td>
+    </tr>
+    <tr>
+      <td><code>4</code></td>
+      <td><code>exp_base</code></td>
+      <td><code>exp_base</code></td>
+      <td>经验基数</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_579960</code></td>
+      <td class="muted">csv 4 · +12 · 0x5799ef</td>
+      <td class="meaning-cell">升级经验基数（u32 col4 → +12）</td>
+    </tr>
+    <tr>
+      <td><code>5</code></td>
+      <td><code>exp_increment</code></td>
+      <td><code>exp_increment</code></td>
+      <td>经验增量</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_579960</code></td>
+      <td class="muted">csv 5 · +16 · 0x5799f2</td>
+      <td class="meaning-cell">升级经验增量（u32 col5 → +16；与 col4 合成总需求）</td>
+    </tr>
+    <tr>
+      <td><code>6</code></td>
+      <td><code>rokaku_level</code></td>
+      <td><code>rokaku_level</code></td>
+      <td>着陆平台等级</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_579960</code></td>
+      <td class="muted">csv 6 · +28 · 0x579a0c</td>
+      <td class="meaning-cell">着陆平台等级档（enum col6 sub_578EE0：ROKAKU_LV0..5 → +28）<div class="enum-vals"><a class="enum-chip" href="enums/sub_578ee0.html#v-ROKAKU_LV0" title="登录平台等级0"><code>ROKAKU_LV0</code>=0<span class="enum-zh">登录平台等级0</span></a> <a class="enum-chip" href="enums/sub_578ee0.html#v-ROKAKU_LV1" title="登录平台等级1"><code>ROKAKU_LV1</code>=1<span class="enum-zh">登录平台等级1</span></a> <a class="enum-chip" href="enums/sub_578ee0.html#v-ROKAKU_LV2" title="登录平台等级2"><code>ROKAKU_LV2</code>=2<span class="enum-zh">登录平台等级2</span></a> <a class="enum-chip" href="enums/sub_578ee0.html#v-ROKAKU_LV3" title="登录平台等级3"><code>ROKAKU_LV3</code>=3<span class="enum-zh">登录平台等级3</span></a> <a class="enum-chip" href="enums/sub_578ee0.html#v-ROKAKU_LV4" title="登录平台等级4"><code>ROKAKU_LV4</code>=4<span class="enum-zh">登录平台等级4</span></a> <a class="enum-chip" href="enums/sub_578ee0.html#v-ROKAKU_LV5" title="登录平台等级5"><code>ROKAKU_LV5</code>=5<span class="enum-zh">登录平台等级5</span></a> <a class="enum-conv-link" href="enums/sub_578ee0.html" title="登录平台等级">↗ sub_578EE0</a></div></td>
+    </tr>
+    <tr>
+      <td><code>7</code></td>
+      <td><code>gp_bonus</code></td>
+      <td><code>gp_bonus</code></td>
+      <td>GP 加成</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_579960</code></td>
+      <td class="muted">csv 7 · +32 · 0x579a4c</td>
+      <td class="meaning-cell">部队 GP 加成（u32 col7 → +32）</td>
+    </tr>
+    <tr>
+      <td><code>8</code></td>
+      <td><code>shop_level</code></td>
+      <td><code>shop_level</code></td>
+      <td>商店等级</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_579960</code></td>
+      <td class="muted">csv 8 · +36 · 0x579a4f</td>
+      <td class="meaning-cell">部队商店等级（enum col8 sub_5790B0：SHOP_LV0..21 → +36）<div class="enum-vals"><a class="enum-chip" href="enums/sub_5790b0.html#v-SHOP_LV0" title="商店等级0"><code>SHOP_LV0</code>=0<span class="enum-zh">商店等级0</span></a> <a class="enum-chip" href="enums/sub_5790b0.html#v-SHOP_LV1" title="商店等级1"><code>SHOP_LV1</code>=1<span class="enum-zh">商店等级1</span></a> <a class="enum-chip" href="enums/sub_5790b0.html#v-SHOP_LV2" title="商店等级2"><code>SHOP_LV2</code>=2<span class="enum-zh">商店等级2</span></a> <a class="enum-chip" href="enums/sub_5790b0.html#v-SHOP_LV3" title="商店等级3"><code>SHOP_LV3</code>=3<span class="enum-zh">商店等级3</span></a> <a class="enum-chip" href="enums/sub_5790b0.html#v-SHOP_LV4" title="商店等级4"><code>SHOP_LV4</code>=4<span class="enum-zh">商店等级4</span></a> <a class="enum-chip" href="enums/sub_5790b0.html#v-SHOP_LV5" title="商店等级5"><code>SHOP_LV5</code>=5<span class="enum-zh">商店等级5</span></a> <a class="enum-chip" href="enums/sub_5790b0.html#v-SHOP_LV6" title="商店等级6"><code>SHOP_LV6</code>=6<span class="enum-zh">商店等级6</span></a> <a class="enum-chip" href="enums/sub_5790b0.html#v-SHOP_LV7" title="商店等级7"><code>SHOP_LV7</code>=7<span class="enum-zh">商店等级7</span></a> <a class="enum-chip" href="enums/sub_5790b0.html#v-SHOP_LV8" title="商店等级8"><code>SHOP_LV8</code>=8<span class="enum-zh">商店等级8</span></a> <a class="enum-chip" href="enums/sub_5790b0.html#v-SHOP_LV9" title="商店等级9"><code>SHOP_LV9</code>=9<span class="enum-zh">商店等级9</span></a> <a class="enum-chip" href="enums/sub_5790b0.html#v-SHOP_LV10" title="商店等级10"><code>SHOP_LV10</code>=10<span class="enum-zh">商店等级10</span></a> <a class="enum-chip" href="enums/sub_5790b0.html#v-SHOP_LV11" title="商店等级11"><code>SHOP_LV11</code>=11<span class="enum-zh">商店等级11</span></a> <a class="enum-conv-link" href="enums/sub_5790b0.html" title="商店等级">↗ sub_5790B0</a> <span class="muted">…共 22 项</span></div></td>
+    </tr>
+    <tr>
+      <td><code>9</code></td>
+      <td><code>deck_cost_level</code></td>
+      <td><code>deck_cost_level</code></td>
+      <td>卡组 COST 档</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_579960</code></td>
+      <td class="muted">csv 9 · +40 · 0x579a87</td>
+      <td class="meaning-cell">卡组 COST 上限档（enum col9 sub_579500：DECKCOST_LV0..5 → +40）<div class="enum-vals"><a class="enum-chip" href="enums/sub_579500.html#v-DECKCOST_LV0" title="卡组COST等级0"><code>DECKCOST_LV0</code>=0<span class="enum-zh">卡组COST等级0</span></a> <a class="enum-chip" href="enums/sub_579500.html#v-DECKCOST_LV1" title="卡组COST等级1"><code>DECKCOST_LV1</code>=1<span class="enum-zh">卡组COST等级1</span></a> <a class="enum-chip" href="enums/sub_579500.html#v-DECKCOST_LV2" title="卡组COST等级2"><code>DECKCOST_LV2</code>=2<span class="enum-zh">卡组COST等级2</span></a> <a class="enum-chip" href="enums/sub_579500.html#v-DECKCOST_LV3" title="卡组COST等级3"><code>DECKCOST_LV3</code>=3<span class="enum-zh">卡组COST等级3</span></a> <a class="enum-chip" href="enums/sub_579500.html#v-DECKCOST_LV4" title="卡组COST等级4"><code>DECKCOST_LV4</code>=4<span class="enum-zh">卡组COST等级4</span></a> <a class="enum-chip" href="enums/sub_579500.html#v-DECKCOST_LV5" title="卡组COST等级5"><code>DECKCOST_LV5</code>=5<span class="enum-zh">卡组COST等级5</span></a> <a class="enum-conv-link" href="enums/sub_579500.html" title="卡组 COST 等级">↗ sub_579500</a></div></td>
+    </tr>
+    <tr>
+      <td><code>10</code></td>
+      <td><code>bonus_gp</code></td>
+      <td><code>bonus_gp</code></td>
+      <td>奖励 GP</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_579960</code></td>
+      <td class="muted">csv 10 · +44 · 0x579ac1</td>
+      <td class="meaning-cell">等级奖励 GP 数（u32 col10 → +44）</td>
+    </tr>
+    <tr>
+      <td><code>11</code></td>
+      <td><code>discount_level</code></td>
+      <td><code>discount_level</code></td>
+      <td>折扣档</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_579960</code></td>
+      <td class="muted">csv 11 · +48 · 0x579aca</td>
+      <td class="meaning-cell">商店折扣档（enum col11 sub_5796D0：DISCOUNT_LV0..10 → +48）<div class="enum-vals"><a class="enum-chip" href="enums/sub_5796d0.html#v-DISCOUNT_LV0" title="折扣等级0"><code>DISCOUNT_LV0</code>=0<span class="enum-zh">折扣等级0</span></a> <a class="enum-chip" href="enums/sub_5796d0.html#v-DISCOUNT_LV1" title="折扣等级1"><code>DISCOUNT_LV1</code>=1<span class="enum-zh">折扣等级1</span></a> <a class="enum-chip" href="enums/sub_5796d0.html#v-DISCOUNT_LV2" title="折扣等级2"><code>DISCOUNT_LV2</code>=2<span class="enum-zh">折扣等级2</span></a> <a class="enum-chip" href="enums/sub_5796d0.html#v-DISCOUNT_LV3" title="折扣等级3"><code>DISCOUNT_LV3</code>=3<span class="enum-zh">折扣等级3</span></a> <a class="enum-chip" href="enums/sub_5796d0.html#v-DISCOUNT_LV4" title="折扣等级4"><code>DISCOUNT_LV4</code>=4<span class="enum-zh">折扣等级4</span></a> <a class="enum-chip" href="enums/sub_5796d0.html#v-DISCOUNT_LV5" title="折扣等级5"><code>DISCOUNT_LV5</code>=5<span class="enum-zh">折扣等级5</span></a> <a class="enum-chip" href="enums/sub_5796d0.html#v-DISCOUNT_LV6" title="折扣等级6"><code>DISCOUNT_LV6</code>=6<span class="enum-zh">折扣等级6</span></a> <a class="enum-chip" href="enums/sub_5796d0.html#v-DISCOUNT_LV7" title="折扣等级7"><code>DISCOUNT_LV7</code>=7<span class="enum-zh">折扣等级7</span></a> <a class="enum-chip" href="enums/sub_5796d0.html#v-DISCOUNT_LV8" title="折扣等级8"><code>DISCOUNT_LV8</code>=8<span class="enum-zh">折扣等级8</span></a> <a class="enum-chip" href="enums/sub_5796d0.html#v-DISCOUNT_LV9" title="折扣等级9"><code>DISCOUNT_LV9</code>=9<span class="enum-zh">折扣等级9</span></a> <a class="enum-chip" href="enums/sub_5796d0.html#v-DISCOUNT_LV10" title="折扣等级10"><code>DISCOUNT_LV10</code>=10<span class="enum-zh">折扣等级10</span></a> <a class="enum-conv-link" href="enums/sub_5796d0.html" title="折扣等级">↗ sub_5796D0</a></div></td>
+    </tr>
+    <tr>
+      <td><code>12</code></td>
+      <td><code>extra_param</code></td>
+      <td><code>extra_param</code></td>
+      <td>扩展参数</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_579960</code></td>
+      <td class="muted">csv 12 · +52 · 0x579b12</td>
+      <td class="meaning-cell">扩展参数（u32 col12 → +52）</td>
+    </tr></tbody>
+      </table>
+    </section>
+
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">生成于 2026-10-12 · 改 JSON 后重跑 build_site.py · HTML 只读</div>
+  </footer>
+</body>
+</html>

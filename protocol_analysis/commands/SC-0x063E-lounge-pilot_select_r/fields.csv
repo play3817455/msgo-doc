@@ -1,0 +1,20 @@
+序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+0,-,2,u16,opcode,命令号,lounge 分发的 switch 选择子,0x063E,0xB539E5,确证
+1,0,4,u32,result,选人结果码,交 vt[0x94] 第1实参；日志 result=,?,0xB536DB|0xB02DE9|0xB53A3B,类型确证/枚举待定
+2,4,4,u32,restore_channel,恢复(重连)频道号,交 vt[0x94] 第2实参；日志 restore_channel=,-,0xB53718|0xB02DE9|0xB53A65,确证
+3,8,4,u32,charge_point,充能点(能量/点数),交 vt[0x94] 第3实参；日志 charge_point=,-,0xB53742|0xB02DE9|0xB53A92,确证
+4,12,4,u32,tuto_step,教程进度步号,交 vt[0x94] 第4实参；日志 tuto_step=,-,0xB5376C|0xB02DE9|0xB53ABF,确证
+5,16,8,u64,tuto_flags,教程标志位(64位),交 vt[0x94] 第5+6实参(低/高4字节)；日志 tuto_flags=,位义 ?,0xB53785|0xB53794|0xB06220|0xB53AE9,类型确证/位义待定
+6,24,4,u32,tuto_missionid,教程任务ID,交 vt[0x94] 第7实参；日志 tuto_missionid=,-,0xB537D7|0xB02DE9|0xB53B16,确证
+7,28,51672,struct pilot_detail,pilot_detail,驾驶员(玩家)详情全量概要(9数组+3嵌套结构),结构体指针交 vt[0x94] 第8实参；日志 pilot_detail= + 打印器 sub_B48010,成员见同目录 README 3.1/3.2,0xB537EF|0xB53801|0xB4126A|0xB42640,确证
+8,51700,1,u8,is_netcafe,是否网吧环境,交 vt[0x94] 第9实参(零扩展)；日志 is_netcafe=,?,0xB53825|0xB06249|0xB53B6B,确证
+9,51701,1,u8,is_processing_comeback,是否正在处理回归(comeback)流程,交 vt[0x94] 第10实参；日志 is_processing_comeback=,?,0xB5384D|0xB06249|0xB53B95,确证
+10,51702,4,u32,vip_lv,VIP等级,交 vt[0x94] 第11实参；日志 vip_lv=,-,0xB53875|0xB02DE9|0xB53BC1,确证
+11,51706,1,u8,overplay_type,超额游玩(overplay)类型,交 vt[0x94] 第12实参；日志 overplay_type=,?,0xB5389D|0xB06249|0xB53BE9,类型确证/枚举待定
+12,51707,4,u32,accum_playtime,累计游玩时长,交 vt[0x94] 第13实参；日志 accum_playtime=,?,0xB538C5|0xB02DE9|0xB53C15,类型确证/单位待定
+13,51711,4,u32,daily_compcnt,当日完成次数,交 vt[0x94] 第14实参；日志 daily_compcnt=,-,0xB538ED|0xB02DE9|0xB53C3F,确证
+14,51715,4,u32,ncafe_compcnt,网吧任务完成次数,交 vt[0x94] 第15实参；日志 ncafe_compcnt=,-,0xB53915|0xB02DE9|0xB53C69,确证
+15,51719,L+1,bytes,heroms_term,英雄(heroms)期限字符串(NUL结尾),"交 vt[0x94] 第16实参(串指针)；日志 heroms_term=""",槽位预算65B⇒L<=64,0xB5393E|0xB5392B|0xB53932|0xB02BEE|0xB53C96,确证
+16,51720+L,1,u8,flag_wideuse,是否启用宽屏/广泛使用(wideuse)标志,交 vt[0x94] 第17实参；日志 flag_wideuse=,?,0xB53966|0xB06249|0xB53CC9,确证
+17,51721+L,4,u32,level_point,等级点数,交 vt[0x94] 第18实参；日志 level_point=,-,0xB5398E|0xB02DE9|0xB53CF0,确证
+-,51725+L,0,-,（长度闭合）,游标必须==报文末尾（L<=64）,L<=64,-,0xB539A2|0xB539A8,确证

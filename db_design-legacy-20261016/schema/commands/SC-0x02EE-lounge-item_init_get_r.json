@@ -1,0 +1,1970 @@
+{
+  "id": "SC-0x02EE-lounge-item_init_get_r",
+  "opcode": "0x02EE",
+  "direction": "SC",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "item_init_get_r",
+  "source_dir": "protocol_analysis/commands/SC-0x02EE-lounge-item_init_get_r",
+  "meta": {
+    "opcode": "`0x02EE`",
+    "方向": "SC（服务端 → 客户端（recv））",
+    "协议类": "`lounge_client`",
+    "命令名": "`item_init_get_r`",
+    "名字符串": "`)->_proto_lounge_client::recv_item_init_get_r(` @ `0xEEA090`，xref `0xB529EF`",
+    "处理函数": "`sub_B51930` @ `0xB51930`（lounge 分发器）",
+    "处理块范围": "`0xB524F6` .. `0xB52FA3`（块首 `0xB524F6 push 140h`，`140h` 即本 case 开关/错误码）",
+    "关联命令": "发出侧 `_proto_lounge_client::send_item_init_get`（C→S `0x947E`，声明容量 `0x2`）→ `../CS-0x947E-lounge-item_init_get/`"
+  },
+  "handler": "sub_B51930",
+  "handler_va": "0xB51930",
+  "block": [
+    "0xB524F6",
+    "0xB52FA3"
+  ],
+  "name_str": ")->_proto_lounge_client::recv_item_init_get_r(",
+  "name_str_va": "0xEEA090",
+  "capacity": "0xF400",
+  "capacity_va": "0xB52512",
+  "closer_va": "0xB529A6",
+  "dispatch": null,
+  "dispatch_slot": "vt[0x32C]",
+  "dispatch_va": "0xB52F59",
+  "wire": {
+    "length_expr": "64+22*sumA",
+    "fixed": false,
+    "var_drivers": [
+      "sumA"
+    ],
+    "capacity_note": "声明容量 0xF400（容量记账口径，非线长）",
+    "field_count": 22,
+    "length_source": "closure_row",
+    "readme_conclusion": "**报文体总长：变长**（含 4 个「计数 + 元素数组」列表）。定长骨架 = 4×u16 + 6×u32 + 4×u32 + 4×u32 = 8 + 24 + 16 + 16 = 64 字节，再加上 4 个列表的 N × 22 字节。",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "lounge 分发的 switch 选择子",
+      "enum": "0x02EE",
+      "evidence_va": [
+        "0xB529EF"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "slot_num_main",
+      "meaning": "主物品栏槽位数",
+      "purpose": "交 vt[0x32C]；日志 slot_num_main=",
+      "enum": null,
+      "evidence_va": [
+        "0xB52550",
+        "0xB02E0B",
+        "0xB52A46"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "2",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "slot_num_consume",
+      "meaning": "消耗品栏槽位数",
+      "purpose": "交 vt[0x32C]；日志 slot_num_consume=",
+      "enum": null,
+      "evidence_va": [
+        "0xB52590",
+        "0xB02E0B",
+        "0xB52A71"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "4",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "slot_num_trash",
+      "meaning": "垃圾栏槽位数",
+      "purpose": "交 vt[0x32C]；日志 slot_num_trash=",
+      "enum": null,
+      "evidence_va": [
+        "0xB525B4",
+        "0xB02E0B",
+        "0xB52A9C"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 4,
+      "offset": "6",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "slot_num_plan",
+      "meaning": "计划栏槽位数",
+      "purpose": "交 vt[0x32C]；日志 slot_num_plan=",
+      "enum": null,
+      "evidence_va": [
+        "0xB525D8",
+        "0xB02E0B",
+        "0xB52AC7"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    },
+    {
+      "seq": 5,
+      "offset": "8",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "sort_tm_sec_main",
+      "meaning": "主栏排序时间戳(秒)",
+      "purpose": "交 vt[0x32C]；日志 sort_tm_sec_main=",
+      "enum": null,
+      "evidence_va": [
+        "0xB52600",
+        "0xB02DE9",
+        "0xB52AF1"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 7
+    },
+    {
+      "seq": 6,
+      "offset": "12",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "sort_tm_usec_main",
+      "meaning": "主栏排序时间戳(微秒)",
+      "purpose": "交 vt[0x32C]；日志 sort_tm_usec_main=",
+      "enum": null,
+      "evidence_va": [
+        "0xB52628",
+        "0xB02DE9",
+        "0xB52B1B"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 8
+    },
+    {
+      "seq": 7,
+      "offset": "16",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "sort_tm_sec_consume",
+      "meaning": "消耗栏排序时间戳(秒)",
+      "purpose": "交 vt[0x32C]；日志 sort_tm_sec_consume=",
+      "enum": null,
+      "evidence_va": [
+        "0xB52650",
+        "0xB02DE9",
+        "0xB52B45"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 9
+    },
+    {
+      "seq": 8,
+      "offset": "20",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "sort_tm_usec_consume",
+      "meaning": "消耗栏排序时间戳(微秒)",
+      "purpose": "交 vt[0x32C]；日志 sort_tm_usec_consume=",
+      "enum": null,
+      "evidence_va": [
+        "0xB52678",
+        "0xB02DE9",
+        "0xB52B6F"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 10
+    },
+    {
+      "seq": 9,
+      "offset": "24",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "sort_tm_sec_plan",
+      "meaning": "计划栏排序时间戳(秒)",
+      "purpose": "交 vt[0x32C]；日志 sort_tm_sec_plan=",
+      "enum": null,
+      "evidence_va": [
+        "0xB526A0",
+        "0xB02DE9",
+        "0xB52B99"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 11
+    },
+    {
+      "seq": 10,
+      "offset": "28",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "sort_tm_usec_plan",
+      "meaning": "计划栏排序时间戳(微秒)",
+      "purpose": "交 vt[0x32C]；日志 sort_tm_usec_plan=",
+      "enum": null,
+      "evidence_va": [
+        "0xB526CE",
+        "0xB02DE9",
+        "0xB52BC6"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 12
+    },
+    {
+      "seq": 11,
+      "offset": "32",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "count_main",
+      "meaning": "主栏物品条数 A1",
+      "purpose": "列表长度前缀；日志 itmlist_main={",
+      "enum": "<=300",
+      "evidence_va": [
+        "0xB526E8",
+        "0xB52714",
+        "0xB52BE1"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 13
+    },
+    {
+      "seq": 12,
+      "offset": "36",
+      "length": "22*A1",
+      "wire_type": "array<item,A1>",
+      "name": "itmlist_main",
+      "meaning": "主栏物品列表",
+      "purpose": "交 vt[0x32C] 数组基址；打印器 sub_B49CF0",
+      "enum": "元素见同目录 README 3.1",
+      "evidence_va": [
+        "0xB5274A",
+        "0xB52756",
+        "0xB52BFD"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 14,
+      "element_composite_ref_source": "name",
+      "element_composite_ref": "item"
+    },
+    {
+      "seq": 13,
+      "offset": "36+22*A1",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "count_consume",
+      "meaning": "消耗栏物品条数 A2",
+      "purpose": "列表长度前缀；日志 itmlist_consume={",
+      "enum": "<=100",
+      "evidence_va": [
+        "0xB5277E",
+        "0xB52792",
+        "0xB52C5B"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 15
+    },
+    {
+      "seq": 14,
+      "offset": "40+22*A1",
+      "length": "22*A2",
+      "wire_type": "array<item,A2>",
+      "name": "itmlist_consume",
+      "meaning": "消耗栏物品列表",
+      "purpose": "交 vt[0x32C] 数组基址；打印器 sub_B49CF0",
+      "enum": "元素见同目录 README 3.1",
+      "evidence_va": [
+        "0xB527CA",
+        "0xB527D6",
+        "0xB52C77"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 16,
+      "element_composite_ref_source": "name",
+      "element_composite_ref": "item"
+    },
+    {
+      "seq": 15,
+      "offset": "40+22*(A1+A2)",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "count_trash",
+      "meaning": "垃圾栏物品条数 A3",
+      "purpose": "列表长度前缀；日志 itmlist_trash={",
+      "enum": "<=1300",
+      "evidence_va": [
+        "0xB527FE",
+        "0xB52812",
+        "0xB52CD1"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 17
+    },
+    {
+      "seq": 16,
+      "offset": "44+22*(A1+A2)",
+      "length": "22*A3",
+      "wire_type": "array<item,A3>",
+      "name": "itmlist_trash",
+      "meaning": "垃圾栏物品列表",
+      "purpose": "交 vt[0x32C] 数组基址；打印器 sub_B49CF0",
+      "enum": "元素见同目录 README 3.1",
+      "evidence_va": [
+        "0xB5284B",
+        "0xB52857",
+        "0xB52CF0"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 18,
+      "element_composite_ref_source": "name",
+      "element_composite_ref": "item"
+    },
+    {
+      "seq": 17,
+      "offset": "44+22*(A1+A2+A3)",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "count_plan",
+      "meaning": "计划栏物品条数 A4",
+      "purpose": "列表长度前缀；日志 itmlist_plan={",
+      "enum": "<=900",
+      "evidence_va": [
+        "0xB5287F",
+        "0xB52893",
+        "0xB52D4D"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 19
+    },
+    {
+      "seq": 18,
+      "offset": "48+22*(A1+A2+A3)",
+      "length": "22*A4",
+      "wire_type": "array<item,A4>",
+      "name": "itmlist_plan",
+      "meaning": "计划栏物品列表",
+      "purpose": "交 vt[0x32C] 数组基址；打印器 sub_B49CF0",
+      "enum": "元素见同目录 README 3.1",
+      "evidence_va": [
+        "0xB528C6",
+        "0xB528D2",
+        "0xB52D69"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 20,
+      "element_composite_ref_source": "name",
+      "element_composite_ref": "item"
+    },
+    {
+      "seq": 19,
+      "offset": "48+22*sumA",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "msma_plan_sort_type",
+      "meaning": "计划栏排序方式",
+      "purpose": "交 vt[0x32C]；日志 msma_plan_sort_type=",
+      "enum": "?",
+      "evidence_va": [
+        "0xB5290E",
+        "0xB02DE9",
+        "0xB52DD5"
+      ],
+      "confidence": "类型确证/枚举未定",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 21
+    },
+    {
+      "seq": 20,
+      "offset": "52+22*sumA",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "msma_plan_sort_order",
+      "meaning": "计划栏排序方向",
+      "purpose": "交 vt[0x32C]；日志 msma_plan_sort_order=",
+      "enum": "?",
+      "evidence_va": [
+        "0xB5293C",
+        "0xB02DE9",
+        "0xB52E02"
+      ],
+      "confidence": "类型确证/枚举未定",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 22
+    },
+    {
+      "seq": 21,
+      "offset": "56+22*sumA",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "sort_plan_sec",
+      "meaning": "计划栏排序时间戳(秒)",
+      "purpose": "交 vt[0x32C]；日志 sort_plan_sec=",
+      "enum": null,
+      "evidence_va": [
+        "0xB5296A",
+        "0xB02DE9",
+        "0xB52E2F"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 23
+    },
+    {
+      "seq": 22,
+      "offset": "60+22*sumA",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "sort_plan_usec",
+      "meaning": "计划栏排序时间戳(微秒)",
+      "purpose": "交 vt[0x32C]；日志 sort_plan_usec=",
+      "enum": null,
+      "evidence_va": [
+        "0xB52992",
+        "0xB02DE9",
+        "0xB52E54"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 24
+    },
+    {
+      "seq": -1,
+      "offset": "64+22*sumA",
+      "length": "0",
+      "wire_type": "-",
+      "name": "（长度闭合）",
+      "meaning": "游标必须==末尾",
+      "purpose": "-",
+      "enum": null,
+      "evidence_va": [
+        "0xB529A2",
+        "0xB529A6",
+        "0xB529AC"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 25,
+      "is_closure": true
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0x02EE（分发器 switch 选择子）",
+      "evidence_va": "0xB529EF"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB41120`（模块 id 320）→ 之后逐字段读线",
+      "evidence_va": "0xB524FD"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "slot_num_main：`u16`（线长 2）—— 主物品栏槽位数",
+      "evidence_va": "0xB52550"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "slot_num_consume：`u16`（线长 2）—— 消耗品栏槽位数",
+      "evidence_va": "0xB52590"
+    },
+    {
+      "step": 5,
+      "kind": "read_scalar",
+      "detail": "slot_num_trash：`u16`（线长 2）—— 垃圾栏槽位数",
+      "evidence_va": "0xB525B4"
+    },
+    {
+      "step": 6,
+      "kind": "read_scalar",
+      "detail": "slot_num_plan：`u16`（线长 2）—— 计划栏槽位数",
+      "evidence_va": "0xB525D8"
+    },
+    {
+      "step": 7,
+      "kind": "read_scalar",
+      "detail": "sort_tm_sec_main：`u32`（线长 4）—— 主栏排序时间戳(秒)",
+      "evidence_va": "0xB52600"
+    },
+    {
+      "step": 8,
+      "kind": "read_scalar",
+      "detail": "sort_tm_usec_main：`u32`（线长 4）—— 主栏排序时间戳(微秒)",
+      "evidence_va": "0xB52628"
+    },
+    {
+      "step": 9,
+      "kind": "read_scalar",
+      "detail": "sort_tm_sec_consume：`u32`（线长 4）—— 消耗栏排序时间戳(秒)",
+      "evidence_va": "0xB52650"
+    },
+    {
+      "step": 10,
+      "kind": "read_scalar",
+      "detail": "sort_tm_usec_consume：`u32`（线长 4）—— 消耗栏排序时间戳(微秒)",
+      "evidence_va": "0xB52678"
+    },
+    {
+      "step": 11,
+      "kind": "read_scalar",
+      "detail": "sort_tm_sec_plan：`u32`（线长 4）—— 计划栏排序时间戳(秒)",
+      "evidence_va": "0xB526A0"
+    },
+    {
+      "step": 12,
+      "kind": "read_scalar",
+      "detail": "sort_tm_usec_plan：`u32`（线长 4）—— 计划栏排序时间戳(微秒)",
+      "evidence_va": "0xB526CE"
+    },
+    {
+      "step": 13,
+      "kind": "read_count",
+      "detail": "count_main：`u32`（线长 4）—— 主栏物品条数 A1",
+      "evidence_va": "0xB526E8"
+    },
+    {
+      "step": 14,
+      "kind": "read_array",
+      "detail": "itmlist_main：`array<item,A1>`（线长 22*A1）—— 主栏物品列表",
+      "evidence_va": "0xB5274A"
+    },
+    {
+      "step": 15,
+      "kind": "read_count",
+      "detail": "count_consume：`u32`（线长 4）—— 消耗栏物品条数 A2",
+      "evidence_va": "0xB5277E"
+    },
+    {
+      "step": 16,
+      "kind": "read_array",
+      "detail": "itmlist_consume：`array<item,A2>`（线长 22*A2）—— 消耗栏物品列表",
+      "evidence_va": "0xB527CA"
+    },
+    {
+      "step": 17,
+      "kind": "read_count",
+      "detail": "count_trash：`u32`（线长 4）—— 垃圾栏物品条数 A3",
+      "evidence_va": "0xB527FE"
+    },
+    {
+      "step": 18,
+      "kind": "read_array",
+      "detail": "itmlist_trash：`array<item,A3>`（线长 22*A3）—— 垃圾栏物品列表",
+      "evidence_va": "0xB5284B"
+    },
+    {
+      "step": 19,
+      "kind": "read_count",
+      "detail": "count_plan：`u32`（线长 4）—— 计划栏物品条数 A4",
+      "evidence_va": "0xB5287F"
+    },
+    {
+      "step": 20,
+      "kind": "read_array",
+      "detail": "itmlist_plan：`array<item,A4>`（线长 22*A4）—— 计划栏物品列表",
+      "evidence_va": "0xB528C6"
+    },
+    {
+      "step": 21,
+      "kind": "read_scalar",
+      "detail": "msma_plan_sort_type：`u32`（线长 4）—— 计划栏排序方式",
+      "evidence_va": "0xB5290E"
+    },
+    {
+      "step": 22,
+      "kind": "read_scalar",
+      "detail": "msma_plan_sort_order：`u32`（线长 4）—— 计划栏排序方向",
+      "evidence_va": "0xB5293C"
+    },
+    {
+      "step": 23,
+      "kind": "read_scalar",
+      "detail": "sort_plan_sec：`u32`（线长 4）—— 计划栏排序时间戳(秒)",
+      "evidence_va": "0xB5296A"
+    },
+    {
+      "step": 24,
+      "kind": "read_scalar",
+      "detail": "sort_plan_usec：`u32`（线长 4）—— 计划栏排序时间戳(微秒)",
+      "evidence_va": "0xB52992"
+    },
+    {
+      "step": 25,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB529A6"
+    },
+    {
+      "step": 26,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x32C]`，实参 22 个",
+      "evidence_va": "0xB52F59"
+    },
+    {
+      "step": 27,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB5256A"
+    }
+  ],
+  "capabilities": [
+    "flow",
+    "query",
+    "lounge.item"
+  ],
+  "capabilities_derived": [
+    "query"
+  ],
+  "db_effects": [
+    {
+      "entity": "item",
+      "table_ref": "tbl_item",
+      "op": "update",
+      "fields": [
+        "item_list_element"
+      ],
+      "disposition": "PERSIST",
+      "evidence_va": "0xB434F0"
+    }
+  ],
+  "pair": "CS-0x947E-lounge-item_init_get",
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:41",
+    "batch": 1,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 62464,
+        "va": "0xB52512",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB5250F",
+        "call_va": "0xB52517"
+      },
+      "field_window": {
+        "start_va": "0xB524FE",
+        "end_va": "0xB529CD",
+        "guard": {
+          "va": "0xB524FD",
+          "func": "0xB41120",
+          "module_id": 320,
+          "release_va": "0xB41110"
+        },
+        "closer_or_commit_va": "0xB529A6",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "slot_num_main",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB52550",
+              "0xB02E0B",
+              "0xB52A46"
+            ]
+          },
+          {
+            "name": "slot_num_consume",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB52590",
+              "0xB02E0B",
+              "0xB52A71"
+            ]
+          },
+          {
+            "name": "slot_num_trash",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB525B4",
+              "0xB02E0B",
+              "0xB52A9C"
+            ]
+          },
+          {
+            "name": "slot_num_plan",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 4,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB525D8",
+              "0xB02E0B",
+              "0xB52AC7"
+            ]
+          },
+          {
+            "name": "sort_tm_sec_main",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 5,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB52600",
+              "0xB02DE9",
+              "0xB52AF1"
+            ]
+          },
+          {
+            "name": "sort_tm_usec_main",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 6,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB52628",
+              "0xB02DE9",
+              "0xB52B1B"
+            ]
+          },
+          {
+            "name": "sort_tm_sec_consume",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 7,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB52650",
+              "0xB02DE9",
+              "0xB52B45"
+            ]
+          },
+          {
+            "name": "sort_tm_usec_consume",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 8,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB52678",
+              "0xB02DE9",
+              "0xB52B6F"
+            ]
+          },
+          {
+            "name": "sort_tm_sec_plan",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 9,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB526A0",
+              "0xB02DE9",
+              "0xB52B99"
+            ]
+          },
+          {
+            "name": "sort_tm_usec_plan",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 10,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB526CE",
+              "0xB02DE9",
+              "0xB52BC6"
+            ]
+          },
+          {
+            "name": "count_main",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 11,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB526E8",
+              "0xB52714",
+              "0xB52BE1"
+            ]
+          },
+          {
+            "name": "itmlist_main",
+            "wire_type": "array<item,A1>",
+            "width": null,
+            "seq": 12,
+            "shape": "agg",
+            "evidence_va": [
+              "0xB5274A",
+              "0xB52756",
+              "0xB52BFD"
+            ]
+          },
+          {
+            "name": "count_consume",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 13,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB5277E",
+              "0xB52792",
+              "0xB52C5B"
+            ]
+          },
+          {
+            "name": "itmlist_consume",
+            "wire_type": "array<item,A2>",
+            "width": null,
+            "seq": 14,
+            "shape": "agg",
+            "evidence_va": [
+              "0xB527CA",
+              "0xB527D6",
+              "0xB52C77"
+            ]
+          },
+          {
+            "name": "count_trash",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 15,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB527FE",
+              "0xB52812",
+              "0xB52CD1"
+            ]
+          },
+          {
+            "name": "itmlist_trash",
+            "wire_type": "array<item,A3>",
+            "width": null,
+            "seq": 16,
+            "shape": "agg",
+            "evidence_va": [
+              "0xB5284B",
+              "0xB52857",
+              "0xB52CF0"
+            ]
+          },
+          {
+            "name": "count_plan",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 17,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB5287F",
+              "0xB52893",
+              "0xB52D4D"
+            ]
+          },
+          {
+            "name": "itmlist_plan",
+            "wire_type": "array<item,A4>",
+            "width": null,
+            "seq": 18,
+            "shape": "agg",
+            "evidence_va": [
+              "0xB528C6",
+              "0xB528D2",
+              "0xB52D69"
+            ]
+          },
+          {
+            "name": "msma_plan_sort_type",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 19,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB5290E",
+              "0xB02DE9",
+              "0xB52DD5"
+            ]
+          },
+          {
+            "name": "msma_plan_sort_order",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 20,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB5293C",
+              "0xB02DE9",
+              "0xB52E02"
+            ]
+          },
+          {
+            "name": "sort_plan_sec",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 21,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB5296A",
+              "0xB02DE9",
+              "0xB52E2F"
+            ]
+          },
+          {
+            "name": "sort_plan_usec",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 22,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB52992",
+              "0xB02DE9",
+              "0xB52E54"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB43503",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB43503",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB43503",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB43503",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB43507",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB43507",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB43507",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB43507",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB4351A",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB4351A",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB4351A",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB4351A",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB4352C",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB4352C",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB4352C",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB4352C",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB4353E",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB4353E",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB4353E",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB4353E",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB4354B",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB4354B",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB4354B",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB4354B",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB52550",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB52590",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB525B4",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB525D8",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB52600",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB52628",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB52650",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB52678",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB526A0",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB526CE",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB526E8",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB52726",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B416C0",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB5274A",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B434F0",
+            "consumed": 22,
+            "consumed_effective": 22,
+            "nested_of": null
+          },
+          {
+            "va": "0xB5277E",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB527A5",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B416C0",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB527CA",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B434F0",
+            "consumed": 22,
+            "consumed_effective": 22,
+            "nested_of": null
+          },
+          {
+            "va": "0xB527FE",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB5282B",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B416C0",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB5284B",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B434F0",
+            "consumed": 22,
+            "consumed_effective": 22,
+            "nested_of": null
+          },
+          {
+            "va": "0xB5287F",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB528A9",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B416C0",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB528C6",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B434F0",
+            "consumed": 22,
+            "consumed_effective": 22,
+            "nested_of": null
+          },
+          {
+            "va": "0xB5290E",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB5293C",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB5296A",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB52992",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 18,
+        "checkable": 18,
+        "pairs": [
+          {
+            "field": "slot_num_main",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB52550",
+            "kind": "read"
+          },
+          {
+            "field": "slot_num_consume",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB52590",
+            "kind": "read"
+          },
+          {
+            "field": "slot_num_trash",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB525B4",
+            "kind": "read"
+          },
+          {
+            "field": "slot_num_plan",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB525D8",
+            "kind": "read"
+          },
+          {
+            "field": "sort_tm_sec_main",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB52600",
+            "kind": "read"
+          },
+          {
+            "field": "sort_tm_usec_main",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB52628",
+            "kind": "read"
+          },
+          {
+            "field": "sort_tm_sec_consume",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB52650",
+            "kind": "read"
+          },
+          {
+            "field": "sort_tm_usec_consume",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB52678",
+            "kind": "read"
+          },
+          {
+            "field": "sort_tm_sec_plan",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB526A0",
+            "kind": "read"
+          },
+          {
+            "field": "sort_tm_usec_plan",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB526CE",
+            "kind": "read"
+          },
+          {
+            "field": "count_main",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB526E8",
+            "kind": "read"
+          },
+          {
+            "field": "count_consume",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB5277E",
+            "kind": "read"
+          },
+          {
+            "field": "count_trash",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB527FE",
+            "kind": "read"
+          },
+          {
+            "field": "count_plan",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB5287F",
+            "kind": "read"
+          },
+          {
+            "field": "msma_plan_sort_type",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB5290E",
+            "kind": "read"
+          },
+          {
+            "field": "msma_plan_sort_order",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB5293C",
+            "kind": "read"
+          },
+          {
+            "field": "sort_plan_sec",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB5296A",
+            "kind": "read"
+          },
+          {
+            "field": "sort_plan_usec",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB52992",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB5274A",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null
+          },
+          {
+            "va": "0xB43503",
+            "kind": "nested_run",
+            "width": 20,
+            "wire_type": null
+          },
+          {
+            "va": "0xB4354B",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null
+          },
+          {
+            "va": "0xB527CA",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null
+          },
+          {
+            "va": "0xB43503",
+            "kind": "nested_run",
+            "width": 20,
+            "wire_type": null
+          },
+          {
+            "va": "0xB4354B",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null
+          },
+          {
+            "va": "0xB5284B",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null
+          },
+          {
+            "va": "0xB43503",
+            "kind": "nested_run",
+            "width": 20,
+            "wire_type": null
+          },
+          {
+            "va": "0xB4354B",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null
+          },
+          {
+            "va": "0xB528C6",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null
+          },
+          {
+            "va": "0xB43503",
+            "kind": "nested_run",
+            "width": 20,
+            "wire_type": null
+          },
+          {
+            "va": "0xB4354B",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB524FE",
+          "0xB529CD"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 152,
+          "capacity": 62464,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB52726",
+              "kind": "opaque",
+              "name": "sub_B416C0"
+            },
+            {
+              "va": "0xB527A5",
+              "kind": "opaque",
+              "name": "sub_B416C0"
+            },
+            {
+              "va": "0xB5282B",
+              "kind": "opaque",
+              "name": "sub_B416C0"
+            },
+            {
+              "va": "0xB528A9",
+              "kind": "opaque",
+              "name": "sub_B416C0"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）152 / 容量 0xf400"
+        }
+      },
+      "closer": {
+        "va": "0xB529A6",
+        "kind": "jz",
+        "jcc_va": "0xB529AC",
+        "seq_va": "0xB529A2",
+        "jcc_dst": "0xB529C8",
+        "cmp": "cmp     ecx, [esp+2C5Ch+var_2C40]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x32C]",
+        "slot_value": 812,
+        "va": "0xB52F59",
+        "mov_va": "0xB52F50",
+        "host": "[eax+32Ch]",
+        "argc": 22,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB5256A",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "slot_num_main=",
+        "slot_num_consume=",
+        "slot_num_trash=",
+        "slot_num_plan=",
+        "sort_tm_sec_main=",
+        "sort_tm_usec_main=",
+        "sort_tm_sec_consume=",
+        "sort_tm_usec_consume=",
+        "sort_tm_sec_plan=",
+        "sort_tm_usec_plan=",
+        "itmlist_main={",
+        "itmlist_consume={",
+        "itmlist_trash={",
+        "itmlist_plan={",
+        "msma_plan_sort_type=",
+        "msma_plan_sort_order=",
+        "sort_plan_sec=",
+        "sort_plan_usec="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0x02EE-lounge-item_init_get_r.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": "（长度闭合）",
+    "opcode_field_va": [
+      "0xB529EF"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "ItemInitGetR",
+      "role": "response",
+      "wire_length": "64+22*sumA",
+      "members": [
+        {
+          "name": "SlotNumMain",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "slot_num_main"
+        },
+        {
+          "name": "SlotNumConsume",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "slot_num_consume"
+        },
+        {
+          "name": "SlotNumTrash",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "slot_num_trash"
+        },
+        {
+          "name": "SlotNumPlan",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "slot_num_plan"
+        },
+        {
+          "name": "SortTmSecMain",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "sort_tm_sec_main"
+        },
+        {
+          "name": "SortTmUsecMain",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "sort_tm_usec_main"
+        },
+        {
+          "name": "SortTmSecConsume",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "sort_tm_sec_consume"
+        },
+        {
+          "name": "SortTmUsecConsume",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "sort_tm_usec_consume"
+        },
+        {
+          "name": "SortTmSecPlan",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "sort_tm_sec_plan"
+        },
+        {
+          "name": "SortTmUsecPlan",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "sort_tm_usec_plan"
+        },
+        {
+          "name": "CountMain",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "count_main"
+        },
+        {
+          "name": "ItmlistMain",
+          "wire_type": "array<item,A1>",
+          "length": "22*A1",
+          "field_ref": "itmlist_main",
+          "element": "item",
+          "element_composite_ref": "item",
+          "element_length": "22",
+          "cap": null,
+          "count_field": "count_main",
+          "count_field_source": "heuristic",
+          "count_var": "A1",
+          "note": null
+        },
+        {
+          "name": "CountConsume",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "count_consume"
+        },
+        {
+          "name": "ItmlistConsume",
+          "wire_type": "array<item,A2>",
+          "length": "22*A2",
+          "field_ref": "itmlist_consume",
+          "element": "item",
+          "element_composite_ref": "item",
+          "element_length": "22",
+          "cap": null,
+          "count_field": "count_consume",
+          "count_field_source": "heuristic",
+          "count_var": "A2",
+          "note": null
+        },
+        {
+          "name": "CountTrash",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "count_trash"
+        },
+        {
+          "name": "ItmlistTrash",
+          "wire_type": "array<item,A3>",
+          "length": "22*A3",
+          "field_ref": "itmlist_trash",
+          "element": "item",
+          "element_composite_ref": "item",
+          "element_length": "22",
+          "cap": null,
+          "count_field": "count_trash",
+          "count_field_source": "heuristic",
+          "count_var": "A3",
+          "note": null
+        },
+        {
+          "name": "CountPlan",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "count_plan"
+        },
+        {
+          "name": "ItmlistPlan",
+          "wire_type": "array<item,A4>",
+          "length": "22*A4",
+          "field_ref": "itmlist_plan",
+          "element": "item",
+          "element_composite_ref": "item",
+          "element_length": "22",
+          "cap": null,
+          "count_field": "count_plan",
+          "count_field_source": "heuristic",
+          "count_var": "A4",
+          "note": null
+        },
+        {
+          "name": "MsmaPlanSortType",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "msma_plan_sort_type"
+        },
+        {
+          "name": "MsmaPlanSortOrder",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "msma_plan_sort_order"
+        },
+        {
+          "name": "SortPlanSec",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "sort_plan_sec"
+        },
+        {
+          "name": "SortPlanUsec",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "sort_plan_usec"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "7183223c89393419",
+  "check_fingerprint": "c2666dede35b98c7"
+}

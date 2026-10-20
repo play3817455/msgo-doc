@@ -1,0 +1,537 @@
+{
+  "id": "CS-0x6B74-lounge-bugtrace_report",
+  "opcode": "0x6B74",
+  "direction": "CS",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "bugtrace_report",
+  "source_dir": "protocol_analysis/commands/CS-0x6B74-lounge-bugtrace_report",
+  "meta": {
+    "opcode": "`0x6B74`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`bugtrace_report`",
+    "名字符串": "`)<-_proto_lounge_client::send_bugtrace_report(` @ `0xeed1a8`",
+    "代码位置": "sub_BA5BE0 @ `0xba5be0`（`0xba5be0`..`0xba5ece`）",
+    "opcode 写入证据": "`0xba5c62`",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0x1816`（6166）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)`",
+    "配对命令（同 opcode 反向）": "见 §4.3 与其他命令的关联 / INDEX 反向表"
+  },
+  "handler": "sub_BA5BE0",
+  "handler_va": "0xba5be0",
+  "block": [
+    "0xBA5BE0",
+    "0xBA5ECE"
+  ],
+  "name_str": ")<-_proto_lounge_client::send_bugtrace_report(",
+  "name_str_va": "0xeed1a8",
+  "capacity": "0x1816",
+  "capacity_va": null,
+  "closer_va": "0xBA5D41",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": null,
+  "wire": {
+    "length_expr": "4 + 4 + var + 4 + var",
+    "fixed": false,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x1816（容量记账口径，非线长）",
+    "field_count": 5,
+    "length_source": "field_sum",
+    "readme_conclusion": "结论：崩溃/异常上报：发生时间 + pc + 调用栈串 + 异常码 + 附加信息串。",
+    "readme_close": "2 + 4 + 4 + 3073 + 4 + 3073 = 6160 ≤ 容量 0x1816=6166（富余 6，上限场景）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发给 lounge 协议类处理块（C→S 无 case 块）",
+      "enum": "0x6B74",
+      "evidence_va": [
+        "0xBA5C62"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "2",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "occured_time",
+      "meaning": "异常发生时间（客户端时间戳）",
+      "purpose": "来源=入参 arg_0（@0xBA5C6E）；内联 `mov [eax],esi`；经 `vt[0x58]` 发送",
+      "enum": null,
+      "evidence_va": [
+        "0xBA5C72"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "6",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "pc",
+      "meaning": "异常指令指针（pc）",
+      "purpose": "来源=入参 arg_4（@0xBA5C81）；内联 `mov [eax],ecx`；经 `vt[0x58]` 发送",
+      "enum": null,
+      "evidence_va": [
+        "0xBA5C92"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "10",
+      "length": "var",
+      "wire_type": "bytes",
+      "name": "stack",
+      "meaning": "调用栈文本（NUL 结尾）",
+      "purpose": "来源=入参 arg_8（@0xBA5C94）；写线原语 `sub_B02B40`；服务端据此定位崩溃点",
+      "enum": "slot 预算 3073（push 0xC01@0xBA5C89）",
+      "evidence_va": [
+        "0xBA5C9A"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 4,
+      "offset": "var",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "excode",
+      "meaning": "异常码",
+      "purpose": "来源=入参 arg_C（@0xBA5CAF）；写线原语 `sub_B02D80`(u32)；经 `vt[0x58]` 发送",
+      "enum": null,
+      "evidence_va": [
+        "0xBA5CB4"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    },
+    {
+      "seq": 5,
+      "offset": "var",
+      "length": "var",
+      "wire_type": "bytes",
+      "name": "exinfo",
+      "meaning": "附加异常信息（NUL 结尾）",
+      "purpose": "来源=入参 arg_10（@0xBA5CC4）；写线原语 `sub_B02B40`；经 `vt[0x58]` 发送",
+      "enum": "slot 预算 3073（push 0xC01@0xBA5CC8）",
+      "evidence_va": [
+        "0xBA5CD3"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 7
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0x6B74（分发器 switch 选择子）",
+      "evidence_va": "0xBA5C62"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0x1816 B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xBA5C26"
+    },
+    {
+      "step": 3,
+      "kind": "write_scalar",
+      "detail": "occured_time：`u32`（线长 4）—— 异常发生时间（客户端时间戳）",
+      "evidence_va": "0xBA5C72"
+    },
+    {
+      "step": 4,
+      "kind": "write_count",
+      "detail": "pc：`u32`（线长 4）—— 异常指令指针（pc）",
+      "evidence_va": "0xBA5C92"
+    },
+    {
+      "step": 5,
+      "kind": "write_scalar",
+      "detail": "stack：`bytes`（线长 var）—— 调用栈文本（NUL 结尾）",
+      "evidence_va": "0xBA5C9A"
+    },
+    {
+      "step": 6,
+      "kind": "write_count",
+      "detail": "excode：`u32`（线长 4）—— 异常码",
+      "evidence_va": "0xBA5CB4"
+    },
+    {
+      "step": 7,
+      "kind": "write_scalar",
+      "detail": "exinfo：`bytes`（线长 var）—— 附加异常信息（NUL 结尾）",
+      "evidence_va": "0xBA5CD3"
+    },
+    {
+      "step": 8,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xBA5D41"
+    },
+    {
+      "step": 9,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xBA5E65"
+    }
+  ],
+  "capabilities": [
+    "report",
+    "lounge.bugtrace"
+  ],
+  "capabilities_derived": [
+    "unclassified"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:44",
+    "batch": 8,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 6166,
+        "va": "0xBA5C26",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xBA5C23",
+        "call_va": "0xBA5C2B"
+      },
+      "field_window": {
+        "start_va": "0xBA5BE0",
+        "end_va": "0xBA5D41",
+        "guard": null,
+        "closer_or_commit_va": "0xBA5D41",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "occured_time",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xBA5C72"
+            ]
+          },
+          {
+            "name": "pc",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xBA5C92"
+            ]
+          },
+          {
+            "name": "stack",
+            "wire_type": "bytes",
+            "width": null,
+            "seq": 3,
+            "shape": "agg",
+            "evidence_va": [
+              "0xBA5C9A"
+            ]
+          },
+          {
+            "name": "excode",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 4,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xBA5CB4"
+            ]
+          },
+          {
+            "name": "exinfo",
+            "wire_type": "bytes",
+            "width": null,
+            "seq": 5,
+            "shape": "agg",
+            "evidence_va": [
+              "0xBA5CD3"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xBA5C62",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xBA5C72",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xBA5C92",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xBA5C9A",
+            "kind": "write",
+            "width": null,
+            "wire_type": "str",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xBA5CB4",
+            "kind": "write",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xBA5CD3",
+            "kind": "write",
+            "width": null,
+            "wire_type": "str",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xBA5D17",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 3,
+        "checkable": 3,
+        "pairs": [
+          {
+            "field": "occured_time",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xBA5C72",
+            "kind": "inline_store"
+          },
+          {
+            "field": "pc",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xBA5C92",
+            "kind": "inline_store"
+          },
+          {
+            "field": "excode",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xBA5CB4",
+            "kind": "write"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xBA5C62",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          },
+          {
+            "va": "0xBA5C9A",
+            "kind": "write",
+            "width": null,
+            "wire_type": "str"
+          },
+          {
+            "va": "0xBA5CD3",
+            "kind": "write",
+            "width": null,
+            "wire_type": "str"
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xBA5BE0",
+          "0xBA5D41"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 14,
+          "capacity": 6166,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xBA5C9A",
+              "kind": "write",
+              "name": ""
+            },
+            {
+              "va": "0xBA5CD3",
+              "kind": "write",
+              "name": ""
+            },
+            {
+              "va": "0xBA5D17",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）14 / 容量 0x1816"
+        }
+      },
+      "closer": {
+        "va": "0xBA5D41",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xBA5E65",
+        "mov_va": "0xBA5E5C",
+        "host": "[edx+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "occured_time=",
+        "pc=",
+        "stack=\"",
+        "excode=",
+        "exinfo=\""
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0x6B74-lounge-bugtrace_report.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0xba5c62",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xBA5C62"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "BugtraceReport",
+      "role": "request",
+      "wire_length": "4 + 4 + var + 4 + var",
+      "members": [
+        {
+          "name": "OccuredTime",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "occured_time"
+        },
+        {
+          "name": "Pc",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "pc"
+        },
+        {
+          "name": "Stack",
+          "wire_type": "bytes",
+          "length": "var",
+          "field_ref": "stack",
+          "element": null,
+          "element_length": null,
+          "cap": null,
+          "count_field": "pc",
+          "count_field_source": "nearest_scalar",
+          "note": "元素成员未建模（composites/ 无此结构），须以 IDA 复核补"
+        },
+        {
+          "name": "Excode",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "excode"
+        },
+        {
+          "name": "Exinfo",
+          "wire_type": "bytes",
+          "length": "var",
+          "field_ref": "exinfo",
+          "element": null,
+          "element_length": null,
+          "cap": null,
+          "count_field": "excode",
+          "count_field_source": "nearest_scalar",
+          "note": "元素成员未建模（composites/ 无此结构），须以 IDA 复核补"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "20a064e099e8db0f",
+  "check_fingerprint": "b256553f17fe21d5"
+}

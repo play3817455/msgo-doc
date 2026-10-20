@@ -1,0 +1,209 @@
+{
+ "id": "SC-0x6A38-battle-roomlobby_pilot_level_update",
+ "verified_at": "2026-09-30 15:25:47",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "block",
+ "block": [
+  "0xB1CBE4",
+  "0xB1CE6D"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 12,
+   "va": "0xB1CBF9",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xB1CBF6",
+   "call_va": "0xB1CBFB"
+  },
+  "field_window": {
+   "start_va": "0xB1CBE5",
+   "end_va": "0xB1CCEE",
+   "guard": {
+    "va": "0xB1CBE4",
+    "func": "0xB05DA0",
+    "module_id": null,
+    "release_va": "0xB05D90"
+   },
+   "closer_or_commit_va": "0xB1CCCD",
+   "within_model_block": true,
+   "range_from": "block"
+  },
+  "primitive_widths": {
+   "direction": "SC",
+   "expected": [
+    {
+     "name": "world_id",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xb1cc34"
+     ]
+    },
+    {
+     "name": "pilot_id",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 2,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xb1cc71"
+     ]
+    },
+    {
+     "name": "lv_old",
+     "wire_type": "u16",
+     "width": 2,
+     "seq": 3,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xb1cc95"
+     ]
+    },
+    {
+     "name": "lv_new",
+     "wire_type": "u16",
+     "width": 2,
+     "seq": 4,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xb1ccb9"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB1CC34",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB1CC71",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB1CC95",
+     "kind": "read",
+     "width": 2,
+     "wire_type": "u16",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB1CCB9",
+     "kind": "read",
+     "width": 2,
+     "wire_type": "u16",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 4,
+   "checkable": 4,
+   "pairs": [
+    {
+     "field": "world_id",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB1CC34",
+     "kind": "read"
+    },
+    {
+     "field": "pilot_id",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB1CC71",
+     "kind": "read"
+    },
+    {
+     "field": "lv_old",
+     "width": 2,
+     "shape": "scalar",
+     "va": "0xB1CC95",
+     "kind": "read"
+    },
+    {
+     "field": "lv_new",
+     "width": 2,
+     "shape": "scalar",
+     "va": "0xB1CCB9",
+     "kind": "read"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB1CBE5",
+    "0xB1CCEE"
+   ],
+   "scalar_match_verifiable": true,
+   "capacity_relation": {
+    "observed_min": 12,
+    "capacity": 12,
+    "relation": "exact",
+    "unknown_events": [],
+    "is_lower_bound": false,
+    "note": "观测线长（下界）12 / 容量 0xc"
+   }
+  },
+  "closer": {
+   "va": "0xB1CCCD",
+   "kind": "jz",
+   "jcc_va": "0xB1CCD3",
+   "seq_va": "0xB1CCC9",
+   "jcc_dst": "0xB1CCEC",
+   "cmp": "cmp     ebx, [esp+1B3Ch+var_1B24]",
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x88]",
+   "slot_value": 136,
+   "va": "0xB1CE51",
+   "mov_va": "0xB1CE36",
+   "host": "[edx+88h]",
+   "argc": 4,
+   "form": "mov_then_call",
+   "error_slot": {
+    "slot": "vt[0x64]",
+    "va": "0xB1CC4B",
+    "argc": 2
+   }
+  },
+  "log_strings": [
+   "world_id=",
+   "pilot_id=",
+   "lv_old=",
+   "lv_new="
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "lv_new",
+  "lv_old",
+  "pilot_id",
+  "world_id"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 17
+}

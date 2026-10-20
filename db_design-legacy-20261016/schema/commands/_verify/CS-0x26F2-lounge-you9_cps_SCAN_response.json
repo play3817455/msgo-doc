@@ -1,0 +1,234 @@
+{
+ "id": "CS-0x26F2-lounge-you9_cps_SCAN_response",
+ "verified_at": "2026-09-30 15:25:43",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "handler_func",
+ "block": [
+  "0xBA54D0",
+  "0xBA57C9"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 9014,
+   "va": "0xBA5516",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xBA5513",
+   "call_va": "0xBA551B"
+  },
+  "field_window": {
+   "start_va": "0xBA54D0",
+   "end_va": "0xBA5645",
+   "guard": null,
+   "closer_or_commit_va": "0xBA5645",
+   "within_model_block": true,
+   "range_from": "handler_func"
+  },
+  "primitive_widths": {
+   "direction": "CS",
+   "expected": [
+    {
+     "name": "cps_result",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xBA556F"
+     ]
+    },
+    {
+     "name": "buffer_size",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 2,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xBA5585"
+     ]
+    },
+    {
+     "name": "buffer",
+     "wire_type": "array<u8,8192>",
+     "width": null,
+     "seq": 3,
+     "shape": "agg",
+     "evidence_va": [
+      "0xBA55B5"
+     ]
+    },
+    {
+     "name": "virus_path",
+     "wire_type": "str",
+     "width": null,
+     "seq": 4,
+     "shape": "str",
+     "evidence_va": [
+      "0xBA55DB"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xBA5556",
+     "kind": "inline_store",
+     "width": 2,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xBA556F",
+     "kind": "inline_store",
+     "width": 4,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xBA5585",
+     "kind": "write",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xBA55B5",
+     "kind": "inline_store",
+     "width": 1,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xBA55DB",
+     "kind": "write",
+     "width": null,
+     "wire_type": "str",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xBA561B",
+     "kind": "composite",
+     "width": null,
+     "wire_type": null,
+     "name": "sub_B03020",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 3,
+   "checkable": 3,
+   "pairs": [
+    {
+     "field": "cps_result",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xBA556F",
+     "kind": "inline_store"
+    },
+    {
+     "field": "buffer_size",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xBA5585",
+     "kind": "write"
+    },
+    {
+     "field": "virus_path",
+     "width": null,
+     "shape": "str",
+     "va": "0xBA55DB",
+     "kind": "write"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [
+    {
+     "va": "0xBA5556",
+     "kind": "inline_store",
+     "width": 2,
+     "wire_type": null
+    },
+    {
+     "va": "0xBA55B5",
+     "kind": "inline_store",
+     "width": 1,
+     "wire_type": null
+    }
+   ],
+   "nested_unmatchable": [],
+   "window": [
+    "0xBA54D0",
+    "0xBA5645"
+   ],
+   "scalar_match_verifiable": false,
+   "capacity_relation": {
+    "observed_min": 11,
+    "capacity": 9014,
+    "relation": "within",
+    "unknown_events": [
+     {
+      "va": "0xBA55DB",
+      "kind": "write",
+      "name": ""
+     },
+     {
+      "va": "0xBA561B",
+      "kind": "composite",
+      "name": "sub_B03020"
+     }
+    ],
+    "is_lower_bound": true,
+    "note": "观测线长（下界）11 / 容量 0x2336"
+   }
+  },
+  "closer": {
+   "va": "0xBA5645",
+   "kind": "commit",
+   "jcc_va": null,
+   "seq_va": null,
+   "cmp": null,
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x58]",
+   "slot_value": 88,
+   "va": "0xBA575C",
+   "mov_va": "0xBA5753",
+   "host": "[edx+58h]",
+   "argc": 2,
+   "form": "mov_then_call",
+   "error_slot": null
+  },
+  "log_strings": [
+   "cps_result=",
+   "buffer={",
+   "virus_path=\""
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "buffer",
+  "cps_result",
+  "virus_path"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 5
+}

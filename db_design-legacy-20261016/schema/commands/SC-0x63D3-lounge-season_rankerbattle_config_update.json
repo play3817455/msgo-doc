@@ -1,0 +1,702 @@
+{
+  "id": "SC-0x63D3-lounge-season_rankerbattle_config_update",
+  "opcode": "0x63D3",
+  "direction": "SC",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "season_rankerbattle_config_update",
+  "source_dir": "protocol_analysis/commands/SC-0x63D3-lounge-season_rankerbattle_config_update",
+  "meta": {
+    "opcode": "`0x63D3`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`season_rankerbattle_config_update`",
+    "处理块范围": "`0xb64c4e`..`0xb64e31`",
+    "名字串引用点": "`0xb64d3e`",
+    "声明容量（解码缓冲）": "`0x70`（`0xb64c6c`）",
+    "长度闭合点": "`0xb64cf1`",
+    "去向": "`vt[0x59C]` @ `0xb64e15`（2 实参）"
+  },
+  "handler": null,
+  "handler_va": null,
+  "block": [
+    "0xb64c4e",
+    "0xb64e31"
+  ],
+  "name_str": null,
+  "name_str_va": "0xb64d3e",
+  "capacity": "0x70",
+  "capacity_va": "0xb64c6c",
+  "closer_va": "0xB64CF5",
+  "dispatch": "`vt[0x59C]` @ `0xb64e15`（2 实参）",
+  "dispatch_slot": "vt[0x59C]",
+  "dispatch_va": "0xb64e15",
+  "wire": {
+    "length_expr": "52 + 52",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x70（容量记账口径，非线长）",
+    "field_count": 2,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：52 + 52 = 104。",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0x63D3",
+      "evidence_va": [
+        "`0xb64d3e`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "52",
+      "wire_type": "struct<season_rb_conf>",
+      "name": "season_rb_conf",
+      "meaning": "当期赛季排位战配置（日志串 `season_rb_conf=`）",
+      "purpose": "`vt[0x59C]` 第 1 实参（指针）",
+      "enum": null,
+      "evidence_va": [
+        "0xb64ca5"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3,
+      "composite_ref": "season_rb_conf"
+    },
+    {
+      "seq": 2,
+      "offset": "52",
+      "length": "52",
+      "wire_type": "struct<season_rb_conf>",
+      "name": "season_rb_conf_next",
+      "meaning": "下期赛季排位战配置（日志串 `season_rb_conf_next=`）",
+      "purpose": "`vt[0x59C]` 第 2 实参（指针）",
+      "enum": null,
+      "evidence_va": [
+        "0xb64ce5"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4,
+      "composite_ref": "season_rb_conf"
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0x63D3（分发器 switch 选择子）",
+      "evidence_va": "0xB64D3E"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB41120`（模块 id 596）→ 之后逐字段读线",
+      "evidence_va": "0xB64C55"
+    },
+    {
+      "step": 3,
+      "kind": "read_struct",
+      "detail": "season_rb_conf：`struct<season_rb_conf>`（线长 52）—— 当期赛季排位战配置（日志串 `season_rb_conf=`）",
+      "evidence_va": "0xB64CA5"
+    },
+    {
+      "step": 4,
+      "kind": "read_struct",
+      "detail": "season_rb_conf_next：`struct<season_rb_conf>`（线长 52）—— 下期赛季排位战配置（日志串 `season_rb_conf_next=`）",
+      "evidence_va": "0xB64CE5"
+    },
+    {
+      "step": 5,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB64CF5"
+    },
+    {
+      "step": 6,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x59C]`，实参 2 个",
+      "evidence_va": "0xB64E15"
+    },
+    {
+      "step": 7,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB64CBF"
+    }
+  ],
+  "capabilities": [
+    "update",
+    "lounge.season_rankerbattle"
+  ],
+  "capabilities_derived": [
+    "notify"
+  ],
+  "db_effects": [
+    {
+      "entity": "season_rb_conf",
+      "table_ref": "tbl_season_rb_conf",
+      "op": "update",
+      "fields": [
+        "season_rb_conf"
+      ],
+      "disposition": "COMPOSITE",
+      "evidence_va": "0xB64CA5"
+    },
+    {
+      "entity": "season_rb_conf",
+      "table_ref": "tbl_season_rb_conf",
+      "op": "update",
+      "fields": [
+        "config_update"
+      ],
+      "disposition": "PERSIST",
+      "evidence_va": "?"
+    }
+  ],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:41",
+    "batch": 1,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 112,
+        "va": "0xB64C6A",
+        "reg": "eax",
+        "host": "[edx+78h]",
+        "alloc_va": "0xB64C67",
+        "call_va": "0xB64C6C"
+      },
+      "field_window": {
+        "start_va": "0xB64C56",
+        "end_va": "0xB64D1C",
+        "guard": {
+          "va": "0xB64C55",
+          "func": "0xB41120",
+          "module_id": 596,
+          "release_va": "0xB41110"
+        },
+        "closer_or_commit_va": "0xB64CF5",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "season_rb_conf",
+            "wire_type": "struct<season_rb_conf>",
+            "width": null,
+            "seq": 1,
+            "shape": "agg",
+            "evidence_va": [
+              "0xb64ca5"
+            ]
+          },
+          {
+            "name": "season_rb_conf_next",
+            "wire_type": "struct<season_rb_conf>",
+            "width": null,
+            "seq": 2,
+            "shape": "agg",
+            "evidence_va": [
+              "0xb64ce5"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB471EF",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB471EF",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB47205",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB47205",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB47217",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB47217",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB47229",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB47229",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB47236",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB47236",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB47247",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB47247",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB47258",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB47258",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB47276",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB47276",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB47276",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB47276",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB47276",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB47276",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB47276",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB47276",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB47292",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB47292",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB472AA",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB472AA",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB64C96",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B41A90",
+            "consumed": 0,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB64CA5",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B471E0",
+            "consumed": null,
+            "consumed_effective": 52,
+            "nested_of": null
+          },
+          {
+            "va": "0xB64CD6",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B41A90",
+            "consumed": 0,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB64CE5",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B471E0",
+            "consumed": null,
+            "consumed_effective": 52,
+            "nested_of": null
+          }
+        ],
+        "matched": 0,
+        "checkable": 0,
+        "pairs": [],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB64C96",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null
+          },
+          {
+            "va": "0xB64CA5",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null
+          },
+          {
+            "va": "0xB471EF",
+            "kind": "nested_run",
+            "width": 28,
+            "wire_type": null
+          },
+          {
+            "va": "0xB47276",
+            "kind": "nested_run",
+            "width": 16,
+            "wire_type": null
+          },
+          {
+            "va": "0xB47292",
+            "kind": "nested_run",
+            "width": 8,
+            "wire_type": null
+          },
+          {
+            "va": "0xB64CD6",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null
+          },
+          {
+            "va": "0xB64CE5",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null
+          },
+          {
+            "va": "0xB471EF",
+            "kind": "nested_run",
+            "width": 28,
+            "wire_type": null
+          },
+          {
+            "va": "0xB47276",
+            "kind": "nested_run",
+            "width": 16,
+            "wire_type": null
+          },
+          {
+            "va": "0xB47292",
+            "kind": "nested_run",
+            "width": 8,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB64C56",
+          "0xB64D1C"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 0,
+          "capacity": 112,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB64CA5",
+              "kind": "composite",
+              "name": "sub_B471E0"
+            },
+            {
+              "va": "0xB64CE5",
+              "kind": "composite",
+              "name": "sub_B471E0"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）0 / 容量 0x70"
+        },
+        "zero_load": true
+      },
+      "closer": {
+        "va": "0xB64CF5",
+        "kind": "jz",
+        "jcc_va": "0xB64CFB",
+        "seq_va": "0xB64CF1",
+        "jcc_dst": "0xB64D17",
+        "cmp": "cmp     ebx, [esp+2C5Ch+var_2C40]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x59C]",
+        "slot_value": 1436,
+        "va": "0xB64E15",
+        "mov_va": "0xB64E0B",
+        "host": "[edx+59Ch]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB64CBF",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "season_rb_conf=",
+        "season_rb_conf_next="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0x63D3-lounge-season_rankerbattle_config_update.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "`0xb64d3e`"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "SeasonRankerbattleConfigUpdate",
+      "role": "response",
+      "wire_length": "52 + 52",
+      "members": [
+        {
+          "name": "SeasonRbConf",
+          "wire_type": "struct<season_rb_conf>",
+          "length": "52",
+          "field_ref": "season_rb_conf",
+          "element": "season_rb_conf",
+          "element_length": "52",
+          "cap": null,
+          "composite_ref": "season_rb_conf",
+          "count_field": null,
+          "count_field_source": "fixed",
+          "members_source": "composite"
+        },
+        {
+          "name": "SeasonRbConfNext",
+          "wire_type": "struct<season_rb_conf>",
+          "length": "52",
+          "field_ref": "season_rb_conf_next",
+          "element": "season_rb_conf",
+          "element_length": "52",
+          "cap": null,
+          "composite_ref": "season_rb_conf",
+          "count_field": null,
+          "count_field_source": "fixed",
+          "members_source": "composite"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "3befd2aa2d944a58",
+  "check_fingerprint": "a0ed59f29279dc66"
+}

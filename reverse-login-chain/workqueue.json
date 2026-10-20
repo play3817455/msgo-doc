@@ -1,0 +1,538 @@
+{
+  "project": "reverse-login-chain",
+  "purpose": "登录入口 → 战斗大厅 全链（汇编/伪代码/状态机/数值/报文逐字段偏移）持续研究工作项队列（真相源）",
+  "createdAt": "2026-09-15T00:00",
+  "updatedAt": "2026-09-15T12:35",
+  "finished": true,
+  "sessionMinutes": 10,
+  "chainIntervalMinutes": 10,
+  "maxDurationMinutes": 9,
+  "currentItem": null,
+  "sessionCount": 21,
+  "rules": [
+    "每个会话只推进当前工作项（currentItem），且会话不限时长（研究到完成）；会话【完成后】才 suggested create 下一个 once 任务（scheduledAt = now+10min）作为下一轮；严禁会话开头建/重复建新任务。",
+    "会话开头先读本文件 → automation/prompts/common.md → automation/prompts/session.md。",
+    "任何结论必须有证据：地址(sub_XXXXXX)/字节/实测日志三者之一；无证据一律写『⚠️待验证』。",
+    "逐字段交付 = 每个报文必须有『方向|ID|发送函数|接收case|体逐字段表(偏移/类型/长度/含义/取值域)|期望应答|应答体|异常处理|证据』。",
+    "★反外挂铁律：客户端任何断点都不能下（软/硬件都不行，会退出）；只允许纯读内存(eval_expression/memory_read)与服务端日志。",
+    "不做动态交互式点击（自动化无法交互用户界面）；需要实跑时改 server/logs/push.txt 借 0xD377 节拍补发，或改服务端固化值后让客户端自动跑。"
+  ],
+  "phases": [
+    { "id": "P0", "name": "基建（总表与队列）" },
+    { "id": "P1", "name": "登录入口 → 大厅：逐字段补全" },
+    { "id": "P2", "name": "大厅 → 战斗大厅：新链路研究" },
+    { "id": "P3", "name": "全链汇总与一致性核对" }
+  ],
+  "items": [
+    {
+      "id": "W00",
+      "phase": "P0",
+      "title": "建立《全链报文总表》骨架并预填已知全部报文索引",
+      "status": "done",
+      "deliverable": "formats/全链报文总表.md",
+      "doneAt": "2026-09-15T00:00",
+      "result": "已建索引看板（帧层/4 通道/全已知报文索引/未知项标记），作为后续每个会话的追加目标"
+    },
+    {
+      "id": "W01",
+      "phase": "P1",
+      "title": "登录入口与凭据采集（N1）逐字段/偏移复核",
+      "why": "用户要求『从登录入口开始』；N1 现有结论缺『控件↔槽位↔FSM 偏移』的完整对照与 account.ini 的字节级证据。",
+      "scope": {
+        "funcs": ["sub_A88920", "sub_433E60", "sub_434140", "sub_43E3F0", "sub_430D00", "sub_747040", "sub_747D70", "sub_79A860", "sub_747730"],
+        "files": ["account.ini", "sysinfo.ini"]
+      },
+      "deliverable": "detail/W01-登录入口-字段与偏移.md",
+      "judge": "能给出『控件ID/槽位 → 内存偏移 → 文件键 → 下一跳函数』四列完整对照，且每行有地址或字节证据",
+      "needsDynamic": false,
+      "status": "done",
+      "doneAt": "2026-09-15T00:20",
+      "result": "四列对照完成；★新证：account.ini=键值 map（升序/CRLF/UTF-8无BOM/无 section）、ID 仅在 ID/PW_SAVE!=0 时读、密码从不落盘；sub_433E60/sub_434140/sub_430D00 全文反编译（step+20/+533，vftable 0xD68014）"
+    },
+    {
+      "id": "W02",
+      "phase": "P1",
+      "title": "平台认证 authsv（N2）逐字段：URL 参数 / HTTP 请求 / CSV 逐列 / 服务器条目内存布局",
+      "why": "N2 有链路但缺『URL 逐参数』与『CSV 逐列 + 条目内存偏移』的对照表。",
+      "scope": {
+        "funcs": ["sub_746B40", "sub_747E10", "sub_BB22E0", "sub_BB5480", "sub_BBBB70", "sub_746710", "sub_746DC0"],
+        "files": ["settings/authsv*.csv", "remote/config.txt", "ClientCheck/config.xml", "wmode|fmode|dmode.txt"]
+      },
+      "deliverable": "detail/W02-authsv-字段与格式.md",
+      "judge": "URL 每个 query/路径参数有意义；CSV 每列有名称+类型；Server/ServerGroup 结构 52B/32B 逐字段",
+      "needsDynamic": false,
+      "status": "done",
+      "doneAt": "2026-09-15T01:20",
+      "result": "★URL 由 sub_BAFBD0 调 WinHttpCrackUrl 拆解（无显式端口 ⇒ port=80）；唯一附加参数 t=GetTickCount()（0xDD194C=L\"t\"），序列化 sub_BB35E0 ⇒ k=v&k1=v1（分隔符 unk_EEEF88=L\"=\"、unk_EEEF8C=L\"&\"）+ sub_BB3450 URL-encode；常量头 szHeaders(0xEEEFC0)=Content-Type: application/x-www-form-urlencoded\\r\\n，dwHeadersLength(0x120A98C)，全 IDB 仅 sub_BB5A80 引用无写入点；CSV 5 列（组ID/组名/IP/端口/图标ID）逐列去向 + 越界列返回 0 + '#'/空行跳过 + 同组多行不去重；pair 52B / Server 32B 逐字段（v31[11]=+48、sub_745F90(a2+8)→a2+32、步长>>5）；⚠️待验证：参数串去向、sub_BB5A80 分支、值对象类型号、CSV 源编码"
+    },
+    {
+      "id": "W03",
+      "phase": "P1",
+      "title": "access 握手与会话加密（N3）逐字节复核",
+      "why": "N3 已定案，但『帧头位域/type 0~4 逐 type 分支/RSA 参数字节序』需要逐字节表，服务端实现要与之一一对应。",
+      "scope": {
+        "funcs": ["sub_CA9B40", "sub_CAD510", "sub_C9E810", "sub_CA3030", "sub_C9FA00", "sub_C9F820", "sub_C88510", "sub_C84B60", "sub_CAC820"],
+        "consts": ["单帧明文上限 16366", "帧头 4B", "尾块补 16B"]
+      },
+      "deliverable": "detail/W03-握手与加密-逐字节.md",
+      "judge": "16B/32B 握手包、帧头 4B 位域、type 0~4 各自最小长度与去向，全部有反编译证据",
+      "needsDynamic": false,
+      "status": "done",
+      "doneAt": "2026-09-15T01:35",
+      "result": "①帧头 4B = 本帧明文长度 n（低 4 位=tail / 高 28 位=full，恒等 (full<<4)|tail）；②单帧上限 16366 三处铁证（ctor this[114]=0x4000 / sub_C87F30 / 发送 clamp + 接收硬判 (13,5)）；③发/收两侧拆组帧公式逐行核实（含 (10,3)）；④★环偏移落实：发送环 +0x1F8、解密输入环 +0x230、明文输出环 +0x4E0，且握手 16B/32B 与加密帧共用同一输入环；⑤尾块填充随机源 = MT19937(sub_CB09E0)；⑥★block2 必须 RSA 结案；⑦★RSA 上下文 +8=65537(e)/+0x18=n ⇒ vt[2] 加密 / vt[3] 解密；⑧type 0~4 全表复核（type1 自动回发 type2 新证）；⑨★孪生实现定案（两档逐行同构，选择=运行时工厂 vce[677]）；⑩修正 N3 超时持有者 +0x4C（非 +0x88）+ 状态 6 收包解密在 sub_CA3030 尾部；⑪⚠️+0x280 初值 1 = 穷举型否定结论（9 处立即数写入无 1）"
+    },
+    {
+      "id": "W04",
+      "phase": "P1",
+      "title": "认证协议链（N4）8 个 case 逐字段 + 各 send 函数参数构造",
+      "why": "N4 给出了 case 地址，但 8 条报文的『每个参数怎么构造出体』未逐条落地。",
+      "scope": {
+        "funcs": ["sub_B03D30", "sub_B04C70", "sub_B05C10", "sub_BA8A70", "sub_BA8BB0"],
+        "ids": ["0x34A9→0xDE24", "0x2C1A→0xA5DA", "0x8288→0x298E", "0x3B8F→0x4F3F", "0xA380→0x1146"]
+      },
+      "deliverable": "detail/W04-认证协议链-逐字段.md",
+      "judge": "每条报文一行『发送函数↔ID↔体逐字段↔应答ID↔分发case↔落地偏移』",
+      "needsDynamic": false,
+      "status": "done",
+      "doneAt": "2026-09-15T02:52",
+      "result": "8 条 send + 8 条 recv 全逐字段。★4 处 N4 send ID 修正：sub_B04EB0=0xF24B(非0x2C1A)/sub_B055D0=0x2C1A(非0x8F36)/sub_B05190=0x44CD(非0xA103)/sub_B05370=0x5C82(非0x60E0)；auth 0xA5DA=4B result(非8B)；0x34A9 auth=1977/0x2D45E072/0；世界条目串=定长49/49/193B(sub_B02E20 无NUL检查)"
+    },
+    {
+      "id": "W05",
+      "phase": "P1",
+      "title": "世界选择→大厅跳转（N5）逐字段：309B 世界条目 / OTP / Lounge step 11 case",
+      "why": "N5 有状态机全表，但 309B 世界条目字段与 OTP 全生命周期未逐字段。",
+      "scope": {
+        "funcs": ["sub_A88E90", "sub_A88430", "sub_43E5A0", "sub_430E40", "sub_BA8A70", "sub_AF75B0", "sub_430E40", "sub_439220", "sub_BAAF60", "sub_BAAF80"],
+        "ids": ["0x3B8F→0x4F3F", "0xA380→0x1146", "0xF24B→0xA5DA"]
+      },
+      "deliverable": "detail/W05-世界选择到大厅-逐字段.md",
+      "judge": "309B 条目每字节有意义；OTP 的生成/下发/回传/校验四点闭环",
+      "needsDynamic": false,
+      "status": "done",
+      "doneAt": "2026-09-15T03:05",
+      "result": "三报文闭环全逐字段。309B 每字节定案 + client_now/client_max 负载率四档(100*now/max→0/1/2/3 阈26/66/93)；OTP 四点闭环(生成=服务端/下发=0x1146→app+1297/回传=0xF24B原样/校验=0xA5DA result，0xFB85再下发覆写)；lounge 0xF24B=u32 userid+NUL串otp、lounge 0xA5DA=8B result+admin_lv；channeling_type=dword_1104680=0..3(0xA28F04循环匹配4×28B线路串)；0x4F3F回reset_sec=0安全(sub_A88E90 a2<=0⇒sub_A88430)"
+    },
+    {
+      "id": "W06",
+      "phase": "P1",
+      "title": "大厅认证与数据表下载（N6）逐字段：76 表对照 / 0xF86A / 0x5290 / 泵状态机",
+      "why": "N6 有清单与泵，但『表ID↔文件名↔处理器ID↔行回调』的完整对照与 0x5290 逐字段仍分散。",
+      "scope": {
+        "funcs": ["sub_5760B0", "sub_576160", "sub_BBBD70", "sub_AEDCF0", "sub_B8A8B0"],
+        "files": ["settings/download_list.csv", "autoexec_sv.cfg"]
+      },
+      "deliverable": "detail/W06-数据表下载-逐字段.md",
+      "judge": "76 行完整对照表 + 0xF86A/0x5290 逐字段 + 泵推进条件逐条",
+      "needsDynamic": false,
+      "status": "done",
+      "doneAt": "2026-09-15T08:48",
+      "result": "76表对照三证合一(sub_576160 80路switch+键表0xD783E0 80项+download_list.csv 76行)；0xF86A发送=sub_B89BE0(非scope误写sub_B8A8B0)体=str filepath(NUL≤256)+u32 hashval(恒0) alloc262；0x5290七字段逐字节(result/filepath/hashval/src_bytes/compress/bin_len/bin)；泵状态机+空内容双锁定案；★请求顺序=处理器ID升序≠CSV行序"
+    },
+    {
+      "id": "W07",
+      "phase": "P1",
+      "title": "机师列表/创建/改名/删除（N7）逐字段",
+      "why": "N7 已命名 58/23/17 段，但仍需把 845B 列表体、163B 创建体、' 改名 46B'、'删除 13B' 落成逐字段表并核对枚举列。",
+      "scope": {
+        "funcs": ["sub_B42BB0", "sub_B48C10", "sub_B06980", "sub_B06360", "sub_B08AD0", "sub_B8A8B0"],
+        "ids": ["0x60CD→0xE13A", "0xFD3E→0xC43C", "0x6142→0x986D", "0x498B→0xBF1F", "0xF705→0x063E"]
+      },
+      "deliverable": "detail/W07-机师报文-逐字段.md",
+      "judge": "每条报文逐字段（偏移/类型/长度/含义/取值域）；枚举列给出名称字符串要求",
+      "needsDynamic": false,
+      "status": "done",
+      "doneAt": "2026-09-15T08:57",
+      "result": "4条报文全逐字段(列表845B=2×398B+16应答级/创建163B/删除13B/改名≤46B)；★线偏移vs内存偏移padding对照(398B线↔424B内存/159B↔176B/avatar18B↔22B)；★枚举列取值域(troops线上0基/mil_class数值等级/gender0-1/del_kind应答必回2/status3成功1拒绝)；★证伪lounge.go status=0/1旧注释(权威=config.yaml 3/1)"
+    },
+    {
+      "id": "W08",
+      "phase": "P1",
+      "title": "★0xF705→0x063E：请求 17B 与应答 51725B 顶层逐字段",
+      "why": "N7 已定长度与顶层字段序，但『每个 u32/u16 的业务含义』与『必须非零项』未逐条确认；这是白屏/进大厅的命门。",
+      "scope": {
+        "funcs": ["sub_437040", "sub_B8A8B0", "sub_B42640", "sub_B41260"],
+        "ids": ["0xF705", "0x063E"]
+      },
+      "deliverable": "detail/W08-pilot_select-逐字段.md",
+      "judge": "0xF705 全 17B 逐字段 + 0x063E 顶层 17 段逐字段（含 is_processing_comeback 等门控字段的客户端用途）",
+      "needsDynamic": false,
+      "status": "done",
+      "doneAt": "2026-09-15T09:12",
+      "result": "★0xF705 17B 全逐字段(troops u32/pilot_id u32/is_tutorial_skip u8/dbg_comeback_disable u32恒0/channeling_type u32)+字段来源([app+0x6F108]/[app+0x6F0FC]/[app+0x1BE22]/dword_1104680)；★0x063E 顶层 17 段全逐字段+各字段客户端用途(sub_437040 回调)；★is_processing_comeback 唯一门控(非0⇒app+0x1BDAC=1⇒sub_450E10@0x450FB7升2⇒FSM sub_43ADD0 case0x14调sub_442970开大厅窗口，恒0⇒白屏)；★restore_channel(a3)回调内未使用(纠偏server.go第1070行误导注释)；★回调app+1400|=2(首屏门位bit1)推进case8"
+    },
+    {
+      "id": "W09",
+      "phase": "P1",
+      "title": "★pilot_detail 51672B 内部结构逐字段（favms_arr / hav_avatar / hav_modules / cshist / comment / beginner_challenge）",
+      "why": "51672B 只知总量与几个子数组，未逐字段；服务端要『能过校验且业务前进』就必须逐字段正确。",
+      "scope": { "funcs": ["sub_B42640", "sub_B41260"], "ids": ["0x063E"] },
+      "deliverable": "detail/W09-pilot_detail-逐字段.md",
+      "judge": "偏移表逐条（0→51672），每个子数组给出步长/条数上限/字段含义",
+      "needsDynamic": false,
+      "status": "done",
+      "doneAt": "2026-09-15T09:25",
+      "result": "★53 段全逐字段（头部17字段64B/comment115B/hav_medal[16]/hav_emblem[8]/hav_avatar[160]/hav_voice[8]/hav_modules[128]/examination_state68B/rokaku系列/cshist[32]每项6B/second_chance/hav_rental_modules[128]每项8B/dc_point/favms_arr[720]每项66B/heroms系列/尾部混合90B/beginner_challenge454B）；字段名100%取自日志函数sub_B48010+7子日志；线51672B/内存56080B，padding4408B全定位；★纠偏W08：pilot_detail头4B=exp非pilot_id（pilot_id只在favms_arr条目偏移0）"
+    },
+    {
+      "id": "W10",
+      "phase": "P1",
+      "title": "进频道（N8）逐字段：0x3E0B / 0xF11C(54B 条目) / 0x2830 / 0xFB85",
+      "why": "N8 已定结构，需把 54B 频道条目与 0xFB85 的 7 字段落成逐字段+取值域，便于服务端造多频道。",
+      "scope": { "funcs": ["sub_A87E50", "sub_B89A30", "sub_43BC70", "sub_43ADD0", "sub_B02BA0"], "ids": ["0x3E0B", "0xF11C", "0x2830", "0xFB85"] },
+      "deliverable": "detail/W10-进频道-逐字段.md",
+      "judge": "54B 条目逐字段（含 37B 定长名）与 0xFB85 逐字段，含长度校验规则",
+      "needsDynamic": false,
+      "status": "done",
+      "doneAt": "2026-09-15T09:27",
+      "result": "★0xF11C 54B条目10字段逐字段（channelid u32/name定长37B无NUL/type u8/pilotlv_min u8/pilotlv_max u8/user_num_eff u16/user_num_zeon u16/user_max u16/user_conn u16/user_comeback u16，字段名取自sub_B474B0日志串）；★0xFB85 7字段逐字段（result≥0/channel_id回显/host≤128 NUL/port/userid/pilot_id/otp≤40 NUL，内存+0/+4/+8(129)/+137/+141/+145/+149(41)=190自洽）；★长度校验（count 1..32、>32⇒error(5,1)、游标恰到底、sub_B02BA0有界NUL）；★三层padding（线54B/缓冲60B/向量48B，sub_43F1D0再压缩丢弃user_max/user_comeback）；★门序号补强（0x3E0B send4→0xF11C recv5、0x2830 send6→0xFB85 recv7）"
+    },
+    {
+      "id": "W11",
+      "phase": "P1",
+      "title": "★30002 首屏 10 条应答逐字段语义（0x9397 / 0x7C8A / 0x02EE / 0x2ACF+0xFCE6 / 0x356F / 0x36D9 / 0x0876 / 0xCCDF / 0xE0DE）",
+      "why": "N9 只定了体长，字段语义全空（§3.2(b) 自述『体格式全部未解』）⇒ 服务端只能回全零骨架，业务层可能仍不前进。",
+      "scope": { "funcs": ["sub_B51930", "sub_B02DD0", "sub_B02DF0", "sub_B06230", "sub_B06200", "sub_B02BA0", "sub_B41470", "sub_B413B0", "sub_B41A10", "sub_B43B00", "sub_B43BE0"] },
+      "deliverable": "detail/W11-30002首屏应答-逐字段.md",
+      "judge": "10 条各自给出『偏移/类型/长度/含义/取值域/是否必须非零』",
+      "needsDynamic": false,
+      "status": "done",
+      "doneAt": "2026-09-15T09:37",
+      "result": "★10 条应答逐字段全解（0x9397=13字段37B/0x7C8A=is_revoked+两榜12B/0x02EE=18段64B/0x2ACF=9字段28B/0xFCE6=真空0B/0x356F=count+ms_set4B/0x36D9=count+missionunit4B/0x0906=count+navi4B/0xCE1A=result+两表12B/0xE0DE=evflag3 u64 8B）。★★推翻 N9 附三 B 两处：①0x0876 不是 player_navi 而是 recv_msma_weapon_buildup_r(36B)（请求 0x5FAB 非首屏），player_navi 真应答=0x0906（case 0xB54919，三重互证：send 0xF0C4 通知索引582+1=门583=0x247）；②0x7C8A=12B 非 16B（旧把循环内 u16 条目误当独立字段）；③0xCCDF=xwar_booking(554B)/block_list=0xCE1A(12B)。★10 条均无「必须非零」字段（count=0/result=0 即过）。★item元素22B/ms_set元素95B/missionunit元素6B。★落地 Go：lounge_channel.go 改 0xF0C4→0x0906(4B)+0x05A5→12B，go test 全绿"
+    },
+    {
+      "id": "W12",
+      "phase": "P1",
+      "title": "记录类结构逐字段：159B 大厅成员 / 398B 机师记录 / 845B 列表 / 1857B pilot_record / 58 字段",
+      "why": "多场景共用读取器（sub_B06980 等），字段名必须与 api_doc §3.3 列名一致，否则大厅成员表找不到自己。",
+      "scope": { "funcs": ["sub_B06980", "sub_B42BB0", "sub_B48C10"], "ids": ["0xDC47", "0xE13A", "0xD377"] },
+      "deliverable": "detail/W12-记录结构-逐字段.md",
+      "judge": "每个结构一张偏移表，并与服务端字段名一一对应",
+      "needsDynamic": false,
+      "status": "done",
+      "doneAt": "2026-09-15T10:02",
+      "result": "★1857B pilot_record(0x48F2→0xDC47) 9 段全逐字段定案：result/pilot_id/world_id 3×u32 + precord 242B(sub_B440B0=61字段=60u32+1u16，字段名取自sub_B4B240:rec_point/kill_cnt/…/weapon_buildup_cnt) + pbadge 3×152B(sub_B44610=各38u32=hav_count+37无名) + hav_medal 16×8B(16×u64位图) + msdeck 2×324B(sub_B43E00=各80u32+4u8:msma_id[4]/weapon_main[4]/…/eq_modules[40]/eq_bonus_modules[4]/eq_rental_modules[4]/is_heroms) + plvhist 369B(sub_B44750:pilot_id/lv_history[24]/lv_history_num/max/xwarwin_history[24]u16/xwarlose_history[24]u16/termstr_now 65B/term_old[25]) + lvjudge_hist u16 =1857B。★两条请求体定案：0x48F2=u32 pilot_id|u32 world_id|u8 is_checkmedal(9B,sub_B8E290)、0xD377=u32 is_simple(4B,sub_B8DD40)。★1857B 全字段不门控进大厅（零填即可推进）。★159B/398B/845B 继承 W07/api_doc §2.4 对齐核对通过"
+    },
+    {
+      "id": "W13",
+      "phase": "P1",
+      "title": "channellobby 报文族全解：0xA3B2 / 0xD377 / 0xC475 / 0xA64A + 相关应答",
+      "why": "大厅交互（进入/成员/场景切换/脚本播放）是大厅可用的核心，目前只解了 0xA64A 与 0xD377 的应答 ID。",
+      "scope": { "funcs": ["sub_B8Axxx", "sub_44F590", "sub_438D10", "sub_43A350"], "ids": ["0xA3B2", "0xD377", "0xC475", "0xA64A", "0x1D02"] },
+      "deliverable": "detail/W13-channellobby-逐字段.md",
+      "judge": "4 条请求 + 全部应答的逐字段，且给出『客户端下一步动作』判据",
+      "needsDynamic": false,
+      "status": "done",
+      "doneAt": "2026-09-15T10:12",
+      "result": "★channellobby 族全解：全 IDB 仅 2 个 recv_channellobby 串（script_play/members_get_r）⇒ 0xA3B2 enter 与 0xC475 scene_transition 都无应答，服务端唯一主动手段=推 0xA64A 脚本。★0x1D02 无 result 字段（旧表猜测✗），真字段序=u32 is_simple(回显)|u32 world_client_num|u32 count(≤0x800)+count×159B 记录，回调 vt[0x148]。★0xA64A 字段名=src（非 name），体=src(NUL串cap65)|val1 u32|val2 u32，len(src)+9 变长。★scene→destination 映射(sub_433770 switch)：4→1/6→3/8→2/17→4/19→5/21→6/13不发/default→0。★门序 96/97/98/99/100；三条请求体全定案(enter 空/members_get u32 is_simple/scene_transition u32 destination)"
+    },
+    {
+      "id": "W14",
+      "phase": "P1",
+      "title": "大厅轮询/心跳与已出现请求族：0x48F2→0xDC47、0xE9A2→0x3620、0x2F63→0xB4B6、0x3C26→0x994C、0x0680→0x5A3D、0x1C33",
+      "why": "实测出现但未逐字段的报文，缺字段会导致大厅持续轮询不前进。",
+      "scope": { "funcs": ["sub_BA47E0", "sub_B51930"], "ids": ["0x48F2", "0xDC47", "0xE9A2", "0x3620", "0x2F63", "0xB4B6", "0x3C26", "0x994C", "0x0680", "0x5A3D", "0x1C33"] },
+      "deliverable": "detail/W14-大厅轮询族-逐字段.md",
+      "judge": "每条给出请求体/应答体逐字段与门控序号",
+      "needsDynamic": false,
+      "status": "done",
+      "doneAt": "2026-09-15T10:25",
+      "result": "★4 条有应答 + 1 条无应答全逐字段（0x48F2→0xDC47 已在 W12 定案引用）。0xE9A2(send_pilot_favms_get sub_B8E4D0,通知105)→0x3620(recv_pilot_favms_get_r,门106)：result/pilot_id/world_id/count(≤720)+66B 元素（16×u32+2×u8，字段名取自 sub_B47CC0：pilot_id/favorite_ms_id/battle_rule/favorite_exp_sum/kill_cnt/…/last_update/dirty_flag，线66B↔内存72B）；0x2F63(send_pilotcard_get sub_B8E0A0,通知101)→0xB4B6(门102)：result/world_id/398B pcard；0x3C26(send_item_buyback_delete_term_get sub_B9A730,通知333,体空)→0x994C(门334)：delete_term NUL串 cap65；0x0680(send_activity_request sub_BA47E0,通知519,体空)→0x5A3D(recv_activity_notice,门518⚠️−1)：count(≤38)+356B 元素（pilot_id/pilot_name25B/level/is_admin/send_range/timestamp24B/msg241B/avatar18B/clan_id/clan_name31B/clan_emb×3，线356B↔内存368B）；0x1C33(send_save_message sub_BA6890,通知574)：msg cap769/u32 type/u8 is_save_db，无应答。★全族无「必须非零」字段（零填即过，唯一硬约束=体长精确+游标恰到底）"
+    },
+    {
+      "id": "W15",
+      "phase": "P2",
+      "title": "大厅 UI → 出击入口链（客户端侧）：场景 10 / 主菜单窗 / 出击按钮 → FSM",
+      "why": "要『到战斗大厅』必须先知道用户点『出击』后客户端做什么、发什么。",
+      "scope": { "funcs": ["sub_442970", "sub_733530", "sub_44F590", "sub_450E10"], "files": ["script/UI/*.nut", "interface 布局 xml"] },
+      "deliverable": "detail/W15-出击入口链.md",
+      "judge": "能画出『窗口控件 → 事件 → FSM 状态 → 发包函数』链，含地址",
+      "needsDynamic": false,
+      "status": "done",
+      "doneAt": "2026-09-15T10:45",
+      "result": "★出击入口链定案：主菜单窗 CMainMenuWindow(控件#103, sub_7328A0/sub_733530) → 出击类型选择窗(sub_7B7320 确认按钮→btlroom_get、sub_89FF60 case21 写 app+0x4BD48=出击类型1/2/10) → btlroom_get(0x7ABC,通知134) → 选房 → btlroom_enter(0x61AF,通知142, sub_44F590 进房间作业) → sub_442970 建 CGameStateStepUpdateLoginBattle(登录战斗服, vtable 0xD68474)。★出击族 8 条 send 全定位(0x7ABC/0xD12D/0x6DF1/0x61AF/0xEB14/0xDFB2/0x645D/0x1F3E；发送函数 sub_B8F680/B8F830/B8FAC0/B8FE80/B905D0/B90B70/B91AD0/B92160；通知索引 134/138/140/142/—/154/—/—；接收门=+1)。★send 侧逐字段(btlroom_get/enter/create/quick_start/coop_roomlist_get 已逐字段，字段名取自日志串)。★★推翻旧结论 3 处：①sub_442970≠开大厅窗口 而是登录战斗服(sub_43F780 写 vtable 0xD68474)；②sub_44F590≠进大厅作业 而是进房间作业(btlroom_enter)；③sub_AFEF40≠跑脚本 而是 btlroom_enter 包装。★场景：8=进房间(sub_44EF10)/10=主菜单(sub_733530)/15=出击前置校验(sub_89FF60)"
+    },
+    {
+      "id": "W16",
+      "phase": "P2",
+      "title": "出击/编成/机库/仓库报文族逐字段（send 表筛选 → 逐字段）",
+      "why": "战斗大厅的核心交互报文族，服务端必须应答才能出击。",
+      "scope": { "ref": ".codebuddy/memory/topics/14-大厅send报文ID全表.md + 本工作区索引", "hint": "按 send_* 名称筛选 出击/编成/unit/hangar/warehouse 关键词" },
+      "deliverable": "detail/W16-出击编成报文族-逐字段.md",
+      "judge": "每条报文一行索引 + 已解项逐字段表",
+      "needsDynamic": false,
+      "status": "done",
+      "doneAt": "2026-09-15T10:55",
+      "result": "★四族 110 条 send 全映射（ID/发送函数/应答 recv case；机读 _lounge_send_idmap.json + _lounge_recv_idmap.json，350 recv case 全解析）。★出击族 27 + 编成族 21 全逐字段（48 条，字段名取自日志串 sub_41D990，类型取自写体助手 sub_B03580=i32/sub_B032A0=i16/sub_B08500=i64/sub_B0C1F0=u8/sub_B02B40=NUL串/sub_B02D80=u32/sub_B02DA0=u16/sub_B061C0=u8）。★关键新证：btlroom_get(0x7ABC) 无 recv_btlroom_get_r——房间列表=btlroom_info_one(0x244E)逐条推+btlroom_update_count(0xB0A3)收尾。★出击族应答 ID 补全（create_r=0x2D6F/enter_r=0x5383/quick_start_r=0xC887/change_mission_r=0xB317/coop_roomlist_get_r=0xDBDB 等）。★编成核心类型 uniqid=u64(8B)/slot|decktype|eq_slot=u16/eq_modules[10]/msid_list[600](4806B)；ms_set/equip_set 复合体 ⚠️内部未逐字段。★机库 38+仓库 24 给索引（逐字段留待后续）"
+    },
+    {
+      "id": "W17",
+      "phase": "P2",
+      "title": "房间/战场列表/创建/加入报文族逐字段",
+      "why": "『战斗大厅』通常含房间/战场列表，客户端要拉到列表才能选择出击。",
+      "scope": { "hint": "send_* 名称含 room/battle/war/field/stage/quest" },
+      "deliverable": "detail/W17-房间战场列表-逐字段.md",
+      "judge": "列表请求 + 列表应答逐字段（含条数上限与内存步长交叉校验）",
+      "needsDynamic": false,
+      "status": "done",
+      "doneAt": "2026-09-15T11:50",
+      "result": "★26 条报文逐字段（房间列表3+coop列表1+出击应答8+出击推送3+party6+xwar5）。★★核心新证：①btlroom_get 无 _r——房间列表=btlroom_info_one(0x244E)逐条推+btlroom_update_count(0xB0A3)收尾（门135=通知134+1 三重互证）；②btlroom_enter_r(0x5383) 携带 battlesv_host/battlesv_port/otp_battle=进战斗服凭据（W18 来源）；③roominfo 16 字段（room_id/room_name 73B定长/room_type/room_stat/play_elapsed/mission_id/extrule_id/is_lock/is_vsclan/count_eff/count_zeon/count_max/master_pilotid/master_worldid/master_name NUL≤25）+clan 11B 三处复用；④party 招募列表=recruits(80B线/84B内存,≤200)+leaders(58B线/64B内存,≤200)；⑤门序号 9 条三重互证「接收门=发送通知+1」"
+    },
+    {
+      "id": "W18",
+      "phase": "P2",
+      "title": "匹配流程 → 战斗服务器连接（战场服端口/握手/首包）",
+      "why": "『进入战斗』的最后一跳：匹配成功后客户端连哪里、走什么协议。",
+      "scope": { "hint": "搜 sub_AF73xx / 新 proto 对象 / 新端口常量" },
+      "deliverable": "detail/W18-匹配与战斗服连接.md",
+      "judge": "给出连接链（建连函数→host/port 来源→握手是否复用 N3→首包 ID）",
+      "needsDynamic": false,
+      "status": "done",
+      "doneAt": "2026-09-15T12:10",
+      "result": "★战斗服=第 3 个 VCE 协议对象 CGVOProtoBattle(全局 dword_1201A64,vtable 0xEED7AC,ctor sub_BAAE90,会话字段+16576,分发器 sub_B0CC20;三对象 sub_AF6CB0 初始化,共用连接管理器 dword_1201A58=iCompressSession<LZP,iTcpStream>)。★连接链:0x5383 recv_btlroom_enter_r(battlesv_host/port/otp)→回调写 app 全局(host→app+115060/otp→app+115189/port→app+115232/pilot_id→app+454908/room_id→app+114700)→sub_442970 建 CGameStateStepUpdateLoginBattle(vtable 0xD68474,布局 +20 host/+149 otp/+192 port/+196 pilot_id/+200 room_id)→tick sub_440080(state0 连/state1 等就绪/state2 发首包)→sub_AF7400→sub_AF7130(与 auth/lounge 同一 helper,mgr vt[6] 发起 TCP 超时 30000ms)。★握手复用 N3:vt[8]=sub_C84B60(N3 帧类型解析器)+iCompressSession。★首包=0xF24B battle 变体(sub_B31B10,7 字段 userid/world_id/pilot_id/room_id/otp_battle/is_comeback,字段名取自日志串);应答=0xA5DA 20 字段(case 0xB25A79 闸门 3,体长 630+len(room_name),handler vt+0x70=sub_BA8C20→sub_AFAB40→sub_448FE0)。本轮增量=首包逐字段+app 偏移映射+LoginBattle 布局+连接状态机;引用 B01/B02/B03 战服取证"
+    },
+    {
+      "id": "W19",
+      "phase": "P2",
+      "title": "战斗大厅判据与最小实现清单（可交给服务端落地）",
+      "why": "把 W15~W18 汇成『服务端必须实现哪些应答 + 每条体格式』的可执行清单。",
+      "scope": { "ref": "server/internal/protocol/*.go, server/docs/TODO-Go服务端与注册页.md" },
+      "deliverable": "detail/W19-战斗大厅最小实现清单.md",
+      "judge": "清单每条含：ID/方向/体逐字段/服务端数据来源/失败现象",
+      "needsDynamic": false,
+      "status": "done",
+      "doneAt": "2026-09-15T12:25",
+      "result": "三判据 J1进房间(0x5383)/J2战斗服会话(0xF24B battle变体→0xA5DA 20字段)/J3进战场(0x1365 23字段)，逐级依赖；两层面最小清单：A大厅侧出击族7条(0x7ABC→0x244E+0xB0A3无_r/0x6DF1→0x2D6F/0xD12D→0xC887/0x61AF→0x5383★命门/0xEB14→0xB317/0xDFB2→0xDBDB/其余零填)+B战斗服6步(复用N3握手/0x34A9→0xDE24/0xF24B→0xA5DA★命门/0xBA73 cpf可选/0x1365★命门/S2~S11索引)；逐字段+数据来源+失败现象三表齐；★发现0x5383字段序冲突(W17静态6字段 vs lounge_channel.go实测4字段 port→room_id→host→otp，实测优先)⇒归W20复核"
+    },
+    {
+      "id": "W20",
+      "phase": "P3",
+      "title": "全链报文总表一致性核对与冲突消解（含被推翻结论清理）",
+      "why": "多轮结论有作废项（68B/9B/12B…），需一次全表核对，保证总表可直接当规格用。",
+      "scope": { "ref": "formats/全链报文总表.md, formats/README.md, topics/08, topics/09" },
+      "deliverable": "formats/全链报文总表.md（§核对记录）",
+      "judge": "总表内无自相矛盾项；每个『作废』都有替代值",
+      "needsDynamic": false,
+      "status": "done",
+      "doneAt": "2026-09-15T12:25",
+      "result": "★0x5383 字段序反汇编定案（case 0xB616DC..0xB61A30）= 6 字段：result u32|matching_type u32|battlesv_host NUL≤128|battlesv_port u32|room_id u32|otp_battle NUL≤40（alloc 0xBA=186=4+4+129+4+4+41 自洽；回调 vt[0x1B0] 6 参）。★裁决：W17 静态 6 字段正确；lounge_channel.go/B01/B02 的 4 字段序作废 ✗（漏读 result/matching_type 两个 u32）。★落地修正 EncodeBtlroomEnterR + server.go 注释（go build 通过）。★新增 §6 核对记录：8 项作废项全部有替代值（68B→51725B/9B→37B/20B→64B/16B→12B/0x0876→0x0906/0xCCDF→0xCE1A/4字段→6字段）。★总表无自相矛盾项"
+    },
+    {
+      "id": "W21",
+      "phase": "P3",
+      "title": "全链状态机与函数地址索引汇总（含 app 结构偏移总表）",
+      "why": "把 N1~N9 + W15~W18 的 FSM/偏移/函数汇总成一张总索引，便于服务端与后续逆向复用。",
+      "scope": { "ref": "topics/10-逆向地址索引.md, 各 nodes/*.md" },
+      "deliverable": "detail/W21-全链状态机与地址索引.md",
+      "judge": "函数/偏移/状态机三张表齐全且地址可回溯到节点文档",
+      "needsDynamic": false,
+      "status": "done",
+      "doneAt": "2026-09-15T12:35",
+      "result": "★总索引三张表齐：①函数地址索引约 150 个（13 域：帧层/分发器/读取器/协议对象/登录FSM/authsv/认证send/lounge send/首屏send/出击/战斗服/记录读取器/数据表泵，每行标注出处可回溯 nodes/* + detail/W*）；②app 结构偏移总表约 35 个（登录凭据→世界跳转→频道→出击→战斗服全链，十进制/十六进制双标，含换算注释）；③状态机索引 9 台（登录 sub_A88920 10..23/998 / LoginLounge sub_43BAC0 / 频道 sub_43ADD0 2..21 / LoginBattle sub_440080 / 连接 sub_CAD510 0..13 / 握手 sub_C9E810+sub_CA3030 1..6 / 频道列表 sub_A87E50 / 进房间 sub_44F590 / 分区 sub_733880）；④全局对象/vtable 索引 + 读取器速查。⚠️1 处源文档待复核：app+0x4BD48(出击类型)标题 hex 0x4BD48=310600 vs 正文 dec 310616=0x4BD58 差 16B。★队列完成 currentItem=null、finished=true"
+    }
+  ],
+  "sessionLog": [
+    {
+      "at": "2026-09-15T00:00",
+      "type": "setup",
+      "summary": "建立 workqueue.json（P0~P3 共 22 项）+ 重写自动化公约为『10 分钟/会话 + 自链式续跑』+ 新建《全链报文总表》",
+      "next": "W01"
+    },
+    {
+      "at": "2026-09-15T00:20",
+      "item": "W01",
+      "type": "session",
+      "result": "done",
+      "summary": "登录入口逐字段：四列对照（控件↔偏移↔文件键↔下一跳）+ account.ini 磁盘字节级新证（键值 map/升序/CRLF/无 BOM/无 section；ID 仅在 PW_SAVE!=0 时读；密码不落盘）+ step 对象 +20/+533",
+      "artifact": "detail/W01-登录入口-字段与偏移.md",
+      "next": "W02"
+    },
+    {
+      "at": "2026-09-15T01:20",
+      "item": "W02",
+      "type": "session",
+      "result": "done",
+      "summary": "authsv 逐字段：URL 由 sub_BAFBD0 调 WinHttpCrackUrl 拆解（无显式端口 ⇒ 80）；唯一附加参数 t=GetTickCount() 经 sub_BB35E0 序列化 k=v&k1=v1 + sub_BB3450 URL-encode；常量头 szHeaders=Content-Type: application/x-www-form-urlencoded；CSV 5 列逐列去向 + 越界列返回 0 + '#'/空行跳过；pair 52B / Server 32B 逐字段",
+      "artifact": "detail/W02-authsv-字段与格式.md",
+      "next": "W03"
+    },
+    {
+      "at": "2026-09-15T01:35",
+      "item": "W03",
+      "type": "session",
+      "result": "done",
+      "summary": "access 握手与加密逐字节复核：帧头 4B = 明文长度 n；单帧上限 16366 三处铁证；环偏移（发送 +0x1F8 / 解密输入 +0x230 / 明文输出 +0x4E0）且握手与加密共用输入环；尾块填充 = MT19937；block2 必须 RSA 结案；RSA ctx +8=e(65537)/+0x18=n；type 0~4 全表（type1 自动回 type2、type4 四子类最小 17/13/13/14B）；孪生实现定案（两档同构，工厂 vce[677]）；修正 N3（超时 +0x4C、状态 6 收包在 sub_CA3030 尾）；+0x280 初值 1 穷举否定",
+      "artifact": "detail/W03-握手与加密-逐字节.md",
+      "next": "W04",
+      "notes": "自动化任务冗余对：2-w02-authsv(01:27) 与 3-w03(01:30) 相邻重叠；因会话 prompt 为通用模板（运行时读 currentItem），重复触发无副作用；建议用户手动把 2-w02-authsv 置 PAUSED。"
+    },
+    {
+      "at": "2026-09-15T02:2x",
+      "type": "setup",
+      "summary": "★修复任务机制理解错误（v3 定案）：会话不限时长（研究到完成当前工作项，非 10 分钟上限）；会话【完成后】才 suggested create 下一个 once 任务（scheduledAt = now+10min）作为下一轮；严禁会话开头建/重复建。已同步改写 prompts/common.md、session.md、tasks.json 与本文件 rules",
+      "next": "W04"
+    },
+    {
+      "at": "2026-09-15T02:52",
+      "item": "W04",
+      "type": "session",
+      "result": "done",
+      "summary": "认证协议链（30000）逐字段：8 send + 8 recv 全逐字段表。★4 处 N4 send ID 修正（sub_B04EB0=0xF24B 非 0x2C1A / sub_B055D0=0x2C1A 非 0x8F36 / sub_B05190=0x44CD 非 0xA103 / sub_B05370=0x5C82 非 0x60E0）+ auth 0xA5DA=4B（非 8B）+ 0x34A9 auth=1977/0x2D45E072/0 + 世界条目串=定长 49/49/193B（sub_B02E20 无 NUL 检查）",
+      "artifact": "detail/W04-认证协议链-逐字段.md",
+      "next": "W05"
+    },
+    {
+      "at": "2026-09-15T03:05",
+      "item": "W05",
+      "type": "session",
+      "result": "done",
+      "summary": "世界选择→大厅跳转逐字段：0x3B8F→0x4F3F / 0xA380→0x1146 / 0xF24B→0xA5DA 三报文闭环。★309B 世界条目每字节定案 + client_now/client_max 负载率四档（100*now/max→0/1/2/3）；★OTP 四点闭环（生成/下发0x1146→app+1297/回传0xF24B/校验0xA5DA；0xFB85 再下发覆写）；lounge 0xF24B=u32 userid+NUL串otp、lounge 0xA5DA=8B；channeling_type=0..3；0x4F3F 回 reset_sec=0 安全",
+      "artifact": "detail/W05-世界选择到大厅-逐字段.md",
+      "next": "W06"
+    },
+    {
+      "at": "2026-09-15T08:48",
+      "item": "W06",
+      "type": "session",
+      "result": "done",
+      "summary": "76表对照三证合一(sub_576160 80路switch+键表0xD783E0 80项+download_list.csv 76行)；0xF86A发送=sub_B89BE0体=str filepath(NUL≤256)+u32 hashval(恒0)alloc262；0x5290七字段逐字节；泵状态机+空内容双锁定案；★请求顺序=处理器ID升序≠CSV行序",
+      "artifact": "detail/W06-数据表下载-逐字段.md",
+      "next": "W07"
+    },
+    {
+      "at": "2026-09-15T08:57",
+      "item": "W07",
+      "type": "session",
+      "result": "done",
+      "summary": "4条报文全逐字段(列表845B=2×398B+16应答级/创建163B/删除13B/改名≤46B)；★线偏移vs内存偏移padding对照(398B线↔424B内存/159B↔176B/avatar18B↔22B)；★枚举列取值域(troops线上0基/mil_class数值等级/gender0-1/del_kind应答必回2/status3成功1拒绝)；★证伪lounge.go status=0/1旧注释(权威=config.yaml 3/1)",
+      "artifact": "detail/W07-机师报文-逐字段.md",
+      "next": "W08"
+    },
+    {
+      "at": "2026-09-15T09:12",
+      "item": "W08",
+      "type": "session",
+      "result": "done",
+      "summary": "选机师0xF705→0x063E逐字段：★0xF705 17B全逐字段(troops u32/pilot_id u32/is_tutorial_skip u8/dbg_comeback_disable u32恒0/channeling_type u32)+字段来源；★0x063E顶层17段全逐字段+各字段客户端用途(sub_437040)；★is_processing_comeback唯一门控(非0⇒app+0x1BDAC=1⇒sub_450E10升2⇒FSM case0x14调sub_442970开大厅窗口，恒0⇒白屏)；★restore_channel(a3)回调内未使用(纠偏server.go误导注释)；★回调app+1400|=2推进首屏",
+      "artifact": "detail/W08-pilot_select-逐字段.md",
+      "next": "W09"
+    },
+    {
+      "at": "2026-09-15T09:25",
+      "item": "W09",
+      "type": "session",
+      "result": "done",
+      "summary": "pilot_detail 51672B 内部逐字段：★53 段全逐字段（头部17字段64B/comment115B/hav_medal[16]/hav_emblem[8]/hav_avatar[160]/hav_voice[8]/hav_modules[128]/examination_state68B/rokaku系列/cshist[32]每项6B/second_chance/hav_rental_modules[128]每项8B/dc_point/favms_arr[720]每项66B/heroms系列/尾部混合90B/beginner_challenge454B）；字段名100%取自日志函数sub_B48010+7子日志；线51672B/内存56080B，padding4408B全定位；★纠偏W08：pilot_detail头4B=exp非pilot_id（pilot_id只在favms_arr条目偏移0）",
+      "artifact": "detail/W09-pilot_detail-逐字段.md",
+      "next": "W10"
+    },
+    {
+      "at": "2026-09-15T09:27",
+      "item": "W10",
+      "type": "session",
+      "result": "done",
+      "summary": "进频道（N8）四报文逐字段：0x3E0B(空)→0xF11C(54B条目×count) / 0x2830(u32 channel_id)→0xFB85(7字段)。★0xF11C 54B条目10字段逐字段（字段名取自sub_B474B0日志串）+ 0xFB85 7字段逐字段（result≥0/channel_id回显/host≤128 NUL/port/userid/pilot_id/otp≤40 NUL，alloc190=4+4+129+4+4+4+41自洽）；★长度校验（count 1..32、>32⇒error(5,1)、游标恰到底、sub_B02BA0有界NUL）；★三层padding（线54B/缓冲60B/向量48B）；★门序号补强（0x3E0B send4→0xF11C recv5、0x2830 send6→0xFB85 recv7）",
+      "artifact": "detail/W10-进频道-逐字段.md",
+      "next": "W11"
+    },
+    {
+      "at": "2026-09-15T09:37",
+      "item": "W11",
+      "type": "session",
+      "result": "done",
+      "summary": "30002 首屏 10 条应答逐字段全解。★★推翻 N9 附三 B 两处：①0x0876 不是 player_navi 而是 recv_msma_weapon_buildup_r(36B)（请求 0x5FAB 非首屏），player_navi 真应答=0x0906（case 0xB54919，三重互证 send 0xF0C4 通知索引582+1=门583=0x247）；②0x7C8A=12B 非 16B（旧把循环内 u16 条目误当独立字段）；③0xCCDF=xwar_booking(554B)/block_list=0xCE1A(12B)。★10 条均无「必须非零」字段（count=0/result=0 即过）。★item元素22B/ms_set元素95B/missionunit元素6B。★落地 Go：lounge_channel.go 改 0xF0C4→0x0906(4B)+0x05A5→12B，go test 全绿",
+      "artifact": "detail/W11-30002首屏应答-逐字段.md",
+      "next": "W12"
+    },
+    {
+      "at": "2026-09-15T10:02",
+      "item": "W12",
+      "type": "session",
+      "result": "done",
+      "summary": "记录类结构逐字段：★1857B pilot_record(0x48F2→0xDC47) 9 段全逐字段定案（result/pilot_id/world_id 3×u32 + precord 242B[sub_B440B0=61字段=60u32+1u16，字段名取自sub_B4B240] + pbadge 3×152B[sub_B44610=各38u32=hav_count+37无名] + hav_medal 16×8B[16×u64位图] + msdeck 2×324B[sub_B43E00=各80u32+4u8] + plvhist 369B[sub_B44750] + lvjudge_hist u16）。★两条请求体定案：0x48F2=u32 pilot_id|u32 world_id|u8 is_checkmedal(9B)、0xD377=u32 is_simple(4B)。★1857B 全字段不门控进大厅（零填即可推进）。★159B/398B/845B 继承 W07/api_doc §2.4 对齐核对通过",
+      "artifact": "detail/W12-记录结构-逐字段.md",
+      "next": "W13"
+    },
+    {
+      "at": "2026-09-15T10:12",
+      "item": "W13",
+      "type": "session",
+      "result": "done",
+      "summary": "channellobby 族全解（0xA3B2/0xD377/0xC475/0xA64A/0x1D02）：★全 IDB 仅 2 个 recv_channellobby 串 ⇒ 0xA3B2 enter 与 0xC475 scene_transition 都无应答，服务端唯一主动手段=推 0xA64A；★0x1D02 无 result 字段（真字段序 is_simple回显/world_client_num/count≤0x800+159B×count，回调 vt[0x148]）；★0xA64A 字段名=src 非 name，体 len(src)+9 变长；★scene→destination 映射(sub_433770)；★门序 96/97/98/99/100",
+      "artifact": "detail/W13-channellobby-逐字段.md",
+      "next": "W14"
+    },
+    {
+      "at": "2026-09-15T10:25",
+      "item": "W14",
+      "type": "session",
+      "result": "done",
+      "summary": "大厅轮询/心跳族逐字段（0xE9A2/0x2F63/0x3C26/0x0680/0x1C33；0x48F2→0xDC47 已在 W12）。★4 条有应答+1 条无应答全逐字段：0xE9A2→0x3620 favms(result/pilot_id/world_id/count≤720+66B元素=16×u32+2×u8，字段名取自sub_B47CC0，线66B↔内存72B)；0x2F63→0xB4B6 pilotcard(result/world_id/398B pcard)；0x3C26→0x994C(delete_term NUL串cap65)；0x0680→0x5A3D activity(count≤38+356B元素=pilot_id/pilot_name25B/level/is_admin/send_range/timestamp24B/msg241B/avatar18B/clan_id/clan_name31B/clan_emb×3，线356B↔内存368B)；0x1C33 save_message(msg cap769/u32 type/u8 is_save_db，无应答)。★全族无「必须非零」字段（零填即过）。★门序：favms 105→106/pilotcard 101→102/item_buyback 333→334(+1)，activity 519→518(−1⚠️ notice型)",
+      "artifact": "detail/W14-大厅轮询族-逐字段.md",
+      "next": "W15"
+    },
+    {
+      "at": "2026-09-15T10:45",
+      "item": "W15",
+      "type": "session",
+      "result": "done",
+      "summary": "大厅 UI→出击入口链定案：主菜单窗 CMainMenuWindow(控件#103) → 出击类型选择窗(sub_7B7320/sub_89FF60) → btlroom_get(0x7ABC) → 选房 → btlroom_enter(0x61AF, sub_44F590) → sub_442970 建 CGameStateStepUpdateLoginBattle(登录战斗服)。★出击族 8 条 send 全定位 + send 侧逐字段 + 通知索引。★★推翻旧结论：sub_442970=登录战斗服(非开大厅窗口)、sub_44F590=进房间作业(非进大厅)、sub_AFEF40=btlroom_enter包装(非跑脚本)",
+      "artifact": "detail/W15-出击入口链.md",
+      "next": "W16"
+    },
+    {
+      "at": "2026-09-15T10:55",
+      "item": "W16",
+      "type": "session",
+      "result": "done",
+      "summary": "出击/编成/机库/仓库报文族逐字段：★四族 110 条 send 全映射（ID/发送函数/应答 recv case；机读 _lounge_send_idmap.json + _lounge_recv_idmap.json，350 recv case 全解析）。★出击族 27 + 编成族 21 全逐字段（48 条，字段名取自日志串，类型取自写体助手）。★关键新证：btlroom_get(0x7ABC) 无 recv_btlroom_get_r——房间列表=btlroom_info_one(0x244E)逐条推+btlroom_update_count(0xB0A3)收尾。★出击族应答 ID 全补（enter_r=0x5383/create_r=0x2D6F/quick_start_r=0xC887 等）。★编成核心类型 uniqid=u64/slot=u16/eq_modules[10]/msid_list[600]。★机库 38+仓库 24 给索引（逐字段留待后续）",
+      "artifact": "detail/W16-出击编成报文族-逐字段.md",
+      "next": "W17"
+    },
+    {
+      "at": "2026-09-15T11:50",
+      "item": "W17",
+      "type": "session",
+      "result": "done",
+      "summary": "房间/战场列表/创建/加入报文族逐字段：★26 条报文逐字段（房间列表3+coop列表1+出击应答8+出击推送3+party6+xwar5）。★★核心新证：①btlroom_get 无 _r——房间列表=btlroom_info_one(0x244E)逐条推+btlroom_update_count(0xB0A3)收尾（门135=通知134+1 三重互证）；②btlroom_enter_r(0x5383)携带 battlesv_host/battlesv_port/otp_battle=进战斗服凭据（W18 来源）；③roominfo 16字段+clan 11B 三处复用（info_one/coop/member_detail）；④party 招募列表=recruits(80B线/84B内存,≤200)+leaders(58B线/64B内存,≤200)；⑤门序号9条三重互证「接收门=发送通知+1」",
+      "artifact": "detail/W17-房间战场列表-逐字段.md",
+      "next": "W18"
+    },
+    {
+      "at": "2026-09-15T12:10",
+      "item": "W18",
+      "type": "session",
+      "result": "done",
+      "summary": "匹配→战斗服连接定案：★战斗服=第 3 个 VCE 协议对象 CGVOProtoBattle(全局 dword_1201A64,vtable 0xEED7AC,ctor sub_BAAE90,分发器 sub_B0CC20;三对象 sub_AF6CB0 初始化,共用连接管理器 dword_1201A58=iCompressSession<LZP,iTcpStream>)。★连接链=0x5383(battlesv_host/port/otp)→app 全局(host app+115060/otp app+115189/port app+115232/pilot_id app+454908/room_id app+114700)→sub_442970 建 CGameStateStepUpdateLoginBattle(vtable 0xD68474,布局 +20 host/+149 otp/+192 port/+196 pilot_id/+200 room_id)→tick sub_440080(state0 连/state1 等就绪/state2 发首包)→sub_AF7400→sub_AF7130(与 auth/lounge 同一 helper,mgr vt[6] 发起 TCP 超时 30000ms)。★握手复用 N3:vt[8]=sub_C84B60(N3 帧类型解析器)+iCompressSession。★首包=0xF24B battle 变体(sub_B31B10,7 字段 userid/world_id/pilot_id/room_id/otp_battle/is_comeback);应答=0xA5DA 20 字段(case 0xB25A79 闸门 3,体长 630+len(room_name),handler vt+0x70=sub_BA8C20→sub_AFAB40→sub_448FE0)。本轮增量=首包逐字段+app 偏移映射+LoginBattle 布局+连接状态机;引用 B01/B02/B03",
+      "artifact": "detail/W18-匹配与战斗服连接.md",
+      "next": "W19"
+    },
+    {
+      "at": "2026-09-15T12:25",
+      "item": "W19",
+      "type": "session",
+      "result": "done",
+      "summary": "战斗大厅判据与最小实现清单（汇总落地）：★三判据 J1进房间(0x5383回战斗服凭据→客户端建LoginBattle连战斗服)/J2战斗服会话(0xF24B battle变体→0xA5DA 20字段→sub_448FE0战场初始化)/J3进战场(0x1365 23字段→可出击)，逐级依赖。★两层面最小清单：A大厅侧出击族7条(0x7ABC→0x244E+0xB0A3无_r/0x6DF1→0x2D6F/0xD12D→0xC887/0x61AF→0x5383★命门/0xEB14→0xB317/0xDFB2→0xDBDB/其余零填)+B战斗服6步(复用N3握手/0x34A9→0xDE24/0xF24B→0xA5DA★命门/0xBA73 cpf可选/0x1365★命门/S2~S11索引)。★数据来源表：战斗服凭据需新增config battle.addr+otp扩展+房间表；config/progress/extrarule可零填。★失败现象对照。★★发现0x5383字段序真冲突(W17静态6字段 vs lounge_channel.go实测4字段port→room_id→host→otp，实测优先)⇒归W20复核",
+      "artifact": "detail/W19-战斗大厅最小实现清单.md",
+      "next": "W20"
+    },
+    {
+      "at": "2026-09-15T12:25",
+      "item": "W20",
+      "type": "session",
+      "result": "done",
+      "summary": "全链一致性核对 + 0x5383 冲突消解：★反汇编 case 0xB616DC 定案 0x5383 = 6 字段（result u32|matching_type u32|battlesv_host NUL≤128|battlesv_port u32|room_id u32|otp_battle NUL≤40；alloc 0xBA=186 自洽；回调 vt[0x1B0] 6 参）。★裁决：W17 静态 6 字段正确；lounge_channel.go/B01/B02 的 4 字段序作废 ✗。★落地修正 EncodeBtlroomEnterR + server.go 注释（go build 通过）。★新增总表 §6 核对记录：8 项作废项全部有替代值；0x921B→0xCE1A / 0xCCDF=xwar / 0x02EE alloc 语义已一致无矛盾",
+      "artifact": "formats/全链报文总表.md（§6 核对记录 + §2.5.1 R3 定案）+ server/internal/protocol/lounge_channel.go + server/internal/authsrv/server.go",
+      "next": "W21"
+    },
+    {
+      "at": "2026-09-15T12:35",
+      "item": "W21",
+      "type": "session",
+      "result": "done",
+      "summary": "全链状态机与函数地址索引汇总：★函数索引约150个（13域：帧层/分发器/读取器/协议对象/登录FSM/authsv/认证send/lounge send/首屏send/出击/战斗服/记录读取器/数据表泵）/app偏移约35个（登录凭据→世界跳转→频道→出击→战斗服全链）/状态机9台（sub_A88920/sub_43BAC0/sub_43ADD0/sub_440080/sub_CAD510/sub_C9E810+sub_CA3030/sub_A87E50/sub_44F590/sub_733880），全部标注出处可回溯 nodes/* + detail/W*；⚠️1处待复核 app+0x4BD48(出击类型)标题hex 0x4BD48=310600 vs 正文dec 310616=0x4BD58 差16B。★队列完成 currentItem=null、finished=true",
+      "artifact": "detail/W21-全链状态机与地址索引.md",
+      "next": null
+    }
+  ]
+}

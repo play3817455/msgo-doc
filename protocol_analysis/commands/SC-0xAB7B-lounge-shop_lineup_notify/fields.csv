@@ -1,0 +1,6 @@
+序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+0,-,2,u16,opcode,命令号,分发器 switch 选择子,0xAB7B,0xb71a91,确证
+1,0,4,u32,id_type_num,id_type 条目数（上限 500）,"驱动 id_type 数组循环（`cmp ebx,1F4h`）",0..500,B71938|B71964,确证
+2,4,n₁,"array<u8,500>",id_type,商店阵容类型列表（日志串 `id_type={...}` 逐项十六进制打印）,经 `vt[0x3B0]` 交业务（4 实参）,-,B71976|B7198D,确证
+3,var,4,u32,item_num,item_list 条目数（上限 500）,"驱动 item_list 数组循环（`cmp ebx,1F4h`）",0..500,B719BC|B719E8,确证
+4,var,23·n₂,"array<struct,24>",item_list,商店商品列表（元素线长 23 / 槽步进 24）,经 `vt[0x3B0]` 交业务,-,B719FA|B71A1A|B71A26,确证

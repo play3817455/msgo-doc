@@ -1,0 +1,151 @@
+{
+ "id": "SC-0x73F0-lounge-pilot_monthlypassport_pay_r",
+ "verified_at": "2026-09-30 15:25:44",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "block",
+ "block": [
+  "0xB67126",
+  "0xB6730E"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 5,
+   "va": "0xB67142",
+   "reg": "eax",
+   "host": "[edx+78h]",
+   "alloc_va": "0xB6713F",
+   "call_va": "0xB67144"
+  },
+  "field_window": {
+   "start_va": "0xB6712E",
+   "end_va": "0xB671F4",
+   "guard": {
+    "va": "0xB6712D",
+    "func": "0xB41120",
+    "module_id": 131,
+    "release_va": "0xB41110"
+   },
+   "closer_or_commit_va": "0xB671CD",
+   "within_model_block": true,
+   "range_from": "block"
+  },
+  "primitive_widths": {
+   "direction": "SC",
+   "expected": [
+    {
+     "name": "result",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xb6717d"
+     ]
+    },
+    {
+     "name": "remaining_days",
+     "wire_type": "u8",
+     "width": 1,
+     "seq": 2,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xb671bd"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB6717D",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB671BD",
+     "kind": "read",
+     "width": 1,
+     "wire_type": "u8",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 2,
+   "checkable": 2,
+   "pairs": [
+    {
+     "field": "result",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB6717D",
+     "kind": "read"
+    },
+    {
+     "field": "remaining_days",
+     "width": 1,
+     "shape": "scalar",
+     "va": "0xB671BD",
+     "kind": "read"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB6712E",
+    "0xB671F4"
+   ],
+   "scalar_match_verifiable": true,
+   "capacity_relation": {
+    "observed_min": 5,
+    "capacity": 5,
+    "relation": "exact",
+    "unknown_events": [],
+    "is_lower_bound": false,
+    "note": "观测线长（下界）5 / 容量 0x5"
+   }
+  },
+  "closer": {
+   "va": "0xB671CD",
+   "kind": "jz",
+   "jcc_va": "0xB671D3",
+   "seq_va": "0xB671C9",
+   "jcc_dst": "0xB671EF",
+   "cmp": "cmp     ebx, [esp+2C5Ch+var_2C40]",
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x190]",
+   "slot_value": 400,
+   "va": "0xB672F2",
+   "mov_va": "0xB672E6",
+   "host": "[eax+190h]",
+   "argc": 2,
+   "form": "mov_then_call",
+   "error_slot": {
+    "slot": "vt[0x64]",
+    "va": "0xB67197",
+    "argc": 2
+   }
+  },
+  "log_strings": [
+   "result=",
+   "remaining_days="
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "remaining_days",
+  "result"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 8
+}

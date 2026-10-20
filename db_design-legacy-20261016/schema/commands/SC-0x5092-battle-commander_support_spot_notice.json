@@ -1,0 +1,498 @@
+{
+  "id": "SC-0x5092-battle-commander_support_spot_notice",
+  "opcode": "0x5092",
+  "direction": "SC",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "commander_support_spot_notice",
+  "source_dir": "protocol_analysis/commands/SC-0x5092-battle-commander_support_spot_notice",
+  "meta": {
+    "opcode": "`0x5092`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`battle_client`",
+    "命令名": "`commander_support_spot_notice`",
+    "处理函数": "`sub_B0CC20` @ `0xB0CC20`（battle 分发器）",
+    "处理块范围": "`0xB16D04`..`0xB16F37`",
+    "名字串引用点": "`0xB16E18`",
+    "声明容量（解码缓冲）": "`0x784`（`0xB16D19`）",
+    "长度闭合点": "`0xB16DCF`",
+    "去向": "`vt[0x2AC]` @ `0xB16F1B`（2 实参）"
+  },
+  "handler": "sub_B0CC20",
+  "handler_va": "0xB0CC20",
+  "block": [
+    "0xB16D04",
+    "0xB16F37"
+  ],
+  "name_str": null,
+  "name_str_va": "0xB16E18",
+  "capacity": "0x784",
+  "capacity_va": "0xB16D19",
+  "closer_va": "0xB16DCF",
+  "dispatch": "`vt[0x2AC]` @ `0xB16F1B`（2 实参）",
+  "dispatch_slot": "vt[0x2AC]",
+  "dispatch_va": "0xB16F1B",
+  "wire": {
+    "length_expr": "4 + 37·support_spot_count",
+    "fixed": false,
+    "var_drivers": [
+      "support_spot_count"
+    ],
+    "capacity_note": "声明容量 0x784（容量记账口径，非线长）",
+    "field_count": 2,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：4 + 37N（N = support_spot_count ≤ 30）。",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0x5092",
+      "evidence_va": [
+        "0xB16E18"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "support_spot_count",
+      "meaning": "支援地点数（上限 `0x1E`=30，`cmp ebx,1Eh`@`0xB16D75`）",
+      "purpose": "经 `vt[0x2AC]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB16D49",
+        "0xB16E62"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "37",
+      "wire_type": "array<support_spot>",
+      "name": "support_spots[]",
+      "meaning": "支援地点数组（元素线长 37 / 槽步进 `0x40`=64，预留 `sub_B41AC0`）",
+      "purpose": "经 `vt[0x2AC]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB16D84",
+        "0xB16E62",
+        "0xB16DA1(元素读取器 sub_B08220 消费 37B)"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4,
+      "element_composite_ref_source": "name",
+      "element_composite_ref": "support_spot",
+      "length_is_elem_width": "support_spot_count"
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0x5092（分发器 switch 选择子）",
+      "evidence_va": "0xB16E18"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB05DA0`（模块 id None）→ 之后逐字段读线",
+      "evidence_va": "0xB16D04"
+    },
+    {
+      "step": 3,
+      "kind": "read_count",
+      "detail": "support_spot_count：`u32`（线长 4）—— 支援地点数（上限 `0x1E`=30，`cmp ebx,1Eh`@`0xB16D75`）",
+      "evidence_va": "0xB16D49"
+    },
+    {
+      "step": 4,
+      "kind": "read_array",
+      "detail": "support_spots[]：`array<support_spot>`（线长 37）—— 支援地点数组（元素线长 37 / 槽步进 `0x40`=64，预留 `sub_B41AC0`）",
+      "evidence_va": "0xB16D84"
+    },
+    {
+      "step": 5,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB16DCF"
+    },
+    {
+      "step": 6,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x2AC]`，实参 2 个",
+      "evidence_va": "0xB16F1B"
+    },
+    {
+      "step": 7,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB16D63"
+    }
+  ],
+  "capabilities": [
+    "notify",
+    "battle.commander_support"
+  ],
+  "capabilities_derived": [
+    "notify"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:46",
+    "batch": 17,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 1924,
+        "va": "0xB16D19",
+        "reg": "eax",
+        "host": "[edx+78h]",
+        "alloc_va": "0xB16D16",
+        "call_va": "0xB16D1E"
+      },
+      "field_window": {
+        "start_va": "0xB16D05",
+        "end_va": "0xB16DF6",
+        "guard": {
+          "va": "0xB16D04",
+          "func": "0xB05DA0",
+          "module_id": null,
+          "release_va": "0xB05D90"
+        },
+        "closer_or_commit_va": "0xB16DCF",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "support_spot_count",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB16D49",
+              "0xB16E62"
+            ]
+          },
+          {
+            "name": "support_spots[]",
+            "wire_type": "array<support_spot>",
+            "width": null,
+            "seq": 2,
+            "shape": "agg",
+            "evidence_va": [
+              "0xB16D84",
+              "0xB16E62",
+              "0xB16DA1(元素读取器 sub_B08220 消费 37B)"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB08233",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0824F",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB08267",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB08279",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB08286",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": 1,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB08297",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB082A8",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB082B9",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB082CA",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB082DB",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB082F5",
+            "kind": "nested",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": 4,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB16D49",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB16D84",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B41AC0",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB16DA1",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B08220",
+            "consumed": 37,
+            "consumed_effective": 37,
+            "nested_of": null
+          }
+        ],
+        "matched": 1,
+        "checkable": 1,
+        "pairs": [
+          {
+            "field": "support_spot_count",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB16D49",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB16DA1",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null
+          },
+          {
+            "va": "0xB08233",
+            "kind": "nested_run",
+            "width": 4,
+            "wire_type": null
+          },
+          {
+            "va": "0xB08267",
+            "kind": "nested_run",
+            "width": 8,
+            "wire_type": null
+          },
+          {
+            "va": "0xB08286",
+            "kind": "nested",
+            "width": 1,
+            "wire_type": null
+          },
+          {
+            "va": "0xB08297",
+            "kind": "nested_run",
+            "width": 24,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB16D05",
+          "0xB16DF6"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 41,
+          "capacity": 1924,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB16D84",
+              "kind": "opaque",
+              "name": "sub_B41AC0"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）41 / 容量 0x784"
+        }
+      },
+      "closer": {
+        "va": "0xB16DCF",
+        "kind": "jz",
+        "jcc_va": "0xB16DD5",
+        "seq_va": "0xB16DCB",
+        "jcc_dst": "0xB16DF1",
+        "cmp": "cmp     ecx, [esp+1B3Ch+var_1B24]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x2AC]",
+        "slot_value": 684,
+        "va": "0xB16F1B",
+        "mov_va": "0xB16F11",
+        "host": "[edx+2ACh]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB16D63",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "support_spots={"
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0x5092-battle-commander_support_spot_notice.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xB16E18"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "CommanderSupportSpotNotice",
+      "role": "response",
+      "wire_length": "4 + 37·support_spot_count",
+      "members": [
+        {
+          "name": "SupportSpotCount",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "support_spot_count"
+        },
+        {
+          "name": "SupportSpots",
+          "wire_type": "array<support_spot>",
+          "length": "37",
+          "field_ref": "support_spots[]",
+          "element": "support_spot",
+          "element_composite_ref": "support_spot",
+          "element_length": null,
+          "cap": null,
+          "count_field": "support_spot_count",
+          "count_field_source": "heuristic"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "c4efafc3eb7c8106",
+  "check_fingerprint": "d85df3141690f42f",
+  "import_repairs": [
+    "len_is_elem_width:support_spots[](37 → 37·support_spot_count)",
+    "wire_len_member_rows_folded:4 + 37 → 4 + 37·support_spot_count"
+  ]
+}

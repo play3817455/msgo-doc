@@ -1,0 +1,450 @@
+{
+  "id": "SC-0x3075-lounge-msma_sort_list_r",
+  "opcode": "0x3075",
+  "direction": "SC",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "msma_sort_list_r",
+  "source_dir": "protocol_analysis/commands/SC-0x3075-lounge-msma_sort_list_r",
+  "meta": {
+    "opcode": "`0x3075`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`msma_sort_list_r`",
+    "处理函数": "`sub_B51930` @ `0xB51930`（lounge 分发器）",
+    "处理块范围": "`0xB5B13B..0xB5B3D0`",
+    "名字串引用点": "`0xB5B277`",
+    "声明容量（解码缓冲）": "`0x10`（`0xB5B157`）",
+    "长度闭合点": "`0xB5B250`",
+    "去向": "`vt[0x29C]` @ `0xB5B3B4`（4 实参）"
+  },
+  "handler": "sub_B51930",
+  "handler_va": "0xB51930",
+  "block": [
+    "0xB5B13B",
+    "0xB5B3D0"
+  ],
+  "name_str": null,
+  "name_str_va": "0xB5B277",
+  "capacity": "0x10",
+  "capacity_va": "0xB5B157",
+  "closer_va": "0xB5B22E",
+  "dispatch": "`vt[0x29C]` @ `0xB5B3B4`（4 实参）",
+  "dispatch_slot": "vt[0x29C]",
+  "dispatch_va": "0xB5B3B4",
+  "wire": {
+    "length_expr": "4 + 4 + 4 + 4",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x10（容量记账口径，非线长）",
+    "field_count": 4,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体总长**：4×4 = **16**（== 容量 0x10）",
+    "readme_close": "4×4 = **16**（== 容量 0x10）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0x3075",
+      "evidence_va": [
+        "0xB5B277"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "sort_tm_sec",
+      "meaning": "排序时间戳（秒）",
+      "purpose": "经 `vt[0x29C]`；日志 `sort_tm_sec=`",
+      "enum": null,
+      "evidence_va": [
+        "0xB5B192",
+        "0xB5B2CD"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "sort_tm_usec",
+      "meaning": "排序时间戳（微秒）",
+      "purpose": "经 `vt[0x29C]`；日志 `sort_tm_usec=`",
+      "enum": null,
+      "evidence_va": [
+        "0xB5B1D2",
+        "0xB5B2F7"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "8",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "msma_sort_type",
+      "meaning": "机体排序类型",
+      "purpose": "经 `vt[0x29C]`；日志 `msma_sort_type=`",
+      "enum": null,
+      "evidence_va": [
+        "0xB5B1F6",
+        "0xB5B321"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 4,
+      "offset": "12",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "msma_sort_order",
+      "meaning": "机体排序方向",
+      "purpose": "经 `vt[0x29C]`；日志 `msma_sort_order=`",
+      "enum": null,
+      "evidence_va": [
+        "0xB5B1F6",
+        "0xB5B346"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0x3075（分发器 switch 选择子）",
+      "evidence_va": "0xB5B277"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB41120`（模块 id 251）→ 之后逐字段读线",
+      "evidence_va": "0xB5B142"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "sort_tm_sec：`u32`（线长 4）—— 排序时间戳（秒）",
+      "evidence_va": "0xB5B192"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "sort_tm_usec：`u32`（线长 4）—— 排序时间戳（微秒）",
+      "evidence_va": "0xB5B1D2"
+    },
+    {
+      "step": 5,
+      "kind": "read_scalar",
+      "detail": "msma_sort_type：`u32`（线长 4）—— 机体排序类型",
+      "evidence_va": "0xB5B1F6"
+    },
+    {
+      "step": 6,
+      "kind": "read_scalar",
+      "detail": "msma_sort_order：`u32`（线长 4）—— 机体排序方向",
+      "evidence_va": "0xB5B1F6"
+    },
+    {
+      "step": 7,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB5B22E"
+    },
+    {
+      "step": 8,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x29C]`，实参 4 个",
+      "evidence_va": "0xB5B3B4"
+    },
+    {
+      "step": 9,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB5B1AC"
+    }
+  ],
+  "capabilities": [
+    "query",
+    "lounge.sort"
+  ],
+  "capabilities_derived": [
+    "unclassified"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:43",
+    "batch": 6,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 16,
+        "va": "0xB5B157",
+        "reg": "eax",
+        "host": "[edx+78h]",
+        "alloc_va": "0xB5B154",
+        "call_va": "0xB5B159"
+      },
+      "field_window": {
+        "start_va": "0xB5B143",
+        "end_va": "0xB5B255",
+        "guard": {
+          "va": "0xB5B142",
+          "func": "0xB41120",
+          "module_id": 251,
+          "release_va": "0xB41110"
+        },
+        "closer_or_commit_va": "0xB5B22E",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "sort_tm_sec",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB5B192",
+              "0xB5B2CD"
+            ]
+          },
+          {
+            "name": "sort_tm_usec",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB5B1D2",
+              "0xB5B2F7"
+            ]
+          },
+          {
+            "name": "msma_sort_type",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB5B1F6",
+              "0xB5B321"
+            ]
+          },
+          {
+            "name": "msma_sort_order",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 4,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB5B1F6",
+              "0xB5B346"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB5B192",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB5B1D2",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB5B1F6",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB5B21A",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 4,
+        "checkable": 4,
+        "pairs": [
+          {
+            "field": "sort_tm_sec",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB5B192",
+            "kind": "read"
+          },
+          {
+            "field": "sort_tm_usec",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB5B1D2",
+            "kind": "read"
+          },
+          {
+            "field": "msma_sort_type",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB5B1F6",
+            "kind": "read"
+          },
+          {
+            "field": "msma_sort_order",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB5B21A",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB5B143",
+          "0xB5B255"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 16,
+          "capacity": 16,
+          "relation": "exact",
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）16 / 容量 0x10"
+        }
+      },
+      "closer": {
+        "va": "0xB5B22E",
+        "kind": "jz",
+        "jcc_va": "0xB5B234",
+        "seq_va": "0xB5B22A",
+        "jcc_dst": "0xB5B250",
+        "cmp": "cmp     ebx, [esp+2C5Ch+var_2C40]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x29C]",
+        "slot_value": 668,
+        "va": "0xB5B3B4",
+        "mov_va": "0xB5B39A",
+        "host": "[edx+29Ch]",
+        "argc": 4,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB5B1AC",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "sort_tm_sec=",
+        "sort_tm_usec=",
+        "msma_sort_type=",
+        "msma_sort_order="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0x3075-lounge-msma_sort_list_r.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xB5B277"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "MsmaSortListR",
+      "role": "response",
+      "wire_length": "4 + 4 + 4 + 4",
+      "members": [
+        {
+          "name": "SortTmSec",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "sort_tm_sec"
+        },
+        {
+          "name": "SortTmUsec",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "sort_tm_usec"
+        },
+        {
+          "name": "MsmaSortType",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "msma_sort_type"
+        },
+        {
+          "name": "MsmaSortOrder",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "msma_sort_order"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "b97e6110f20f807a",
+  "check_fingerprint": "d5f6640e99c4e92a"
+}

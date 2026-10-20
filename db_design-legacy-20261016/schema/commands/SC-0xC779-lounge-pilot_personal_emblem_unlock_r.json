@@ -1,0 +1,452 @@
+{
+  "id": "SC-0xC779-lounge-pilot_personal_emblem_unlock_r",
+  "opcode": "0xC779",
+  "direction": "SC",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "pilot_personal_emblem_unlock_r",
+  "source_dir": "protocol_analysis/commands/SC-0xC779-lounge-pilot_personal_emblem_unlock_r",
+  "meta": {
+    "opcode": "`0xC779`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`pilot_personal_emblem_unlock_r`",
+    "处理块范围": "`0xb7926a`..`0xb7954f`",
+    "名字串引用点": "`0xb793b3`",
+    "声明容量（解码缓冲）": "`0x4C`（`B79285`）",
+    "长度闭合点": "`B79370`",
+    "报错码": "`0x34`（块内 `push 1; push <0x34>; vt[0x64]`）",
+    "去向": "`vt[0xDC]` @`B79533`（4 实参）"
+  },
+  "handler": null,
+  "handler_va": null,
+  "block": [
+    "0xb7926a",
+    "0xb7954f"
+  ],
+  "name_str": null,
+  "name_str_va": "0xb793b3",
+  "capacity": "0x4C",
+  "capacity_va": "0xB79285",
+  "closer_va": "0xB79370",
+  "dispatch": "`vt[0xDC]` @`B79533`（4 实参）",
+  "dispatch_slot": "vt[0xDC]",
+  "dispatch_va": "0xB79533",
+  "wire": {
+    "length_expr": "4 + 4 + 4 + 64",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x4C（容量记账口径，非线长）",
+    "field_count": 4,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：76",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "result",
+      "meaning": "结果码（日志串 `result=`）",
+      "purpose": "经 `vt[0xDC]`（4 实参）交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xb792af",
+        "0xb792be"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "emblem_id",
+      "meaning": "徽章 ID（日志串 `emblem_id=`）",
+      "purpose": "同上",
+      "enum": null,
+      "evidence_va": [
+        "0xb792ec",
+        "0xb792fb"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 3,
+      "offset": "8",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "use_gp",
+      "meaning": "消耗 GP（日志串 `use_gp=`）",
+      "purpose": "同上",
+      "enum": null,
+      "evidence_va": [
+        "0xb79310",
+        "0xb7931f"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 4,
+      "offset": "12",
+      "length": "64",
+      "wire_type": "array<u64,8>",
+      "name": "hav_emblem",
+      "meaning": "已持有徽章列表（日志串 `hav_emblem={`）",
+      "purpose": "同上",
+      "enum": null,
+      "evidence_va": [
+        "0xb79334",
+        "0xb79346"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0xC779（分发器 switch 选择子）",
+      "evidence_va": "0x0000"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB41120`（模块 id 52）→ 之后逐字段读线",
+      "evidence_va": "0xB7926E"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "result：`u32`（线长 4）—— 结果码（日志串 `result=`）",
+      "evidence_va": "0xB792AF"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "emblem_id：`u32`（线长 4）—— 徽章 ID（日志串 `emblem_id=`）",
+      "evidence_va": "0xB792EC"
+    },
+    {
+      "step": 5,
+      "kind": "read_scalar",
+      "detail": "use_gp：`u32`（线长 4）—— 消耗 GP（日志串 `use_gp=`）",
+      "evidence_va": "0xB79310"
+    },
+    {
+      "step": 6,
+      "kind": "read_array",
+      "detail": "hav_emblem：`array<u64,8>`（线长 64）—— 已持有徽章列表（日志串 `hav_emblem={`）",
+      "evidence_va": "0xB79334"
+    },
+    {
+      "step": 7,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB79370"
+    },
+    {
+      "step": 8,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0xDC]`，实参 4 个",
+      "evidence_va": "0xB79533"
+    },
+    {
+      "step": 9,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB792D5"
+    }
+  ],
+  "capabilities": [
+    "update",
+    "lounge.pilot_personal"
+  ],
+  "capabilities_derived": [
+    "update"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:45",
+    "batch": 11,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 76,
+        "va": "0xB79283",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB79280",
+        "call_va": "0xB79285"
+      },
+      "field_window": {
+        "start_va": "0xB7926F",
+        "end_va": "0xB79391",
+        "guard": {
+          "va": "0xB7926E",
+          "func": "0xB41120",
+          "module_id": 52,
+          "release_va": "0xB41110"
+        },
+        "closer_or_commit_va": "0xB79370",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "result",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb792af",
+              "0xb792be"
+            ]
+          },
+          {
+            "name": "emblem_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb792ec",
+              "0xb792fb"
+            ]
+          },
+          {
+            "name": "use_gp",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb79310",
+              "0xb7931f"
+            ]
+          },
+          {
+            "name": "hav_emblem",
+            "wire_type": "array<u64,8>",
+            "width": null,
+            "seq": 4,
+            "shape": "agg",
+            "evidence_va": [
+              "0xb79334",
+              "0xb79346"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB792BE",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB792FB",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB7931F",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB79334",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B05ED0",
+            "consumed": 0,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB79346",
+            "kind": "read",
+            "width": 64,
+            "wire_type": "u64",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 3,
+        "checkable": 3,
+        "pairs": [
+          {
+            "field": "result",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB792BE",
+            "kind": "read"
+          },
+          {
+            "field": "emblem_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB792FB",
+            "kind": "read"
+          },
+          {
+            "field": "use_gp",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB7931F",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB79334",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null
+          },
+          {
+            "va": "0xB79346",
+            "kind": "read",
+            "width": 64,
+            "wire_type": "u64"
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB7926F",
+          "0xB79391"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 76,
+          "capacity": 76,
+          "relation": "exact",
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）76 / 容量 0x4c"
+        }
+      },
+      "closer": {
+        "va": "0xB79370",
+        "kind": "jz",
+        "jcc_va": "0xB79376",
+        "seq_va": "0xB7936C",
+        "jcc_dst": "0xB7938F",
+        "cmp": "cmp     eax, [esp+2C5Ch+var_2C40]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0xDC]",
+        "slot_value": 220,
+        "va": "0xB79533",
+        "mov_va": "0xB7952A",
+        "host": "[eax+0DCh]",
+        "argc": 4,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB792D5",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "result=",
+        "emblem_id=",
+        "use_gp=",
+        "hav_emblem={"
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0xC779-lounge-pilot_personal_emblem_unlock_r.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": []
+  },
+  "structs": {
+    "response": {
+      "go_name": "PilotPersonalEmblemUnlockR",
+      "role": "response",
+      "wire_length": "4 + 4 + 4 + 64",
+      "members": [
+        {
+          "name": "Result",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "result"
+        },
+        {
+          "name": "EmblemId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "emblem_id"
+        },
+        {
+          "name": "UseGp",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "use_gp"
+        },
+        {
+          "name": "HavEmblem",
+          "wire_type": "array<u64,8>",
+          "length": "64",
+          "field_ref": "hav_emblem",
+          "element": "u64",
+          "element_length": "8",
+          "cap": 8,
+          "count_field": null,
+          "count_field_source": "fixed"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "e34b2c2698c7d481",
+  "check_fingerprint": "57b34a755e20922b"
+}

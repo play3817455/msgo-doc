@@ -1,0 +1,153 @@
+{
+ "id": "SC-0x93EF-lounge-xwar_reward_accept_notice",
+ "verified_at": "2026-09-30 15:25:44",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "block",
+ "block": [
+  "0xB6D749",
+  "0xB6D929"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 8,
+   "va": "0xB6D75E",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xB6D75B",
+   "call_va": "0xB6D760"
+  },
+  "field_window": {
+   "start_va": "0xB6D74A",
+   "end_va": "0xB6D810",
+   "guard": {
+    "va": "0xB6D749",
+    "func": "0xB41120",
+    "module_id": null,
+    "release_va": "0xB41110"
+   },
+   "closer_or_commit_va": "0xB6D7E9",
+   "within_model_block": true,
+   "range_from": "block"
+  },
+  "primitive_widths": {
+   "direction": "SC",
+   "expected": [
+    {
+     "name": "item_id",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "B6D799",
+      "B6D888"
+     ]
+    },
+    {
+     "name": "amount",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 2,
+     "shape": "scalar",
+     "evidence_va": [
+      "B6D7D9",
+      "B6D8AD"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB6D799",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB6D7D9",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 2,
+   "checkable": 2,
+   "pairs": [
+    {
+     "field": "item_id",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB6D799",
+     "kind": "read"
+    },
+    {
+     "field": "amount",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB6D7D9",
+     "kind": "read"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB6D74A",
+    "0xB6D810"
+   ],
+   "scalar_match_verifiable": true,
+   "capacity_relation": {
+    "observed_min": 8,
+    "capacity": 8,
+    "relation": "exact",
+    "unknown_events": [],
+    "is_lower_bound": false,
+    "note": "观测线长（下界）8 / 容量 0x8"
+   }
+  },
+  "closer": {
+   "va": "0xB6D7E9",
+   "kind": "jz",
+   "jcc_va": "0xB6D7EF",
+   "seq_va": "0xB6D7E5",
+   "jcc_dst": "0xB6D80B",
+   "cmp": "cmp     ebx, [esp+2C5Ch+var_2C40]",
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x1D8]",
+   "slot_value": 472,
+   "va": "0xB6D90D",
+   "mov_va": "0xB6D901",
+   "host": "[edx+1D8h]",
+   "argc": 2,
+   "form": "mov_then_call",
+   "error_slot": {
+    "slot": "vt[0x64]",
+    "va": "0xB6D7B3",
+    "argc": 2
+   }
+  },
+  "log_strings": [
+   "item_id=",
+   "amount="
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "amount",
+  "item_id"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 9
+}

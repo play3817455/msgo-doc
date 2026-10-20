@@ -1,0 +1,209 @@
+{
+ "id": "SC-0xFEBB-battle-msma_spawn_warp_start_r",
+ "verified_at": "2026-09-30 15:25:46",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "block",
+ "block": [
+  "0xB31273",
+  "0xB314FE"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 14,
+   "va": "0xB3128C",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xB31289",
+   "call_va": "0xB3128E"
+  },
+  "field_window": {
+   "start_va": "0xB31278",
+   "end_va": "0xB31381",
+   "guard": {
+    "va": "0xB31277",
+    "func": "0xB05DA0",
+    "module_id": 79,
+    "release_va": "0xB05D90"
+   },
+   "closer_or_commit_va": "0xB31360",
+   "within_model_block": true,
+   "range_from": "block"
+  },
+  "primitive_widths": {
+   "direction": "SC",
+   "expected": [
+    {
+     "name": "result",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB312C7"
+     ]
+    },
+    {
+     "name": "is_cancel",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 2,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB31304"
+     ]
+    },
+    {
+     "name": "ent_id",
+     "wire_type": "u16",
+     "width": 2,
+     "seq": 3,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB31328"
+     ]
+    },
+    {
+     "name": "countdown_msec",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 4,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB3134C"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB312C7",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB31304",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB31328",
+     "kind": "read",
+     "width": 2,
+     "wire_type": "u16",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB3134C",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 4,
+   "checkable": 4,
+   "pairs": [
+    {
+     "field": "result",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB312C7",
+     "kind": "read"
+    },
+    {
+     "field": "is_cancel",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB31304",
+     "kind": "read"
+    },
+    {
+     "field": "ent_id",
+     "width": 2,
+     "shape": "scalar",
+     "va": "0xB31328",
+     "kind": "read"
+    },
+    {
+     "field": "countdown_msec",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB3134C",
+     "kind": "read"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB31278",
+    "0xB31381"
+   ],
+   "scalar_match_verifiable": true,
+   "capacity_relation": {
+    "observed_min": 14,
+    "capacity": 14,
+    "relation": "exact",
+    "unknown_events": [],
+    "is_lower_bound": false,
+    "note": "观测线长（下界）14 / 容量 0xe"
+   }
+  },
+  "closer": {
+   "va": "0xB31360",
+   "kind": "jz",
+   "jcc_va": "0xB31366",
+   "seq_va": "0xB3135C",
+   "jcc_dst": "0xB3137F",
+   "cmp": "cmp     ebx, [esp+1B3Ch+var_1B24]",
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x144]",
+   "slot_value": 324,
+   "va": "0xB314E2",
+   "mov_va": "0xB314C7",
+   "host": "[edx+144h]",
+   "argc": 4,
+   "form": "mov_then_call",
+   "error_slot": {
+    "slot": "vt[0x64]",
+    "va": "0xB312DE",
+    "argc": 2
+   }
+  },
+  "log_strings": [
+   "result=",
+   "is_cancel=",
+   "ent_id=",
+   "countdown_msec="
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "countdown_msec",
+  "ent_id",
+  "is_cancel",
+  "result"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 16
+}

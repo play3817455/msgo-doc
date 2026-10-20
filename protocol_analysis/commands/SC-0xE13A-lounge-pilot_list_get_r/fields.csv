@@ -1,0 +1,17 @@
+序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+1,0,4,u32,result,取得结果码（日志串 `result=`）,经 `vt[0x84]` 交业务,-,0xb82642|0xb82a2a,确证
+2,4,398,struct<pilots_list>,pilots_eff,地球联邦侧飞行员列表结构（**固定 1 元**；日志串 `pilots_eff={`；claim 0x1A8=424；打印器 `sub_B48C10`）,经 `vt[0x84]` 交业务；内部成员未逐一命名（见 `notes.md`）,-,0xb82670|0xb82686|0xb8269b|0xb82a45,确证
+3,402,398,struct<pilots_list>,pilots_zeon,吉翁侧飞行员列表结构（**固定 1 元**；日志串 `pilots_zeon={`；claim 0x1A8=424）,经 `vt[0x84]` 交业务；内部成员未逐一命名,-,0xb826b8|0xb826c9|0xb826de|0xb82a77,确证
+4,800,4,u32,del_remain_sec_eff,联邦侧删除剩余秒数（**固定 1 元数组**；日志串 `del_remain_sec_eff={`）,经 `vt[0x84]` 交业务,-,0xb826fb|0xb8270c|0xb82aa9,确证
+5,804,4,u32,del_remain_sec_zeon,吉翁侧删除剩余秒数（固定 1 元数组；日志串 `del_remain_sec_zeon={`）,经 `vt[0x84]` 交业务,-,0xb8273b|0xb8274c|0xb82ade,确证
+6,808,4,u32,pilot_rename_remaintime_eff,联邦侧改名剩余时间（固定 1 元数组；日志串 `pilot_rename_remaintime_eff={`）,经 `vt[0x84]` 交业务,-,0xb8277b|0xb8278c|0xb82b13,确证
+7,812,4,u32,pilot_rename_remaintime_zeon,吉翁侧改名剩余时间（固定 1 元数组；日志串 `pilot_rename_remaintime_zeon={`）,经 `vt[0x84]` 交业务,-,0xb827bb|0xb827cc|0xb82b48,确证
+8,816,4,u32,charge_point,充值点数（日志串 `charge_point=`）,经 `vt[0x84]` 交业务,-,0xb82809|0xb82b8c,确证
+9,820,4,u32,bmgpack_num,BGM 包条数（上限 16，`cmp ebx，10h; ja`@`B8284C`）,驱动 `bmgpack_list` 数组循环（`cmp edi，ebx`@`B82894`）,0..16,0xb82838|0xb8284c|0xb82894,确证
+10,824,23n,"array<bmgpack,16>",bmgpack_list,BGM 包列表（日志串 `bmgpack_list={`）,经 `vt[0x84]` 交业务；元素线长 **23**（复合读取器 `sub_B458A0`）≠ 槽步进 **24**（`sub_B416C0`）,-,0xb8285f|0xb82880|0xb82894,确证
+11,var,1,u8,is_tutorial_end,教程是否结束（日志串 `is_tutorial_end=`）,经 `vt[0x84]` 交业务,0/1,0xb828bd|0xb82c39,确证
+12,var,4,u32,pilot_rename_price,改名价格（日志串 `pilot_rename_price=`）,经 `vt[0x84]` 交业务,-,0xb828df|0xb82c68,确证
+13,var,4,u32,pilot_rename_time_efsf,联邦侧改名时长（日志串 `pilot_rename_time_efsf=`）,经 `vt[0x84]` 交业务,-,0xb82905|0xb82c95,确证
+14,var,4,u32,pilot_rename_forbidtime_efsf,联邦侧改名冷却（日志串 `pilot_rename_forbidtime_efsf=`）,经 `vt[0x84]` 交业务,-,0xb8292d|0xb82cbf,确证
+15,var,4,u32,pilot_rename_time_zeon,吉翁侧改名时长（日志串 `pilot_rename_time_zeon=`）,经 `vt[0x84]` 交业务,-,0xb82955|0xb82ce9,确证
+16,var,4,u32,pilot_rename_forbidtime_zeon,吉翁侧改名冷却（日志串 `pilot_rename_forbidtime_zeon=`）,经 `vt[0x84]` 交业务,-,0xb8297d|0xb82d0e,确证

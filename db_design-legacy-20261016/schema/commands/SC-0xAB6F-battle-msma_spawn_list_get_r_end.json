@@ -1,0 +1,220 @@
+{
+  "id": "SC-0xAB6F-battle-msma_spawn_list_get_r_end",
+  "opcode": "0xAB6F",
+  "direction": "SC",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "msma_spawn_list_get_r_end",
+  "source_dir": "protocol_analysis/commands/SC-0xAB6F-battle-msma_spawn_list_get_r_end",
+  "meta": {
+    "opcode": "`0xAB6F`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`battle_client`",
+    "命令名": "`msma_spawn_list_get_r_end`",
+    "处理块范围": "`0xb27452`..`0xb27567`",
+    "名字串引用点": "`0xb274b2`",
+    "声明容量（解码缓冲）": "无（块内无分配器调用）",
+    "长度闭合点": "`B27463`",
+    "报错码": "`0x49`（块内 `push 1; push <errcode>; vt[0x64]`）",
+    "去向": "`vt[0x134]` @`B2753F`（0 实参）"
+  },
+  "handler": null,
+  "handler_va": null,
+  "block": [
+    "0xb27452",
+    "0xb27567"
+  ],
+  "name_str": null,
+  "name_str_va": "0xb274b2",
+  "capacity": null,
+  "capacity_va": null,
+  "closer_va": "0xB27463",
+  "dispatch": "`vt[0x134]` @`B2753F`（0 实参）",
+  "dispatch_slot": "vt[0x134]",
+  "dispatch_va": "0xB2753F",
+  "wire": {
+    "length_expr": "0",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": null,
+    "field_count": 0,
+    "length_source": "zero_load",
+    "readme_conclusion": "**报文体线长**：0（零负载命令）。",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0xAB6F",
+      "evidence_va": [
+        "0xb274b2"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0xAB6F（分发器 switch 选择子）",
+      "evidence_va": "0xB274B2"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB05DA0`（模块 id None）→ 之后逐字段读线",
+      "evidence_va": "0xB27452"
+    },
+    {
+      "step": 3,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB27463"
+    },
+    {
+      "step": 4,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x134]`",
+      "evidence_va": "0xB2753F"
+    },
+    {
+      "step": 5,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB27474"
+    },
+    {
+      "step": 6,
+      "kind": "read_scalar",
+      "detail": "零负载：无报文体字段，仅 opcode + 去向",
+      "evidence_va": "0xB27463"
+    }
+  ],
+  "capabilities": [
+    "create",
+    "flow",
+    "query"
+  ],
+  "capabilities_derived": [
+    "battle",
+    "flow"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:47",
+    "batch": 19,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "absent": true,
+        "reason": "零负载命令：无字段 ⇒ 无容量/闭合点/去向"
+      },
+      "field_window": {
+        "start_va": "0xB27453",
+        "end_va": "0xB27490",
+        "guard": {
+          "va": "0xB27452",
+          "func": "0xB05DA0",
+          "module_id": null,
+          "release_va": "0xB05D90"
+        },
+        "closer_or_commit_va": "0xB27463",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [],
+        "actual": [],
+        "matched": 0,
+        "checkable": 0,
+        "pairs": [],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB27453",
+          "0xB27490"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 0,
+          "capacity": null,
+          "relation": null,
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）0 / 容量 ?"
+        },
+        "zero_load": true
+      },
+      "closer": {
+        "va": "0xB27463",
+        "kind": "jz",
+        "jcc_va": "0xB27469",
+        "seq_va": "0xB2745F",
+        "jcc_dst": "0xB2748E",
+        "cmp": "cmp     ebx, [esp+1B3Ch+var_1B24]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x134]",
+        "slot_value": 308,
+        "va": "0xB2753F",
+        "mov_va": "0xB27537",
+        "host": "[edx+134h]",
+        "argc": 0,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB27474",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        ")->_proto_battle_client::recv_msma_spawn_list_get_r_end( ",
+        " (id:",
+        "V",
+        "]byte",
+        " ) ["
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0xAB6F-battle-msma_spawn_list_get_r_end.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xb274b2"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "MsmaSpawnListGetREnd",
+      "role": "response",
+      "wire_length": "0",
+      "members": []
+    }
+  },
+  "wire_fingerprint": "5035ce6ffb52f6ff",
+  "check_fingerprint": "b510a9a3123568f3"
+}

@@ -1,0 +1,219 @@
+{
+ "id": "SC-0xE69C-lounge-clan_mshipbid_request_r",
+ "verified_at": "2026-09-30 15:25:45",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "block",
+ "block": [
+  "0xB83F19",
+  "0xB841E3"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 40,
+   "va": "0xB83F35",
+   "reg": "eax",
+   "host": "[edx+78h]",
+   "alloc_va": "0xB83F32",
+   "call_va": "0xB83F37"
+  },
+  "field_window": {
+   "start_va": "0xB83F21",
+   "end_va": "0xB8404C",
+   "guard": {
+    "va": "0xB83F20",
+    "func": "0xB41120",
+    "module_id": 437,
+    "release_va": "0xB41110"
+   },
+   "closer_or_commit_va": "0xB84025",
+   "within_model_block": true,
+   "range_from": "block"
+  },
+  "primitive_widths": {
+   "direction": "SC",
+   "expected": [
+    {
+     "name": "result",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB83F70",
+      "0xB840C4"
+     ]
+    },
+    {
+     "name": "mclan_id",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 2,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB83FB0",
+      "0xB840EE"
+     ]
+    },
+    {
+     "name": "mclan_name",
+     "wire_type": "str",
+     "width": null,
+     "seq": 3,
+     "shape": "str",
+     "evidence_va": [
+      "0xB83FD5",
+      "0xB8411B"
+     ]
+    },
+    {
+     "name": "clan_kind",
+     "wire_type": "u8",
+     "width": 1,
+     "seq": 4,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB84015",
+      "0xB84149"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB83F70",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB83FB0",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB83FD5",
+     "kind": "read",
+     "width": null,
+     "wire_type": "str",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB84015",
+     "kind": "read",
+     "width": 1,
+     "wire_type": "u8",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 4,
+   "checkable": 4,
+   "pairs": [
+    {
+     "field": "result",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB83F70",
+     "kind": "read"
+    },
+    {
+     "field": "mclan_id",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB83FB0",
+     "kind": "read"
+    },
+    {
+     "field": "mclan_name",
+     "width": null,
+     "shape": "str",
+     "va": "0xB83FD5",
+     "kind": "read"
+    },
+    {
+     "field": "clan_kind",
+     "width": 1,
+     "shape": "scalar",
+     "va": "0xB84015",
+     "kind": "read"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB83F21",
+    "0xB8404C"
+   ],
+   "scalar_match_verifiable": true,
+   "capacity_relation": {
+    "observed_min": 9,
+    "capacity": 40,
+    "relation": "within",
+    "unknown_events": [
+     {
+      "va": "0xB83FD5",
+      "kind": "read",
+      "name": ""
+     }
+    ],
+    "is_lower_bound": true,
+    "note": "观测线长（下界）9 / 容量 0x28"
+   }
+  },
+  "closer": {
+   "va": "0xB84025",
+   "kind": "jz",
+   "jcc_va": "0xB8402B",
+   "seq_va": "0xB84021",
+   "jcc_dst": "0xB84047",
+   "cmp": "cmp     ebx, [esp+2C5Ch+var_2C40]",
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x42C]",
+   "slot_value": 1068,
+   "va": "0xB841B8",
+   "mov_va": "0xB841A0",
+   "host": "[edx+42Ch]",
+   "argc": 4,
+   "form": "mov_then_call",
+   "error_slot": {
+    "slot": "vt[0x64]",
+    "va": "0xB83F8A",
+    "argc": 2
+   }
+  },
+  "log_strings": [
+   "result=",
+   "mclan_id=",
+   "mclan_name=\"",
+   "clan_kind="
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "clan_kind",
+  "mclan_id",
+  "mclan_name",
+  "result"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 13
+}

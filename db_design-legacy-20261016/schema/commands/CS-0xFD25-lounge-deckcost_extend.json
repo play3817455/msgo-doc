@@ -1,0 +1,349 @@
+{
+  "id": "CS-0xFD25-lounge-deckcost_extend",
+  "opcode": "0xFD25",
+  "direction": "CS",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "deckcost_extend",
+  "source_dir": "protocol_analysis/commands/CS-0xFD25-lounge-deckcost_extend",
+  "meta": {
+    "opcode": "`0xFD25`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`deckcost_extend`",
+    "名字符串": "`)<-_proto_lounge_client::send_deckcost_extend( ` @ `0x00EECF40`",
+    "代码位置": "`sub_BA4460` @ `0x00BA4460`（`0x00BA4460`..`0x00BA4646`）",
+    "opcode 写入证据": "`0x00BA44D4`",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0xA`（10）",
+    "容量申请证据": "`0x00BA44A6`（分配器 `[obj+0Ch]` 的 `vt[0x78]`）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)` @ `0x00BA45D4`",
+    "提交": "`sub_B02FF0` @ `0x00BA4551`",
+    "附加通知回调": "`[obj+79A8h]`（模块 id `0x1FC`）",
+    "配对命令": "S→C `SC-0x5A2C-lounge-deckcost_extend_r`"
+  },
+  "handler": "sub_BA4460",
+  "handler_va": "0x00BA4460",
+  "block": [
+    "0xBA4460",
+    "0xBA4646"
+  ],
+  "name_str": ")<-_proto_lounge_client::send_deckcost_extend(",
+  "name_str_va": "0x00EECF40",
+  "capacity": "0xA",
+  "capacity_va": "0x00BA44A6",
+  "closer_va": "0xBA4551",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)` @ `0x00BA45D4`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": "0x00BA45D4",
+  "wire": {
+    "length_expr": "4 + 4",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0xA（容量记账口径，非线长）",
+    "field_count": 2,
+    "length_source": "field_sum",
+    "readme_conclusion": "字段数：**3**（含 opcode 第 0 项）",
+    "readme_close": "2 + 4 + 4 = 10 == 容量 0xA = 10（**精确相等**）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "写入 `buf+0`，供服务端分发；无 case 块（C→S）",
+      "enum": "0xFD25",
+      "evidence_va": [
+        "`00BA44D4`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "use_bc",
+      "meaning": "是否使用 BC（付费货币）支付",
+      "purpose": "来源=入参 `arg_0` → 内联写 `[eax],esi`(@`0xBA44E9`)；**语义像布尔但写线为 u32**（打印器 `sub_B03580` 亦为 u32）",
+      "enum": null,
+      "evidence_va": [
+        "`0xBA44E9`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "token_id",
+      "meaning": "使用的代币（ticket/token）ID",
+      "purpose": "来源=入参 `arg_4` → 内联写 `[edx],ecx`(@`0xBA44F5`)",
+      "enum": null,
+      "evidence_va": [
+        "`0xBA44F5`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0xFD25（分发器 switch 选择子）",
+      "evidence_va": "0x00BA44D4"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0xA B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xBA44A6"
+    },
+    {
+      "step": 3,
+      "kind": "write_scalar",
+      "detail": "use_bc：`u32`（线长 4）—— 是否使用 BC（付费货币）支付",
+      "evidence_va": "0xBA44E9"
+    },
+    {
+      "step": 4,
+      "kind": "write_scalar",
+      "detail": "token_id：`u32`（线长 4）—— 使用的代币（ticket/token）ID",
+      "evidence_va": "0xBA44F5"
+    },
+    {
+      "step": 5,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xBA4551"
+    },
+    {
+      "step": 6,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xBA45DD"
+    }
+  ],
+  "capabilities": [
+    "unclassified",
+    "lounge.deckcost_extend"
+  ],
+  "capabilities_derived": [
+    "unclassified"
+  ],
+  "db_effects": [],
+  "pair": "SC-0x5A2C-lounge-deckcost_extend_r",
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:46",
+    "batch": 14,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 10,
+        "va": "0xBA44A6",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xBA44A3",
+        "call_va": "0xBA44A8"
+      },
+      "field_window": {
+        "start_va": "0xBA4460",
+        "end_va": "0xBA4551",
+        "guard": null,
+        "closer_or_commit_va": "0xBA4551",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "use_bc",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "`0xBA44E9`"
+            ]
+          },
+          {
+            "name": "token_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "`0xBA44F5`"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xBA44D4",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xBA44E9",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xBA44F5",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xBA4527",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 2,
+        "checkable": 2,
+        "pairs": [
+          {
+            "field": "use_bc",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xBA44E9",
+            "kind": "inline_store"
+          },
+          {
+            "field": "token_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xBA44F5",
+            "kind": "inline_store"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xBA44D4",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xBA4460",
+          "0xBA4551"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 10,
+          "capacity": 10,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xBA4527",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）10 / 容量 0xa"
+        }
+      },
+      "closer": {
+        "va": "0xBA4551",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xBA45DD",
+        "mov_va": "0xBA45D4",
+        "host": "[edx+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "use_bc=",
+        "token_id="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0xFD25-lounge-deckcost_extend.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0x00BA44D4",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "`00BA44D4`"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "DeckcostExtend",
+      "role": "request",
+      "wire_length": "4 + 4",
+      "members": [
+        {
+          "name": "UseBc",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "use_bc"
+        },
+        {
+          "name": "TokenId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "token_id"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "49b9dee35e27590d",
+  "check_fingerprint": "66f8b80a3c1c7033"
+}

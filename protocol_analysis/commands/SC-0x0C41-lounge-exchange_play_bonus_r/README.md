@@ -1,0 +1,63 @@
+# SC-0x0C41-exchange_play_bonus_r
+
+> 状态：`DONE`（2026-09-20，批次-3）
+> 方向：服务端 → 客户端（recv）
+> 协议类：`lounge_client`
+> 依据规范：`00-规范-组包格式分析SOP.md`
+
+## 1. 命令元信息
+
+| 项 | 值 |
+|---|---|
+| opcode | `0x0C41` |
+| 方向 | SC（服务端 → 客户端（recv）） |
+| 协议类 | `lounge_client` |
+| 命令名 | `exchange_play_bonus_r` |
+| 名字符串 | `)->_proto_lounge_client::recv_exchange_play_bonus_r(` @ `0xEE9DE8`，引用点 `0xB54DD9` |
+| 处理函数 | `sub_B51930` @ `0xB51930`（lounge 分发器） |
+| 处理块范围 | `0xB54CE9` .. `0xB54ED0`（块首 `0xB54CE9 push 180h; call sub_B41120`，错误码 `0x180`） |
+| 关联命令 | 配对请求 `../CS-0x5FFE-lounge-exchange_play_bonus/`（`sub_B9D450`，容量 `0x6`） |
+
+## 2. 结论摘要
+
+- **报文体总长：定长 8 字节**（2 个 u32）。
+- 长度校验：`0xB54D8C mov ebx,[esp+var_2C44]`（游标）、`0xB54D90 cmp ebx,[esp+var_2C40]`（vs 报文末尾）、`0xB54D96 jz ok`（不等 ⇒ `push 180h` 报错）⇒ **整包精确消费完**。
+- 声明容量 `push 8`（`0xB54D05`）= **8 == 线长**（全定长 ⇒ 容量与线长强相等）。
+- 是否分帧：否。
+- 关键结论：2 个值交 `vt[0x3BC]`（`0xB54EA8` 取虚表项 / `0xB54EB4` 调用），实参顺序 `(result, reward_id)`；块内日志 `result=` / `reward_id=`。
+
+## 3. 帧格式表
+
+> 每行必须有汇编证据 VA；**线类型只能来自汇编**，禁止使用伪代码类型。
+
+| 序号 | 偏移 | 长度 | 线类型 | 字段名 | 含义 | 用途 | 取值/枚举 | 证据(VA) | 置信度 |
+|---|---|---|---|---|---|---|---|---|---|
+| 0 | - | 2 | u16 | opcode | 命令号 | lounge 分发的 switch 选择子 | `0x0C41` | `0xB54DD9`（名字串引用点） | 确证 |
+| 1 | 0 | 4 | u32 | `result` | 兑换结果码 | 交 `vt[0x3BC]`（第 1 实参 `0xB54EB1 push ecx`）；日志 `result=`（`0xB54E2F`，十进制） | `?`（结果码枚举未交叉） | `0xB54D40`（`sub_B02DD0`）；槽预留 `0xB54D31`（`sub_B41470`）；`0xB02DE9 add [eax],4`；日志 `0xB54E2F` | 类型确证 / 枚举待定 |
+| 2 | 4 | 4 | u32 | `reward_id` | 兑换获得的奖励 ID | 交 `vt[0x3BC]`（第 2 实参 `0xB54EAE push ecx`）；日志 `reward_id=`（`0xB54E54`） | `-` | `0xB54D80`（`sub_B02DD0`）；槽预留 `0xB54D71`（`sub_B41470`）；日志 `0xB54E54` | 确证 |
+| — | 8 | 0 | — | （长度闭合） | — | 游标必须 == 报文末尾 | — | `0xB54D90`（`cmp`）、`0xB54D96`（`jz`） | 确证 |
+
+## 4. 分析记录
+
+### 4.1 定位过程
+1. 名字符串 `0xEE9DE8` 的引用点 `0xB54DD9` 落在 `sub_B51930` 的 case 块 `0xB54CE9..0xB54ED0` 内（全部错误路径 `0xB54D53`/`0xB54D9F` 用错误码 `0x180`）。
+2. 两个字段 = 两组「槽预留 `sub_B41470` + bounded 读取器 `sub_B02DD0`」。
+3. 块内日志顺序（`result=` → `reward_id=`）与线序一致（注意日志串间的分隔逗号 `0xB54E29`、字段 2 前的 `0xB54E44`）。
+4. 去向：`0xB54EA8 mov edx,[edx+3BCh]` ⇒ `vt[0x3BC]`，实参 `(result, reward_id)`（`0xB54EAE`/`0xB54EB1`）。
+
+### 4.2 长度闭合
+- `4 + 4 = 8`；闭合点 `0xB54D90` 要求「游标 == 末尾」✓
+- 容量 8 == 线长（全定长 ⇒ 强相等）。
+
+### 4.3 存疑点
+见 `notes.md`（`result` 枚举、与 C→S `0x5FFE` 的字段对应）。
+
+## 5. 质量门自检
+
+- [x] G1 字段表总长（8）与 `0xB54D90`/`0xB54D96` 的「游标 == 末尾」校验一致；容量 8 == 线长。
+- [x] G2 线类型指回汇编 VA（`0xB54D40`/`0xB54D80` + `0xB02DE9`）；未使用伪代码类型。
+- [x] G3 含义取自块内日志串（`result=`/`reward_id=`），用途追到 `vt[0x3BC]`（`0xB54EB4`）。
+- [x] G4 不确定项（`result` 枚举）标 `?` 且已记入 `notes.md`。
+- [x] G5 README / fields.csv / asm.md 三处一致。
+- [x] G6 INDEX 状态一致（`DONE`）。
+- [x] G7 配对请求 `CS-0x5FFE-lounge-exchange_play_bonus` 已在 §1 链接。

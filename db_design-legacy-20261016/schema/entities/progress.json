@@ -1,0 +1,39 @@
+{
+  "id": "progress",
+  "title": "progress",
+  "description": "协议实体 progress；46B 线 / 64B 槽；14 成员（sub_B07880/sub_B0A820）",
+  "table_ref": "tbl_progress",
+  "disposition": "EVENT",
+  "wire_forms": [
+    {
+      "name": "progress",
+      "length": 46,
+      "memory_claim": 64,
+      "commands": [
+        "SC-0x1365-battle-game_begin",
+        "SC-0xA5DA-battle-authenticate_r",
+        "SC-0xC66B-battle-game_round_end",
+        "SC-0xD5E6-lounge-result_info"
+      ],
+      "protocol_path": "protocol_analysis/commands/SC-0x1365-battle-game_begin/README.md",
+      "reader": "sub_B07880",
+      "printer": "sub_B0A820"
+    }
+  ],
+  "fields": [
+    { "name": "remain_msec", "offset": 0, "length": 4, "wire_type": "u32", "meaning": "本局剩余时间（毫秒）", "disposition": "EVENT" },
+    { "name": "coop_step", "offset": 4, "length": 4, "wire_type": "u32", "meaning": "协力（coop）阶段步号", "disposition": "EVENT" },
+    { "name": "A_point_now", "offset": 8, "length": 4, "wire_type": "u32", "meaning": "A 军当前点数", "disposition": "EVENT" },
+    { "name": "B_point_now", "offset": 12, "length": 4, "wire_type": "u32", "meaning": "B 军当前点数", "disposition": "EVENT" },
+    { "name": "A_gauge_dmg_scale", "offset": 16, "length": 2, "wire_type": "u16", "meaning": "A 军量表伤害比例", "disposition": "EVENT" },
+    { "name": "B_gauge_dmg_scale", "offset": 18, "length": 2, "wire_type": "u16", "meaning": "B 军量表伤害比例", "disposition": "EVENT" },
+    { "name": "coop_dead_remain", "offset": 20, "length": 1, "wire_type": "i8", "meaning": "协力死亡剩余计数", "disposition": "EVENT" },
+    { "name": "is_prestart", "offset": 21, "length": 1, "wire_type": "i8", "meaning": "是否处于开局前阶段", "disposition": "EVENT" },
+    { "name": "rule_status", "offset": 24, "length": 4, "wire_type": "u32", "meaning": "规则状态", "disposition": "EVENT" },
+    { "name": "rule_timer_msec", "offset": 28, "length": 4, "wire_type": "u32", "meaning": "规则计时（毫秒）", "disposition": "EVENT" },
+    { "name": "rule_param1", "offset": 32, "length": 4, "wire_type": "u32", "meaning": "规则参数 1", "disposition": "EVENT" },
+    { "name": "rule_param2", "offset": 36, "length": 4, "wire_type": "u32", "meaning": "规则参数 2", "disposition": "EVENT" },
+    { "name": "A_dot_dmg", "offset": 40, "length": 4, "wire_type": "u32", "meaning": "A 军 dot 伤害值", "disposition": "EVENT" },
+    { "name": "B_dot_dmg", "offset": 44, "length": 4, "wire_type": "u32", "meaning": "B 军 dot 伤害值", "disposition": "EVENT" }
+  ]
+}

@@ -1,0 +1,163 @@
+{
+  "id": "intro_info",
+  "title": "战队介绍 intro_info（547B）",
+  "length": 547,
+  "status": "complete",
+  "reader": "sub_B46140",
+  "printer": "sub_B4F080",
+  "memory_claim": 547,
+  "wire_layout": "u8 + u8 + 4×(28×u8) + 433×u8",
+  "evidence": {
+    "commands": [
+      "SC-0xA5FE-lounge-clan_introduction_set_r"
+    ],
+    "protocol_paths": [
+      "protocol_analysis/commands/SC-0xA5FE-lounge-clan_introduction_set_r/README.md"
+    ],
+    "note": "claim == 线长 == 547（sub_B411F0）"
+  },
+  "members": [
+    {
+      "name": "active_time_bits",
+      "offset": 0,
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "活跃时段位图",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0xA5FE-lounge-clan_introduction_set_r",
+          "struct": "intro_info",
+          "field_name": "active_time_bits",
+          "offset": 0,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0xA5FE-lounge-clan_introduction_set_r/README.md",
+          "section": "§4.3",
+          "reader": "sub_B46140",
+          "printer": "sub_B4F080",
+          "evidence_va": "0xB46155|B4F0A9"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB46155|B4F0A9",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 0
+    },
+    {
+      "name": "play_style",
+      "offset": 1,
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "游戏风格",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0xA5FE-lounge-clan_introduction_set_r",
+          "struct": "intro_info",
+          "field_name": "play_style",
+          "offset": 1,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0xA5FE-lounge-clan_introduction_set_r/README.md",
+          "section": "§4.3",
+          "reader": "sub_B46140",
+          "printer": "sub_B4F080",
+          "evidence_va": "0xB46168|B4F0D1"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB46168|B4F0D1",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 1
+    },
+    {
+      "name": "feature_word",
+      "offset": 2,
+      "length": 112,
+      "wire_type": "u8[112]",
+      "meaning": "特色词（4×28 字节）",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0xA5FE-lounge-clan_introduction_set_r",
+          "struct": "intro_info",
+          "field_name": "feature_word",
+          "offset": 2,
+          "length": 112,
+          "wire_type": "u8[112]",
+          "protocol_path": "protocol_analysis/commands/SC-0xA5FE-lounge-clan_introduction_set_r/README.md",
+          "section": "§4.3",
+          "reader": "sub_B46140",
+          "printer": "sub_B4F080",
+          "evidence_va": "0xB4618A|B4F0F3"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB4618A|B4F0F3",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 2
+    },
+    {
+      "name": "notice_body",
+      "offset": 114,
+      "length": 433,
+      "wire_type": "u8[433]",
+      "meaning": "公告正文",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0xA5FE-lounge-clan_introduction_set_r",
+          "struct": "intro_info",
+          "field_name": "notice_body",
+          "offset": 114,
+          "length": 433,
+          "wire_type": "u8[433]",
+          "protocol_path": "protocol_analysis/commands/SC-0xA5FE-lounge-clan_introduction_set_r/README.md",
+          "section": "§4.3",
+          "reader": "sub_B46140",
+          "printer": "sub_B4F080",
+          "evidence_va": "0xB461B1|B4F156"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB461B1|B4F156",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 114
+    }
+  ],
+  "asm_audit": {
+    "verified": "2026-09-20",
+    "reader": "sub_B46140",
+    "writer": null,
+    "total_bytes": 547,
+    "fields_ok": 4,
+    "fields_fail": 0,
+    "issues": [],
+    "status": "pass",
+    "memory": {
+      "manual_batch": 7,
+      "verified": "2026-09-20",
+      "status": "pass",
+      "wire_eq_mem_prefix": true,
+      "memory_claim": 547,
+      "mem_fields": 0,
+      "fields_ok": 0,
+      "fields_fail": 0,
+      "issues": [],
+      "note": "sub_B46140 claim==线长；循环写 feature_word/notice_body（提取器漏捕）"
+    }
+  },
+  "oracle_audit": {
+    "date": "2026-09-23",
+    "tool": "emulab/oracle_fix.py",
+    "verdict_before": "GAP",
+    "verdict_after": "PASS",
+    "changes": [
+      "active_time_bits: memory_offset None -> 0",
+      "play_style: memory_offset None -> 1",
+      "feature_word: memory_offset None -> 2",
+      "notice_body: memory_offset None -> 114"
+    ]
+  }
+}

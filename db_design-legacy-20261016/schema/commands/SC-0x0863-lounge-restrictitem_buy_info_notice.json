@@ -1,0 +1,396 @@
+{
+  "id": "SC-0x0863-lounge-restrictitem_buy_info_notice",
+  "opcode": "0x0863",
+  "direction": "SC",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "restrictitem_buy_info_notice",
+  "source_dir": "protocol_analysis/commands/SC-0x0863-lounge-restrictitem_buy_info_notice",
+  "meta": {
+    "opcode": "`0x0863`",
+    "方向": "SC（服务端 → 客户端（recv））",
+    "协议类": "`lounge_client`",
+    "命令名": "`restrictitem_buy_info_notice`",
+    "名字符串": "`)->_proto_lounge_client::recv_restrictitem_buy_info_notice(` @ `0xEE9F34`，引用点 `0xB53F45`",
+    "处理函数": "`sub_B51930` @ `0xB51930`（lounge 分发器）",
+    "处理块范围": "`0xB53E24` .. `0xB5405D`（块首 `0xB53E24 push 203h; call sub_B41120`，错误码 `0x203`）",
+    "关联命令": "未发现同名 C→S 请求（服务端主动通知；见 `notes.md` Q3）"
+  },
+  "handler": "sub_B51930",
+  "handler_va": "0xB51930",
+  "block": [
+    "0xB53E24",
+    "0xB5405D"
+  ],
+  "name_str": ")->_proto_lounge_client::recv_restrictitem_buy_info_notice(",
+  "name_str_va": "0xEE9F34",
+  "capacity": "0x44",
+  "capacity_va": "0xB53E40",
+  "closer_va": "0xB53EF8",
+  "dispatch": null,
+  "dispatch_slot": "vt[0x4D4]",
+  "dispatch_va": "0xB54041",
+  "wire": {
+    "length_expr": "4+4*N",
+    "fixed": false,
+    "var_drivers": [
+      "N"
+    ],
+    "capacity_note": "声明容量 0x44（容量记账口径，非线长）",
+    "field_count": 2,
+    "length_source": "closure_row",
+    "readme_conclusion": "**报文体总长：变长 4 + 4*N 字节**（N = count，N ≤ 16 ⇒ 线长 ∈ [4, 68]）。",
+    "readme_close": "4 + 4*N；闭合点 0xB53EF8 要求「游标 == 末尾」⇒ 变长部分亦精确闭合 ✓"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "lounge 分发的 switch 选择子",
+      "enum": "0x0863",
+      "evidence_va": [
+        "0xB53F45"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "count",
+      "meaning": "限购道具条数(列表长度)",
+      "purpose": "数组预留元素个数+循环上界+交 vt[0x4D4] 第2实参",
+      "enum": "N<=16",
+      "evidence_va": [
+        "0xB53E6D",
+        "0xB02DE9",
+        "0xB53E99",
+        "0xB53EDE",
+        "0xB5403D"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "4*N",
+      "wire_type": "array<u32,N>",
+      "name": "item_id[]",
+      "meaning": "限购道具 ID 列表",
+      "purpose": "交 vt[0x4D4] 第1实参(数组基址)；日志 restrictitem_buy={…}",
+      "enum": "元素=u32 道具ID(语义见 notes Q1)",
+      "evidence_va": [
+        "0xB53EA8",
+        "0xB41870",
+        "0xB53ECA",
+        "0xB53ED6",
+        "0xB53F8F",
+        "0xB54033"
+      ],
+      "confidence": "类型确证/语义推测",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": -1,
+      "offset": "4+4*N",
+      "length": "0",
+      "wire_type": "-",
+      "name": "（长度闭合）",
+      "meaning": "游标必须==报文末尾",
+      "purpose": "N<=16",
+      "enum": null,
+      "evidence_va": [
+        "0xB53EF8",
+        "0xB53EFE"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5,
+      "is_closure": true
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0x0863（分发器 switch 选择子）",
+      "evidence_va": "0xB53F45"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB41120`（模块 id 515）→ 之后逐字段读线",
+      "evidence_va": "0xB53E2B"
+    },
+    {
+      "step": 3,
+      "kind": "read_count",
+      "detail": "count：`u32`（线长 4）—— 限购道具条数(列表长度)",
+      "evidence_va": "0xB53E6D"
+    },
+    {
+      "step": 4,
+      "kind": "read_array",
+      "detail": "item_id[]：`array<u32,N>`（线长 4*N）—— 限购道具 ID 列表",
+      "evidence_va": "0xB53EA8"
+    },
+    {
+      "step": 5,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB53EF8"
+    },
+    {
+      "step": 6,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x4D4]`，实参 2 个",
+      "evidence_va": "0xB54041"
+    },
+    {
+      "step": 7,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB53E87"
+    }
+  ],
+  "capabilities": [
+    "create",
+    "notify",
+    "query",
+    "lounge.restrictitem"
+  ],
+  "capabilities_derived": [
+    "create",
+    "notify"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:42",
+    "batch": 4,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 68,
+        "va": "0xB53E40",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB53E3D",
+        "call_va": "0xB53E42"
+      },
+      "field_window": {
+        "start_va": "0xB53E2C",
+        "end_va": "0xB53F1F",
+        "guard": {
+          "va": "0xB53E2B",
+          "func": "0xB41120",
+          "module_id": 515,
+          "release_va": "0xB41110"
+        },
+        "closer_or_commit_va": "0xB53EF8",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "count",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB53E6D",
+              "0xB02DE9",
+              "0xB53E99",
+              "0xB53EDE",
+              "0xB5403D"
+            ]
+          },
+          {
+            "name": "item_id[]",
+            "wire_type": "array<u32,N>",
+            "width": null,
+            "seq": 2,
+            "shape": "agg",
+            "evidence_va": [
+              "0xB53EA8",
+              "0xB41870",
+              "0xB53ECA",
+              "0xB53ED6",
+              "0xB53F8F",
+              "0xB54033"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB53E6D",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB53EA8",
+            "kind": "bounded",
+            "width": 4,
+            "wire_type": null,
+            "name": "sub_B41850",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB53ECA",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 1,
+        "checkable": 1,
+        "pairs": [
+          {
+            "field": "count",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB53E6D",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB53EA8",
+            "kind": "bounded",
+            "width": 4,
+            "wire_type": null
+          },
+          {
+            "va": "0xB53ECA",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32"
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB53E2C",
+          "0xB53F1F"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 8,
+          "capacity": 68,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB53EA8",
+              "kind": "bounded",
+              "name": "sub_B41850"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）8 / 容量 0x44"
+        }
+      },
+      "closer": {
+        "va": "0xB53EF8",
+        "kind": "jz",
+        "jcc_va": "0xB53EFE",
+        "seq_va": "0xB53EF4",
+        "jcc_dst": "0xB53F1A",
+        "cmp": "cmp     ecx, [esp+2C5Ch+var_2C40]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x4D4]",
+        "slot_value": 1236,
+        "va": "0xB54041",
+        "mov_va": "0xB54037",
+        "host": "[edx+4D4h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB53E87",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "restrictitem_buy={"
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0x0863-lounge-restrictitem_buy_info_notice.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": "（长度闭合）",
+    "opcode_field_va": [
+      "0xB53F45"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "RestrictitemBuyInfoNotice",
+      "role": "response",
+      "wire_length": "4+4*N",
+      "members": [
+        {
+          "name": "Count",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "count"
+        },
+        {
+          "name": "ItemId",
+          "wire_type": "array<u32,N>",
+          "length": "4*N",
+          "field_ref": "item_id[]",
+          "element": "u32",
+          "element_length": "4",
+          "cap": null,
+          "count_field": "count",
+          "count_field_source": "heuristic",
+          "count_var": "N",
+          "note": null
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "4efa9c83dac8615a",
+  "check_fingerprint": "2a7cc4f106f801cc"
+}

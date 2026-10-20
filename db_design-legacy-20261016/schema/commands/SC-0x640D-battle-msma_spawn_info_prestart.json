@@ -1,0 +1,832 @@
+{
+  "id": "SC-0x640D-battle-msma_spawn_info_prestart",
+  "opcode": "0x640D",
+  "direction": "SC",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "msma_spawn_info_prestart",
+  "source_dir": "protocol_analysis/commands/SC-0x640D-battle-msma_spawn_info_prestart",
+  "meta": {
+    "opcode": "`0x640D`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`battle_client`",
+    "命令名": "`msma_spawn_info_prestart`",
+    "处理块范围": "`0xb1b859`..`0xb1bdec`",
+    "名字串引用点": "`0xb1bb10`",
+    "声明容量（解码缓冲）": "`0x179`（`0xb1b873`）",
+    "长度闭合点": "`0xb1bac9`",
+    "去向": "`vt[0x140]` @ `0xb1bdd0`（8 实参）"
+  },
+  "handler": null,
+  "handler_va": null,
+  "block": [
+    "0xb1b859",
+    "0xb1bdec"
+  ],
+  "name_str": null,
+  "name_str_va": "0xb1bb10",
+  "capacity": "0x179",
+  "capacity_va": "0xb1b873",
+  "closer_va": "0xb1bac9",
+  "dispatch": "`vt[0x140]` @ `0xb1bdd0`（8 实参）",
+  "dispatch_slot": "vt[0x140]",
+  "dispatch_va": "0xb1bdd0",
+  "wire": {
+    "length_expr": "4 + 4 + 1 + 4 + 2 + 4 + 2 + 4 + 2",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x179（容量记账口径，非线长）",
+    "field_count": 9,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：4 + 4 + N1 + 4 + 2N2 + 4 + 2N3 + 4 + 2N4（N≤51）。",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0x640D",
+      "evidence_va": [
+        "`0xb1bb10`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "remain_sec",
+      "meaning": "开场剩余秒数（日志串 `remain_sec=`）",
+      "purpose": "`vt[0x140]` 实参",
+      "enum": null,
+      "evidence_va": [
+        "0xb1b8ac"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "mstype_count",
+      "meaning": "`mstype` 列表计数（上限检查 `cmp ebx,33h` @`0xb1b904`）",
+      "purpose": "驱动随后的循环（上限 51）",
+      "enum": "≤51",
+      "evidence_va": [
+        "0xb1b8db"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "8",
+      "length": "1",
+      "wire_type": "array<u8,N>",
+      "name": "mstype",
+      "meaning": "出场机型分类列表（日志串 `mstype={`）",
+      "purpose": "`vt[0x140]` 实参（指针），元素由 `sub_B06230` 逐字节读",
+      "enum": null,
+      "evidence_va": [
+        "0xb1b930"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 4,
+      "offset": "?",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "post_index_count",
+      "meaning": "`post_index` 计数（`cmp ebx,33h` @`0xb1b970`）",
+      "purpose": "驱动循环（≤51）",
+      "enum": "≤51",
+      "evidence_va": [
+        "0xb1b95c"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    },
+    {
+      "seq": 5,
+      "offset": "?",
+      "length": "2",
+      "wire_type": "array<u16,N>",
+      "name": "post_index",
+      "meaning": "出场点位索引列表（日志串 `post_index={`）",
+      "purpose": "同上",
+      "enum": null,
+      "evidence_va": [
+        "0xb1b9aa"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 7
+    },
+    {
+      "seq": 6,
+      "offset": "?",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "spt_spot_index_count",
+      "meaning": "`spt_spot_index` 计数（`cmp ebx,33h` @`0xb1b9ef`）",
+      "purpose": "驱动循环（≤51）",
+      "enum": "≤51",
+      "evidence_va": [
+        "0xb1b9db"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 8
+    },
+    {
+      "seq": 7,
+      "offset": "?",
+      "length": "2",
+      "wire_type": "array<u16,N>",
+      "name": "spt_spot_index",
+      "meaning": "支援点索引列表（日志串 `spt_spot_index={`）",
+      "purpose": "同上",
+      "enum": null,
+      "evidence_va": [
+        "0xb1ba2a"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 9
+    },
+    {
+      "seq": 8,
+      "offset": "?",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "stghold_entid_count",
+      "meaning": "`stghold_entid` 计数（`cmp ebx,33h` @`0xb1ba6f`）",
+      "purpose": "驱动循环（≤51）",
+      "enum": "≤51",
+      "evidence_va": [
+        "0xb1ba5b"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 10
+    },
+    {
+      "seq": 9,
+      "offset": "?",
+      "length": "2",
+      "wire_type": "array<u16,N>",
+      "name": "stghold_entid",
+      "meaning": "据点保持实体 id 列表（日志串 `stghold_entid={`）",
+      "purpose": "同上",
+      "enum": null,
+      "evidence_va": [
+        "0xb1baa2"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 11
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0x640D（分发器 switch 选择子）",
+      "evidence_va": "0xB1BB10"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB05DA0`（模块 id None）→ 之后逐字段读线",
+      "evidence_va": "0xB1B859"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "remain_sec：`u32`（线长 4）—— 开场剩余秒数（日志串 `remain_sec=`）",
+      "evidence_va": "0xB1B8AC"
+    },
+    {
+      "step": 4,
+      "kind": "read_count",
+      "detail": "mstype_count：`u32`（线长 4）—— `mstype` 列表计数（上限检查 `cmp ebx,33h` @`0xb1b904`）",
+      "evidence_va": "0xB1B8DB"
+    },
+    {
+      "step": 5,
+      "kind": "read_array",
+      "detail": "mstype：`array<u8,N>`（线长 1）—— 出场机型分类列表（日志串 `mstype={`）",
+      "evidence_va": "0xB1B930"
+    },
+    {
+      "step": 6,
+      "kind": "read_count",
+      "detail": "post_index_count：`u32`（线长 4）—— `post_index` 计数（`cmp ebx,33h` @`0xb1b970`）",
+      "evidence_va": "0xB1B95C"
+    },
+    {
+      "step": 7,
+      "kind": "read_array",
+      "detail": "post_index：`array<u16,N>`（线长 2）—— 出场点位索引列表（日志串 `post_index={`）",
+      "evidence_va": "0xB1B9AA"
+    },
+    {
+      "step": 8,
+      "kind": "read_count",
+      "detail": "spt_spot_index_count：`u32`（线长 4）—— `spt_spot_index` 计数（`cmp ebx,33h` @`0xb1b9ef`）",
+      "evidence_va": "0xB1B9DB"
+    },
+    {
+      "step": 9,
+      "kind": "read_array",
+      "detail": "spt_spot_index：`array<u16,N>`（线长 2）—— 支援点索引列表（日志串 `spt_spot_index={`）",
+      "evidence_va": "0xB1BA2A"
+    },
+    {
+      "step": 10,
+      "kind": "read_count",
+      "detail": "stghold_entid_count：`u32`（线长 4）—— `stghold_entid` 计数（`cmp ebx,33h` @`0xb1ba6f`）",
+      "evidence_va": "0xB1BA5B"
+    },
+    {
+      "step": 11,
+      "kind": "read_array",
+      "detail": "stghold_entid：`array<u16,N>`（线长 2）—— 据点保持实体 id 列表（日志串 `stghold_entid={`）",
+      "evidence_va": "0xB1BAA2"
+    },
+    {
+      "step": 12,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB1BACD"
+    },
+    {
+      "step": 13,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x140]`，实参 9 个",
+      "evidence_va": "0xB1BDD0"
+    },
+    {
+      "step": 14,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB1B8C3"
+    }
+  ],
+  "capabilities": [
+    "create",
+    "query"
+  ],
+  "capabilities_derived": [
+    "battle"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:49",
+    "batch": 23,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 377,
+        "va": "0xB1B86E",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB1B86B",
+        "call_va": "0xB1B873"
+      },
+      "field_window": {
+        "start_va": "0xB1B85A",
+        "end_va": "0xB1BAEE",
+        "guard": {
+          "va": "0xB1B859",
+          "func": "0xB05DA0",
+          "module_id": null,
+          "release_va": "0xB05D90"
+        },
+        "closer_or_commit_va": "0xB1BACD",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "remain_sec",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb1b8ac"
+            ]
+          },
+          {
+            "name": "mstype_count",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb1b8db"
+            ]
+          },
+          {
+            "name": "mstype",
+            "wire_type": "array<u8,N>",
+            "width": null,
+            "seq": 3,
+            "shape": "agg",
+            "evidence_va": [
+              "0xb1b930"
+            ]
+          },
+          {
+            "name": "post_index_count",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 4,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb1b95c"
+            ]
+          },
+          {
+            "name": "post_index",
+            "wire_type": "array<u16,N>",
+            "width": null,
+            "seq": 5,
+            "shape": "agg",
+            "evidence_va": [
+              "0xb1b9aa"
+            ]
+          },
+          {
+            "name": "spt_spot_index_count",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 6,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb1b9db"
+            ]
+          },
+          {
+            "name": "spt_spot_index",
+            "wire_type": "array<u16,N>",
+            "width": null,
+            "seq": 7,
+            "shape": "agg",
+            "evidence_va": [
+              "0xb1ba2a"
+            ]
+          },
+          {
+            "name": "stghold_entid_count",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 8,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb1ba5b"
+            ]
+          },
+          {
+            "name": "stghold_entid",
+            "wire_type": "array<u16,N>",
+            "width": null,
+            "seq": 9,
+            "shape": "agg",
+            "evidence_va": [
+              "0xb1baa2"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB1B8AC",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB1B8DB",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB1B916",
+            "kind": "bounded",
+            "width": 1,
+            "wire_type": null,
+            "name": "sub_B05EA0",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB1B930",
+            "kind": "read",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB1B95C",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB1B986",
+            "kind": "bounded",
+            "width": 2,
+            "wire_type": null,
+            "name": "sub_B05E40",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB1B9AA",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB1B9DB",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB1BA05",
+            "kind": "bounded",
+            "width": 2,
+            "wire_type": null,
+            "name": "sub_B05E40",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB1BA2A",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB1BA5B",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB1BA85",
+            "kind": "bounded",
+            "width": 2,
+            "wire_type": null,
+            "name": "sub_B05E40",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB1BAA2",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 5,
+        "checkable": 5,
+        "pairs": [
+          {
+            "field": "remain_sec",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB1B8AC",
+            "kind": "read"
+          },
+          {
+            "field": "mstype_count",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB1B8DB",
+            "kind": "read"
+          },
+          {
+            "field": "post_index_count",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB1B95C",
+            "kind": "read"
+          },
+          {
+            "field": "spt_spot_index_count",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB1B9DB",
+            "kind": "read"
+          },
+          {
+            "field": "stghold_entid_count",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB1BA5B",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB1B916",
+            "kind": "bounded",
+            "width": 1,
+            "wire_type": null
+          },
+          {
+            "va": "0xB1B930",
+            "kind": "read",
+            "width": 1,
+            "wire_type": "u8"
+          },
+          {
+            "va": "0xB1B986",
+            "kind": "bounded",
+            "width": 2,
+            "wire_type": null
+          },
+          {
+            "va": "0xB1B9AA",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16"
+          },
+          {
+            "va": "0xB1BA05",
+            "kind": "bounded",
+            "width": 2,
+            "wire_type": null
+          },
+          {
+            "va": "0xB1BA2A",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16"
+          },
+          {
+            "va": "0xB1BA85",
+            "kind": "bounded",
+            "width": 2,
+            "wire_type": null
+          },
+          {
+            "va": "0xB1BAA2",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16"
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB1B85A",
+          "0xB1BAEE"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 27,
+          "capacity": 377,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB1B916",
+              "kind": "bounded",
+              "name": "sub_B05EA0"
+            },
+            {
+              "va": "0xB1B986",
+              "kind": "bounded",
+              "name": "sub_B05E40"
+            },
+            {
+              "va": "0xB1BA05",
+              "kind": "bounded",
+              "name": "sub_B05E40"
+            },
+            {
+              "va": "0xB1BA85",
+              "kind": "bounded",
+              "name": "sub_B05E40"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）27 / 容量 0x179"
+        }
+      },
+      "closer": {
+        "va": "0xB1BACD",
+        "kind": "jz",
+        "jcc_va": "0xB1BAD3",
+        "seq_va": "0xB1BAC9",
+        "jcc_dst": "0xB1BAEC",
+        "cmp": "cmp     ecx, [esp+1B3Ch+var_1B24]",
+        "va_convention": "seq"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x140]",
+        "slot_value": 320,
+        "va": "0xB1BDD0",
+        "mov_va": "0xB1BD9C",
+        "host": "[edx+140h]",
+        "argc": 9,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB1B8C3",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "remain_sec=",
+        "mstype={",
+        "post_index={",
+        "spt_spot_index={",
+        "stghold_entid={"
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0x640D-battle-msma_spawn_info_prestart.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "`0xb1bb10`"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "MsmaSpawnInfoPrestart",
+      "role": "response",
+      "wire_length": "4 + 4 + 1 + 4 + 2 + 4 + 2 + 4 + 2",
+      "members": [
+        {
+          "name": "RemainSec",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "remain_sec"
+        },
+        {
+          "name": "MstypeCount",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "mstype_count"
+        },
+        {
+          "name": "Mstype",
+          "wire_type": "array<u8,N>",
+          "length": "1",
+          "field_ref": "mstype",
+          "element": "u8",
+          "element_length": "1",
+          "cap": null,
+          "count_field": "mstype_count",
+          "count_field_source": "heuristic",
+          "count_var": "N",
+          "note": null
+        },
+        {
+          "name": "PostIndexCount",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "post_index_count"
+        },
+        {
+          "name": "PostIndex",
+          "wire_type": "array<u16,N>",
+          "length": "2",
+          "field_ref": "post_index",
+          "element": "u16",
+          "element_length": "2",
+          "cap": null,
+          "count_field": "post_index_count",
+          "count_field_source": "heuristic",
+          "count_var": "N",
+          "note": null
+        },
+        {
+          "name": "SptSpotIndexCount",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "spt_spot_index_count"
+        },
+        {
+          "name": "SptSpotIndex",
+          "wire_type": "array<u16,N>",
+          "length": "2",
+          "field_ref": "spt_spot_index",
+          "element": "u16",
+          "element_length": "2",
+          "cap": null,
+          "count_field": "spt_spot_index_count",
+          "count_field_source": "heuristic",
+          "count_var": "N",
+          "note": null
+        },
+        {
+          "name": "StgholdEntidCount",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "stghold_entid_count"
+        },
+        {
+          "name": "StgholdEntid",
+          "wire_type": "array<u16,N>",
+          "length": "2",
+          "field_ref": "stghold_entid",
+          "element": "u16",
+          "element_length": "2",
+          "cap": null,
+          "count_field": "stghold_entid_count",
+          "count_field_source": "heuristic",
+          "count_var": "N",
+          "note": null
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "df5e6a89139d1238",
+  "check_fingerprint": "f6241676f5da328f"
+}

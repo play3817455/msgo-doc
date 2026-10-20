@@ -1,0 +1,215 @@
+{
+ "id": "CS-0x9138-lounge-msma_equip_weapon_exchange",
+ "verified_at": "2026-09-30 15:25:44",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "handler_func",
+ "block": [
+  "0xB93600",
+  "0xB93846"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 18,
+   "va": "0xB93646",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xB93643",
+   "call_va": "0xB93648"
+  },
+  "field_window": {
+   "start_va": "0xB93600",
+   "end_va": "0xB93724",
+   "guard": null,
+   "closer_or_commit_va": "0xB93724",
+   "within_model_block": true,
+   "range_from": "handler_func"
+  },
+  "primitive_widths": {
+   "direction": "CS",
+   "expected": [
+    {
+     "name": "uniqid_ms",
+     "wire_type": "u64",
+     "width": 8,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB9368C, 0xB93692"
+     ]
+    },
+    {
+     "name": "eq_slot1",
+     "wire_type": "u16",
+     "width": 2,
+     "seq": 2,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB936A5"
+     ]
+    },
+    {
+     "name": "eq_slot2",
+     "wire_type": "u16",
+     "width": 2,
+     "seq": 3,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB936B6"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB9367C",
+     "kind": "inline_store",
+     "width": 2,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB9368C",
+     "kind": "inline_store",
+     "width": 4,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB936A5",
+     "kind": "inline_store",
+     "width": 2,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB936B6",
+     "kind": "write",
+     "width": 2,
+     "wire_type": "u16",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB936FA",
+     "kind": "composite",
+     "width": null,
+     "wire_type": null,
+     "name": "sub_B03020",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 2,
+   "checkable": 3,
+   "pairs": [
+    {
+     "field": "eq_slot1",
+     "width": 2,
+     "shape": "scalar",
+     "va": "0xB9367C",
+     "kind": "inline_store"
+    },
+    {
+     "field": "eq_slot2",
+     "width": 2,
+     "shape": "scalar",
+     "va": "0xB936A5",
+     "kind": "inline_store"
+    }
+   ],
+   "gaps": [
+    {
+     "field": "uniqid_ms",
+     "wire_type": "u64",
+     "width": 8,
+     "shape": "scalar",
+     "note": "汇编事件序列里找不到与之对位的读写点（缺字段或宽度不符）"
+    }
+   ],
+   "unmatched_actual": [
+    {
+     "va": "0xB9368C",
+     "kind": "inline_store",
+     "width": 4,
+     "wire_type": null
+    },
+    {
+     "va": "0xB936B6",
+     "kind": "write",
+     "width": 2,
+     "wire_type": "u16"
+    }
+   ],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB93600",
+    "0xB93724"
+   ],
+   "scalar_match_verifiable": false,
+   "capacity_relation": {
+    "observed_min": 10,
+    "capacity": 18,
+    "relation": "within",
+    "unknown_events": [
+     {
+      "va": "0xB936FA",
+      "kind": "composite",
+      "name": "sub_B03020"
+     }
+    ],
+    "is_lower_bound": true,
+    "note": "观测线长（下界）10 / 容量 0x12"
+   }
+  },
+  "closer": {
+   "va": "0xB93724",
+   "kind": "commit",
+   "jcc_va": null,
+   "seq_va": null,
+   "cmp": null,
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x58]",
+   "slot_value": 88,
+   "va": "0xB937DD",
+   "mov_va": "0xB937D4",
+   "host": "[edx+58h]",
+   "argc": 2,
+   "form": "mov_then_call",
+   "error_slot": null
+  },
+  "log_strings": [
+   "uniqid_ms=",
+   "eq_slot1=",
+   "eq_slot2="
+  ]
+ },
+ "mismatches": [],
+ "notes": [
+  {
+   "check": "primitive_widths",
+   "note": "定宽对位不可判定：C→S 写线在复合写入器内部 consumed 未知；缺口 uniqid_ms"
+  }
+ ],
+ "log_name_hits": [
+  "eq_slot1",
+  "eq_slot2",
+  "uniqid_ms"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 9
+}

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NETCAFE_CHALLENGE · db_design</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <h1><a href="../index.html">db_design</a></h1>
+      <p class="header-note">唯一证据源：<code>protocol_analysis/</code></p>
+      <nav><a href="../index.html">首页</a>
+      <a href="../homing/index.html">归位库</a>
+      <a href="../tables/index.html">旧表留档</a>
+      <a href="../commands/index.html">命令</a>
+      <a href="../cfg/index.html" class="active">配置表79</a>
+      <a href="../srv/index.html">服务端配置</a>
+      <a href="../asm-audit/index.html">ASM 审计</a>
+      <a href="../oracle-audit/index.html">Oracle 审计</a>
+      <a href="../entities/index.html">协议实体</a>
+      <a href="../fields/index.html">字段索引</a>
+      <a href="../relations.html">表关系</a></nav>
+    </div>
+  </header>
+  <main class="wrap">
+
+    <p class="breadcrumb"><a href="index.html">配置表79</a> / <code>NETCAFE_CHALLENGE</code></p>
+    <h2><code>NETCAFE_CHALLENGE</code> <span class="badge" style="background:#1565c0">DOWNLOAD</span> <span class="badge" style="background:#2e7d32">确证</span></h2>
+    <dl class="asm-dl">
+      <dt>CSV</dt><dd><code>pilot/netcafe_challenge.csv</code></dd>
+      <dt>用途</dt><dd>网吧挑战：网吧登录用户的专属战绩挑战</dd>
+      <dt>读表函数</dt><dd><code>sub_5875E0</code></dd>
+      <dt>表ID</dt><dd>48</dd>
+      <dt>下载序</dt><dd>48</dd>
+      <dt>类名</dt><dd><code>CNetcafeChallengeTable</code></dd>
+      <dt>列统计</dt><dd>13 列 · 确证 13 · 已映射 0 · 间隙 7</dd>
+      <dt>证据</dt><dd><a href="../../../datatables/01-列注释/48-48-NETCAFE_CHALLENGE.md" target="_blank">datatables/01-列注释/48-48-NETCAFE_CHALLENGE.md</a></dd>
+    </dl>
+    <section>
+      <h3>列定案</h3>
+      <p class="muted"><code>db_column</code> = PostgreSQL 列名（确证/有语义的 partial 用订案名；<code>unknown_*</code> 暂保留 colN）</p>
+      <table class="wide">
+        <thead>
+          <tr>
+            <th>CSV#</th><th>DB列</th><th>订案名</th><th>中文摘要</th><th>类型</th>
+            <th>状态</th><th>读表</th><th>偏移/VA</th><th>语义详情</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td><code>0</code></td>
+      <td><code>challenge_id</code></td>
+      <td><code>challenge_id</code></td>
+      <td>网吧挑战 ID</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5875E0</code></td>
+      <td class="muted">csv 0 · +0 · 0x58760d</td>
+      <td class="meaning-cell">网吧挑战 ID（主键）</td>
+    </tr>
+    <tr>
+      <td><code>1</code></td>
+      <td><code>display_group</code></td>
+      <td><code>display_group</code></td>
+      <td>UI 显示分组</td>
+      <td><code>u8</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5875E0</code></td>
+      <td class="muted">csv 1 · +4 · 0x58761b</td>
+      <td class="meaning-cell">UI 显示分组（u8 col1）</td>
+    </tr>
+    <tr>
+      <td><code>2</code></td>
+      <td><code>reserved_u32_2</code></td>
+      <td><code>reserved_u32_2</code></td>
+      <td>预留列 col2</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_5875E0</code></td>
+      <td class="muted">csv 2</td>
+      <td class="meaning-cell">UI 分组后预留（读表跳至 col4 写 stat_type；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>3</code></td>
+      <td><code>reserved_u32_3</code></td>
+      <td><code>reserved_u32_3</code></td>
+      <td>预留列 col3</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_5875E0</code></td>
+      <td class="muted">csv 3</td>
+      <td class="meaning-cell">stat_type 前预留（读表跳至 col4；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>4</code></td>
+      <td><code>stat_type</code></td>
+      <td><code>stat_type</code></td>
+      <td>网吧挑战统计项</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5875E0</code></td>
+      <td class="muted">csv 4 · +8 · 0x587638</td>
+      <td class="meaning-cell">网吧挑战统计项（enum sub_5874A0，46 项 + NETCAFE；与 DAILY_RECORD 同一套战绩体系）<div class="enum-vals"><a class="enum-chip" href="enums/sub_5874a0.html#v-VERSUS" title="对战"><code>VERSUS</code>=1<span class="enum-zh">对战</span></a> <a class="enum-chip" href="enums/sub_5874a0.html#v-VERSUS_XWAR" title="大规模对战"><code>VERSUS_XWAR</code>=2<span class="enum-zh">大规模对战</span></a> <a class="enum-chip" href="enums/sub_5874a0.html#v-VERSUS_COMMANDER" title="指挥官对战"><code>VERSUS_COMMANDER</code>=3<span class="enum-zh">指挥官对战</span></a> <a class="enum-chip" href="enums/sub_5874a0.html#v-WIN" title="胜利"><code>WIN</code>=4<span class="enum-zh">胜利</span></a> <a class="enum-chip" href="enums/sub_5874a0.html#v-WIN_XWAR" title="大规模战胜利"><code>WIN_XWAR</code>=5<span class="enum-zh">大规模战胜利</span></a> <a class="enum-chip" href="enums/sub_5874a0.html#v-WIN_COMMANDER" title="指挥官战胜利"><code>WIN_COMMANDER</code>=6<span class="enum-zh">指挥官战胜利</span></a> <a class="enum-chip" href="enums/sub_5874a0.html#v-KILL" title="击杀"><code>KILL</code>=7<span class="enum-zh">击杀</span></a> <a class="enum-chip" href="enums/sub_5874a0.html#v-KILL_WRESTLE" title="击杀·格斗"><code>KILL_WRESTLE</code>=8<span class="enum-zh">击杀·格斗</span></a> <a class="enum-chip" href="enums/sub_5874a0.html#v-KILL_SHOT" title="射击击杀"><code>KILL_SHOT</code>=9<span class="enum-zh">射击击杀</span></a> <a class="enum-chip" href="enums/sub_5874a0.html#v-KILL_CANNON" title="击杀·炮击"><code>KILL_CANNON</code>=10<span class="enum-zh">击杀·炮击</span></a> <a class="enum-chip" href="enums/sub_5874a0.html#v-KILL_THROW" title="投掷击杀"><code>KILL_THROW</code>=11<span class="enum-zh">投掷击杀</span></a> <a class="enum-chip" href="enums/sub_5874a0.html#v-KILL_DEPARMS" title="击杀·破坏武装"><code>KILL_DEPARMS</code>=12<span class="enum-zh">击杀·破坏武装</span></a> <a class="enum-conv-link" href="enums/sub_5874a0.html" title="部队挑战统计项">↗ sub_5874A0</a> <span class="muted">…共 46 项</span></div></td>
+    </tr>
+    <tr>
+      <td><code>5</code></td>
+      <td><code>target_value</code></td>
+      <td><code>target_value</code></td>
+      <td>网吧累计目标值</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5875E0</code></td>
+      <td class="muted">csv 5 · +12 · 0x58766a</td>
+      <td class="meaning-cell">网吧累计目标值（u32 col5 → +12）</td>
+    </tr>
+    <tr>
+      <td><code>6</code></td>
+      <td><code>reserved_u32_6</code></td>
+      <td><code>reserved_u32_6</code></td>
+      <td>预留列 col6</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_5875E0</code></td>
+      <td class="muted">csv 6</td>
+      <td class="meaning-cell">目标值后预留（读表跳至下一奖励段；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>7</code></td>
+      <td><code>reserved_u32_7</code></td>
+      <td><code>reserved_u32_7</code></td>
+      <td>预留列 col7</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_5875E0</code></td>
+      <td class="muted">csv 7</td>
+      <td class="meaning-cell">目标值后预留（读表跳至下一奖励段；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>8</code></td>
+      <td><code>display_order</code></td>
+      <td><code>display_order</code></td>
+      <td>列表排序权重</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5875E0</code></td>
+      <td class="muted">csv 8 · +16 · 0x58767a</td>
+      <td class="meaning-cell">列表排序权重（u32 col8 → +16）</td>
+    </tr>
+    <tr>
+      <td><code>9</code></td>
+      <td><code>reserved_u32_9</code></td>
+      <td><code>reserved_u32_9</code></td>
+      <td>预留列 col9</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_5875E0</code></td>
+      <td class="muted">csv 9</td>
+      <td class="meaning-cell">奖励段前预留（读表跳至 col11/col12；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>10</code></td>
+      <td><code>badge_tier_ref</code></td>
+      <td><code>badge_tier_ref</code></td>
+      <td>绶带等级参照</td>
+      <td><code>enum</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5875E0</code></td>
+      <td class="muted">csv 10 · +20 · 0x58768b</td>
+      <td class="meaning-cell">绶带等级参照（enum col10 sub_587540：BRONZE/SILVER/GOLD）<div class="enum-vals"><a class="enum-chip" href="enums/sub_587540.html#v-BRONZE" title="铜"><code>BRONZE</code>=0<span class="enum-zh">铜</span></a> <a class="enum-chip" href="enums/sub_587540.html#v-SILVER" title="银"><code>SILVER</code>=1<span class="enum-zh">银</span></a> <a class="enum-chip" href="enums/sub_587540.html#v-GOLD" title="金"><code>GOLD</code>=2<span class="enum-zh">金</span></a> <a class="enum-conv-link" href="enums/sub_587540.html" title="网咖等级奖励">↗ sub_587540</a></div></td>
+    </tr>
+    <tr>
+      <td><code>11</code></td>
+      <td><code>reward_gp</code></td>
+      <td><code>reward_gp</code></td>
+      <td>达成奖励 GP</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5875E0</code></td>
+      <td class="muted">csv 11 · +24 · 0x5876bd</td>
+      <td class="meaning-cell">达成奖励 GP（u32 col11 → +24）</td>
+    </tr>
+    <tr>
+      <td><code>12</code></td>
+      <td><code>reward_item_id</code></td>
+      <td><code>reward_item_id</code></td>
+      <td>达成奖励物品 ID</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5875E0</code></td>
+      <td class="muted">csv 12 · +28 · 0x5876c8</td>
+      <td class="meaning-cell">达成奖励物品 ID（u32 col12 → +28）</td>
+    </tr>
+    <tr>
+      <td><code>13</code></td>
+      <td><code>reserved_u32_13</code></td>
+      <td><code>reserved_u32_13</code></td>
+      <td>预留列 col13</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_5875E0</code></td>
+      <td class="muted">csv 13</td>
+      <td class="meaning-cell">奖励数量前预留（读表跳至 col14；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>14</code></td>
+      <td><code>reward_qty</code></td>
+      <td><code>reward_qty</code></td>
+      <td>奖励物品数量</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5875E0</code></td>
+      <td class="muted">csv 14 · +32 · 0x5876d3</td>
+      <td class="meaning-cell">奖励物品数量（u32 col14 → +32）</td>
+    </tr>
+    <tr>
+      <td><code>15</code></td>
+      <td><code>bonus_point</code></td>
+      <td><code>bonus_point</code></td>
+      <td>附加点数/积分</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5875E0</code></td>
+      <td class="muted">csv 15 · +36 · 0x5876de</td>
+      <td class="meaning-cell">附加点数/积分（u32 col15 → +36）</td>
+    </tr>
+    <tr>
+      <td><code>16</code></td>
+      <td><code>reserved_u32_16</code></td>
+      <td><code>reserved_u32_16</code></td>
+      <td>预留列 col16</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#e65100">间隙</span></td>
+      <td><code>sub_5875E0</code></td>
+      <td class="muted">csv 16</td>
+      <td class="meaning-cell">bonus 前预留（读表跳至 col17；默认 0）</td>
+    </tr>
+    <tr>
+      <td><code>17</code></td>
+      <td><code>bonus_param</code></td>
+      <td><code>bonus_param</code></td>
+      <td>附加奖励参数</td>
+      <td><code>u32</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5875E0</code></td>
+      <td class="muted">csv 17 · +40 · 0x5876f2</td>
+      <td class="meaning-cell">附加奖励参数（u32 col17 → +40）</td>
+    </tr>
+    <tr>
+      <td><code>18</code></td>
+      <td><code>challenge_title</code></td>
+      <td><code>challenge_title</code></td>
+      <td>挑战标题</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5875E0</code></td>
+      <td class="muted">csv 18 · +44 · 0x5876f5</td>
+      <td class="meaning-cell">挑战标题（wstring col18 → +44）</td>
+    </tr>
+    <tr>
+      <td><code>19</code></td>
+      <td><code>challenge_desc</code></td>
+      <td><code>challenge_desc</code></td>
+      <td>挑战说明</td>
+      <td><code>str</code></td>
+      <td><span class="badge" style="background:#2e7d32">确证</span></td>
+      <td><code>sub_5875E0</code></td>
+      <td class="muted">csv 19 · +72 · 0x587734</td>
+      <td class="meaning-cell">挑战说明（wstring col19 → +72）</td>
+    </tr></tbody>
+      </table>
+    </section>
+
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">生成于 2026-10-12 · 改 JSON 后重跑 build_site.py · HTML 只读</div>
+  </footer>
+</body>
+</html>

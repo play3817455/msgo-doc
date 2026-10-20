@@ -1,0 +1,909 @@
+{
+  "id": "SC-0x7155-battle-roomlobby_pilot_add_npc",
+  "opcode": "0x7155",
+  "direction": "SC",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "roomlobby_pilot_add_npc",
+  "source_dir": "protocol_analysis/commands/SC-0x7155-battle-roomlobby_pilot_add_npc",
+  "meta": {
+    "opcode": "`0x7155`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`battle_client`",
+    "命令名": "`roomlobby_pilot_add_npc`",
+    "处理块范围": "`0xb1e268`..`0xb1e7f7`",
+    "名字串引用点": "`0xb1e4e6`",
+    "声明容量（解码缓冲）": "`0x5B`（`0xb1e283`）",
+    "长度闭合点": "`0xb1e49f`",
+    "去向": "`vt[0x78](客户端对象)` @ `0xb1e7c1`（12 实参）"
+  },
+  "handler": null,
+  "handler_va": null,
+  "block": [
+    "0xb1e268",
+    "0xb1e7f7"
+  ],
+  "name_str": null,
+  "name_str_va": "0xb1e4e6",
+  "capacity": "0x5B",
+  "capacity_va": "0xb1e283",
+  "closer_va": "0xB1E4A3",
+  "dispatch": "`vt[0x78](客户端对象)` @ `0xb1e7c1`（12 实参）",
+  "dispatch_slot": "vt[0x78]",
+  "dispatch_va": "0xb1e7c1",
+  "wire": {
+    "length_expr": "1 + 1 + 4 + 2 + 4 + 1 + 1 + 1 + 1 + 1 + 1",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x5B（容量记账口径，非线长）",
+    "field_count": 12,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：1+1+4+2+4+(串长+1)+6。",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0x7155",
+      "evidence_va": [
+        "`0xb1e4e6`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "team",
+      "meaning": "阵营（日志串 `team=`）",
+      "purpose": "`vt[0x78]`（**客户端对象** `[esi]`）实参，`movzx ecx,byte ptr [eax]` @`0xb1e788`",
+      "enum": null,
+      "evidence_va": [
+        "0xb1e2bc"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "1",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "troops",
+      "meaning": "部队类型（日志串 `troops=`）",
+      "purpose": "同上（`0xb1e780`）",
+      "enum": null,
+      "evidence_va": [
+        "0xb1e2f9"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "2",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "pilot_id",
+      "meaning": "NPC 驾驶员 id（日志串 `pilot_id=`）",
+      "purpose": "同上（`0xb1e7a9`）",
+      "enum": null,
+      "evidence_va": [
+        "0xb1e31d"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 4,
+      "offset": "6",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "level",
+      "meaning": "等级（日志串 `level=`）",
+      "purpose": "同上（`0xb1e7a1`）",
+      "enum": null,
+      "evidence_va": [
+        "0xb1e341"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    },
+    {
+      "seq": 5,
+      "offset": "8",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "cutin_id",
+      "meaning": "切入 id（日志串 `cutin_id=`）",
+      "purpose": "同上（`0xb1e79a`）",
+      "enum": null,
+      "evidence_va": [
+        "0xb1e369"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 7
+    },
+    {
+      "seq": 6,
+      "offset": "12",
+      "length": "",
+      "wire_type": "bytes",
+      "name": "name",
+      "meaning": "NPC 名称，NUL 结尾串（日志串 `name='`）",
+      "purpose": "同上（指针实参）",
+      "enum": "串（槽 73）",
+      "evidence_va": [
+        "0xb1e392"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 8
+    },
+    {
+      "seq": 7,
+      "offset": "?",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "gender",
+      "meaning": "性别（日志串 `gender=`）",
+      "purpose": "同上（`0xb1e7ba`）",
+      "enum": null,
+      "evidence_va": [
+        "0xb1e3cf"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 9
+    },
+    {
+      "seq": 8,
+      "offset": "?",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "platoon",
+      "meaning": "小队编号（日志串 `platoon=`）",
+      "purpose": "同上（`0xb1e7b0`）",
+      "enum": null,
+      "evidence_va": [
+        "0xb1e3f3"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 10
+    },
+    {
+      "seq": 9,
+      "offset": "?",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "platoon_slot",
+      "meaning": "小队槽位（日志串 `platoon_slot=`）",
+      "purpose": "同上",
+      "enum": null,
+      "evidence_va": [
+        "0xb1e417"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 11
+    },
+    {
+      "seq": 10,
+      "offset": "?",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "is_platoon_leader",
+      "meaning": "是否队长（日志串 `is_platoon_leader=`）",
+      "purpose": "同上",
+      "enum": null,
+      "evidence_va": [
+        "0xb1e43f"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 12
+    },
+    {
+      "seq": 11,
+      "offset": "?",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "dtaskf_order_number",
+      "meaning": "动态部队指令序号（日志串 `dtaskf_order_number=`）",
+      "purpose": "同上",
+      "enum": null,
+      "evidence_va": [
+        "0xb1e467"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 13
+    },
+    {
+      "seq": 12,
+      "offset": "?",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "is_disable_scoreboard",
+      "meaning": "是否禁用计分板（日志串 `is_disable_scoreboard=`）",
+      "purpose": "同上",
+      "enum": null,
+      "evidence_va": [
+        "0xb1e48f"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 14
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0x7155（分发器 switch 选择子）",
+      "evidence_va": "0xB1E4E6"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB05DA0`（模块 id 5）→ 之后逐字段读线",
+      "evidence_va": "0xB1E26C"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "team：`u8`（线长 1）—— 阵营（日志串 `team=`）",
+      "evidence_va": "0xB1E2BC"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "troops：`u8`（线长 1）—— 部队类型（日志串 `troops=`）",
+      "evidence_va": "0xB1E2F9"
+    },
+    {
+      "step": 5,
+      "kind": "read_scalar",
+      "detail": "pilot_id：`u32`（线长 4）—— NPC 驾驶员 id（日志串 `pilot_id=`）",
+      "evidence_va": "0xB1E31D"
+    },
+    {
+      "step": 6,
+      "kind": "read_scalar",
+      "detail": "level：`u16`（线长 2）—— 等级（日志串 `level=`）",
+      "evidence_va": "0xB1E341"
+    },
+    {
+      "step": 7,
+      "kind": "read_count",
+      "detail": "cutin_id：`u32`（线长 4）—— 切入 id（日志串 `cutin_id=`）",
+      "evidence_va": "0xB1E369"
+    },
+    {
+      "step": 8,
+      "kind": "read_scalar",
+      "detail": "name：`bytes`（线长 ）—— NPC 名称，NUL 结尾串（日志串 `name='`）",
+      "evidence_va": "0xB1E392"
+    },
+    {
+      "step": 9,
+      "kind": "read_scalar",
+      "detail": "gender：`u8`（线长 1）—— 性别（日志串 `gender=`）",
+      "evidence_va": "0xB1E3CF"
+    },
+    {
+      "step": 10,
+      "kind": "read_scalar",
+      "detail": "platoon：`u8`（线长 1）—— 小队编号（日志串 `platoon=`）",
+      "evidence_va": "0xB1E3F3"
+    },
+    {
+      "step": 11,
+      "kind": "read_scalar",
+      "detail": "platoon_slot：`u8`（线长 1）—— 小队槽位（日志串 `platoon_slot=`）",
+      "evidence_va": "0xB1E417"
+    },
+    {
+      "step": 12,
+      "kind": "read_scalar",
+      "detail": "is_platoon_leader：`u8`（线长 1）—— 是否队长（日志串 `is_platoon_leader=`）",
+      "evidence_va": "0xB1E43F"
+    },
+    {
+      "step": 13,
+      "kind": "read_scalar",
+      "detail": "dtaskf_order_number：`u8`（线长 1）—— 动态部队指令序号（日志串 `dtaskf_order_number=`）",
+      "evidence_va": "0xB1E467"
+    },
+    {
+      "step": 14,
+      "kind": "read_scalar",
+      "detail": "is_disable_scoreboard：`u8`（线长 1）—— 是否禁用计分板（日志串 `is_disable_scoreboard=`）",
+      "evidence_va": "0xB1E48F"
+    },
+    {
+      "step": 15,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB1E4A3"
+    },
+    {
+      "step": 16,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x78]`，实参 12 个",
+      "evidence_va": "0xB1E7C1"
+    },
+    {
+      "step": 17,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB1E2D3"
+    }
+  ],
+  "capabilities": [
+    "create",
+    "battle.roomlobby_pilot"
+  ],
+  "capabilities_derived": [
+    "create"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:47",
+    "batch": 18,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 91,
+        "va": "0xB1E281",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB1E27E",
+        "call_va": "0xB1E283"
+      },
+      "field_window": {
+        "start_va": "0xB1E26D",
+        "end_va": "0xB1E4C4",
+        "guard": {
+          "va": "0xB1E26C",
+          "func": "0xB05DA0",
+          "module_id": 5,
+          "release_va": "0xB05D90"
+        },
+        "closer_or_commit_va": "0xB1E4A3",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "team",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb1e2bc"
+            ]
+          },
+          {
+            "name": "troops",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb1e2f9"
+            ]
+          },
+          {
+            "name": "pilot_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb1e31d"
+            ]
+          },
+          {
+            "name": "level",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 4,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb1e341"
+            ]
+          },
+          {
+            "name": "cutin_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 5,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb1e369"
+            ]
+          },
+          {
+            "name": "name",
+            "wire_type": "bytes",
+            "width": null,
+            "seq": 6,
+            "shape": "agg",
+            "evidence_va": [
+              "0xb1e392"
+            ]
+          },
+          {
+            "name": "gender",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 7,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb1e3cf"
+            ]
+          },
+          {
+            "name": "platoon",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 8,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb1e3f3"
+            ]
+          },
+          {
+            "name": "platoon_slot",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 9,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb1e417"
+            ]
+          },
+          {
+            "name": "is_platoon_leader",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 10,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb1e43f"
+            ]
+          },
+          {
+            "name": "dtaskf_order_number",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 11,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb1e467"
+            ]
+          },
+          {
+            "name": "is_disable_scoreboard",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 12,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb1e48f"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB1E2BC",
+            "kind": "read",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB1E2F9",
+            "kind": "read",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB1E31D",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB1E341",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB1E369",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB1E392",
+            "kind": "read",
+            "width": null,
+            "wire_type": "str",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB1E3CF",
+            "kind": "read",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB1E3F3",
+            "kind": "read",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB1E417",
+            "kind": "read",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB1E43F",
+            "kind": "read",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB1E467",
+            "kind": "read",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB1E48F",
+            "kind": "read",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 11,
+        "checkable": 11,
+        "pairs": [
+          {
+            "field": "team",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB1E2BC",
+            "kind": "read"
+          },
+          {
+            "field": "troops",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB1E2F9",
+            "kind": "read"
+          },
+          {
+            "field": "pilot_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB1E31D",
+            "kind": "read"
+          },
+          {
+            "field": "level",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB1E341",
+            "kind": "read"
+          },
+          {
+            "field": "cutin_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB1E369",
+            "kind": "read"
+          },
+          {
+            "field": "gender",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB1E3CF",
+            "kind": "read"
+          },
+          {
+            "field": "platoon",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB1E3F3",
+            "kind": "read"
+          },
+          {
+            "field": "platoon_slot",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB1E417",
+            "kind": "read"
+          },
+          {
+            "field": "is_platoon_leader",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB1E43F",
+            "kind": "read"
+          },
+          {
+            "field": "dtaskf_order_number",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB1E467",
+            "kind": "read"
+          },
+          {
+            "field": "is_disable_scoreboard",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB1E48F",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB1E392",
+            "kind": "read",
+            "width": null,
+            "wire_type": "str"
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB1E26D",
+          "0xB1E4C4"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 18,
+          "capacity": 91,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB1E392",
+              "kind": "read",
+              "name": ""
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）18 / 容量 0x5b"
+        }
+      },
+      "closer": {
+        "va": "0xB1E4A3",
+        "kind": "jz",
+        "jcc_va": "0xB1E4A9",
+        "seq_va": "0xB1E49F",
+        "jcc_dst": "0xB1E4C2",
+        "cmp": "cmp     ebx, [esp+1B3Ch+var_1B24]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x78]",
+        "slot_value": 120,
+        "va": "0xB1E7C1",
+        "mov_va": "0xB1E796",
+        "host": "[edx+78h]",
+        "argc": 12,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB1E2D3",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "team=",
+        "troops=",
+        "pilot_id=",
+        "level=",
+        "cutin_id=",
+        "name=\"",
+        "gender=",
+        "platoon=",
+        "platoon_slot=",
+        "is_platoon_leader=",
+        "dtaskf_order_number=",
+        "is_disable_scoreboard="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0x7155-battle-roomlobby_pilot_add_npc.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "`0xb1e4e6`"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "RoomlobbyPilotAddNpc",
+      "role": "response",
+      "wire_length": "1 + 1 + 4 + 2 + 4 + 1 + 1 + 1 + 1 + 1 + 1",
+      "members": [
+        {
+          "name": "Team",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "team"
+        },
+        {
+          "name": "Troops",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "troops"
+        },
+        {
+          "name": "PilotId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "pilot_id"
+        },
+        {
+          "name": "Level",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "level"
+        },
+        {
+          "name": "CutinId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "cutin_id"
+        },
+        {
+          "name": "Name",
+          "wire_type": "bytes",
+          "length": "",
+          "field_ref": "name",
+          "element": null,
+          "element_length": null,
+          "cap": null,
+          "count_field": "cutin_id",
+          "count_field_source": "nearest_scalar",
+          "note": "元素成员未建模（composites/ 无此结构），须以 IDA 复核补"
+        },
+        {
+          "name": "Gender",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "gender"
+        },
+        {
+          "name": "Platoon",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "platoon"
+        },
+        {
+          "name": "PlatoonSlot",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "platoon_slot"
+        },
+        {
+          "name": "IsPlatoonLeader",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "is_platoon_leader"
+        },
+        {
+          "name": "DtaskfOrderNumber",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "dtaskf_order_number"
+        },
+        {
+          "name": "IsDisableScoreboard",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "is_disable_scoreboard"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "6676c8144b6d96c5",
+  "check_fingerprint": "15e7cd24ae28761a"
+}

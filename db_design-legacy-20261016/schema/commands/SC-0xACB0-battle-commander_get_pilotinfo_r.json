@@ -1,0 +1,448 @@
+{
+  "id": "SC-0xACB0-battle-commander_get_pilotinfo_r",
+  "opcode": "0xACB0",
+  "direction": "SC",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "commander_get_pilotinfo_r",
+  "source_dir": "protocol_analysis/commands/SC-0xACB0-battle-commander_get_pilotinfo_r",
+  "meta": {
+    "opcode": "`0xACB0`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`battle_client`",
+    "命令名": "`commander_get_pilotinfo_r`",
+    "处理块范围": "`0xb282bb`..`0xb28550`",
+    "名字串引用点": "`0xb283f0`",
+    "声明容量（解码缓冲）": "`0x7`（`B282CD`）",
+    "长度闭合点": "`B283A7`",
+    "报错码": "`0xDA`（块内 `push 1; push <errcode>; vt[0x64]`）",
+    "去向": "`vt[0x2A4]` @`B28534`（4 实参）"
+  },
+  "handler": null,
+  "handler_va": null,
+  "block": [
+    "0xb282bb",
+    "0xb28550"
+  ],
+  "name_str": null,
+  "name_str_va": "0xb283f0",
+  "capacity": "0x7",
+  "capacity_va": "0xB282CD",
+  "closer_va": "0xB283A7",
+  "dispatch": "`vt[0x2A4]` @`B28534`（4 实参）",
+  "dispatch_slot": "vt[0x2A4]",
+  "dispatch_va": "0xB28534",
+  "wire": {
+    "length_expr": "1 + 2 + 2 + 2",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x7（容量记账口径，非线长）",
+    "field_count": 4,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：7（全定长）。",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0xACB0",
+      "evidence_va": [
+        "0xb283f0"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "target_member",
+      "meaning": "目标队员编号（日志串 `target_member=`）",
+      "purpose": "经 `vt[0x2A4]` 交业务（4 实参）",
+      "enum": null,
+      "evidence_va": [
+        "B2830B",
+        "B2852E"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "1",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "target_ace",
+      "meaning": "目标王牌编号（日志串 `target_ace=`）",
+      "purpose": "经 `vt[0x2A4]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B2834B",
+        "B2851E"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "3",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "kill_cnt",
+      "meaning": "击坠数（日志串 `kill_cnt=`）",
+      "purpose": "经 `vt[0x2A4]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B2836F",
+        "B2850E"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 4,
+      "offset": "5",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "death_cnt",
+      "meaning": "被击坠数（日志串 `death_cnt=`）",
+      "purpose": "经 `vt[0x2A4]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B28393"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0xACB0（分发器 switch 选择子）",
+      "evidence_va": "0xB283F0"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB05DA0`（模块 id None）→ 之后逐字段读线",
+      "evidence_va": "0xB282BB"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "target_member：`u8`（线长 1）—— 目标队员编号（日志串 `target_member=`）",
+      "evidence_va": "0xB2830B"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "target_ace：`u16`（线长 2）—— 目标王牌编号（日志串 `target_ace=`）",
+      "evidence_va": "0xB2834B"
+    },
+    {
+      "step": 5,
+      "kind": "read_scalar",
+      "detail": "kill_cnt：`u16`（线长 2）—— 击坠数（日志串 `kill_cnt=`）",
+      "evidence_va": "0xB2836F"
+    },
+    {
+      "step": 6,
+      "kind": "read_scalar",
+      "detail": "death_cnt：`u16`（线长 2）—— 被击坠数（日志串 `death_cnt=`）",
+      "evidence_va": "0xB28393"
+    },
+    {
+      "step": 7,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB283A7"
+    },
+    {
+      "step": 8,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x2A4]`，实参 4 个",
+      "evidence_va": "0xB28534"
+    },
+    {
+      "step": 9,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB28325"
+    }
+  ],
+  "capabilities": [
+    "query",
+    "battle.commander"
+  ],
+  "capabilities_derived": [
+    "unclassified"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:47",
+    "batch": 19,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 7,
+        "va": "0xB282D0",
+        "reg": "eax",
+        "host": "[edx+78h]",
+        "alloc_va": "0xB282CD",
+        "call_va": "0xB282D2"
+      },
+      "field_window": {
+        "start_va": "0xB282BC",
+        "end_va": "0xB283CE",
+        "guard": {
+          "va": "0xB282BB",
+          "func": "0xB05DA0",
+          "module_id": null,
+          "release_va": "0xB05D90"
+        },
+        "closer_or_commit_va": "0xB283A7",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "target_member",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "B2830B",
+              "B2852E"
+            ]
+          },
+          {
+            "name": "target_ace",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "B2834B",
+              "B2851E"
+            ]
+          },
+          {
+            "name": "kill_cnt",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "B2836F",
+              "B2850E"
+            ]
+          },
+          {
+            "name": "death_cnt",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 4,
+            "shape": "scalar",
+            "evidence_va": [
+              "B28393"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB2830B",
+            "kind": "read",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB2834B",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB2836F",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB28393",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 4,
+        "checkable": 4,
+        "pairs": [
+          {
+            "field": "target_member",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB2830B",
+            "kind": "read"
+          },
+          {
+            "field": "target_ace",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB2834B",
+            "kind": "read"
+          },
+          {
+            "field": "kill_cnt",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB2836F",
+            "kind": "read"
+          },
+          {
+            "field": "death_cnt",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB28393",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB282BC",
+          "0xB283CE"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 7,
+          "capacity": 7,
+          "relation": "exact",
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）7 / 容量 0x7"
+        }
+      },
+      "closer": {
+        "va": "0xB283A7",
+        "kind": "jz",
+        "jcc_va": "0xB283AD",
+        "seq_va": "0xB283A3",
+        "jcc_dst": "0xB283C9",
+        "cmp": "cmp     ebx, [esp+1B3Ch+var_1B24]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x2A4]",
+        "slot_value": 676,
+        "va": "0xB28534",
+        "mov_va": "0xB28517",
+        "host": "[edx+2A4h]",
+        "argc": 4,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB28325",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "target_member=",
+        "target_ace=",
+        "kill_cnt=",
+        "death_cnt="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0xACB0-battle-commander_get_pilotinfo_r.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xb283f0"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "CommanderGetPilotinfoR",
+      "role": "response",
+      "wire_length": "1 + 2 + 2 + 2",
+      "members": [
+        {
+          "name": "TargetMember",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "target_member"
+        },
+        {
+          "name": "TargetAce",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "target_ace"
+        },
+        {
+          "name": "KillCnt",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "kill_cnt"
+        },
+        {
+          "name": "DeathCnt",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "death_cnt"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "19d09d59e05eb69d",
+  "check_fingerprint": "ff91e254d88409d3"
+}

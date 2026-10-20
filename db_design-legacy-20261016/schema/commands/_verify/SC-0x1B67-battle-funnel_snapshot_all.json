@@ -1,0 +1,261 @@
+{
+ "id": "SC-0x1B67-battle-funnel_snapshot_all",
+ "verified_at": "2026-09-30 15:25:42",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "block",
+ "block": [
+  "0xB1106D",
+  "0xB11299"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 1252,
+   "va": "0xB11082",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xB1107F",
+   "call_va": "0xB11087"
+  },
+  "field_window": {
+   "start_va": "0xB1106E",
+   "end_va": "0xB1115F",
+   "guard": {
+    "va": "0xB1106D",
+    "func": "0xB05DA0",
+    "module_id": null,
+    "release_va": "0xB05D90"
+   },
+   "closer_or_commit_va": "0xB11138",
+   "within_model_block": true,
+   "range_from": "block"
+  },
+  "primitive_widths": {
+   "direction": "SC",
+   "expected": [
+    {
+     "name": "snapshot_num",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB110B2",
+      "0xB110DE"
+     ]
+    },
+    {
+     "name": "snapshot_arr",
+     "wire_type": "array<funnel_snapshot_entry,N>",
+     "width": null,
+     "seq": 2,
+     "shape": "agg",
+     "evidence_va": [
+      "0xB1110A",
+      "0xB081C0",
+      "0xB0BF80"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB081CE",
+     "kind": "nested",
+     "width": 4,
+     "wire_type": null,
+     "name": "",
+     "consumed": 4,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB081E4",
+     "kind": "nested",
+     "width": 1,
+     "wire_type": null,
+     "name": "",
+     "consumed": 1,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB081F9",
+     "kind": "nested",
+     "width": 1,
+     "wire_type": null,
+     "name": "",
+     "consumed": 1,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB081F9",
+     "kind": "nested",
+     "width": 1,
+     "wire_type": null,
+     "name": "",
+     "consumed": 1,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB081F9",
+     "kind": "nested",
+     "width": 1,
+     "wire_type": null,
+     "name": "",
+     "consumed": 1,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB081F9",
+     "kind": "nested",
+     "width": 1,
+     "wire_type": null,
+     "name": "",
+     "consumed": 1,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB081F9",
+     "kind": "nested",
+     "width": 1,
+     "wire_type": null,
+     "name": "",
+     "consumed": 1,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB110B2",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB110ED",
+     "kind": "opaque",
+     "width": null,
+     "wire_type": null,
+     "name": "sub_B06060",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB1110A",
+     "kind": "opaque",
+     "width": null,
+     "wire_type": null,
+     "name": "sub_B081C0",
+     "consumed": null,
+     "consumed_effective": 10,
+     "nested_of": null
+    }
+   ],
+   "matched": 1,
+   "checkable": 1,
+   "pairs": [
+    {
+     "field": "snapshot_num",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB110B2",
+     "kind": "read"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [
+    {
+     "va": "0xB1110A",
+     "kind": "opaque",
+     "width": null,
+     "wire_type": null
+    },
+    {
+     "va": "0xB081CE",
+     "kind": "nested",
+     "width": 4,
+     "wire_type": null
+    },
+    {
+     "va": "0xB081E4",
+     "kind": "nested",
+     "width": 1,
+     "wire_type": null
+    },
+    {
+     "va": "0xB081F9",
+     "kind": "nested_run",
+     "width": 5,
+     "wire_type": null
+    }
+   ],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB1106E",
+    "0xB1115F"
+   ],
+   "scalar_match_verifiable": true,
+   "capacity_relation": {
+    "observed_min": 4,
+    "capacity": 1252,
+    "relation": "within",
+    "unknown_events": [
+     {
+      "va": "0xB110ED",
+      "kind": "opaque",
+      "name": "sub_B06060"
+     },
+     {
+      "va": "0xB1110A",
+      "kind": "opaque",
+      "name": "sub_B081C0"
+     }
+    ],
+    "is_lower_bound": true,
+    "note": "观测线长（下界）4 / 容量 0x4e4"
+   }
+  },
+  "closer": {
+   "va": "0xB11138",
+   "kind": "jz",
+   "jcc_va": "0xB1113E",
+   "seq_va": "0xB11134",
+   "jcc_dst": "0xB1115A",
+   "cmp": "cmp     ecx, [esp+1B3Ch+var_1B24]",
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x1E4]",
+   "slot_value": 484,
+   "va": "0xB1127D",
+   "mov_va": "0xB11273",
+   "host": "[edx+1E4h]",
+   "argc": 2,
+   "form": "mov_then_call",
+   "error_slot": {
+    "slot": "vt[0x64]",
+    "va": "0xB110CC",
+    "argc": 2
+   }
+  },
+  "log_strings": [
+   "snapshot_arr={"
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "snapshot_arr"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 4
+}

@@ -1,0 +1,610 @@
+{
+  "id": "SC-0xDCF2-battle-roomlobby_pilot_msdeck",
+  "opcode": "0xDCF2",
+  "direction": "SC",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "roomlobby_pilot_msdeck",
+  "source_dir": "protocol_analysis/commands/SC-0xDCF2-battle-roomlobby_pilot_msdeck",
+  "meta": {
+    "opcode": "`0xDCF2`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`battle_client`",
+    "命令名": "`roomlobby_pilot_msdeck`",
+    "处理块范围": "`0xb2cbf8`..`0xb2cff8`",
+    "名字串引用点": "`0xee6c00`",
+    "声明容量（解码缓冲）": "`0x24`（`B2CC11`）",
+    "长度闭合点": "`B2CD98`（`cmp`）→ `B2CD9E jz`",
+    "报错码": "`0x7`（块内 5 处 `push 1; push 7; vt[0x64]`）",
+    "去向": "`vt[0x80]` @`B2CFB0`（6 实参）"
+  },
+  "handler": null,
+  "handler_va": null,
+  "block": [
+    "0xb2cbf8",
+    "0xb2cff8"
+  ],
+  "name_str": null,
+  "name_str_va": "0xee6c00",
+  "capacity": "0x24",
+  "capacity_va": "0xB2CC11",
+  "closer_va": "0xB2CD98",
+  "dispatch": "`vt[0x80]` @`B2CFB0`（6 实参）",
+  "dispatch_slot": "vt[0x80]",
+  "dispatch_va": "0xB2CFB0",
+  "wire": {
+    "length_expr": "4 + 4 + 4 + 4n + 4 + 1m",
+    "fixed": false,
+    "var_drivers": [
+      "m",
+      "n"
+    ],
+    "capacity_note": "声明容量 0x24（容量记账口径，非线长）",
+    "field_count": 6,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：12 + 4n + 4m（n,m ≤ 4）",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "world_id",
+      "meaning": "大区 ID（日志串 `world_id=`）",
+      "purpose": "经 `vt[0x80]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xb2cc4c",
+        "0xb2ce31"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "pilot_id",
+      "meaning": "飞行员 ID（日志串 `pilot_id=`）",
+      "purpose": "经 `vt[0x80]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xb2cc89",
+        "0xb2ce5b"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 3,
+      "offset": "8",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "deck_msid_num",
+      "meaning": "编成机体条数（上限 4，`cmp ebx，4; ja`@`B2CCC8`）",
+      "purpose": "驱动 `deck_msid` 数组循环",
+      "enum": "0..4",
+      "evidence_va": [
+        "0xb2cc9f",
+        "0xb2ccc8",
+        "0xb2cd10"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 4,
+      "offset": "12",
+      "length": "4n",
+      "wire_type": "array<u32,4>",
+      "name": "deck_msid",
+      "meaning": "编成机体 ID 列表（日志串 `deck_msid={`）",
+      "purpose": "经 `vt[0x80]` 交业务；槽步进 4 = `sub_B41850`（`add dword ptr [edx]，4`）",
+      "enum": null,
+      "evidence_va": [
+        "0xb2ccda",
+        "0xb2ccfa",
+        "0xb2cd10"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 5,
+      "offset": "var",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "deck_mscolor_num",
+      "meaning": "编成配色条数（上限 4，`cmp …，4; ja`@`B2CD3B`）",
+      "purpose": "驱动 `deck_mscolor` 数组循环",
+      "enum": "0..4",
+      "evidence_va": [
+        "0xb2cd2b",
+        "0xb2cd3b",
+        "0xb2cd7f"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    },
+    {
+      "seq": 6,
+      "offset": "var",
+      "length": "1m",
+      "wire_type": "array<u8,4>",
+      "name": "deck_mscolor",
+      "meaning": "编成配色列表（日志串 `deck_mscolor={`）",
+      "purpose": "经 `vt[0x80]` 交业务；槽步进 1 = `sub_B05EA0`（`add dword ptr [edx]，1`）",
+      "enum": null,
+      "evidence_va": [
+        "0xb2cd57",
+        "0xb2cd70",
+        "0xb2cd7f"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 7
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0xDCF2（分发器 switch 选择子）",
+      "evidence_va": "0x0000"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB05DA0`（模块 id 7）→ 之后逐字段读线",
+      "evidence_va": "0xB2CBFC"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "world_id：`u32`（线长 4）—— 大区 ID（日志串 `world_id=`）",
+      "evidence_va": "0xB2CC4C"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "pilot_id：`u32`（线长 4）—— 飞行员 ID（日志串 `pilot_id=`）",
+      "evidence_va": "0xB2CC89"
+    },
+    {
+      "step": 5,
+      "kind": "read_count",
+      "detail": "deck_msid_num：`u32`（线长 4）—— 编成机体条数（上限 4，`cmp ebx，4; ja`@`B2CCC8`）",
+      "evidence_va": "0xB2CC9F"
+    },
+    {
+      "step": 6,
+      "kind": "read_array",
+      "detail": "deck_msid：`array<u32,4>`（线长 4n）—— 编成机体 ID 列表（日志串 `deck_msid={`）",
+      "evidence_va": "0xB2CCDA"
+    },
+    {
+      "step": 7,
+      "kind": "read_count",
+      "detail": "deck_mscolor_num：`u32`（线长 4）—— 编成配色条数（上限 4，`cmp …，4; ja`@`B2CD3B`）",
+      "evidence_va": "0xB2CD2B"
+    },
+    {
+      "step": 8,
+      "kind": "read_array",
+      "detail": "deck_mscolor：`array<u8,4>`（线长 1m）—— 编成配色列表（日志串 `deck_mscolor={`）",
+      "evidence_va": "0xB2CD57"
+    },
+    {
+      "step": 9,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB2CD98"
+    },
+    {
+      "step": 10,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x80]`，实参 6 个",
+      "evidence_va": "0xB2CFB0"
+    },
+    {
+      "step": 11,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB2CC63"
+    }
+  ],
+  "capabilities": [
+    "unclassified",
+    "battle.roomlobby_pilot"
+  ],
+  "capabilities_derived": [
+    "unclassified"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:48",
+    "batch": 20,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 36,
+        "va": "0xB2CC11",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB2CC0E",
+        "call_va": "0xB2CC13"
+      },
+      "field_window": {
+        "start_va": "0xB2CBFD",
+        "end_va": "0xB2CDB9",
+        "guard": {
+          "va": "0xB2CBFC",
+          "func": "0xB05DA0",
+          "module_id": 7,
+          "release_va": "0xB05D90"
+        },
+        "closer_or_commit_va": "0xB2CD98",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "world_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb2cc4c",
+              "0xb2ce31"
+            ]
+          },
+          {
+            "name": "pilot_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb2cc89",
+              "0xb2ce5b"
+            ]
+          },
+          {
+            "name": "deck_msid_num",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb2cc9f",
+              "0xb2ccc8",
+              "0xb2cd10"
+            ]
+          },
+          {
+            "name": "deck_msid",
+            "wire_type": "array<u32,4>",
+            "width": null,
+            "seq": 4,
+            "shape": "agg",
+            "evidence_va": [
+              "0xb2ccda",
+              "0xb2ccfa",
+              "0xb2cd10"
+            ]
+          },
+          {
+            "name": "deck_mscolor_num",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 5,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb2cd2b",
+              "0xb2cd3b",
+              "0xb2cd7f"
+            ]
+          },
+          {
+            "name": "deck_mscolor",
+            "wire_type": "array<u8,4>",
+            "width": null,
+            "seq": 6,
+            "shape": "agg",
+            "evidence_va": [
+              "0xb2cd57",
+              "0xb2cd70",
+              "0xb2cd7f"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB2CC4C",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB2CC89",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB2CC9F",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB2CCDA",
+            "kind": "bounded",
+            "width": 4,
+            "wire_type": null,
+            "name": "sub_B41850",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB2CCFA",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB2CD2B",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB2CD57",
+            "kind": "bounded",
+            "width": 1,
+            "wire_type": null,
+            "name": "sub_B05EA0",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB2CD70",
+            "kind": "read",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 4,
+        "checkable": 4,
+        "pairs": [
+          {
+            "field": "world_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB2CC4C",
+            "kind": "read"
+          },
+          {
+            "field": "pilot_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB2CC89",
+            "kind": "read"
+          },
+          {
+            "field": "deck_msid_num",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB2CC9F",
+            "kind": "read"
+          },
+          {
+            "field": "deck_mscolor_num",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB2CCDA",
+            "kind": "bounded"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB2CCFA",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32"
+          },
+          {
+            "va": "0xB2CD2B",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32"
+          },
+          {
+            "va": "0xB2CD57",
+            "kind": "bounded",
+            "width": 1,
+            "wire_type": null
+          },
+          {
+            "va": "0xB2CD70",
+            "kind": "read",
+            "width": 1,
+            "wire_type": "u8"
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB2CBFD",
+          "0xB2CDB9"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 21,
+          "capacity": 36,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB2CCDA",
+              "kind": "bounded",
+              "name": "sub_B41850"
+            },
+            {
+              "va": "0xB2CD57",
+              "kind": "bounded",
+              "name": "sub_B05EA0"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）21 / 容量 0x24"
+        }
+      },
+      "closer": {
+        "va": "0xB2CD98",
+        "kind": "jz",
+        "jcc_va": "0xB2CD9E",
+        "seq_va": "0xB2CD94",
+        "jcc_dst": "0xB2CDB7",
+        "cmp": "cmp     ecx, [esp+1B3Ch+var_1B24]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x80]",
+        "slot_value": 128,
+        "va": "0xB2CFB0",
+        "mov_va": "0xB2CF8F",
+        "host": "[edx+80h]",
+        "argc": 6,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB2CC63",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "world_id=",
+        "pilot_id=",
+        "deck_msid={",
+        "deck_mscolor={"
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0xDCF2-battle-roomlobby_pilot_msdeck.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": []
+  },
+  "structs": {
+    "response": {
+      "go_name": "RoomlobbyPilotMsdeck",
+      "role": "response",
+      "wire_length": "4 + 4 + 4 + 4n + 4 + 1m",
+      "members": [
+        {
+          "name": "WorldId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "world_id"
+        },
+        {
+          "name": "PilotId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "pilot_id"
+        },
+        {
+          "name": "DeckMsidNum",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "deck_msid_num"
+        },
+        {
+          "name": "DeckMsid",
+          "wire_type": "array<u32,4>",
+          "length": "4n",
+          "field_ref": "deck_msid",
+          "element": "u32",
+          "element_length": "4",
+          "cap": 4,
+          "count_field": "deck_msid_num",
+          "count_field_source": "heuristic"
+        },
+        {
+          "name": "DeckMscolorNum",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "deck_mscolor_num"
+        },
+        {
+          "name": "DeckMscolor",
+          "wire_type": "array<u8,4>",
+          "length": "1m",
+          "field_ref": "deck_mscolor",
+          "element": "u8",
+          "element_length": "1",
+          "cap": 4,
+          "count_field": "deck_mscolor_num",
+          "count_field_source": "heuristic"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "43a286be4cf037e6",
+  "check_fingerprint": "2f8dfddc32ab5fa8"
+}

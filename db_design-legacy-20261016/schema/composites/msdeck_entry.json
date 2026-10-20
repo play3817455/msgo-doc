@@ -1,0 +1,133 @@
+{
+  "id": "msdeck_entry",
+  "title": "排行编成机体槽 msdeck_entry（36B 线 / 36B 槽）",
+  "length": 36,
+  "status": "complete",
+  "reader": "sub_B467C0",
+  "printer": "sub_B4FD20",
+  "memory_claim": 36,
+  "wire_layout": "4×4+4×4+4",
+  "evidence": {
+    "commands": [
+      "SC-0xC5A9-lounge-ranking_elite_pilot_get_page_r"
+    ],
+    "protocol_paths": [
+      "protocol_analysis/commands/SC-0xC5A9-lounge-ranking_elite_pilot_get_page_r/README.md"
+    ],
+    "note": "`SC-0xC5A9` 的 `rank_pilot` 元素内嵌两个本结构（读取器 `sub_B467C0` 循环 2 次、步进 0x24=36，落点 mem 0x50 / 0x74；打印器 `sub_B4FD20` 打 `msma_id={` / `color={` / `is_heroms=`，两次调用之间打分隔串 ⇒ 线上是 msdeck_entry[2] 共 72B）。读取器实算：4×u32 + 4×u32 + 4×u8 = 36B，与槽一致（两槽 mem 80..115 / 116..151 紧邻，无填充）。**勿与 battle 线形 `msdeck`（324B / 15 成员）混用**，两者只是同名字段不同体。"
+  },
+  "members": [
+    {
+      "name": "msma_id",
+      "offset": 0,
+      "length": 16,
+      "wire_type": "u32[4]",
+      "meaning": "编成槽机体模板 ID（4 槽）",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0xC5A9-lounge-ranking_elite_pilot_get_page_r",
+          "struct": "msdeck_entry",
+          "field_name": "msma_id",
+          "offset": 0,
+          "length": 16,
+          "wire_type": "u32[4]",
+          "protocol_path": "protocol_analysis/commands/SC-0xC5A9-lounge-ranking_elite_pilot_get_page_r/README.md",
+          "section": "§4.3 元素成员（读取器 sub_B46840 + 打印器 sub_B4FE20）",
+          "reader": "sub_B467C0",
+          "printer": "sub_B4FD20",
+          "evidence_va": "0xB467D0"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB467D0",
+      "asm_audit_date": "2026-09-22",
+      "memory_offset": 0
+    },
+    {
+      "name": "color",
+      "offset": 16,
+      "length": 16,
+      "wire_type": "u32[4]",
+      "meaning": "编成槽配色（4 槽）",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0xC5A9-lounge-ranking_elite_pilot_get_page_r",
+          "struct": "msdeck_entry",
+          "field_name": "color",
+          "offset": 16,
+          "length": 16,
+          "wire_type": "u32[4]",
+          "protocol_path": "protocol_analysis/commands/SC-0xC5A9-lounge-ranking_elite_pilot_get_page_r/README.md",
+          "section": "§4.3 元素成员（读取器 sub_B46840 + 打印器 sub_B4FE20）",
+          "reader": "sub_B467C0",
+          "printer": "sub_B4FD20",
+          "evidence_va": "0xB467F2"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB467F2",
+      "asm_audit_date": "2026-09-22",
+      "memory_offset": 16
+    },
+    {
+      "name": "is_heroms",
+      "offset": 32,
+      "length": 4,
+      "wire_type": "u8[4]",
+      "meaning": "编成槽是否英雄机（4 槽；打印器只打第 1 槽 `is_heroms=`）",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0xC5A9-lounge-ranking_elite_pilot_get_page_r",
+          "struct": "msdeck_entry",
+          "field_name": "is_heroms",
+          "offset": 32,
+          "length": 4,
+          "wire_type": "u8[4]",
+          "protocol_path": "protocol_analysis/commands/SC-0xC5A9-lounge-ranking_elite_pilot_get_page_r/README.md",
+          "section": "§4.3 元素成员（读取器 sub_B46840 + 打印器 sub_B4FE20）",
+          "reader": "sub_B467C0",
+          "printer": "sub_B4FD20",
+          "evidence_va": "0xB46810"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB46810",
+      "asm_audit_date": "2026-09-22",
+      "memory_offset": 32
+    }
+  ],
+  "asm_audit": {
+    "verified": "2026-09-22",
+    "reader": "sub_B467C0",
+    "writer": null,
+    "total_bytes": 36,
+    "fields_ok": 3,
+    "fields_fail": 0,
+    "issues": [],
+    "status": "pass",
+    "memory": {
+      "verified": "2026-09-26",
+      "status": "pass",
+      "mem_fields": 3,
+      "fields_ok": 3,
+      "fields_fail": 0,
+      "issues": [],
+      "memory_claim": 36,
+      "note": "线偏移 == 内存偏移（0/16/32）；两槽紧邻（80..115 / 116..151），槽 == 线长 36"
+    }
+  },
+  "oracle_audit": {
+    "date": "2026-09-23",
+    "tool": "emulab/oracle_fix.py",
+    "verdict_before": "GAP",
+    "verdict_after": "PASS",
+    "changes": [
+      "msma_id: memory_offset None -> 0",
+      "color: memory_offset None -> 16",
+      "is_heroms: memory_offset None -> 32"
+    ]
+  }
+}

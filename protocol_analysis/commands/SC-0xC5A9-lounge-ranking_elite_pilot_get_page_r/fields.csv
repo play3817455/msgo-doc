@@ -1,0 +1,11 @@
+序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+1,0,4,u32,result,结果码（日志串 `result=`）,经 `vt[0x588]`（10 实参）交业务,-,0xb786e8|0xb786f7,确证
+2,4,4,u32,is_revoke,是否撤销（日志串 `is_revoke=`）,同上,-,0xb78728|0xb78737,确证
+3,8,10,struct(10),order,排序条件（日志串 `order=`；读取器 `sub_B46420` = 5×u16 = 10B）,同上,-,0xb7874c|0xb7875b,确证
+4,18,8,u64,rankself,自身名次值（日志串 `rankself=`）,同上（拆低/高 32 位）,-,0xb78770|0xb7877f,确证
+5,26,4,u32,page_now,当前页（日志串 `page_now=`）,同上,-,0xb78798|0xb787a7,确证
+6,30,4,u32,page_max,总页数（日志串 `page_max=`）,同上,-,0xb787c0|0xb787cf,确证
+7,34,4,u32,ranking_num,名次条目数（上限 100）,"驱动 `ranking` 数组循环（`cmp edi,ebx`）",0..100,0xb787e9|0xb78815,确证
+8,38,188n,"array<rank_pilot,100>",ranking,精英机师排行榜（日志串 `ranking={`）,经 `vt[0x588]`（指针 + 计数）交业务,-,0xb78824|0xb7884a,确证
+9,var,Ls+1,bytes(≤65),term_str,赛季/期间字符串（NUL 结尾 日志串 `term_str=`）,同上,-,0xb78890,确证
+10,var,4,u32,term_rankerbattle,排位赛期间号（日志串 `term_rankerbattle=`）,同上,-,0xb788a9|0xb788b8,确证

@@ -1,0 +1,229 @@
+{
+ "id": "CS-0xE314-battle-weapon_fire__camera",
+ "verified_at": "2026-09-30 15:25:48",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "handler_func",
+ "block": [
+  "0xB3A580",
+  "0xB3A857"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 118,
+   "va": "0xB3A5C6",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xB3A5C3",
+   "call_va": "0xB3A5C8"
+  },
+  "field_window": {
+   "start_va": "0xB3A580",
+   "end_va": "0xB3A6E5",
+   "guard": null,
+   "closer_or_commit_va": "0xB3A6E5",
+   "within_model_block": true,
+   "range_from": "handler_func"
+  },
+  "primitive_widths": {
+   "direction": "CS",
+   "expected": [
+    {
+     "name": "frame_count",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "`0xB3A612`;`0xB3A616`"
+     ]
+    },
+    {
+     "name": "ent_ids_num",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 2,
+     "shape": "scalar",
+     "evidence_va": [
+      "`0xB3A60F`;`0xB3A62C`"
+     ]
+    },
+    {
+     "name": "ent_ids",
+     "wire_type": "array<u16,N>",
+     "width": null,
+     "seq": 3,
+     "shape": "agg",
+     "evidence_va": [
+      "`0xB3A65E`;`0xB3A662`;`0xB3A66E`"
+     ]
+    },
+    {
+     "name": "AI_ent_id",
+     "wire_type": "u16",
+     "width": 2,
+     "seq": 4,
+     "shape": "scalar",
+     "evidence_va": [
+      "`0xB3A683`;`0xB3A688`"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB3A600",
+     "kind": "inline_store",
+     "width": 2,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB3A616",
+     "kind": "inline_store",
+     "width": 4,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB3A62C",
+     "kind": "write",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB3A662",
+     "kind": "inline_store",
+     "width": 2,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB3A688",
+     "kind": "inline_store",
+     "width": 2,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB3A6BB",
+     "kind": "composite",
+     "width": null,
+     "wire_type": null,
+     "name": "sub_B03020",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 3,
+   "checkable": 3,
+   "pairs": [
+    {
+     "field": "frame_count",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB3A616",
+     "kind": "inline_store"
+    },
+    {
+     "field": "ent_ids_num",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB3A62C",
+     "kind": "write"
+    },
+    {
+     "field": "AI_ent_id",
+     "width": 2,
+     "shape": "scalar",
+     "va": "0xB3A662",
+     "kind": "inline_store"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [
+    {
+     "va": "0xB3A600",
+     "kind": "inline_store",
+     "width": 2,
+     "wire_type": null
+    },
+    {
+     "va": "0xB3A688",
+     "kind": "inline_store",
+     "width": 2,
+     "wire_type": null
+    }
+   ],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB3A580",
+    "0xB3A6E5"
+   ],
+   "scalar_match_verifiable": false,
+   "capacity_relation": {
+    "observed_min": 14,
+    "capacity": 118,
+    "relation": "within",
+    "unknown_events": [
+     {
+      "va": "0xB3A6BB",
+      "kind": "composite",
+      "name": "sub_B03020"
+     }
+    ],
+    "is_lower_bound": true,
+    "note": "观测线长（下界）14 / 容量 0x76"
+   }
+  },
+  "closer": {
+   "va": "0xB3A6E5",
+   "kind": "commit",
+   "jcc_va": null,
+   "seq_va": null,
+   "cmp": null,
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x58]",
+   "slot_value": 88,
+   "va": "0xB3A7EE",
+   "mov_va": "0xB3A7E5",
+   "host": "[eax+58h]",
+   "argc": 2,
+   "form": "mov_then_call",
+   "error_slot": null
+  },
+  "log_strings": [
+   "frame_count=",
+   "ent_ids={",
+   "AI_ent_id="
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "AI_ent_id",
+  "ent_ids",
+  "frame_count"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 20
+}

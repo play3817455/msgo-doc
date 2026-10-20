@@ -1,0 +1,244 @@
+{
+ "id": "SC-0xDE24-auth-proto_version_check_r",
+ "verified_at": "2026-09-30 15:25:42",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "block",
+ "block": [
+  "0xB04800",
+  "0xB049F0"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 12,
+   "va": "0xB04817",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xB04814",
+   "call_va": "0xB04819"
+  },
+  "field_window": {
+   "start_va": "0xB04803",
+   "end_va": "0xB049DB",
+   "guard": {
+    "va": "0xB04802",
+    "func": "0xB02C90",
+    "module_id": 1,
+    "release_va": null
+   },
+   "closer_or_commit_va": "0xB048A7",
+   "within_model_block": true,
+   "range_from": "block"
+  },
+  "primitive_widths": {
+   "direction": "SC",
+   "expected": [
+    {
+     "name": "version",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xb04844",
+      "0xb04924"
+     ]
+    },
+    {
+     "name": "crc",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 2,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xb04885",
+      "0xb0494e"
+     ]
+    },
+    {
+     "name": "gentime",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 3,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xb04897",
+      "0xb04970"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB04844",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB04885",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB04897",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB048E3",
+     "kind": "composite",
+     "width": null,
+     "wire_type": null,
+     "name": "sub_B03020",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB04934",
+     "kind": "composite",
+     "width": null,
+     "wire_type": null,
+     "name": "sub_B03580",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB049A2",
+     "kind": "composite",
+     "width": null,
+     "wire_type": null,
+     "name": "sub_B03580",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB049B6",
+     "kind": "composite",
+     "width": null,
+     "wire_type": null,
+     "name": "sub_B036E0",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 3,
+   "checkable": 3,
+   "pairs": [
+    {
+     "field": "version",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB04844",
+     "kind": "read"
+    },
+    {
+     "field": "crc",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB04885",
+     "kind": "read"
+    },
+    {
+     "field": "gentime",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB04897",
+     "kind": "read"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB04803",
+    "0xB049DB"
+   ],
+   "scalar_match_verifiable": true,
+   "capacity_relation": {
+    "observed_min": 12,
+    "capacity": 12,
+    "relation": "within",
+    "unknown_events": [
+     {
+      "va": "0xB048E3",
+      "kind": "composite",
+      "name": "sub_B03020"
+     },
+     {
+      "va": "0xB04934",
+      "kind": "composite",
+      "name": "sub_B03580"
+     },
+     {
+      "va": "0xB049A2",
+      "kind": "composite",
+      "name": "sub_B03580"
+     },
+     {
+      "va": "0xB049B6",
+      "kind": "composite",
+      "name": "sub_B036E0"
+     }
+    ],
+    "is_lower_bound": true,
+    "note": "观测线长（下界）12 / 容量 0xc"
+   }
+  },
+  "closer": {
+   "va": "0xB048A7",
+   "kind": "jnz",
+   "jcc_va": "0xB048AB",
+   "seq_va": "0xB048A3",
+   "jcc_dst": "0xB04850",
+   "cmp": "cmp     ebx, [esp+124h+var_108]",
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x68]",
+   "slot_value": 104,
+   "va": "0xB049DB",
+   "mov_va": "0xB049CB",
+   "host": "[edx+68h]",
+   "argc": 3,
+   "form": "mov_then_call",
+   "error_slot": {
+    "slot": "vt[0x64]",
+    "va": "0xB0485B",
+    "argc": 2
+   }
+  },
+  "log_strings": [
+   "version=",
+   "crc=",
+   "gentime="
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "crc",
+  "gentime",
+  "version"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 2
+}

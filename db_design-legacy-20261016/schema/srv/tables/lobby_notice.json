@@ -1,0 +1,278 @@
+{
+  "id": "srv.lobby_notice",
+  "slug": "lobby_notice",
+  "title": "大厅公告板",
+  "kind": "server_config",
+  "status": "complete",
+  "ddl": "serverv/migrations/0013_srv_lobby.up.sql",
+  "generated_by": "db_design/tools/build_srv_docs.py",
+  "note": "本文件由 db_design/tools/build_srv_docs.py 从 serverv/migrations/0013_srv_lobby.up.sql 生成，勿手改：改 srv.* 请改迁移再重跑生成器",
+  "purpose": "大厅公告板；SC-0x5A3D activity_notice 的 activity[] 来源（元素 = activity 复合体 356B）",
+  "primary_key": [
+    "id"
+  ],
+  "columns": [
+    {
+      "name": "id",
+      "sql_type": "BIGSERIAL",
+      "not_null": true,
+      "default": null,
+      "checks": [],
+      "meaning": "自增主键（下发次序按 posted_at DESC, id DESC 兜稳定）"
+    },
+    {
+      "name": "world_id",
+      "sql_type": "INTEGER",
+      "not_null": true,
+      "default": "0,",
+      "checks": [],
+      "meaning": "大区号；0 = 全大区通用（任何大区都收到）"
+    },
+    {
+      "name": "pilot_id",
+      "sql_type": "BIGINT",
+      "not_null": true,
+      "default": "0,",
+      "checks": [],
+      "meaning": "发布者机师号 [u32] activity@offset0；0 = 系统公告"
+    },
+    {
+      "name": "pilot_name",
+      "sql_type": "TEXT",
+      "not_null": true,
+      "default": "'',",
+      "checks": [],
+      "meaning": "发布者名（快照）[char[25]] activity@offset4"
+    },
+    {
+      "name": "level",
+      "sql_type": "SMALLINT",
+      "not_null": true,
+      "default": "0",
+      "checks": [
+        "level BETWEEN -128 AND 127"
+      ],
+      "meaning": "发布者等级（快照）[i8] activity@offset29"
+    },
+    {
+      "name": "is_admin",
+      "sql_type": "SMALLINT",
+      "not_null": true,
+      "default": "0",
+      "checks": [
+        "is_admin BETWEEN -128 AND 127"
+      ],
+      "meaning": "发布者管理员标记 [i8] activity@offset30"
+    },
+    {
+      "name": "send_range",
+      "sql_type": "BIGINT",
+      "not_null": true,
+      "default": "0,",
+      "checks": [],
+      "meaning": "发送范围 [u32] activity@offset31（枚举未取证）"
+    },
+    {
+      "name": "timestamp_text",
+      "sql_type": "TEXT",
+      "not_null": true,
+      "default": "'',",
+      "checks": [],
+      "meaning": "时间戳文本 [char[24]] activity@offset35；空 = 下发时按 posted_at 现算"
+    },
+    {
+      "name": "msg",
+      "sql_type": "TEXT",
+      "not_null": true,
+      "default": "'',",
+      "checks": [],
+      "meaning": "公告正文 [char[241]] activity@offset59"
+    },
+    {
+      "name": "avatar_avatar_id",
+      "sql_type": "BIGINT",
+      "not_null": true,
+      "default": "0,",
+      "checks": [],
+      "meaning": "外观模板 ID [u32] avatar@0"
+    },
+    {
+      "name": "avatar_gender",
+      "sql_type": "SMALLINT",
+      "not_null": true,
+      "default": "0",
+      "checks": [
+        "avatar_gender BETWEEN 0 AND 255"
+      ],
+      "meaning": "外观-性别 [u8] avatar@4"
+    },
+    {
+      "name": "avatar_face",
+      "sql_type": "SMALLINT",
+      "not_null": true,
+      "default": "0",
+      "checks": [
+        "avatar_face BETWEEN 0 AND 255"
+      ],
+      "meaning": "外观-脸型 [u8] avatar@5"
+    },
+    {
+      "name": "avatar_skincolor",
+      "sql_type": "SMALLINT",
+      "not_null": true,
+      "default": "0",
+      "checks": [
+        "avatar_skincolor BETWEEN 0 AND 255"
+      ],
+      "meaning": "外观-肤色 [u8] avatar@6"
+    },
+    {
+      "name": "avatar_clothes",
+      "sql_type": "INTEGER",
+      "not_null": true,
+      "default": "0",
+      "checks": [
+        "avatar_clothes BETWEEN 0 AND 65535"
+      ],
+      "meaning": "外观-服装 [u16] avatar@7"
+    },
+    {
+      "name": "avatar_hair",
+      "sql_type": "BIGINT",
+      "not_null": true,
+      "default": "0,",
+      "checks": [],
+      "meaning": "外观-发型 [u32] avatar@9"
+    },
+    {
+      "name": "avatar_accessory",
+      "sql_type": "SMALLINT",
+      "not_null": true,
+      "default": "0",
+      "checks": [
+        "avatar_accessory BETWEEN 0 AND 255"
+      ],
+      "meaning": "外观-饰品 [u8] avatar@13"
+    },
+    {
+      "name": "avatar_frame",
+      "sql_type": "SMALLINT",
+      "not_null": true,
+      "default": "0",
+      "checks": [
+        "avatar_frame BETWEEN 0 AND 255"
+      ],
+      "meaning": "外观-边框 [u8] avatar@14"
+    },
+    {
+      "name": "avatar_voice",
+      "sql_type": "SMALLINT",
+      "not_null": true,
+      "default": "0",
+      "checks": [
+        "avatar_voice BETWEEN 0 AND 255"
+      ],
+      "meaning": "外观-语音 [u8] avatar@15"
+    },
+    {
+      "name": "avatar_byword",
+      "sql_type": "INTEGER",
+      "not_null": true,
+      "default": "0",
+      "checks": [
+        "avatar_byword BETWEEN 0 AND 65535"
+      ],
+      "meaning": "外观-口头禅 ID [u16] avatar@16"
+    },
+    {
+      "name": "clan_id",
+      "sql_type": "BIGINT",
+      "not_null": true,
+      "default": "0,",
+      "checks": [],
+      "meaning": "战队 ID [u32] activity@offset318"
+    },
+    {
+      "name": "clan_name",
+      "sql_type": "TEXT",
+      "not_null": true,
+      "default": "'',",
+      "checks": [],
+      "meaning": "战队名 [char[31]] activity@offset322"
+    },
+    {
+      "name": "clan_emb_base",
+      "sql_type": "SMALLINT",
+      "not_null": true,
+      "default": "0",
+      "checks": [
+        "clan_emb_base BETWEEN -128 AND 127"
+      ],
+      "meaning": "战队徽章底色 [i8] activity@offset353"
+    },
+    {
+      "name": "clan_emb_parts1",
+      "sql_type": "SMALLINT",
+      "not_null": true,
+      "default": "0",
+      "checks": [
+        "clan_emb_parts1 BETWEEN -128 AND 127"
+      ],
+      "meaning": "战队徽章部件1 [i8] activity@offset354"
+    },
+    {
+      "name": "clan_emb_parts2",
+      "sql_type": "SMALLINT",
+      "not_null": true,
+      "default": "0",
+      "checks": [
+        "clan_emb_parts2 BETWEEN -128 AND 127"
+      ],
+      "meaning": "战队徽章部件2 [i8] activity@offset355"
+    },
+    {
+      "name": "enabled",
+      "sql_type": "BOOLEAN",
+      "not_null": true,
+      "default": "TRUE,",
+      "checks": [],
+      "meaning": "是否下发（FALSE = 撤下，仍然留档）"
+    },
+    {
+      "name": "posted_at",
+      "sql_type": "TIMESTAMPTZ",
+      "not_null": true,
+      "default": "now(),",
+      "checks": [],
+      "meaning": "发布时刻（下发排序键；timestamp_text 为空时由它生成文本）"
+    },
+    {
+      "name": "updated_at",
+      "sql_type": "TIMESTAMPTZ",
+      "not_null": true,
+      "default": "now()",
+      "checks": [],
+      "meaning": "本行最后修改时间（GM 编辑公告时更新）"
+    }
+  ],
+  "seed_columns": [
+    "world_id",
+    "pilot_id",
+    "pilot_name",
+    "level",
+    "is_admin",
+    "send_range",
+    "msg"
+  ],
+  "seed_rows": [
+    {
+      "world_id": "0",
+      "pilot_id": "0",
+      "pilot_name": "'SERVER'",
+      "level": "1",
+      "is_admin": "1",
+      "send_range": "0",
+      "msg": "'欢迎来到频道大厅。'"
+    }
+  ]
+}

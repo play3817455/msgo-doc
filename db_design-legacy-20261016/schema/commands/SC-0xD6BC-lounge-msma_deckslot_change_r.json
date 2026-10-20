@@ -1,0 +1,490 @@
+{
+  "id": "SC-0xD6BC-lounge-msma_deckslot_change_r",
+  "opcode": "0xD6BC",
+  "direction": "SC",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "msma_deckslot_change_r",
+  "source_dir": "protocol_analysis/commands/SC-0xD6BC-lounge-msma_deckslot_change_r",
+  "meta": {
+    "opcode": "`0xD6BC`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`msma_deckslot_change_r`",
+    "处理块范围": "`0xb7eba7`..`0xb7eea2`",
+    "名字串引用点": "`0xee6704`",
+    "声明容量（解码缓冲）": "`0x11`（`B7EBC3`）",
+    "长度闭合点": "`B7ECC2`（`cmp`）→ `B7ECC8 jz`",
+    "报错码": "`0xD2`（块内 `push 1; push 0D2h; vt[0x64]`）",
+    "去向": "`vt[0x24C]` @`B7EE86`（6 实参）"
+  },
+  "handler": null,
+  "handler_va": null,
+  "block": [
+    "0xb7eba7",
+    "0xb7eea2"
+  ],
+  "name_str": null,
+  "name_str_va": "0xee6704",
+  "capacity": "0x11",
+  "capacity_va": "0xB7EBC3",
+  "closer_va": "0xB7ECC2",
+  "dispatch": "`vt[0x24C]` @`B7EE86`（6 实参）",
+  "dispatch_slot": "vt[0x24C]",
+  "dispatch_va": "0xB7EE86",
+  "wire": {
+    "length_expr": "4 + 8 + 2 + 2 + 1",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x11（容量记账口径，非线长）",
+    "field_count": 5,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：17",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "result",
+      "meaning": "编成槽变更结果码（日志串 `result=`）",
+      "purpose": "经 `vt[0x24C]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xb7ebfe",
+        "0xb7ed61"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "8",
+      "wire_type": "u64",
+      "name": "uniqid",
+      "meaning": "机体唯一 ID（日志串 `uniqid=`）",
+      "purpose": "经 `vt[0x24C]` 交业务（cdecl 拆低/高 32 位）",
+      "enum": null,
+      "evidence_va": [
+        "0xb7ec3e",
+        "0xb7ed8f"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 3,
+      "offset": "12",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "decktype",
+      "meaning": "编成类型（日志串 `decktype=`）",
+      "purpose": "经 `vt[0x24C]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xb7ec62",
+        "0xb7edba"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 4,
+      "offset": "14",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "deckslot",
+      "meaning": "编成槽位（日志串 `deckslot=`）",
+      "purpose": "经 `vt[0x24C]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xb7ec86",
+        "0xb7ede5"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 5,
+      "offset": "16",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "is_costover",
+      "meaning": "是否超出 COST（日志串 `is_costover=`）",
+      "purpose": "经 `vt[0x24C]` 交业务",
+      "enum": "0/1",
+      "evidence_va": [
+        "0xb7ecae",
+        "0xb7ee08"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0xD6BC（分发器 switch 选择子）",
+      "evidence_va": "0x0000"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB41120`（模块 id 210）→ 之后逐字段读线",
+      "evidence_va": "0xB7EBAE"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "result：`u32`（线长 4）—— 编成槽变更结果码（日志串 `result=`）",
+      "evidence_va": "0xB7EBFE"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "uniqid：`u64`（线长 8）—— 机体唯一 ID（日志串 `uniqid=`）",
+      "evidence_va": "0xB7EC3E"
+    },
+    {
+      "step": 5,
+      "kind": "read_scalar",
+      "detail": "decktype：`u16`（线长 2）—— 编成类型（日志串 `decktype=`）",
+      "evidence_va": "0xB7EC62"
+    },
+    {
+      "step": 6,
+      "kind": "read_scalar",
+      "detail": "deckslot：`u16`（线长 2）—— 编成槽位（日志串 `deckslot=`）",
+      "evidence_va": "0xB7EC86"
+    },
+    {
+      "step": 7,
+      "kind": "read_scalar",
+      "detail": "is_costover：`u8`（线长 1）—— 是否超出 COST（日志串 `is_costover=`）",
+      "evidence_va": "0xB7ECAE"
+    },
+    {
+      "step": 8,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB7ECC2"
+    },
+    {
+      "step": 9,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x24C]`，实参 6 个",
+      "evidence_va": "0xB7EE86"
+    },
+    {
+      "step": 10,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB7EC18"
+    }
+  ],
+  "capabilities": [
+    "update",
+    "lounge.deckslot"
+  ],
+  "capabilities_derived": [
+    "update"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:45",
+    "batch": 12,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 17,
+        "va": "0xB7EBC3",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB7EBC0",
+        "call_va": "0xB7EBC5"
+      },
+      "field_window": {
+        "start_va": "0xB7EBAF",
+        "end_va": "0xB7ECE9",
+        "guard": {
+          "va": "0xB7EBAE",
+          "func": "0xB41120",
+          "module_id": 210,
+          "release_va": "0xB41110"
+        },
+        "closer_or_commit_va": "0xB7ECC2",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "result",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb7ebfe",
+              "0xb7ed61"
+            ]
+          },
+          {
+            "name": "uniqid",
+            "wire_type": "u64",
+            "width": 8,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb7ec3e",
+              "0xb7ed8f"
+            ]
+          },
+          {
+            "name": "decktype",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb7ec62",
+              "0xb7edba"
+            ]
+          },
+          {
+            "name": "deckslot",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 4,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb7ec86",
+              "0xb7ede5"
+            ]
+          },
+          {
+            "name": "is_costover",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 5,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb7ecae",
+              "0xb7ee08"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB7EBFE",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB7EC3E",
+            "kind": "read",
+            "width": 8,
+            "wire_type": "u64",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB7EC62",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB7EC86",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB7ECAE",
+            "kind": "read",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 5,
+        "checkable": 5,
+        "pairs": [
+          {
+            "field": "result",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB7EBFE",
+            "kind": "read"
+          },
+          {
+            "field": "uniqid",
+            "width": 8,
+            "shape": "scalar",
+            "va": "0xB7EC3E",
+            "kind": "read"
+          },
+          {
+            "field": "decktype",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB7EC62",
+            "kind": "read"
+          },
+          {
+            "field": "deckslot",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB7EC86",
+            "kind": "read"
+          },
+          {
+            "field": "is_costover",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB7ECAE",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB7EBAF",
+          "0xB7ECE9"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 17,
+          "capacity": 17,
+          "relation": "exact",
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）17 / 容量 0x11"
+        }
+      },
+      "closer": {
+        "va": "0xB7ECC2",
+        "kind": "jz",
+        "jcc_va": "0xB7ECC8",
+        "seq_va": "0xB7ECBE",
+        "jcc_dst": "0xB7ECE4",
+        "cmp": "cmp     ebx, [esp+2C5Ch+var_2C40]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x24C]",
+        "slot_value": 588,
+        "va": "0xB7EE86",
+        "mov_va": "0xB7EE5F",
+        "host": "[edx+24Ch]",
+        "argc": 6,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB7EC18",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "result=",
+        "uniqid=",
+        "decktype=",
+        "deckslot=",
+        "is_costover="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0xD6BC-lounge-msma_deckslot_change_r.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": []
+  },
+  "structs": {
+    "response": {
+      "go_name": "MsmaDeckslotChangeR",
+      "role": "response",
+      "wire_length": "4 + 8 + 2 + 2 + 1",
+      "members": [
+        {
+          "name": "Result",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "result"
+        },
+        {
+          "name": "Uniqid",
+          "wire_type": "u64",
+          "length": "8",
+          "field_ref": "uniqid"
+        },
+        {
+          "name": "Decktype",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "decktype"
+        },
+        {
+          "name": "Deckslot",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "deckslot"
+        },
+        {
+          "name": "IsCostover",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "is_costover"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "183d8f2191307d76",
+  "check_fingerprint": "cdd0f4b0b6002950"
+}

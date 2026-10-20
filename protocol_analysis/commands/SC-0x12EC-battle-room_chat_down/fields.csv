@@ -1,0 +1,12 @@
+序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+0,-,2,u16,opcode,命令号,battle 分发的 switch 选择子,0x12EC,0xB0F96F,确证
+1,0,1,u8,team,发送者所属队伍,交 vt[0xD4] 第1实参（movzx 零扩展）；日志 team=,?（队伍枚举未交叉）,0xB0F7CB|0xB0F9B9|0xB0F9C3|0xB0FBB8,确证（宽度）/枚举待定
+2,1,1,u8,troops,发送者所属兵种/部队,交 vt[0xD4] 第2实参；日志 troops=,?,0xB0F808|0xB0F9E0|0xB0F9ED|0xB0FBB0,确证
+3,2,4,u32,world_id,发送者所在世界（大区/场景）ID,交 vt[0xD4] 第3实参；日志 world_id=,-,0xB0F82C|0xB0FA0A|0xB0FA19|0xB0FBA9,确证
+4,6,4,u32,pilot_id,发送者驾驶员 ID,交 vt[0xD4] 第4实参；日志 pilot_id=,-,0xB0F850|0xB0FA34|0xB0FA43|0xB0FBA4,确证
+5,10,L1+1,bytes,pilot_name,发送者驾驶员名（NUL 结尾串）,"串指针交 vt[0xD4] 第5实参；日志 pilot_name=""",L1<=24（槽位预算 25）,0xB0F875|0xB0FA70|0xB0FBA1,确证
+6,10+L1+1,L2+1,bytes,msg,聊天正文（NUL 结尾串）,"串指针交 vt[0xD4] 第6实参；日志 msg=""",L2<=180（槽位预算 181）,0xB0F8A0|0xB0FAA8|0xB0FB9C,确证
+7,10+L1+L2+2,1,u8,is_all,是否对全体广播,交 vt[0xD4] 第7实参；日志 is_all=,?,0xB0F8C8|0xB0FADB|0xB0FB91,确证
+8,11+L1+L2+2,1,u8,is_party,是否仅本小队可见,交 vt[0xD4] 第8实参；日志 is_party=,?,0xB0F8F0|0xB0FB05|0xB0FB87,确证
+9,12+L1+L2+2,1,u8,is_audience,是否对观战者可见,交 vt[0xD4] 第9实参；日志 is_audience=,?,0xB0F918|0xB0FB2A|0xB0FB7F,确证
+-,13+L1+L2+2,0,-,（长度闭合）,游标必须==报文末尾,容量 0xDB=1+1+4+4+25+181+1+1+1（两串按槽预算）,-,0xB0F92C|0xB0F932,确证

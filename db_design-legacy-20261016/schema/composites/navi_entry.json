@@ -1,0 +1,94 @@
+{
+  "id": "navi_entry",
+  "title": "导航条目元素 navi_entry（8B 线 / 8B 槽）",
+  "length": 8,
+  "status": "complete",
+  "reader": "sub_B434B0",
+  "printer": "sub_B49C80",
+  "memory_claim": 8,
+  "wire_layout": "4+4",
+  "evidence": {
+    "commands": [
+      "SC-0x0906-lounge-player_navi_get_list_r"
+    ],
+    "protocol_paths": [
+      "protocol_analysis/commands/SC-0x0906-lounge-player_navi_get_list_r/README.md"
+    ],
+    "note": "元素线长 8 = 2×u32（读取器 sub_B434B0 整函数扫描两次 `mov ecx,[ecx]` + `mov [edx],ecx` / `mov [edx+4],ecx`，游标各 +4），与预留步进（sub_B41690 的 8）、循环步进（`add [var_2C48],8`@0xB549C9）三方一致。成员名取自元素打印器 sub_B49C80。"
+  },
+  "members": [
+    {
+      "name": "navi_id",
+      "offset": 0,
+      "memory_offset": 0,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "导航 ID",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x0906-lounge-player_navi_get_list_r",
+          "struct": "navi_entry",
+          "field_name": "navi_id",
+          "offset": 0,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x0906-lounge-player_navi_get_list_r/README.md",
+          "section": "§3 字段 2",
+          "reader": "sub_B434B0",
+          "printer": null,
+          "evidence_va": "0xB434BE"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB434BE",
+      "asm_audit_date": "2026-09-22"
+    },
+    {
+      "name": "status",
+      "offset": 4,
+      "memory_offset": 4,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "导航解锁/进度状态（枚举待交叉）",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x0906-lounge-player_navi_get_list_r",
+          "struct": "navi_entry",
+          "field_name": "status",
+          "offset": 4,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x0906-lounge-player_navi_get_list_r/README.md",
+          "section": "§3 字段 2",
+          "reader": "sub_B434B0",
+          "printer": null,
+          "evidence_va": "0xB434D5"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB434D5",
+      "asm_audit_date": "2026-09-22"
+    }
+  ],
+  "asm_audit": {
+    "verified": "2026-09-22",
+    "reader": "sub_B434B0",
+    "writer": null,
+    "total_bytes": 8,
+    "fields_ok": 2,
+    "fields_fail": 0,
+    "issues": [],
+    "status": "pass",
+    "memory": {
+      "verified": "2026-09-26",
+      "status": "pass",
+      "mem_fields": 2,
+      "fields_ok": 2,
+      "fields_fail": 0,
+      "issues": [],
+      "memory_claim": 8
+    }
+  }
+}

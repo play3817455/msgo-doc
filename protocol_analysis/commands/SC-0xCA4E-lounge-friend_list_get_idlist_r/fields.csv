@@ -1,0 +1,4 @@
+序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+1,0,4,u32,result,结果码（日志串 `result=`）,经 `vt[0x354]`（3 实参）交业务,-,0xb7a1b7|0xb7a1c6,确证
+2,4,4,u32,friend_num,好友数（上限 100）,"驱动 `friend_idlist` 数组循环（`cmp edi,ebx`）",0..100,0xb7a1f8|0xb7a224,确证
+3,8,4n,"array<u32,100>",friend_idlist,好友 ID 列表（日志串 `friend_idlist={`）,经 `vt[0x354]`（指针 + 计数）交业务,-,0xb7a233|0xb7a250,确证

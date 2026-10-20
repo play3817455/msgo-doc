@@ -1,0 +1,7 @@
+序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+0,-,2,u16,opcode,命令号,分发器 switch 选择子,0x9F94,0xb6eab3,确证
+1,0,4,u32,result,结果码（日志串 `result=`）,经 `vt[0x368]` 交业务,-,B6E92E|B6EB09,确证
+2,4,4,u32,friend_histories_cnt,"好友履历个数（上界 `cmp ebx,64h` @`B6E98C` ⇒ ≤100）",驱动元素循环,0..100,B6E960,确证
+3,8,113·N1,"array<struct,N1>",friend_histories,"好友履历列表（日志 `friend_histories={pilot_id,name,last_in,troops,...}`）",经 `vt[0x368]` 交业务,N1 ≤ 100,B6E99B|B6E9BA|B6EB24,确证
+4,var,4,u32,block_widlist_cnt,"屏蔽世界 ID 个数（上界 `cmp …,64h` @`B6EA01` ⇒ ≤100）",驱动元素循环,0..100,B6E9F1,确证
+5,var,4·N2,"array<u32,N2>",block_widlist,屏蔽世界 ID 列表（日志 `block_widlist={...}`）,经 `vt[0x368]` 交业务,N2 ≤ 100,B6EA1A|B6EA3A|B6EB9E,确证

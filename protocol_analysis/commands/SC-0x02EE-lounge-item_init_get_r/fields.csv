@@ -1,0 +1,25 @@
+序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+0,-,2,u16,opcode,命令号,lounge 分发的 switch 选择子,0x02EE,0xB529EF,确证
+1,0,2,u16,slot_num_main,主物品栏槽位数,交 vt[0x32C]；日志 slot_num_main=,-,0xB52550|0xB02E0B|0xB52A46,确证
+2,2,2,u16,slot_num_consume,消耗品栏槽位数,交 vt[0x32C]；日志 slot_num_consume=,-,0xB52590|0xB02E0B|0xB52A71,确证
+3,4,2,u16,slot_num_trash,垃圾栏槽位数,交 vt[0x32C]；日志 slot_num_trash=,-,0xB525B4|0xB02E0B|0xB52A9C,确证
+4,6,2,u16,slot_num_plan,计划栏槽位数,交 vt[0x32C]；日志 slot_num_plan=,-,0xB525D8|0xB02E0B|0xB52AC7,确证
+5,8,4,u32,sort_tm_sec_main,主栏排序时间戳(秒),交 vt[0x32C]；日志 sort_tm_sec_main=,-,0xB52600|0xB02DE9|0xB52AF1,确证
+6,12,4,u32,sort_tm_usec_main,主栏排序时间戳(微秒),交 vt[0x32C]；日志 sort_tm_usec_main=,-,0xB52628|0xB02DE9|0xB52B1B,确证
+7,16,4,u32,sort_tm_sec_consume,消耗栏排序时间戳(秒),交 vt[0x32C]；日志 sort_tm_sec_consume=,-,0xB52650|0xB02DE9|0xB52B45,确证
+8,20,4,u32,sort_tm_usec_consume,消耗栏排序时间戳(微秒),交 vt[0x32C]；日志 sort_tm_usec_consume=,-,0xB52678|0xB02DE9|0xB52B6F,确证
+9,24,4,u32,sort_tm_sec_plan,计划栏排序时间戳(秒),交 vt[0x32C]；日志 sort_tm_sec_plan=,-,0xB526A0|0xB02DE9|0xB52B99,确证
+10,28,4,u32,sort_tm_usec_plan,计划栏排序时间戳(微秒),交 vt[0x32C]；日志 sort_tm_usec_plan=,-,0xB526CE|0xB02DE9|0xB52BC6,确证
+11,32,4,u32,count_main,主栏物品条数 A1,列表长度前缀；日志 itmlist_main={,<=300,0xB526E8|0xB52714|0xB52BE1,确证
+12,36,22*A1,"array<item,A1>",itmlist_main,主栏物品列表,交 vt[0x32C] 数组基址；打印器 sub_B49CF0,元素见同目录 README 3.1,0xB5274A|0xB52756|0xB52BFD,确证
+13,36+22*A1,4,u32,count_consume,消耗栏物品条数 A2,列表长度前缀；日志 itmlist_consume={,<=100,0xB5277E|0xB52792|0xB52C5B,确证
+14,40+22*A1,22*A2,"array<item,A2>",itmlist_consume,消耗栏物品列表,交 vt[0x32C] 数组基址；打印器 sub_B49CF0,元素见同目录 README 3.1,0xB527CA|0xB527D6|0xB52C77,确证
+15,40+22*(A1+A2),4,u32,count_trash,垃圾栏物品条数 A3,列表长度前缀；日志 itmlist_trash={,<=1300,0xB527FE|0xB52812|0xB52CD1,确证
+16,44+22*(A1+A2),22*A3,"array<item,A3>",itmlist_trash,垃圾栏物品列表,交 vt[0x32C] 数组基址；打印器 sub_B49CF0,元素见同目录 README 3.1,0xB5284B|0xB52857|0xB52CF0,确证
+17,44+22*(A1+A2+A3),4,u32,count_plan,计划栏物品条数 A4,列表长度前缀；日志 itmlist_plan={,<=900,0xB5287F|0xB52893|0xB52D4D,确证
+18,48+22*(A1+A2+A3),22*A4,"array<item,A4>",itmlist_plan,计划栏物品列表,交 vt[0x32C] 数组基址；打印器 sub_B49CF0,元素见同目录 README 3.1,0xB528C6|0xB528D2|0xB52D69,确证
+19,48+22*sumA,4,u32,msma_plan_sort_type,计划栏排序方式,交 vt[0x32C]；日志 msma_plan_sort_type=,?,0xB5290E|0xB02DE9|0xB52DD5,类型确证/枚举未定
+20,52+22*sumA,4,u32,msma_plan_sort_order,计划栏排序方向,交 vt[0x32C]；日志 msma_plan_sort_order=,?,0xB5293C|0xB02DE9|0xB52E02,类型确证/枚举未定
+21,56+22*sumA,4,u32,sort_plan_sec,计划栏排序时间戳(秒),交 vt[0x32C]；日志 sort_plan_sec=,-,0xB5296A|0xB02DE9|0xB52E2F,确证
+22,60+22*sumA,4,u32,sort_plan_usec,计划栏排序时间戳(微秒),交 vt[0x32C]；日志 sort_plan_usec=,-,0xB52992|0xB02DE9|0xB52E54,确证
+-,64+22*sumA,0,-,（长度闭合）,游标必须==末尾,-,-,0xB529A2|0xB529A6|0xB529AC,确证

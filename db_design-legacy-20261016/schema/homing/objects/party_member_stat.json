@@ -1,0 +1,542 @@
+{
+  "id": "party_member_stat",
+  "title": "队伍成员状态 party_member_stat（31B 线 / 40B 槽）",
+  "domain": "lounge",
+  "domain_votes": {
+    "lounge": 1
+  },
+  "folded_composites": [
+    "party_member_stat"
+  ],
+  "anchored_by": "",
+  "legacy_table": "tbl_party_member_stat",
+  "row_key": [],
+  "views": [
+    {
+      "composite": "party_member_stat",
+      "length": 31,
+      "memory_claim": 40,
+      "reader": "sub_B432C0",
+      "printer": "sub_B498C0",
+      "commands": [
+        "SC-0x76B1-lounge-party_member_stat_update"
+      ]
+    }
+  ],
+  "members": [
+    {
+      "name": "avatar",
+      "wire_type": "avatar",
+      "length": 18,
+      "meaning": "外观（18B 子结构）",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "party_member_stat"
+        ]
+      },
+      "views": [
+        "party_member_stat"
+      ],
+      "composite_ref": "avatar",
+      "element_composite_ref": null,
+      "link_kind": "nested",
+      "link_composite": "avatar",
+      "memory_only": false,
+      "evidence_va": "0xb43343",
+      "evidence_ref": {
+        "command": "SC-0x76B1-lounge-party_member_stat_update",
+        "struct": "party_member_stat",
+        "field": "avatar",
+        "reader": "sub_B068B0",
+        "printer": "sub_B08920",
+        "protocol_path": "protocol_analysis/commands/SC-0x76B1-lounge-party_member_stat_update/README.md",
+        "section": "§3 / notes.md"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "is_booking",
+      "wire_type": "u8",
+      "length": 1,
+      "meaning": "是否预约中",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "party_member_stat"
+        ]
+      },
+      "views": [
+        "party_member_stat"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xb43329",
+      "evidence_ref": {
+        "command": "SC-0x76B1-lounge-party_member_stat_update",
+        "struct": "party_member_stat",
+        "field": "is_booking",
+        "reader": "sub_B432C0",
+        "printer": "sub_B498C0",
+        "protocol_path": "protocol_analysis/commands/SC-0x76B1-lounge-party_member_stat_update/README.md",
+        "section": "§3 / notes.md"
+      },
+      "role": "flag"
+    },
+    {
+      "name": "lv",
+      "wire_type": "u8",
+      "length": 1,
+      "meaning": "等级",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "party_member_stat"
+        ]
+      },
+      "views": [
+        "party_member_stat"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xb432ea",
+      "evidence_ref": {
+        "command": "SC-0x76B1-lounge-party_member_stat_update",
+        "struct": "party_member_stat",
+        "field": "lv",
+        "reader": "sub_B432C0",
+        "printer": "sub_B498C0",
+        "protocol_path": "protocol_analysis/commands/SC-0x76B1-lounge-party_member_stat_update/README.md",
+        "section": "§3 / notes.md"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "mission_id",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "任务 ID",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "party_member_stat"
+        ]
+      },
+      "views": [
+        "party_member_stat"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xb43329",
+      "evidence_ref": {
+        "command": "SC-0x76B1-lounge-party_member_stat_update",
+        "struct": "party_member_stat",
+        "field": "mission_id",
+        "reader": "sub_B432C0",
+        "printer": "sub_B498C0",
+        "protocol_path": "protocol_analysis/commands/SC-0x76B1-lounge-party_member_stat_update/README.md",
+        "section": "§3 / notes.md"
+      },
+      "role": "ref",
+      "ref_kind": "master",
+      "ref_basis": "主数据候选 ['MISSION_COOP', 'MISSION_VS']（cfg 主键列名多命中，待定）",
+      "master_target": "cfg.MISSION_COOP.mission_id"
+    },
+    {
+      "name": "party_id",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "所属队伍 ID（外部行键：元素自身不带，身份写在兄弟字段上）",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": []
+      },
+      "views": [],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB64379",
+      "role": "ref",
+      "injected": true,
+      "injected_basis": "SC-0x76B1 下发的 `party_member_stat` 数组（4+31N，N≤9）里既没有队伍 id 也没有元素身份列——它讲的是「我所在队伍」的成员状态，服务端推给队内每个成员。队伍 id 的值域与下发点见 SC-0x5F18-cupteam_party_get_r（`party_id` 与 `channel_id` 并列回给客户端，0xB64379）；注入这一列，元素身份 =（队伍 + 成员机师）。",
+      "injected_resolved_by": "wire_sibling",
+      "ref_kind": "fk",
+      "fk_target": "party.party_id",
+      "ref_basis": "外部行键：SC-0x76B1 下发的 `party_member_stat` 数组（4+31N，N≤9）里既没有队伍 id 也没有元素身份列——它讲的是「我所在队伍」的成员状态，服务端推给队内每个成员。队伍 id 的值域与下发点见 SC-0x5F18-cupteam_party_get_r（`party_id` 与 `channel_id` 并列回给客户端，0xB64379）；注入这一列，元素身份 =（队伍 + 成员机师）。"
+    },
+    {
+      "name": "pilot_id",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "机师 ID",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "party_member_stat"
+        ]
+      },
+      "views": [
+        "party_member_stat"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xb432d8",
+      "evidence_ref": {
+        "command": "SC-0x76B1-lounge-party_member_stat_update",
+        "struct": "party_member_stat",
+        "field": "pilot_id",
+        "reader": "sub_B432C0",
+        "printer": "sub_B498C0",
+        "protocol_path": "protocol_analysis/commands/SC-0x76B1-lounge-party_member_stat_update/README.md",
+        "section": "§3 / notes.md"
+      },
+      "role": "scope"
+    },
+    {
+      "name": "rate_vslocal",
+      "wire_type": "u16",
+      "length": 2,
+      "meaning": "对本地胜率",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "party_member_stat"
+        ]
+      },
+      "views": [
+        "party_member_stat"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xb432fe",
+      "evidence_ref": {
+        "command": "SC-0x76B1-lounge-party_member_stat_update",
+        "struct": "party_member_stat",
+        "field": "rate_vslocal",
+        "reader": "sub_B432C0",
+        "printer": "sub_B498C0",
+        "protocol_path": "protocol_analysis/commands/SC-0x76B1-lounge-party_member_stat_update/README.md",
+        "section": "§3 / notes.md"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "stat",
+      "wire_type": "u8",
+      "length": 1,
+      "meaning": "状态",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "party_member_stat"
+        ]
+      },
+      "views": [
+        "party_member_stat"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xb43318",
+      "evidence_ref": {
+        "command": "SC-0x76B1-lounge-party_member_stat_update",
+        "struct": "party_member_stat",
+        "field": "stat",
+        "reader": "sub_B432C0",
+        "printer": "sub_B498C0",
+        "protocol_path": "protocol_analysis/commands/SC-0x76B1-lounge-party_member_stat_update/README.md",
+        "section": "§3 / notes.md"
+      },
+      "role": "attribute"
+    }
+  ],
+  "wire_body": "party_member_stat",
+  "writes": [],
+  "reads": [
+    {
+      "command": "SC-0x76B1-lounge-party_member_stat_update",
+      "op": "read",
+      "via": "party_member_stat"
+    }
+  ],
+  "db_effects": [
+    {
+      "command": "SC-0x76B1-lounge-party_member_stat_update",
+      "entity": "party_member_stat",
+      "op": "update",
+      "fields": [
+        "party_member_stats"
+      ],
+      "table_ref": "tbl_party_member_stat"
+    },
+    {
+      "command": "SC-0x76B1-lounge-party_member_stat_update",
+      "entity": "party_member_stat",
+      "op": "update",
+      "fields": [
+        "party_member_stat"
+      ],
+      "table_ref": "tbl_party_member_stat"
+    }
+  ],
+  "pk_members": [
+    "party_id",
+    "pilot_id"
+  ],
+  "pk_kind": "override",
+  "is_root": true,
+  "identity": [],
+  "scope": [
+    "world_id"
+  ],
+  "multi": false,
+  "array_parents": [],
+  "inline_parents": [],
+  "shape": "root",
+  "parent": "",
+  "parents": [],
+  "has_scope": true,
+  "disposition": "PERSIST",
+  "table": "game.party_member_stat",
+  "columns_excluded": [],
+  "columns": [
+    {
+      "member": "is_booking",
+      "column": "is_booking",
+      "role": "flag",
+      "wire_type": "u8",
+      "synthetic": false,
+      "meaning": "是否预约中",
+      "evidence_va": "0xb43329",
+      "pk": false
+    },
+    {
+      "member": "lv",
+      "column": "lv",
+      "role": "attribute",
+      "wire_type": "u8",
+      "synthetic": false,
+      "meaning": "等级",
+      "evidence_va": "0xb432ea",
+      "pk": false
+    },
+    {
+      "member": "mission_id",
+      "column": "mission_id",
+      "role": "ref",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "任务 ID",
+      "evidence_va": "0xb43329",
+      "pk": false
+    },
+    {
+      "member": "party_id",
+      "column": "party_id",
+      "role": "ref",
+      "wire_type": "u32",
+      "synthetic": true,
+      "meaning": "所属队伍 ID（外部行键：元素自身不带，身份写在兄弟字段上）",
+      "evidence_va": "0xB64379",
+      "pk": true
+    },
+    {
+      "member": "pilot_id",
+      "column": "pilot_id",
+      "role": "scope",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "机师 ID",
+      "evidence_va": "0xb432d8",
+      "pk": true
+    },
+    {
+      "member": "rate_vslocal",
+      "column": "rate_vslocal",
+      "role": "attribute",
+      "wire_type": "u16",
+      "synthetic": false,
+      "meaning": "对本地胜率",
+      "evidence_va": "0xb432fe",
+      "pk": false
+    },
+    {
+      "member": "stat",
+      "column": "stat",
+      "role": "attribute",
+      "wire_type": "u8",
+      "synthetic": false,
+      "meaning": "状态",
+      "evidence_va": "0xb43318",
+      "pk": false
+    }
+  ],
+  "columns_expected": 7,
+  "keys": {
+    "scope": [
+      "world_id"
+    ],
+    "own": [
+      "party_id",
+      "pilot_id"
+    ],
+    "inherited": [],
+    "primary_key": [
+      "world_id",
+      "party_id",
+      "party_member_stat_pilot_id"
+    ],
+    "pk_kind": "override",
+    "children": [],
+    "nested": [
+      "avatar"
+    ],
+    "child_key": [
+      "elem_index"
+    ]
+  },
+  "tables": [
+    {
+      "name": "game.party_member_stat",
+      "shape": "root",
+      "parent": "",
+      "parent_table": "",
+      "via_member": "",
+      "key_extra": [],
+      "scope": [
+        "world_id"
+      ],
+      "links": [
+        {
+          "member": "avatar",
+          "column": "avatar",
+          "kind": "nested",
+          "composite": "avatar",
+          "child_object": "avatar",
+          "child_table": "game.party_member_stat__avatar",
+          "count": 0,
+          "length": 18,
+          "evidence_va": "0xb43343"
+        }
+      ],
+      "child_tables": [
+        "game.party_member_stat__avatar"
+      ],
+      "columns": [
+        {
+          "member": "is_booking",
+          "column": "is_booking",
+          "role": "flag",
+          "wire_type": "u8",
+          "synthetic": false,
+          "meaning": "是否预约中",
+          "evidence_va": "0xb43329",
+          "pk": false
+        },
+        {
+          "member": "lv",
+          "column": "lv",
+          "role": "attribute",
+          "wire_type": "u8",
+          "synthetic": false,
+          "meaning": "等级",
+          "evidence_va": "0xb432ea",
+          "pk": false
+        },
+        {
+          "member": "mission_id",
+          "column": "mission_id",
+          "role": "ref",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "任务 ID",
+          "evidence_va": "0xb43329",
+          "pk": false
+        },
+        {
+          "member": "party_id",
+          "column": "party_id",
+          "role": "ref",
+          "wire_type": "u32",
+          "synthetic": true,
+          "meaning": "所属队伍 ID（外部行键：元素自身不带，身份写在兄弟字段上）",
+          "evidence_va": "0xB64379",
+          "pk": true
+        },
+        {
+          "member": "pilot_id",
+          "column": "party_member_stat_pilot_id",
+          "role": "scope",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "机师 ID",
+          "evidence_va": "0xb432d8",
+          "pk": true,
+          "renamed_from": "pilot_id"
+        },
+        {
+          "member": "rate_vslocal",
+          "column": "rate_vslocal",
+          "role": "attribute",
+          "wire_type": "u16",
+          "synthetic": false,
+          "meaning": "对本地胜率",
+          "evidence_va": "0xb432fe",
+          "pk": false
+        },
+        {
+          "member": "stat",
+          "column": "stat",
+          "role": "attribute",
+          "wire_type": "u8",
+          "synthetic": false,
+          "meaning": "状态",
+          "evidence_va": "0xb43318",
+          "pk": false
+        }
+      ],
+      "key_members": [
+        "world_id",
+        "party_id",
+        "pilot_id"
+      ],
+      "primary_key": [
+        "world_id",
+        "party_id",
+        "party_member_stat_pilot_id"
+      ]
+    }
+  ],
+  "links": [
+    {
+      "member": "avatar",
+      "column": "avatar",
+      "kind": "nested",
+      "composite": "avatar",
+      "child_object": "avatar",
+      "child_table": "game.party_member_stat__avatar",
+      "count": 0,
+      "length": 18,
+      "evidence_va": "0xb43343"
+    }
+  ]
+}

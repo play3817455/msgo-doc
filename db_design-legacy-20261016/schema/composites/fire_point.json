@@ -1,0 +1,137 @@
+{
+  "id": "fire_point",
+  "title": "弹着点元素 fire_point（6B 线 / 6B 槽）",
+  "length": 6,
+  "status": "complete",
+  "reader": "sub_B07760",
+  "writer": "sub_B06580",
+  "printer": "sub_B0A5D0",
+  "memory_claim": 6,
+  "wire_layout": "2+2+2",
+  "evidence": {
+    "commands": [
+      "CS-0xFBC1-battle-weapon_fire__funnel",
+      "SC-0xA78D-battle-weapon_fire__funnel_r"
+    ],
+    "protocol_paths": [
+      "protocol_analysis/commands/CS-0xFBC1-battle-weapon_fire__funnel/README.md",
+      "protocol_analysis/commands/SC-0xA78D-battle-weapon_fire__funnel_r/README.md"
+    ],
+    "note": "元素线长 6（3×u16），三处独立证据闭合：写原语 sub_B06580 三次 `mov [dst],si` 各 +2、循环步进 `add …,6`、元素打印器 sub_B0A5D0 打 `x=`/`y=`/`z=` 全 `movzx word`。CS 侧 wire_type 里的 `12` 是槽口径，不是线长。SC 侧数组字段名 `fire_points` 曾被自动导入当成结构名，造出一个只有 `TBD` 成员的伪结构（composite/entity/tbl 三件套）；2026-09-23 已按 `scan_struct_fields` 的规则修正并删除，元素类型以本文件为准。二次确认：`sub_B0A5D0(int, unsigned __int16 *a2)` 只读 a2[0]/a2[1]/a2[2]。**2026-09-23 Oracle 复核**：本文件原先把 `reader` 记成了写侧原语，导致无法审计（属 ㉙ 类脏数据）。SC 侧真 reader 为 `sub_B07760`：`probe_reader` 下 6B 精确闭合、5B 被拒（consumed 4）；`trace_fields` 录得三次 2 字节写，线 0/2/4 → 内存 0/2/4。与 x/y/z 逐项吻合，本元素布局**升级为执行级确认**。"
+  },
+  "members": [
+    {
+      "name": "x",
+      "offset": 0,
+      "memory_offset": 0,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "X 坐标",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "CS-0xFBC1-battle-weapon_fire__funnel",
+          "struct": "fire_point",
+          "field_name": "x",
+          "offset": 0,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/CS-0xFBC1-battle-weapon_fire__funnel/README.md",
+          "section": "§3 字段 4",
+          "reader": "sub_B06580",
+          "reader_role": "写侧原语（CS 方向客户端为写方）",
+          "printer": null,
+          "evidence_va": "0xB3A945"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB3A945",
+      "asm_audit_date": "2026-09-22"
+    },
+    {
+      "name": "y",
+      "offset": 2,
+      "memory_offset": 2,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "Y 坐标",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "CS-0xFBC1-battle-weapon_fire__funnel",
+          "struct": "fire_point",
+          "field_name": "y",
+          "offset": 2,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/CS-0xFBC1-battle-weapon_fire__funnel/README.md",
+          "section": "§3 字段 4",
+          "reader": "sub_B06580",
+          "reader_role": "写侧原语（CS 方向客户端为写方）",
+          "printer": null,
+          "evidence_va": "0xB3A955"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB3A955",
+      "asm_audit_date": "2026-09-22"
+    },
+    {
+      "name": "z",
+      "offset": 4,
+      "memory_offset": 4,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "Z 坐标",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "CS-0xFBC1-battle-weapon_fire__funnel",
+          "struct": "fire_point",
+          "field_name": "z",
+          "offset": 4,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/CS-0xFBC1-battle-weapon_fire__funnel/README.md",
+          "section": "§3 字段 4",
+          "reader": "sub_B06580",
+          "reader_role": "写侧原语（CS 方向客户端为写方）",
+          "printer": null,
+          "evidence_va": "0xB3A965"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB3A965",
+      "asm_audit_date": "2026-09-22"
+    }
+  ],
+  "oracle_audit": {
+    "date": "2026-09-23",
+    "tool": "emulab/oracle_fix.py",
+    "verdict_before": "FAIL",
+    "verdict_after": "PASS",
+    "changes": [
+      "reader: sub_B06580（写侧原语）-> sub_B07760（原字段记的是 CS 写侧原语，不是 reader；写原语移入 writer）",
+      "wire_sources[].reader: 去掉括号注解，角色改由 reader_role 承载"
+    ]
+  },
+  "asm_audit": {
+    "verified": "2026-09-22",
+    "reader": "sub_B07760",
+    "writer": "sub_B06580",
+    "total_bytes": 6,
+    "fields_ok": 3,
+    "fields_fail": 0,
+    "issues": [],
+    "status": "pass",
+    "memory": {
+      "verified": "2026-09-26",
+      "status": "pass",
+      "mem_fields": 3,
+      "fields_ok": 3,
+      "fields_fail": 0,
+      "issues": [],
+      "memory_claim": 6
+    }
+  }
+}

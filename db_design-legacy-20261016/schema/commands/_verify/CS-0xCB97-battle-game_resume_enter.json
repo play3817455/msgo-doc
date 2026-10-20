@@ -1,0 +1,207 @@
+{
+ "id": "CS-0xCB97-battle-game_resume_enter",
+ "verified_at": "2026-09-30 15:25:47",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "handler_func",
+ "block": [
+  "0xB33810",
+  "0xB33A59"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 78,
+   "va": "0xB33856",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xB33853",
+   "call_va": "0xB33858"
+  },
+  "field_window": {
+   "start_va": "0xB33810",
+   "end_va": "0xB3392D",
+   "guard": null,
+   "closer_or_commit_va": "0xB3392D",
+   "within_model_block": true,
+   "range_from": "handler_func"
+  },
+  "primitive_widths": {
+   "direction": "CS",
+   "expected": [
+    {
+     "name": "is_initial",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "`0xB3389C`"
+     ]
+    },
+    {
+     "name": "script_thread",
+     "wire_type": "u8",
+     "width": 1,
+     "seq": 2,
+     "shape": "scalar",
+     "evidence_va": [
+      "`0xB338B7`"
+     ]
+    },
+    {
+     "name": "src",
+     "wire_type": "bytes",
+     "width": null,
+     "seq": 3,
+     "shape": "agg",
+     "evidence_va": [
+      "`0xB338BF`"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB3388C",
+     "kind": "inline_store",
+     "width": 2,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB3389C",
+     "kind": "inline_store",
+     "width": 4,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB338B7",
+     "kind": "inline_store",
+     "width": 1,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB338BF",
+     "kind": "write",
+     "width": null,
+     "wire_type": "str",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB33903",
+     "kind": "composite",
+     "width": null,
+     "wire_type": null,
+     "name": "sub_B03020",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 2,
+   "checkable": 2,
+   "pairs": [
+    {
+     "field": "is_initial",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB3389C",
+     "kind": "inline_store"
+    },
+    {
+     "field": "script_thread",
+     "width": 1,
+     "shape": "scalar",
+     "va": "0xB338B7",
+     "kind": "inline_store"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [
+    {
+     "va": "0xB3388C",
+     "kind": "inline_store",
+     "width": 2,
+     "wire_type": null
+    },
+    {
+     "va": "0xB338BF",
+     "kind": "write",
+     "width": null,
+     "wire_type": "str"
+    }
+   ],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB33810",
+    "0xB3392D"
+   ],
+   "scalar_match_verifiable": false,
+   "capacity_relation": {
+    "observed_min": 7,
+    "capacity": 78,
+    "relation": "within",
+    "unknown_events": [
+     {
+      "va": "0xB338BF",
+      "kind": "write",
+      "name": ""
+     },
+     {
+      "va": "0xB33903",
+      "kind": "composite",
+      "name": "sub_B03020"
+     }
+    ],
+    "is_lower_bound": true,
+    "note": "观测线长（下界）7 / 容量 0x4e"
+   }
+  },
+  "closer": {
+   "va": "0xB3392D",
+   "kind": "commit",
+   "jcc_va": null,
+   "seq_va": null,
+   "cmp": null,
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x58]",
+   "slot_value": 88,
+   "va": "0xB339F3",
+   "mov_va": "0xB339EA",
+   "host": "[eax+58h]",
+   "argc": 2,
+   "form": "mov_then_call",
+   "error_slot": null
+  },
+  "log_strings": [
+   "is_initial=",
+   "script_thread=",
+   "src=\""
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "is_initial",
+  "script_thread",
+  "src"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 20
+}

@@ -1,0 +1,213 @@
+{
+ "id": "SC-0xA34A-lounge-msma_create_r",
+ "verified_at": "2026-09-30 15:25:44",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "block",
+ "block": [
+  "0xB6FCDA",
+  "0xB6FF84"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 20,
+   "va": "0xB6FCEF",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xB6FCEC",
+   "call_va": "0xB6FCF1"
+  },
+  "field_window": {
+   "start_va": "0xB6FCDB",
+   "end_va": "0xB6FE05",
+   "guard": {
+    "va": "0xB6FCDA",
+    "func": "0xB41120",
+    "module_id": null,
+    "release_va": "0xB41110"
+   },
+   "closer_or_commit_va": "0xB6FDDE",
+   "within_model_block": true,
+   "range_from": "block"
+  },
+  "primitive_widths": {
+   "direction": "SC",
+   "expected": [
+    {
+     "name": "result",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "B6FD2A",
+      "B6FE7D"
+     ]
+    },
+    {
+     "name": "uniqid_ms",
+     "wire_type": "u64",
+     "width": 8,
+     "seq": 2,
+     "shape": "scalar",
+     "evidence_va": [
+      "B6FD6A",
+      "B6FEA7"
+     ]
+    },
+    {
+     "name": "workres",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 3,
+     "shape": "scalar",
+     "evidence_va": [
+      "B6FDAA",
+      "B6FED1"
+     ]
+    },
+    {
+     "name": "mech_npcpict",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 4,
+     "shape": "scalar",
+     "evidence_va": [
+      "B6FDCE",
+      "B6FEF6"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB6FD2A",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB6FD6A",
+     "kind": "read",
+     "width": 8,
+     "wire_type": "u64",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB6FDAA",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB6FDCE",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 4,
+   "checkable": 4,
+   "pairs": [
+    {
+     "field": "result",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB6FD2A",
+     "kind": "read"
+    },
+    {
+     "field": "uniqid_ms",
+     "width": 8,
+     "shape": "scalar",
+     "va": "0xB6FD6A",
+     "kind": "read"
+    },
+    {
+     "field": "workres",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB6FDAA",
+     "kind": "read"
+    },
+    {
+     "field": "mech_npcpict",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB6FDCE",
+     "kind": "read"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB6FCDB",
+    "0xB6FE05"
+   ],
+   "scalar_match_verifiable": true,
+   "capacity_relation": {
+    "observed_min": 20,
+    "capacity": 20,
+    "relation": "exact",
+    "unknown_events": [],
+    "is_lower_bound": false,
+    "note": "观测线长（下界）20 / 容量 0x14"
+   }
+  },
+  "closer": {
+   "va": "0xB6FDDE",
+   "kind": "jz",
+   "jcc_va": "0xB6FDE4",
+   "seq_va": "0xB6FDDA",
+   "jcc_dst": "0xB6FE00",
+   "cmp": "cmp     eax, [esp+2C5Ch+var_2C40]",
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x2A4]",
+   "slot_value": 676,
+   "va": "0xB6FF68",
+   "mov_va": "0xB6FF4E",
+   "host": "[edx+2A4h]",
+   "argc": 5,
+   "form": "mov_then_call",
+   "error_slot": {
+    "slot": "vt[0x64]",
+    "va": "0xB6FD44",
+    "argc": 2
+   }
+  },
+  "log_strings": [
+   "result=",
+   "uniqid_ms=",
+   "workres=",
+   "mech_npcpict="
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "mech_npcpict",
+  "result",
+  "uniqid_ms",
+  "workres"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 10
+}

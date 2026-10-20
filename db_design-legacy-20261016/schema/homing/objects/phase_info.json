@@ -1,0 +1,324 @@
+{
+  "id": "phase_info",
+  "title": "赛程阶段 phase_info（13B 线 / 16B 槽）",
+  "domain": "lounge",
+  "domain_votes": {
+    "lounge": 1
+  },
+  "folded_composites": [
+    "phase_info"
+  ],
+  "anchored_by": "",
+  "legacy_table": "tbl_phase_info",
+  "row_key": [],
+  "views": [
+    {
+      "composite": "phase_info",
+      "length": 13,
+      "memory_claim": 16,
+      "reader": "sub_B46D20",
+      "printer": "sub_B50780",
+      "commands": [
+        "SC-0xD784-lounge-cupteam_party_status_update"
+      ]
+    }
+  ],
+  "members": [
+    {
+      "name": "close_time",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "关闭时间",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "phase_info"
+        ]
+      },
+      "views": [
+        "phase_info"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "B46D6A|B50810",
+      "evidence_ref": {
+        "command": "SC-0xD784-lounge-cupteam_party_status_update",
+        "struct": "phase_info",
+        "field": "close_time",
+        "reader": "sub_B46D20",
+        "printer": "sub_B50780",
+        "protocol_path": "protocol_analysis/commands/SC-0xD784-lounge-cupteam_party_status_update/README.md",
+        "section": "§3 / notes.md"
+      },
+      "role": "timestamp"
+    },
+    {
+      "name": "open_time",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "开放时间",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "phase_info"
+        ]
+      },
+      "views": [
+        "phase_info"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "B46D58|B507EE",
+      "evidence_ref": {
+        "command": "SC-0xD784-lounge-cupteam_party_status_update",
+        "struct": "phase_info",
+        "field": "open_time",
+        "reader": "sub_B46D20",
+        "printer": "sub_B50780",
+        "protocol_path": "protocol_analysis/commands/SC-0xD784-lounge-cupteam_party_status_update/README.md",
+        "section": "§3 / notes.md"
+      },
+      "role": "timestamp"
+    },
+    {
+      "name": "phase",
+      "wire_type": "i8",
+      "length": 1,
+      "meaning": "赛程阶段编号（打印器 movsx）",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "phase_info"
+        ]
+      },
+      "views": [
+        "phase_info"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "B46D34|B507A0",
+      "evidence_ref": {
+        "command": "SC-0xD784-lounge-cupteam_party_status_update",
+        "struct": "phase_info",
+        "field": "phase",
+        "reader": "sub_B46D20",
+        "printer": "sub_B50780",
+        "protocol_path": "protocol_analysis/commands/SC-0xD784-lounge-cupteam_party_status_update/README.md",
+        "section": "§3 / notes.md"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "round",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "轮次",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "phase_info"
+        ]
+      },
+      "views": [
+        "phase_info"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "B46D46|B507C7",
+      "evidence_ref": {
+        "command": "SC-0xD784-lounge-cupteam_party_status_update",
+        "struct": "phase_info",
+        "field": "round",
+        "reader": "sub_B46D20",
+        "printer": "sub_B50780",
+        "protocol_path": "protocol_analysis/commands/SC-0xD784-lounge-cupteam_party_status_update/README.md",
+        "section": "§3 / notes.md"
+      },
+      "role": "attribute"
+    }
+  ],
+  "wire_body": "phase_info",
+  "writes": [],
+  "reads": [
+    {
+      "command": "SC-0xD784-lounge-cupteam_party_status_update",
+      "op": "read",
+      "via": "phase_info"
+    }
+  ],
+  "db_effects": [
+    {
+      "command": "SC-0xD784-lounge-cupteam_party_status_update",
+      "entity": "phase_info",
+      "op": "update",
+      "fields": [
+        "phase"
+      ],
+      "table_ref": "tbl_phase_info"
+    },
+    {
+      "command": "SC-0xD784-lounge-cupteam_party_status_update",
+      "entity": "phase_info",
+      "op": "update",
+      "fields": [
+        "cupteam_phase"
+      ],
+      "table_ref": "tbl_phase_info"
+    }
+  ],
+  "pk_members": [],
+  "pk_kind": "scope_only",
+  "is_root": true,
+  "identity": [],
+  "singleton_reason": "旧库 uq_game_phase_info (world_id,pilot_id) 逐列一致",
+  "multi": false,
+  "array_parents": [],
+  "inline_parents": [],
+  "shape": "root",
+  "parent": "",
+  "parents": [],
+  "has_scope": false,
+  "disposition": "PERSIST",
+  "table": "game.phase_info",
+  "columns_excluded": [],
+  "columns": [
+    {
+      "member": "close_time",
+      "column": "close_time",
+      "role": "timestamp",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "关闭时间",
+      "evidence_va": "B46D6A|B50810",
+      "pk": false
+    },
+    {
+      "member": "open_time",
+      "column": "open_time",
+      "role": "timestamp",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "开放时间",
+      "evidence_va": "B46D58|B507EE",
+      "pk": false
+    },
+    {
+      "member": "phase",
+      "column": "phase",
+      "role": "attribute",
+      "wire_type": "i8",
+      "synthetic": false,
+      "meaning": "赛程阶段编号（打印器 movsx）",
+      "evidence_va": "B46D34|B507A0",
+      "pk": false
+    },
+    {
+      "member": "round",
+      "column": "round",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "轮次",
+      "evidence_va": "B46D46|B507C7",
+      "pk": false
+    }
+  ],
+  "columns_expected": 4,
+  "keys": {
+    "scope": [
+      "world_id",
+      "pilot_id"
+    ],
+    "own": [],
+    "inherited": [],
+    "primary_key": [
+      "world_id",
+      "pilot_id"
+    ],
+    "pk_kind": "scope_only",
+    "children": [],
+    "nested": [],
+    "child_key": [
+      "elem_index"
+    ]
+  },
+  "tables": [
+    {
+      "name": "game.phase_info",
+      "shape": "root",
+      "parent": "",
+      "parent_table": "",
+      "via_member": "",
+      "key_extra": [],
+      "scope": [
+        "world_id",
+        "pilot_id"
+      ],
+      "links": [],
+      "child_tables": [],
+      "columns": [
+        {
+          "member": "close_time",
+          "column": "close_time",
+          "role": "timestamp",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "关闭时间",
+          "evidence_va": "B46D6A|B50810",
+          "pk": false
+        },
+        {
+          "member": "open_time",
+          "column": "open_time",
+          "role": "timestamp",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "开放时间",
+          "evidence_va": "B46D58|B507EE",
+          "pk": false
+        },
+        {
+          "member": "phase",
+          "column": "phase",
+          "role": "attribute",
+          "wire_type": "i8",
+          "synthetic": false,
+          "meaning": "赛程阶段编号（打印器 movsx）",
+          "evidence_va": "B46D34|B507A0",
+          "pk": false
+        },
+        {
+          "member": "round",
+          "column": "round",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "轮次",
+          "evidence_va": "B46D46|B507C7",
+          "pk": false
+        }
+      ],
+      "key_members": [
+        "world_id",
+        "pilot_id"
+      ],
+      "primary_key": [
+        "world_id",
+        "pilot_id"
+      ]
+    }
+  ],
+  "links": []
+}

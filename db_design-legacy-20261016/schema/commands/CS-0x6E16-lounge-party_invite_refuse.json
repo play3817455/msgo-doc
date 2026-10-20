@@ -1,0 +1,460 @@
+{
+  "id": "CS-0x6E16-lounge-party_invite_refuse",
+  "opcode": "0x6E16",
+  "direction": "CS",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "party_invite_refuse",
+  "source_dir": "protocol_analysis/commands/CS-0x6E16-lounge-party_invite_refuse",
+  "meta": {
+    "opcode": "`0x6E16`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`party_invite_refuse`",
+    "名字符串": "`)<-_proto_lounge_client::send_party_invite_refuse(` @ `0xeeb150`",
+    "代码位置": "sub_B91EE0 @ `0xb91ee0`（`0xb91ee0`..`0xb9215c`）",
+    "opcode 写入证据": "`0xb91f5c`",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0x12`（18）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)`",
+    "配对命令": "S→C `SC-0x300A-lounge-party_invite_r`（同族邀请应答）"
+  },
+  "handler": "sub_B91EE0",
+  "handler_va": "0xb91ee0",
+  "block": [
+    "0xB91EE0",
+    "0xB9215C"
+  ],
+  "name_str": ")<-_proto_lounge_client::send_party_invite_refuse(",
+  "name_str_va": "0xeeb150",
+  "capacity": "0x12",
+  "capacity_va": null,
+  "closer_va": "0xB92017",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": null,
+  "wire": {
+    "length_expr": "4 + 4 + 4 + 4",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x12（容量记账口径，非线长）",
+    "field_count": 4,
+    "length_source": "field_sum",
+    "readme_conclusion": "结论：拒绝别人的组队邀请：回送 party/channel/pilot 三个 id 与拒绝理由码。",
+    "readme_close": "2(opcode) + 4×4 = 18 == 容量 0x12 = 18（精确相等）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "写入 buf+0，供服务端分发；无 case 块（C→S）",
+      "enum": "0x6E16",
+      "evidence_va": [
+        "0xb91f5c"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "2",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "party_id",
+      "meaning": "队伍 id",
+      "purpose": "来源=入参 arg_0；内联 `mov [eax],esi`；经 `vt[0x58]` 发送；服务端据此定位该队伍",
+      "enum": null,
+      "evidence_va": [
+        "0xB91F6C"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "6",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "channel_id",
+      "meaning": "频道 id",
+      "purpose": "来源=入参 arg_4；内联 `mov [eax],ecx`；服务端据此定位频道",
+      "enum": null,
+      "evidence_va": [
+        "0xB91F87"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "10",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "pilot_id",
+      "meaning": "对方驾驶员 id",
+      "purpose": "来源=入参 arg_8；写线原语 `sub_B02D80`；服务端据此找到被拒的邀请",
+      "enum": null,
+      "evidence_va": [
+        "0xB91F8F"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 4,
+      "offset": "14",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "reason",
+      "meaning": "拒绝理由码",
+      "purpose": "来源=入参 arg_C；写线原语 `sub_B02D80`；服务端据此把理由回显给对方",
+      "enum": "取值域 {1,19}（1=手动婉拒 19=自动婉拒）；生产者 sub_6557F0/sub_AF8680",
+      "evidence_va": [
+        "0xB91FA9"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0x6E16（分发器 switch 选择子）",
+      "evidence_va": "0xB91F5C"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0x12 B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xB91F26"
+    },
+    {
+      "step": 3,
+      "kind": "write_scalar",
+      "detail": "party_id：`u32`（线长 4）—— 队伍 id",
+      "evidence_va": "0xB91F6C"
+    },
+    {
+      "step": 4,
+      "kind": "write_scalar",
+      "detail": "channel_id：`u32`（线长 4）—— 频道 id",
+      "evidence_va": "0xB91F87"
+    },
+    {
+      "step": 5,
+      "kind": "write_scalar",
+      "detail": "pilot_id：`u32`（线长 4）—— 对方驾驶员 id",
+      "evidence_va": "0xB91F8F"
+    },
+    {
+      "step": 6,
+      "kind": "write_scalar",
+      "detail": "reason：`u32`（线长 4）—— 拒绝理由码",
+      "evidence_va": "0xB91FA9"
+    },
+    {
+      "step": 7,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xB92017"
+    },
+    {
+      "step": 8,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xB920F3"
+    }
+  ],
+  "capabilities": [
+    "delete",
+    "lounge.party_invite"
+  ],
+  "capabilities_derived": [
+    "delete"
+  ],
+  "db_effects": [],
+  "pair": "SC-0x300A-lounge-party_invite_r",
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:44",
+    "batch": 8,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 18,
+        "va": "0xB91F26",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB91F23",
+        "call_va": "0xB91F28"
+      },
+      "field_window": {
+        "start_va": "0xB91EE0",
+        "end_va": "0xB92017",
+        "guard": null,
+        "closer_or_commit_va": "0xB92017",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "party_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB91F6C"
+            ]
+          },
+          {
+            "name": "channel_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB91F87"
+            ]
+          },
+          {
+            "name": "pilot_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB91F8F"
+            ]
+          },
+          {
+            "name": "reason",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 4,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB91FA9"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB91F5C",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB91F6C",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB91F87",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB91F8F",
+            "kind": "write",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB91FA9",
+            "kind": "write",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB91FED",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 4,
+        "checkable": 4,
+        "pairs": [
+          {
+            "field": "party_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB91F6C",
+            "kind": "inline_store"
+          },
+          {
+            "field": "channel_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB91F87",
+            "kind": "inline_store"
+          },
+          {
+            "field": "pilot_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB91F8F",
+            "kind": "write"
+          },
+          {
+            "field": "reason",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB91FA9",
+            "kind": "write"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB91F5C",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB91EE0",
+          "0xB92017"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 18,
+          "capacity": 18,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB91FED",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）18 / 容量 0x12"
+        }
+      },
+      "closer": {
+        "va": "0xB92017",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xB920F3",
+        "mov_va": "0xB920EA",
+        "host": "[edx+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "party_id=",
+        "channel_id=",
+        "pilot_id=",
+        "reason="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0x6E16-lounge-party_invite_refuse.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0xb91f5c",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xb91f5c"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "PartyInviteRefuse",
+      "role": "request",
+      "wire_length": "4 + 4 + 4 + 4",
+      "members": [
+        {
+          "name": "PartyId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "party_id"
+        },
+        {
+          "name": "ChannelId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "channel_id"
+        },
+        {
+          "name": "PilotId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "pilot_id"
+        },
+        {
+          "name": "Reason",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "reason"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "fefa03222fb31327",
+  "check_fingerprint": "27a10e6dc5098f38"
+}

@@ -1,0 +1,295 @@
+{
+ "id": "CS-0xF24B-battle-authenticate",
+ "verified_at": "2026-09-30 15:25:48",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "handler_func",
+ "block": [
+  "0xB31B10",
+  "0xB31E1E"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 66,
+   "va": "0xB31B53",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xB31B50",
+   "call_va": "0xB31B55"
+  },
+  "field_window": {
+   "start_va": "0xB31B10",
+   "end_va": "0xB31C7A",
+   "guard": null,
+   "closer_or_commit_va": "0xB31C7A",
+   "within_model_block": true,
+   "range_from": "handler_func"
+  },
+  "primitive_widths": {
+   "direction": "CS",
+   "expected": [
+    {
+     "name": "userid",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "`0xB31B95`;`0xB31B99`"
+     ]
+    },
+    {
+     "name": "world_id",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 2,
+     "shape": "scalar",
+     "evidence_va": [
+      "`0xB31BA8`;`0xB31BB4`"
+     ]
+    },
+    {
+     "name": "pilot_id",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 3,
+     "shape": "scalar",
+     "evidence_va": [
+      "`0xB31BBC`"
+     ]
+    },
+    {
+     "name": "room_id",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 4,
+     "shape": "scalar",
+     "evidence_va": [
+      "`0xB31BD6`"
+     ]
+    },
+    {
+     "name": "otp_battle",
+     "wire_type": "str",
+     "width": null,
+     "seq": 5,
+     "shape": "str",
+     "evidence_va": [
+      "`0xB31BEA`;`0xB31BF2`"
+     ]
+    },
+    {
+     "name": "is_comeback",
+     "wire_type": "u8",
+     "width": 1,
+     "seq": 6,
+     "shape": "scalar",
+     "evidence_va": [
+      "`0xB31C0C`"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB31B89",
+     "kind": "inline_store",
+     "width": 2,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB31B99",
+     "kind": "inline_store",
+     "width": 4,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB31BB4",
+     "kind": "inline_store",
+     "width": 4,
+     "wire_type": null,
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB31BBC",
+     "kind": "write",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB31BD6",
+     "kind": "write",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB31BF2",
+     "kind": "write",
+     "width": null,
+     "wire_type": "str",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB31C0C",
+     "kind": "write",
+     "width": 1,
+     "wire_type": "u8",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB31C50",
+     "kind": "composite",
+     "width": null,
+     "wire_type": null,
+     "name": "sub_B03020",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 6,
+   "checkable": 6,
+   "pairs": [
+    {
+     "field": "userid",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB31B99",
+     "kind": "inline_store"
+    },
+    {
+     "field": "world_id",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB31BB4",
+     "kind": "inline_store"
+    },
+    {
+     "field": "pilot_id",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB31BBC",
+     "kind": "write"
+    },
+    {
+     "field": "room_id",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB31BD6",
+     "kind": "write"
+    },
+    {
+     "field": "otp_battle",
+     "width": null,
+     "shape": "str",
+     "va": "0xB31BF2",
+     "kind": "write"
+    },
+    {
+     "field": "is_comeback",
+     "width": 1,
+     "shape": "scalar",
+     "va": "0xB31C0C",
+     "kind": "write"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [
+    {
+     "va": "0xB31B89",
+     "kind": "inline_store",
+     "width": 2,
+     "wire_type": null
+    }
+   ],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB31B10",
+    "0xB31C7A"
+   ],
+   "scalar_match_verifiable": false,
+   "capacity_relation": {
+    "observed_min": 19,
+    "capacity": 66,
+    "relation": "within",
+    "unknown_events": [
+     {
+      "va": "0xB31BF2",
+      "kind": "write",
+      "name": ""
+     },
+     {
+      "va": "0xB31C50",
+      "kind": "composite",
+      "name": "sub_B03020"
+     }
+    ],
+    "is_lower_bound": true,
+    "note": "观测线长（下界）19 / 容量 0x42"
+   }
+  },
+  "closer": {
+   "va": "0xB31C7A",
+   "kind": "commit",
+   "jcc_va": null,
+   "seq_va": null,
+   "cmp": null,
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x58]",
+   "slot_value": 88,
+   "va": "0xB31DB8",
+   "mov_va": "0xB31DAF",
+   "host": "[edx+58h]",
+   "argc": 2,
+   "form": "mov_then_call",
+   "error_slot": null
+  },
+  "log_strings": [
+   "userid=",
+   "world_id=",
+   "pilot_id=",
+   "room_id=",
+   "otp_battle=\"",
+   "is_comeback="
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "is_comeback",
+  "otp_battle",
+  "pilot_id",
+  "room_id",
+  "userid",
+  "world_id"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 21
+}

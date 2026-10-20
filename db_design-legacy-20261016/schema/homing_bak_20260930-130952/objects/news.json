@@ -1,0 +1,801 @@
+{
+  "id": "news",
+  "title": "战队留言板新闻 news（244B 线 / 248B 槽）",
+  "domain": "lounge",
+  "domain_votes": {
+    "lounge": 2
+  },
+  "folded_composites": [
+    "comment",
+    "news"
+  ],
+  "anchored_by": "",
+  "legacy_table": "",
+  "row_key": [],
+  "views": [
+    {
+      "composite": "comment",
+      "length": 267,
+      "memory_claim": 280,
+      "reader": "sub_B45E20",
+      "printer": "sub_B4EA90",
+      "commands": [
+        "SC-0x4DE7-lounge-clan_msgboard_msglist_get_r"
+      ]
+    },
+    {
+      "composite": "news",
+      "length": 244,
+      "memory_claim": 248,
+      "reader": "sub_B45D20",
+      "printer": "sub_B4E900",
+      "commands": [
+        "SC-0x1FC7-lounge-clan_msgboard_news_get_r"
+      ]
+    }
+  ],
+  "members": [
+    {
+      "name": "avatar",
+      "wire_type": "avatar",
+      "length": 18,
+      "meaning": "发言者外观（18B 子结构）",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "comment"
+        ]
+      },
+      "views": [
+        "comment"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "nested",
+      "link_composite": "avatar",
+      "memory_only": false,
+      "evidence_va": "0xb45f25",
+      "evidence_ref": {
+        "command": "SC-0x4DE7-lounge-clan_msgboard_msglist_get_r",
+        "struct": "comment",
+        "field": "avatar",
+        "reader": "sub_B068B0",
+        "printer": "sub_B08920",
+        "protocol_path": "protocol_analysis/commands/SC-0x4DE7-lounge-clan_msgboard_msglist_get_r/README.md",
+        "section": "§3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "body",
+      "wire_type": "char[193]",
+      "length": 193,
+      "meaning": "新闻正文（NUL 结尾定长串，逐字节循环 0xC1 次）",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "news",
+          "comment"
+        ]
+      },
+      "views": [
+        "news",
+        "comment"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB45DAC",
+      "evidence_ref": {
+        "command": "SC-0x1FC7-lounge-clan_msgboard_news_get_r",
+        "struct": "news",
+        "field": "body",
+        "reader": "sub_B45D20",
+        "printer": "sub_B4E900",
+        "protocol_path": "protocol_analysis/commands/SC-0x1FC7-lounge-clan_msgboard_news_get_r/README.md",
+        "section": "§3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "child_count",
+      "wire_type": "u16",
+      "length": 2,
+      "meaning": "子条目（回复）条数",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "news"
+        ]
+      },
+      "views": [
+        "news"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB45D90",
+      "evidence_ref": {
+        "command": "SC-0x1FC7-lounge-clan_msgboard_news_get_r",
+        "struct": "news",
+        "field": "child_count",
+        "reader": "sub_B45D20",
+        "printer": "sub_B4E900",
+        "protocol_path": "protocol_analysis/commands/SC-0x1FC7-lounge-clan_msgboard_news_get_r/README.md",
+        "section": "§3"
+      },
+      "role": "counter"
+    },
+    {
+      "name": "clan_id",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "所属氏族 ID（会话解析行主列：本条板归**我的氏族**所有，5 条 CS 一条都不带它）",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": []
+      },
+      "views": [],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB9F389|0xB9FB5C",
+      "role": "ref",
+      "injected": true,
+      "injected_basis": "`SC-0x1FC7-clan_msgboard_news_get_r` / `SC-0x4DE7-clan_msgboard_msglist_get_r` 的元素里只有**发帖人**（`pilot_id` u32，语义「发布飞行员 ID（0 = 非玩家发布）」/「发言飞行员 ID」），没有「这块板属于哪个氏族」；5 条 CS 只有 `clan_kind`（0=clan / 1=cupteam），`CS-0x1027` 的容量 `0xA`=10 对负载 7 **只剩 3B 富余，装不下 4B 的 clan_id** ⇒ 氏族不是「漏了一个字段」，而是设计上由**会话**定（读写两侧都不带 ⇒ 口径必须一致；旧实现 `core.clan_board` 的行键 `(clan_id, msg_id)`、`ClanBoardInsert` 的 `msg_id` 按族内自增，`server/internal/store/clan.go`）。本类的 `evidence_va` 证明的是「这块面板/这些命令是按氏族打开的」而不是写入点：`0xB9F389` = `sub_92A8D0` 同屏发的 `CS-0x4550-clan_info_get_other`（`clan_id` 写线，面板绑定的氏族）、`0xB9FB5C` = `CS-0x0038-clan_leave` 的 `clan_id` 写线（关族 id 的既有命令，值就是「我自己的氏族」）。不注入这一列，`(world_id, pilot_id=发帖人, msg_id)` 会让每个读方只看到自己发的帖、且族长删不掉别人的帖。",
+      "injected_resolved_by": "session",
+      "ref_kind": "fk",
+      "fk_target": "clan.clan_id",
+      "ref_basis": "外部行键：`SC-0x1FC7-clan_msgboard_news_get_r` / `SC-0x4DE7-clan_msgboard_msglist_get_r` 的元素里只有**发帖人**（`pilot_id` u32，语义「发布飞行员 ID（0 = 非玩家发布）」/「发言飞行员 ID」），没有「这块板属于哪个氏族」；5 条 CS 只有 `clan_kind`（0=clan / 1=cupteam），`CS-0x1027` 的容量 `0xA`=10 对负载 7 **只剩 3B 富余，装不下 4B 的 clan_id** ⇒ 氏族不是「漏了一个字段」，而是设计上由**会话**定（读写两侧都不带 ⇒ 口径必须一致；旧实现 `core.clan_board` 的行键 `(clan_id, msg_id)`、`ClanBoardInsert` 的 `msg_id` 按族内自增，`server/internal/store/clan.go`）。本类的 `evidence_va` 证明的是「这块面板/这些命令是按氏族打开的」而不是写入点：`0xB9F389` = `sub_92A8D0` 同屏发的 `CS-0x4550-clan_info_get_other`（`clan_id` 写线，面板绑定的氏族）、`0xB9FB5C` = `CS-0x0038-clan_leave` 的 `clan_id` 写线（关族 id 的既有命令，值就是「我自己的氏族」）。不注入这一列，`(world_id, pilot_id=发帖人, msg_id)` 会让每个读方只看到自己发的帖、且族长删不掉别人的帖。"
+    },
+    {
+      "name": "date",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "新闻发布时间",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "news",
+          "comment"
+        ]
+      },
+      "views": [
+        "news",
+        "comment"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB45D55",
+      "evidence_ref": {
+        "command": "SC-0x1FC7-lounge-clan_msgboard_news_get_r",
+        "struct": "news",
+        "field": "date",
+        "reader": "sub_B45D20",
+        "printer": "sub_B4E900",
+        "protocol_path": "protocol_analysis/commands/SC-0x1FC7-lounge-clan_msgboard_news_get_r/README.md",
+        "section": "§3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "is_niced",
+      "wire_type": "i8",
+      "length": 1,
+      "meaning": "自己是否已点赞",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "comment"
+        ]
+      },
+      "views": [
+        "comment"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xb45e94",
+      "evidence_ref": {
+        "command": "SC-0x4DE7-lounge-clan_msgboard_msglist_get_r",
+        "struct": "comment",
+        "field": "is_niced",
+        "reader": "sub_B45E20",
+        "printer": "sub_B4EA90",
+        "protocol_path": "protocol_analysis/commands/SC-0x4DE7-lounge-clan_msgboard_msglist_get_r/README.md",
+        "section": "§3"
+      },
+      "role": "flag",
+      "ignored_reason": "**相对读方的状态**（`is_niced` = 「我赞过没有」）落在**氏族共享行**上没有娘家：行是 `(world_id, clan_id, msg_id)`，存成列就等于「一个人赞过 ⇒ 全族都显示已赞」。它正确的娘家是一份 `(world_id, clan_id, msg_id, pilot_id)` 的行集，而本族 5 条命令没有创建它的写方（`CS-0xC3DF-nicecount_add` 只带 `msg_id` + `clan_kind`，回执 `SC-0xF514` 只有 `result`）⇒ 按「宁可欠账不猜」不落库，读侧恒回 0（与旧实现同口径：旧 `ClanBoardNewsRow` 没有 `is_niced`）。裁决与全链取证见 reviewed.batch_27_msgboard_owner。"
+    },
+    {
+      "name": "kind",
+      "wire_type": "u16",
+      "length": 2,
+      "meaning": "新闻类别（打印器 `kind=` 按 u16 输出；枚举值待补）",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "news"
+        ]
+      },
+      "views": [
+        "news"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB45D6C",
+      "evidence_ref": {
+        "command": "SC-0x1FC7-lounge-clan_msgboard_news_get_r",
+        "struct": "news",
+        "field": "kind",
+        "reader": "sub_B45D20",
+        "printer": "sub_B4E900",
+        "protocol_path": "protocol_analysis/commands/SC-0x1FC7-lounge-clan_msgboard_news_get_r/README.md",
+        "section": "§3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "msg_id",
+      "wire_type": "u64",
+      "length": 8,
+      "meaning": "新闻（留言）ID",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "news",
+          "comment"
+        ]
+      },
+      "views": [
+        "news",
+        "comment"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB45D3A",
+      "evidence_ref": {
+        "command": "SC-0x1FC7-lounge-clan_msgboard_news_get_r",
+        "struct": "news",
+        "field": "msg_id",
+        "reader": "sub_B45D20",
+        "printer": "sub_B4E900",
+        "protocol_path": "protocol_analysis/commands/SC-0x1FC7-lounge-clan_msgboard_news_get_r/README.md",
+        "section": "§3"
+      },
+      "role": "identity",
+      "ref_kind": "self",
+      "ref_basis": "自指：留言板条目号：`news`（`game.news`）是条目本体、`msg_id` 是条目**自己的号**（批 19 复核：`SC-0x4DE7` 每个元素都带 `is_niced`/`nice_count`，点赞 `CS-0xC3DF` / 删除 `CS-0xA791` 只带 `msg_id`；`CS-0x45E3-msg_insert` 的 `parent_msgid=0` 即「新话题」）。`news.msg_id` 命中本词干 ⇒ 目标=本对象 ⇒ 身份列（`comment` 已折进 `news`）。"
+    },
+    {
+      "name": "name",
+      "wire_type": "char[25]",
+      "length": 25,
+      "meaning": "发布者名称（NUL 结尾定长串，逐字节循环 0x19 次）",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "news",
+          "comment"
+        ]
+      },
+      "views": [
+        "news",
+        "comment"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB45DFC",
+      "evidence_ref": {
+        "command": "SC-0x1FC7-lounge-clan_msgboard_news_get_r",
+        "struct": "news",
+        "field": "name",
+        "reader": "sub_B45D20",
+        "printer": "sub_B4E900",
+        "protocol_path": "protocol_analysis/commands/SC-0x1FC7-lounge-clan_msgboard_news_get_r/README.md",
+        "section": "§3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "nice_count",
+      "wire_type": "u16",
+      "length": 2,
+      "meaning": "点赞数",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "news",
+          "comment"
+        ]
+      },
+      "views": [
+        "news",
+        "comment"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB45D88",
+      "evidence_ref": {
+        "command": "SC-0x1FC7-lounge-clan_msgboard_news_get_r",
+        "struct": "news",
+        "field": "nice_count",
+        "reader": "sub_B45D20",
+        "printer": "sub_B4E900",
+        "protocol_path": "protocol_analysis/commands/SC-0x1FC7-lounge-clan_msgboard_news_get_r/README.md",
+        "section": "§3"
+      },
+      "role": "counter"
+    },
+    {
+      "name": "npc_id",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "发布 NPC ID（0 = 非 NPC 发布）",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "news",
+          "comment"
+        ]
+      },
+      "views": [
+        "news",
+        "comment"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB45DDE",
+      "evidence_ref": {
+        "command": "SC-0x1FC7-lounge-clan_msgboard_news_get_r",
+        "struct": "news",
+        "field": "npc_id",
+        "reader": "sub_B45D20",
+        "printer": "sub_B4E900",
+        "protocol_path": "protocol_analysis/commands/SC-0x1FC7-lounge-clan_msgboard_news_get_r/README.md",
+        "section": "§3"
+      },
+      "role": "ref",
+      "ref_kind": "dangling",
+      "ref_basis": "clan 板 NPC 发帖人 id：80 张 cfg 里唯一 NPC 主表是 COMMANDER_NPC（主键 commander_id，另有 npc_model_id），键名与线名不符，未定 → 保留普通列。",
+      "ref_category": "master_candidate"
+    },
+    {
+      "name": "parent_msgid",
+      "wire_type": "u64",
+      "length": 8,
+      "meaning": "父留言 ID",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "comment"
+        ]
+      },
+      "views": [
+        "comment"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xb45e55",
+      "evidence_ref": {
+        "command": "SC-0x4DE7-lounge-clan_msgboard_msglist_get_r",
+        "struct": "comment",
+        "field": "parent_msgid",
+        "reader": "sub_B45E20",
+        "printer": "sub_B4EA90",
+        "protocol_path": "protocol_analysis/commands/SC-0x4DE7-lounge-clan_msgboard_msglist_get_r/README.md",
+        "section": "§3"
+      },
+      "role": "ref",
+      "ref_kind": "dangling",
+      "ref_basis": "`parent_msgid` = 所属父条目号（`CS-0x45E3` 的 `parent_msgid=0` 即新话题），指向**同一张表** `game.news.msg_id` 的另一行。引擎把「目标=本对象」的 fk 一律判成身份列（`_stem_verdict` 自指分支，`news.msg_id` 正是靠这条），所以这里不指 FK：落普通列，自指关系留档（`0xB45E55`）。",
+      "ref_category": "self_ref"
+    },
+    {
+      "name": "pilot_id",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "发布飞行员 ID（0 = 非玩家发布）",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "news",
+          "comment"
+        ]
+      },
+      "views": [
+        "news",
+        "comment"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB45DC9",
+      "evidence_ref": {
+        "command": "SC-0x1FC7-lounge-clan_msgboard_news_get_r",
+        "struct": "news",
+        "field": "pilot_id",
+        "reader": "sub_B45D20",
+        "printer": "sub_B4E900",
+        "protocol_path": "protocol_analysis/commands/SC-0x1FC7-lounge-clan_msgboard_news_get_r/README.md",
+        "section": "§3"
+      },
+      "role": "attribute"
+    }
+  ],
+  "wire_body": "comment",
+  "writes": [],
+  "reads": [
+    {
+      "command": "SC-0x1FC7-lounge-clan_msgboard_news_get_r",
+      "op": "read",
+      "via": "news"
+    },
+    {
+      "command": "SC-0x4DE7-lounge-clan_msgboard_msglist_get_r",
+      "op": "read",
+      "via": "comment"
+    }
+  ],
+  "db_effects": [],
+  "pk_members": [
+    "clan_id",
+    "msg_id"
+  ],
+  "pk_kind": "override",
+  "is_root": true,
+  "alternate_identity": [
+    "msg_id"
+  ],
+  "identity": [],
+  "scope": [
+    "world_id"
+  ],
+  "multi": false,
+  "array_parents": [],
+  "inline_parents": [],
+  "shape": "root",
+  "parent": "",
+  "parents": [],
+  "has_scope": true,
+  "disposition": "PERSIST",
+  "table": "game.news",
+  "columns_excluded": [
+    {
+      "member": "is_niced",
+      "reason": "人工登记不落库：**相对读方的状态**（`is_niced` = 「我赞过没有」）落在**氏族共享行**上没有娘家：行是 `(world_id, clan_id, msg_id)`，存成列就等于「一个人赞过 ⇒ 全族都显示已赞」。它正确的娘家是一份 `(world_id, clan_id, msg_id, pilot_id)` 的行集，而本族 5 条命令没有创建它的写方（`CS-0xC3DF-nicecount_add` 只带 `msg_id` + `clan_kind`，回执 `SC-0xF514` 只有 `result`）⇒ 按「宁可欠账不猜」不落库，读侧恒回 0（与旧实现同口径：旧 `ClanBoardNewsRow` 没有 `is_niced`）。裁决与全链取证见 reviewed.batch_27_msgboard_owner。",
+      "evidence_va": "0xb45e94"
+    }
+  ],
+  "columns": [
+    {
+      "member": "body",
+      "column": "body",
+      "role": "attribute",
+      "wire_type": "char[193]",
+      "synthetic": false,
+      "meaning": "新闻正文（NUL 结尾定长串，逐字节循环 0xC1 次）",
+      "evidence_va": "0xB45DAC",
+      "pk": false
+    },
+    {
+      "member": "child_count",
+      "column": "child_count",
+      "role": "counter",
+      "wire_type": "u16",
+      "synthetic": false,
+      "meaning": "子条目（回复）条数",
+      "evidence_va": "0xB45D90",
+      "pk": false
+    },
+    {
+      "member": "clan_id",
+      "column": "clan_id",
+      "role": "ref",
+      "wire_type": "u32",
+      "synthetic": true,
+      "meaning": "所属氏族 ID（会话解析行主列：本条板归**我的氏族**所有，5 条 CS 一条都不带它）",
+      "evidence_va": "0xB9F389|0xB9FB5C",
+      "pk": true
+    },
+    {
+      "member": "date",
+      "column": "date",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "新闻发布时间",
+      "evidence_va": "0xB45D55",
+      "pk": false
+    },
+    {
+      "member": "kind",
+      "column": "kind",
+      "role": "attribute",
+      "wire_type": "u16",
+      "synthetic": false,
+      "meaning": "新闻类别（打印器 `kind=` 按 u16 输出；枚举值待补）",
+      "evidence_va": "0xB45D6C",
+      "pk": false
+    },
+    {
+      "member": "msg_id",
+      "column": "msg_id",
+      "role": "identity",
+      "wire_type": "u64",
+      "synthetic": false,
+      "meaning": "新闻（留言）ID",
+      "evidence_va": "0xB45D3A",
+      "pk": true
+    },
+    {
+      "member": "name",
+      "column": "name",
+      "role": "attribute",
+      "wire_type": "char[25]",
+      "synthetic": false,
+      "meaning": "发布者名称（NUL 结尾定长串，逐字节循环 0x19 次）",
+      "evidence_va": "0xB45DFC",
+      "pk": false
+    },
+    {
+      "member": "nice_count",
+      "column": "nice_count",
+      "role": "counter",
+      "wire_type": "u16",
+      "synthetic": false,
+      "meaning": "点赞数",
+      "evidence_va": "0xB45D88",
+      "pk": false
+    },
+    {
+      "member": "npc_id",
+      "column": "npc_id",
+      "role": "ref",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "发布 NPC ID（0 = 非 NPC 发布）",
+      "evidence_va": "0xB45DDE",
+      "pk": false
+    },
+    {
+      "member": "parent_msgid",
+      "column": "parent_msgid",
+      "role": "ref",
+      "wire_type": "u64",
+      "synthetic": false,
+      "meaning": "父留言 ID",
+      "evidence_va": "0xb45e55",
+      "pk": false
+    },
+    {
+      "member": "pilot_id",
+      "column": "pilot_id",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "发布飞行员 ID（0 = 非玩家发布）",
+      "evidence_va": "0xB45DC9",
+      "pk": true
+    }
+  ],
+  "columns_expected": 11,
+  "keys": {
+    "scope": [
+      "world_id"
+    ],
+    "own": [
+      "clan_id",
+      "msg_id"
+    ],
+    "inherited": [],
+    "primary_key": [
+      "world_id",
+      "clan_id",
+      "msg_id"
+    ],
+    "pk_kind": "override",
+    "children": [],
+    "nested": [],
+    "child_key": [
+      "elem_index"
+    ]
+  },
+  "tables": [
+    {
+      "name": "game.news",
+      "shape": "root",
+      "parent": "",
+      "parent_table": "",
+      "via_member": "",
+      "key_extra": [],
+      "scope": [
+        "world_id"
+      ],
+      "links": [
+        {
+          "member": "avatar",
+          "column": "avatar",
+          "kind": "nested",
+          "composite": "avatar",
+          "child_object": "avatar",
+          "child_table": "game.news__avatar",
+          "count": 0,
+          "length": 18,
+          "evidence_va": "0xb45f25"
+        }
+      ],
+      "child_tables": [
+        "game.news__avatar"
+      ],
+      "columns": [
+        {
+          "member": "body",
+          "column": "body",
+          "role": "attribute",
+          "wire_type": "char[193]",
+          "synthetic": false,
+          "meaning": "新闻正文（NUL 结尾定长串，逐字节循环 0xC1 次）",
+          "evidence_va": "0xB45DAC",
+          "pk": false
+        },
+        {
+          "member": "child_count",
+          "column": "child_count",
+          "role": "counter",
+          "wire_type": "u16",
+          "synthetic": false,
+          "meaning": "子条目（回复）条数",
+          "evidence_va": "0xB45D90",
+          "pk": false
+        },
+        {
+          "member": "clan_id",
+          "column": "clan_id",
+          "role": "ref",
+          "wire_type": "u32",
+          "synthetic": true,
+          "meaning": "所属氏族 ID（会话解析行主列：本条板归**我的氏族**所有，5 条 CS 一条都不带它）",
+          "evidence_va": "0xB9F389|0xB9FB5C",
+          "pk": true
+        },
+        {
+          "member": "date",
+          "column": "date",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "新闻发布时间",
+          "evidence_va": "0xB45D55",
+          "pk": false
+        },
+        {
+          "member": "kind",
+          "column": "kind",
+          "role": "attribute",
+          "wire_type": "u16",
+          "synthetic": false,
+          "meaning": "新闻类别（打印器 `kind=` 按 u16 输出；枚举值待补）",
+          "evidence_va": "0xB45D6C",
+          "pk": false
+        },
+        {
+          "member": "msg_id",
+          "column": "msg_id",
+          "role": "identity",
+          "wire_type": "u64",
+          "synthetic": false,
+          "meaning": "新闻（留言）ID",
+          "evidence_va": "0xB45D3A",
+          "pk": true
+        },
+        {
+          "member": "name",
+          "column": "name",
+          "role": "attribute",
+          "wire_type": "char[25]",
+          "synthetic": false,
+          "meaning": "发布者名称（NUL 结尾定长串，逐字节循环 0x19 次）",
+          "evidence_va": "0xB45DFC",
+          "pk": false
+        },
+        {
+          "member": "nice_count",
+          "column": "nice_count",
+          "role": "counter",
+          "wire_type": "u16",
+          "synthetic": false,
+          "meaning": "点赞数",
+          "evidence_va": "0xB45D88",
+          "pk": false
+        },
+        {
+          "member": "npc_id",
+          "column": "npc_id",
+          "role": "ref",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "发布 NPC ID（0 = 非 NPC 发布）",
+          "evidence_va": "0xB45DDE",
+          "pk": false
+        },
+        {
+          "member": "parent_msgid",
+          "column": "parent_msgid",
+          "role": "ref",
+          "wire_type": "u64",
+          "synthetic": false,
+          "meaning": "父留言 ID",
+          "evidence_va": "0xb45e55",
+          "pk": false
+        },
+        {
+          "member": "pilot_id",
+          "column": "news_pilot_id",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "发布飞行员 ID（0 = 非玩家发布）",
+          "evidence_va": "0xB45DC9",
+          "pk": true,
+          "renamed_from": "pilot_id"
+        }
+      ],
+      "key_members": [
+        "world_id",
+        "clan_id",
+        "msg_id"
+      ],
+      "primary_key": [
+        "world_id",
+        "clan_id",
+        "msg_id"
+      ]
+    }
+  ],
+  "links": [
+    {
+      "member": "avatar",
+      "column": "avatar",
+      "kind": "nested",
+      "composite": "avatar",
+      "child_object": "avatar",
+      "child_table": "game.news__avatar",
+      "count": 0,
+      "length": 18,
+      "evidence_va": "0xb45f25"
+    }
+  ]
+}

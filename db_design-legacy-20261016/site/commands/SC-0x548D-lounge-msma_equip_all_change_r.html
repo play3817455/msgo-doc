@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SC-0x548D-lounge-msma_equip_all_change_r · db_design</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <h1><a href="../index.html">db_design</a></h1>
+      <p class="header-note">唯一证据源：<code>protocol_analysis/</code></p>
+      <nav><a href="../index.html">首页</a>
+      <a href="../homing/index.html">归位库</a>
+      <a href="../tables/index.html">旧表留档</a>
+      <a href="../commands/index.html" class="active">命令</a>
+      <a href="../cfg/index.html">配置表79</a>
+      <a href="../srv/index.html">服务端配置</a>
+      <a href="../asm-audit/index.html">ASM 审计</a>
+      <a href="../oracle-audit/index.html">Oracle 审计</a>
+      <a href="../entities/index.html">协议实体</a>
+      <a href="../fields/index.html">字段索引</a>
+      <a href="../relations.html">表关系</a></nav>
+    </div>
+  </header>
+  <main class="wrap">
+
+    <nav class="breadcrumb"><a href="index.html">命令</a> / <span><code>SC-0x548D-lounge-msma_equip_all_change_r</code></span></nav>
+    <h2>SC-0x548D-lounge-msma_equip_all_change_r
+      <span class="badge" style="background:#455a64">SC</span>
+      <span class="badge" style="background:#1565c0">lounge</span>
+      <span class="badge" style="background:#1565c0">BEHAVIOR-DONE</span></h2>
+    
+      <dl class="asm-dl">
+        <dt>opcode</dt><dd><code>0x548D</code> · SC · lounge</dd>
+        <dt>协议类</dt><dd><code>lounge_client</code></dd>
+        <dt>处理函数</dt><dd><code>sub_B51930</code> <code>0xB51930</code></dd>
+        <dt>处理块</dt><dd>0xB61431 .. 0xB616DC</dd>
+        <dt>名字串</dt><dd><code>—</code> <code>0xB61581</code></dd>
+        <dt>声明容量</dt><dd>0x90 <code>0xB61446</code>
+          <span class="muted">（缓冲 claim，非线长）</span></dd>
+        <dt>长度闭合点</dt><dd><code>0xB61538</code></dd>
+        <dt>去向槽</dt><dd><code>vt[0x314]</code> <code>0xB616C0</code></dd>
+        <dt>配对 / 同族</dt><dd><span class="muted">—</span></dd>
+        <dt>证据目录</dt><dd><a href="../../../protocol_analysis/commands/SC-0x548D-lounge-msma_equip_all_change_r/README.md" target="_blank">README.md</a> · <a href="../../../protocol_analysis/commands/SC-0x548D-lounge-msma_equip_all_change_r/fields.csv" target="_blank">fields.csv</a> · <a href="../../../protocol_analysis/commands/SC-0x548D-lounge-msma_equip_all_change_r/asm.md" target="_blank">asm.md</a> · <a href="../../../protocol_analysis/commands/SC-0x548D-lounge-msma_equip_all_change_r/notes.md" target="_blank">notes.md</a></dd>
+      </dl>
+    
+
+    <section>
+      <h3>线长</h3>
+      <dl class="asm-dl">
+        <dt>报文体线长</dt><dd><code>4 + 8 + 121 + 4</code>
+          <span class="badge" style="background:#455a64">定长</span>
+          <span class="muted">来源 field_sum</span></dd>
+        <dt>变长驱动</dt><dd><span class="muted">—</span></dd>
+        <dt>负载字段数</dt><dd>4</dd>
+        <dt>容量口径</dt><dd class="muted">声明容量 0x90（容量记账口径，非线长）</dd>
+        <dt>README 结论</dt><dd class="muted">**报文体线长**：137（4+8+121+4）。</dd>
+        <dt>README 闭合</dt><dd class="muted">—</dd>
+        
+      </dl>
+    </section>
+
+    <section>
+      <h3>包结构体</h3>
+      <p class="muted">由 <code>fields[]</code> 归并而成；线序即字段行序，可复用的聚合体只在
+        <code>element</code> 里引用 <code>schema/composites/</code>。</p>
+      
+      <div class="struct-block">
+        <h4><code>MsmaEquipAllChangeR</code> <span class="muted">(response · 角色 response)</span>
+          <span class="muted">线长 4 + 8 + 121 + 4</span></h4>
+        <table class="srv-table">
+          <thead><tr><th>Go 成员</th><th>线类型</th><th>线长</th><th>字段引用</th><th>元素 / 计数</th></tr></thead>
+          <tbody><tr>
+          <td><code class="fname">Result</code></td>
+          <td><code>u32</code></td>
+          <td><code>4</code></td>
+          <td>result</td>
+          <td class="muted">—</td>
+        </tr><tr>
+          <td><code class="fname">UniqidMs</code></td>
+          <td><code>u64</code></td>
+          <td><code>8</code></td>
+          <td>uniqid_ms</td>
+          <td class="muted">—</td>
+        </tr><tr>
+          <td><code class="fname">EquipSet</code></td>
+          <td><code>struct&lt;equip_set&gt;</code></td>
+          <td><code>121</code></td>
+          <td>equip_set</td>
+          <td class="muted">元素 <div class="composite-inline"><span class="muted">9 个成员：</span><code>uniq_id</code> u64 · <code>slot</code> u16 · <code>eq_weapon</code> u32[3] · <code>eq_shield</code> u32 · <code>eq_special</code> u32 · <code>eq_modules</code> u32[10] · <code>eq_bonus_modules</code> u32 · <code>eq_rental_modules</code> u32 · <code>setname</code> u8[43]</div></td>
+        </tr><tr>
+          <td><code class="fname">Cost</code></td>
+          <td><code>u32</code></td>
+          <td><code>4</code></td>
+          <td>cost</td>
+          <td class="muted">—</td>
+        </tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h3>字段解剖</h3>
+      <table class="wide">
+        <thead><tr>
+          <th>序</th><th>偏移</th><th>线长</th><th>线类型</th><th>字段名</th>
+          <th>含义</th><th>用途（来源/去向）</th><th>取值/枚举</th><th>去向</th><th>证据 VA</th><th>置信度</th>
+        </tr></thead>
+        <tbody><tr>
+          <td>0</td>
+          <td><code>-</code></td>
+          <td><code>2</code></td>
+          <td><code>u16</code></td>
+          <td><code class="fname">opcode</code></td>
+          <td>命令号</td>
+          <td>分发器 switch 选择子</td>
+          <td class="muted">0x548D</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB61581</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>1</td>
+          <td><code>0</code></td>
+          <td><code>4</code></td>
+          <td><code>u32</code></td>
+          <td><code class="fname">result</code></td>
+          <td>结果码</td>
+          <td>经 `vt[0x314]` 交业务</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB61484</code> <code>0xB615D7</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>2</td>
+          <td><code>4</code></td>
+          <td><code>8</code></td>
+          <td><code>u64</code></td>
+          <td><code class="fname">uniqid_ms</code></td>
+          <td>机体唯一 ID（u64）</td>
+          <td>经 `vt[0x314]` 交业务</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB614C4</code> <code>0xB61601</code></td>
+          <td class="muted">确证</td>
+        </tr><tr>
+          <td>3</td>
+          <td><code>12</code></td>
+          <td><code>121</code></td>
+          <td><code>struct&lt;equip_set&gt;</code></td>
+          <td><code class="fname">equip_set</code></td>
+          <td>整份装备编成（claim 128 = 预留 `sub_B411D0` 槽步进 `0x80`；线长 121，读取器 `sub_B43C50`）</td>
+          <td>经 `vt[0x314]` 交业务</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB61504</code> <code>0xB61629</code></td>
+          <td class="muted">确证</td>
+        </tr><tr class="row-members"><td colspan="11"><div class="composite-block"><div class="composite-head"><code>equip_set</code> <span class="muted">结构体成员</span> <span class="muted">线长 121B · 槽 123B · ASM pass</span> <span class="muted">定义 <code>schema/composites/equip_set.json</code></span></div><table class="srv-table composite-table"><thead><tr><th>成员</th><th>线类型</th><th>线偏移 / 线长</th><th>disposition</th><th>含义</th></tr></thead><tbody><tr><td><code class="fname">uniq_id</code></td><td><code>u64</code></td><td class="muted">线 +0 8B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xB41C73">✓</span></td><td>装备套组唯一 id</td></tr><tr><td><code class="fname">slot</code></td><td><code>u16</code></td><td class="muted">线 +8 2B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xB41C92">✓</span></td><td>套组槽位号</td></tr><tr><td><code class="fname">eq_weapon</code></td><td><code>u32[3]</code></td><td class="muted">线 +10 mem +12 12B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xB41CA3">✓</span></td><td>装备武器（3 项）</td></tr><tr><td><code class="fname">eq_shield</code></td><td><code>u32</code></td><td class="muted">线 +22 mem +24 4B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xB41CD1">✓</span></td><td>装备盾</td></tr><tr><td><code class="fname">eq_special</code></td><td><code>u32</code></td><td class="muted">线 +26 mem +28 4B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xB41CE7">✓</span></td><td>装备特殊装备</td></tr><tr><td><code class="fname">eq_modules</code></td><td><code>u32[10]</code></td><td class="muted">线 +30 mem +32 40B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xB41D00">✓</span></td><td>装备模块（10 项）</td></tr><tr><td><code class="fname">eq_bonus_modules</code></td><td><code>u32</code></td><td class="muted">线 +70 mem +72 4B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xB41D25">✓</span></td><td>奖励模块（1 项）</td></tr><tr><td><code class="fname">eq_rental_modules</code></td><td><code>u32</code></td><td class="muted">线 +74 mem +76 4B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xB41D46">✓</span></td><td>租赁模块（1 项）</td></tr><tr><td><code class="fname">setname</code></td><td><code>u8[43]</code></td><td class="muted">线 +78 mem +80 43B</td><td><span class="badge" style="background:#2e7d32">PERSIST</span> <span class="asm-ok" title="0xB41D64">✓</span></td><td>套组名（43 字节定长）</td></tr></tbody></table></div></td></tr><tr>
+          <td>4</td>
+          <td><code>133</code></td>
+          <td><code>4</code></td>
+          <td><code>u32</code></td>
+          <td><code class="fname">cost</code></td>
+          <td>当前机体 COST</td>
+          <td>经 `vt[0x314]` 交业务</td>
+          <td class="muted">—</td>
+          <td><span class="badge" style="background:#757575">TBD</span> <span class="muted">—</span></td>
+          <td><code>0xB61528</code> <code>0xB61650</code></td>
+          <td class="muted">确证</td>
+        </tr></tbody>
+      </table>
+    </section>
+
+    <section>
+      <h3>客户端行为</h3>
+      <table class="srv-table">
+        <thead><tr><th>步</th><th>类别</th><th>动作</th><th>证据 VA</th></tr></thead>
+        <tbody><tr>
+          <td>1</td>
+          <td><code>read_scalar</code></td>
+          <td>opcode 0x548D（分发器 switch 选择子）</td>
+          <td><code>0xB61581</code></td>
+        </tr><tr>
+          <td>2</td>
+          <td><code>guard</code></td>
+          <td>进入解码窗口：守卫 `0xB41120`（模块 id None）→ 之后逐字段读线</td>
+          <td><code>0xB61431</code></td>
+        </tr><tr>
+          <td>3</td>
+          <td><code>read_scalar</code></td>
+          <td>result：`u32`（线长 4）—— 结果码</td>
+          <td><code>0xB61484</code></td>
+        </tr><tr>
+          <td>4</td>
+          <td><code>read_scalar</code></td>
+          <td>uniqid_ms：`u64`（线长 8）—— 机体唯一 ID（u64）</td>
+          <td><code>0xB614C4</code></td>
+        </tr><tr>
+          <td>5</td>
+          <td><code>read_struct</code></td>
+          <td>equip_set：`struct&lt;equip_set&gt;`（线长 121）—— 整份装备编成（claim 128 = 预留 `sub_B411D0` 槽步进 `0x80`；线长 121，读取器 `sub_B43C50`）</td>
+          <td><code>0xB61504</code></td>
+        </tr><tr>
+          <td>6</td>
+          <td><code>read_scalar</code></td>
+          <td>cost：`u32`（线长 4）—— 消耗</td>
+          <td><code>0xB61528</code></td>
+        </tr><tr>
+          <td>7</td>
+          <td><code>close_check</code></td>
+          <td>闭合校验：读游标 == 报文末尾（jz）</td>
+          <td><code>0xB61538</code></td>
+        </tr><tr>
+          <td>8</td>
+          <td><code>dispatch</code></td>
+          <td>交业务 `vt[0x314]`，实参 5 个</td>
+          <td><code>0xB616C0</code></td>
+        </tr><tr>
+          <td>9</td>
+          <td><code>error_path</code></td>
+          <td>失败路径 `vt[0x64](1, 错误码)`（不是业务去向）</td>
+          <td><code>0xB6149E</code></td>
+        </tr></tbody>
+      </table>
+    </section>
+
+    <section>
+      <h3>能力</h3>
+      <span class="cap-chip">update</span><div class="muted">命名学推断（非证据）：<span class="cap-chip cap-derived">update</span></div>
+    </section>
+
+    <section>
+      <h3>DB 影响</h3>
+      <p class="muted">未补。CS 的 op 需服务端语义确认；SC 的 op 由去向槽 <code>vt[0xNNN]</code> 的实参决定。</p>
+    </section>
+
+    
+
+    <section>
+      <h3>汇编复核（IDA asm 为唯一权威）</h3>
+      
+      <dl class="asm-dl">
+        <dt>状态</dt><dd><span class="badge" style="background:#1565c0">BEHAVIOR-DONE</span></dd>
+        <dt>复核批次</dt><dd>7</dd>
+        <dt>复核时间</dt><dd>2026-09-30 15:25:43</dd>
+        <dt>提取器</dt><dd><code>tools/verify_commands_ida.py</code></dd>
+      </dl>
+      <table class="srv-table">
+        <thead><tr><th>检查项</th><th>键</th><th>结果</th></tr></thead>
+        <tbody><tr><td>容量指纹</td><td><code>capacity</code></td><td><code>{&quot;value&quot;: 144, &quot;va&quot;: &quot;0xB61446&quot;, &quot;reg&quot;: &quot;edx&quot;, &quot;host&quot;: &quot;[eax+78h]&quot;, &quot;alloc_va&quot;: &quot;0xB61443&quot;, &quot;call_va&quot;: &quot;0xB6144B&quot;}</code></td></tr><tr><td>字段窗口</td><td><code>field_window</code></td><td><code>{&quot;start_va&quot;: &quot;0xB61432&quot;, &quot;end_va&quot;: &quot;0xB6155F&quot;, &quot;guard&quot;: {&quot;va&quot;: &quot;0xB61431&quot;, &quot;func&quot;: &quot;0xB41120&quot;, &quot;module_id&quot;: null, &quot;release_va&quot;: &quot;0xB41110&quot;}, &quot;closer_or_commit_va&quot;: &quot;0xB61538&quot;, &quot;within_model_block&quot;: true, &quot;range_from&quot;: &quot;block&quot;}</code></td></tr><tr><td>原语宽度</td><td><code>primitive_widths</code></td><td><code>{&quot;direction&quot;: &quot;SC&quot;, &quot;expected&quot;: [{&quot;name&quot;: &quot;result&quot;, &quot;wire_type&quot;: &quot;u32&quot;, &quot;width&quot;: 4, &quot;seq&quot;: 1, &quot;shape&quot;: &quot;scalar&quot;, &quot;evidence_va&quot;: [&quot;0xB61484&quot;, &quot;0xB615D7&quot;]}, {&quot;name&quot;: &quot;uniqid_ms&quot;, &quot;wire_type&quot;: &quot;u64&quot;, &quot;width&quot;: 8, &quot;seq&quot;: 2, &quot;shape&quot;: &quot;scalar&quot;, &quot;evidence_va&quot;: [&quot;0xB614C4&quot;, &quot;0xB61601&quot;]}, {&quot;name&quot;: &quot;equip_set&quot;, &quot;wire_type&quot;: &quot;struct&lt;equip_set&gt;&quot;, &quot;width&quot;: null, &quot;seq&quot;: 3, &quot;shape&quot;: &quot;agg&quot;, &quot;evidence_va&quot;: [&quot;0xB61504&quot;, &quot;0xB61629&quot;]}, {&quot;name&quot;: &quot;cost&quot;, &quot;wire_type&quot;: &quot;u32&quot;, &quot;width&quot;: 4, &quot;seq&quot;: 4, &quot;shape&quot;: &quot;scalar&quot;, &quot;evidence_va&quot;: [&quot;0xB61528&quot;, &quot;0xB61650&quot;]}], &quot;actual&quot;: [{&quot;va&quot;: &quot;0xB43C62&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 4, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 4, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43C6B&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 4, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 4, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43C82&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 2, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 2, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43CA1&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 4, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 4, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43CA1&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 4, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 4, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43CA1&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 4, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 4, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43CC1&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 4, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 4, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43CD7&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 4, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 4, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43CFC&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 4, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 4, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43CFC&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 4, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 4, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43CFC&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 4, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 4, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43CFC&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 4, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 4, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43CFC&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 4, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 4, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43CFC&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 4, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 4, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43CFC&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 4, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 4, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43CFC&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 4, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 4, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43CFC&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 4, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 4, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43CFC&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 4, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 4, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43D1D&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 4, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 4, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43D3E&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 4, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 4, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43D5E&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 1, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 1, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43D5E&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 1, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 1, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43D5E&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 1, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 1, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43D5E&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 1, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 1, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43D5E&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 1, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 1, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43D5E&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 1, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 1, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43D5E&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 1, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 1, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43D5E&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 1, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 1, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43D5E&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 1, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 1, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43D5E&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 1, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 1, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43D5E&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 1, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 1, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43D5E&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 1, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 1, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43D5E&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 1, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 1, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43D5E&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 1, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 1, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43D5E&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 1, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 1, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43D5E&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 1, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 1, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43D5E&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 1, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 1, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43D5E&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 1, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 1, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43D5E&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 1, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 1, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43D5E&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 1, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 1, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43D5E&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 1, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 1, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43D5E&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 1, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 1, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43D5E&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 1, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 1, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43D5E&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 1, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 1, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43D5E&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 1, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 1, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43D5E&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 1, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 1, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43D5E&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 1, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 1, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43D5E&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 1, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 1, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43D5E&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 1, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 1, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43D5E&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 1, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 1, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43D5E&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 1, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 1, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43D5E&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 1, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 1, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43D5E&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 1, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 1, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43D5E&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 1, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 1, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43D5E&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 1, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 1, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43D5E&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 1, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 1, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43D5E&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 1, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 1, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43D5E&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 1, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 1, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43D5E&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 1, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 1, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43D5E&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 1, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 1, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43D5E&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 1, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 1, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43D5E&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 1, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 1, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB43D5E&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 1, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: 1, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB61484&quot;, &quot;kind&quot;: &quot;read&quot;, &quot;width&quot;: 4, &quot;wire_type&quot;: &quot;u32&quot;, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: null, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB614C4&quot;, &quot;kind&quot;: &quot;read&quot;, &quot;width&quot;: 8, &quot;wire_type&quot;: &quot;u64&quot;, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: null, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB614F5&quot;, &quot;kind&quot;: &quot;opaque&quot;, &quot;width&quot;: null, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;sub_B411D0&quot;, &quot;consumed&quot;: 0, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB61504&quot;, &quot;kind&quot;: &quot;opaque&quot;, &quot;width&quot;: null, &quot;wire_type&quot;: null, &quot;name&quot;: &quot;sub_B43C50&quot;, &quot;consumed&quot;: null, &quot;consumed_effective&quot;: 121, &quot;nested_of&quot;: null}, {&quot;va&quot;: &quot;0xB61528&quot;, &quot;kind&quot;: &quot;read&quot;, &quot;width&quot;: 4, &quot;wire_type&quot;: &quot;u32&quot;, &quot;name&quot;: &quot;&quot;, &quot;consumed&quot;: null, &quot;consumed_effective&quot;: null, &quot;nested_of&quot;: null}], &quot;matched&quot;: 3, &quot;checkable&quot;: 3, &quot;pairs&quot;: [{&quot;field&quot;: &quot;result&quot;, &quot;width&quot;: 4, &quot;shape&quot;: &quot;scalar&quot;, &quot;va&quot;: &quot;0xB61484&quot;, &quot;kind&quot;: &quot;read&quot;}, {&quot;field&quot;: &quot;uniqid_ms&quot;, &quot;width&quot;: 8, &quot;shape&quot;: &quot;scalar&quot;, &quot;va&quot;: &quot;0xB614C4&quot;, &quot;kind&quot;: &quot;read&quot;}, {&quot;field&quot;: &quot;cost&quot;, &quot;width&quot;: 4, &quot;shape&quot;: &quot;scalar&quot;, &quot;va&quot;: &quot;0xB61528&quot;, &quot;kind&quot;: &quot;read&quot;}], &quot;gaps&quot;: [], &quot;unmatched_actual&quot;: [{&quot;va&quot;: &quot;0xB614F5&quot;, &quot;kind&quot;: &quot;opaque&quot;, &quot;width&quot;: null, &quot;wire_type&quot;: null}, {&quot;va&quot;: &quot;0xB61504&quot;, &quot;kind&quot;: &quot;opaque&quot;, &quot;width&quot;: null, &quot;wire_type&quot;: null}, {&quot;va&quot;: &quot;0xB43C62&quot;, &quot;kind&quot;: &quot;nested_run&quot;, &quot;width&quot;: 8, &quot;wire_type&quot;: null}, {&quot;va&quot;: &quot;0xB43C82&quot;, &quot;kind&quot;: &quot;nested&quot;, &quot;width&quot;: 2, &quot;wire_type&quot;: null}, {&quot;va&quot;: &quot;0xB43CA1&quot;, &quot;kind&quot;: &quot;nested_run&quot;, &quot;width&quot;: 12, &quot;wire_type&quot;: null}, {&quot;va&quot;: &quot;0xB43CC1&quot;, &quot;kind&quot;: &quot;nested_run&quot;, &quot;width&quot;: 8, &quot;wire_type&quot;: null}, {&quot;va&quot;: &quot;0xB43CFC&quot;, &quot;kind&quot;: &quot;nested_run&quot;, &quot;width&quot;: 40, &quot;wire_type&quot;: null}, {&quot;va&quot;: &quot;0xB43D1D&quot;, &quot;kind&quot;: &quot;nested_run&quot;, &quot;width&quot;: 8, &quot;wire_type&quot;: null}, {&quot;va&quot;: &quot;0xB43D5E&quot;, &quot;kind&quot;: &quot;nested_run&quot;, &quot;width&quot;: 43, &quot;wire_type&quot;: null}], &quot;nested_unmatchable&quot;: [], &quot;window&quot;: [&quot;0xB61432&quot;, &quot;0xB6155F&quot;], &quot;scalar_match_verifiable&quot;: true, &quot;capacity_relation&quot;: {&quot;observed_min&quot;: 16, &quot;capacity&quot;: 144, &quot;relation&quot;: &quot;within&quot;, &quot;unknown_events&quot;: [{&quot;va&quot;: &quot;0xB61504&quot;, &quot;kind&quot;: &quot;opaque&quot;, &quot;name&quot;: &quot;sub_B43C50&quot;}], &quot;is_lower_bound&quot;: true, &quot;note&quot;: &quot;观测线长（下界）16 / 容量 0x90&quot;}}</code></td></tr><tr><td>闭合点</td><td><code>closer</code></td><td><code>{&quot;va&quot;: &quot;0xB61538&quot;, &quot;kind&quot;: &quot;jz&quot;, &quot;jcc_va&quot;: &quot;0xB6153E&quot;, &quot;seq_va&quot;: &quot;0xB61534&quot;, &quot;jcc_dst&quot;: &quot;0xB6155A&quot;, &quot;cmp&quot;: &quot;cmp     eax, [esp+2C5Ch+var_2C40]&quot;, &quot;va_convention&quot;: &quot;cmp&quot;}</code></td></tr><tr><td>去向槽+实参</td><td><code>dispatch_slot</code></td><td><code>{&quot;slot&quot;: &quot;vt[0x314]&quot;, &quot;slot_value&quot;: 788, &quot;va&quot;: &quot;0xB616C0&quot;, &quot;mov_va&quot;: &quot;0xB616A8&quot;, &quot;host&quot;: &quot;[edx+314h]&quot;, &quot;argc&quot;: 5, &quot;form&quot;: &quot;mov_then_call&quot;, &quot;error_slot&quot;: {&quot;slot&quot;: &quot;vt[0x64]&quot;, &quot;va&quot;: &quot;0xB6149E&quot;, &quot;argc&quot;: 2}}</code></td></tr><tr><td>日志串</td><td><code>log_strings</code></td><td><code>[&quot;result=&quot;, &quot;uniqid_ms=&quot;, &quot;equip_set=&quot;, &quot;cost=&quot;]</code></td></tr></tbody>
+      </table>
+      <p>无差异。</p>
+      <p>原始证据切片：<a href="../../../db_design/schema/commands/_verify/SC-0x548D-lounge-msma_equip_all_change_r.json" target="_blank"><code>commands/_verify/SC-0x548D-lounge-msma_equip_all_change_r.json</code></a></p>
+    </section>
+
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">生成于 2026-10-12 · 改 JSON 后重跑 build_site.py · HTML 只读</div>
+  </footer>
+</body>
+</html>

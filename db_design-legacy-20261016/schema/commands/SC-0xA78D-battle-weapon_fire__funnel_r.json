@@ -1,0 +1,527 @@
+{
+  "id": "SC-0xA78D-battle-weapon_fire__funnel_r",
+  "opcode": "0xA78D",
+  "direction": "SC",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "weapon_fire__funnel_r",
+  "source_dir": "protocol_analysis/commands/SC-0xA78D-battle-weapon_fire__funnel_r",
+  "meta": {
+    "opcode": "`0xA78D`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`battle_client`",
+    "命令名": "`weapon_fire__funnel_r`",
+    "处理块范围": "`0xb2648b`..`0xb2677d`",
+    "名字串引用点": "`0xb26603`",
+    "声明容量（解码缓冲）": "`0x51`（`B2649D`）",
+    "长度闭合点": "`B265BA`",
+    "报错码": "`0x94`（块内 `push 1; push <errcode>; vt[0x64]`）",
+    "去向": "`vt[0x1E0]` @`B26761`（4 实参）"
+  },
+  "handler": null,
+  "handler_va": null,
+  "block": [
+    "0xb2648b",
+    "0xb2677d"
+  ],
+  "name_str": null,
+  "name_str_va": "0xb26603",
+  "capacity": "0x51",
+  "capacity_va": "0xB2649D",
+  "closer_va": "0xB265BA",
+  "dispatch": "`vt[0x1E0]` @`B26761`（4 实参）",
+  "dispatch_slot": "vt[0x1E0]",
+  "dispatch_va": "0xB26761",
+  "wire": {
+    "length_expr": "4 + 1 + 4 + 6·N",
+    "fixed": false,
+    "var_drivers": [
+      "N"
+    ],
+    "capacity_note": "声明容量 0x51（容量记账口径，非线长）",
+    "field_count": 4,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：**9 + 6N**（N ≤ 12）。",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0xA78D",
+      "evidence_va": [
+        "0xb26603"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "from_ent_id",
+      "meaning": "发射者实体 ID（日志串 `from_ent_id=`）",
+      "purpose": "经 `vt[0x1E0]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B264DB",
+        "B26659"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "wslot_idx",
+      "meaning": "武器槽序号（日志串 `wslot_idx=`，字节打印器）",
+      "purpose": "经 `vt[0x1E0]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B2651B",
+        "B26681"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "5",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "fire_points_cnt",
+      "meaning": "火力点个数（上界 `cmp ebx,0Ch` @`B2655D` ⇒ ≤12）",
+      "purpose": "驱动元素循环",
+      "enum": "0..12",
+      "evidence_va": [
+        "B26531"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 4,
+      "offset": "9",
+      "length": "6·N",
+      "wire_type": "array<fire_point,N>",
+      "name": "fire_points",
+      "meaning": "火力点坐标列表（日志 `fire_points={x,y,z}`）",
+      "purpose": "经 `vt[0x1E0]` 交业务",
+      "enum": "元素线长 6（3×u16，x/y/z）/ 槽 6",
+      "evidence_va": [
+        "0xB2656F",
+        "0xB07760",
+        "0xB0A5D0"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6,
+      "override_verified": true,
+      "element_composite_ref_source": "name",
+      "element_composite_ref": "fire_point"
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0xA78D（分发器 switch 选择子）",
+      "evidence_va": "0xB26603"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB05DA0`（模块 id None）→ 之后逐字段读线",
+      "evidence_va": "0xB2648B"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "from_ent_id：`u32`（线长 4）—— 发射者实体 ID（日志串 `from_ent_id=`）",
+      "evidence_va": "0xB264DB"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "wslot_idx：`u8`（线长 1）—— 武器槽序号（日志串 `wslot_idx=`，字节打印器）",
+      "evidence_va": "0xB2651B"
+    },
+    {
+      "step": 5,
+      "kind": "read_count",
+      "detail": "fire_points_cnt：`u32`（线长 4）—— 火力点个数（上界 `cmp ebx,0Ch` @`B2655D` ⇒ ≤12）",
+      "evidence_va": "0xB26531"
+    },
+    {
+      "step": 6,
+      "kind": "read_array",
+      "detail": "fire_points：`array<fire_point,N>`（线长 6·N）—— 火力点坐标列表（日志 `fire_points={x,y,z}`）",
+      "evidence_va": "0xB2656F"
+    },
+    {
+      "step": 7,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB265BA"
+    },
+    {
+      "step": 8,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x1E0]`，实参 4 个",
+      "evidence_va": "0xB26761"
+    },
+    {
+      "step": 9,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB264F5"
+    }
+  ],
+  "capabilities": [
+    "battle_action"
+  ],
+  "capabilities_derived": [
+    "battle"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:47",
+    "batch": 19,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 81,
+        "va": "0xB264A0",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB2649D",
+        "call_va": "0xB264A2"
+      },
+      "field_window": {
+        "start_va": "0xB2648C",
+        "end_va": "0xB265E1",
+        "guard": {
+          "va": "0xB2648B",
+          "func": "0xB05DA0",
+          "module_id": null,
+          "release_va": "0xB05D90"
+        },
+        "closer_or_commit_va": "0xB265BA",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "from_ent_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "B264DB",
+              "B26659"
+            ]
+          },
+          {
+            "name": "wslot_idx",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "B2651B",
+              "B26681"
+            ]
+          },
+          {
+            "name": "fire_points_cnt",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "B26531"
+            ]
+          },
+          {
+            "name": "fire_points",
+            "wire_type": "array<fire_point,N>",
+            "width": null,
+            "seq": 4,
+            "shape": "agg",
+            "evidence_va": [
+              "0xB2656F",
+              "0xB07760",
+              "0xB0A5D0"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB0776E",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB07786",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB0779A",
+            "kind": "nested",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": 2,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB264DB",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB2651B",
+            "kind": "read",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB26531",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB2656F",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B05E70",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB2658C",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B07760",
+            "consumed": 6,
+            "consumed_effective": 6,
+            "nested_of": null
+          }
+        ],
+        "matched": 3,
+        "checkable": 3,
+        "pairs": [
+          {
+            "field": "from_ent_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB264DB",
+            "kind": "read"
+          },
+          {
+            "field": "wslot_idx",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB2651B",
+            "kind": "read"
+          },
+          {
+            "field": "fire_points_cnt",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB26531",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB2658C",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null
+          },
+          {
+            "va": "0xB0776E",
+            "kind": "nested_run",
+            "width": 6,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB2648C",
+          "0xB265E1"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 15,
+          "capacity": 81,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB2656F",
+              "kind": "opaque",
+              "name": "sub_B05E70"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）15 / 容量 0x51"
+        }
+      },
+      "closer": {
+        "va": "0xB265BA",
+        "kind": "jz",
+        "jcc_va": "0xB265C0",
+        "seq_va": "0xB265B6",
+        "jcc_dst": "0xB265DC",
+        "cmp": "cmp     ecx, [esp+1B3Ch+var_1B24]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x1E0]",
+        "slot_value": 480,
+        "va": "0xB26761",
+        "mov_va": "0xB2674C",
+        "host": "[edx+1E0h]",
+        "argc": 4,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB264F5",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "from_ent_id=",
+        "wslot_idx=",
+        "fire_points={"
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0xA78D-battle-weapon_fire__funnel_r.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xb26603"
+    ]
+  },
+  "field_override": {
+    "revision": 1,
+    "verified_at": "2026-09-22",
+    "reason": "`array<struct(3×u16),N>` 是记法问题：内联元组应具名。元素线长 6（sub_B07760 三次 u16 读取、槽步进 6），与 CS 侧共用 schema/composites/fire_point.json（成员 x/y/z，打印器 sub_B0A5D0）。",
+    "evidence_file": "schema/commands/_overrides/SC-0xA78D-battle-weapon_fire__funnel_r.json",
+    "meta_keys": [],
+    "notes": [
+      "override_patch:1"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "WeaponFireFunnelR",
+      "role": "response",
+      "wire_length": "4 + 1 + 4 + 6·N",
+      "members": [
+        {
+          "name": "FromEntId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "from_ent_id"
+        },
+        {
+          "name": "WslotIdx",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "wslot_idx"
+        },
+        {
+          "name": "FirePointsCnt",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "fire_points_cnt"
+        },
+        {
+          "name": "FirePoints",
+          "wire_type": "array<fire_point,N>",
+          "length": "6·N",
+          "field_ref": "fire_points",
+          "element": "fire_point",
+          "element_composite_ref": "fire_point",
+          "element_length": "6",
+          "cap": null,
+          "count_field": "fire_points_cnt",
+          "count_field_source": "heuristic",
+          "count_var": "N",
+          "note": null
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "15ed81351b8d46ad",
+  "check_fingerprint": "f512b33cc022df94",
+  "import_repairs": [
+    "override_patch:1",
+    "wire_len_member_rows_folded:4 + 1 + 4 + 6N → 4 + 1 + 4 + 6·N"
+  ]
+}

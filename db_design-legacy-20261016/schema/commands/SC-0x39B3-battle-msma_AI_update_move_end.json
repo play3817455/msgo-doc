@@ -1,0 +1,452 @@
+{
+  "id": "SC-0x39B3-battle-msma_AI_update_move_end",
+  "opcode": "0x39B3",
+  "direction": "SC",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "msma_AI_update_move_end",
+  "source_dir": "protocol_analysis/commands/SC-0x39B3-battle-msma_AI_update_move_end",
+  "meta": {
+    "opcode": "`0x39B3`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`battle_client`",
+    "命令名": "`msma_AI_update_move_end`",
+    "处理函数": "`sub_B0CC20` @ `0xB0CC20`（battle 分发器）",
+    "处理块范围": "`0xB149B7`..`0xB14C54`",
+    "名字串引用点": "`0xB14AF3`",
+    "声明容量（解码缓冲）": "`0x8`（`0xB149D3`）",
+    "长度闭合点": "`0xB14AD1`",
+    "去向": "`vt[0x258]` @ `0xB14C38`（4 实参）"
+  },
+  "handler": "sub_B0CC20",
+  "handler_va": "0xB0CC20",
+  "block": [
+    "0xB149B7",
+    "0xB14C54"
+  ],
+  "name_str": null,
+  "name_str_va": "0xB14AF3",
+  "capacity": "0x8",
+  "capacity_va": "0xB149D3",
+  "closer_va": "0xB14AAA",
+  "dispatch": "`vt[0x258]` @ `0xB14C38`（4 实参）",
+  "dispatch_slot": "vt[0x258]",
+  "dispatch_va": "0xB14C38",
+  "wire": {
+    "length_expr": "2 + 2 + 2 + 2",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x8（容量记账口径，非线长）",
+    "field_count": 4,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体总长**：**8** 字节（== 容量 0x8）。",
+    "readme_close": "容量 0x8 与线长的关系：**相等**（全定长）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0x39B3",
+      "evidence_va": [
+        "0xB14AF3"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "AI_ent_id",
+      "meaning": "AI 实体 ID",
+      "purpose": "经 `vt[0x258]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB14A0E",
+        "0xB14B4A"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "2",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "end_x",
+      "meaning": "终点 X",
+      "purpose": "经 `vt[0x258]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB14A4E",
+        "0xB14B75"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "4",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "end_y",
+      "meaning": "终点 Y",
+      "purpose": "经 `vt[0x258]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB14A72",
+        "0xB14BA0"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 4,
+      "offset": "6",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "end_z",
+      "meaning": "终点 Z",
+      "purpose": "经 `vt[0x258]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB14A96",
+        "0xB14BC6"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0x39B3（分发器 switch 选择子）",
+      "evidence_va": "0xB14AF3"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB05DA0`（模块 id 191）→ 之后逐字段读线",
+      "evidence_va": "0xB149BE"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "AI_ent_id：`u16`（线长 2）—— AI 实体 ID",
+      "evidence_va": "0xB14A0E"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "end_x：`u16`（线长 2）—— 终点 X",
+      "evidence_va": "0xB14A4E"
+    },
+    {
+      "step": 5,
+      "kind": "read_scalar",
+      "detail": "end_y：`u16`（线长 2）—— 终点 Y",
+      "evidence_va": "0xB14A72"
+    },
+    {
+      "step": 6,
+      "kind": "read_scalar",
+      "detail": "end_z：`u16`（线长 2）—— 终点 Z",
+      "evidence_va": "0xB14A96"
+    },
+    {
+      "step": 7,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB14AAA"
+    },
+    {
+      "step": 8,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x258]`，实参 4 个",
+      "evidence_va": "0xB14C38"
+    },
+    {
+      "step": 9,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB14A28"
+    }
+  ],
+  "capabilities": [
+    "update",
+    "flow",
+    "battle.ai"
+  ],
+  "capabilities_derived": [
+    "flow",
+    "notify"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:46",
+    "batch": 17,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 8,
+        "va": "0xB149D3",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB149D0",
+        "call_va": "0xB149D5"
+      },
+      "field_window": {
+        "start_va": "0xB149BF",
+        "end_va": "0xB14AD1",
+        "guard": {
+          "va": "0xB149BE",
+          "func": "0xB05DA0",
+          "module_id": 191,
+          "release_va": "0xB05D90"
+        },
+        "closer_or_commit_va": "0xB14AAA",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "AI_ent_id",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB14A0E",
+              "0xB14B4A"
+            ]
+          },
+          {
+            "name": "end_x",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB14A4E",
+              "0xB14B75"
+            ]
+          },
+          {
+            "name": "end_y",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB14A72",
+              "0xB14BA0"
+            ]
+          },
+          {
+            "name": "end_z",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 4,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB14A96",
+              "0xB14BC6"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB14A0E",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB14A4E",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB14A72",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB14A96",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 4,
+        "checkable": 4,
+        "pairs": [
+          {
+            "field": "AI_ent_id",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB14A0E",
+            "kind": "read"
+          },
+          {
+            "field": "end_x",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB14A4E",
+            "kind": "read"
+          },
+          {
+            "field": "end_y",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB14A72",
+            "kind": "read"
+          },
+          {
+            "field": "end_z",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB14A96",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB149BF",
+          "0xB14AD1"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 8,
+          "capacity": 8,
+          "relation": "exact",
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）8 / 容量 0x8"
+        }
+      },
+      "closer": {
+        "va": "0xB14AAA",
+        "kind": "jz",
+        "jcc_va": "0xB14AB0",
+        "seq_va": "0xB14AA6",
+        "jcc_dst": "0xB14ACC",
+        "cmp": "cmp     ebx, [esp+1B3Ch+var_1B24]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x258]",
+        "slot_value": 600,
+        "va": "0xB14C38",
+        "mov_va": "0xB14C1B",
+        "host": "[edx+258h]",
+        "argc": 4,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB14A28",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "AI_ent_id=",
+        "end_x=",
+        "end_y=",
+        "end_z="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0x39B3-battle-msma_AI_update_move_end.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xB14AF3"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "MsmaAIUpdateMoveEnd",
+      "role": "response",
+      "wire_length": "2 + 2 + 2 + 2",
+      "members": [
+        {
+          "name": "AIEntId",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "AI_ent_id"
+        },
+        {
+          "name": "EndX",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "end_x"
+        },
+        {
+          "name": "EndY",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "end_y"
+        },
+        {
+          "name": "EndZ",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "end_z"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "7123fcc0611abf37",
+  "check_fingerprint": "9984b3ab869f745a"
+}

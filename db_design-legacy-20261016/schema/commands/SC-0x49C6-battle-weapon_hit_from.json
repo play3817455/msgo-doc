@@ -1,0 +1,1098 @@
+{
+  "id": "SC-0x49C6-battle-weapon_hit_from",
+  "opcode": "0x49C6",
+  "direction": "SC",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "weapon_hit_from",
+  "source_dir": "protocol_analysis/commands/SC-0x49C6-battle-weapon_hit_from",
+  "meta": {
+    "opcode": "`0x49C6`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`battle_client`",
+    "命令名": "`weapon_hit_from`",
+    "处理函数": "`sub_B0CC20` @ `0xB0CC20`（battle 分发器）",
+    "处理块范围": "`0xB15A63`..`0xB16104`",
+    "名字串引用点": "`0xB15D57`",
+    "声明容量（解码缓冲）": "`0x2B`（`0xB15A7F`）",
+    "长度闭合点": "`0xB15D35`",
+    "去向": "`vt[0x1F8]` @ `0xB160D0`（15 实参）"
+  },
+  "handler": "sub_B0CC20",
+  "handler_va": "0xB0CC20",
+  "block": [
+    "0xB15A63",
+    "0xB16104"
+  ],
+  "name_str": null,
+  "name_str_va": "0xB15D57",
+  "capacity": "0x2B",
+  "capacity_va": "0xB15A7F",
+  "closer_va": "0xB15D0E",
+  "dispatch": "`vt[0x1F8]` @ `0xB160D0`（15 实参）",
+  "dispatch_slot": "vt[0x1F8]",
+  "dispatch_va": "0xB160D0",
+  "wire": {
+    "length_expr": "2 + 2 + 4 + 1 + 4 + 4 + 4 + 4 + 2 + 2 + 2 + 2 + 2 + 4 + 4",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x2B（容量记账口径，非线长）",
+    "field_count": 15,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体总长**：**43** 字节（== 容量 0x2B）。",
+    "readme_close": "容量 0x2B 与线长的关系：**相等**（全定长）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0x49C6",
+      "evidence_va": [
+        "0xB15D57"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "ent_id",
+      "meaning": "受击实体 ID",
+      "purpose": "经 `vt[0x1F8]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB15ABA",
+        "0xB15DAE"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "2",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "from_ent_id",
+      "meaning": "攻击方实体 ID",
+      "purpose": "经 `vt[0x1F8]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB15AFA",
+        "0xB15DD9"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "4",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "weapon_itemid",
+      "meaning": "武器道具 ID",
+      "purpose": "经 `vt[0x1F8]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB15B1E",
+        "0xB15E03"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 4,
+      "offset": "8",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "charge_lv",
+      "meaning": "蓄力等级",
+      "purpose": "经 `vt[0x1F8]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB15B42",
+        "0xB15E2B"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    },
+    {
+      "seq": 5,
+      "offset": "9",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "hp_now",
+      "meaning": "当前 HP",
+      "purpose": "经 `vt[0x1F8]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB15B6A",
+        "0xB15E57"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 7
+    },
+    {
+      "seq": 6,
+      "offset": "13",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "hp_max",
+      "meaning": "最大 HP",
+      "purpose": "经 `vt[0x1F8]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB15B92",
+        "0xB15E81"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 8
+    },
+    {
+      "seq": 7,
+      "offset": "17",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "damage",
+      "meaning": "伤害值",
+      "purpose": "经 `vt[0x1F8]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB15BBA",
+        "0xB15EAB"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 9
+    },
+    {
+      "seq": 8,
+      "offset": "21",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "spbits",
+      "meaning": "状态位",
+      "purpose": "经 `vt[0x1F8]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB15BE2",
+        "0xB15ED5"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 10
+    },
+    {
+      "seq": 9,
+      "offset": "25",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "hit_pos_x",
+      "meaning": "命中点 X",
+      "purpose": "经 `vt[0x1F8]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB15C0A",
+        "0xB15F00"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 11
+    },
+    {
+      "seq": 10,
+      "offset": "27",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "hit_pos_y",
+      "meaning": "命中点 Y",
+      "purpose": "经 `vt[0x1F8]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB15C32",
+        "0xB15F2B"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 12
+    },
+    {
+      "seq": 11,
+      "offset": "29",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "hit_pos_z",
+      "meaning": "命中点 Z",
+      "purpose": "经 `vt[0x1F8]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB15C5A",
+        "0xB15F56"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 13
+    },
+    {
+      "seq": 12,
+      "offset": "31",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "hit_dir",
+      "meaning": "受击方向",
+      "purpose": "经 `vt[0x1F8]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB15C82",
+        "0xB15F81"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 14
+    },
+    {
+      "seq": 13,
+      "offset": "33",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "body_region",
+      "meaning": "受击部位",
+      "purpose": "经 `vt[0x1F8]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB15CAA",
+        "0xB15FAC"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 15
+    },
+    {
+      "seq": 14,
+      "offset": "35",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "optbits",
+      "meaning": "选项位",
+      "purpose": "经 `vt[0x1F8]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB15CD2",
+        "0xB15FD6"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 16
+    },
+    {
+      "seq": 15,
+      "offset": "39",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "shield_hp_now",
+      "meaning": "护盾当前 HP",
+      "purpose": "经 `vt[0x1F8]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB15CFA",
+        "0xB15FFB"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 17
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0x49C6（分发器 switch 选择子）",
+      "evidence_va": "0xB15D57"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB05DA0`（模块 id 158）→ 之后逐字段读线",
+      "evidence_va": "0xB15A6A"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "ent_id：`u16`（线长 2）—— 受击实体 ID",
+      "evidence_va": "0xB15ABA"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "from_ent_id：`u16`（线长 2）—— 攻击方实体 ID",
+      "evidence_va": "0xB15AFA"
+    },
+    {
+      "step": 5,
+      "kind": "read_scalar",
+      "detail": "weapon_itemid：`u32`（线长 4）—— 武器道具 ID",
+      "evidence_va": "0xB15B1E"
+    },
+    {
+      "step": 6,
+      "kind": "read_scalar",
+      "detail": "charge_lv：`u8`（线长 1）—— 蓄力等级",
+      "evidence_va": "0xB15B42"
+    },
+    {
+      "step": 7,
+      "kind": "read_scalar",
+      "detail": "hp_now：`u32`（线长 4）—— 当前 HP",
+      "evidence_va": "0xB15B6A"
+    },
+    {
+      "step": 8,
+      "kind": "read_scalar",
+      "detail": "hp_max：`u32`（线长 4）—— 最大 HP",
+      "evidence_va": "0xB15B92"
+    },
+    {
+      "step": 9,
+      "kind": "read_scalar",
+      "detail": "damage：`u32`（线长 4）—— 伤害值",
+      "evidence_va": "0xB15BBA"
+    },
+    {
+      "step": 10,
+      "kind": "read_scalar",
+      "detail": "spbits：`u32`（线长 4）—— 状态位",
+      "evidence_va": "0xB15BE2"
+    },
+    {
+      "step": 11,
+      "kind": "read_scalar",
+      "detail": "hit_pos_x：`u16`（线长 2）—— 命中点 X",
+      "evidence_va": "0xB15C0A"
+    },
+    {
+      "step": 12,
+      "kind": "read_scalar",
+      "detail": "hit_pos_y：`u16`（线长 2）—— 命中点 Y",
+      "evidence_va": "0xB15C32"
+    },
+    {
+      "step": 13,
+      "kind": "read_scalar",
+      "detail": "hit_pos_z：`u16`（线长 2）—— 命中点 Z",
+      "evidence_va": "0xB15C5A"
+    },
+    {
+      "step": 14,
+      "kind": "read_scalar",
+      "detail": "hit_dir：`u16`（线长 2）—— 受击方向",
+      "evidence_va": "0xB15C82"
+    },
+    {
+      "step": 15,
+      "kind": "read_scalar",
+      "detail": "body_region：`u16`（线长 2）—— 受击部位",
+      "evidence_va": "0xB15CAA"
+    },
+    {
+      "step": 16,
+      "kind": "read_scalar",
+      "detail": "optbits：`u32`（线长 4）—— 选项位",
+      "evidence_va": "0xB15CD2"
+    },
+    {
+      "step": 17,
+      "kind": "read_scalar",
+      "detail": "shield_hp_now：`u32`（线长 4）—— 护盾当前 HP",
+      "evidence_va": "0xB15CFA"
+    },
+    {
+      "step": 18,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB15D0E"
+    },
+    {
+      "step": 19,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x1F8]`，实参 15 个",
+      "evidence_va": "0xB160D0"
+    },
+    {
+      "step": 20,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB15AD4"
+    }
+  ],
+  "capabilities": [
+    "battle_action"
+  ],
+  "capabilities_derived": [
+    "unclassified"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:46",
+    "batch": 17,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 43,
+        "va": "0xB15A7F",
+        "reg": "eax",
+        "host": "[edx+78h]",
+        "alloc_va": "0xB15A7C",
+        "call_va": "0xB15A81"
+      },
+      "field_window": {
+        "start_va": "0xB15A6B",
+        "end_va": "0xB15D35",
+        "guard": {
+          "va": "0xB15A6A",
+          "func": "0xB05DA0",
+          "module_id": 158,
+          "release_va": "0xB05D90"
+        },
+        "closer_or_commit_va": "0xB15D0E",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "ent_id",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB15ABA",
+              "0xB15DAE"
+            ]
+          },
+          {
+            "name": "from_ent_id",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB15AFA",
+              "0xB15DD9"
+            ]
+          },
+          {
+            "name": "weapon_itemid",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB15B1E",
+              "0xB15E03"
+            ]
+          },
+          {
+            "name": "charge_lv",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 4,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB15B42",
+              "0xB15E2B"
+            ]
+          },
+          {
+            "name": "hp_now",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 5,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB15B6A",
+              "0xB15E57"
+            ]
+          },
+          {
+            "name": "hp_max",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 6,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB15B92",
+              "0xB15E81"
+            ]
+          },
+          {
+            "name": "damage",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 7,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB15BBA",
+              "0xB15EAB"
+            ]
+          },
+          {
+            "name": "spbits",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 8,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB15BE2",
+              "0xB15ED5"
+            ]
+          },
+          {
+            "name": "hit_pos_x",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 9,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB15C0A",
+              "0xB15F00"
+            ]
+          },
+          {
+            "name": "hit_pos_y",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 10,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB15C32",
+              "0xB15F2B"
+            ]
+          },
+          {
+            "name": "hit_pos_z",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 11,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB15C5A",
+              "0xB15F56"
+            ]
+          },
+          {
+            "name": "hit_dir",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 12,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB15C82",
+              "0xB15F81"
+            ]
+          },
+          {
+            "name": "body_region",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 13,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB15CAA",
+              "0xB15FAC"
+            ]
+          },
+          {
+            "name": "optbits",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 14,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB15CD2",
+              "0xB15FD6"
+            ]
+          },
+          {
+            "name": "shield_hp_now",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 15,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB15CFA",
+              "0xB15FFB"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB15ABA",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB15AFA",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB15B1E",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB15B42",
+            "kind": "read",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB15B6A",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB15B92",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB15BBA",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB15BE2",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB15C0A",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB15C32",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB15C5A",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB15C82",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB15CAA",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB15CD2",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB15CFA",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 15,
+        "checkable": 15,
+        "pairs": [
+          {
+            "field": "ent_id",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB15ABA",
+            "kind": "read"
+          },
+          {
+            "field": "from_ent_id",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB15AFA",
+            "kind": "read"
+          },
+          {
+            "field": "weapon_itemid",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB15B1E",
+            "kind": "read"
+          },
+          {
+            "field": "charge_lv",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB15B42",
+            "kind": "read"
+          },
+          {
+            "field": "hp_now",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB15B6A",
+            "kind": "read"
+          },
+          {
+            "field": "hp_max",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB15B92",
+            "kind": "read"
+          },
+          {
+            "field": "damage",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB15BBA",
+            "kind": "read"
+          },
+          {
+            "field": "spbits",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB15BE2",
+            "kind": "read"
+          },
+          {
+            "field": "hit_pos_x",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB15C0A",
+            "kind": "read"
+          },
+          {
+            "field": "hit_pos_y",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB15C32",
+            "kind": "read"
+          },
+          {
+            "field": "hit_pos_z",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB15C5A",
+            "kind": "read"
+          },
+          {
+            "field": "hit_dir",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB15C82",
+            "kind": "read"
+          },
+          {
+            "field": "body_region",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB15CAA",
+            "kind": "read"
+          },
+          {
+            "field": "optbits",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB15CD2",
+            "kind": "read"
+          },
+          {
+            "field": "shield_hp_now",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB15CFA",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB15A6B",
+          "0xB15D35"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 43,
+          "capacity": 43,
+          "relation": "exact",
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）43 / 容量 0x2b"
+        }
+      },
+      "closer": {
+        "va": "0xB15D0E",
+        "kind": "jz",
+        "jcc_va": "0xB15D14",
+        "seq_va": "0xB15D0A",
+        "jcc_dst": "0xB15D30",
+        "cmp": "cmp     ebx, [esp+1B3Ch+var_1B24]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x1F8]",
+        "slot_value": 504,
+        "va": "0xB160D0",
+        "mov_va": "0xB160A3",
+        "host": "[edx+1F8h]",
+        "argc": 15,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB15AD4",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "ent_id=",
+        "from_ent_id=",
+        "weapon_itemid=",
+        "charge_lv=",
+        "hp_now=",
+        "hp_max=",
+        "damage=",
+        "spbits=",
+        "hit_pos_x=",
+        "hit_pos_y=",
+        "hit_pos_z=",
+        "hit_dir=",
+        "body_region=",
+        "optbits=",
+        "shield_hp_now="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0x49C6-battle-weapon_hit_from.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xB15D57"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "WeaponHitFrom",
+      "role": "response",
+      "wire_length": "2 + 2 + 4 + 1 + 4 + 4 + 4 + 4 + 2 + 2 + 2 + 2 + 2 + 4 + 4",
+      "members": [
+        {
+          "name": "EntId",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "ent_id"
+        },
+        {
+          "name": "FromEntId",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "from_ent_id"
+        },
+        {
+          "name": "WeaponItemid",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "weapon_itemid"
+        },
+        {
+          "name": "ChargeLv",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "charge_lv"
+        },
+        {
+          "name": "HpNow",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "hp_now"
+        },
+        {
+          "name": "HpMax",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "hp_max"
+        },
+        {
+          "name": "Damage",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "damage"
+        },
+        {
+          "name": "Spbits",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "spbits"
+        },
+        {
+          "name": "HitPosX",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "hit_pos_x"
+        },
+        {
+          "name": "HitPosY",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "hit_pos_y"
+        },
+        {
+          "name": "HitPosZ",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "hit_pos_z"
+        },
+        {
+          "name": "HitDir",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "hit_dir"
+        },
+        {
+          "name": "BodyRegion",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "body_region"
+        },
+        {
+          "name": "Optbits",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "optbits"
+        },
+        {
+          "name": "ShieldHpNow",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "shield_hp_now"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "6fba3020b5d4036c",
+  "check_fingerprint": "828c30cd1f5c0a77"
+}

@@ -1,0 +1,744 @@
+{
+  "id": "clan",
+  "title": "氏族（战队）实体（声明式：成员逐列取自氏族级命令，无单一线体）",
+  "length": 0,
+  "status": "complete",
+  "declared": true,
+  "wire_layout": "声明式：无单一线体。成员逐列取自 clan_create / clan_emblem_update / clan_text_offer_set / clan_text_notice_set / clan_introduction_set / clan_leader_change / clan_level_update / clan_leave_r 的字段表；文本成员一律定宽，宽度取证在读侧槽预算（clan_name 31B、offer_subj 49B、offer_body 31B、notice_body 433B、feature_word 4×28B）",
+  "evidence": {
+    "commands": [
+      "CS-0xA5BC-lounge-clan_create",
+      "CS-0x0038-lounge-clan_leave",
+      "CS-0x0562-lounge-clan_npc_update",
+      "CS-0x979C-lounge-clan_emblem_update",
+      "CS-0x55D6-lounge-clan_text_offer_set",
+      "CS-0xC59B-lounge-clan_text_notice_set",
+      "CS-0xDD4C-lounge-clan_introduction_set",
+      "CS-0x25A0-lounge-clan_leader_change",
+      "CS-0x6CF9-lounge-clan_memb_exp_use",
+      "SC-0x143D-lounge-clan_create_r",
+      "SC-0x1600-lounge-clan_leave_r",
+      "SC-0x5F72-lounge-clan_text_offer_set_r",
+      "SC-0x68D7-lounge-clan_level_update",
+      "SC-0x5D2A-battle-roomlobby_clan_notice",
+      "SC-0x8E92-lounge-clan_info_get_self_r"
+    ],
+    "protocol_paths": [
+      "protocol_analysis/commands/CS-0xA5BC-lounge-clan_create/README.md",
+      "protocol_analysis/commands/CS-0x979C-lounge-clan_emblem_update/README.md",
+      "protocol_analysis/commands/CS-0x55D6-lounge-clan_text_offer_set/README.md",
+      "protocol_analysis/commands/CS-0xC59B-lounge-clan_text_notice_set/README.md",
+      "protocol_analysis/commands/CS-0xDD4C-lounge-clan_introduction_set/README.md",
+      "protocol_analysis/commands/CS-0x25A0-lounge-clan_leader_change/README.md",
+      "protocol_analysis/commands/SC-0x68D7-lounge-clan_level_update/README.md",
+      "protocol_analysis/commands/SC-0x1600-lounge-clan_leave_r/README.md",
+      "protocol_analysis/commands/CS-0x6CF9-lounge-clan_memb_exp_use/README.md"
+    ],
+    "note": "为什么不是「某个命令的报文体」：氏族是跨机师共享实体，线上只作为别人的属性出现（pilot.clan_id / pcard.clan_id / cinfo 副本），命令里也没有以氏族为顶层的 body。所以这里按实体建模：每条成员各自带命令 + VA，宽度取读侧定长槽；本复合体不代表任何一条报文的字节布局（无 offset、无 total_bytes），DDL 侧也就没有 wire 线长。cinfo 是「我的战队信息」副本（键 world_id,pilot_id），成员名一致的照抄（clan_id/clan_name/emb_*/offer_is_active/notice_body/leader_id/level），只在读侧存在的名字在 wire_sources 里注为别名。身份列 clan_id 的最强证据是 CS-0x0038-clan_leave（客户端主动上报所退氏族），创建响应 SC-0x143D-clan_create_r **只回 result+clan_kind、不回 clan_id**——id 由服务端分配，创建后靠读侧（cinfo / leave / 通知）拿到。氏族累计经验 exp 是**唯一只有读侧副本、写侧靠 CS-0x6CF9 单字段**的成员：C→S 报文只带 1 个 u32（投入值，@0xBA3154），S→C 侧的权威值在 cinfo.exp（@0xB459E8）——因此它必须落在氏族的根行上，不能只留在 cinfo（每个成员各有一份副本，谁的都不权威）。同一条理由本轮再判给 3 个成员：**active_time_bits / play_style / feature_word 的写方是 CS-0xDD4C-clan_introduction_set**（介绍报文 intro_info 的前 3 个字段，写入器 sub_B41EC0 逐字段写线），它们只在 cinfo 里有读侧副本，而 cinfo 是每机师一份的投影、谁都替别人代言不了 —— 所以落氏族根行；`game.intro_info`（单行 per 机师）只是 SC-0xA5FE 的报文形状副本，不是权威（同 cinfo 的关系）。"
+  },
+  "members": [
+    {
+      "name": "clan_id",
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "氏族 ID（服务端分配，身份列）",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "CS-0x0038-lounge-clan_leave",
+          "field_name": "clan_id",
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/CS-0x0038-lounge-clan_leave/README.md",
+          "section": "§2",
+          "notes": "客户端主动上报所退氏族——身份列最直接的证据（创建响应不回 clan_id）",
+          "evidence_va": "0xB9FB5C"
+        },
+        {
+          "command": "SC-0x8E92-lounge-clan_info_get_self_r",
+          "struct": "cinfo",
+          "field_name": "clan_id",
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x8E92-lounge-clan_info_get_self_r/README.md",
+          "section": "§3",
+          "evidence_va": "0xB4595A"
+        },
+        {
+          "command": "SC-0x1600-lounge-clan_leave_r",
+          "field_name": "clan_id",
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x1600-lounge-clan_leave_r/README.md",
+          "section": "§2",
+          "evidence_va": "0xB55EB1"
+        },
+        {
+          "command": "SC-0x5D2A-battle-roomlobby_clan_notice",
+          "field_name": "clan_id",
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x5D2A-battle-roomlobby_clan_notice/README.md",
+          "section": "§2",
+          "evidence_va": "0xB18E2E"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB9FB5C",
+      "asm_audit_date": "2026-09-23"
+    },
+    {
+      "name": "clan_kind",
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "氏族种类/所处阵营（leader_change 侧按 i8 读，同为 1 字节）",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "CS-0xA5BC-lounge-clan_create",
+          "field_name": "clan_kind",
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/CS-0xA5BC-lounge-clan_create/README.md",
+          "section": "§2",
+          "evidence_va": "0xB9F902"
+        },
+        {
+          "command": "CS-0xC59B-lounge-clan_text_notice_set",
+          "field_name": "clan_kind",
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/CS-0xC59B-lounge-clan_text_notice_set/README.md",
+          "section": "§2",
+          "evidence_va": "0xBA0DEB"
+        },
+        {
+          "command": "SC-0x1600-lounge-clan_leave_r",
+          "field_name": "clan_kind",
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0x1600-lounge-clan_leave_r/README.md",
+          "section": "§2",
+          "evidence_va": "0xB55ED5"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB9F902",
+      "asm_audit_date": "2026-09-23"
+    },
+    {
+      "name": "clan_name",
+      "length": 31,
+      "wire_type": "bytes[31]",
+      "meaning": "氏族名（命令侧 var(≤31) NUL 结尾；宽度取读侧定长 31B）",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "CS-0xA5BC-lounge-clan_create",
+          "field_name": "clan_name",
+          "length": 31,
+          "wire_type": "bytes[31]",
+          "protocol_path": "protocol_analysis/commands/CS-0xA5BC-lounge-clan_create/README.md",
+          "section": "§2",
+          "notes": "命令侧写 var(≤31)，按读侧 cinfo.clan_name 的定长 31B 落列",
+          "evidence_va": "0xB9F8CE"
+        },
+        {
+          "command": "SC-0x5D2A-battle-roomlobby_clan_notice",
+          "field_name": "clan_name",
+          "length": 31,
+          "wire_type": "bytes[31]",
+          "protocol_path": "protocol_analysis/commands/SC-0x5D2A-battle-roomlobby_clan_notice/README.md",
+          "section": "§2",
+          "evidence_va": "0xB18E53"
+        },
+        {
+          "command": "SC-0x8E92-lounge-clan_info_get_self_r",
+          "struct": "cinfo",
+          "field_name": "clan_name",
+          "length": 31,
+          "wire_type": "bytes[31]",
+          "protocol_path": "protocol_analysis/commands/SC-0x8E92-lounge-clan_info_get_self_r/README.md",
+          "section": "§3",
+          "evidence_va": "0xB459B3"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xb459b7",
+      "asm_audit_date": "2026-09-23"
+    },
+    {
+      "name": "npc_id",
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "建队 NPC ID",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "CS-0xA5BC-lounge-clan_create",
+          "field_name": "npc_id",
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/CS-0xA5BC-lounge-clan_create/README.md",
+          "section": "§2",
+          "evidence_va": "0xB9F8C6"
+        },
+        {
+          "command": "CS-0x0562-lounge-clan_npc_update",
+          "field_name": "npc_id",
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/CS-0x0562-lounge-clan_npc_update/README.md",
+          "section": "§2",
+          "evidence_va": "0xBA09A4"
+        },
+        {
+          "command": "SC-0x8E92-lounge-clan_info_get_self_r",
+          "struct": "cinfo",
+          "field_name": "npc_id",
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x8E92-lounge-clan_info_get_self_r/README.md",
+          "section": "§3",
+          "evidence_va": "0xB45985"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB9F8C6",
+      "asm_audit_date": "2026-09-23"
+    },
+    {
+      "name": "is_active",
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "氏族是否激活（线宽 u32）",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "CS-0xA5BC-lounge-clan_create",
+          "field_name": "is_active",
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/CS-0xA5BC-lounge-clan_create/README.md",
+          "section": "§2",
+          "evidence_va": "0xB9F8E8"
+        },
+        {
+          "command": "SC-0x5F72-lounge-clan_text_offer_set_r",
+          "field_name": "is_active",
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x5F72-lounge-clan_text_offer_set_r/README.md",
+          "section": "§2",
+          "notes": "读侧同名字段，线宽同样记 u32",
+          "evidence_va": "0xB64054"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB9F8E8",
+      "asm_audit_date": "2026-09-23"
+    },
+    {
+      "name": "emb_base",
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "徽章底色",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "CS-0x979C-lounge-clan_emblem_update",
+          "field_name": "emb_base",
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/CS-0x979C-lounge-clan_emblem_update/README.md",
+          "section": "§2",
+          "evidence_va": "0xBA076C"
+        },
+        {
+          "command": "SC-0x5D2A-battle-roomlobby_clan_notice",
+          "field_name": "clan_emb_base",
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0x5D2A-battle-roomlobby_clan_notice/README.md",
+          "section": "§2",
+          "notes": "读侧别名为 clan_emb_base",
+          "evidence_va": "0xB18E90"
+        },
+        {
+          "command": "SC-0x8E92-lounge-clan_info_get_self_r",
+          "struct": "cinfo",
+          "field_name": "emb_base",
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0x8E92-lounge-clan_info_get_self_r/README.md",
+          "section": "§3",
+          "evidence_va": "0xB45A02"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xBA076C",
+      "asm_audit_date": "2026-09-23"
+    },
+    {
+      "name": "emb_parts1",
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "徽章部件 1",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "CS-0x979C-lounge-clan_emblem_update",
+          "field_name": "emb_parts1",
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/CS-0x979C-lounge-clan_emblem_update/README.md",
+          "section": "§2",
+          "evidence_va": "0xBA078B"
+        },
+        {
+          "command": "SC-0x5D2A-battle-roomlobby_clan_notice",
+          "field_name": "clan_emb_parts1",
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0x5D2A-battle-roomlobby_clan_notice/README.md",
+          "section": "§2",
+          "notes": "读侧别名为 clan_emb_parts1",
+          "evidence_va": "0xB18EB4"
+        },
+        {
+          "command": "SC-0x8E92-lounge-clan_info_get_self_r",
+          "struct": "cinfo",
+          "field_name": "emb_parts1",
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0x8E92-lounge-clan_info_get_self_r/README.md",
+          "section": "§3",
+          "evidence_va": "0xB45A09"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xBA078B",
+      "asm_audit_date": "2026-09-23"
+    },
+    {
+      "name": "emb_parts2",
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "徽章部件 2",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "CS-0x979C-lounge-clan_emblem_update",
+          "field_name": "emb_parts2",
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/CS-0x979C-lounge-clan_emblem_update/README.md",
+          "section": "§2",
+          "evidence_va": "0xBA078D"
+        },
+        {
+          "command": "SC-0x5D2A-battle-roomlobby_clan_notice",
+          "field_name": "clan_emb_parts2",
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0x5D2A-battle-roomlobby_clan_notice/README.md",
+          "section": "§2",
+          "notes": "读侧别名为 clan_emb_parts2",
+          "evidence_va": "0xB18ED8"
+        },
+        {
+          "command": "SC-0x8E92-lounge-clan_info_get_self_r",
+          "struct": "cinfo",
+          "field_name": "emb_parts2",
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0x8E92-lounge-clan_info_get_self_r/README.md",
+          "section": "§3",
+          "evidence_va": "0xB45A1E"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xBA078D",
+      "asm_audit_date": "2026-09-23"
+    },
+    {
+      "name": "offer_is_active",
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "招募宣言是否启用（命令侧字段名 is_active；cinfo 侧 offer_is_active）",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "CS-0x55D6-lounge-clan_text_offer_set",
+          "field_name": "is_active",
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/CS-0x55D6-lounge-clan_text_offer_set/README.md",
+          "section": "§2",
+          "notes": "命令侧字段名 is_active；与 clan.is_active（建队激活）不同值，故此处按读侧名 offer_is_active",
+          "evidence_va": "0xBA0FE6"
+        },
+        {
+          "command": "SC-0x5F72-lounge-clan_text_offer_set_r",
+          "field_name": "is_active",
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x5F72-lounge-clan_text_offer_set_r/README.md",
+          "section": "§2",
+          "evidence_va": "0xB64054"
+        },
+        {
+          "command": "SC-0x8E92-lounge-clan_info_get_self_r",
+          "struct": "cinfo",
+          "field_name": "offer_is_active",
+          "length": 1,
+          "wire_type": "i8",
+          "protocol_path": "protocol_analysis/commands/SC-0x8E92-lounge-clan_info_get_self_r/README.md",
+          "section": "§3",
+          "notes": "cinfo 侧记 i8（1 字节），读侧报价命令 SC-0x5F72 记 u32（4 字节）——列宽按最宽 u32",
+          "evidence_va": "0xB45AD4"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xBA0FE6",
+      "asm_audit_date": "2026-09-23"
+    },
+    {
+      "name": "offer_subj",
+      "length": 49,
+      "wire_type": "bytes[49]",
+      "meaning": "招募宣言标题（命令侧 var，读侧槽预算 0x31=49）",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x5F72-lounge-clan_text_offer_set_r",
+          "field_name": "subj",
+          "length": 49,
+          "wire_type": "bytes[49]",
+          "protocol_path": "protocol_analysis/commands/SC-0x5F72-lounge-clan_text_offer_set_r/README.md",
+          "section": "§2",
+          "notes": "槽位预算 0x31=49",
+          "evidence_va": "0xB64075"
+        },
+        {
+          "command": "CS-0x55D6-lounge-clan_text_offer_set",
+          "field_name": "subj",
+          "length": 49,
+          "wire_type": "bytes[49]",
+          "protocol_path": "protocol_analysis/commands/CS-0x55D6-lounge-clan_text_offer_set/README.md",
+          "section": "§2",
+          "notes": "命令侧写 var（NUL 结尾），宽度取读侧槽预算",
+          "evidence_va": "0xBA0FEE"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB64075",
+      "asm_audit_date": "2026-09-23"
+    },
+    {
+      "name": "offer_body",
+      "length": 31,
+      "wire_type": "bytes[31]",
+      "meaning": "招募宣言正文（命令侧 var，读侧槽预算 0x1F=31）",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x5F72-lounge-clan_text_offer_set_r",
+          "field_name": "body",
+          "length": 31,
+          "wire_type": "bytes[31]",
+          "protocol_path": "protocol_analysis/commands/SC-0x5F72-lounge-clan_text_offer_set_r/README.md",
+          "section": "§2",
+          "notes": "槽位预算 0x1F=31",
+          "evidence_va": "0xB64096"
+        },
+        {
+          "command": "CS-0x55D6-lounge-clan_text_offer_set",
+          "field_name": "body",
+          "length": 31,
+          "wire_type": "bytes[31]",
+          "protocol_path": "protocol_analysis/commands/CS-0x55D6-lounge-clan_text_offer_set/README.md",
+          "section": "§2",
+          "notes": "命令侧写 var（NUL 结尾），宽度取读侧槽预算",
+          "evidence_va": "0xBA100A"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB64096",
+      "asm_audit_date": "2026-09-23"
+    },
+    {
+      "name": "notice_body",
+      "length": 433,
+      "wire_type": "bytes[433]",
+      "meaning": "氏族公告正文（命令侧 var，槽预算 0x1B1=433；cinfo 侧定长 433B）",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x8E92-lounge-clan_info_get_self_r",
+          "struct": "cinfo",
+          "field_name": "notice_body",
+          "length": 433,
+          "wire_type": "bytes[433]",
+          "protocol_path": "protocol_analysis/commands/SC-0x8E92-lounge-clan_info_get_self_r/README.md",
+          "section": "§3",
+          "evidence_va": "0xB45AF6"
+        },
+        {
+          "command": "CS-0xC59B-lounge-clan_text_notice_set",
+          "field_name": "body",
+          "length": 433,
+          "wire_type": "bytes[433]",
+          "protocol_path": "protocol_analysis/commands/CS-0xC59B-lounge-clan_text_notice_set/README.md",
+          "section": "§2",
+          "notes": "命令侧字段名 body、槽预算 0x1B1=433（NUL 结尾）",
+          "evidence_va": "0xBA0DC6"
+        },
+        {
+          "command": "CS-0xDD4C-lounge-clan_introduction_set",
+          "struct": "intro_info",
+          "field_name": "notice_body",
+          "length": 433,
+          "wire_type": "u8[433]",
+          "protocol_path": "protocol_analysis/commands/CS-0xDD4C-lounge-clan_introduction_set/notes.md",
+          "section": "§未决",
+          "notes": "同一事实的第二条写路径：介绍报文 intro_info 的**最后一个字段**（写入器 sub_B41EC0 的 src+72h、433B 循环；UI 侧取 433B 文本框）。与命令侧字段名 body 同槽预算 ⇒ 归并到本成员、不另立列",
+          "evidence_va": "0xB41F2C"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xb45af6",
+      "asm_audit_date": "2026-09-23"
+    },
+    {
+      "name": "leader_pilot_id",
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "部队长机师 ID（命令侧 pilot_id_new；cinfo 侧 leader_id）",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "CS-0x25A0-lounge-clan_leader_change",
+          "field_name": "pilot_id_new",
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/CS-0x25A0-lounge-clan_leader_change/README.md",
+          "section": "§2",
+          "notes": "命令侧字段名 pilot_id_new；读侧 cinfo.leader_id",
+          "evidence_va": "0xBA0B66"
+        },
+        {
+          "command": "SC-0x8E92-lounge-clan_info_get_self_r",
+          "struct": "cinfo",
+          "field_name": "leader_id",
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x8E92-lounge-clan_info_get_self_r/README.md",
+          "section": "§3",
+          "notes": "读侧名 leader_id",
+          "evidence_va": "0xB45A5D"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xBA0B66",
+      "asm_audit_date": "2026-09-23"
+    },
+    {
+      "name": "lv",
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "氏族等级（cinfo 侧名 level）",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x68D7-lounge-clan_level_update",
+          "field_name": "lv",
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0x68D7-lounge-clan_level_update/README.md",
+          "section": "§2",
+          "evidence_va": "0xb652c2"
+        },
+        {
+          "command": "SC-0x8E92-lounge-clan_info_get_self_r",
+          "struct": "cinfo",
+          "field_name": "level",
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0x8E92-lounge-clan_info_get_self_r/README.md",
+          "section": "§3",
+          "notes": "读侧名 level",
+          "evidence_va": "0xB459D2"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xb652c2",
+      "asm_audit_date": "2026-09-23"
+    },
+    {
+      "name": "exp",
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "氏族累计经验（升级进度的**权威值**：客户端拿它和 cfg.LVUP_CLAN 的累计需求做差算等级进度）",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "CS-0x6CF9-lounge-clan_memb_exp_use",
+          "field_name": "exp",
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/CS-0x6CF9-lounge-clan_memb_exp_use/README.md",
+          "section": "§2",
+          "notes": "写侧：机师把自己的 clan_memb_exp 投进氏族的经验值（报文只有 1 个 u32 exp）——服务端 clan.exp += exp 并同事务扣 pilot.clan_memb_exp",
+          "evidence_va": "0xBA3154"
+        },
+        {
+          "command": "SC-0x8E92-lounge-clan_info_get_self_r",
+          "struct": "cinfo",
+          "field_name": "exp",
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x8E92-lounge-clan_info_get_self_r/README.md",
+          "section": "§3",
+          "notes": "读侧副本：cinfo+0x30（wire 偏移 45，紧接 level）",
+          "evidence_va": "0xB459E8"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xBA3154",
+      "asm_audit_date": "2026-09-24"
+    },
+    {
+      "name": "deckcost",
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "氏族卡组编成费用上限（升级与退队响应里都带）",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x68D7-lounge-clan_level_update",
+          "field_name": "deckcost",
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x68D7-lounge-clan_level_update/README.md",
+          "section": "§2",
+          "evidence_va": "0xb65302"
+        },
+        {
+          "command": "SC-0x1600-lounge-clan_leave_r",
+          "field_name": "deckcost",
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x1600-lounge-clan_leave_r/README.md",
+          "section": "§2",
+          "evidence_va": "0xB55EF9"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xb65302",
+      "asm_audit_date": "2026-09-23"
+    },
+    {
+      "name": "active_time_bits",
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "活跃时段位图（低 4 位 = 4 个时段复选框；写侧 u8、读侧 cinfo 槽宽 u32）",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "CS-0xDD4C-lounge-clan_introduction_set",
+          "struct": "intro_info",
+          "field_name": "active_time_bits",
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/CS-0xDD4C-lounge-clan_introduction_set/notes.md",
+          "section": "§未决",
+          "notes": "写入器 sub_B41EC0 的第 1 个字段（`mov bl,[edx]` → `mov [ecx],bl`）；客户端组包处 sub_92D5B0 由 4 个复选框按 bit0..bit3 拼（[ebx+1D4h/1D8h/1DCh/1E0h]）",
+          "evidence_va": "0xB41ED5"
+        },
+        {
+          "command": "SC-0x8E92-lounge-clan_info_get_self_r",
+          "struct": "cinfo",
+          "field_name": "active_time_bits",
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x8E92-lounge-clan_info_get_self_r/README.md",
+          "section": "§3",
+          "notes": "读侧副本，槽宽 u32（值域只在低 4 位——同一字段、不同容器）",
+          "evidence_va": "0xB45B15"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xb41ed5",
+      "asm_audit_date": "2026-09-25"
+    },
+    {
+      "name": "play_style",
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "游戏风格（下拉选中项序号；写侧 u8、读侧 cinfo 槽宽 i8）",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "CS-0xDD4C-lounge-clan_introduction_set",
+          "struct": "intro_info",
+          "field_name": "play_style",
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/CS-0xDD4C-lounge-clan_introduction_set/notes.md",
+          "section": "§未决",
+          "notes": "写入器 sub_B41EC0 的第 2 个字段（`mov bl,[edx+1]`）；UI 取值 = 下拉控件当前项（[ebx+1E4h] 的 vt[2B0h]/vt[2CCh]）",
+          "evidence_va": "0xB41EE9"
+        },
+        {
+          "command": "SC-0x8E92-lounge-clan_info_get_self_r",
+          "struct": "cinfo",
+          "field_name": "play_style",
+          "length": 1,
+          "wire_type": "i8",
+          "protocol_path": "protocol_analysis/commands/SC-0x8E92-lounge-clan_info_get_self_r/README.md",
+          "section": "§3",
+          "notes": "读侧副本，槽宽 i8（同一字段、不同容器）",
+          "evidence_va": "0xB45B29"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xb41ee9",
+      "asm_audit_date": "2026-09-25"
+    },
+    {
+      "name": "feature_word",
+      "length": 112,
+      "wire_type": "bytes[112]",
+      "meaning": "宣言短语（4×28B 文本槽：写侧 u8[112]、读侧 cinfo 同形）",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "CS-0xDD4C-lounge-clan_introduction_set",
+          "struct": "intro_info",
+          "field_name": "feature_word",
+          "length": 112,
+          "wire_type": "u8[112]",
+          "protocol_path": "protocol_analysis/commands/CS-0xDD4C-lounge-clan_introduction_set/notes.md",
+          "section": "§未决",
+          "notes": "写入器 sub_B41EC0 的第 3 个字段：4 轮 × 28B 拷贝（`cmp esi,1Ch` / `add edi,1Ch`）；UI 侧 4 个文本框各拷 28B 槽、按 27 字符截断",
+          "evidence_va": "0xB41F03"
+        },
+        {
+          "command": "SC-0x5800-lounge-clan_info_get_other_r",
+          "struct": "cinfo",
+          "field_name": "feature_word",
+          "length": 112,
+          "wire_type": "bytes[112]",
+          "protocol_path": "protocol_analysis/commands/SC-0x5800-lounge-clan_info_get_other_r/notes.md",
+          "section": "§1",
+          "notes": "读侧副本，同 4×28B 线形（仅首段有 feature_word= 日志名）",
+          "evidence_va": "0xB45B65"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xb41f03",
+      "asm_audit_date": "2026-09-25"
+    }
+  ]
+}

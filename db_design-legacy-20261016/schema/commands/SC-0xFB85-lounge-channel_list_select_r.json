@@ -1,0 +1,617 @@
+{
+  "id": "SC-0xFB85-lounge-channel_list_select_r",
+  "opcode": "0xFB85",
+  "direction": "SC",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "channel_list_select_r",
+  "source_dir": "protocol_analysis/commands/SC-0xFB85-lounge-channel_list_select_r",
+  "meta": {
+    "opcode": "`0xFB85`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`channel_list_select_r`",
+    "名字符串": "`)->_proto_lounge_client::recv_channel_list_select_r( ` @ `0xee55e8`",
+    "代码位置": "sub_B51930 @ `0xb51930`　块 `0xb87e8f`..`0xb88255`",
+    "opcode 写入/分发证据": "`0xb88045`（命令名字符串引用点 = case 归属锚点）",
+    "处理块范围": "`0xB87E8F`..`0xB88255`",
+    "声明容量": "`0xBE`（190）",
+    "配对命令（同 opcode 反向）": "（本批次内无同 opcode 反向命令）"
+  },
+  "handler": "sub_B51930",
+  "handler_va": "0xb51930",
+  "block": [
+    "0xB87E8F",
+    "0xB88255"
+  ],
+  "name_str": ")->_proto_lounge_client::recv_channel_list_select_r(",
+  "name_str_va": "0xee55e8",
+  "capacity": "0xBE",
+  "capacity_va": null,
+  "closer_va": "0xB88002",
+  "dispatch": null,
+  "dispatch_slot": "vt[0x74]",
+  "dispatch_va": null,
+  "wire": {
+    "length_expr": "4 + 4 + var + 4 + 4 + 4 + var",
+    "fixed": false,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0xBE（容量记账口径，非线长）",
+    "field_count": 7,
+    "length_source": "field_sum",
+    "readme_conclusion": "结论：7 字段；含两个 NUL 串（loungesv_host 槽预算 129、otp 槽预算 41）。",
+    "readme_close": "闭合点：0x00B88002（游标寄存器与报文末尾比较，jz/jnz 走成功分支）。"
+  },
+  "fields": [
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "result",
+      "meaning": "结果码",
+      "purpose": "`sub_B02DD0`（`0xB87EE6`）读 u32；去向 `vt[0x74]` 末实参（`0xB88227 push edx`）",
+      "enum": null,
+      "evidence_va": [
+        "0xB87EE6"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "channel_id",
+      "meaning": "频道 ID",
+      "purpose": "`sub_B02DD0`（`0xB87F23`）读 u32；去向 `vt[0x74]` 第 6 实参（`0xB88224 push edx`）",
+      "enum": null,
+      "evidence_va": [
+        "0xB87F23"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 3,
+      "offset": "8",
+      "length": "var",
+      "wire_type": "str",
+      "name": "loungesv_host",
+      "meaning": "大厅服务器主机名（NUL 结尾）",
+      "purpose": "`sub_B02BA0`（`0xB87F4D`，`push 81h`=129）读串；去向 `vt[0x74]` 第 5 实参（`0xB8821D push edx`）",
+      "enum": "串槽预算 129",
+      "evidence_va": [
+        "0xB87F4D"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 4,
+      "offset": "var",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "loungesv_port",
+      "meaning": "大厅服务器端口",
+      "purpose": "`sub_B02DD0`（`0xB87F8A`）读 u32；去向 `vt[0x74]` 第 4 实参（`0xB88218 push ecx`）",
+      "enum": null,
+      "evidence_va": [
+        "0xB87F8A"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 5,
+      "offset": "var",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "userid",
+      "meaning": "用户 ID",
+      "purpose": "`sub_B02DD0`（`0xB87FAE`）读 u32；去向 `vt[0x74]` 第 3 实参（`0xB88211 push ecx`）",
+      "enum": null,
+      "evidence_va": [
+        "0xB87FAE"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    },
+    {
+      "seq": 6,
+      "offset": "var",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "pilot_id",
+      "meaning": "角色 ID",
+      "purpose": "`sub_B02DD0`（`0xB87FD2`）读 u32；去向 `vt[0x74]` 第 2 实参（`0xB8820A push ecx`）",
+      "enum": null,
+      "evidence_va": [
+        "0xB87FD2"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 7
+    },
+    {
+      "seq": 7,
+      "offset": "var",
+      "length": "var",
+      "wire_type": "str",
+      "name": "otp",
+      "meaning": "一次性口令（NUL 结尾）",
+      "purpose": "`sub_B02BA0`（`0xB87FEE`，`push 29h`=41）读串；去向 `vt[0x74]` 首实参（`0xB88203 push ecx`）",
+      "enum": "串槽预算 41",
+      "evidence_va": [
+        "0xB87FEE"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 8
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0xFB85（分发器 switch 选择子）",
+      "evidence_va": "0xB88045"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB41120`（模块 id 7）→ 之后逐字段读线",
+      "evidence_va": "0xB87E93"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "result：`u32`（线长 4）—— 结果码",
+      "evidence_va": "0xB87EE6"
+    },
+    {
+      "step": 4,
+      "kind": "read_count",
+      "detail": "channel_id：`u32`（线长 4）—— 频道 ID",
+      "evidence_va": "0xB87F23"
+    },
+    {
+      "step": 5,
+      "kind": "read_string",
+      "detail": "loungesv_host：`str`（线长 var）—— 大厅服务器主机名（NUL 结尾）",
+      "evidence_va": "0xB87F4D"
+    },
+    {
+      "step": 6,
+      "kind": "read_scalar",
+      "detail": "loungesv_port：`u32`（线长 4）—— 大厅服务器端口",
+      "evidence_va": "0xB87F8A"
+    },
+    {
+      "step": 7,
+      "kind": "read_scalar",
+      "detail": "userid：`u32`（线长 4）—— 用户 ID",
+      "evidence_va": "0xB87FAE"
+    },
+    {
+      "step": 8,
+      "kind": "read_count",
+      "detail": "pilot_id：`u32`（线长 4）—— 角色 ID",
+      "evidence_va": "0xB87FD2"
+    },
+    {
+      "step": 9,
+      "kind": "read_string",
+      "detail": "otp：`str`（线长 var）—— 一次性口令（NUL 结尾）",
+      "evidence_va": "0xB87FEE"
+    },
+    {
+      "step": 10,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB88002"
+    },
+    {
+      "step": 11,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x74]`，实参 7 个",
+      "evidence_va": "0xB8822A"
+    },
+    {
+      "step": 12,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB87EFD"
+    }
+  ],
+  "capabilities": [
+    "query",
+    "lounge.channel"
+  ],
+  "capabilities_derived": [
+    "query"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:46",
+    "batch": 14,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 190,
+        "va": "0xB87EA8",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB87EA5",
+        "call_va": "0xB87EAD"
+      },
+      "field_window": {
+        "start_va": "0xB87E94",
+        "end_va": "0xB88023",
+        "guard": {
+          "va": "0xB87E93",
+          "func": "0xB41120",
+          "module_id": 7,
+          "release_va": "0xB41110"
+        },
+        "closer_or_commit_va": "0xB88002",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "result",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB87EE6"
+            ]
+          },
+          {
+            "name": "channel_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB87F23"
+            ]
+          },
+          {
+            "name": "loungesv_host",
+            "wire_type": "str",
+            "width": null,
+            "seq": 3,
+            "shape": "str",
+            "evidence_va": [
+              "0xB87F4D"
+            ]
+          },
+          {
+            "name": "loungesv_port",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 4,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB87F8A"
+            ]
+          },
+          {
+            "name": "userid",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 5,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB87FAE"
+            ]
+          },
+          {
+            "name": "pilot_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 6,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB87FD2"
+            ]
+          },
+          {
+            "name": "otp",
+            "wire_type": "str",
+            "width": null,
+            "seq": 7,
+            "shape": "str",
+            "evidence_va": [
+              "0xB87FEE"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB87EE6",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB87F23",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB87F4D",
+            "kind": "read",
+            "width": null,
+            "wire_type": "str",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB87F8A",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB87FAE",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB87FD2",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB87FEE",
+            "kind": "read",
+            "width": null,
+            "wire_type": "str",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 7,
+        "checkable": 7,
+        "pairs": [
+          {
+            "field": "result",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB87EE6",
+            "kind": "read"
+          },
+          {
+            "field": "channel_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB87F23",
+            "kind": "read"
+          },
+          {
+            "field": "loungesv_host",
+            "width": null,
+            "shape": "str",
+            "va": "0xB87F4D",
+            "kind": "read"
+          },
+          {
+            "field": "loungesv_port",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB87F8A",
+            "kind": "read"
+          },
+          {
+            "field": "userid",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB87FAE",
+            "kind": "read"
+          },
+          {
+            "field": "pilot_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB87FD2",
+            "kind": "read"
+          },
+          {
+            "field": "otp",
+            "width": null,
+            "shape": "str",
+            "va": "0xB87FEE",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB87E94",
+          "0xB88023"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 20,
+          "capacity": 190,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB87F4D",
+              "kind": "read",
+              "name": ""
+            },
+            {
+              "va": "0xB87FEE",
+              "kind": "read",
+              "name": ""
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）20 / 容量 0xbe"
+        }
+      },
+      "closer": {
+        "va": "0xB88002",
+        "kind": "jz",
+        "jcc_va": "0xB88008",
+        "seq_va": "0xB87FFE",
+        "jcc_dst": "0xB88021",
+        "cmp": "cmp     ebx, [esp+2C5Ch+var_2C40]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x74]",
+        "slot_value": 116,
+        "va": "0xB8822A",
+        "mov_va": "0xB88200",
+        "host": "[eax+74h]",
+        "argc": 7,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB87EFD",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "result=",
+        "channel_id=",
+        "loungesv_host=\"",
+        "loungesv_port=",
+        "userid=",
+        "pilot_id=",
+        "otp=\""
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0xFB85-lounge-channel_list_select_r.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0xb88045",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": []
+  },
+  "structs": {
+    "response": {
+      "go_name": "ChannelListSelectR",
+      "role": "response",
+      "wire_length": "4 + 4 + var + 4 + 4 + 4 + var",
+      "members": [
+        {
+          "name": "Result",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "result"
+        },
+        {
+          "name": "ChannelId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "channel_id"
+        },
+        {
+          "name": "LoungesvHost",
+          "wire_type": "str",
+          "length": "var",
+          "field_ref": "loungesv_host",
+          "element": null,
+          "element_length": null,
+          "cap": null,
+          "count_field": "channel_id",
+          "count_field_source": "nearest_scalar",
+          "note": "元素成员未建模（composites/ 无此结构），须以 IDA 复核补"
+        },
+        {
+          "name": "LoungesvPort",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "loungesv_port"
+        },
+        {
+          "name": "Userid",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "userid"
+        },
+        {
+          "name": "PilotId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "pilot_id"
+        },
+        {
+          "name": "Otp",
+          "wire_type": "str",
+          "length": "var",
+          "field_ref": "otp",
+          "element": null,
+          "element_length": null,
+          "cap": null,
+          "count_field": "pilot_id",
+          "count_field_source": "nearest_scalar",
+          "note": "元素成员未建模（composites/ 无此结构），须以 IDA 复核补"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "6a809f7671ea28ca",
+  "check_fingerprint": "423d2024f0f04ab2"
+}

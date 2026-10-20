@@ -1,0 +1,709 @@
+{
+  "id": "coop_room",
+  "title": "协同房元素 coop_room（= roominfo 布局）（135B 线 / 144B 槽）",
+  "domain": "lounge",
+  "domain_votes": {
+    "lounge": 1
+  },
+  "folded_composites": [
+    "coop_room"
+  ],
+  "anchored_by": "",
+  "legacy_table": "",
+  "row_key": [],
+  "views": [
+    {
+      "composite": "coop_room",
+      "length": 135,
+      "memory_claim": 144,
+      "reader": "sub_B44880",
+      "printer": null,
+      "commands": [
+        "SC-0xDBDB-lounge-btlroom_coop_roomlist_get_r"
+      ]
+    }
+  ],
+  "members": [
+    {
+      "name": "count_eff",
+      "wire_type": "u16",
+      "length": 2,
+      "meaning": "联邦侧人数",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "coop_room"
+        ]
+      },
+      "views": [
+        "coop_room"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB44956",
+      "evidence_ref": {
+        "command": "SC-0x6B15-lounge-btlroom_member_detail_get_r",
+        "struct": "roominfo",
+        "field": "count_eff",
+        "reader": "sub_B02DF0",
+        "printer": "sub_B4C0D0",
+        "protocol_path": "protocol_analysis/commands/SC-0x6B15-lounge-btlroom_member_detail_get_r/notes.md",
+        "section": "§2"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "count_max",
+      "wire_type": "u16",
+      "length": 2,
+      "meaning": "房间人数上限",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "coop_room"
+        ]
+      },
+      "views": [
+        "coop_room"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB44978",
+      "evidence_ref": {
+        "command": "SC-0x6B15-lounge-btlroom_member_detail_get_r",
+        "struct": "roominfo",
+        "field": "count_max",
+        "reader": "sub_B02DF0",
+        "printer": "sub_B4C0D0",
+        "protocol_path": "protocol_analysis/commands/SC-0x6B15-lounge-btlroom_member_detail_get_r/notes.md",
+        "section": "§2"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "count_zeon",
+      "wire_type": "u16",
+      "length": 2,
+      "meaning": "吉翁侧人数",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "coop_room"
+        ]
+      },
+      "views": [
+        "coop_room"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB44967",
+      "evidence_ref": {
+        "command": "SC-0x6B15-lounge-btlroom_member_detail_get_r",
+        "struct": "roominfo",
+        "field": "count_zeon",
+        "reader": "sub_B02DF0",
+        "printer": "sub_B4C0D0",
+        "protocol_path": "protocol_analysis/commands/SC-0x6B15-lounge-btlroom_member_detail_get_r/notes.md",
+        "section": "§2"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "extrule_id",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "扩展规则 ID",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "coop_room"
+        ]
+      },
+      "views": [
+        "coop_room"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB44928",
+      "evidence_ref": {
+        "command": "SC-0x244E-lounge-btlroom_info_one",
+        "struct": "roominfo",
+        "field": "extrule_id",
+        "reader": "sub_B44880",
+        "printer": "",
+        "protocol_path": "protocol_analysis/commands/SC-0x244E-lounge-btlroom_info_one/README.md",
+        "section": "§3"
+      },
+      "role": "ref",
+      "ref_kind": "master",
+      "ref_basis": "人工裁决·主数据：扩展规则 id = 任务附加规则表 MISSION_EXTRULE（purpose 即「任务附加规则」，主键 rule_id）；coop_room/roominfo/dailycup_conf 用的都是这一张",
+      "master_target": "cfg.MISSION_EXTRULE.rule_id"
+    },
+    {
+      "name": "is_lock",
+      "wire_type": "i8",
+      "length": 1,
+      "meaning": "是否上锁",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "coop_room"
+        ]
+      },
+      "views": [
+        "coop_room"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB4493E",
+      "evidence_ref": {
+        "command": "SC-0x244E-lounge-btlroom_info_one",
+        "struct": "roominfo",
+        "field": "is_lock",
+        "reader": "sub_B44880",
+        "printer": "",
+        "protocol_path": "protocol_analysis/commands/SC-0x244E-lounge-btlroom_info_one/README.md",
+        "section": "§3"
+      },
+      "role": "flag"
+    },
+    {
+      "name": "is_vsclan",
+      "wire_type": "i8",
+      "length": 1,
+      "meaning": "是否部队对战房间",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "coop_room"
+        ]
+      },
+      "views": [
+        "coop_room"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB4493E",
+      "evidence_ref": {
+        "command": "SC-0x6B15-lounge-btlroom_member_detail_get_r",
+        "struct": "roominfo",
+        "field": "is_vsclan",
+        "reader": "sub_B44880",
+        "printer": "sub_B4C0D0",
+        "protocol_path": "protocol_analysis/commands/SC-0x6B15-lounge-btlroom_member_detail_get_r/notes.md",
+        "section": "§2"
+      },
+      "role": "flag"
+    },
+    {
+      "name": "master_name",
+      "wire_type": "bytes[25]",
+      "length": 25,
+      "meaning": "房主名称（定长 25B）",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "coop_room"
+        ]
+      },
+      "views": [
+        "coop_room"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB449C2",
+      "evidence_ref": {
+        "command": "SC-0x6B15-lounge-btlroom_member_detail_get_r",
+        "struct": "roominfo",
+        "field": "master_name",
+        "reader": "sub_B06230",
+        "printer": "sub_B4C0D0",
+        "protocol_path": "protocol_analysis/commands/SC-0x6B15-lounge-btlroom_member_detail_get_r/notes.md",
+        "section": "§2"
+      },
+      "role": "payload"
+    },
+    {
+      "name": "master_pilotid",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "房主 pilot ID",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "coop_room"
+        ]
+      },
+      "views": [
+        "coop_room"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB44989",
+      "evidence_ref": {
+        "command": "SC-0x6B15-lounge-btlroom_member_detail_get_r",
+        "struct": "roominfo",
+        "field": "master_pilotid",
+        "reader": "sub_B02DD0",
+        "printer": "sub_B4C0D0",
+        "protocol_path": "protocol_analysis/commands/SC-0x6B15-lounge-btlroom_member_detail_get_r/notes.md",
+        "section": "§2"
+      },
+      "role": "ref",
+      "ref_kind": "fk",
+      "fk_target": "core.pilot_registry.pilot_id",
+      "ref_basis": "名字形如机师 id（master_pilotid）"
+    },
+    {
+      "name": "master_worldid",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "房主 world ID",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "coop_room"
+        ]
+      },
+      "views": [
+        "coop_room"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB4499A",
+      "evidence_ref": {
+        "command": "SC-0x6B15-lounge-btlroom_member_detail_get_r",
+        "struct": "roominfo",
+        "field": "master_worldid",
+        "reader": "sub_B02DD0",
+        "printer": "sub_B4C0D0",
+        "protocol_path": "protocol_analysis/commands/SC-0x6B15-lounge-btlroom_member_detail_get_r/notes.md",
+        "section": "§2"
+      },
+      "role": "ref",
+      "ref_kind": "fk",
+      "fk_target": "core.worlds.world_id",
+      "ref_basis": "名字形如世界 id（master_worldid）"
+    },
+    {
+      "name": "mission_id",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "任务 ID",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "coop_room"
+        ]
+      },
+      "views": [
+        "coop_room"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB44912",
+      "evidence_ref": {
+        "command": "SC-0x244E-lounge-btlroom_info_one",
+        "struct": "roominfo",
+        "field": "mission_id",
+        "reader": "sub_B44880",
+        "printer": "",
+        "protocol_path": "protocol_analysis/commands/SC-0x244E-lounge-btlroom_info_one/README.md",
+        "section": "§3"
+      },
+      "role": "ref",
+      "ref_kind": "master",
+      "ref_basis": "主数据候选 ['MISSION_COOP', 'MISSION_VS']（cfg 主键列名多命中，待定）",
+      "master_target": "cfg.MISSION_COOP.mission_id"
+    },
+    {
+      "name": "play_elapsed",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "已进行时间（秒）",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "coop_room"
+        ]
+      },
+      "views": [
+        "coop_room"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB448FC",
+      "evidence_ref": {
+        "command": "SC-0x244E-lounge-btlroom_info_one",
+        "struct": "roominfo",
+        "field": "play_elapsed",
+        "reader": "sub_B44880",
+        "printer": "",
+        "protocol_path": "protocol_analysis/commands/SC-0x244E-lounge-btlroom_info_one/README.md",
+        "section": "§3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "room_id",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "房间 ID",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "coop_room"
+        ]
+      },
+      "views": [
+        "coop_room"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB4489A",
+      "evidence_ref": {
+        "command": "SC-0x244E-lounge-btlroom_info_one",
+        "struct": "roominfo",
+        "field": "room_id",
+        "reader": "sub_B44880",
+        "printer": "",
+        "protocol_path": "protocol_analysis/commands/SC-0x244E-lounge-btlroom_info_one/README.md",
+        "section": "§3"
+      },
+      "role": "ref",
+      "ref_kind": "fk",
+      "fk_target": "roominfo.room_id",
+      "ref_basis": "人工裁决·外键：coop_room 是被下发出去的房间列表投影（自身无身份列），房间本体是 game.roominfo（身份列 room_id，同一批成员逐字相同）"
+    },
+    {
+      "name": "room_name",
+      "wire_type": "bytes[73]",
+      "length": 73,
+      "meaning": "房间名（定长 73B）",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "coop_room"
+        ]
+      },
+      "views": [
+        "coop_room"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB4489F",
+      "evidence_ref": {
+        "command": "SC-0x244E-lounge-btlroom_info_one",
+        "struct": "roominfo",
+        "field": "room_name",
+        "reader": "sub_B44880",
+        "printer": "",
+        "protocol_path": "protocol_analysis/commands/SC-0x244E-lounge-btlroom_info_one/README.md",
+        "section": "§3"
+      },
+      "role": "payload"
+    },
+    {
+      "name": "room_stat",
+      "wire_type": "i8",
+      "length": 1,
+      "meaning": "房间状态",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "coop_room"
+        ]
+      },
+      "views": [
+        "coop_room"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB448E6",
+      "evidence_ref": {
+        "command": "SC-0x244E-lounge-btlroom_info_one",
+        "struct": "roominfo",
+        "field": "room_stat",
+        "reader": "sub_B44880",
+        "printer": "",
+        "protocol_path": "protocol_analysis/commands/SC-0x244E-lounge-btlroom_info_one/README.md",
+        "section": "§3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "room_type",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "房间类型",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "coop_room"
+        ]
+      },
+      "views": [
+        "coop_room"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB448D0",
+      "evidence_ref": {
+        "command": "SC-0x244E-lounge-btlroom_info_one",
+        "struct": "roominfo",
+        "field": "room_type",
+        "reader": "sub_B44880",
+        "printer": "",
+        "protocol_path": "protocol_analysis/commands/SC-0x244E-lounge-btlroom_info_one/README.md",
+        "section": "§3"
+      },
+      "role": "attribute"
+    }
+  ],
+  "wire_body": "coop_room",
+  "writes": [],
+  "reads": [
+    {
+      "command": "SC-0xDBDB-lounge-btlroom_coop_roomlist_get_r",
+      "op": "read",
+      "via": "coop_room"
+    }
+  ],
+  "db_effects": [],
+  "pk_members": [],
+  "pk_kind": "scope_only",
+  "is_root": true,
+  "identity": [],
+  "disposition_override": "DERIVED",
+  "disposition_reason": "房间列表的读视图：15 个成员名与根对象 `roominfo` 逐个相同（= `roominfo` 的线形），`btlroom_coop_roomlist_get_r` 下发的是「协同房列表」。房间本体的家在 `roominfo`，0 CS 写方 ⇒ 不成第二张房表。",
+  "no_writer_reason": "0 个 CS 写；只被 SC-0xDBDB btlroom_coop_roomlist_get_r 当顶层数组下发；成员里有 room_id（房间身份）与 master_pilotid/master_worldid（房主）——说明行属「房间」，不属读方机师",
+  "multi": false,
+  "array_parents": [],
+  "inline_parents": [],
+  "shape": "root",
+  "parent": "",
+  "parents": [],
+  "has_scope": false,
+  "disposition": "DERIVED",
+  "table": "",
+  "no_table_reason": "disposition=DERIVED（不建表）：房间列表的读视图：15 个成员名与根对象 `roominfo` 逐个相同（= `roominfo` 的线形），`btlroom_coop_roomlist_get_r` 下发的是「协同房列表」。房间本体的家在 `roominfo`，0 CS 写方 ⇒ 不成第二张房表。",
+  "columns_excluded": [],
+  "columns": [
+    {
+      "member": "count_eff",
+      "column": "count_eff",
+      "role": "attribute",
+      "wire_type": "u16",
+      "synthetic": false,
+      "meaning": "联邦侧人数",
+      "evidence_va": "0xB44956",
+      "pk": false
+    },
+    {
+      "member": "count_max",
+      "column": "count_max",
+      "role": "attribute",
+      "wire_type": "u16",
+      "synthetic": false,
+      "meaning": "房间人数上限",
+      "evidence_va": "0xB44978",
+      "pk": false
+    },
+    {
+      "member": "count_zeon",
+      "column": "count_zeon",
+      "role": "attribute",
+      "wire_type": "u16",
+      "synthetic": false,
+      "meaning": "吉翁侧人数",
+      "evidence_va": "0xB44967",
+      "pk": false
+    },
+    {
+      "member": "extrule_id",
+      "column": "extrule_id",
+      "role": "ref",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "扩展规则 ID",
+      "evidence_va": "0xB44928",
+      "pk": false
+    },
+    {
+      "member": "is_lock",
+      "column": "is_lock",
+      "role": "flag",
+      "wire_type": "i8",
+      "synthetic": false,
+      "meaning": "是否上锁",
+      "evidence_va": "0xB4493E",
+      "pk": false
+    },
+    {
+      "member": "is_vsclan",
+      "column": "is_vsclan",
+      "role": "flag",
+      "wire_type": "i8",
+      "synthetic": false,
+      "meaning": "是否部队对战房间",
+      "evidence_va": "0xB4493E",
+      "pk": false
+    },
+    {
+      "member": "master_name",
+      "column": "master_name",
+      "role": "payload",
+      "wire_type": "bytes[25]",
+      "synthetic": false,
+      "meaning": "房主名称（定长 25B）",
+      "evidence_va": "0xB449C2",
+      "pk": false
+    },
+    {
+      "member": "master_pilotid",
+      "column": "master_pilotid",
+      "role": "ref",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "房主 pilot ID",
+      "evidence_va": "0xB44989",
+      "pk": false
+    },
+    {
+      "member": "master_worldid",
+      "column": "master_worldid",
+      "role": "ref",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "房主 world ID",
+      "evidence_va": "0xB4499A",
+      "pk": false
+    },
+    {
+      "member": "mission_id",
+      "column": "mission_id",
+      "role": "ref",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "任务 ID",
+      "evidence_va": "0xB44912",
+      "pk": false
+    },
+    {
+      "member": "play_elapsed",
+      "column": "play_elapsed",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "已进行时间（秒）",
+      "evidence_va": "0xB448FC",
+      "pk": false
+    },
+    {
+      "member": "room_id",
+      "column": "room_id",
+      "role": "ref",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "房间 ID",
+      "evidence_va": "0xB4489A",
+      "pk": false
+    },
+    {
+      "member": "room_name",
+      "column": "room_name",
+      "role": "payload",
+      "wire_type": "bytes[73]",
+      "synthetic": false,
+      "meaning": "房间名（定长 73B）",
+      "evidence_va": "0xB4489F",
+      "pk": false
+    },
+    {
+      "member": "room_stat",
+      "column": "room_stat",
+      "role": "attribute",
+      "wire_type": "i8",
+      "synthetic": false,
+      "meaning": "房间状态",
+      "evidence_va": "0xB448E6",
+      "pk": false
+    },
+    {
+      "member": "room_type",
+      "column": "room_type",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "房间类型",
+      "evidence_va": "0xB448D0",
+      "pk": false
+    }
+  ],
+  "columns_expected": 15,
+  "keys": {
+    "scope": [
+      "world_id",
+      "pilot_id"
+    ],
+    "own": [],
+    "inherited": [],
+    "primary_key": [
+      "world_id",
+      "pilot_id"
+    ],
+    "pk_kind": "scope_only",
+    "children": [],
+    "nested": [],
+    "child_key": [
+      "elem_index"
+    ]
+  },
+  "tables": [],
+  "links": []
+}

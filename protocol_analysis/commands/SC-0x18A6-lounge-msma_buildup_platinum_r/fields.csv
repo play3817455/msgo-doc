@@ -1,0 +1,10 @@
+序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+0,-,2,u16,opcode,命令号,分发器 switch 选择子,0x18A6,0xB564AA,确证
+1,0,4,u32,result,强化（白金）处理结果码,经 `vt[0x2B8]`；日志 `result=`,-,0xB562EE|0xB56500,确证
+2,4,8,u64,uniqid_ms,机体唯一 ID,经 `vt[0x2B8]`（拆低/高 32 位）；日志 `uniqid_ms=`,-,0xB5632E|0xB5652E,确证
+3,12,4,u32,ticket_id,消耗的强化票 ID,经 `vt[0x2B8]`；日志 `ticket_id=`,-,0xB56352|0xB56558,确证
+4,16,2,u16,usenum,本次使用材料数量,经 `vt[0x2B8]`；日志 `usenum=`,-,0xB56376|0xB56583,确证
+5,18,4,u32,workres,强化作业结果资源 ID,经 `vt[0x2B8]`；日志 `workres=`,-,0xB5639E|0xB565AD,确证
+6,22,2,u16,buildup_cnt,累计强化次数,经 `vt[0x2B8]`；日志 `buildup_cnt=`,-,0xB563C6|0xB565D8,确证
+7,24,14,u16[7],up_params,强化参数数组（固定 7×u16，无线上计数）,经 `vt[0x2B8]`；日志 `up_params={…}`（7 项）,固定 7 项,"0xB563F6|0xB563DF(sub_B41590=0x0E/槽)|0xB56408(cmp edi,7)|0xB5662E",确证
+8,38,4,u32,mech_npcpict,机体 NPC 立绘 ID,经 `vt[0x2B8]`；日志 `mech_npcpict=`,-,0xB56437|0xB5665E,确证

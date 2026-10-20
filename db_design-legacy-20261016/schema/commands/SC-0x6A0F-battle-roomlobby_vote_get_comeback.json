@@ -1,0 +1,348 @@
+{
+  "id": "SC-0x6A0F-battle-roomlobby_vote_get_comeback",
+  "opcode": "0x6A0F",
+  "direction": "SC",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "roomlobby_vote_get_comeback",
+  "source_dir": "protocol_analysis/commands/SC-0x6A0F-battle-roomlobby_vote_get_comeback",
+  "meta": {
+    "opcode": "`0x6A0F`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`battle_client`",
+    "命令名": "`roomlobby_vote_get_comeback`",
+    "处理块范围": "`0xb1ce6d`..`0xb1d0a1`",
+    "名字串引用点": "`0xb1cf73`",
+    "声明容量（解码缓冲）": "`0x14`（`0xb1ce88`）",
+    "长度闭合点": "`0xb1cf2c`",
+    "去向": "`vt[0xD0]` @ `0xb1d085`（2 实参）"
+  },
+  "handler": null,
+  "handler_va": null,
+  "block": [
+    "0xb1ce6d",
+    "0xb1d0a1"
+  ],
+  "name_str": null,
+  "name_str_va": "0xb1cf73",
+  "capacity": "0x14",
+  "capacity_va": "0xb1ce88",
+  "closer_va": "0xB1CF30",
+  "dispatch": "`vt[0xD0]` @ `0xb1d085`（2 实参）",
+  "dispatch_slot": "vt[0xD0]",
+  "dispatch_va": "0xb1d085",
+  "wire": {
+    "length_expr": "4 + 16",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x14（容量记账口径，非线长）",
+    "field_count": 2,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：4 + 16 = 20。",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0x6A0F",
+      "evidence_va": [
+        "`0xb1cf73`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "state",
+      "meaning": "投票状态（日志串 `state=`）",
+      "purpose": "`vt[0xD0]` 第 2 实参",
+      "enum": null,
+      "evidence_va": [
+        "0xb1cec1"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "16",
+      "wire_type": "array<u32,4>",
+      "name": "msma_id",
+      "meaning": "候选机体型号 ID 列表（日志串 `msma_id={`，**定长 4**，无线上计数）",
+      "purpose": "`vt[0xD0]` 第 1 实参（指针）",
+      "enum": null,
+      "evidence_va": [
+        "0xb1cf06"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0x6A0F（分发器 switch 选择子）",
+      "evidence_va": "0xB1CF73"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB05DA0`（模块 id 38）→ 之后逐字段读线",
+      "evidence_va": "0xB1CE71"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "state：`u32`（线长 4）—— 投票状态（日志串 `state=`）",
+      "evidence_va": "0xB1CEC1"
+    },
+    {
+      "step": 4,
+      "kind": "read_array",
+      "detail": "msma_id：`array<u32,4>`（线长 16）—— 候选机体型号 ID 列表（日志串 `msma_id={`，**定长 4**，无线上计数）",
+      "evidence_va": "0xB1CF06"
+    },
+    {
+      "step": 5,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB1CF30"
+    },
+    {
+      "step": 6,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0xD0]`，实参 2 个",
+      "evidence_va": "0xB1D085"
+    },
+    {
+      "step": 7,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB1CED8"
+    }
+  ],
+  "capabilities": [
+    "query",
+    "battle.roomlobby_vote"
+  ],
+  "capabilities_derived": [
+    "unclassified"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:47",
+    "batch": 17,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 20,
+        "va": "0xB1CE86",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB1CE83",
+        "call_va": "0xB1CE88"
+      },
+      "field_window": {
+        "start_va": "0xB1CE72",
+        "end_va": "0xB1CF51",
+        "guard": {
+          "va": "0xB1CE71",
+          "func": "0xB05DA0",
+          "module_id": 38,
+          "release_va": "0xB05D90"
+        },
+        "closer_or_commit_va": "0xB1CF30",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "state",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb1cec1"
+            ]
+          },
+          {
+            "name": "msma_id",
+            "wire_type": "array<u32,4>",
+            "width": null,
+            "seq": 2,
+            "shape": "agg",
+            "evidence_va": [
+              "0xb1cf06"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB1CEC1",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB1CEEF",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B41990",
+            "consumed": 0,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB1CF06",
+            "kind": "read",
+            "width": 16,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 1,
+        "checkable": 1,
+        "pairs": [
+          {
+            "field": "state",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB1CEC1",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB1CEEF",
+            "kind": "opaque",
+            "width": null,
+            "wire_type": null
+          },
+          {
+            "va": "0xB1CF06",
+            "kind": "read",
+            "width": 16,
+            "wire_type": "u32"
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB1CE72",
+          "0xB1CF51"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 20,
+          "capacity": 20,
+          "relation": "exact",
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）20 / 容量 0x14"
+        }
+      },
+      "closer": {
+        "va": "0xB1CF30",
+        "kind": "jz",
+        "jcc_va": "0xB1CF36",
+        "seq_va": "0xB1CF2C",
+        "jcc_dst": "0xB1CF4F",
+        "cmp": "cmp     eax, [esp+1B3Ch+var_1B24]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0xD0]",
+        "slot_value": 208,
+        "va": "0xB1D085",
+        "mov_va": "0xB1D07C",
+        "host": "[eax+0D0h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB1CED8",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "state=",
+        "msma_id={"
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0x6A0F-battle-roomlobby_vote_get_comeback.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "`0xb1cf73`"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "RoomlobbyVoteGetComeback",
+      "role": "response",
+      "wire_length": "4 + 16",
+      "members": [
+        {
+          "name": "State",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "state"
+        },
+        {
+          "name": "MsmaId",
+          "wire_type": "array<u32,4>",
+          "length": "16",
+          "field_ref": "msma_id",
+          "element": "u32",
+          "element_length": "4",
+          "cap": 4,
+          "count_field": null,
+          "count_field_source": "fixed"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "38570dde22a348be",
+  "check_fingerprint": "13a0dbe34340649a"
+}

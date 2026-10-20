@@ -1,0 +1,35 @@
+{
+  "id": "CS-0xA76E-lounge-msma_msset_store",
+  "revision": 1,
+  "verified_at": "2026-09-22",
+  "verifier": "agent (IDA asm)",
+  "reason": "fields.csv 把 95B 的 `ms_set` 摊成 6 行成员（`ms_set.uniq_id` … `ms_set.equip_set_slots`）却没有父行 —— 与 `CS-0x9527` 同形。补父行 `ms_set`（`struct<ms_set>`，95B，偏移 2，插在 `ms_set.uniq_id` 之前），成员由 `composites/ms_set.json` 承载（成员名取自打印器 `sub_B4A7E0`）。父行出现后那 6 行成为成员占位行，不再参与线长求和：线长仍是 `95`，与 README 的 `2 + 95 + 1 = 98` 容量吻合。",
+  "evidence": [
+    {
+      "va": "0xB41B10",
+      "note": "复合写入器 `sub_B41B10`（0xB41B10..0xB41BE5）整块写出 `ms_set`，函数体逐字段累加 8+2+2+43+32+8 = 95B —— 父行长度的唯一出处。"
+    },
+    {
+      "va": "0xB4A7E0",
+      "note": "结构打印器 `sub_B4A7E0`：成员名 `uniq_id=` / `deck_type=` / `deck_slot=` / `setname=` / `msma_uniq_ids={` / `equip_set_slots={` —— 命名出处。"
+    },
+    {
+      "va": "0xB8BB",
+      "note": "配对命令 S→C `SC-0xB8BB-msma_msset_store_r` 的 `ms_set` 线长 95 跨方向精确互证。"
+    }
+  ],
+  "add": [
+    {
+      "name": "ms_set",
+      "before": "ms_set.uniq_id",
+      "offset": "2",
+      "length": "95",
+      "wire_type": "struct<ms_set>",
+      "meaning": "机体套装（复合写入器 `sub_B41B10` 整块写出 95B；打印器 `sub_B4A7E0`）",
+      "purpose": "保存机体套装（服务端据此 update；与 S→C `SC-0xB8BB` 的 `ms_set` 线长 95 互证）",
+      "evidence_va": ["0xB41B10", "0xB4A7E0"],
+      "confidence": "确证",
+      "disposition": "PERSIST"
+    }
+  ]
+}

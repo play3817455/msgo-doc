@@ -1,0 +1,291 @@
+{
+  "id": "CS-0xFF32-lounge-gacha_lineup",
+  "opcode": "0xFF32",
+  "direction": "CS",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "gacha_lineup",
+  "source_dir": "protocol_analysis/commands/CS-0xFF32-lounge-gacha_lineup",
+  "meta": {
+    "opcode": "`0xFF32`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`gacha_lineup`",
+    "名字符串": "`)<-_proto_lounge_client::send_gacha_lineup( ` @ `0x00EEC494`",
+    "代码位置": "`sub_B9DCA0` @ `0x00B9DCA0`（`0x00B9DCA0`..`0x00B9DE4D`）",
+    "opcode 写入证据": "`0x00B9DD14`",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0x6`（6）",
+    "容量申请证据": "`0x00B9DCE6`（分配器 `[obj+0Ch]` 的 `vt[0x78]`）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)` @ `0x00B9DDDB`",
+    "提交": "`sub_B02FF0` @ `0x00B9DD80`",
+    "附加通知回调": "`[obj+79A8h]`（模块 id `0x18C`）",
+    "配对命令": "S→C `SC-0xCBC6-lounge-gacha_lineup_r`"
+  },
+  "handler": "sub_B9DCA0",
+  "handler_va": "0x00B9DCA0",
+  "block": [
+    "0xB9DCA0",
+    "0xB9DE4D"
+  ],
+  "name_str": ")<-_proto_lounge_client::send_gacha_lineup(",
+  "name_str_va": "0x00EEC494",
+  "capacity": "0x6",
+  "capacity_va": "0x00B9DCE6",
+  "closer_va": "0xB9DD80",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)` @ `0x00B9DDDB`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": "0x00B9DDDB",
+  "wire": {
+    "length_expr": "4",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x6（容量记账口径，非线长）",
+    "field_count": 1,
+    "length_source": "field_sum",
+    "readme_conclusion": "字段数：**2**（含 opcode 第 0 项）",
+    "readme_close": "2 + 4 = 6 == 容量 0x6 = 6（**精确相等**）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "写入 `buf+0`，供服务端分发；无 case 块（C→S）",
+      "enum": "0xFF32",
+      "evidence_va": [
+        "`00B9DD14`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "gacha_type",
+      "meaning": "扭蛋（gacha）类型（卡池种类）",
+      "purpose": "来源=入参 `arg_0` → 内联写 `[eax],ecx`(@`0xB9DD24`)；去向=经 `vt[0x58]` 发往服务端",
+      "enum": "取值域 {0,1,2,4,5,6}（无 3）；exe 取证 sub_9955E0 switch + sub_995220 六调用点",
+      "evidence_va": [
+        "`0xB9DD24`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0xFF32（分发器 switch 选择子）",
+      "evidence_va": "0x00B9DD14"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0x6 B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xB9DCE6"
+    },
+    {
+      "step": 3,
+      "kind": "write_scalar",
+      "detail": "gacha_type：`u32`（线长 4）—— 扭蛋（gacha）类型（卡池种类）",
+      "evidence_va": "0xB9DD24"
+    },
+    {
+      "step": 4,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xB9DD80"
+    },
+    {
+      "step": 5,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xB9DDE4"
+    }
+  ],
+  "capabilities": [
+    "create"
+  ],
+  "capabilities_derived": [
+    "unclassified"
+  ],
+  "db_effects": [],
+  "pair": "SC-0xCBC6-lounge-gacha_lineup_r",
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:46",
+    "batch": 14,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 6,
+        "va": "0xB9DCE6",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB9DCE3",
+        "call_va": "0xB9DCE8"
+      },
+      "field_window": {
+        "start_va": "0xB9DCA0",
+        "end_va": "0xB9DD80",
+        "guard": null,
+        "closer_or_commit_va": "0xB9DD80",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "gacha_type",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "`0xB9DD24`"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB9DD14",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB9DD24",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB9DD56",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 1,
+        "checkable": 1,
+        "pairs": [
+          {
+            "field": "gacha_type",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB9DD24",
+            "kind": "inline_store"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB9DD14",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB9DCA0",
+          "0xB9DD80"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 6,
+          "capacity": 6,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB9DD56",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）6 / 容量 0x6"
+        }
+      },
+      "closer": {
+        "va": "0xB9DD80",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xB9DDE4",
+        "mov_va": "0xB9DDDB",
+        "host": "[edx+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "gacha_type="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0xFF32-lounge-gacha_lineup.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0x00B9DD14",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "`00B9DD14`"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "GachaLineup",
+      "role": "request",
+      "wire_length": "4",
+      "members": [
+        {
+          "name": "GachaType",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "gacha_type"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "86825d3f3f7d98f1",
+  "check_fingerprint": "fec037809ec68d27"
+}

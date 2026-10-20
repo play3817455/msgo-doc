@@ -1,0 +1,348 @@
+{
+  "id": "SC-0x918E-battle-debug_message",
+  "opcode": "0x918E",
+  "direction": "SC",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "debug_message",
+  "source_dir": "protocol_analysis/commands/SC-0x918E-battle-debug_message",
+  "meta": {
+    "opcode": "`0x918E`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`battle_client`",
+    "命令名": "`debug_message`",
+    "处理块范围": "`0xb2466a`..`0xb2487b`",
+    "名字串引用点": "`0xb2475e`",
+    "声明容量（解码缓冲）": "`0xB9`（`B24683`）",
+    "长度闭合点": "`B24715`",
+    "报错码": "`0x11F`（块内 `push 1; push <errcode>; vt[0x64]`）",
+    "去向": "`vt[0x368]` @`B24845`（2 实参）"
+  },
+  "handler": null,
+  "handler_va": null,
+  "block": [
+    "0xb2466a",
+    "0xb2487b"
+  ],
+  "name_str": null,
+  "name_str_va": "0xb2475e",
+  "capacity": "0xB9",
+  "capacity_va": "0xB24683",
+  "closer_va": "0xB24715",
+  "dispatch": "`vt[0x368]` @`B24845`（2 实参）",
+  "dispatch_slot": "vt[0x368]",
+  "dispatch_va": "0xB24845",
+  "wire": {
+    "length_expr": "L+1 + 4",
+    "fixed": false,
+    "var_drivers": [
+      "L"
+    ],
+    "capacity_note": "声明容量 0xB9（容量记账口径，非线长）",
+    "field_count": 2,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：**4 + (L+1)**（L = msg 串长）。",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0x918E",
+      "evidence_va": [
+        "0xb2475e"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "L+1",
+      "wire_type": "string",
+      "name": "msg",
+      "meaning": "调试消息文本（日志串 `msg='...'`；NUL 结尾）",
+      "purpose": "经 `vt[0x368]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B246C5",
+        "B247B7"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "var",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "color",
+      "meaning": "消息颜色（日志串 `color=`）",
+      "purpose": "经 `vt[0x368]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B24705",
+        "B247E7"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0x918E（分发器 switch 选择子）",
+      "evidence_va": "0xB2475E"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB05DA0`（模块 id 287）→ 之后逐字段读线",
+      "evidence_va": "0xB24671"
+    },
+    {
+      "step": 3,
+      "kind": "read_string",
+      "detail": "msg：`string`（线长 L+1）—— 调试消息文本（日志串 `msg='...'`；NUL 结尾）",
+      "evidence_va": "0xB246C5"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "color：`u32`（线长 4）—— 消息颜色（日志串 `color=`）",
+      "evidence_va": "0xB24705"
+    },
+    {
+      "step": 5,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB24715"
+    },
+    {
+      "step": 6,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x368]`，实参 2 个",
+      "evidence_va": "0xB24845"
+    },
+    {
+      "step": 7,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB246DF"
+    }
+  ],
+  "capabilities": [
+    "unclassified",
+    "battle.debug_message"
+  ],
+  "capabilities_derived": [
+    "communicate"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [
+    "SC-0x918E-lounge-debug_message"
+  ],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:47",
+    "batch": 18,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 185,
+        "va": "0xB24686",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB24683",
+        "call_va": "0xB2468B"
+      },
+      "field_window": {
+        "start_va": "0xB24672",
+        "end_va": "0xB2473C",
+        "guard": {
+          "va": "0xB24671",
+          "func": "0xB05DA0",
+          "module_id": 287,
+          "release_va": "0xB05D90"
+        },
+        "closer_or_commit_va": "0xB24715",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "msg",
+            "wire_type": "string",
+            "width": null,
+            "seq": 1,
+            "shape": "str",
+            "evidence_va": [
+              "B246C5",
+              "B247B7"
+            ]
+          },
+          {
+            "name": "color",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "B24705",
+              "B247E7"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB246C5",
+            "kind": "read",
+            "width": null,
+            "wire_type": "str",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB24705",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 2,
+        "checkable": 2,
+        "pairs": [
+          {
+            "field": "msg",
+            "width": null,
+            "shape": "str",
+            "va": "0xB246C5",
+            "kind": "read"
+          },
+          {
+            "field": "color",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB24705",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB24672",
+          "0xB2473C"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 4,
+          "capacity": 185,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB246C5",
+              "kind": "read",
+              "name": ""
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）4 / 容量 0xb9"
+        }
+      },
+      "closer": {
+        "va": "0xB24715",
+        "kind": "jz",
+        "jcc_va": "0xB2471B",
+        "seq_va": "0xB24711",
+        "jcc_dst": "0xB24737",
+        "cmp": "cmp     ebx, [esp+1B3Ch+var_1B24]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x368]",
+        "slot_value": 872,
+        "va": "0xB24845",
+        "mov_va": "0xB2483C",
+        "host": "[eax+368h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB246DF",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "msg=\"",
+        "color="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0x918E-battle-debug_message.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xb2475e"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "DebugMessage",
+      "role": "response",
+      "wire_length": "L+1 + 4",
+      "members": [
+        {
+          "name": "Msg",
+          "wire_type": "string",
+          "length": "L+1",
+          "field_ref": "msg",
+          "element": null,
+          "element_length": null,
+          "cap": null,
+          "count_field": null,
+          "count_field_source": null,
+          "note": "元素成员未建模（composites/ 无此结构），须以 IDA 复核补"
+        },
+        {
+          "name": "Color",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "color"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "1dac71a572ee6066",
+  "check_fingerprint": "0ec75d5fcdb01855"
+}

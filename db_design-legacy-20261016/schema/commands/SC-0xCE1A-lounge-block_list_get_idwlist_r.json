@@ -1,0 +1,543 @@
+{
+  "id": "SC-0xCE1A-lounge-block_list_get_idwlist_r",
+  "opcode": "0xCE1A",
+  "direction": "SC",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "block_list_get_idwlist_r",
+  "source_dir": "protocol_analysis/commands/SC-0xCE1A-lounge-block_list_get_idwlist_r",
+  "meta": {
+    "opcode": "`0xCE1A`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`block_list_get_idwlist_r`",
+    "处理块范围": "`0xb7b3bd`..`0xb7b74c`",
+    "名字串引用点": "`0xb7b591`",
+    "声明容量（解码缓冲）": "`0x32C`（`B7B3D7`）",
+    "长度闭合点": "`B7B548`",
+    "报错码": "`0x15F`（块内 `push 1; push <0x15F>; vt[0x64]`）",
+    "去向": "`vt[0x374]` @`B7B730`（5 实参）"
+  },
+  "handler": null,
+  "handler_va": null,
+  "block": [
+    "0xb7b3bd",
+    "0xb7b74c"
+  ],
+  "name_str": null,
+  "name_str_va": "0xb7b591",
+  "capacity": "0x32C",
+  "capacity_va": "0xB7B3D7",
+  "closer_va": "0xB7B548",
+  "dispatch": "`vt[0x374]` @`B7B730`（5 实参）",
+  "dispatch_slot": "vt[0x374]",
+  "dispatch_va": "0xB7B730",
+  "wire": {
+    "length_expr": "4 + 4 + 4n + 4 + 4m",
+    "fixed": false,
+    "var_drivers": [
+      "m",
+      "n"
+    ],
+    "capacity_note": "声明容量 0x32C（容量记账口径，非线长）",
+    "field_count": 5,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：12 + 4n + 4m",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "result",
+      "meaning": "结果码（日志串 `result=`）",
+      "purpose": "经 `vt[0x374]`（5 实参）交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xb7b401",
+        "0xb7b410"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "block_id_num",
+      "meaning": "屏蔽 ID 个数（上限 100）",
+      "purpose": "驱动 `block_idlist` 循环（`cmp ebx,64h`@`B7B46E`）",
+      "enum": "0..100",
+      "evidence_va": [
+        "0xb7b442",
+        "0xb7b46e"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 3,
+      "offset": "8",
+      "length": "4n",
+      "wire_type": "array<u32,100>",
+      "name": "block_idlist",
+      "meaning": "屏蔽 ID 列表（日志串 `block_idlist={`）",
+      "purpose": "同上",
+      "enum": null,
+      "evidence_va": [
+        "0xb7b47d",
+        "0xb7b49e"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 4,
+      "offset": "var",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "block_wid_num",
+      "meaning": "屏蔽世界 ID 个数（上限 100）",
+      "purpose": "驱动 `block_widlist` 循环",
+      "enum": "0..100",
+      "evidence_va": [
+        "0xb7b4d2",
+        "0xb7b4e6"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 5,
+      "offset": "var",
+      "length": "4m",
+      "wire_type": "array<u32,100>",
+      "name": "block_widlist",
+      "meaning": "屏蔽世界 ID 列表（日志串 `block_widlist={`）",
+      "purpose": "同上",
+      "enum": null,
+      "evidence_va": [
+        "0xb7b4f9",
+        "0xb7b51a"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0xCE1A（分发器 switch 选择子）",
+      "evidence_va": "0x0000"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB41120`（模块 id None）→ 之后逐字段读线",
+      "evidence_va": "0xB7B3BD"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "result：`u32`（线长 4）—— 结果码（日志串 `result=`）",
+      "evidence_va": "0xB7B401"
+    },
+    {
+      "step": 4,
+      "kind": "read_count",
+      "detail": "block_id_num：`u32`（线长 4）—— 屏蔽 ID 个数（上限 100）",
+      "evidence_va": "0xB7B442"
+    },
+    {
+      "step": 5,
+      "kind": "read_array",
+      "detail": "block_idlist：`array<u32,100>`（线长 4n）—— 屏蔽 ID 列表（日志串 `block_idlist={`）",
+      "evidence_va": "0xB7B47D"
+    },
+    {
+      "step": 6,
+      "kind": "read_count",
+      "detail": "block_wid_num：`u32`（线长 4）—— 屏蔽世界 ID 个数（上限 100）",
+      "evidence_va": "0xB7B4D2"
+    },
+    {
+      "step": 7,
+      "kind": "read_array",
+      "detail": "block_widlist：`array<u32,100>`（线长 4m）—— 屏蔽世界 ID 列表（日志串 `block_widlist={`）",
+      "evidence_va": "0xB7B4F9"
+    },
+    {
+      "step": 8,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB7B548"
+    },
+    {
+      "step": 9,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x374]`，实参 5 个",
+      "evidence_va": "0xB7B730"
+    },
+    {
+      "step": 10,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB7B42A"
+    }
+  ],
+  "capabilities": [
+    "query",
+    "lounge.block"
+  ],
+  "capabilities_derived": [
+    "unclassified"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:45",
+    "batch": 12,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 812,
+        "va": "0xB7B3D2",
+        "reg": "eax",
+        "host": "[edx+78h]",
+        "alloc_va": "0xB7B3CF",
+        "call_va": "0xB7B3D7"
+      },
+      "field_window": {
+        "start_va": "0xB7B3BE",
+        "end_va": "0xB7B56F",
+        "guard": {
+          "va": "0xB7B3BD",
+          "func": "0xB41120",
+          "module_id": null,
+          "release_va": "0xB41110"
+        },
+        "closer_or_commit_va": "0xB7B548",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "result",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb7b401",
+              "0xb7b410"
+            ]
+          },
+          {
+            "name": "block_id_num",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb7b442",
+              "0xb7b46e"
+            ]
+          },
+          {
+            "name": "block_idlist",
+            "wire_type": "array<u32,100>",
+            "width": null,
+            "seq": 3,
+            "shape": "agg",
+            "evidence_va": [
+              "0xb7b47d",
+              "0xb7b49e"
+            ]
+          },
+          {
+            "name": "block_wid_num",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 4,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb7b4d2",
+              "0xb7b4e6"
+            ]
+          },
+          {
+            "name": "block_widlist",
+            "wire_type": "array<u32,100>",
+            "width": null,
+            "seq": 5,
+            "shape": "agg",
+            "evidence_va": [
+              "0xb7b4f9",
+              "0xb7b51a"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB7B410",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB7B442",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB7B47D",
+            "kind": "bounded",
+            "width": 4,
+            "wire_type": null,
+            "name": "sub_B41850",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB7B49E",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB7B4D2",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB7B4F9",
+            "kind": "bounded",
+            "width": 4,
+            "wire_type": null,
+            "name": "sub_B41850",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB7B51A",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 3,
+        "checkable": 3,
+        "pairs": [
+          {
+            "field": "result",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB7B410",
+            "kind": "read"
+          },
+          {
+            "field": "block_id_num",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB7B442",
+            "kind": "read"
+          },
+          {
+            "field": "block_wid_num",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB7B47D",
+            "kind": "bounded"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB7B49E",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32"
+          },
+          {
+            "va": "0xB7B4D2",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32"
+          },
+          {
+            "va": "0xB7B4F9",
+            "kind": "bounded",
+            "width": 4,
+            "wire_type": null
+          },
+          {
+            "va": "0xB7B51A",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32"
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB7B3BE",
+          "0xB7B56F"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 20,
+          "capacity": 812,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB7B47D",
+              "kind": "bounded",
+              "name": "sub_B41850"
+            },
+            {
+              "va": "0xB7B4F9",
+              "kind": "bounded",
+              "name": "sub_B41850"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）20 / 容量 0x32c"
+        }
+      },
+      "closer": {
+        "va": "0xB7B548",
+        "kind": "jz",
+        "jcc_va": "0xB7B54E",
+        "seq_va": "0xB7B544",
+        "jcc_dst": "0xB7B56A",
+        "cmp": "cmp     ecx, [esp+2C5Ch+var_2C40]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x374]",
+        "slot_value": 884,
+        "va": "0xB7B730",
+        "mov_va": "0xB7B719",
+        "host": "[edx+374h]",
+        "argc": 5,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB7B42A",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "result=",
+        "block_idlist={",
+        "block_widlist={"
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0xCE1A-lounge-block_list_get_idwlist_r.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": []
+  },
+  "structs": {
+    "response": {
+      "go_name": "BlockListGetIdwlistR",
+      "role": "response",
+      "wire_length": "4 + 4 + 4n + 4 + 4m",
+      "members": [
+        {
+          "name": "Result",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "result"
+        },
+        {
+          "name": "BlockIdNum",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "block_id_num"
+        },
+        {
+          "name": "BlockIdlist",
+          "wire_type": "array<u32,100>",
+          "length": "4n",
+          "field_ref": "block_idlist",
+          "element": "u32",
+          "element_length": "4",
+          "cap": 100,
+          "count_field": "block_id_num",
+          "count_field_source": "heuristic"
+        },
+        {
+          "name": "BlockWidNum",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "block_wid_num"
+        },
+        {
+          "name": "BlockWidlist",
+          "wire_type": "array<u32,100>",
+          "length": "4m",
+          "field_ref": "block_widlist",
+          "element": "u32",
+          "element_length": "4",
+          "cap": 100,
+          "count_field": "block_wid_num",
+          "count_field_source": "heuristic"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "fec2e1fd8809460b",
+  "check_fingerprint": "caad521d3b3061d6"
+}

@@ -1,0 +1,72 @@
+{
+  "id": "tbl_missionunit_set",
+  "title": "任务编成单元",
+  "status": "complete",
+  "table_disposition": "PERSIST",
+  "purpose": "持久化 missionunit_set 12B：deck_type + deck_set + missionunit_id；CS/SC 互证",
+  "entity_ref": "missionunit_set",
+  "row_key": {
+    "columns": [
+      "deck_type",
+      "deck_set"
+    ],
+    "reason": "C→S `msma_missionunit_store` 每次只发一条 12 字节编成（deck_type=卡组类型、deck_set=卡组套编号、missionunit_id=任务单位），S→C `msma_missionunit_get_list` 一次列 ≤22 条 → 一名飞行员有多个卡组套的编成，行键=卡组类型+套编号。",
+    "evidence_va": "B998DA|B999E5",
+    "verified": "2026-09-21"
+  },
+  "evidence_commands": [
+    "CS-0x33CC-lounge-msma_missionunit_store",
+    "SC-0x1908-lounge-msma_missionunit_store_r",
+    "SC-0x36D9-lounge-msma_missionunit_get_list_r"
+  ],
+  "column_groups": [
+    {
+      "name": "missionunit_set（12B）",
+      "columns": [
+        "missionunit_set"
+      ]
+    }
+  ],
+  "columns": [
+    {
+      "name": "missionunit_set",
+      "disposition": "COMPOSITE",
+      "composite_ref": "missionunit_set",
+      "meaning": "任务编成单元（12B；写入 sub_B41BF0 / 读取 sub_B43BE0）",
+      "wire_sources": [
+        {
+          "command": "CS-0x33CC-lounge-msma_missionunit_store",
+          "struct": "missionunit_set",
+          "field_name": "missionunit_set",
+          "offset": 2,
+          "length": 12,
+          "wire_type": "struct",
+          "protocol_path": "protocol_analysis/commands/CS-0x33CC-lounge-msma_missionunit_store/README.md",
+          "section": "§3",
+          "writer": "sub_B41BF0",
+          "evidence_va": "0xB998DA"
+        },
+        {
+          "command": "SC-0x1908-lounge-msma_missionunit_store_r",
+          "struct": "missionunit_set",
+          "field_name": "missionunit_set",
+          "offset": 4,
+          "length": 12,
+          "wire_type": "struct{12}",
+          "protocol_path": "protocol_analysis/commands/SC-0x1908-lounge-msma_missionunit_store_r/README.md",
+          "section": "§3",
+          "reader": "sub_B43BE0",
+          "evidence_va": "0xB56A02"
+        }
+      ],
+      "asm_verified": true
+    }
+  ],
+  "asm_audit": {
+    "composite_ref": "missionunit_set",
+    "status": "pass",
+    "issues_count": 0,
+    "memory_status": "pass",
+    "memory_issues_count": 0
+  }
+}

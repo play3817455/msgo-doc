@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI 参数（battle 事件） · db_design</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <h1><a href="../index.html">db_design</a></h1>
+      <p class="header-note">唯一证据源：<code>protocol_analysis/</code></p>
+      <nav><a href="../index.html">首页</a>
+      <a href="../homing/index.html">归位库</a>
+      <a href="../tables/index.html" class="active">旧表留档</a>
+      <a href="../commands/index.html">命令</a>
+      <a href="../cfg/index.html">配置表79</a>
+      <a href="../srv/index.html">服务端配置</a>
+      <a href="../asm-audit/index.html">ASM 审计</a>
+      <a href="../oracle-audit/index.html">Oracle 审计</a>
+      <a href="../entities/index.html">协议实体</a>
+      <a href="../fields/index.html">字段索引</a>
+      <a href="../relations.html">表关系</a></nav>
+    </div>
+  </header>
+  <main class="wrap">
+
+    <nav class="breadcrumb"><a href="index.html">表设计</a> / <span><code>tbl_AI</code></span></nav>
+    <h2>AI 参数（battle 事件） <span class="badge" style="background:#2e7d32">complete</span> <span class="badge" style="background:#2e7d32">ASM ✓</span></h2>
+    <p>battle AI 165B 线格式；29 成员（sub_B07230/sub_B09C10）；槽 168B</p>
+    <p class="muted">共 30 节点 · PERSIST 0 · TBD 0</p>
+    
+    <section class="asm-panel">
+      <h3>ASM 审计 <span class="badge" style="background:#2e7d32">ASM ✓</span> · memory <span class="badge" style="background:#2e7d32">ASM ✓</span></h3>
+      <dl class="asm-dl">
+        <dt>composite</dt><dd><code>AI</code></dd>
+        <dt>reader</dt><dd><code>sub_B07230</code></dd>
+        <dt>线长</dt><dd>165 B
+           / 槽 168 B</dd>
+        <dt>wire_layout</dt><dd><code>1+33+4+1+2+10×4+10×2+10×2+14×2+2×4+3×2+1+1</code></dd>
+        <dt>wire 字段</dt><dd>29 ok</dd>
+        <dt>memory 字段</dt><dd>29 audited · 29 ok</dd>
+        <dt>verified</dt><dd>wire 2026-09-20 · mem 2026-09-26</dd>
+      </dl>
+    </section>
+    <h3>证据命令</h3>
+    <ul><li><a href="../commands/SC-0xB463-battle-msma_AI_install.html"><code>SC-0xB463-battle-msma_AI_install</code></a> · <a href="../../../protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md" target="_blank">protocol README</a></li></ul>
+
+    <h3 id="columns">列树（按分组）</h3>
+    <div class="tree-legend">
+      <span>列名</span><span>线类型</span><span>disposition</span><span>含义</span><span>→ protocol 证据</span>
+    </div>
+    
+    <section class="col-group">
+      <h3>AI（165B · 29 成员）</h3>
+      <ul class="field-tree root-tree"><li class="tree-branch">
+      <details open>
+        <summary><code class='fname'>AI</code> <code class='ftype'>struct</code> <span class='offset'></span> <span class="badge" style="background:#455a64">COMPOSITE</span> <span class="muted">← <code>AI</code></span></summary>
+        <div class="tree-body">
+          <div class="tree-detail">AI 参数结构体（线长 165 / 跨度 168B；日志串 `AI=`）</div>
+          <div class="evidence-line"><code>SC-0xB463-battle-msma_AI_install</code> struct <code>AI</code> @2 §3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md" target="_blank">📄 protocol</a></div>
+          <ul class="field-tree"><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">type</code>
+          <code class="ftype">u8</code>
+          <span class="offset">wire +0 1B</span>
+          <span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xb0724c">✓</span>
+        </div>
+        <div class="tree-meaning">AI 类型</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0xB463-battle-msma_AI_install</code> struct <code>AI</code> @0 §4.3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">name</code>
+          <code class="ftype">char[33]</code>
+          <span class="offset">wire +1 33B</span>
+          <span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xb07265">✓</span>
+        </div>
+        <div class="tree-meaning">名称（定长 33 字节）</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0xB463-battle-msma_AI_install</code> struct <code>AI</code> @1 §4.3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">param_id</code>
+          <code class="ftype">u32</code>
+          <span class="offset">wire +34 mem +36 4B</span>
+          <span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB07283">✓</span>
+        </div>
+        <div class="tree-meaning">参数 ID</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0xB463-battle-msma_AI_install</code> struct <code>AI</code> @34 §4.3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">action_type</code>
+          <code class="ftype">u8</code>
+          <span class="offset">wire +38 mem +40 1B</span>
+          <span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB07296">✓</span>
+        </div>
+        <div class="tree-meaning">行动类型</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0xB463-battle-msma_AI_install</code> struct <code>AI</code> @38 §4.3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">move_spd</code>
+          <code class="ftype">u16</code>
+          <span class="offset">wire +39 mem +42 2B</span>
+          <span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB072B1">✓</span>
+        </div>
+        <div class="tree-meaning">移动速度</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0xB463-battle-msma_AI_install</code> struct <code>AI</code> @39 §4.3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">stat</code>
+          <code class="ftype">u32[10]</code>
+          <span class="offset">wire +41 mem +44 40B</span>
+          <span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xb072d2">✓</span>
+        </div>
+        <div class="tree-meaning">状态数组（10×u32）</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0xB463-battle-msma_AI_install</code> struct <code>AI</code> @41 §4.3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">hate_ent_id</code>
+          <code class="ftype">u16[10]</code>
+          <span class="offset">wire +81 mem +84 20B</span>
+          <span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB072F9">✓</span>
+        </div>
+        <div class="tree-meaning">仇恨实体 ID（10×u16）</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0xB463-battle-msma_AI_install</code> struct <code>AI</code> @81 §4.3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">hate_val</code>
+          <code class="ftype">u16[10]</code>
+          <span class="offset">wire +101 mem +104 20B</span>
+          <span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB07322">✓</span>
+        </div>
+        <div class="tree-meaning">仇恨值（10×u16）</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0xB463-battle-msma_AI_install</code> struct <code>AI</code> @101 §4.3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">pop_init_x</code>
+          <code class="ftype">u16</code>
+          <span class="offset">wire +121 mem +124 2B</span>
+          <span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB07345">✓</span>
+        </div>
+        <div class="tree-meaning">出现初始 X</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0xB463-battle-msma_AI_install</code> struct <code>AI</code> @121 §4.3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">pop_init_y</code>
+          <code class="ftype">u16</code>
+          <span class="offset">wire +123 mem +126 2B</span>
+          <span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB0735D">✓</span>
+        </div>
+        <div class="tree-meaning">出现初始 Y</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0xB463-battle-msma_AI_install</code> struct <code>AI</code> @123 §4.3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">pop_init_z</code>
+          <code class="ftype">u16</code>
+          <span class="offset">wire +125 mem +128 2B</span>
+          <span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB07378">✓</span>
+        </div>
+        <div class="tree-meaning">出现初始 Z</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0xB463-battle-msma_AI_install</code> struct <code>AI</code> @125 §4.3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">pop_init_dir</code>
+          <code class="ftype">u16</code>
+          <span class="offset">wire +127 mem +130 2B</span>
+          <span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB07393">✓</span>
+        </div>
+        <div class="tree-meaning">出现初始朝向</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0xB463-battle-msma_AI_install</code> struct <code>AI</code> @127 §4.3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">fire_start_x</code>
+          <code class="ftype">u16</code>
+          <span class="offset">wire +129 mem +132 2B</span>
+          <span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB073AE">✓</span>
+        </div>
+        <div class="tree-meaning">射击起点 X</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0xB463-battle-msma_AI_install</code> struct <code>AI</code> @129 §4.3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">fire_start_y</code>
+          <code class="ftype">u16</code>
+          <span class="offset">wire +131 mem +134 2B</span>
+          <span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB073C9">✓</span>
+        </div>
+        <div class="tree-meaning">射击起点 Y</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0xB463-battle-msma_AI_install</code> struct <code>AI</code> @131 §4.3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">fire_start_z</code>
+          <code class="ftype">u16</code>
+          <span class="offset">wire +133 mem +136 2B</span>
+          <span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB073E4">✓</span>
+        </div>
+        <div class="tree-meaning">射击起点 Z</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0xB463-battle-msma_AI_install</code> struct <code>AI</code> @133 §4.3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">fire_end_x</code>
+          <code class="ftype">u16</code>
+          <span class="offset">wire +135 mem +138 2B</span>
+          <span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB073FF">✓</span>
+        </div>
+        <div class="tree-meaning">射击终点 X</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0xB463-battle-msma_AI_install</code> struct <code>AI</code> @135 §4.3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">fire_end_y</code>
+          <code class="ftype">u16</code>
+          <span class="offset">wire +137 mem +140 2B</span>
+          <span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB07421">✓</span>
+        </div>
+        <div class="tree-meaning">射击终点 Y</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0xB463-battle-msma_AI_install</code> struct <code>AI</code> @137 §4.3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">fire_end_z</code>
+          <code class="ftype">u16</code>
+          <span class="offset">wire +139 mem +142 2B</span>
+          <span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB07425">✓</span>
+        </div>
+        <div class="tree-meaning">射击终点 Z</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0xB463-battle-msma_AI_install</code> struct <code>AI</code> @139 §4.3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">move_end_x</code>
+          <code class="ftype">u16</code>
+          <span class="offset">wire +141 mem +144 2B</span>
+          <span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB0743D">✓</span>
+        </div>
+        <div class="tree-meaning">移动终点 X</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0xB463-battle-msma_AI_install</code> struct <code>AI</code> @141 §4.3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">move_end_y</code>
+          <code class="ftype">u16</code>
+          <span class="offset">wire +143 mem +146 2B</span>
+          <span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB07455">✓</span>
+        </div>
+        <div class="tree-meaning">移动终点 Y</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0xB463-battle-msma_AI_install</code> struct <code>AI</code> @143 §4.3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">move_end_z</code>
+          <code class="ftype">u16</code>
+          <span class="offset">wire +145 mem +148 2B</span>
+          <span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB0746D">✓</span>
+        </div>
+        <div class="tree-meaning">移动终点 Z</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0xB463-battle-msma_AI_install</code> struct <code>AI</code> @145 §4.3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">order_kind</code>
+          <code class="ftype">u16</code>
+          <span class="offset">wire +147 mem +150 2B</span>
+          <span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB07485">✓</span>
+        </div>
+        <div class="tree-meaning">指令种类</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0xB463-battle-msma_AI_install</code> struct <code>AI</code> @147 §4.3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">order_param</code>
+          <code class="ftype">u32</code>
+          <span class="offset">wire +149 mem +152 4B</span>
+          <span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB07499">✓</span>
+        </div>
+        <div class="tree-meaning">指令参数</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0xB463-battle-msma_AI_install</code> struct <code>AI</code> @149 §4.3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">group_id</code>
+          <code class="ftype">u32</code>
+          <span class="offset">wire +153 mem +156 4B</span>
+          <span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB074AD">✓</span>
+        </div>
+        <div class="tree-meaning">编组 ID</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0xB463-battle-msma_AI_install</code> struct <code>AI</code> @153 §4.3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">center_ms_entid</code>
+          <code class="ftype">u16</code>
+          <span class="offset">wire +157 mem +160 2B</span>
+          <span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB074C1">✓</span>
+        </div>
+        <div class="tree-meaning">中心机体实体 ID</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0xB463-battle-msma_AI_install</code> struct <code>AI</code> @157 §4.3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">route_number</code>
+          <code class="ftype">u16</code>
+          <span class="offset">wire +159 mem +162 2B</span>
+          <span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB074D5">✓</span>
+        </div>
+        <div class="tree-meaning">路线编号</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0xB463-battle-msma_AI_install</code> struct <code>AI</code> @159 §4.3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">formation_id</code>
+          <code class="ftype">u16</code>
+          <span class="offset">wire +161 mem +164 2B</span>
+          <span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB074E9">✓</span>
+        </div>
+        <div class="tree-meaning">阵型 ID</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0xB463-battle-msma_AI_install</code> struct <code>AI</code> @161 §4.3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">formation_number</code>
+          <code class="ftype">u8</code>
+          <span class="offset">wire +163 mem +166 1B</span>
+          <span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB074FD">✓</span>
+        </div>
+        <div class="tree-meaning">阵型数量</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0xB463-battle-msma_AI_install</code> struct <code>AI</code> @163 §4.3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li><li class="tree-leaf">
+      <div class="tree-row cols-4">
+        <div class="tree-head">
+          <code class="fname">stuck_escape</code>
+          <code class="ftype">u8</code>
+          <span class="offset">wire +164 mem +167 1B</span>
+          <span class="badge" style="background:#c62828">EVENT</span> <span class="asm-ok" title="0xB07520">✓</span>
+        </div>
+        <div class="tree-meaning">卡住脱困</div>
+        <div class="tree-evidence"><div class="evidence-line"><code>SC-0xB463-battle-msma_AI_install</code> struct <code>AI</code> @164 §4.3 <a class="ev-link" href="../../../protocol_analysis/commands/SC-0xB463-battle-msma_AI_install/README.md" target="_blank">📄 protocol</a></div></div>
+        <div class="tree-notes muted"></div>
+      </div>
+    </li></ul>
+        </div>
+      </details>
+    </li></ul>
+    </section>
+
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">生成于 2026-10-12 · 改 JSON 后重跑 build_site.py · HTML 只读</div>
+  </footer>
+</body>
+</html>

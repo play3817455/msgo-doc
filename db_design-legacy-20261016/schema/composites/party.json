@@ -1,0 +1,508 @@
+{
+  "id": "party",
+  "title": "队伍实体（声明式：成员逐列取自队伍级命令，无单一线体）",
+  "length": 0,
+  "status": "complete",
+  "declared": true,
+  "wire_layout": "声明式：无单一线体。成员逐列取自 party_create / party_info_edit / party_leave 与 party_create_r / party_enter_r / party_info_edit_notice / cupteam_party_get_r / party_invite_to 的字段表；留言成员按读侧定长槽 61B（0x3D）落列",
+  "evidence": {
+    "commands": [
+      "CS-0x645D-lounge-party_create",
+      "CS-0x9226-lounge-party_info_edit",
+      "CS-0x5F80-lounge-party_leave",
+      "CS-0x1F3E-lounge-party_enter",
+      "CS-0x16AE-lounge-party_recruit_detail_get",
+      "CS-0x6E16-lounge-party_invite_refuse",
+      "CS-0x0A73-lounge-party_recruit_list_get",
+      "SC-0xE18C-lounge-party_create_r",
+      "SC-0x1E49-lounge-party_enter_r",
+      "SC-0x07E8-lounge-party_info_edit_notice",
+      "SC-0x5F18-lounge-cupteam_party_get_r",
+      "SC-0x5C61-lounge-party_invite_to",
+      "SC-0xB43F-lounge-party_recruit_list_get_r",
+      "SC-0x305D-lounge-party_recruit_detail_get_r"
+    ],
+    "protocol_paths": [
+      "protocol_analysis/commands/CS-0x645D-lounge-party_create/README.md",
+      "protocol_analysis/commands/CS-0x9226-lounge-party_info_edit/README.md",
+      "protocol_analysis/commands/CS-0x5F80-lounge-party_leave/README.md",
+      "protocol_analysis/commands/CS-0x1F3E-lounge-party_enter/README.md",
+      "protocol_analysis/commands/SC-0xE18C-lounge-party_create_r/README.md",
+      "protocol_analysis/commands/SC-0x1E49-lounge-party_enter_r/README.md",
+      "protocol_analysis/commands/SC-0x5F18-lounge-cupteam_party_get_r/README.md",
+      "protocol_analysis/commands/SC-0x5C61-lounge-party_invite_to/README.md",
+      "protocol_analysis/commands/SC-0xB43F-lounge-party_recruit_list_get_r/README.md",
+      "protocol_analysis/commands/SC-0x305D-lounge-party_recruit_detail_get_r/README.md"
+    ],
+    "note": "为什么不是「某个命令的报文体」：队伍是跨机师共享实体（一队多名成员），线上只作为**元素的父级**或别人的属性出现（recruit.party_id / recruits.party_id / party_member 的所属队），没有任何命令以队伍为顶层 body。所以按实体建模：每条成员各自带命令 + VA，宽度取读侧定长槽；本复合体不代表任何一条报文的字节布局（无 offset、无 total_bytes），DDL 侧也就没有 wire 线长。身份列 party_id 的最强证据是 CS-0x1F3E-party_enter（客户端进队时上报目标队伍）与 SC-0x5F18-cupteam_party_get_r（读侧把 party_id 与 channel_id 一起下发）；三条写方命令（create/edit/leave）都**不带** party_id——id 由服务端分配，客户端靠读侧拿到后再上报（与 clan_id 同口径）。为什么 party_id 不是队长的 pilot_id：SC-0xF449-party_leader_delegate_r 只带新旧队长 pilot_id、不带 party_id，party_member_add 用 is_party_leader 标队长——队长换人而队伍 id 不变，说明队伍有独立 id 空间。★ 2026-09-25 视图收口（reviewed.batch_28_party_recruit_closure）：原先挂着「channel_id / member_count / is_lock / troops / pstat 口径未定」的欠账，本批结清——IDA 复看确认 `recruit`（SC-0x305D 单发）与 `recruits`（SC-0xB43F 列表）是**同一读取器 `sub_B45400` 解出的同一个 80B 元素**（9 个成员逐偏移同形，线 80B / 内存 84B），故两者判 DERIVED（不建表，退 game.recruit / game.recruits），其成员逐列都是**队伍自身属性**，一并并进本复合体：channel_id（另见 SC-0x5F18 读侧并列下发）、troops、member_count、pstat、is_lock（两个视图里逐列带 VA）。其中 channel_id 由创建时按会话频道落列、troops 取队长机师势力、member_count 随成员增删维护；pstat / is_lock 在全部命令里**都没有写方**、旧库两处注释还互相矛盾（「队伍状态」/「机师状态」、是否上锁/是否锁定）⇒ 本批先落列、按 0 写入，欠账记在各自 meaning。"
+  },
+  "members": [
+    {
+      "name": "party_id",
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "队伍 ID（服务端分配，身份列）",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "CS-0x1F3E-lounge-party_enter",
+          "field_name": "party_id",
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/CS-0x1F3E-lounge-party_enter/README.md",
+          "section": "§2",
+          "notes": "客户端进队时上报所进队伍——身份列最直接的证据（create/edit/leave 都不带 party_id）",
+          "evidence_va": "0xB921E4"
+        },
+        {
+          "command": "SC-0x5F18-lounge-cupteam_party_get_r",
+          "field_name": "party_id",
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x5F18-lounge-cupteam_party_get_r/README.md",
+          "section": "§3",
+          "notes": "读侧把 party_id 与 channel_id 并列下发（12B 定长：result+channel_id+party_id）",
+          "evidence_va": "0xB64379"
+        },
+        {
+          "command": "SC-0x5C61-lounge-party_invite_to",
+          "field_name": "party_id",
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x5C61-lounge-party_invite_to/README.md",
+          "section": "§2",
+          "notes": "邀请通知里带 party_id（与 channel_id 并列）",
+          "evidence_va": "0xB639FD"
+        },
+        {
+          "command": "CS-0x16AE-lounge-party_recruit_detail_get",
+          "field_name": "party_id",
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/CS-0x16AE-lounge-party_recruit_detail_get/README.md",
+          "section": "§2",
+          "notes": "客户端按 party_id 索取招募详情（读侧寻址证据）",
+          "evidence_va": "0xB92AF5"
+        },
+        {
+          "command": "CS-0x6E16-lounge-party_invite_refuse",
+          "field_name": "party_id",
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/CS-0x6E16-lounge-party_invite_refuse/README.md",
+          "section": "§2",
+          "notes": "拒绝邀请时上报 party_id + channel_id",
+          "evidence_va": "0xB91F6C"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB921E4",
+      "asm_audit_date": "2026-09-23"
+    },
+    {
+      "name": "is_recruiting",
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "是否招募中",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "CS-0x645D-lounge-party_create",
+          "field_name": "is_recruiting",
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/CS-0x645D-lounge-party_create/README.md",
+          "section": "§2",
+          "notes": "创建队伍时开/关招募（来源=入参 arg_0 低字节）",
+          "evidence_va": "0xB91B66"
+        },
+        {
+          "command": "CS-0x9226-lounge-party_info_edit",
+          "field_name": "is_recruiting",
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/CS-0x9226-lounge-party_info_edit/README.md",
+          "section": "§2",
+          "notes": "编辑招募信息时可改",
+          "evidence_va": "0xB926E6"
+        },
+        {
+          "command": "SC-0xE18C-lounge-party_create_r",
+          "field_name": "is_recruiting",
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0xE18C-lounge-party_create_r/README.md",
+          "section": "§2",
+          "notes": "创建响应回显",
+          "evidence_va": "0xb83607"
+        },
+        {
+          "command": "SC-0x07E8-lounge-party_info_edit_notice",
+          "field_name": "is_recruiting",
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0x07E8-lounge-party_info_edit_notice/README.md",
+          "section": "§2",
+          "notes": "编辑通知把这四个字段整体推给全队",
+          "evidence_va": "0xB540B4"
+        },
+        {
+          "command": "SC-0x1E49-lounge-party_enter_r",
+          "field_name": "is_recruiting",
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0x1E49-lounge-party_enter_r/README.md",
+          "section": "§2",
+          "notes": "入队响应回显",
+          "evidence_va": "0xB57B0B"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB91B66",
+      "asm_audit_date": "2026-09-23"
+    },
+    {
+      "name": "comment",
+      "length": 61,
+      "wire_type": "bytes[61]",
+      "meaning": "队伍留言（命令侧 var，NUL 结尾；宽度取读侧定长槽 0x3D=61）",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "CS-0x645D-lounge-party_create",
+          "field_name": "comment",
+          "length": 61,
+          "wire_type": "bytes[61]",
+          "protocol_path": "protocol_analysis/commands/CS-0x645D-lounge-party_create/README.md",
+          "section": "§2",
+          "notes": "命令侧写 var（NUL 结尾），槽预算 push 0x3D @0xB91B60；按读侧定长 61B 落列",
+          "evidence_va": "0xB91B6E"
+        },
+        {
+          "command": "CS-0x9226-lounge-party_info_edit",
+          "field_name": "comment",
+          "length": 61,
+          "wire_type": "bytes[61]",
+          "protocol_path": "protocol_analysis/commands/CS-0x9226-lounge-party_info_edit/README.md",
+          "section": "§2",
+          "notes": "写线原语 sub_B02B40，串槽预算 0x3D",
+          "evidence_va": "0xB926EE"
+        },
+        {
+          "command": "SC-0xE18C-lounge-party_create_r",
+          "field_name": "comment",
+          "length": 61,
+          "wire_type": "bytes[61]",
+          "protocol_path": "protocol_analysis/commands/SC-0xE18C-lounge-party_create_r/README.md",
+          "section": "§2",
+          "notes": "读侧定长槽 61B（push 3Dh @0xB83619）",
+          "evidence_va": "0xb8362c"
+        },
+        {
+          "command": "SC-0x07E8-lounge-party_info_edit_notice",
+          "field_name": "comment",
+          "length": 61,
+          "wire_type": "bytes[61]",
+          "protocol_path": "protocol_analysis/commands/SC-0x07E8-lounge-party_info_edit_notice/README.md",
+          "section": "§2",
+          "notes": "NUL 串，闭合校验 L<=60（即 ≤61B 含终止符）",
+          "evidence_va": "0xB540F5"
+        },
+        {
+          "command": "SC-0x1E49-lounge-party_enter_r",
+          "field_name": "comment",
+          "length": 61,
+          "wire_type": "bytes[61]",
+          "protocol_path": "protocol_analysis/commands/SC-0x1E49-lounge-party_enter_r/README.md",
+          "section": "§2",
+          "notes": "读侧槽预算 push 3Dh @0xB57B1D",
+          "evidence_va": "0xB57B30"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB57B30",
+      "asm_audit_date": "2026-09-23"
+    },
+    {
+      "name": "party_type",
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "队伍类型",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "CS-0x645D-lounge-party_create",
+          "field_name": "party_type",
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/CS-0x645D-lounge-party_create/README.md",
+          "section": "§2",
+          "notes": "写线原语 sub_B02D80(u32)",
+          "evidence_va": "0xB91B88"
+        },
+        {
+          "command": "CS-0x9226-lounge-party_info_edit",
+          "field_name": "party_type",
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/CS-0x9226-lounge-party_info_edit/README.md",
+          "section": "§2",
+          "evidence_va": "0xB92708"
+        },
+        {
+          "command": "SC-0xE18C-lounge-party_create_r",
+          "field_name": "party_type",
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0xE18C-lounge-party_create_r/README.md",
+          "section": "§2",
+          "evidence_va": "0xb8366c"
+        },
+        {
+          "command": "SC-0x07E8-lounge-party_info_edit_notice",
+          "field_name": "party_type",
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x07E8-lounge-party_info_edit_notice/README.md",
+          "section": "§2",
+          "evidence_va": "0xB54135"
+        },
+        {
+          "command": "SC-0x1E49-lounge-party_enter_r",
+          "field_name": "party_type",
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x1E49-lounge-party_enter_r/README.md",
+          "section": "§2",
+          "evidence_va": "0xB57B94"
+        },
+        {
+          "command": "CS-0x0A73-lounge-party_recruit_list_get",
+          "field_name": "party_type",
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/CS-0x0A73-lounge-party_recruit_list_get/README.md",
+          "section": "§2",
+          "notes": "招募列表按 party_type 过滤——类型是队伍自身的属性（读侧按它寻址）",
+          "evidence_va": "0xB92934"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB91B88",
+      "asm_audit_date": "2026-09-23"
+    },
+    {
+      "name": "remain_minutes",
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "队伍剩余有效时间（分钟）",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x1E49-lounge-party_enter_r",
+          "field_name": "remain_minutes",
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0x1E49-lounge-party_enter_r/README.md",
+          "section": "§2",
+          "notes": "入队响应把队伍剩余有效期一起回给客户端",
+          "evidence_va": "0xB57B70"
+        },
+        {
+          "command": "SC-0xB43F-lounge-party_recruit_list_get_r",
+          "struct": "recruits",
+          "field_name": "remain_minutes",
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0xB43F-lounge-party_recruit_list_get_r/README.md",
+          "section": "§3 / notes.md",
+          "notes": "招募列表项里的同名成员（80B 元素，offset 74）",
+          "evidence_va": "0xB454A4"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB57B70",
+      "asm_audit_date": "2026-09-23"
+    },
+    {
+      "name": "channel_id",
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "队伍所在频道 ID（队伍建在创建者会话当时的频道里；读侧把 channel_id 与 party_id 并列回给客户端，招募列表/详情也逐条带它）",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x5F18-lounge-cupteam_party_get_r",
+          "field_name": "channel_id",
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x5F18-lounge-cupteam_party_get_r/README.md",
+          "section": "§3 字段 2",
+          "notes": "读侧把 channel_id 与 party_id 并列下发（12B 定长：result + channel_id + party_id）——频道是队伍自身的属性",
+          "evidence_va": "0xB64355"
+        },
+        {
+          "command": "SC-0xB43F-lounge-party_recruit_list_get_r",
+          "struct": "recruits",
+          "field_name": "channel_id",
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0xB43F-lounge-party_recruit_list_get_r/README.md",
+          "section": "§3 / notes.md",
+          "notes": "招募列表项（80B 元素，offset 0）里的频道列",
+          "evidence_va": "0xB4541C"
+        },
+        {
+          "command": "SC-0x305D-lounge-party_recruit_detail_get_r",
+          "struct": "recruit",
+          "field_name": "channel_id",
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x305D-lounge-party_recruit_detail_get_r/README.md",
+          "section": "§3",
+          "notes": "招募详情（80B 元素，offset 0）同名同偏移；同读取器 sub_B45400",
+          "evidence_va": "0xB4541A"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB64355",
+      "asm_audit_date": "2026-09-25"
+    },
+    {
+      "name": "troops",
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "队伍势力（0 个 CS 写方**直接**送它：创建命令只送 is_recruiting/comment/party_type ⇒ 创建时按队长机师的势力落列，之后不再变）",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0xB43F-lounge-party_recruit_list_get_r",
+          "struct": "recruits",
+          "field_name": "troops",
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0xB43F-lounge-party_recruit_list_get_r/README.md",
+          "section": "§3 / notes.md",
+          "notes": "招募列表项（80B 元素，offset 8）里的部队/阵营列",
+          "evidence_va": "0xB45444"
+        },
+        {
+          "command": "SC-0x305D-lounge-party_recruit_detail_get_r",
+          "struct": "recruit",
+          "field_name": "troops",
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0x305D-lounge-party_recruit_detail_get_r/README.md",
+          "section": "§3",
+          "notes": "招募详情（80B 元素，offset 8）同名同偏移；同读取器 sub_B45400",
+          "evidence_va": "0xB45441"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB45444",
+      "asm_audit_date": "2026-09-25"
+    },
+    {
+      "name": "member_count",
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "队伍人数（=party_member 行数，含队长）——缓存列；两条读路径均现算（列表 count(*)，详情取数组长）",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0xB43F-lounge-party_recruit_list_get_r",
+          "struct": "recruits",
+          "field_name": "member_count",
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0xB43F-lounge-party_recruit_list_get_r/README.md",
+          "section": "§3 / notes.md",
+          "notes": "招募列表项（80B 元素，offset 9）里的成员数列",
+          "evidence_va": "0xB45458"
+        },
+        {
+          "command": "SC-0x305D-lounge-party_recruit_detail_get_r",
+          "struct": "recruit",
+          "field_name": "member_count",
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0x305D-lounge-party_recruit_detail_get_r/README.md",
+          "section": "§3",
+          "notes": "招募详情（80B 元素，offset 9）同名同偏移；同读取器 sub_B45400",
+          "evidence_va": "0xB45454"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB45458",
+      "asm_audit_date": "2026-09-25"
+    },
+    {
+      "name": "pstat",
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "队伍状态（招募视图独有的 1B 列）——★ 语义未定、无写方：四条队伍级命令都不下发它，旧库两处注释互相矛盾（「机师状态」/「队伍状态」）⇒ 本批按 0 写入，见 batch_28",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0xB43F-lounge-party_recruit_list_get_r",
+          "struct": "recruits",
+          "field_name": "pstat",
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0xB43F-lounge-party_recruit_list_get_r/README.md",
+          "section": "§3 / notes.md",
+          "notes": "招募列表项（80B 元素，offset 72）里的状态列（`recruits.pstat`，wire +72 / 内存 +73）",
+          "evidence_va": "0xB45487"
+        },
+        {
+          "command": "SC-0x305D-lounge-party_recruit_detail_get_r",
+          "struct": "recruit",
+          "field_name": "pstat",
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0x305D-lounge-party_recruit_detail_get_r/README.md",
+          "section": "§3",
+          "notes": "招募详情同偏移同 VA（0xB45487 = `mov [edi+49h], al`，同一读取器 sub_B45400 的同一取值点）",
+          "evidence_va": "0xB45487"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB45487",
+      "asm_audit_date": "2026-09-25"
+    },
+    {
+      "name": "is_lock",
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "是否上锁（招募视图独有的 1B 列）——★ 无写方，本批按 0 写入；与 is_recruiting 不是同一字节（后者在 comment 之前、由创建/编辑命令写）",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0xB43F-lounge-party_recruit_list_get_r",
+          "struct": "recruits",
+          "field_name": "is_lock",
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0xB43F-lounge-party_recruit_list_get_r/README.md",
+          "section": "§3 / notes.md",
+          "notes": "招募列表项（80B 元素，offset 73）里的锁定列",
+          "evidence_va": "0xB4549D"
+        },
+        {
+          "command": "SC-0x305D-lounge-party_recruit_detail_get_r",
+          "struct": "recruit",
+          "field_name": "is_lock",
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0x305D-lounge-party_recruit_detail_get_r/README.md",
+          "section": "§3",
+          "notes": "招募详情同偏移同 VA（同一读取器 sub_B45400 的同一取值点）",
+          "evidence_va": "0xB4549D"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB4549D",
+      "asm_audit_date": "2026-09-25"
+    }
+  ]
+}

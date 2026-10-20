@@ -1,0 +1,39 @@
+{
+  "id": "CS-0x9527-lounge-msma_equipset_store",
+  "revision": 1,
+  "verified_at": "2026-09-22",
+  "verifier": "agent (IDA asm)",
+  "reason": "fields.csv 把 121B 的 equip_set 摊成 9 行成员（`equip_set.uniq_id` … `equip_set.setname`）却没有父行：站点看不到「这是一个 121B 的结构体」，包结构体里只剩 9 个散字段 —— 与 `CS-0x7916` 的 snapshot 同一形态。补一行父行 `equip_set`（`struct<equip_set>`，121B，偏移 10 = `uniqid_ms` 之后），成员仍由 `composites/equip_set.json` 承载（成员名取自打印器 `sub_B4AA30`）。父行出现后那 9 行被自动识别为成员占位行（`is_member_row`），不再参与线长求和：线长仍是 `8 + 121 = 129`，与 README 的容量等式 `2 + 8 + 121 = 131 ≤ 134` 一致。",
+  "evidence": [
+    {
+      "va": "0xB41C60",
+      "note": "复合写入器 `sub_B41C60`（0xB41C60..0xB41D92）：按 equip_set 成员逐个 `mov [ecx+NN],…`（读 `[edi+NN]`）落盘，共 121B = 8+2+12+4+4+40+4+4+43，与 `composites/equip_set.json` 的 9 个成员逐一对应。"
+    },
+    {
+      "va": "0xB4AA30",
+      "note": "结构打印器 `sub_B4AA30`：成员名 `uniq_id` / `slot` / `eq_weapon={…}` / `eq_shield` / `eq_special` / `eq_modules={…}` / `eq_bonus_modules={…}` / `eq_rental_modules={…}` / `setname` —— 命名出处。"
+    },
+    {
+      "va": "0xB98F12",
+      "note": "前导字段 `uniqid_ms`（u64，偏移 2，两个内联 `mov [eax],ecx` / `mov [eax+4],ecx`）在 equip_set 之前，故父行插在 `equip_set.uniq_id` 之前、偏移 10。"
+    },
+    {
+      "va": "0xB41D64",
+      "note": "`setname` 循环 43 次（`cmp ecx,2Bh`）读 `[ecx+edi+50h]`：确认结构以 43B 定长名收尾，父行 121B 的边界成立。"
+    }
+  ],
+  "add": [
+    {
+      "name": "equip_set",
+      "before": "equip_set.uniq_id",
+      "offset": "10",
+      "length": "121",
+      "wire_type": "struct<equip_set>",
+      "meaning": "机体装备套组（复合写入器 `sub_B41C60` 消费 121B；打印器 `sub_B4AA30`）",
+      "purpose": "保存到机体装备套组（服务端据此 update；与 S→C `SC-0x7172` 的 equip_set 线长 121 一致）",
+      "evidence_va": ["0xB41C60", "0xB4AA30"],
+      "confidence": "确证",
+      "disposition": "PERSIST"
+    }
+  ]
+}

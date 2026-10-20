@@ -1,0 +1,467 @@
+{
+  "id": "SC-0x54AF-lounge-present_add_dialog_show",
+  "opcode": "0x54AF",
+  "direction": "SC",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "present_add_dialog_show",
+  "source_dir": "protocol_analysis/commands/SC-0x54AF-lounge-present_add_dialog_show",
+  "meta": {
+    "opcode": "`0x54AF`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`present_add_dialog_show`",
+    "处理函数": "`sub_B51930` @ `0xB51930`（lounge 分发器）",
+    "处理块范围": "`0xB61A4C`..`0xB61D00`",
+    "名字串引用点": "`0xB61B7E`",
+    "声明容量（解码缓冲）": "`0xCD`（`0xB61A68`）",
+    "长度闭合点": "`0xB61B51`",
+    "去向": "`vt[0x3A4]` @ `0xB61CC7`（4 实参）"
+  },
+  "handler": "sub_B51930",
+  "handler_va": "0xB51930",
+  "block": [
+    "0xB61A4C",
+    "0xB61D00"
+  ],
+  "name_str": null,
+  "name_str_va": "0xB61B7E",
+  "capacity": "0xCD",
+  "capacity_va": "0xB61A68",
+  "closer_va": "0xB61B51",
+  "dispatch": "`vt[0x3A4]` @ `0xB61CC7`（4 实参）",
+  "dispatch_slot": "vt[0x3A4]",
+  "dispatch_va": "0xB61CC7",
+  "wire": {
+    "length_expr": "4 + 4 + 4 + var(≤193)",
+    "fixed": false,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0xCD（容量记账口径，非线长）",
+    "field_count": 4,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：12 + L（L = message 串长 + 1）。",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0x54AF",
+      "evidence_va": [
+        "0xB61B7E"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "attach_type",
+      "meaning": "附件类型",
+      "purpose": "经 `vt[0x3A4]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB61AA6",
+        "0xB61BD4"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "attach_id",
+      "meaning": "附件 ID",
+      "purpose": "经 `vt[0x3A4]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB61AE6",
+        "0xB61BFE"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "8",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "amount",
+      "meaning": "数量",
+      "purpose": "经 `vt[0x3A4]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB61B0A",
+        "0xB61C28"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 4,
+      "offset": "12",
+      "length": "var(≤193)",
+      "wire_type": "str",
+      "name": "message",
+      "meaning": "赠送留言（槽位预算 `0xC1`=193）",
+      "purpose": "经 `vt[0x3A4]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB61B25",
+        "0xB61C50"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6,
+      "slot_budget": 193
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0x54AF（分发器 switch 选择子）",
+      "evidence_va": "0xB61B7E"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB41120`（模块 id 373）→ 之后逐字段读线",
+      "evidence_va": "0xB61A53"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "attach_type：`u32`（线长 4）—— 附件类型",
+      "evidence_va": "0xB61AA6"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "attach_id：`u32`（线长 4）—— 附件 ID",
+      "evidence_va": "0xB61AE6"
+    },
+    {
+      "step": 5,
+      "kind": "read_count",
+      "detail": "amount：`u32`（线长 4）—— 数量",
+      "evidence_va": "0xB61B0A"
+    },
+    {
+      "step": 6,
+      "kind": "read_string",
+      "detail": "message：`str`（线长 var(≤193)）—— 赠送留言（槽位预算 `0xC1`=193）",
+      "evidence_va": "0xB61B25"
+    },
+    {
+      "step": 7,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jnz）",
+      "evidence_va": "0xB61B51"
+    },
+    {
+      "step": 8,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x3A4]`，实参 4 个",
+      "evidence_va": "0xB61CC7"
+    },
+    {
+      "step": 9,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB61AC0"
+    }
+  ],
+  "capabilities": [
+    "create",
+    "lounge.present"
+  ],
+  "capabilities_derived": [
+    "create"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:43",
+    "batch": 7,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 205,
+        "va": "0xB61A68",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB61A65",
+        "call_va": "0xB61A6D"
+      },
+      "field_window": {
+        "start_va": "0xB61A54",
+        "end_va": "0xB61B5C",
+        "guard": {
+          "va": "0xB61A53",
+          "func": "0xB41120",
+          "module_id": 373,
+          "release_va": "0xB41110"
+        },
+        "closer_or_commit_va": "0xB61B51",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "attach_type",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB61AA6",
+              "0xB61BD4"
+            ]
+          },
+          {
+            "name": "attach_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB61AE6",
+              "0xB61BFE"
+            ]
+          },
+          {
+            "name": "amount",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB61B0A",
+              "0xB61C28"
+            ]
+          },
+          {
+            "name": "message",
+            "wire_type": "str",
+            "width": null,
+            "seq": 4,
+            "shape": "str",
+            "evidence_va": [
+              "0xB61B25",
+              "0xB61C50"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB61AA6",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB61AE6",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB61B0A",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB61B25",
+            "kind": "read",
+            "width": null,
+            "wire_type": "str",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 4,
+        "checkable": 4,
+        "pairs": [
+          {
+            "field": "attach_type",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB61AA6",
+            "kind": "read"
+          },
+          {
+            "field": "attach_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB61AE6",
+            "kind": "read"
+          },
+          {
+            "field": "amount",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB61B0A",
+            "kind": "read"
+          },
+          {
+            "field": "message",
+            "width": null,
+            "shape": "str",
+            "va": "0xB61B25",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB61A54",
+          "0xB61B5C"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 12,
+          "capacity": 205,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB61B25",
+              "kind": "read",
+              "name": ""
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）12 / 容量 0xcd"
+        }
+      },
+      "closer": {
+        "va": "0xB61B51",
+        "kind": "jnz",
+        "jcc_va": "0xB61B55",
+        "seq_va": "0xB61B4D",
+        "jcc_dst": "0xB61B33",
+        "cmp": "cmp     ebx, [esp+2C5Ch+var_2C40]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x3A4]",
+        "slot_value": 932,
+        "va": "0xB61CC7",
+        "mov_va": "0xB61CBE",
+        "host": "[eax+3A4h]",
+        "argc": 4,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB61AC0",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "attach_type=",
+        "attach_id=",
+        "amount=",
+        "message=\""
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0x54AF-lounge-present_add_dialog_show.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xB61B7E"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "PresentAddDialogShow",
+      "role": "response",
+      "wire_length": "4 + 4 + 4 + var(≤193)",
+      "members": [
+        {
+          "name": "AttachType",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "attach_type"
+        },
+        {
+          "name": "AttachId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "attach_id"
+        },
+        {
+          "name": "Amount",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "amount"
+        },
+        {
+          "name": "Message",
+          "wire_type": "str",
+          "length": "var(≤193)",
+          "field_ref": "message",
+          "element": null,
+          "element_length": null,
+          "cap": null,
+          "count_field": "amount",
+          "count_field_source": "heuristic",
+          "note": "元素成员未建模（composites/ 无此结构），须以 IDA 复核补"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "82474dd0833310e4",
+  "check_fingerprint": "63787e9494ebcfa2",
+  "import_repairs": [
+    "str_slot_budget:message(193 → var(≤193)；线上实写 strlen+1)",
+    "wire_len_member_rows_folded:4 + 4 + 4 + 193 → 4 + 4 + 4 + var(≤193)"
+  ]
+}

@@ -1,0 +1,627 @@
+{
+  "id": "SC-0xE3B4-lounge-pilot_level_update",
+  "opcode": "0xE3B4",
+  "direction": "SC",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "pilot_level_update",
+  "source_dir": "protocol_analysis/commands/SC-0xE3B4-lounge-pilot_level_update",
+  "meta": {
+    "opcode": "`0xE3B4`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`pilot_level_update`",
+    "处理函数": "`sub_B51930`（lounge 分发器）",
+    "处理块范围": "`0xB831D8`..`0xB83570`",
+    "名字串引用点": "`0xB8337C`",
+    "声明容量（解码缓冲）": "`0x10`（`0xB831ED`）",
+    "长度闭合点": "`0xB83339`",
+    "去向": "`vt[0x0B4]` @ `0xB83554`（7 实参）"
+  },
+  "handler": "sub_B51930",
+  "handler_va": "0xB51930",
+  "block": [
+    "0xB831D8",
+    "0xB83570"
+  ],
+  "name_str": null,
+  "name_str_va": "0xB8337C",
+  "capacity": "0x10",
+  "capacity_va": "0xB831ED",
+  "closer_va": "0xB83339",
+  "dispatch": "`vt[0x0B4]` @ `0xB83554`（7 实参）",
+  "dispatch_slot": "vt[0xB4]",
+  "dispatch_va": "0xB83554",
+  "wire": {
+    "length_expr": "4 + 2 + 2 + 4 + 2 + 1 + 1",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x10（容量记账口径，非线长）",
+    "field_count": 7,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：16。",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0xE3B4",
+      "evidence_va": [
+        "0xB8337C"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "pilot_id",
+      "meaning": "飞行员 ID（日志串 `pilot_id=`）",
+      "purpose": "经 `vt[0x0B4]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB83228",
+        "0xB833D2"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "lv_new",
+      "meaning": "新等级（日志串 `lv_new=`）",
+      "purpose": "经 `vt[0x0B4]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB83265",
+        "0xB833FD"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "6",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "lv_old",
+      "meaning": "旧等级（日志串 `lv_old=`）",
+      "purpose": "经 `vt[0x0B4]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB83289",
+        "0xB83428"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 4,
+      "offset": "8",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "lv_point",
+      "meaning": "等级点数（日志串 `lv_point=`）",
+      "purpose": "经 `vt[0x0B4]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB832AD",
+        "0xB83452"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    },
+    {
+      "seq": 5,
+      "offset": "12",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "deckcost",
+      "meaning": "卡组费用（日志串 `deckcost=`）",
+      "purpose": "经 `vt[0x0B4]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB832D5",
+        "0xB8347D"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 7
+    },
+    {
+      "seq": 6,
+      "offset": "14",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "reason",
+      "meaning": "变更原因（日志串 `reason=`）",
+      "purpose": "经 `vt[0x0B4]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB832FD",
+        "0xB834A5"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 8
+    },
+    {
+      "seq": 7,
+      "offset": "15",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "is_penalty",
+      "meaning": "是否惩罚（日志串 `is_penalty=`）",
+      "purpose": "经 `vt[0x0B4]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xB83325",
+        "0xB834CA"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 9
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0xE3B4（分发器 switch 选择子）",
+      "evidence_va": "0xB8337C"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB41120`（模块 id None）→ 之后逐字段读线",
+      "evidence_va": "0xB831D8"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "pilot_id：`u32`（线长 4）—— 飞行员 ID（日志串 `pilot_id=`）",
+      "evidence_va": "0xB83228"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "lv_new：`u16`（线长 2）—— 新等级（日志串 `lv_new=`）",
+      "evidence_va": "0xB83265"
+    },
+    {
+      "step": 5,
+      "kind": "read_scalar",
+      "detail": "lv_old：`u16`（线长 2）—— 旧等级（日志串 `lv_old=`）",
+      "evidence_va": "0xB83289"
+    },
+    {
+      "step": 6,
+      "kind": "read_scalar",
+      "detail": "lv_point：`u32`（线长 4）—— 等级点数（日志串 `lv_point=`）",
+      "evidence_va": "0xB832AD"
+    },
+    {
+      "step": 7,
+      "kind": "read_scalar",
+      "detail": "deckcost：`u16`（线长 2）—— 卡组费用（日志串 `deckcost=`）",
+      "evidence_va": "0xB832D5"
+    },
+    {
+      "step": 8,
+      "kind": "read_scalar",
+      "detail": "reason：`u8`（线长 1）—— 变更原因（日志串 `reason=`）",
+      "evidence_va": "0xB832FD"
+    },
+    {
+      "step": 9,
+      "kind": "read_scalar",
+      "detail": "is_penalty：`u8`（线长 1）—— 是否惩罚（日志串 `is_penalty=`）",
+      "evidence_va": "0xB83325"
+    },
+    {
+      "step": 10,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB83339"
+    },
+    {
+      "step": 11,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0xB4]`，实参 7 个",
+      "evidence_va": "0xB83554"
+    },
+    {
+      "step": 12,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB8323F"
+    }
+  ],
+  "capabilities": [
+    "update",
+    "lounge.pilot_level"
+  ],
+  "capabilities_derived": [
+    "notify"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:45",
+    "batch": 13,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 16,
+        "va": "0xB831ED",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB831EA",
+        "call_va": "0xB831EF"
+      },
+      "field_window": {
+        "start_va": "0xB831D9",
+        "end_va": "0xB8335A",
+        "guard": {
+          "va": "0xB831D8",
+          "func": "0xB41120",
+          "module_id": null,
+          "release_va": "0xB41110"
+        },
+        "closer_or_commit_va": "0xB83339",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "pilot_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB83228",
+              "0xB833D2"
+            ]
+          },
+          {
+            "name": "lv_new",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB83265",
+              "0xB833FD"
+            ]
+          },
+          {
+            "name": "lv_old",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB83289",
+              "0xB83428"
+            ]
+          },
+          {
+            "name": "lv_point",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 4,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB832AD",
+              "0xB83452"
+            ]
+          },
+          {
+            "name": "deckcost",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 5,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB832D5",
+              "0xB8347D"
+            ]
+          },
+          {
+            "name": "reason",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 6,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB832FD",
+              "0xB834A5"
+            ]
+          },
+          {
+            "name": "is_penalty",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 7,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB83325",
+              "0xB834CA"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB83228",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB83265",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB83289",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB832AD",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB832D5",
+            "kind": "read",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB832FD",
+            "kind": "read",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB83325",
+            "kind": "read",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 7,
+        "checkable": 7,
+        "pairs": [
+          {
+            "field": "pilot_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB83228",
+            "kind": "read"
+          },
+          {
+            "field": "lv_new",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB83265",
+            "kind": "read"
+          },
+          {
+            "field": "lv_old",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB83289",
+            "kind": "read"
+          },
+          {
+            "field": "lv_point",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB832AD",
+            "kind": "read"
+          },
+          {
+            "field": "deckcost",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB832D5",
+            "kind": "read"
+          },
+          {
+            "field": "reason",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB832FD",
+            "kind": "read"
+          },
+          {
+            "field": "is_penalty",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB83325",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB831D9",
+          "0xB8335A"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 16,
+          "capacity": 16,
+          "relation": "exact",
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）16 / 容量 0x10"
+        }
+      },
+      "closer": {
+        "va": "0xB83339",
+        "kind": "jz",
+        "jcc_va": "0xB8333F",
+        "seq_va": "0xB83335",
+        "jcc_dst": "0xB83358",
+        "cmp": "cmp     ebx, [esp+2C5Ch+var_2C40]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0xB4]",
+        "slot_value": 180,
+        "va": "0xB83554",
+        "mov_va": "0xB83529",
+        "host": "[eax+0B4h]",
+        "argc": 7,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB8323F",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "pilot_id=",
+        "lv_new=",
+        "lv_old=",
+        "lv_point=",
+        "deckcost=",
+        "reason=",
+        "is_penalty="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0xE3B4-lounge-pilot_level_update.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xB8337C"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "PilotLevelUpdate",
+      "role": "response",
+      "wire_length": "4 + 2 + 2 + 4 + 2 + 1 + 1",
+      "members": [
+        {
+          "name": "PilotId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "pilot_id"
+        },
+        {
+          "name": "LvNew",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "lv_new"
+        },
+        {
+          "name": "LvOld",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "lv_old"
+        },
+        {
+          "name": "LvPoint",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "lv_point"
+        },
+        {
+          "name": "Deckcost",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "deckcost"
+        },
+        {
+          "name": "Reason",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "reason"
+        },
+        {
+          "name": "IsPenalty",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "is_penalty"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "48161d387c1edbbf",
+  "check_fingerprint": "18b4c0a1e23d8930"
+}

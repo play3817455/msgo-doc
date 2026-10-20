@@ -1,0 +1,6 @@
+序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+0,-,2,u16,opcode,命令号,分发器 switch 选择子,0x99A0,0xb6e2f4,确证
+1,0,4,u32,result,结果码（日志串 `result=`）,经 `vt[0x3A8]` 交业务,-,B6E1CC|B6E34A,确证
+2,4,1,u8,id_type,道具 ID 类型（日志串 `id_type=`，字节打印器）,经 `vt[0x3A8]` 交业务,-,B6E20C|B6E372,确证
+3,5,4,u32,count,"列表元素个数（上界检查 `cmp ebx,1F4h` @`B6E24E` ⇒ ≤500）",驱动元素循环；经 `vt[0x3A8]` 交业务,0..500,B6E222,确证
+4,9,23N,"array<struct,N>",item_list,"商店陈列列表（日志 `item_list={shopitem_id,gp_x01,gp_x10,cp_x01,cp_x10,bit_eff,stock}`）",经 `vt[0x3A8]` 交业务,N ≤ 500,B6E260|B6E27D|B6E38F,确证

@@ -1,0 +1,91 @@
+{
+ "id": "SC-0xD94A-battle-game_suspend",
+ "verified_at": "2026-09-30 15:25:48",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "block",
+ "block": [
+  "0xB2C6FE",
+  "0xB2C832"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "absent": true,
+   "reason": "零负载命令：无字段 ⇒ 无容量/闭合点/去向"
+  },
+  "field_window": {
+   "start_va": "0xB2C703",
+   "end_va": "0xB2C740",
+   "guard": {
+    "va": "0xB2C702",
+    "func": "0xB05DA0",
+    "module_id": 56,
+    "release_va": "0xB05D90"
+   },
+   "closer_or_commit_va": "0xB2C713",
+   "within_model_block": true,
+   "range_from": "block"
+  },
+  "primitive_widths": {
+   "direction": "SC",
+   "expected": [],
+   "actual": [],
+   "matched": 0,
+   "checkable": 0,
+   "pairs": [],
+   "gaps": [],
+   "unmatched_actual": [],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB2C703",
+    "0xB2C740"
+   ],
+   "scalar_match_verifiable": true,
+   "capacity_relation": {
+    "observed_min": 0,
+    "capacity": null,
+    "relation": null,
+    "unknown_events": [],
+    "is_lower_bound": false,
+    "note": "观测线长（下界）0 / 容量 ?"
+   },
+   "zero_load": true
+  },
+  "closer": {
+   "va": "0xB2C713",
+   "kind": "jz",
+   "jcc_va": "0xB2C719",
+   "seq_va": "0xB2C70F",
+   "jcc_dst": "0xB2C73E",
+   "cmp": "cmp     ebx, [esp+1B3Ch+var_1B24]",
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x100]",
+   "slot_value": 256,
+   "va": "0xB2C7EF",
+   "mov_va": "0xB2C7E7",
+   "host": "[edx+100h]",
+   "argc": 0,
+   "form": "mov_then_call",
+   "error_slot": {
+    "slot": "vt[0x64]",
+    "va": "0xB2C724",
+    "argc": 2
+   }
+  },
+  "log_strings": [
+   ")->_proto_battle_client::recv_game_suspend( ",
+   " (id:",
+   "V",
+   "]byte",
+   " ) ["
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [],
+ "status": "ASM-VERIFIED",
+ "batch": 20
+}

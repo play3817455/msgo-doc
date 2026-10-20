@@ -1,0 +1,206 @@
+{
+  "id": "buffitem_ex",
+  "title": "战斗增益道具附加 buffitem_ex（= buffitem 6B）",
+  "domain": "battle",
+  "domain_votes": {
+    "battle": 1
+  },
+  "folded_composites": [
+    "buffitem_ex"
+  ],
+  "anchored_by": "",
+  "legacy_table": "tbl_buffitem_ex",
+  "row_key": [],
+  "views": [
+    {
+      "composite": "buffitem_ex",
+      "length": 6,
+      "memory_claim": 8,
+      "reader": "sub_B07E70",
+      "printer": "sub_B0B410",
+      "commands": [
+        "SC-0x91C9-battle-battle_buffitem_list"
+      ]
+    }
+  ],
+  "members": [
+    {
+      "name": "is_usable",
+      "wire_type": "u8",
+      "length": 1,
+      "meaning": "是否可用",
+      "lifetime": "EVENT",
+      "dispositions": {
+        "EVENT": [
+          "buffitem_ex"
+        ]
+      },
+      "views": [
+        "buffitem_ex"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xb07eab",
+      "evidence_ref": {
+        "command": "SC-0x91C9-battle-battle_buffitem_list",
+        "struct": "buffitem",
+        "field": "is_usable",
+        "reader": "sub_B07E70",
+        "printer": "sub_B0B410",
+        "protocol_path": "protocol_analysis/commands/SC-0x91C9-battle-battle_buffitem_list/README.md",
+        "section": "§3 / §4.3"
+      },
+      "role": "flag"
+    },
+    {
+      "name": "is_used",
+      "wire_type": "u8",
+      "length": 1,
+      "meaning": "是否已使用",
+      "lifetime": "EVENT",
+      "dispositions": {
+        "EVENT": [
+          "buffitem_ex"
+        ]
+      },
+      "views": [
+        "buffitem_ex"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xb07e99",
+      "evidence_ref": {
+        "command": "SC-0x91C9-battle-battle_buffitem_list",
+        "struct": "buffitem",
+        "field": "is_used",
+        "reader": "sub_B07E70",
+        "printer": "sub_B0B410",
+        "protocol_path": "protocol_analysis/commands/SC-0x91C9-battle-battle_buffitem_list/README.md",
+        "section": "§3 / §4.3"
+      },
+      "role": "flag"
+    },
+    {
+      "name": "itemid",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "道具 ID",
+      "lifetime": "EVENT",
+      "dispositions": {
+        "EVENT": [
+          "buffitem_ex"
+        ]
+      },
+      "views": [
+        "buffitem_ex"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xb07e86",
+      "evidence_ref": {
+        "command": "SC-0x91C9-battle-battle_buffitem_list",
+        "struct": "buffitem",
+        "field": "itemid",
+        "reader": "sub_B07E70",
+        "printer": "sub_B0B410",
+        "protocol_path": "protocol_analysis/commands/SC-0x91C9-battle-battle_buffitem_list/README.md",
+        "section": "§3 / §4.3"
+      },
+      "role": "ref",
+      "ref_kind": "fk",
+      "fk_target": "item.uniqid",
+      "ref_basis": "对象名命中 item"
+    }
+  ],
+  "wire_body": "buffitem_ex",
+  "writes": [],
+  "reads": [
+    {
+      "command": "SC-0x91C9-battle-battle_buffitem_list",
+      "op": "read",
+      "via": "buffitem_ex"
+    }
+  ],
+  "db_effects": [
+    {
+      "command": "SC-0x91C9-battle-battle_buffitem_list",
+      "entity": "buffitem_ex",
+      "op": "update",
+      "fields": [
+        "buffitem_ex"
+      ],
+      "table_ref": "tbl_buffitem_ex"
+    },
+    {
+      "command": "SC-0x91C9-battle-battle_buffitem_list",
+      "entity": "buffitem_ex",
+      "op": "update",
+      "fields": [
+        "battle_buffitem_list"
+      ],
+      "table_ref": "tbl_buffitem_ex"
+    }
+  ],
+  "pk_members": [],
+  "pk_kind": "scope_only",
+  "is_root": true,
+  "identity": [],
+  "multi": false,
+  "array_parents": [],
+  "inline_parents": [],
+  "shape": "root",
+  "parent": "",
+  "parents": [],
+  "has_scope": false,
+  "disposition": "EVENT",
+  "table": "",
+  "no_table_reason": "disposition=EVENT（不建表）：EVENT/TBD 的持久化见 docs/05 §4.C / §9 的 B6 入口",
+  "columns_excluded": [
+    {
+      "member": "is_usable",
+      "reason": "lifetime=EVENT",
+      "evidence_va": "0xb07eab"
+    },
+    {
+      "member": "is_used",
+      "reason": "lifetime=EVENT",
+      "evidence_va": "0xb07e99"
+    },
+    {
+      "member": "itemid",
+      "reason": "lifetime=EVENT",
+      "evidence_va": "0xb07e86"
+    }
+  ],
+  "columns": [],
+  "columns_expected": 0,
+  "keys": {
+    "scope": [
+      "world_id",
+      "pilot_id"
+    ],
+    "own": [],
+    "inherited": [],
+    "primary_key": [
+      "world_id",
+      "pilot_id"
+    ],
+    "pk_kind": "scope_only",
+    "children": [],
+    "nested": [],
+    "child_key": [
+      "elem_index"
+    ]
+  },
+  "tables": [],
+  "links": []
+}

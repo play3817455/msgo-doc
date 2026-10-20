@@ -1,0 +1,8 @@
+序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+0,0,2,u16,opcode,命令号,写入 `buf+0`，供服务端分发；无 case 块（C→S）,0xA76E,0xB98951,确证
+1,2,8,u64,ms_set.uniq_id,套装记录唯一 id,"来源=入参 `arg_0` 指向的源结构 `[src+0]`/`[src+4]`（复合写入器 `sub_B41B10` 两次内联 `mov [ecx],edx` / `mov [ecx+4],edx`，低 32 位在前）",-,"0xB41B27, 0xB41B2B",确证
+2,10,2,u16,ms_set.deck_type,卡组类型,"复合写入器 `sub_B41B10`：`mov dx,[edi+8]` → `mov [ecx],dx`",-,0xB41B42,确证
+3,12,2,u16,ms_set.deck_slot,套装槽位,"复合写入器 `sub_B41B10`：`mov dx,[edi+0Ah]` → `mov [ecx],dx`",-,0xB41B5A,确证
+4,14,43,u8[43],ms_set.setname,套装名（定长 43 字节）,"复合写入器 `sub_B41B10`：`mov dl,[ecx+edi+0Ch]` 循环 `cmp ecx,2Bh`（43 次）",-,0xB41B71,确证
+5,57,32,u64[4],ms_set.msma_uniq_ids,四个机体的唯一 id,"复合写入器 `sub_B41B10`：`mov ebx,[ecx]`/`[ecx+4]` 循环 4 次（源 `[edi+38h]` 起，步进 8）",-,"0xB41B92, 0xB41B96",确证
+6,89,8,u16[4],ms_set.equip_set_slots,四个装备槽位,"复合写入器 `sub_B41B10`：`mov di,[edx]` 循环 4 次（源 `[edi+58h]` 起，步进 2）",-,0xB41BBA,确证

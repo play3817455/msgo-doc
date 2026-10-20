@@ -1,0 +1,216 @@
+{
+ "id": "SC-0xAB93-lounge-online_notice",
+ "verified_at": "2026-09-30 15:25:44",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "block",
+ "block": [
+  "0xB71E50",
+  "0xB7210A"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 37,
+   "va": "0xB71E6C",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xB71E69",
+   "call_va": "0xB71E6E"
+  },
+  "field_window": {
+   "start_va": "0xB71E58",
+   "end_va": "0xB71F83",
+   "guard": {
+    "va": "0xB71E57",
+    "func": "0xB41120",
+    "module_id": 343,
+    "release_va": "0xB41110"
+   },
+   "closer_or_commit_va": "0xB71F5C",
+   "within_model_block": true,
+   "range_from": "block"
+  },
+  "primitive_widths": {
+   "direction": "SC",
+   "expected": [
+    {
+     "name": "pilot_id",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "B71EA7"
+     ]
+    },
+    {
+     "name": "pilot_name",
+     "wire_type": "bytes(NUL 串)",
+     "width": null,
+     "seq": 2,
+     "shape": "agg",
+     "evidence_va": [
+      "B71EE8",
+      "B71ED5"
+     ]
+    },
+    {
+     "name": "count",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 3,
+     "shape": "scalar",
+     "evidence_va": [
+      "B71F28"
+     ]
+    },
+    {
+     "name": "type",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 4,
+     "shape": "scalar",
+     "evidence_va": [
+      "B71F4C"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB71EA7",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB71EE8",
+     "kind": "read",
+     "width": null,
+     "wire_type": "str",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB71F28",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB71F4C",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 3,
+   "checkable": 3,
+   "pairs": [
+    {
+     "field": "pilot_id",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB71EA7",
+     "kind": "read"
+    },
+    {
+     "field": "count",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB71F28",
+     "kind": "read"
+    },
+    {
+     "field": "type",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB71F4C",
+     "kind": "read"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [
+    {
+     "va": "0xB71EE8",
+     "kind": "read",
+     "width": null,
+     "wire_type": "str"
+    }
+   ],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB71E58",
+    "0xB71F83"
+   ],
+   "scalar_match_verifiable": true,
+   "capacity_relation": {
+    "observed_min": 12,
+    "capacity": 37,
+    "relation": "within",
+    "unknown_events": [
+     {
+      "va": "0xB71EE8",
+      "kind": "read",
+      "name": ""
+     }
+    ],
+    "is_lower_bound": true,
+    "note": "观测线长（下界）12 / 容量 0x25"
+   }
+  },
+  "closer": {
+   "va": "0xB71F5C",
+   "kind": "jz",
+   "jcc_va": "0xB71F62",
+   "seq_va": "0xB71F58",
+   "jcc_dst": "0xB71F7E",
+   "cmp": "cmp     ebx, [esp+2C5Ch+var_2C40]",
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x364]",
+   "slot_value": 868,
+   "va": "0xB720EE",
+   "mov_va": "0xB720E5",
+   "host": "[eax+364h]",
+   "argc": 4,
+   "form": "mov_then_call",
+   "error_slot": {
+    "slot": "vt[0x64]",
+    "va": "0xB71EC1",
+    "argc": 2
+   }
+  },
+  "log_strings": [
+   "pilot_id=",
+   "pilot_name=\"",
+   "count=",
+   "type="
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "count",
+  "pilot_id",
+  "pilot_name",
+  "type"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 10
+}

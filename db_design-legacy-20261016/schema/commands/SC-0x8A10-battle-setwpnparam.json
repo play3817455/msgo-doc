@@ -1,0 +1,391 @@
+{
+  "id": "SC-0x8A10-battle-setwpnparam",
+  "opcode": "0x8A10",
+  "direction": "SC",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "setwpnparam",
+  "source_dir": "protocol_analysis/commands/SC-0x8A10-battle-setwpnparam",
+  "meta": {
+    "opcode": "`0x8A10`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`battle_client`",
+    "命令名": "`setwpnparam`",
+    "处理块范围": "`B2227C`..`B224B7`",
+    "名字串引用点": "`B22389`",
+    "声明容量（解码缓冲）": "`0xC`（`B22291`）",
+    "长度闭合点": "`B22340`",
+    "收尾函数": "`sub_B05D90`（battle 口径）",
+    "去向": "`vt[0x370]` @ `B22487`（3 实参）"
+  },
+  "handler": null,
+  "handler_va": null,
+  "block": [
+    "0xB2227C",
+    "0xB224B7"
+  ],
+  "name_str": null,
+  "name_str_va": "0xB22389",
+  "capacity": "0xC",
+  "capacity_va": "0xB22291",
+  "closer_va": "0xB22340",
+  "dispatch": "`vt[0x370]` @ `B22487`（3 实参）",
+  "dispatch_slot": "vt[0x370]",
+  "dispatch_va": "0xB22487",
+  "wire": {
+    "length_expr": "4 + 4 + 4",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0xC（容量记账口径，非线长）",
+    "field_count": 3,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：12。",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发器 switch 选择子",
+      "enum": "0x8A10",
+      "evidence_va": [
+        "B22389"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "ent_id",
+      "meaning": "实体 ID（日志串 `ent_id=`）",
+      "purpose": "经 `vt[0x370]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B222CC",
+        "B223DF"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "4",
+      "wire_type": "f32",
+      "name": "val",
+      "meaning": "武器参数值（浮点；日志串 `val=`，打印器 `sub_B08660`）",
+      "purpose": "`vt[0x370]` 以 `fld dword`/`fstp` 传递（@`0xB22483`）",
+      "enum": null,
+      "evidence_va": [
+        "B2230C",
+        "B22409"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "8",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "type",
+      "meaning": "武器参数种类（日志串 `type=`）",
+      "purpose": "经 `vt[0x370]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "B22330",
+        "B22431"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0x8A10（分发器 switch 选择子）",
+      "evidence_va": "0xB22389"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB05DA0`（模块 id None）→ 之后逐字段读线",
+      "evidence_va": "0xB2227C"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "ent_id：`u32`（线长 4）—— 实体 ID（日志串 `ent_id=`）",
+      "evidence_va": "0xB222CC"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "val：`f32`（线长 4）—— 武器参数值（浮点；日志串 `val=`，打印器 `sub_B08660`）",
+      "evidence_va": "0xB2230C"
+    },
+    {
+      "step": 5,
+      "kind": "read_scalar",
+      "detail": "type：`u32`（线长 4）—— 武器参数种类（日志串 `type=`）",
+      "evidence_va": "0xB22330"
+    },
+    {
+      "step": 6,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB22340"
+    },
+    {
+      "step": 7,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x370]`，实参 3 个",
+      "evidence_va": "0xB2249B"
+    },
+    {
+      "step": 8,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB222E6"
+    }
+  ],
+  "capabilities": [
+    "unclassified",
+    "battle.setwpnparam"
+  ],
+  "capabilities_derived": [
+    "unclassified"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:47",
+    "batch": 18,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 12,
+        "va": "0xB22291",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB2228E",
+        "call_va": "0xB22293"
+      },
+      "field_window": {
+        "start_va": "0xB2227D",
+        "end_va": "0xB22367",
+        "guard": {
+          "va": "0xB2227C",
+          "func": "0xB05DA0",
+          "module_id": null,
+          "release_va": "0xB05D90"
+        },
+        "closer_or_commit_va": "0xB22340",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "ent_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "B222CC",
+              "B223DF"
+            ]
+          },
+          {
+            "name": "val",
+            "wire_type": "f32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "B2230C",
+              "B22409"
+            ]
+          },
+          {
+            "name": "type",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "B22330",
+              "B22431"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB222CC",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB2230C",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "f32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB22330",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 3,
+        "checkable": 3,
+        "pairs": [
+          {
+            "field": "ent_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB222CC",
+            "kind": "read"
+          },
+          {
+            "field": "val",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB2230C",
+            "kind": "read"
+          },
+          {
+            "field": "type",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB22330",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB2227D",
+          "0xB22367"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 12,
+          "capacity": 12,
+          "relation": "exact",
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）12 / 容量 0xc"
+        }
+      },
+      "closer": {
+        "va": "0xB22340",
+        "kind": "jz",
+        "jcc_va": "0xB22346",
+        "seq_va": "0xB2233C",
+        "jcc_dst": "0xB22362",
+        "cmp": "cmp     ebx, [esp+1B3Ch+var_1B24]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x370]",
+        "slot_value": 880,
+        "va": "0xB2249B",
+        "mov_va": "0xB22487",
+        "host": "[edx+370h]",
+        "argc": 3,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB222E6",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "ent_id=",
+        "val=",
+        "type="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0x8A10-battle-setwpnparam.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "B22389"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "Setwpnparam",
+      "role": "response",
+      "wire_length": "4 + 4 + 4",
+      "members": [
+        {
+          "name": "EntId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "ent_id"
+        },
+        {
+          "name": "Val",
+          "wire_type": "f32",
+          "length": "4",
+          "field_ref": "val"
+        },
+        {
+          "name": "Type_",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "type"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "303ac1d9736b703f",
+  "check_fingerprint": "7cfb8641bcdb10a5"
+}

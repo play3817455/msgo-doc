@@ -1,0 +1,447 @@
+{
+  "id": "LVUP_CLAN",
+  "title": "LVUP_CLAN",
+  "csv_path": "growth/lvup_clan.csv",
+  "purpose": "部队（Clan）等级成长",
+  "table_id": "15",
+  "download_order": "15",
+  "class_name": "CLvupClanTable",
+  "column_count": 12,
+  "disposition": "DOWNLOAD",
+  "source_md": "datatables/01-列注释/15-15-LVUP_CLAN.md",
+  "columns": [
+    {
+      "read_order": 1,
+      "csv_index": 0,
+      "db_column": "clan_level",
+      "type": "u8",
+      "meaning": "部队等级（u8 col0 主键）",
+      "confidence": "★确证",
+      "status": "confirmed",
+      "name": "clan_level",
+      "display_name": "部队等级",
+      "memory_offset": 8,
+      "asm_va": "0x57999a",
+      "asm_reader": "sub_579960"
+    },
+    {
+      "read_order": 2,
+      "csv_index": 1,
+      "db_column": "member_cap",
+      "type": "u32",
+      "meaning": "成员上限（u32 col1 → +0）",
+      "confidence": "★确证",
+      "status": "confirmed",
+      "name": "member_cap",
+      "display_name": "成员上限",
+      "memory_offset": 0,
+      "asm_va": "0x5799a4",
+      "asm_reader": "sub_579960"
+    },
+    {
+      "read_order": 3,
+      "csv_index": 2,
+      "db_column": "reserved_u32_2",
+      "type": "u32",
+      "meaning": "CSV col2 预留（sub_579960 跳过；默认 0）",
+      "confidence": "",
+      "status": "gap",
+      "name": "reserved_u32_2",
+      "display_name": "预留列 col2",
+      "memory_offset": null,
+      "asm_va": null
+    },
+    {
+      "read_order": 4,
+      "csv_index": 3,
+      "db_column": "mechanic_level",
+      "type": "enum",
+      "meaning": "部队机械师等级档（enum col3；MECHANIC_LV0..LV10）",
+      "confidence": "★确证",
+      "status": "confirmed",
+      "name": "mechanic_level",
+      "display_name": "机械师等级档",
+      "memory_offset": 24,
+      "asm_va": "0x5799ac",
+      "asm_reader": "sub_579960",
+      "enum_converter": "sub_578C50",
+      "enum_values": [
+        {
+          "name": "MECHANIC_LV0",
+          "value": 0
+        },
+        {
+          "name": "MECHANIC_LV1",
+          "value": 1
+        },
+        {
+          "name": "MECHANIC_LV2",
+          "value": 2
+        },
+        {
+          "name": "MECHANIC_LV3",
+          "value": 3
+        },
+        {
+          "name": "MECHANIC_LV4",
+          "value": 4
+        },
+        {
+          "name": "MECHANIC_LV5",
+          "value": 5
+        },
+        {
+          "name": "MECHANIC_LV6",
+          "value": 6
+        },
+        {
+          "name": "MECHANIC_LV7",
+          "value": 7
+        },
+        {
+          "name": "MECHANIC_LV8",
+          "value": 8
+        },
+        {
+          "name": "MECHANIC_LV9",
+          "value": 9
+        },
+        {
+          "name": "MECHANIC_LV10",
+          "value": 10
+        }
+      ],
+      "enum_doc": "reverse-login-chain/formats/枚举表.md"
+    },
+    {
+      "read_order": 5,
+      "csv_index": 4,
+      "db_column": "exp_base",
+      "type": "u32",
+      "meaning": "升级经验基数（u32 col4 → +12）",
+      "confidence": "★确证",
+      "status": "confirmed",
+      "name": "exp_base",
+      "display_name": "经验基数",
+      "memory_offset": 12,
+      "asm_va": "0x5799ef",
+      "asm_reader": "sub_579960"
+    },
+    {
+      "read_order": 6,
+      "csv_index": 5,
+      "db_column": "exp_increment",
+      "type": "u32",
+      "meaning": "升级经验增量（u32 col5 → +16；与 col4 合成总需求）",
+      "confidence": "★确证",
+      "status": "confirmed",
+      "name": "exp_increment",
+      "display_name": "经验增量",
+      "memory_offset": 16,
+      "asm_va": "0x5799f2",
+      "asm_reader": "sub_579960"
+    },
+    {
+      "read_order": 7,
+      "csv_index": 6,
+      "db_column": "rokaku_level",
+      "type": "enum",
+      "meaning": "着陆平台等级档（enum col6 sub_578EE0：ROKAKU_LV0..5 → +28）",
+      "confidence": "★确证",
+      "status": "confirmed",
+      "name": "rokaku_level",
+      "display_name": "着陆平台等级",
+      "memory_offset": 28,
+      "asm_va": "0x579a0c",
+      "asm_reader": "sub_579960",
+      "enum_converter": "sub_578EE0",
+      "enum_values": [
+        {
+          "name": "ROKAKU_LV0",
+          "value": 0
+        },
+        {
+          "name": "ROKAKU_LV1",
+          "value": 1
+        },
+        {
+          "name": "ROKAKU_LV2",
+          "value": 2
+        },
+        {
+          "name": "ROKAKU_LV3",
+          "value": 3
+        },
+        {
+          "name": "ROKAKU_LV4",
+          "value": 4
+        },
+        {
+          "name": "ROKAKU_LV5",
+          "value": 5
+        }
+      ],
+      "enum_doc": "reverse-login-chain/formats/枚举表.md"
+    },
+    {
+      "read_order": 8,
+      "csv_index": 7,
+      "db_column": "gp_bonus",
+      "type": "u32",
+      "meaning": "部队 GP 加成（u32 col7 → +32）",
+      "confidence": "○ASM确证",
+      "status": "confirmed",
+      "name": "gp_bonus",
+      "display_name": "GP 加成",
+      "memory_offset": 32,
+      "asm_va": "0x579a4c",
+      "asm_reader": "sub_579960"
+    },
+    {
+      "read_order": 9,
+      "csv_index": 8,
+      "db_column": "shop_level",
+      "type": "enum",
+      "meaning": "部队商店等级（enum col8 sub_5790B0：SHOP_LV0..21 → +36）",
+      "confidence": "★确证",
+      "status": "confirmed",
+      "name": "shop_level",
+      "display_name": "商店等级",
+      "memory_offset": 36,
+      "asm_va": "0x579a4f",
+      "asm_reader": "sub_579960",
+      "enum_converter": "sub_5790B0",
+      "enum_values": [
+        {
+          "name": "SHOP_LV0",
+          "value": 0
+        },
+        {
+          "name": "SHOP_LV1",
+          "value": 1
+        },
+        {
+          "name": "SHOP_LV2",
+          "value": 2
+        },
+        {
+          "name": "SHOP_LV3",
+          "value": 3
+        },
+        {
+          "name": "SHOP_LV4",
+          "value": 4
+        },
+        {
+          "name": "SHOP_LV5",
+          "value": 5
+        },
+        {
+          "name": "SHOP_LV6",
+          "value": 6
+        },
+        {
+          "name": "SHOP_LV7",
+          "value": 7
+        },
+        {
+          "name": "SHOP_LV8",
+          "value": 8
+        },
+        {
+          "name": "SHOP_LV9",
+          "value": 9
+        },
+        {
+          "name": "SHOP_LV10",
+          "value": 10
+        },
+        {
+          "name": "SHOP_LV11",
+          "value": 11
+        },
+        {
+          "name": "SHOP_LV12",
+          "value": 12
+        },
+        {
+          "name": "SHOP_LV13",
+          "value": 13
+        },
+        {
+          "name": "SHOP_LV14",
+          "value": 14
+        },
+        {
+          "name": "SHOP_LV15",
+          "value": 15
+        },
+        {
+          "name": "SHOP_LV16",
+          "value": 16
+        },
+        {
+          "name": "SHOP_LV17",
+          "value": 17
+        },
+        {
+          "name": "SHOP_LV18",
+          "value": 18
+        },
+        {
+          "name": "SHOP_LV19",
+          "value": 19
+        },
+        {
+          "name": "SHOP_LV20",
+          "value": 20
+        },
+        {
+          "name": "SHOP_LV21",
+          "value": 21
+        }
+      ],
+      "enum_doc": "reverse-login-chain/formats/枚举表.md"
+    },
+    {
+      "read_order": 10,
+      "csv_index": 9,
+      "db_column": "deck_cost_level",
+      "type": "enum",
+      "meaning": "卡组 COST 上限档（enum col9 sub_579500：DECKCOST_LV0..5 → +40）",
+      "confidence": "★确证",
+      "status": "confirmed",
+      "name": "deck_cost_level",
+      "display_name": "卡组 COST 档",
+      "memory_offset": 40,
+      "asm_va": "0x579a87",
+      "asm_reader": "sub_579960",
+      "enum_converter": "sub_579500",
+      "enum_values": [
+        {
+          "name": "DECKCOST_LV0",
+          "value": 0
+        },
+        {
+          "name": "DECKCOST_LV1",
+          "value": 1
+        },
+        {
+          "name": "DECKCOST_LV2",
+          "value": 2
+        },
+        {
+          "name": "DECKCOST_LV3",
+          "value": 3
+        },
+        {
+          "name": "DECKCOST_LV4",
+          "value": 4
+        },
+        {
+          "name": "DECKCOST_LV5",
+          "value": 5
+        }
+      ],
+      "enum_doc": "reverse-login-chain/formats/枚举表.md"
+    },
+    {
+      "read_order": 11,
+      "csv_index": 10,
+      "db_column": "bonus_gp",
+      "type": "u32",
+      "meaning": "等级奖励 GP 数（u32 col10 → +44）",
+      "confidence": "○ASM确证",
+      "status": "confirmed",
+      "name": "bonus_gp",
+      "display_name": "奖励 GP",
+      "memory_offset": 44,
+      "asm_va": "0x579ac1",
+      "asm_reader": "sub_579960"
+    },
+    {
+      "read_order": 12,
+      "csv_index": 11,
+      "db_column": "discount_level",
+      "type": "enum",
+      "meaning": "商店折扣档（enum col11 sub_5796D0：DISCOUNT_LV0..10 → +48）",
+      "confidence": "★确证",
+      "status": "confirmed",
+      "name": "discount_level",
+      "display_name": "折扣档",
+      "memory_offset": 48,
+      "asm_va": "0x579aca",
+      "asm_reader": "sub_579960",
+      "enum_converter": "sub_5796D0",
+      "enum_values": [
+        {
+          "name": "DISCOUNT_LV0",
+          "value": 0
+        },
+        {
+          "name": "DISCOUNT_LV1",
+          "value": 1
+        },
+        {
+          "name": "DISCOUNT_LV2",
+          "value": 2
+        },
+        {
+          "name": "DISCOUNT_LV3",
+          "value": 3
+        },
+        {
+          "name": "DISCOUNT_LV4",
+          "value": 4
+        },
+        {
+          "name": "DISCOUNT_LV5",
+          "value": 5
+        },
+        {
+          "name": "DISCOUNT_LV6",
+          "value": 6
+        },
+        {
+          "name": "DISCOUNT_LV7",
+          "value": 7
+        },
+        {
+          "name": "DISCOUNT_LV8",
+          "value": 8
+        },
+        {
+          "name": "DISCOUNT_LV9",
+          "value": 9
+        },
+        {
+          "name": "DISCOUNT_LV10",
+          "value": 10
+        }
+      ],
+      "enum_doc": "reverse-login-chain/formats/枚举表.md"
+    },
+    {
+      "read_order": 13,
+      "csv_index": 12,
+      "db_column": "extra_param",
+      "type": "u32",
+      "meaning": "扩展参数（u32 col12 → +52）",
+      "confidence": "○ASM确证",
+      "status": "confirmed",
+      "name": "extra_param",
+      "display_name": "扩展参数",
+      "memory_offset": 52,
+      "asm_va": "0x579b12",
+      "asm_reader": "sub_579960"
+    }
+  ],
+  "column_defined": 13,
+  "column_confirmed": 12,
+  "column_partial": 0,
+  "column_pending": 0,
+  "asm_reader": "sub_579960",
+  "asm_status": "complete",
+  "column_gap": 1,
+  "column_gap_note": "CSV 行含 col0..col12，读表跳过未映射列见 gap 标记"
+}

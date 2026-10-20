@@ -1,0 +1,491 @@
+{
+  "id": "SC-0x1600-lounge-clan_leave_r",
+  "opcode": "0x1600",
+  "direction": "SC",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "clan_leave_r",
+  "source_dir": "protocol_analysis/commands/SC-0x1600-lounge-clan_leave_r",
+  "meta": {
+    "opcode": "`0x1600`",
+    "方向": "SC（服务端 → 客户端（recv））",
+    "协议类": "`lounge_client`",
+    "命令名": "`clan_leave_r`",
+    "名字字符串": "`)->_proto_lounge_client::recv_clan_leave_r( `，引用点 `0xB55F56`（`push offset aProtoLoungeCli_24`）",
+    "处理函数": "`sub_B51930` @ `0xB51930`（lounge 分发器）",
+    "处理块范围": "`0xB55E21` .. `0xB560B0`",
+    "错误码": "`0x1B1`（`0xB55E84 push 1B1h`、`0xB55F1C`；块首 `0xB55E21 call sub_B41120`（无立即数））",
+    "关联命令": "同族氏族命令：`../SC-0x143D-lounge-clan_create_r/`（`0x143D`，创建）、`../SC-0x15B5-lounge-clan_npc_update_r/`（`0x15B5`）；编成相关：`deckcost` 与机库编成（`character_msdeck`）同口径"
+  },
+  "handler": "sub_B51930",
+  "handler_va": "0xB51930",
+  "block": [
+    "0xB55E21",
+    "0xB560B0"
+  ],
+  "name_str": ")->_proto_lounge_client::recv_clan_leave_r(",
+  "name_str_va": "0xB55F56",
+  "capacity": "0xD",
+  "capacity_va": "0xB55E36",
+  "closer_va": "0xB55F0D",
+  "dispatch": null,
+  "dispatch_slot": "vt[0x424]",
+  "dispatch_va": null,
+  "wire": {
+    "length_expr": "13",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0xD（容量记账口径，非线长）",
+    "field_count": 4,
+    "length_source": "closure_row",
+    "readme_conclusion": "**报文体总长：定长 13 字节**（4 个字段：u32 + u32 + u8 + u32）。",
+    "readme_close": "消费量 4 + 4 + 1 + 4 = 13；闭合点 0xB55F0D/0xB55F13 要求「游标 == 末尾」，与容量 0xD **精确相等** ✓"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "lounge 分发的 switch 选择子",
+      "enum": "0x1600",
+      "evidence_va": [
+        "0xB55F56"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "result",
+      "meaning": "退出氏族的处理结果码",
+      "purpose": "交 vt[0x424] 第1实参；日志 result=",
+      "enum": "?（枚举未交叉）",
+      "evidence_va": [
+        "0xB55E71",
+        "0xB55FA0",
+        "0xB55FAC",
+        "0xB56094"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "clan_id",
+      "meaning": "所退出的氏族 ID",
+      "purpose": "交 vt[0x424] 第2实参；日志 clan_id=",
+      "enum": "?（氏族表未交叉）",
+      "evidence_va": [
+        "0xB55EB1",
+        "0xB55FC7",
+        "0xB55FD6",
+        "0xB56083"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "8",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "clan_kind",
+      "meaning": "氏族种类/类别",
+      "purpose": "交 vt[0x424] 第3实参（movzx 零扩展）；日志 clan_kind=",
+      "enum": "?（氏族类别枚举未交叉）",
+      "evidence_va": [
+        "0xB55ED5",
+        "0xB5606D",
+        "0xB56080",
+        "0xB55FFE"
+      ],
+      "confidence": "确证（宽度）/枚举待定",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 4,
+      "offset": "9",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "deckcost",
+      "meaning": "退出后编成费用（机库编成消耗）",
+      "purpose": "交 vt[0x424] 第4实参；日志 deckcost=",
+      "enum": "?（口径未交叉）",
+      "evidence_va": [
+        "0xB55EF9",
+        "0xB56015",
+        "0xB56025",
+        "0xB56077"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    },
+    {
+      "seq": -1,
+      "offset": "13",
+      "length": "0",
+      "wire_type": "-",
+      "name": "（长度闭合）",
+      "meaning": "游标必须==报文末尾",
+      "purpose": "容量 0xD == 线长 4+4+1+4",
+      "enum": null,
+      "evidence_va": [
+        "0xB55F09",
+        "0xB55F13"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 7,
+      "is_closure": true
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0x1600（分发器 switch 选择子）",
+      "evidence_va": "0xB55F56"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB41120`（模块 id None）→ 之后逐字段读线",
+      "evidence_va": "0xB55E21"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "result：`u32`（线长 4）—— 退出氏族的处理结果码",
+      "evidence_va": "0xB55E71"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "clan_id：`u32`（线长 4）—— 所退出的氏族 ID",
+      "evidence_va": "0xB55EB1"
+    },
+    {
+      "step": 5,
+      "kind": "read_scalar",
+      "detail": "clan_kind：`u8`（线长 1）—— 氏族种类/类别",
+      "evidence_va": "0xB55ED5"
+    },
+    {
+      "step": 6,
+      "kind": "read_scalar",
+      "detail": "deckcost：`u32`（线长 4）—— 退出后编成费用（机库编成消耗）",
+      "evidence_va": "0xB55EF9"
+    },
+    {
+      "step": 7,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB55F0D"
+    },
+    {
+      "step": 8,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x424]`，实参 4 个",
+      "evidence_va": "0xB56094"
+    },
+    {
+      "step": 9,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB55E8B"
+    }
+  ],
+  "capabilities": [
+    "delete",
+    "flow",
+    "lounge.clan"
+  ],
+  "capabilities_derived": [
+    "delete"
+  ],
+  "db_effects": [],
+  "pair": "SC-0x143D-lounge-clan_create_r",
+  "related": [
+    "SC-0x15B5-lounge-clan_npc_update_r"
+  ],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:42",
+    "batch": 5,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 13,
+        "va": "0xB55E36",
+        "reg": "eax",
+        "host": "[edx+78h]",
+        "alloc_va": "0xB55E33",
+        "call_va": "0xB55E38"
+      },
+      "field_window": {
+        "start_va": "0xB55E22",
+        "end_va": "0xB55F34",
+        "guard": {
+          "va": "0xB55E21",
+          "func": "0xB41120",
+          "module_id": null,
+          "release_va": "0xB41110"
+        },
+        "closer_or_commit_va": "0xB55F0D",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "result",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB55E71",
+              "0xB55FA0",
+              "0xB55FAC",
+              "0xB56094"
+            ]
+          },
+          {
+            "name": "clan_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB55EB1",
+              "0xB55FC7",
+              "0xB55FD6",
+              "0xB56083"
+            ]
+          },
+          {
+            "name": "clan_kind",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB55ED5",
+              "0xB5606D",
+              "0xB56080",
+              "0xB55FFE"
+            ]
+          },
+          {
+            "name": "deckcost",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 4,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB55EF9",
+              "0xB56015",
+              "0xB56025",
+              "0xB56077"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB55E71",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB55EB1",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB55ED5",
+            "kind": "read",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB55EF9",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 4,
+        "checkable": 4,
+        "pairs": [
+          {
+            "field": "result",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB55E71",
+            "kind": "read"
+          },
+          {
+            "field": "clan_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB55EB1",
+            "kind": "read"
+          },
+          {
+            "field": "clan_kind",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB55ED5",
+            "kind": "read"
+          },
+          {
+            "field": "deckcost",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB55EF9",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB55E22",
+          "0xB55F34"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 13,
+          "capacity": 13,
+          "relation": "exact",
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）13 / 容量 0xd"
+        }
+      },
+      "closer": {
+        "va": "0xB55F0D",
+        "kind": "jz",
+        "jcc_va": "0xB55F13",
+        "seq_va": "0xB55F09",
+        "jcc_dst": "0xB55F2F",
+        "cmp": "cmp     ebx, [esp+2C5Ch+var_2C40]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x424]",
+        "slot_value": 1060,
+        "va": "0xB56094",
+        "mov_va": "0xB56079",
+        "host": "[edx+424h]",
+        "argc": 4,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB55E8B",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "result=",
+        "clan_id=",
+        "clan_kind=",
+        "deckcost="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0x1600-lounge-clan_leave_r.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [
+      "0xB55E84",
+      "0xB55F1C",
+      "0xB55E21"
+    ],
+    "dispatcher": null,
+    "closure_field": "（长度闭合）",
+    "opcode_field_va": [
+      "0xB55F56"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "ClanLeaveR",
+      "role": "response",
+      "wire_length": "13",
+      "members": [
+        {
+          "name": "Result",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "result"
+        },
+        {
+          "name": "ClanId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "clan_id"
+        },
+        {
+          "name": "ClanKind",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "clan_kind"
+        },
+        {
+          "name": "Deckcost",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "deckcost"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "6fd6783a5163f5af",
+  "check_fingerprint": "81321c633e4a5218"
+}

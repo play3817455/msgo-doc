@@ -1,0 +1,309 @@
+{
+  "id": "SC-0xD407-lounge-msma_sp_parts_exp_update",
+  "opcode": "0xD407",
+  "direction": "SC",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "msma_sp_parts_exp_update",
+  "source_dir": "protocol_analysis/commands/SC-0xD407-lounge-msma_sp_parts_exp_update",
+  "meta": {
+    "opcode": "`0xD407`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`msma_sp_parts_exp_update`",
+    "处理块范围": "`0xb7c4d2`..`0xb7c6b6`",
+    "名字串引用点": "`0xee64d4`",
+    "声明容量（解码缓冲）": "`0xC`（`B7C4E7`）",
+    "长度闭合点": "`B7C572`（`cmp`）→ `B7C578 jz`",
+    "报错码": "`0x123`（块内 `push 1; push 123h; vt[0x64]`）",
+    "去向": "`vt[0x2F0]` @`B7C69A`（3 实参）"
+  },
+  "handler": null,
+  "handler_va": null,
+  "block": [
+    "0xb7c4d2",
+    "0xb7c6b6"
+  ],
+  "name_str": null,
+  "name_str_va": "0xee64d4",
+  "capacity": "0xC",
+  "capacity_va": "0xB7C4E7",
+  "closer_va": "0xB7C572",
+  "dispatch": "`vt[0x2F0]` @`B7C69A`（3 实参）",
+  "dispatch_slot": "vt[0x2F0]",
+  "dispatch_va": "0xB7C69A",
+  "wire": {
+    "length_expr": "8 + 4",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0xC（容量记账口径，非线长）",
+    "field_count": 2,
+    "length_source": "field_sum",
+    "readme_conclusion": "**报文体线长**：12",
+    "readme_close": null
+  },
+  "fields": [
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "8",
+      "wire_type": "u64",
+      "name": "uniqid_ms",
+      "meaning": "机体唯一 ID（日志串 `uniqid_ms=`）",
+      "purpose": "经 `vt[0x2F0]` 交业务（cdecl 拆低 32 位在前、高 32 位在后）",
+      "enum": null,
+      "evidence_va": [
+        "0xb7c522"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 2,
+      "offset": "8",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "exp",
+      "meaning": "SP 部件经验值（日志串 `exp=`）",
+      "purpose": "经 `vt[0x2F0]` 交业务",
+      "enum": null,
+      "evidence_va": [
+        "0xb7c562"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0xD407（分发器 switch 选择子）",
+      "evidence_va": "0x0000"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB41120`（模块 id None）→ 之后逐字段读线",
+      "evidence_va": "0xB7C4D2"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "uniqid_ms：`u64`（线长 8）—— 机体唯一 ID（日志串 `uniqid_ms=`）",
+      "evidence_va": "0xB7C522"
+    },
+    {
+      "step": 4,
+      "kind": "read_scalar",
+      "detail": "exp：`u32`（线长 4）—— SP 部件经验值（日志串 `exp=`）",
+      "evidence_va": "0xB7C562"
+    },
+    {
+      "step": 5,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB7C572"
+    },
+    {
+      "step": 6,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x2F0]`，实参 3 个",
+      "evidence_va": "0xB7C69A"
+    },
+    {
+      "step": 7,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB7C53C"
+    }
+  ],
+  "capabilities": [
+    "update",
+    "lounge.sp_parts"
+  ],
+  "capabilities_derived": [
+    "notify"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:45",
+    "batch": 12,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 12,
+        "va": "0xB7C4E7",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB7C4E4",
+        "call_va": "0xB7C4E9"
+      },
+      "field_window": {
+        "start_va": "0xB7C4D3",
+        "end_va": "0xB7C599",
+        "guard": {
+          "va": "0xB7C4D2",
+          "func": "0xB41120",
+          "module_id": null,
+          "release_va": "0xB41110"
+        },
+        "closer_or_commit_va": "0xB7C572",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "uniqid_ms",
+            "wire_type": "u64",
+            "width": 8,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb7c522"
+            ]
+          },
+          {
+            "name": "exp",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xb7c562"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB7C522",
+            "kind": "read",
+            "width": 8,
+            "wire_type": "u64",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB7C562",
+            "kind": "read",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 2,
+        "checkable": 2,
+        "pairs": [
+          {
+            "field": "uniqid_ms",
+            "width": 8,
+            "shape": "scalar",
+            "va": "0xB7C522",
+            "kind": "read"
+          },
+          {
+            "field": "exp",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB7C562",
+            "kind": "read"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB7C4D3",
+          "0xB7C599"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 12,
+          "capacity": 12,
+          "relation": "exact",
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）12 / 容量 0xc"
+        }
+      },
+      "closer": {
+        "va": "0xB7C572",
+        "kind": "jz",
+        "jcc_va": "0xB7C578",
+        "seq_va": "0xB7C56E",
+        "jcc_dst": "0xB7C594",
+        "cmp": "cmp     eax, [esp+2C5Ch+var_2C40]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x2F0]",
+        "slot_value": 752,
+        "va": "0xB7C69A",
+        "mov_va": "0xB7C68D",
+        "host": "[edx+2F0h]",
+        "argc": 3,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB7C53C",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "uniqid_ms=",
+        "exp="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0xD407-lounge-msma_sp_parts_exp_update.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": []
+  },
+  "structs": {
+    "response": {
+      "go_name": "MsmaSpPartsExpUpdate",
+      "role": "response",
+      "wire_length": "8 + 4",
+      "members": [
+        {
+          "name": "UniqidMs",
+          "wire_type": "u64",
+          "length": "8",
+          "field_ref": "uniqid_ms"
+        },
+        {
+          "name": "Exp",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "exp"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "f70240f6ccd8e73d",
+  "check_fingerprint": "e7dd2639b97a407e"
+}

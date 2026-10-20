@@ -1,0 +1,308 @@
+{
+  "id": "bgm_desc",
+  "title": "BGM 描述 bgm_desc（14B 线 / 20B 槽）",
+  "domain": "battle",
+  "domain_votes": {
+    "battle": 2
+  },
+  "folded_composites": [
+    "bgm_desc"
+  ],
+  "anchored_by": "",
+  "legacy_table": "tbl_bgm_desc",
+  "row_key": [],
+  "views": [
+    {
+      "composite": "bgm_desc",
+      "length": 14,
+      "memory_claim": 20,
+      "reader": "sub_B07E00",
+      "printer": "sub_B0B320",
+      "commands": [
+        "SC-0x1365-battle-game_begin",
+        "SC-0xDC1E-battle-bgm_change"
+      ]
+    }
+  ],
+  "members": [
+    {
+      "name": "ace_bgm_id",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "王牌（ace）BGM ID",
+      "lifetime": "EVENT",
+      "dispositions": {
+        "EVENT": [
+          "bgm_desc"
+        ]
+      },
+      "views": [
+        "bgm_desc"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "B07E36|B0B38F",
+      "evidence_ref": {
+        "command": "SC-0x1365-battle-game_begin",
+        "struct": "bgm_desc",
+        "field": "ace_bgm_id",
+        "reader": "sub_B07E00",
+        "printer": "sub_B0B320",
+        "protocol_path": "protocol_analysis/commands/SC-0x1365-battle-game_begin/README.md",
+        "section": "§3.5"
+      },
+      "role": "ref",
+      "ref_kind": "dangling",
+      "ref_basis": "BGM 包是本地表（BGMPACKAGE，主键 package_id）：ace_bgm_id 虽是表内同名列，但值是包内 bgm 编号、不是服务器主数据主键。",
+      "ref_category": "local_table"
+    },
+    {
+      "name": "field_bgm_id",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "战场 BGM ID",
+      "lifetime": "EVENT",
+      "dispositions": {
+        "EVENT": [
+          "bgm_desc"
+        ]
+      },
+      "views": [
+        "bgm_desc"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "B07E24|B0B368",
+      "evidence_ref": {
+        "command": "SC-0x1365-battle-game_begin",
+        "struct": "bgm_desc",
+        "field": "field_bgm_id",
+        "reader": "sub_B07E00",
+        "printer": "sub_B0B320",
+        "protocol_path": "protocol_analysis/commands/SC-0x1365-battle-game_begin/README.md",
+        "section": "§3.5"
+      },
+      "role": "ref",
+      "ref_kind": "dangling",
+      "ref_basis": "同上：field_bgm_id 是 BGMPACKAGE 内的 bgm 编号（同名列），不是主数据主键。",
+      "ref_category": "local_table"
+    },
+    {
+      "name": "force_bgm_id",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "强制播放 BGM ID",
+      "lifetime": "EVENT",
+      "dispositions": {
+        "EVENT": [
+          "bgm_desc"
+        ]
+      },
+      "views": [
+        "bgm_desc"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "B07E48|B0B3B6",
+      "evidence_ref": {
+        "command": "SC-0x1365-battle-game_begin",
+        "struct": "bgm_desc",
+        "field": "force_bgm_id",
+        "reader": "sub_B07E00",
+        "printer": "sub_B0B320",
+        "protocol_path": "protocol_analysis/commands/SC-0x1365-battle-game_begin/README.md",
+        "section": "§3.5"
+      },
+      "role": "ref",
+      "ref_kind": "dangling",
+      "ref_basis": "同上：BGMPACKAGE 只暴露 force_bgm_enabled（没有 force_bgm_id 列），值域是包内 bgm 编号，不指主数据。",
+      "ref_category": "local_table"
+    },
+    {
+      "name": "is_final_phase",
+      "wire_type": "i8",
+      "length": 1,
+      "meaning": "是否最终阶段（打印器 movsx）",
+      "lifetime": "EVENT",
+      "dispositions": {
+        "EVENT": [
+          "bgm_desc"
+        ]
+      },
+      "views": [
+        "bgm_desc"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "B07E0E|B0B341",
+      "evidence_ref": {
+        "command": "SC-0x1365-battle-game_begin",
+        "struct": "bgm_desc",
+        "field": "is_final_phase",
+        "reader": "sub_B07E00",
+        "printer": "sub_B0B320",
+        "protocol_path": "protocol_analysis/commands/SC-0x1365-battle-game_begin/README.md",
+        "section": "§3.5"
+      },
+      "role": "flag"
+    },
+    {
+      "name": "is_one_shot",
+      "wire_type": "i8",
+      "length": 1,
+      "meaning": "是否只播放一次（打印器 movsx）",
+      "lifetime": "EVENT",
+      "dispositions": {
+        "EVENT": [
+          "bgm_desc"
+        ]
+      },
+      "views": [
+        "bgm_desc"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB07E63",
+      "evidence_ref": {
+        "command": "SC-0x1365-battle-game_begin",
+        "struct": "bgm_desc",
+        "field": "is_one_shot",
+        "reader": "sub_B07E00",
+        "printer": "sub_B0B320",
+        "protocol_path": "protocol_analysis/commands/SC-0x1365-battle-game_begin/README.md",
+        "section": "§3.5"
+      },
+      "role": "flag"
+    }
+  ],
+  "wire_body": "bgm_desc",
+  "writes": [],
+  "reads": [
+    {
+      "command": "SC-0x1365-battle-game_begin",
+      "op": "read",
+      "via": "bgm_desc"
+    },
+    {
+      "command": "SC-0xDC1E-battle-bgm_change",
+      "op": "read",
+      "via": "bgm_desc"
+    }
+  ],
+  "db_effects": [
+    {
+      "command": "SC-0x1365-battle-game_begin",
+      "entity": "bgm_desc",
+      "op": "update",
+      "fields": [
+        "bgm_desc"
+      ],
+      "table_ref": "tbl_bgm_desc"
+    },
+    {
+      "command": "SC-0x1365-battle-game_begin",
+      "entity": "bgm_desc",
+      "op": "update",
+      "fields": [
+        "game_begin"
+      ],
+      "table_ref": "tbl_bgm_desc"
+    },
+    {
+      "command": "SC-0xDC1E-battle-bgm_change",
+      "entity": "bgm_desc",
+      "op": "update",
+      "fields": [
+        "bgm_desc"
+      ],
+      "table_ref": "tbl_bgm_desc"
+    },
+    {
+      "command": "SC-0xDC1E-battle-bgm_change",
+      "entity": "bgm_desc",
+      "op": "update",
+      "fields": [
+        "bgm_change"
+      ],
+      "table_ref": "tbl_bgm_desc"
+    }
+  ],
+  "pk_members": [],
+  "pk_kind": "scope_only",
+  "is_root": true,
+  "identity": [],
+  "multi": false,
+  "array_parents": [],
+  "inline_parents": [],
+  "shape": "root",
+  "parent": "",
+  "parents": [],
+  "has_scope": false,
+  "disposition": "EVENT",
+  "table": "",
+  "no_table_reason": "disposition=EVENT（不建表）：EVENT/TBD 的持久化见 docs/05 §4.C / §9 的 B6 入口",
+  "columns_excluded": [
+    {
+      "member": "ace_bgm_id",
+      "reason": "lifetime=EVENT",
+      "evidence_va": "B07E36|B0B38F"
+    },
+    {
+      "member": "field_bgm_id",
+      "reason": "lifetime=EVENT",
+      "evidence_va": "B07E24|B0B368"
+    },
+    {
+      "member": "force_bgm_id",
+      "reason": "lifetime=EVENT",
+      "evidence_va": "B07E48|B0B3B6"
+    },
+    {
+      "member": "is_final_phase",
+      "reason": "lifetime=EVENT",
+      "evidence_va": "B07E0E|B0B341"
+    },
+    {
+      "member": "is_one_shot",
+      "reason": "lifetime=EVENT",
+      "evidence_va": "0xB07E63"
+    }
+  ],
+  "columns": [],
+  "columns_expected": 0,
+  "keys": {
+    "scope": [
+      "world_id",
+      "pilot_id"
+    ],
+    "own": [],
+    "inherited": [],
+    "primary_key": [
+      "world_id",
+      "pilot_id"
+    ],
+    "pk_kind": "scope_only",
+    "children": [],
+    "nested": [],
+    "child_key": [
+      "elem_index"
+    ]
+  },
+  "tables": [],
+  "links": []
+}

@@ -1,0 +1,311 @@
+{
+  "id": "SC-0x0D24-lounge-pilot_bot_checkcode_request",
+  "opcode": "0x0D24",
+  "direction": "SC",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "pilot_bot_checkcode_request",
+  "source_dir": "protocol_analysis/commands/SC-0x0D24-lounge-pilot_bot_checkcode_request",
+  "meta": {
+    "opcode": "`0x0D24`",
+    "方向": "SC（服务端 → 客户端（recv））",
+    "协议类": "`lounge_client`",
+    "命令名": "`pilot_bot_checkcode_request`",
+    "名字字符串": "`)->_proto_lounge_client::recv_pilot_bot_checkcode_request( `，引用点 `0xB55150`（`push offset aProtoLoungeCli_18`）",
+    "处理函数": "`sub_B51930` @ `0xB51930`（lounge 分发器）",
+    "处理块范围": "`0xB550B7` .. `0xB55234`（块首即 `push 3Ch`，错误码 `0x3C`）",
+    "错误码": "`0x3C`（`0xB55112 push 3Ch` → `vt[0x64](1, 0x3C)`）",
+    "关联命令": "配对请求 `../CS-0x93EE-lounge-pilot_bot_checkcode_request_r/`（`0x93EE`，容量 `0x12`）；后续应答 `../SC-0xCA2C-lounge-pilot_bot_checkcode_result/`（`0xCA2C`）"
+  },
+  "handler": "sub_B51930",
+  "handler_va": "0xB51930",
+  "block": [
+    "0xB550B7",
+    "0xB55234"
+  ],
+  "name_str": ")->_proto_lounge_client::recv_pilot_bot_checkcode_request(",
+  "name_str_va": "0xB55150",
+  "capacity": "0xD",
+  "capacity_va": "0xB550D0",
+  "closer_va": "0xB55126",
+  "dispatch": null,
+  "dispatch_slot": "vt[0xF0]",
+  "dispatch_va": "0xB55206",
+  "wire": {
+    "length_expr": "L+1",
+    "fixed": false,
+    "var_drivers": [
+      "L"
+    ],
+    "capacity_note": "声明容量 0xD（容量记账口径，非线长）",
+    "field_count": 1,
+    "length_source": "closure_row",
+    "readme_conclusion": "**报文体总长：变长 = L + 1**（单个 NUL 结尾字符串，L = strlen(code) ≤ 12）。",
+    "readme_close": "L+1；闭合点 0xB55126/0xB5512A 要求「游标 == 末尾」✓（只有一个字段）。"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "-",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "lounge 分发的 switch 选择子",
+      "enum": "0x0D24",
+      "evidence_va": [
+        "0xB55150"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "L+1",
+      "wire_type": "bytes(NUL 串)",
+      "name": "code",
+      "meaning": "机器人（Bot）验证码字符串",
+      "purpose": "交 vt[0xF0] 唯一实参=串首地址；日志 code=\"",
+      "enum": "L=strlen<=12",
+      "evidence_va": [
+        "0xB550FD",
+        "0xB550EA",
+        "0xB02BEE",
+        "0xB551A4",
+        "0xB551FD",
+        "0xB55206"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": -1,
+      "offset": "L+1",
+      "length": "0",
+      "wire_type": "-",
+      "name": "（长度闭合）",
+      "meaning": "游标必须==报文末尾",
+      "purpose": "容量 13==串槽预算；线长 L+1<=13",
+      "enum": null,
+      "evidence_va": [
+        "0xB55126",
+        "0xB5512A"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4,
+      "is_closure": true
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0x0D24（分发器 switch 选择子）",
+      "evidence_va": "0xB55150"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB41120`（模块 id 60）→ 之后逐字段读线",
+      "evidence_va": "0xB550BB"
+    },
+    {
+      "step": 3,
+      "kind": "read_scalar",
+      "detail": "code：`bytes(NUL 串)`（线长 L+1）—— 机器人（Bot）验证码字符串",
+      "evidence_va": "0xB550FD"
+    },
+    {
+      "step": 4,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jnz）",
+      "evidence_va": "0xB55126"
+    },
+    {
+      "step": 5,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0xF0]`，实参 1 个",
+      "evidence_va": "0xB55206"
+    },
+    {
+      "step": 6,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB55114"
+    }
+  ],
+  "capabilities": [
+    "query",
+    "lounge.pilot_bot"
+  ],
+  "capabilities_derived": [
+    "query",
+    "validate"
+  ],
+  "db_effects": [],
+  "pair": "CS-0x93EE-lounge-pilot_bot_checkcode_request_r",
+  "related": [
+    "SC-0xCA2C-lounge-pilot_bot_checkcode_result"
+  ],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:48",
+    "batch": 22,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 13,
+        "va": "0xB550D0",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB550CD",
+        "call_va": "0xB550D2"
+      },
+      "field_window": {
+        "start_va": "0xB550BC",
+        "end_va": "0xB5512E",
+        "guard": {
+          "va": "0xB550BB",
+          "func": "0xB41120",
+          "module_id": 60,
+          "release_va": "0xB41110"
+        },
+        "closer_or_commit_va": "0xB55126",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [
+          {
+            "name": "code",
+            "wire_type": "bytes(NUL 串)",
+            "width": null,
+            "seq": 1,
+            "shape": "agg",
+            "evidence_va": [
+              "0xB550FD",
+              "0xB550EA",
+              "0xB02BEE",
+              "0xB551A4",
+              "0xB551FD",
+              "0xB55206"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB550FD",
+            "kind": "read",
+            "width": null,
+            "wire_type": "str",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 0,
+        "checkable": 0,
+        "pairs": [],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB550FD",
+            "kind": "read",
+            "width": null,
+            "wire_type": "str"
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB550BC",
+          "0xB5512E"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 0,
+          "capacity": 13,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB550FD",
+              "kind": "read",
+              "name": ""
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）0 / 容量 0xd"
+        }
+      },
+      "closer": {
+        "va": "0xB55126",
+        "kind": "jnz",
+        "jcc_va": "0xB5512A",
+        "seq_va": "0xB55122",
+        "jcc_dst": "0xB5510B",
+        "cmp": "cmp     ebx, [esp+2C5Ch+var_2C40]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0xF0]",
+        "slot_value": 240,
+        "va": "0xB55206",
+        "mov_va": "0xB551FD",
+        "host": "[edx+0F0h]",
+        "argc": 1,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB55114",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        "code=\""
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0x0D24-lounge-pilot_bot_checkcode_request.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": null,
+    "notify_va": null,
+    "error_vas": [
+      "0xB55112"
+    ],
+    "dispatcher": null,
+    "closure_field": "（长度闭合）",
+    "opcode_field_va": [
+      "0xB55150"
+    ]
+  },
+  "structs": {
+    "response": {
+      "go_name": "PilotBotCheckcodeRequest",
+      "role": "response",
+      "wire_length": "L+1",
+      "members": [
+        {
+          "name": "Code",
+          "wire_type": "bytes(NUL 串)",
+          "length": "L+1",
+          "field_ref": "code"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "824490d8d2f4b0f8",
+  "check_fingerprint": "3358cc5671ec8722"
+}

@@ -1,0 +1,23 @@
+{
+  "id": "SC-0x6FF7-lounge-clan_emblem_update_r",
+  "revision": 1,
+  "verified_at": "2026-09-22",
+  "verifier": "人工（IDA 汇编块内逐条核对闭合序列）",
+  "reason": "`fields.csv`/README 的「长度闭合点」记的是 `0xb65b65`，那是闭合校验**不成立时**走的 `vt[0x64]` 报错调用（`mov edx,[esi]; mov eax,[edx+64h]; push 1; push 1BFh; call eax`），不是闭合点。真闭合序列在 `0xB65B51`：`mov ebx,[cur]; cmp ebx,[end]; jz loc_B65B73`。属「README 指错点」，必须改模型而不是在判定层再认一种记法。",
+  "evidence": [
+    {
+      "what": "闭合序列 `cmp <游标>,<末尾>` + `jz`（成立后落到 `push 1BFh; call sub_B41110` 释放守卫）",
+      "va": [
+        "0xB65B4D",
+        "0xB65B51",
+        "0xB65B57",
+        "0xB65B73",
+        "0xB65B78"
+      ],
+      "detail": "`0xB65B4D mov ebx,[esp+2C5Ch+var_2C44]`（游标）/ `0xB65B51 cmp ebx,[esp+2C5Ch+var_2C40]`（末尾）/ `0xB65B57 jz short loc_B65B73`；失败路径 `0xB65B59..0xB65B6E` 经 `[edx+64h]` 报错槽返回，`0xB65B65` 即那条 `call eax`。"
+    }
+  ],
+  "meta": {
+    "closer_va": "0xB65B51"
+  }
+}

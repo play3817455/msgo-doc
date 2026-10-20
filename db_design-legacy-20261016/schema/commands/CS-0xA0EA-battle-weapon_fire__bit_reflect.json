@@ -1,0 +1,866 @@
+{
+  "id": "CS-0xA0EA-battle-weapon_fire__bit_reflect",
+  "opcode": "0xA0EA",
+  "direction": "CS",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "weapon_fire__bit_reflect",
+  "source_dir": "protocol_analysis/commands/CS-0xA0EA-battle-weapon_fire__bit_reflect",
+  "meta": {
+    "opcode": "`0xA0EA`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`battle_client`",
+    "命令名": "`weapon_fire__bit_reflect`",
+    "名字符串": "`)<-_proto_battle_client::send_weapon_fire__bit_reflect(` @ `0xEE10BC`",
+    "代码位置": "sub_B3B350 @ `0xB3B350`（`0xB3B350`..`0xB3B79C`）",
+    "opcode 写入证据": "`0xB3B3CC`",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0x002E`（46）",
+    "容量申请证据": "`0xB3B396`（`push 0x002E`）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)` @ `0xB3B72A`",
+    "附加通知": "`[obj+79A8h]` 回调，模块 id `0x099` @ `0xB3B745`",
+    "配对命令": "S→C `SC-0xEDFC-battle-weapon_fire__bit_reflect_r`（已 DONE）"
+  },
+  "handler": "sub_B3B350",
+  "handler_va": "0xB3B350",
+  "block": [
+    "0xB3B350",
+    "0xB3B79C"
+  ],
+  "name_str": ")<-_proto_battle_client::send_weapon_fire__bit_reflect(",
+  "name_str_va": "0xEE10BC",
+  "capacity": "0x2E",
+  "capacity_va": "0xB3B396",
+  "closer_va": "0xB3B53D",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)` @ `0xB3B72A`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": "0xB3B72A",
+  "wire": {
+    "length_expr": "4 + 4 + 2 + 2 + 2 + 2 + 2 + 2 + 1 + 2 + 2",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x2E（容量记账口径，非线长）",
+    "field_count": 11,
+    "length_source": "field_sum",
+    "readme_conclusion": "结论：上发 BIT（浮游炮）弹丸被反射事件。",
+    "readme_close": "2 + 4 + 4 + 3×2 + 3×2 + 1 + 2 + 2 = 27 ≤ 容量 0x2E = 46（富余 19）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "写入 `buf+0`，供服务端分发；无 case 块（C→S）",
+      "enum": "0xA0EA",
+      "evidence_va": [
+        "0xB3B3CC"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "2",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "frame_count",
+      "meaning": "帧计数",
+      "purpose": "来源=入参 `arg_0`（内联 `mov [eax],esi`）",
+      "enum": null,
+      "evidence_va": [
+        "0xB3B3DC"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "6",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "itemid",
+      "meaning": "武器/道具 id",
+      "purpose": "来源=入参 `arg_4`（内联 `mov [reg],ecx`）；服务端据此取武器参数",
+      "enum": null,
+      "evidence_va": [
+        "0xB3B3F7"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "10",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "launch_x",
+      "meaning": "发射点 X",
+      "purpose": "来源=入参 `arg_8`；写线原语 `sub_B02DA0`(u16)",
+      "enum": null,
+      "evidence_va": [
+        "0xB3B3FF"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 4,
+      "offset": "12",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "launch_y",
+      "meaning": "发射点 Y",
+      "purpose": "来源=入参 `arg_C`；写线原语 `sub_B02DA0`(u16)",
+      "enum": null,
+      "evidence_va": [
+        "0xB3B419"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    },
+    {
+      "seq": 5,
+      "offset": "14",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "launch_z",
+      "meaning": "发射点 Z",
+      "purpose": "来源=入参 `arg_10`；写线原语 `sub_B02DA0`(u16)",
+      "enum": null,
+      "evidence_va": [
+        "0xB3B433"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 7
+    },
+    {
+      "seq": 6,
+      "offset": "16",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "target_x",
+      "meaning": "目标点 X",
+      "purpose": "来源=入参 `arg_14`；写线原语 `sub_B02DA0`(u16)",
+      "enum": null,
+      "evidence_va": [
+        "0xB3B44D"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 8
+    },
+    {
+      "seq": 7,
+      "offset": "18",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "target_y",
+      "meaning": "目标点 Y",
+      "purpose": "来源=入参 `arg_18`；写线原语 `sub_B02DA0`(u16)",
+      "enum": null,
+      "evidence_va": [
+        "0xB3B467"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 9
+    },
+    {
+      "seq": 8,
+      "offset": "20",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "target_z",
+      "meaning": "目标点 Z",
+      "purpose": "来源=入参 `arg_1C`；写线原语 `sub_B02DA0`(u16)",
+      "enum": null,
+      "evidence_va": [
+        "0xB3B481"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 10
+    },
+    {
+      "seq": 9,
+      "offset": "22",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "charge_lv",
+      "meaning": "蓄力等级",
+      "purpose": "来源=入参 `arg_20`；写线原语 `sub_B061C0`(u8)",
+      "enum": null,
+      "evidence_va": [
+        "0xB3B49B"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 11
+    },
+    {
+      "seq": 10,
+      "offset": "23",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "AI_ent_id",
+      "meaning": "施放实体 id",
+      "purpose": "来源=入参 `arg_24`；写线原语 `sub_B02DA0`(u16)",
+      "enum": null,
+      "evidence_va": [
+        "0xB3B4B5"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 12
+    },
+    {
+      "seq": 11,
+      "offset": "25",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "reflect_ent_id",
+      "meaning": "反射目标实体 id",
+      "purpose": "来源=入参 `arg_28`；写线原语 `sub_B02DA0`(u16)",
+      "enum": null,
+      "evidence_va": [
+        "0xB3B4CF"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 13
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0xA0EA（分发器 switch 选择子）",
+      "evidence_va": "0xB3B3CC"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0x2E B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xB3B396"
+    },
+    {
+      "step": 3,
+      "kind": "write_scalar",
+      "detail": "frame_count：`u32`（线长 4）—— 帧计数",
+      "evidence_va": "0xB3B3DC"
+    },
+    {
+      "step": 4,
+      "kind": "write_scalar",
+      "detail": "itemid：`u32`（线长 4）—— 武器/道具 id",
+      "evidence_va": "0xB3B3F7"
+    },
+    {
+      "step": 5,
+      "kind": "write_scalar",
+      "detail": "launch_x：`u16`（线长 2）—— 发射点 X",
+      "evidence_va": "0xB3B3FF"
+    },
+    {
+      "step": 6,
+      "kind": "write_scalar",
+      "detail": "launch_y：`u16`（线长 2）—— 发射点 Y",
+      "evidence_va": "0xB3B419"
+    },
+    {
+      "step": 7,
+      "kind": "write_scalar",
+      "detail": "launch_z：`u16`（线长 2）—— 发射点 Z",
+      "evidence_va": "0xB3B433"
+    },
+    {
+      "step": 8,
+      "kind": "write_scalar",
+      "detail": "target_x：`u16`（线长 2）—— 目标点 X",
+      "evidence_va": "0xB3B44D"
+    },
+    {
+      "step": 9,
+      "kind": "write_scalar",
+      "detail": "target_y：`u16`（线长 2）—— 目标点 Y",
+      "evidence_va": "0xB3B467"
+    },
+    {
+      "step": 10,
+      "kind": "write_scalar",
+      "detail": "target_z：`u16`（线长 2）—— 目标点 Z",
+      "evidence_va": "0xB3B481"
+    },
+    {
+      "step": 11,
+      "kind": "write_scalar",
+      "detail": "charge_lv：`u8`（线长 1）—— 蓄力等级",
+      "evidence_va": "0xB3B49B"
+    },
+    {
+      "step": 12,
+      "kind": "write_scalar",
+      "detail": "AI_ent_id：`u16`（线长 2）—— 施放实体 id",
+      "evidence_va": "0xB3B4B5"
+    },
+    {
+      "step": 13,
+      "kind": "write_scalar",
+      "detail": "reflect_ent_id：`u16`（线长 2）—— 反射目标实体 id",
+      "evidence_va": "0xB3B4CF"
+    },
+    {
+      "step": 14,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xB3B53D"
+    },
+    {
+      "step": 15,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xB3B733"
+    },
+    {
+      "step": 16,
+      "kind": "notify",
+      "detail": "附加通知回调 `[obj+79A8h]`（模块 id，非字段）",
+      "evidence_va": "0xB3B745"
+    }
+  ],
+  "capabilities": [
+    "battle_action"
+  ],
+  "capabilities_derived": [
+    "battle"
+  ],
+  "db_effects": [],
+  "pair": "SC-0xEDFC-battle-weapon_fire__bit_reflect_r",
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:47",
+    "batch": 19,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 46,
+        "va": "0xB3B396",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB3B393",
+        "call_va": "0xB3B398"
+      },
+      "field_window": {
+        "start_va": "0xB3B350",
+        "end_va": "0xB3B53D",
+        "guard": null,
+        "closer_or_commit_va": "0xB3B53D",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "frame_count",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB3B3DC"
+            ]
+          },
+          {
+            "name": "itemid",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB3B3F7"
+            ]
+          },
+          {
+            "name": "launch_x",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB3B3FF"
+            ]
+          },
+          {
+            "name": "launch_y",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 4,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB3B419"
+            ]
+          },
+          {
+            "name": "launch_z",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 5,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB3B433"
+            ]
+          },
+          {
+            "name": "target_x",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 6,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB3B44D"
+            ]
+          },
+          {
+            "name": "target_y",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 7,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB3B467"
+            ]
+          },
+          {
+            "name": "target_z",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 8,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB3B481"
+            ]
+          },
+          {
+            "name": "charge_lv",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 9,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB3B49B"
+            ]
+          },
+          {
+            "name": "AI_ent_id",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 10,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB3B4B5"
+            ]
+          },
+          {
+            "name": "reflect_ent_id",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 11,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB3B4CF"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB3B3CC",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB3B3DC",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB3B3F7",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB3B3FF",
+            "kind": "write",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB3B419",
+            "kind": "write",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB3B433",
+            "kind": "write",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB3B44D",
+            "kind": "write",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB3B467",
+            "kind": "write",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB3B481",
+            "kind": "write",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB3B49B",
+            "kind": "write",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB3B4B5",
+            "kind": "write",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB3B4CF",
+            "kind": "write",
+            "width": 2,
+            "wire_type": "u16",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB3B513",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 11,
+        "checkable": 11,
+        "pairs": [
+          {
+            "field": "frame_count",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB3B3DC",
+            "kind": "inline_store"
+          },
+          {
+            "field": "itemid",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB3B3F7",
+            "kind": "inline_store"
+          },
+          {
+            "field": "launch_x",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB3B3FF",
+            "kind": "write"
+          },
+          {
+            "field": "launch_y",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB3B419",
+            "kind": "write"
+          },
+          {
+            "field": "launch_z",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB3B433",
+            "kind": "write"
+          },
+          {
+            "field": "target_x",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB3B44D",
+            "kind": "write"
+          },
+          {
+            "field": "target_y",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB3B467",
+            "kind": "write"
+          },
+          {
+            "field": "target_z",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB3B481",
+            "kind": "write"
+          },
+          {
+            "field": "charge_lv",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB3B49B",
+            "kind": "write"
+          },
+          {
+            "field": "AI_ent_id",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB3B4B5",
+            "kind": "write"
+          },
+          {
+            "field": "reflect_ent_id",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB3B4CF",
+            "kind": "write"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB3B3CC",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB3B350",
+          "0xB3B53D"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 27,
+          "capacity": 46,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB3B513",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）27 / 容量 0x2e"
+        }
+      },
+      "closer": {
+        "va": "0xB3B53D",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xB3B733",
+        "mov_va": "0xB3B72A",
+        "host": "[edx+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "frame_count=",
+        "itemid=",
+        "launch_x=",
+        "launch_y=",
+        "launch_z=",
+        "target_x=",
+        "target_y=",
+        "target_z=",
+        "charge_lv=",
+        "AI_ent_id=",
+        "reflect_ent_id="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0xA0EA-battle-weapon_fire__bit_reflect.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0xB3B3CC",
+    "notify_va": "0xB3B745",
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xB3B3CC"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "WeaponFireBitReflect",
+      "role": "request",
+      "wire_length": "4 + 4 + 2 + 2 + 2 + 2 + 2 + 2 + 1 + 2 + 2",
+      "members": [
+        {
+          "name": "FrameCount",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "frame_count"
+        },
+        {
+          "name": "Itemid",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "itemid"
+        },
+        {
+          "name": "LaunchX",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "launch_x"
+        },
+        {
+          "name": "LaunchY",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "launch_y"
+        },
+        {
+          "name": "LaunchZ",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "launch_z"
+        },
+        {
+          "name": "TargetX",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "target_x"
+        },
+        {
+          "name": "TargetY",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "target_y"
+        },
+        {
+          "name": "TargetZ",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "target_z"
+        },
+        {
+          "name": "ChargeLv",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "charge_lv"
+        },
+        {
+          "name": "AIEntId",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "AI_ent_id"
+        },
+        {
+          "name": "ReflectEntId",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "reflect_ent_id"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "a9d78690d6ec3950",
+  "check_fingerprint": "34fb3d385d8d05a2"
+}

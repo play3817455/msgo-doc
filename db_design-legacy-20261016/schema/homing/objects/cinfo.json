@@ -1,0 +1,1514 @@
+{
+  "id": "cinfo",
+  "title": "战队信息 cinfo（639B 线长 / 648B 槽）",
+  "domain": "lounge",
+  "domain_votes": {
+    "lounge": 2
+  },
+  "folded_composites": [
+    "cinfo"
+  ],
+  "anchored_by": "",
+  "legacy_table": "tbl_cinfo",
+  "row_key": [],
+  "views": [
+    {
+      "composite": "cinfo",
+      "length": 639,
+      "memory_claim": 648,
+      "reader": "sub_B45940",
+      "printer": "sub_B4E240",
+      "commands": [
+        "SC-0x5800-lounge-clan_info_get_other_r",
+        "SC-0x8E92-lounge-clan_info_get_self_r"
+      ]
+    }
+  ],
+  "members": [
+    {
+      "name": "active_time_bits",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "活跃时段位图",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "cinfo"
+        ]
+      },
+      "views": [
+        "cinfo"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB45B15",
+      "evidence_ref": {
+        "command": "SC-0x8E92-lounge-clan_info_get_self_r",
+        "struct": "cinfo",
+        "field": "active_time_bits",
+        "reader": "sub_B02DD0",
+        "printer": "sub_B4E240",
+        "protocol_path": "protocol_analysis/commands/SC-0x8E92-lounge-clan_info_get_self_r/README.md",
+        "section": "§3"
+      },
+      "role": "flag"
+    },
+    {
+      "name": "capture_unlock_num",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "捕获解锁数量",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "cinfo"
+        ]
+      },
+      "views": [
+        "cinfo"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB45B3D",
+      "evidence_ref": {
+        "command": "SC-0x8E92-lounge-clan_info_get_self_r",
+        "struct": "cinfo",
+        "field": "capture_unlock_num",
+        "reader": "sub_B02DD0",
+        "printer": "sub_B4E240",
+        "protocol_path": "protocol_analysis/commands/SC-0x8E92-lounge-clan_info_get_self_r/README.md",
+        "section": "§3"
+      },
+      "role": "counter"
+    },
+    {
+      "name": "clan_id",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "战队 ID",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "cinfo"
+        ]
+      },
+      "views": [
+        "cinfo"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB4595A",
+      "evidence_ref": {
+        "command": "SC-0x8E92-lounge-clan_info_get_self_r",
+        "struct": "cinfo",
+        "field": "clan_id",
+        "reader": "sub_B45940",
+        "printer": "sub_B4E240",
+        "protocol_path": "protocol_analysis/commands/SC-0x8E92-lounge-clan_info_get_self_r/README.md",
+        "section": "§3"
+      },
+      "role": "ref",
+      "ref_kind": "fk",
+      "fk_target": "clan.clan_id",
+      "ref_basis": "人工裁决·外键：战队根表已建（composites/clan.json + new_objects.clan，按世界一行 scope=[world_id]）：clan_id 是它的身份列，pilot/pcard/cinfo 一族的 clan_id 指过来。见 reviewed.batch_13_new_objects_clan_cupteam。"
+    },
+    {
+      "name": "clan_name",
+      "wire_type": "bytes[31]",
+      "length": 31,
+      "meaning": "战队名（定长 31B）",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "cinfo"
+        ]
+      },
+      "views": [
+        "cinfo"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB459B3",
+      "evidence_ref": {
+        "command": "SC-0x8E92-lounge-clan_info_get_self_r",
+        "struct": "cinfo",
+        "field": "clan_name",
+        "reader": "sub_B45940",
+        "printer": "sub_B4E240",
+        "protocol_path": "protocol_analysis/commands/SC-0x8E92-lounge-clan_info_get_self_r/README.md",
+        "section": "§3"
+      },
+      "role": "payload"
+    },
+    {
+      "name": "clan_pos",
+      "wire_type": "u8",
+      "length": 1,
+      "meaning": "氏族内职务：0=普通成员、1=副队长。**氏族长不在这列**——`clan.leader_pilot_id` 单点承载（避免同一事实两个真相）",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": []
+      },
+      "views": [],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xBA0547|0xB6BE88|0xB624A3|0xB6BEC0",
+      "role": "attribute",
+      "injected": true,
+      "injected_basis": "线上没有这一列，但两端的命令都要求它存在：① **写侧** `CS-0xCBD9-clan_subleader_set(pilot_id_sub, is_set, clan_kind)` —— `is_set` 是 **1=设 / 0=撤**（写线 `0xBA0547`，`pilot_id_sub` @`0xBA052C`），配对应答 `SC-0x52A2` 把 `pilot_id_sub`+`is_set` 原样回显 ⇒ 服务端必须把「谁是副队长」存下来；② **读侧** `SC-0x8E92-clan_info_get_self_r` 与 `SC-0x5800-clan_info_get_other_r` 都以 `subleader[]`（元素 113B `member_info` = `lpcard` 同构卡）下发副队长列表，**上限 4**（`cmp …,4` @`0xB6BE88` / @`0xB624A3`，元素读取器 `sub_B43100` @`0xB6BEC0`）；③ **为什么没有娘家**：`pilot.rank` 是**排名**（`SC-0xB4B6-pilotcard_get_r` 的 `rank` @`0xB43079`，meaning=排名）；`member.is_leader` 是**房间队长**（`SC-0x6B15-btlroom_member_detail_get_r` 的 52B 房间成员），都不是氏族职务；`clan`/`cinfo` 与两张 113B 卡（`member_info`/`clan_member_card`）都没有职务列。**为什么挂 `cinfo` 而不是 `pilot`**：`cinfo` 就是「每成员一份的我的战队视图」（scope `(world_id, pilot_id)`、单行、旧库 `uq_game_cinfo` 逐列一致），查某族的副队长 = `WHERE clan_id=X AND clan_pos=1` 筛成员行；而 `pilot` 是折叠族的宿主线形（`pcard` 398B），线上没有这个字段，注入列进不了线体（同批 17 的 `model_unreachable` 一类）。**为什么不建 `game.clan_member`**：成员关系已由 `pilot.clan_id` 推演（batch_17 裁决把 `clan_member_card`/`member_info`/`lpcard` 判 `DERIVED`），再开一张表等于同一份关系两个家。**为什么不写 2=leader**：`clan.leader_pilot_id`（来自 `CS-0x25A0-clan_leader_change` 的 `pilot_id_new`）已是单点真相，`cinfo.leader_id` 只是它的视图副本（本轮不动重复列）。",
+      "injected_resolved_by": "wire_sibling"
+    },
+    {
+      "name": "emb_base",
+      "wire_type": "i8",
+      "length": 1,
+      "meaning": "徽章底色",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "cinfo"
+        ]
+      },
+      "views": [
+        "cinfo"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB45A02",
+      "evidence_ref": {
+        "command": "SC-0x8E92-lounge-clan_info_get_self_r",
+        "struct": "cinfo",
+        "field": "emb_base",
+        "reader": "sub_B45940",
+        "printer": "sub_B4E240",
+        "protocol_path": "protocol_analysis/commands/SC-0x8E92-lounge-clan_info_get_self_r/README.md",
+        "section": "§3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "emb_parts1",
+      "wire_type": "i8",
+      "length": 1,
+      "meaning": "徽章部件 1",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "cinfo"
+        ]
+      },
+      "views": [
+        "cinfo"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB45A09",
+      "evidence_ref": {
+        "command": "SC-0x8E92-lounge-clan_info_get_self_r",
+        "struct": "cinfo",
+        "field": "emb_parts1",
+        "reader": "sub_B45940",
+        "printer": "sub_B4E240",
+        "protocol_path": "protocol_analysis/commands/SC-0x8E92-lounge-clan_info_get_self_r/README.md",
+        "section": "§3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "emb_parts2",
+      "wire_type": "i8",
+      "length": 1,
+      "meaning": "徽章部件 2",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "cinfo"
+        ]
+      },
+      "views": [
+        "cinfo"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB45A1E",
+      "evidence_ref": {
+        "command": "SC-0x8E92-lounge-clan_info_get_self_r",
+        "struct": "cinfo",
+        "field": "emb_parts2",
+        "reader": "sub_B45940",
+        "printer": "sub_B4E240",
+        "protocol_path": "protocol_analysis/commands/SC-0x8E92-lounge-clan_info_get_self_r/README.md",
+        "section": "§3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "exp",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "战队经验",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "cinfo"
+        ]
+      },
+      "views": [
+        "cinfo"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB459E8",
+      "evidence_ref": {
+        "command": "SC-0x8E92-lounge-clan_info_get_self_r",
+        "struct": "cinfo",
+        "field": "exp",
+        "reader": "sub_B45940",
+        "printer": "sub_B4E240",
+        "protocol_path": "protocol_analysis/commands/SC-0x8E92-lounge-clan_info_get_self_r/README.md",
+        "section": "§3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "feature_word",
+      "wire_type": "bytes[112]",
+      "length": 112,
+      "meaning": "特征文案块（4×28B；日志 feature_word={ + 3 段无单独日志名）",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "cinfo"
+        ]
+      },
+      "views": [
+        "cinfo"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB45B65",
+      "evidence_ref": {
+        "command": "SC-0x5800-lounge-clan_info_get_other_r",
+        "struct": "cinfo",
+        "field": "feature_word",
+        "reader": "sub_B45940",
+        "printer": "sub_B4E240",
+        "protocol_path": "protocol_analysis/commands/SC-0x5800-lounge-clan_info_get_other_r/notes.md",
+        "section": "§1"
+      },
+      "role": "payload"
+    },
+    {
+      "name": "leader_id",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "队长 pilot ID",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "cinfo"
+        ]
+      },
+      "views": [
+        "cinfo"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB45A5D",
+      "evidence_ref": {
+        "command": "SC-0x8E92-lounge-clan_info_get_self_r",
+        "struct": "cinfo",
+        "field": "leader_id",
+        "reader": "sub_B02DD0",
+        "printer": "sub_B4E240",
+        "protocol_path": "protocol_analysis/commands/SC-0x8E92-lounge-clan_info_get_self_r/README.md",
+        "section": "§3"
+      },
+      "role": "ref",
+      "ref_kind": "fk",
+      "fk_target": "core.pilot_registry.pilot_id",
+      "ref_basis": "人工裁决·外键：cinfo.leader_id 的成员注释就是「队长 pilot ID」——行主维度外键（与 master_pilotid 同口径）"
+    },
+    {
+      "name": "level",
+      "wire_type": "i8",
+      "length": 1,
+      "meaning": "战队等级",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "cinfo"
+        ]
+      },
+      "views": [
+        "cinfo"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB459D2",
+      "evidence_ref": {
+        "command": "SC-0x8E92-lounge-clan_info_get_self_r",
+        "struct": "cinfo",
+        "field": "level",
+        "reader": "sub_B45940",
+        "printer": "sub_B4E240",
+        "protocol_path": "protocol_analysis/commands/SC-0x8E92-lounge-clan_info_get_self_r/README.md",
+        "section": "§3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "member_max",
+      "wire_type": "u16",
+      "length": 2,
+      "meaning": "成员上限",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "cinfo"
+        ]
+      },
+      "views": [
+        "cinfo"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB45A48",
+      "evidence_ref": {
+        "command": "SC-0x8E92-lounge-clan_info_get_self_r",
+        "struct": "cinfo",
+        "field": "member_max",
+        "reader": "sub_B02DF0",
+        "printer": "sub_B4E240",
+        "protocol_path": "protocol_analysis/commands/SC-0x8E92-lounge-clan_info_get_self_r/README.md",
+        "section": "§3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "member_num",
+      "wire_type": "u16",
+      "length": 2,
+      "meaning": "当前成员数",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "cinfo"
+        ]
+      },
+      "views": [
+        "cinfo"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB45A33",
+      "evidence_ref": {
+        "command": "SC-0x8E92-lounge-clan_info_get_self_r",
+        "struct": "cinfo",
+        "field": "member_num",
+        "reader": "sub_B02DF0",
+        "printer": "sub_B4E240",
+        "protocol_path": "protocol_analysis/commands/SC-0x8E92-lounge-clan_info_get_self_r/README.md",
+        "section": "§3"
+      },
+      "role": "counter"
+    },
+    {
+      "name": "notice_body",
+      "wire_type": "bytes[433]",
+      "length": 433,
+      "meaning": "战队公告正文（定长 433B；打印器 notice_body=）",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "cinfo"
+        ]
+      },
+      "views": [
+        "cinfo"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB45AF6",
+      "evidence_ref": {
+        "command": "SC-0x8E92-lounge-clan_info_get_self_r",
+        "struct": "cinfo",
+        "field": "notice_body",
+        "reader": "sub_B45940",
+        "printer": "sub_B4E240",
+        "protocol_path": "protocol_analysis/commands/SC-0x8E92-lounge-clan_info_get_self_r/README.md",
+        "section": "§3"
+      },
+      "role": "payload"
+    },
+    {
+      "name": "npc_id",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "战队 NPC ID",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "cinfo"
+        ]
+      },
+      "views": [
+        "cinfo"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB45985",
+      "evidence_ref": {
+        "command": "SC-0x8E92-lounge-clan_info_get_self_r",
+        "struct": "cinfo",
+        "field": "npc_id",
+        "reader": "sub_B45940",
+        "printer": "sub_B4E240",
+        "protocol_path": "protocol_analysis/commands/SC-0x8E92-lounge-clan_info_get_self_r/README.md",
+        "section": "§3"
+      },
+      "role": "ref",
+      "ref_kind": "dangling",
+      "ref_basis": "clan 板 NPC 发帖人 id：80 张 cfg 里唯一 NPC 主表是 COMMANDER_NPC（主键 commander_id，另有 npc_model_id），键名与线名不符，未定 → 保留普通列。",
+      "ref_category": "master_candidate"
+    },
+    {
+      "name": "npc_id2",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "第二 NPC ID",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "cinfo"
+        ]
+      },
+      "views": [
+        "cinfo"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB4599B",
+      "evidence_ref": {
+        "command": "SC-0x8E92-lounge-clan_info_get_self_r",
+        "struct": "cinfo",
+        "field": "npc_id2",
+        "reader": "sub_B45940",
+        "printer": "sub_B4E240",
+        "protocol_path": "protocol_analysis/commands/SC-0x8E92-lounge-clan_info_get_self_r/README.md",
+        "section": "§3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "offer_is_active",
+      "wire_type": "i8",
+      "length": 1,
+      "meaning": "招募/宣言是否激活",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "cinfo"
+        ]
+      },
+      "views": [
+        "cinfo"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB45AD4",
+      "evidence_ref": {
+        "command": "SC-0x8E92-lounge-clan_info_get_self_r",
+        "struct": "cinfo",
+        "field": "offer_is_active",
+        "reader": "sub_B06230",
+        "printer": "sub_B4E240",
+        "protocol_path": "protocol_analysis/commands/SC-0x8E92-lounge-clan_info_get_self_r/README.md",
+        "section": "§3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "play_style",
+      "wire_type": "i8",
+      "length": 1,
+      "meaning": "游戏风格",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "cinfo"
+        ]
+      },
+      "views": [
+        "cinfo"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB45B29",
+      "evidence_ref": {
+        "command": "SC-0x8E92-lounge-clan_info_get_self_r",
+        "struct": "cinfo",
+        "field": "play_style",
+        "reader": "sub_B06230",
+        "printer": "sub_B4E240",
+        "protocol_path": "protocol_analysis/commands/SC-0x8E92-lounge-clan_info_get_self_r/README.md",
+        "section": "§3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "rank",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "排名",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "cinfo"
+        ]
+      },
+      "views": [
+        "cinfo"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB45A90",
+      "evidence_ref": {
+        "command": "SC-0x8E92-lounge-clan_info_get_self_r",
+        "struct": "cinfo",
+        "field": "rank",
+        "reader": "sub_B02DD0",
+        "printer": "sub_B4E240",
+        "protocol_path": "protocol_analysis/commands/SC-0x8E92-lounge-clan_info_get_self_r/README.md",
+        "section": "§3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "rank_rate_vsl",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "排名对战胜率",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "cinfo"
+        ]
+      },
+      "views": [
+        "cinfo"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB45AB2",
+      "evidence_ref": {
+        "command": "SC-0x8E92-lounge-clan_info_get_self_r",
+        "struct": "cinfo",
+        "field": "rank_rate_vsl",
+        "reader": "sub_B02DD0",
+        "printer": "sub_B4E240",
+        "protocol_path": "protocol_analysis/commands/SC-0x8E92-lounge-clan_info_get_self_r/README.md",
+        "section": "§3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "rank_score",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "排名分数",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "cinfo"
+        ]
+      },
+      "views": [
+        "cinfo"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB45AA1",
+      "evidence_ref": {
+        "command": "SC-0x8E92-lounge-clan_info_get_self_r",
+        "struct": "cinfo",
+        "field": "rank_score",
+        "reader": "sub_B02DD0",
+        "printer": "sub_B4E240",
+        "protocol_path": "protocol_analysis/commands/SC-0x8E92-lounge-clan_info_get_self_r/README.md",
+        "section": "§3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "rate_vsl_score",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "对战胜率分数",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "cinfo"
+        ]
+      },
+      "views": [
+        "cinfo"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB45AC3",
+      "evidence_ref": {
+        "command": "SC-0x8E92-lounge-clan_info_get_self_r",
+        "struct": "cinfo",
+        "field": "rate_vsl_score",
+        "reader": "sub_B02DD0",
+        "printer": "sub_B4E240",
+        "protocol_path": "protocol_analysis/commands/SC-0x8E92-lounge-clan_info_get_self_r/README.md",
+        "section": "§3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "troops",
+      "wire_type": "i8",
+      "length": 1,
+      "meaning": "阵营",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "cinfo"
+        ]
+      },
+      "views": [
+        "cinfo"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB4596F",
+      "evidence_ref": {
+        "command": "SC-0x8E92-lounge-clan_info_get_self_r",
+        "struct": "cinfo",
+        "field": "troops",
+        "reader": "sub_B45940",
+        "printer": "sub_B4E240",
+        "protocol_path": "protocol_analysis/commands/SC-0x8E92-lounge-clan_info_get_self_r/README.md",
+        "section": "§3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "vs_lose",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "对战败场",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "cinfo"
+        ]
+      },
+      "views": [
+        "cinfo"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB45A7F",
+      "evidence_ref": {
+        "command": "SC-0x8E92-lounge-clan_info_get_self_r",
+        "struct": "cinfo",
+        "field": "vs_lose",
+        "reader": "sub_B02DD0",
+        "printer": "sub_B4E240",
+        "protocol_path": "protocol_analysis/commands/SC-0x8E92-lounge-clan_info_get_self_r/README.md",
+        "section": "§3"
+      },
+      "role": "attribute"
+    },
+    {
+      "name": "vs_win",
+      "wire_type": "u32",
+      "length": 4,
+      "meaning": "对战胜场",
+      "lifetime": "PERSIST",
+      "dispositions": {
+        "PERSIST": [
+          "cinfo"
+        ]
+      },
+      "views": [
+        "cinfo"
+      ],
+      "composite_ref": null,
+      "element_composite_ref": null,
+      "link_kind": "",
+      "link_composite": "",
+      "memory_only": false,
+      "evidence_va": "0xB45A6E",
+      "evidence_ref": {
+        "command": "SC-0x8E92-lounge-clan_info_get_self_r",
+        "struct": "cinfo",
+        "field": "vs_win",
+        "reader": "sub_B02DD0",
+        "printer": "sub_B4E240",
+        "protocol_path": "protocol_analysis/commands/SC-0x8E92-lounge-clan_info_get_self_r/README.md",
+        "section": "§3"
+      },
+      "role": "attribute"
+    }
+  ],
+  "wire_body": "cinfo",
+  "writes": [
+    {
+      "command": "CS-0x0038-lounge-clan_leave",
+      "op": "delete",
+      "via": "",
+      "verbs": [
+        "delete"
+      ],
+      "declared": true,
+      "declared_reason": "`cinfo` 没有自己的 CS 命令：每一行是「我的战队视图」，由氏族链的四条命令按 `(world_id, pilot_id)` 定位单行写 —— `clan_create` 建建族者那行（`clan_id`/`clan_name`/`leader_id`/`clan_pos=0`，权限证据：命令 `CS-0xA5BC` @`0xB9F902`/`0xB9F8C8`）、`clan_subleader_set` 按 `pilot_id_sub` 改目标行的 `clan_pos`（1=设 / 0=撤，`is_set` @`0xBA0547`）、`clan_leave`（@`0xB9FB5C`，带 `clan_id`+`clan_kind`+`is_GMtool`）与 `clan_kick_member`（`pilot_id_kick` @`0xBA1499`）清掉对应行的氏族列。引擎认不出来的原因很直接：这四条命令的线体里都没有 639B 的 `cinfo` 结构（它们是按 id 定位单行），所以「线体携带」的口径看不见它们，只能点名登记。",
+      "evidence_va": "0xB9F902 / 0xBA0547 / 0xB9FB5C / 0xBA1499"
+    },
+    {
+      "command": "CS-0xA5BC-lounge-clan_create",
+      "op": "create",
+      "via": "",
+      "verbs": [
+        "create"
+      ],
+      "declared": true,
+      "declared_reason": "`cinfo` 没有自己的 CS 命令：每一行是「我的战队视图」，由氏族链的四条命令按 `(world_id, pilot_id)` 定位单行写 —— `clan_create` 建建族者那行（`clan_id`/`clan_name`/`leader_id`/`clan_pos=0`，权限证据：命令 `CS-0xA5BC` @`0xB9F902`/`0xB9F8C8`）、`clan_subleader_set` 按 `pilot_id_sub` 改目标行的 `clan_pos`（1=设 / 0=撤，`is_set` @`0xBA0547`）、`clan_leave`（@`0xB9FB5C`，带 `clan_id`+`clan_kind`+`is_GMtool`）与 `clan_kick_member`（`pilot_id_kick` @`0xBA1499`）清掉对应行的氏族列。引擎认不出来的原因很直接：这四条命令的线体里都没有 639B 的 `cinfo` 结构（它们是按 id 定位单行），所以「线体携带」的口径看不见它们，只能点名登记。",
+      "evidence_va": "0xB9F902 / 0xBA0547 / 0xB9FB5C / 0xBA1499"
+    },
+    {
+      "command": "CS-0xCBD9-lounge-clan_subleader_set",
+      "op": "update",
+      "via": "",
+      "verbs": [
+        "update"
+      ],
+      "declared": true,
+      "declared_reason": "`cinfo` 没有自己的 CS 命令：每一行是「我的战队视图」，由氏族链的四条命令按 `(world_id, pilot_id)` 定位单行写 —— `clan_create` 建建族者那行（`clan_id`/`clan_name`/`leader_id`/`clan_pos=0`，权限证据：命令 `CS-0xA5BC` @`0xB9F902`/`0xB9F8C8`）、`clan_subleader_set` 按 `pilot_id_sub` 改目标行的 `clan_pos`（1=设 / 0=撤，`is_set` @`0xBA0547`）、`clan_leave`（@`0xB9FB5C`，带 `clan_id`+`clan_kind`+`is_GMtool`）与 `clan_kick_member`（`pilot_id_kick` @`0xBA1499`）清掉对应行的氏族列。引擎认不出来的原因很直接：这四条命令的线体里都没有 639B 的 `cinfo` 结构（它们是按 id 定位单行），所以「线体携带」的口径看不见它们，只能点名登记。",
+      "evidence_va": "0xB9F902 / 0xBA0547 / 0xB9FB5C / 0xBA1499"
+    },
+    {
+      "command": "CS-0xE1DB-lounge-clan_kick_member",
+      "op": "delete",
+      "via": "",
+      "verbs": [
+        "delete"
+      ],
+      "declared": true,
+      "declared_reason": "`cinfo` 没有自己的 CS 命令：每一行是「我的战队视图」，由氏族链的四条命令按 `(world_id, pilot_id)` 定位单行写 —— `clan_create` 建建族者那行（`clan_id`/`clan_name`/`leader_id`/`clan_pos=0`，权限证据：命令 `CS-0xA5BC` @`0xB9F902`/`0xB9F8C8`）、`clan_subleader_set` 按 `pilot_id_sub` 改目标行的 `clan_pos`（1=设 / 0=撤，`is_set` @`0xBA0547`）、`clan_leave`（@`0xB9FB5C`，带 `clan_id`+`clan_kind`+`is_GMtool`）与 `clan_kick_member`（`pilot_id_kick` @`0xBA1499`）清掉对应行的氏族列。引擎认不出来的原因很直接：这四条命令的线体里都没有 639B 的 `cinfo` 结构（它们是按 id 定位单行），所以「线体携带」的口径看不见它们，只能点名登记。",
+      "evidence_va": "0xB9F902 / 0xBA0547 / 0xB9FB5C / 0xBA1499"
+    }
+  ],
+  "reads": [
+    {
+      "command": "SC-0x5800-lounge-clan_info_get_other_r",
+      "op": "read",
+      "via": "cinfo"
+    },
+    {
+      "command": "SC-0x8E92-lounge-clan_info_get_self_r",
+      "op": "read",
+      "via": "cinfo"
+    }
+  ],
+  "db_effects": [
+    {
+      "command": "SC-0x5800-lounge-clan_info_get_other_r",
+      "entity": "cinfo",
+      "op": "read",
+      "fields": [
+        "cinfo"
+      ],
+      "table_ref": "tbl_cinfo"
+    },
+    {
+      "command": "SC-0x5800-lounge-clan_info_get_other_r",
+      "entity": "cinfo",
+      "op": "read",
+      "fields": [
+        "cinfo_other"
+      ],
+      "table_ref": "tbl_cinfo"
+    },
+    {
+      "command": "SC-0x8E92-lounge-clan_info_get_self_r",
+      "entity": "cinfo",
+      "op": "read",
+      "fields": [
+        "cinfo"
+      ],
+      "table_ref": "tbl_cinfo"
+    },
+    {
+      "command": "SC-0x8E92-lounge-clan_info_get_self_r",
+      "entity": "cinfo",
+      "op": "read",
+      "fields": [
+        "cinfo_self"
+      ],
+      "table_ref": "tbl_cinfo"
+    }
+  ],
+  "pk_members": [],
+  "pk_kind": "scope_only",
+  "is_root": true,
+  "identity": [],
+  "singleton_reason": "旧库 uq_game_cinfo (world_id,pilot_id) 逐列一致；SC-0x5800/0x8E92 只读",
+  "multi": false,
+  "array_parents": [],
+  "inline_parents": [],
+  "shape": "root",
+  "parent": "",
+  "parents": [],
+  "has_scope": false,
+  "disposition": "PERSIST",
+  "table": "game.cinfo",
+  "columns_excluded": [],
+  "columns": [
+    {
+      "member": "active_time_bits",
+      "column": "active_time_bits",
+      "role": "flag",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "活跃时段位图",
+      "evidence_va": "0xB45B15",
+      "pk": false
+    },
+    {
+      "member": "capture_unlock_num",
+      "column": "capture_unlock_num",
+      "role": "counter",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "捕获解锁数量",
+      "evidence_va": "0xB45B3D",
+      "pk": false
+    },
+    {
+      "member": "clan_id",
+      "column": "clan_id",
+      "role": "ref",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "战队 ID",
+      "evidence_va": "0xB4595A",
+      "pk": false
+    },
+    {
+      "member": "clan_name",
+      "column": "clan_name",
+      "role": "payload",
+      "wire_type": "bytes[31]",
+      "synthetic": false,
+      "meaning": "战队名（定长 31B）",
+      "evidence_va": "0xB459B3",
+      "pk": false
+    },
+    {
+      "member": "clan_pos",
+      "column": "clan_pos",
+      "role": "attribute",
+      "wire_type": "u8",
+      "synthetic": true,
+      "meaning": "氏族内职务：0=普通成员、1=副队长。**氏族长不在这列**——`clan.leader_pilot_id` 单点承载（避免同一事实两个真相）",
+      "evidence_va": "0xBA0547|0xB6BE88|0xB624A3|0xB6BEC0",
+      "pk": false
+    },
+    {
+      "member": "emb_base",
+      "column": "emb_base",
+      "role": "attribute",
+      "wire_type": "i8",
+      "synthetic": false,
+      "meaning": "徽章底色",
+      "evidence_va": "0xB45A02",
+      "pk": false
+    },
+    {
+      "member": "emb_parts1",
+      "column": "emb_parts1",
+      "role": "attribute",
+      "wire_type": "i8",
+      "synthetic": false,
+      "meaning": "徽章部件 1",
+      "evidence_va": "0xB45A09",
+      "pk": false
+    },
+    {
+      "member": "emb_parts2",
+      "column": "emb_parts2",
+      "role": "attribute",
+      "wire_type": "i8",
+      "synthetic": false,
+      "meaning": "徽章部件 2",
+      "evidence_va": "0xB45A1E",
+      "pk": false
+    },
+    {
+      "member": "exp",
+      "column": "exp",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "战队经验",
+      "evidence_va": "0xB459E8",
+      "pk": false
+    },
+    {
+      "member": "feature_word",
+      "column": "feature_word",
+      "role": "payload",
+      "wire_type": "bytes[112]",
+      "synthetic": false,
+      "meaning": "特征文案块（4×28B；日志 feature_word={ + 3 段无单独日志名）",
+      "evidence_va": "0xB45B65",
+      "pk": false
+    },
+    {
+      "member": "leader_id",
+      "column": "leader_id",
+      "role": "ref",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "队长 pilot ID",
+      "evidence_va": "0xB45A5D",
+      "pk": false
+    },
+    {
+      "member": "level",
+      "column": "level",
+      "role": "attribute",
+      "wire_type": "i8",
+      "synthetic": false,
+      "meaning": "战队等级",
+      "evidence_va": "0xB459D2",
+      "pk": false
+    },
+    {
+      "member": "member_max",
+      "column": "member_max",
+      "role": "attribute",
+      "wire_type": "u16",
+      "synthetic": false,
+      "meaning": "成员上限",
+      "evidence_va": "0xB45A48",
+      "pk": false
+    },
+    {
+      "member": "member_num",
+      "column": "member_num",
+      "role": "counter",
+      "wire_type": "u16",
+      "synthetic": false,
+      "meaning": "当前成员数",
+      "evidence_va": "0xB45A33",
+      "pk": false
+    },
+    {
+      "member": "notice_body",
+      "column": "notice_body",
+      "role": "payload",
+      "wire_type": "bytes[433]",
+      "synthetic": false,
+      "meaning": "战队公告正文（定长 433B；打印器 notice_body=）",
+      "evidence_va": "0xB45AF6",
+      "pk": false
+    },
+    {
+      "member": "npc_id",
+      "column": "npc_id",
+      "role": "ref",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "战队 NPC ID",
+      "evidence_va": "0xB45985",
+      "pk": false
+    },
+    {
+      "member": "npc_id2",
+      "column": "npc_id2",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "第二 NPC ID",
+      "evidence_va": "0xB4599B",
+      "pk": false
+    },
+    {
+      "member": "offer_is_active",
+      "column": "offer_is_active",
+      "role": "attribute",
+      "wire_type": "i8",
+      "synthetic": false,
+      "meaning": "招募/宣言是否激活",
+      "evidence_va": "0xB45AD4",
+      "pk": false
+    },
+    {
+      "member": "play_style",
+      "column": "play_style",
+      "role": "attribute",
+      "wire_type": "i8",
+      "synthetic": false,
+      "meaning": "游戏风格",
+      "evidence_va": "0xB45B29",
+      "pk": false
+    },
+    {
+      "member": "rank",
+      "column": "rank",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "排名",
+      "evidence_va": "0xB45A90",
+      "pk": false
+    },
+    {
+      "member": "rank_rate_vsl",
+      "column": "rank_rate_vsl",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "排名对战胜率",
+      "evidence_va": "0xB45AB2",
+      "pk": false
+    },
+    {
+      "member": "rank_score",
+      "column": "rank_score",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "排名分数",
+      "evidence_va": "0xB45AA1",
+      "pk": false
+    },
+    {
+      "member": "rate_vsl_score",
+      "column": "rate_vsl_score",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "对战胜率分数",
+      "evidence_va": "0xB45AC3",
+      "pk": false
+    },
+    {
+      "member": "troops",
+      "column": "troops",
+      "role": "attribute",
+      "wire_type": "i8",
+      "synthetic": false,
+      "meaning": "阵营",
+      "evidence_va": "0xB4596F",
+      "pk": false
+    },
+    {
+      "member": "vs_lose",
+      "column": "vs_lose",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "对战败场",
+      "evidence_va": "0xB45A7F",
+      "pk": false
+    },
+    {
+      "member": "vs_win",
+      "column": "vs_win",
+      "role": "attribute",
+      "wire_type": "u32",
+      "synthetic": false,
+      "meaning": "对战胜场",
+      "evidence_va": "0xB45A6E",
+      "pk": false
+    }
+  ],
+  "columns_expected": 26,
+  "keys": {
+    "scope": [
+      "world_id",
+      "pilot_id"
+    ],
+    "own": [],
+    "inherited": [],
+    "primary_key": [
+      "world_id",
+      "pilot_id"
+    ],
+    "pk_kind": "scope_only",
+    "children": [],
+    "nested": [],
+    "child_key": [
+      "elem_index"
+    ]
+  },
+  "tables": [
+    {
+      "name": "game.cinfo",
+      "shape": "root",
+      "parent": "",
+      "parent_table": "",
+      "via_member": "",
+      "key_extra": [],
+      "scope": [
+        "world_id",
+        "pilot_id"
+      ],
+      "links": [],
+      "child_tables": [],
+      "columns": [
+        {
+          "member": "active_time_bits",
+          "column": "active_time_bits",
+          "role": "flag",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "活跃时段位图",
+          "evidence_va": "0xB45B15",
+          "pk": false
+        },
+        {
+          "member": "capture_unlock_num",
+          "column": "capture_unlock_num",
+          "role": "counter",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "捕获解锁数量",
+          "evidence_va": "0xB45B3D",
+          "pk": false
+        },
+        {
+          "member": "clan_id",
+          "column": "clan_id",
+          "role": "ref",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "战队 ID",
+          "evidence_va": "0xB4595A",
+          "pk": false
+        },
+        {
+          "member": "clan_name",
+          "column": "clan_name",
+          "role": "payload",
+          "wire_type": "bytes[31]",
+          "synthetic": false,
+          "meaning": "战队名（定长 31B）",
+          "evidence_va": "0xB459B3",
+          "pk": false
+        },
+        {
+          "member": "clan_pos",
+          "column": "clan_pos",
+          "role": "attribute",
+          "wire_type": "u8",
+          "synthetic": true,
+          "meaning": "氏族内职务：0=普通成员、1=副队长。**氏族长不在这列**——`clan.leader_pilot_id` 单点承载（避免同一事实两个真相）",
+          "evidence_va": "0xBA0547|0xB6BE88|0xB624A3|0xB6BEC0",
+          "pk": false
+        },
+        {
+          "member": "emb_base",
+          "column": "emb_base",
+          "role": "attribute",
+          "wire_type": "i8",
+          "synthetic": false,
+          "meaning": "徽章底色",
+          "evidence_va": "0xB45A02",
+          "pk": false
+        },
+        {
+          "member": "emb_parts1",
+          "column": "emb_parts1",
+          "role": "attribute",
+          "wire_type": "i8",
+          "synthetic": false,
+          "meaning": "徽章部件 1",
+          "evidence_va": "0xB45A09",
+          "pk": false
+        },
+        {
+          "member": "emb_parts2",
+          "column": "emb_parts2",
+          "role": "attribute",
+          "wire_type": "i8",
+          "synthetic": false,
+          "meaning": "徽章部件 2",
+          "evidence_va": "0xB45A1E",
+          "pk": false
+        },
+        {
+          "member": "exp",
+          "column": "exp",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "战队经验",
+          "evidence_va": "0xB459E8",
+          "pk": false
+        },
+        {
+          "member": "feature_word",
+          "column": "feature_word",
+          "role": "payload",
+          "wire_type": "bytes[112]",
+          "synthetic": false,
+          "meaning": "特征文案块（4×28B；日志 feature_word={ + 3 段无单独日志名）",
+          "evidence_va": "0xB45B65",
+          "pk": false
+        },
+        {
+          "member": "leader_id",
+          "column": "leader_id",
+          "role": "ref",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "队长 pilot ID",
+          "evidence_va": "0xB45A5D",
+          "pk": false
+        },
+        {
+          "member": "level",
+          "column": "level",
+          "role": "attribute",
+          "wire_type": "i8",
+          "synthetic": false,
+          "meaning": "战队等级",
+          "evidence_va": "0xB459D2",
+          "pk": false
+        },
+        {
+          "member": "member_max",
+          "column": "member_max",
+          "role": "attribute",
+          "wire_type": "u16",
+          "synthetic": false,
+          "meaning": "成员上限",
+          "evidence_va": "0xB45A48",
+          "pk": false
+        },
+        {
+          "member": "member_num",
+          "column": "member_num",
+          "role": "counter",
+          "wire_type": "u16",
+          "synthetic": false,
+          "meaning": "当前成员数",
+          "evidence_va": "0xB45A33",
+          "pk": false
+        },
+        {
+          "member": "notice_body",
+          "column": "notice_body",
+          "role": "payload",
+          "wire_type": "bytes[433]",
+          "synthetic": false,
+          "meaning": "战队公告正文（定长 433B；打印器 notice_body=）",
+          "evidence_va": "0xB45AF6",
+          "pk": false
+        },
+        {
+          "member": "npc_id",
+          "column": "npc_id",
+          "role": "ref",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "战队 NPC ID",
+          "evidence_va": "0xB45985",
+          "pk": false
+        },
+        {
+          "member": "npc_id2",
+          "column": "npc_id2",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "第二 NPC ID",
+          "evidence_va": "0xB4599B",
+          "pk": false
+        },
+        {
+          "member": "offer_is_active",
+          "column": "offer_is_active",
+          "role": "attribute",
+          "wire_type": "i8",
+          "synthetic": false,
+          "meaning": "招募/宣言是否激活",
+          "evidence_va": "0xB45AD4",
+          "pk": false
+        },
+        {
+          "member": "play_style",
+          "column": "play_style",
+          "role": "attribute",
+          "wire_type": "i8",
+          "synthetic": false,
+          "meaning": "游戏风格",
+          "evidence_va": "0xB45B29",
+          "pk": false
+        },
+        {
+          "member": "rank",
+          "column": "rank",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "排名",
+          "evidence_va": "0xB45A90",
+          "pk": false
+        },
+        {
+          "member": "rank_rate_vsl",
+          "column": "rank_rate_vsl",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "排名对战胜率",
+          "evidence_va": "0xB45AB2",
+          "pk": false
+        },
+        {
+          "member": "rank_score",
+          "column": "rank_score",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "排名分数",
+          "evidence_va": "0xB45AA1",
+          "pk": false
+        },
+        {
+          "member": "rate_vsl_score",
+          "column": "rate_vsl_score",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "对战胜率分数",
+          "evidence_va": "0xB45AC3",
+          "pk": false
+        },
+        {
+          "member": "troops",
+          "column": "troops",
+          "role": "attribute",
+          "wire_type": "i8",
+          "synthetic": false,
+          "meaning": "阵营",
+          "evidence_va": "0xB4596F",
+          "pk": false
+        },
+        {
+          "member": "vs_lose",
+          "column": "vs_lose",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "对战败场",
+          "evidence_va": "0xB45A7F",
+          "pk": false
+        },
+        {
+          "member": "vs_win",
+          "column": "vs_win",
+          "role": "attribute",
+          "wire_type": "u32",
+          "synthetic": false,
+          "meaning": "对战胜场",
+          "evidence_va": "0xB45A6E",
+          "pk": false
+        }
+      ],
+      "key_members": [
+        "world_id",
+        "pilot_id"
+      ],
+      "primary_key": [
+        "world_id",
+        "pilot_id"
+      ]
+    }
+  ],
+  "links": []
+}

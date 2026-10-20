@@ -1,0 +1,415 @@
+{
+  "id": "CS-0x3FFF-lounge-msma_sp_parts_change",
+  "opcode": "0x3FFF",
+  "direction": "CS",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "msma_sp_parts_change",
+  "source_dir": "protocol_analysis/commands/CS-0x3FFF-lounge-msma_sp_parts_change",
+  "meta": {
+    "opcode": "`0x3FFF`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`msma_sp_parts_change`",
+    "名字符串": "`)<-_proto_lounge_client::send_msma_sp_parts_change(` @ `0xeebbb0`",
+    "代码位置": "sub_B984F0 @ `0x00b984f0`（`0x00b984f0`..`0x00b98734`）",
+    "opcode 写入/分发证据": "`0xb9856c`（opcode 写入指令）",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0x12`（18）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽 @`0xB986C2`）；`call vt[0x58](buf, 负载长度)`",
+    "配对命令（同 opcode 反向）": "（本批次内无同 opcode 反向命令）"
+  },
+  "handler": "sub_B984F0",
+  "handler_va": "0x00b984f0",
+  "block": [
+    "0xB984F0",
+    "0xB98734"
+  ],
+  "name_str": ")<-_proto_lounge_client::send_msma_sp_parts_change(",
+  "name_str_va": "0xeebbb0",
+  "capacity": "0x12",
+  "capacity_va": null,
+  "closer_va": "0xB98612",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽 @`0xB986C2`）；`call vt[0x58](buf, 负载长度)`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": "0xB986C2",
+  "wire": {
+    "length_expr": "8 + 4 + 4",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x12（容量记账口径，非线长）",
+    "field_count": 3,
+    "length_source": "field_sum",
+    "readme_conclusion": "结论：机体 SP 部件更换。",
+    "readme_close": "2 + 8 + 4 + 4 = **18** == 容量 0x12（精确相等）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发给对应协议类的处理块（C→S 无 case 块）",
+      "enum": "0x3FFF",
+      "evidence_va": [
+        "0xB9856C"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "2",
+      "length": "8",
+      "wire_type": "u64",
+      "name": "uniqid_ms",
+      "meaning": "机体唯一 ID（u64）",
+      "purpose": "来源=入参 arg_0（`0xB98578`）；内联 `mov [游标], reg`；服务端定位该机体记录",
+      "enum": null,
+      "evidence_va": [
+        "0xB9857C"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "10",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "bef_sp_parts_id",
+      "meaning": "变更前的 SP 部件 ID",
+      "purpose": "来源=入参 arg_8（`0xB98590`）；内联 `mov [游标], reg`；服务端校验当前部件",
+      "enum": null,
+      "evidence_va": [
+        "0xB98594"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "14",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "aft_sp_parts_id",
+      "meaning": "变更后的 SP 部件 ID",
+      "purpose": "来源=入参 arg_C（`0xB9859F`）；经写原语 `sub_B02D80`；服务端应用新部件",
+      "enum": null,
+      "evidence_va": [
+        "0xB985A4"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0x3FFF（分发器 switch 选择子）",
+      "evidence_va": "0xB9856C"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0x12 B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xB98536"
+    },
+    {
+      "step": 3,
+      "kind": "write_scalar",
+      "detail": "uniqid_ms：`u64`（线长 8）—— 机体唯一 ID（u64）",
+      "evidence_va": "0xB9857C"
+    },
+    {
+      "step": 4,
+      "kind": "write_scalar",
+      "detail": "bef_sp_parts_id：`u32`（线长 4）—— 变更前的 SP 部件 ID",
+      "evidence_va": "0xB98594"
+    },
+    {
+      "step": 5,
+      "kind": "write_scalar",
+      "detail": "aft_sp_parts_id：`u32`（线长 4）—— 变更后的 SP 部件 ID",
+      "evidence_va": "0xB985A4"
+    },
+    {
+      "step": 6,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xB98612"
+    },
+    {
+      "step": 7,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xB986CB"
+    }
+  ],
+  "capabilities": [
+    "update",
+    "lounge.sp_parts"
+  ],
+  "capabilities_derived": [
+    "update"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:43",
+    "batch": 6,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 18,
+        "va": "0xB98536",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB98533",
+        "call_va": "0xB98538"
+      },
+      "field_window": {
+        "start_va": "0xB984F0",
+        "end_va": "0xB98612",
+        "guard": null,
+        "closer_or_commit_va": "0xB98612",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "uniqid_ms",
+            "wire_type": "u64",
+            "width": 8,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB9857C"
+            ]
+          },
+          {
+            "name": "bef_sp_parts_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB98594"
+            ]
+          },
+          {
+            "name": "aft_sp_parts_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB985A4"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB9856C",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB9857C",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB98594",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB985A4",
+            "kind": "write",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB985E8",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 2,
+        "checkable": 3,
+        "pairs": [
+          {
+            "field": "bef_sp_parts_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB9857C",
+            "kind": "inline_store"
+          },
+          {
+            "field": "aft_sp_parts_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB98594",
+            "kind": "inline_store"
+          }
+        ],
+        "gaps": [
+          {
+            "field": "uniqid_ms",
+            "wire_type": "u64",
+            "width": 8,
+            "shape": "scalar",
+            "note": "汇编事件序列里找不到与之对位的读写点（缺字段或宽度不符）"
+          }
+        ],
+        "unmatched_actual": [
+          {
+            "va": "0xB9856C",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          },
+          {
+            "va": "0xB985A4",
+            "kind": "write",
+            "width": 4,
+            "wire_type": "u32"
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB984F0",
+          "0xB98612"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 14,
+          "capacity": 18,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB985E8",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）14 / 容量 0x12"
+        }
+      },
+      "closer": {
+        "va": "0xB98612",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xB986CB",
+        "mov_va": "0xB986C2",
+        "host": "[edx+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "uniqid_ms=",
+        "bef_sp_parts_id=",
+        "aft_sp_parts_id="
+      ]
+    },
+    "mismatches": [],
+    "notes": [
+      {
+        "check": "primitive_widths",
+        "note": "定宽对位不可判定：C→S 写线在复合写入器内部 consumed 未知；缺口 uniqid_ms"
+      }
+    ],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0x3FFF-lounge-msma_sp_parts_change.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0xb9856c",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xB9856C"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "MsmaSpPartsChange",
+      "role": "request",
+      "wire_length": "8 + 4 + 4",
+      "members": [
+        {
+          "name": "UniqidMs",
+          "wire_type": "u64",
+          "length": "8",
+          "field_ref": "uniqid_ms"
+        },
+        {
+          "name": "BefSpPartsId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "bef_sp_parts_id"
+        },
+        {
+          "name": "AftSpPartsId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "aft_sp_parts_id"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "79827410262baa54",
+  "check_fingerprint": "f9f800c8d7709a8b"
+}

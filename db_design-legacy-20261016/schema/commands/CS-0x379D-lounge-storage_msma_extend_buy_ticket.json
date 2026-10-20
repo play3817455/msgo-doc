@@ -1,0 +1,631 @@
+{
+  "id": "CS-0x379D-lounge-storage_msma_extend_buy_ticket",
+  "opcode": "0x379D",
+  "direction": "CS",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "storage_msma_extend_buy_ticket",
+  "source_dir": "protocol_analysis/commands/CS-0x379D-lounge-storage_msma_extend_buy_ticket",
+  "meta": {
+    "opcode": "`0x379D`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`storage_msma_extend_buy_ticket`",
+    "名字符串": "`)<-_proto_lounge_client::send_storage_msma_extend_buy_ticket(` @ `0xeecf00`",
+    "代码位置": "sub_BA4110 @ `0x00ba4110`（`0x00ba4110`..`0x00ba4458`）",
+    "opcode 写入/分发证据": "`0xba418c`（opcode 写入指令）",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0x1E`（30）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽 @`0xBA43E4`）；`call vt[0x58](buf, 负载长度)`",
+    "配对命令（同 opcode 反向）": "（本批次内无同 opcode 反向命令）"
+  },
+  "handler": "sub_BA4110",
+  "handler_va": "0x00ba4110",
+  "block": [
+    "0xBA4110",
+    "0xBA4458"
+  ],
+  "name_str": ")<-_proto_lounge_client::send_storage_msma_extend_buy_ticket(",
+  "name_str_va": "0xeecf00",
+  "capacity": "0x1E",
+  "capacity_va": null,
+  "closer_va": "0xBA4293",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽 @`0xBA43E4`）；`call vt[0x58](buf, 负载长度)`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": "0xBA43E4",
+  "wire": {
+    "length_expr": "4 + 1 + 4 + 1 + 1 + 4 + 4",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x1E（容量记账口径，非线长）",
+    "field_count": 7,
+    "length_source": "field_sum",
+    "readme_conclusion": "结论：机体仓库扩容购买（券）。",
+    "readme_close": "2 + 4+1+4+1+1+4+4 = **21** ≤ 容量 0x1E=30（富余 9）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发给对应协议类的处理块（C→S 无 case 块）",
+      "enum": "0x379D",
+      "evidence_va": [
+        "0xBA418C"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "2",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "shopitemid",
+      "meaning": "商店条目 ID",
+      "purpose": "来源=入参 arg_0（`0xBA4198`）；内联 `mov [游标], reg`；服务端定位商店条目",
+      "enum": null,
+      "evidence_va": [
+        "0xBA419C"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "6",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "id_type",
+      "meaning": "ID 类型（1 字节，**i8**）",
+      "purpose": "来源=入参 arg_4（`0xBA41A9`）；内联 `mov [游标], reg`；服务端按类型解释 shopitemid",
+      "enum": null,
+      "evidence_va": [
+        "0xBA41B5"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "7",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "num",
+      "meaning": "购买数量",
+      "purpose": "来源=入参 arg_8（`0xBA41B8`）；经写原语 `sub_B02D80`；服务端按数量结算",
+      "enum": null,
+      "evidence_va": [
+        "0xBA41BD"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 4,
+      "offset": "11",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "tab_type",
+      "meaning": "页签类别（1 字节，**i8**）",
+      "purpose": "来源=入参 arg_C（`0xBA41D2`）；经写原语 `sub_B061C0`；服务端按页签返回列表",
+      "enum": null,
+      "evidence_va": [
+        "0xBA41D7"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    },
+    {
+      "seq": 5,
+      "offset": "12",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "is_cp",
+      "meaning": "是否 CP（点数券）支付（1 字节，**i8**）",
+      "purpose": "来源=入参 arg_10（`0xBA41EC`）；经写原语 `sub_B061C0`；服务端据此选择货币",
+      "enum": "0=否 1=是",
+      "evidence_va": [
+        "0xBA41F1"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 7
+    },
+    {
+      "seq": 6,
+      "offset": "13",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "total_price",
+      "meaning": "总价",
+      "purpose": "来源=入参 arg_14（`0xBA4206`）；经写原语 `sub_B02D80`；服务端校验金额",
+      "enum": null,
+      "evidence_va": [
+        "0xBA420B"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 8
+    },
+    {
+      "seq": 7,
+      "offset": "17",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "extend_num",
+      "meaning": "扩容数量",
+      "purpose": "来源=入参 arg_18（`0xBA4220`）；经写原语 `sub_B02D80`；服务端按数量扩容仓库/机体格",
+      "enum": null,
+      "evidence_va": [
+        "0xBA4225"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 9
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0x379D（分发器 switch 选择子）",
+      "evidence_va": "0xBA418C"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0x1E B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xBA4156"
+    },
+    {
+      "step": 3,
+      "kind": "write_scalar",
+      "detail": "shopitemid：`u32`（线长 4）—— 商店条目 ID",
+      "evidence_va": "0xBA419C"
+    },
+    {
+      "step": 4,
+      "kind": "write_scalar",
+      "detail": "id_type：`u8`（线长 1）—— ID 类型（1 字节，**i8**）",
+      "evidence_va": "0xBA41B5"
+    },
+    {
+      "step": 5,
+      "kind": "write_scalar",
+      "detail": "num：`u32`（线长 4）—— 购买数量",
+      "evidence_va": "0xBA41BD"
+    },
+    {
+      "step": 6,
+      "kind": "write_scalar",
+      "detail": "tab_type：`u8`（线长 1）—— 页签类别（1 字节，**i8**）",
+      "evidence_va": "0xBA41D7"
+    },
+    {
+      "step": 7,
+      "kind": "write_scalar",
+      "detail": "is_cp：`u8`（线长 1）—— 是否 CP（点数券）支付（1 字节，**i8**）",
+      "evidence_va": "0xBA41F1"
+    },
+    {
+      "step": 8,
+      "kind": "write_scalar",
+      "detail": "total_price：`u32`（线长 4）—— 总价",
+      "evidence_va": "0xBA420B"
+    },
+    {
+      "step": 9,
+      "kind": "write_scalar",
+      "detail": "extend_num：`u32`（线长 4）—— 扩容数量",
+      "evidence_va": "0xBA4225"
+    },
+    {
+      "step": 10,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xBA4293"
+    },
+    {
+      "step": 11,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xBA43EF"
+    }
+  ],
+  "capabilities": [
+    "create",
+    "lounge.storage_extend"
+  ],
+  "capabilities_derived": [
+    "create"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:43",
+    "batch": 6,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 30,
+        "va": "0xBA4156",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xBA4153",
+        "call_va": "0xBA4158"
+      },
+      "field_window": {
+        "start_va": "0xBA4110",
+        "end_va": "0xBA4293",
+        "guard": null,
+        "closer_or_commit_va": "0xBA4293",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "shopitemid",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xBA419C"
+            ]
+          },
+          {
+            "name": "id_type",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xBA41B5"
+            ]
+          },
+          {
+            "name": "num",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xBA41BD"
+            ]
+          },
+          {
+            "name": "tab_type",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 4,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xBA41D7"
+            ]
+          },
+          {
+            "name": "is_cp",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 5,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xBA41F1"
+            ]
+          },
+          {
+            "name": "total_price",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 6,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xBA420B"
+            ]
+          },
+          {
+            "name": "extend_num",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 7,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xBA4225"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xBA418C",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xBA419C",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xBA41B5",
+            "kind": "inline_store",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xBA41BD",
+            "kind": "write",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xBA41D7",
+            "kind": "write",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xBA41F1",
+            "kind": "write",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xBA420B",
+            "kind": "write",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xBA4225",
+            "kind": "write",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xBA4269",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 7,
+        "checkable": 7,
+        "pairs": [
+          {
+            "field": "shopitemid",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xBA419C",
+            "kind": "inline_store"
+          },
+          {
+            "field": "id_type",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xBA41B5",
+            "kind": "inline_store"
+          },
+          {
+            "field": "num",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xBA41BD",
+            "kind": "write"
+          },
+          {
+            "field": "tab_type",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xBA41D7",
+            "kind": "write"
+          },
+          {
+            "field": "is_cp",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xBA41F1",
+            "kind": "write"
+          },
+          {
+            "field": "total_price",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xBA420B",
+            "kind": "write"
+          },
+          {
+            "field": "extend_num",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xBA4225",
+            "kind": "write"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xBA418C",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xBA4110",
+          "0xBA4293"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 21,
+          "capacity": 30,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xBA4269",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）21 / 容量 0x1e"
+        }
+      },
+      "closer": {
+        "va": "0xBA4293",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xBA43EF",
+        "mov_va": "0xBA43E4",
+        "host": "[edx+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "shopitemid=",
+        "id_type=",
+        "num=",
+        "tab_type=",
+        "is_cp=",
+        "total_price=",
+        "extend_num="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0x379D-lounge-storage_msma_extend_buy_ticket.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0xba418c",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xBA418C"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "StorageMsmaExtendBuyTicket",
+      "role": "request",
+      "wire_length": "4 + 1 + 4 + 1 + 1 + 4 + 4",
+      "members": [
+        {
+          "name": "Shopitemid",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "shopitemid"
+        },
+        {
+          "name": "IdType",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "id_type"
+        },
+        {
+          "name": "Num",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "num"
+        },
+        {
+          "name": "TabType",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "tab_type"
+        },
+        {
+          "name": "IsCp",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "is_cp"
+        },
+        {
+          "name": "TotalPrice",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "total_price"
+        },
+        {
+          "name": "ExtendNum",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "extend_num"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "4669ea667e324081",
+  "check_fingerprint": "7337f3e857bb84d3"
+}

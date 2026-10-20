@@ -1,0 +1,181 @@
+{
+ "id": "SC-0xAA33-lounge-msma_sp_parts_change_r",
+ "verified_at": "2026-09-30 15:25:44",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "block",
+ "block": [
+  "0xB716AF",
+  "0xB718EC"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 16,
+   "va": "0xB716C4",
+   "reg": "eax",
+   "host": "[edx+78h]",
+   "alloc_va": "0xB716C1",
+   "call_va": "0xB716C6"
+  },
+  "field_window": {
+   "start_va": "0xB716B0",
+   "end_va": "0xB7179A",
+   "guard": {
+    "va": "0xB716AF",
+    "func": "0xB41120",
+    "module_id": null,
+    "release_va": "0xB41110"
+   },
+   "closer_or_commit_va": "0xB71773",
+   "within_model_block": true,
+   "range_from": "block"
+  },
+  "primitive_widths": {
+   "direction": "SC",
+   "expected": [
+    {
+     "name": "result",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "B716FF"
+     ]
+    },
+    {
+     "name": "uniqid_ms",
+     "wire_type": "u64",
+     "width": 8,
+     "seq": 2,
+     "shape": "scalar",
+     "evidence_va": [
+      "B71730",
+      "B7173F"
+     ]
+    },
+    {
+     "name": "sp_parts_id",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 3,
+     "shape": "scalar",
+     "evidence_va": [
+      "B71763"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB716FF",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB7173F",
+     "kind": "read",
+     "width": 8,
+     "wire_type": "u64",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB71763",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 3,
+   "checkable": 3,
+   "pairs": [
+    {
+     "field": "result",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB716FF",
+     "kind": "read"
+    },
+    {
+     "field": "uniqid_ms",
+     "width": 8,
+     "shape": "scalar",
+     "va": "0xB7173F",
+     "kind": "read"
+    },
+    {
+     "field": "sp_parts_id",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB71763",
+     "kind": "read"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB716B0",
+    "0xB7179A"
+   ],
+   "scalar_match_verifiable": true,
+   "capacity_relation": {
+    "observed_min": 16,
+    "capacity": 16,
+    "relation": "exact",
+    "unknown_events": [],
+    "is_lower_bound": false,
+    "note": "观测线长（下界）16 / 容量 0x10"
+   }
+  },
+  "closer": {
+   "va": "0xB71773",
+   "kind": "jz",
+   "jcc_va": "0xB71779",
+   "seq_va": "0xB7176F",
+   "jcc_dst": "0xB71795",
+   "cmp": "cmp     ebx, [esp+2C5Ch+var_2C40]",
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x2F8]",
+   "slot_value": 760,
+   "va": "0xB718D0",
+   "mov_va": "0xB718B9",
+   "host": "[edx+2F8h]",
+   "argc": 4,
+   "form": "mov_then_call",
+   "error_slot": {
+    "slot": "vt[0x64]",
+    "va": "0xB71719",
+    "argc": 2
+   }
+  },
+  "log_strings": [
+   "result=",
+   "uniqid_ms=",
+   "sp_parts_id="
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "result",
+  "sp_parts_id",
+  "uniqid_ms"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 10
+}

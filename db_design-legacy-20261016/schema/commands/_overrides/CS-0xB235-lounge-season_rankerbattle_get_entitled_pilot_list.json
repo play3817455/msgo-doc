@@ -1,0 +1,35 @@
+{
+  "id": "CS-0xB235-lounge-season_rankerbattle_get_entitled_pilot_list",
+  "revision": 1,
+  "verified_at": "2026-09-22",
+  "verifier": "agent (IDA asm)",
+  "reason": "fields.csv 把 10B 的 `order` 摊成 5 行成员（`order.kind` … `order.troops`）却没有父行 —— 与 `CS-0x9527` 同形。补父行 `order`（`struct<order>`，10B，偏移 2，插在 `order.kind` 之前），成员由 `composites/order.json` 承载（成员名取自打印器 `sub_B4F620`）。父行出现后那 5 行成为成员占位行，不再参与线长求和：线长仍是 `10`（= 5×u16），与 README 的 `2 + 10 = 12 ≤ 14` 容量等式一致；包结构体里也能看到「这是一个 10B 的排序/筛选结构」。",
+  "evidence": [
+    {
+      "va": "0xB42060",
+      "note": "复合写入器 `sub_B42060`（0xB42060..0xB420D2）：5 个 u16 内联写 + 第 5 个走 `sub_B02DA0`，共 10B —— 父行长度的唯一出处。"
+    },
+    {
+      "va": "0xB4F620",
+      "note": "结构打印器 `sub_B4F620`：成员名 `kind=` / `term=` / `filter=` / `reason=` / `troops=` —— 命名出处。"
+    },
+    {
+      "va": "0xB42073",
+      "note": "第一个成员 `kind` 的写入点（源 `[src+0]`），父行插在它之前、偏移 2。"
+    }
+  ],
+  "add": [
+    {
+      "name": "order",
+      "before": "order.kind",
+      "offset": "2",
+      "length": "10",
+      "wire_type": "struct<order>",
+      "meaning": "排序 / 筛选条件（复合写入器 `sub_B42060` 消费 10B = 5×u16；打印器 `sub_B4F620`）",
+      "purpose": "作为赛季排位「有资格驾驶员」名单的排序/筛选条件（服务端据此组装查询）",
+      "evidence_va": ["0xB42060", "0xB4F620"],
+      "confidence": "确证",
+      "disposition": "TRANSIENT"
+    }
+  ]
+}

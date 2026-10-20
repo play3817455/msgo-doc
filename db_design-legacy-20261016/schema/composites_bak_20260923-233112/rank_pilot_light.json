@@ -1,0 +1,333 @@
+{
+  "id": "rank_pilot_light",
+  "title": "精英机师排行轻量项 rank_pilot_light（73B 线 / 76B 槽）",
+  "length": 73,
+  "status": "complete",
+  "reader": "sub_B469F0",
+  "printer": "sub_B501C0",
+  "memory_claim": 76,
+  "wire_layout": "4+4+25+1+4+4+31",
+  "evidence": {
+    "commands": [
+      "SC-0xC664-lounge-ranking_elite_pilot_get_page_light_r",
+      "SC-0x9F9B-lounge-season_rankerbattle_get_entitled_pilot_list_r"
+    ],
+    "protocol_paths": [
+      "protocol_analysis/commands/SC-0xC664-lounge-ranking_elite_pilot_get_page_light_r/README.md",
+      "protocol_analysis/commands/SC-0x9F9B-lounge-season_rankerbattle_get_entitled_pilot_list_r/README.md"
+    ],
+    "note": "两个命令的数组元素是**同一结构**：`SC-0xC664` 的 `ranking`（`array<rank_pilot_light,200>`）与 `SC-0x9F9B` 的 `ranking`（草稿写成匿名 `array<struct,N>`）都由 `sub_B469F0` 读、`sub_B501C0` 打；读取器整函数展开 = 4+4+25+1+4+4+31 = 73B，槽步进 76（两命令的预留器 都是 `sub_B41A60` 的 `add dword ptr [edx],4Ch`，循环体里也是 `add var_2C48,4Ch`）。因为线长 73 ≠ 槽 76，长度列只能写 73（§3.1），槽只进容量记账。条数上限 200（`SC-0xC664` `0xB78CB0`、`SC-0x9F9B` `B6EF9C` 两处都是 `cmp ebx,0C8h`）；元素线长 73 / 槽 76 的差是 `world_id` 前对齐填充。"
+  },
+  "members": [
+    {
+      "name": "score",
+      "offset": 0,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "分数",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0xC664-lounge-ranking_elite_pilot_get_page_light_r",
+          "struct": "rank_pilot_light",
+          "field_name": "score",
+          "offset": 0,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0xC664-lounge-ranking_elite_pilot_get_page_light_r/README.md",
+          "section": "§4.3 结构/数组说明（读取器 sub_B469F0 + 打印器 sub_B501C0）",
+          "reader": "sub_B469F0",
+          "printer": "sub_B501C0",
+          "evidence_va": "0xB469F4"
+        },
+        {
+          "command": "SC-0x9F9B-lounge-season_rankerbattle_get_entitled_pilot_list_r",
+          "struct": "rank_pilot_light",
+          "field_name": "score",
+          "offset": 0,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x9F9B-lounge-season_rankerbattle_get_entitled_pilot_list_r/README.md",
+          "section": "§4.3 结构/数组说明（读取器 sub_B469F0 + 打印器 sub_B501C0）",
+          "reader": "sub_B469F0",
+          "printer": "sub_B501C0",
+          "evidence_va": "0xB469F4"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB469F4",
+      "asm_audit_date": "2026-09-22",
+      "printer_va": "0xB501D5",
+      "reader_va": "0xB469F4"
+    },
+    {
+      "name": "pilot_id",
+      "offset": 4,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "驾驶员 ID",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0xC664-lounge-ranking_elite_pilot_get_page_light_r",
+          "struct": "rank_pilot_light",
+          "field_name": "pilot_id",
+          "offset": 4,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0xC664-lounge-ranking_elite_pilot_get_page_light_r/README.md",
+          "section": "§4.3 结构/数组说明（读取器 sub_B469F0 + 打印器 sub_B501C0）",
+          "reader": "sub_B469F0",
+          "printer": "sub_B501C0",
+          "evidence_va": "0xB46A0E"
+        },
+        {
+          "command": "SC-0x9F9B-lounge-season_rankerbattle_get_entitled_pilot_list_r",
+          "struct": "rank_pilot_light",
+          "field_name": "pilot_id",
+          "offset": 4,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x9F9B-lounge-season_rankerbattle_get_entitled_pilot_list_r/README.md",
+          "section": "§4.3 结构/数组说明（读取器 sub_B469F0 + 打印器 sub_B501C0）",
+          "reader": "sub_B469F0",
+          "printer": "sub_B501C0",
+          "evidence_va": "0xB46A0E"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB46A0E",
+      "asm_audit_date": "2026-09-22",
+      "printer_va": "0xB501FB",
+      "reader_va": "0xB46A0E"
+    },
+    {
+      "name": "name",
+      "offset": 8,
+      "length": 25,
+      "wire_type": "char[25]",
+      "meaning": "驾驶员名（定长 25B）",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0xC664-lounge-ranking_elite_pilot_get_page_light_r",
+          "struct": "rank_pilot_light",
+          "field_name": "name",
+          "offset": 8,
+          "length": 25,
+          "wire_type": "char[25]",
+          "protocol_path": "protocol_analysis/commands/SC-0xC664-lounge-ranking_elite_pilot_get_page_light_r/README.md",
+          "section": "§4.3 结构/数组说明（读取器 sub_B469F0 + 打印器 sub_B501C0）",
+          "reader": "sub_B469F0",
+          "printer": "sub_B501C0",
+          "evidence_va": "0xB46A27"
+        },
+        {
+          "command": "SC-0x9F9B-lounge-season_rankerbattle_get_entitled_pilot_list_r",
+          "struct": "rank_pilot_light",
+          "field_name": "name",
+          "offset": 8,
+          "length": 25,
+          "wire_type": "char[25]",
+          "protocol_path": "protocol_analysis/commands/SC-0x9F9B-lounge-season_rankerbattle_get_entitled_pilot_list_r/README.md",
+          "section": "§4.3 结构/数组说明（读取器 sub_B469F0 + 打印器 sub_B501C0）",
+          "reader": "sub_B469F0",
+          "printer": "sub_B501C0",
+          "evidence_va": "0xB46A27"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB46A27",
+      "asm_audit_date": "2026-09-22",
+      "printer_va": "0xB5022A",
+      "reader_va": "0xB46A27"
+    },
+    {
+      "name": "troops",
+      "offset": 33,
+      "length": 1,
+      "wire_type": "i8",
+      "meaning": "势力/阵营",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0xC664-lounge-ranking_elite_pilot_get_page_light_r",
+          "struct": "rank_pilot_light",
+          "field_name": "troops",
+          "offset": 33,
+          "length": 1,
+          "wire_type": "i8",
+          "protocol_path": "protocol_analysis/commands/SC-0xC664-lounge-ranking_elite_pilot_get_page_light_r/README.md",
+          "section": "§4.3 结构/数组说明（读取器 sub_B469F0 + 打印器 sub_B501C0）",
+          "reader": "sub_B469F0",
+          "printer": "sub_B501C0",
+          "evidence_va": "0xB46A4E"
+        },
+        {
+          "command": "SC-0x9F9B-lounge-season_rankerbattle_get_entitled_pilot_list_r",
+          "struct": "rank_pilot_light",
+          "field_name": "troops",
+          "offset": 33,
+          "length": 1,
+          "wire_type": "i8",
+          "protocol_path": "protocol_analysis/commands/SC-0x9F9B-lounge-season_rankerbattle_get_entitled_pilot_list_r/README.md",
+          "section": "§4.3 结构/数组说明（读取器 sub_B469F0 + 打印器 sub_B501C0）",
+          "reader": "sub_B469F0",
+          "printer": "sub_B501C0",
+          "evidence_va": "0xB46A4E"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB46A4E",
+      "asm_audit_date": "2026-09-22",
+      "printer_va": "0xB5024B",
+      "reader_va": "0xB46A4E"
+    },
+    {
+      "name": "world_id",
+      "offset": 34,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "世界 ID",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0xC664-lounge-ranking_elite_pilot_get_page_light_r",
+          "struct": "rank_pilot_light",
+          "field_name": "world_id",
+          "offset": 34,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0xC664-lounge-ranking_elite_pilot_get_page_light_r/README.md",
+          "section": "§4.3 结构/数组说明（读取器 sub_B469F0 + 打印器 sub_B501C0）",
+          "reader": "sub_B469F0",
+          "printer": "sub_B501C0",
+          "evidence_va": "0xB46A54"
+        },
+        {
+          "command": "SC-0x9F9B-lounge-season_rankerbattle_get_entitled_pilot_list_r",
+          "struct": "rank_pilot_light",
+          "field_name": "world_id",
+          "offset": 34,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x9F9B-lounge-season_rankerbattle_get_entitled_pilot_list_r/README.md",
+          "section": "§4.3 结构/数组说明（读取器 sub_B469F0 + 打印器 sub_B501C0）",
+          "reader": "sub_B469F0",
+          "printer": "sub_B501C0",
+          "evidence_va": "0xB46A54"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB46A54",
+      "asm_audit_date": "2026-09-22",
+      "memory_offset": 36,
+      "printer_va": "0xB50273",
+      "reader_va": "0xB46A54"
+    },
+    {
+      "name": "season_class_lv",
+      "offset": 38,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "赛季阶级等级",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0xC664-lounge-ranking_elite_pilot_get_page_light_r",
+          "struct": "rank_pilot_light",
+          "field_name": "season_class_lv",
+          "offset": 38,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0xC664-lounge-ranking_elite_pilot_get_page_light_r/README.md",
+          "section": "§4.3 结构/数组说明（读取器 sub_B469F0 + 打印器 sub_B501C0）",
+          "reader": "sub_B469F0",
+          "printer": "sub_B501C0",
+          "evidence_va": "0xB46A66"
+        },
+        {
+          "command": "SC-0x9F9B-lounge-season_rankerbattle_get_entitled_pilot_list_r",
+          "struct": "rank_pilot_light",
+          "field_name": "season_class_lv",
+          "offset": 38,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x9F9B-lounge-season_rankerbattle_get_entitled_pilot_list_r/README.md",
+          "section": "§4.3 结构/数组说明（读取器 sub_B469F0 + 打印器 sub_B501C0）",
+          "reader": "sub_B469F0",
+          "printer": "sub_B501C0",
+          "evidence_va": "0xB46A66"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB46A66",
+      "asm_audit_date": "2026-09-22",
+      "memory_offset": 40,
+      "printer_va": "0xB5029A",
+      "reader_va": "0xB46A66"
+    },
+    {
+      "name": "clan_name",
+      "offset": 42,
+      "length": 31,
+      "wire_type": "char[31]",
+      "meaning": "战队名（定长 31B）",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0xC664-lounge-ranking_elite_pilot_get_page_light_r",
+          "struct": "rank_pilot_light",
+          "field_name": "clan_name",
+          "offset": 42,
+          "length": 31,
+          "wire_type": "char[31]",
+          "protocol_path": "protocol_analysis/commands/SC-0xC664-lounge-ranking_elite_pilot_get_page_light_r/README.md",
+          "section": "§4.3 结构/数组说明（读取器 sub_B469F0 + 打印器 sub_B501C0）",
+          "reader": "sub_B469F0",
+          "printer": "sub_B501C0",
+          "evidence_va": "0xB46A80"
+        },
+        {
+          "command": "SC-0x9F9B-lounge-season_rankerbattle_get_entitled_pilot_list_r",
+          "struct": "rank_pilot_light",
+          "field_name": "clan_name",
+          "offset": 42,
+          "length": 31,
+          "wire_type": "char[31]",
+          "protocol_path": "protocol_analysis/commands/SC-0x9F9B-lounge-season_rankerbattle_get_entitled_pilot_list_r/README.md",
+          "section": "§4.3 结构/数组说明（读取器 sub_B469F0 + 打印器 sub_B501C0）",
+          "reader": "sub_B469F0",
+          "printer": "sub_B501C0",
+          "evidence_va": "0xB46A80"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xB46A80",
+      "asm_audit_date": "2026-09-22",
+      "memory_offset": 44,
+      "printer_va": "0xB502C4",
+      "reader_va": "0xB46A80"
+    }
+  ],
+  "asm_audit": {
+    "verified": "2026-09-22",
+    "reader": "sub_B469F0",
+    "writer": null,
+    "total_bytes": 73,
+    "fields_ok": 7,
+    "fields_fail": 0,
+    "issues": [],
+    "status": "pass",
+    "memory": {
+      "verified": "2026-09-22",
+      "status": "pass",
+      "memory_claim": 76,
+      "mem_fields": 7,
+      "fields_ok": 7,
+      "fields_fail": 0,
+      "issues": [],
+      "note": "world_id 起 u32 对齐：0/4/8/33/36/40/44；末字节 mem 74 ⇒ 用 75B，槽对齐到 76"
+    }
+  }
+}

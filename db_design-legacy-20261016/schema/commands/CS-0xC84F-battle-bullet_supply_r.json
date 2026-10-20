@@ -1,0 +1,348 @@
+{
+  "id": "CS-0xC84F-battle-bullet_supply_r",
+  "opcode": "0xC84F",
+  "direction": "CS",
+  "proto": "battle",
+  "proto_class": "battle_client",
+  "name": "bullet_supply_r",
+  "source_dir": "protocol_analysis/commands/CS-0xC84F-battle-bullet_supply_r",
+  "meta": {
+    "opcode": "`0xC84F`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`battle_client`",
+    "命令名": "`bullet_supply_r`",
+    "名字符串": "`)<-_proto_battle_client::send_bullet_supply_r(` @ `0xEE1344`",
+    "代码位置": "`0xB3D8D0`（`0xB3D8D0`..`0xB3DABA`）",
+    "opcode 写入证据": "`0xB3D944`",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0x000A`（10）",
+    "容量申请证据": "`0xB3D916`（分配器 `[obj+0Ch]` 的 `vt[0x78]`）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)` @ `0xB3DA48`",
+    "提交": "`sub_B02FF0` @ `0xB3D9C5`",
+    "配对命令": "S→C `0x377D-battle-bullet_supply`（已 DONE）"
+  },
+  "handler": null,
+  "handler_va": "0xB3D8D0",
+  "block": [
+    "0xB3D8D0",
+    "0xB3DABA"
+  ],
+  "name_str": ")<-_proto_battle_client::send_bullet_supply_r(",
+  "name_str_va": "0xEE1344",
+  "capacity": "0xA",
+  "capacity_va": "0xB3D916",
+  "closer_va": "0xB3D9C5",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)` @ `0xB3DA48`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": "0xB3DA48",
+  "wire": {
+    "length_expr": "2 + 2",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0xA（容量记账口径，非线长）",
+    "field_count": 2,
+    "length_source": "field_sum",
+    "readme_conclusion": "字段数：**3**（含 opcode 第 0 项）",
+    "readme_close": "2+2+2 = 6 ≤ 容量 0xA = 10（富余 4）。"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "写入 `buf+0`，供服务端分发；无 case 块（C→S）",
+      "enum": "0xC84F",
+      "evidence_va": [
+        "`0xB3D944`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "percent_val",
+      "meaning": "补充百分比",
+      "purpose": "来源=入参 `arg_0`（写线指令见证据列）→ `vt[0x58](buf,len)` 发送至服务端",
+      "enum": null,
+      "evidence_va": [
+        "`0xB3D95A`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "2",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "equip_idx",
+      "meaning": "装备槽位索引",
+      "purpose": "来源=入参 `arg_4`（写线指令见证据列）→ `vt[0x58](buf,len)` 发送至服务端",
+      "enum": null,
+      "evidence_va": [
+        "`0xB3D968`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0xC84F（分发器 switch 选择子）",
+      "evidence_va": "0xB3D944"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0xA B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xB3D916"
+    },
+    {
+      "step": 3,
+      "kind": "write_scalar",
+      "detail": "percent_val：`u16`（线长 2）—— 补充百分比",
+      "evidence_va": "0xB3D95A"
+    },
+    {
+      "step": 4,
+      "kind": "write_scalar",
+      "detail": "equip_idx：`u16`（线长 2）—— 装备槽位索引",
+      "evidence_va": "0xB3D968"
+    },
+    {
+      "step": 5,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xB3D9C5"
+    },
+    {
+      "step": 6,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xB3DA51"
+    }
+  ],
+  "capabilities": [
+    "settle",
+    "battle.bullet"
+  ],
+  "capabilities_derived": [
+    "unclassified"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:47",
+    "batch": 20,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 10,
+        "va": "0xB3D916",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB3D913",
+        "call_va": "0xB3D918"
+      },
+      "field_window": {
+        "start_va": "0xB3D8D0",
+        "end_va": "0xB3D9C5",
+        "guard": null,
+        "closer_or_commit_va": "0xB3D9C5",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "percent_val",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "`0xB3D95A`"
+            ]
+          },
+          {
+            "name": "equip_idx",
+            "wire_type": "u16",
+            "width": 2,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "`0xB3D968`"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB3D944",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB3D95A",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB3D968",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB3D99B",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 2,
+        "checkable": 2,
+        "pairs": [
+          {
+            "field": "percent_val",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB3D944",
+            "kind": "inline_store"
+          },
+          {
+            "field": "equip_idx",
+            "width": 2,
+            "shape": "scalar",
+            "va": "0xB3D95A",
+            "kind": "inline_store"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB3D968",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB3D8D0",
+          "0xB3D9C5"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 6,
+          "capacity": 10,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB3D99B",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）6 / 容量 0xa"
+        }
+      },
+      "closer": {
+        "va": "0xB3D9C5",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xB3DA51",
+        "mov_va": "0xB3DA48",
+        "host": "[edx+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "percent_val=",
+        "equip_idx="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0xC84F-battle-bullet_supply_r.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0xB3D944",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "`0xB3D944`"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "BulletSupplyR",
+      "role": "request",
+      "wire_length": "2 + 2",
+      "members": [
+        {
+          "name": "PercentVal",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "percent_val"
+        },
+        {
+          "name": "EquipIdx",
+          "wire_type": "u16",
+          "length": "2",
+          "field_ref": "equip_idx"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "d9ae70b5872ca7a3",
+  "check_fingerprint": "98b68505af5d7235"
+}

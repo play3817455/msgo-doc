@@ -1,0 +1,786 @@
+{
+  "id": "CS-0xADB6-lounge-shop_buy",
+  "opcode": "0xADB6",
+  "direction": "CS",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "shop_buy",
+  "source_dir": "protocol_analysis/commands/CS-0xADB6-lounge-shop_buy",
+  "meta": {
+    "opcode": "`0xADB6`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`shop_buy`",
+    "名字符串": "`)<-_proto_lounge_client::send_shop_buy(` @ `0xEEC350`",
+    "代码位置": "sub_B9CD70 @ `0xB9CD70`（`0xB9CD70`..`0xB9D179`）",
+    "opcode 写入证据": "`0xB9CDF2`",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0x0382`（898）",
+    "容量申请证据": "`0xB9CDB6`（`push 0x0382`）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)` @ `0xB9D107`",
+    "附加通知": "`[obj+79A8h]` 回调，模块 id `0x17B` @ `0xB9D122`",
+    "配对命令": "S→C `SC-0x2467-lounge-shop_buy_r`（已 DONE）"
+  },
+  "handler": "sub_B9CD70",
+  "handler_va": "0xB9CD70",
+  "block": [
+    "0xB9CD70",
+    "0xB9D179"
+  ],
+  "name_str": ")<-_proto_lounge_client::send_shop_buy(",
+  "name_str_va": "0xEEC350",
+  "capacity": "0x382",
+  "capacity_va": "0xB9CDB6",
+  "closer_va": "0xB9CF36",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)` @ `0xB9D107`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": "0xB9D107",
+  "wire": {
+    "length_expr": "4 + 1 + 4 + 1 + 1 + 4 + var(≤25) + var(≤73) + var(≤766)",
+    "fixed": false,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0x382（容量记账口径，非线长）",
+    "field_count": 9,
+    "length_source": "field_sum",
+    "readme_conclusion": "结论：商店购买（商品 + 数量 + 结算方式 + 赠礼/邮件三串）。",
+    "readme_close": "上限场景 2 + 4+1+4+1+1+4 + (25+73+766) = 881 ≤ 容量 0x382 = 898（富余 17）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "写入 `buf+0`，供服务端分发；无 case 块（C→S）",
+      "enum": "0xADB6",
+      "evidence_va": [
+        "0xB9CDF2"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "2",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "shopitemid",
+      "meaning": "商店商品 id",
+      "purpose": "来源=入参 `arg_0`（内联 `mov [ebp+2],esi`）",
+      "enum": null,
+      "evidence_va": [
+        "0xB9CE02"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "6",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "id_type",
+      "meaning": "商品 id 类型",
+      "purpose": "来源=入参 `arg_4`（`mov al,byte ptr [esp+48h+arg_4]` → 内联 `mov [edx],al`）",
+      "enum": null,
+      "evidence_va": [
+        "0xB9CE1B"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    },
+    {
+      "seq": 3,
+      "offset": "7",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "num",
+      "meaning": "购买数量",
+      "purpose": "来源=入参 `arg_8`；写线原语 `sub_B02D80`(u32)",
+      "enum": null,
+      "evidence_va": [
+        "0xB9CE23"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 5
+    },
+    {
+      "seq": 4,
+      "offset": "11",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "tab_type",
+      "meaning": "页签类型",
+      "purpose": "来源=入参 `arg_C`；写线原语 `sub_B061C0`(u8)",
+      "enum": null,
+      "evidence_va": [
+        "0xB9CE3D"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 6
+    },
+    {
+      "seq": 5,
+      "offset": "12",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "is_cp",
+      "meaning": "是否 CP 结算",
+      "purpose": "来源=入参 `arg_10`；写线原语 `sub_B061C0`(u8)",
+      "enum": "0/1",
+      "evidence_va": [
+        "0xB9CE57"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 7
+    },
+    {
+      "seq": 6,
+      "offset": "13",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "total_price",
+      "meaning": "总价",
+      "purpose": "来源=入参 `arg_14`；写线原语 `sub_B02D80`(u32)",
+      "enum": null,
+      "evidence_va": [
+        "0xB9CE71"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 8
+    },
+    {
+      "seq": 7,
+      "offset": "17",
+      "length": "var(≤25)",
+      "wire_type": "str",
+      "name": "gift_pilot_name",
+      "meaning": "赠礼驾驶员名（NUL 结尾串）",
+      "purpose": "来源=入参 `arg_18`；写线原语 `sub_B02B40`，**`push 19h` = 串槽预算 25**",
+      "enum": null,
+      "evidence_va": [
+        "0xB9CE8D"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 9
+    },
+    {
+      "seq": 8,
+      "offset": "var",
+      "length": "var(≤73)",
+      "wire_type": "str",
+      "name": "subject",
+      "meaning": "邮件标题（NUL 结尾串）",
+      "purpose": "来源=入参 `arg_1C`；写线原语 `sub_B02B40`，**`push 49h` = 串槽预算 73**",
+      "enum": null,
+      "evidence_va": [
+        "0xB9CEA9"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 10
+    },
+    {
+      "seq": 9,
+      "offset": "var",
+      "length": "var(≤766)",
+      "wire_type": "str",
+      "name": "body",
+      "meaning": "邮件正文（NUL 结尾串）",
+      "purpose": "来源=入参 `arg_20`；写线原语 `sub_B02B40`，**`push 2FEh` = 串槽预算 766**",
+      "enum": null,
+      "evidence_va": [
+        "0xB9CEC8"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 11
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0xADB6（分发器 switch 选择子）",
+      "evidence_va": "0xB9CDF2"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0x382 B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xB9CDB6"
+    },
+    {
+      "step": 3,
+      "kind": "write_scalar",
+      "detail": "shopitemid：`u32`（线长 4）—— 商店商品 id",
+      "evidence_va": "0xB9CE02"
+    },
+    {
+      "step": 4,
+      "kind": "write_scalar",
+      "detail": "id_type：`u8`（线长 1）—— 商品 id 类型",
+      "evidence_va": "0xB9CE1B"
+    },
+    {
+      "step": 5,
+      "kind": "write_count",
+      "detail": "num：`u32`（线长 4）—— 购买数量",
+      "evidence_va": "0xB9CE23"
+    },
+    {
+      "step": 6,
+      "kind": "write_scalar",
+      "detail": "tab_type：`u8`（线长 1）—— 页签类型",
+      "evidence_va": "0xB9CE3D"
+    },
+    {
+      "step": 7,
+      "kind": "write_scalar",
+      "detail": "is_cp：`u8`（线长 1）—— 是否 CP 结算",
+      "evidence_va": "0xB9CE57"
+    },
+    {
+      "step": 8,
+      "kind": "write_scalar",
+      "detail": "total_price：`u32`（线长 4）—— 总价",
+      "evidence_va": "0xB9CE71"
+    },
+    {
+      "step": 9,
+      "kind": "write_string",
+      "detail": "gift_pilot_name：`str`（线长 var(≤25)）—— 赠礼驾驶员名（NUL 结尾串）",
+      "evidence_va": "0xB9CE8D"
+    },
+    {
+      "step": 10,
+      "kind": "write_string",
+      "detail": "subject：`str`（线长 var(≤73)）—— 邮件标题（NUL 结尾串）",
+      "evidence_va": "0xB9CEA9"
+    },
+    {
+      "step": 11,
+      "kind": "write_string",
+      "detail": "body：`str`（线长 var(≤766)）—— 邮件正文（NUL 结尾串）",
+      "evidence_va": "0xB9CEC8"
+    },
+    {
+      "step": 12,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xB9CF36"
+    },
+    {
+      "step": 13,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xB9D110"
+    },
+    {
+      "step": 14,
+      "kind": "notify",
+      "detail": "附加通知回调 `[obj+79A8h]`（模块 id，非字段）",
+      "evidence_va": "0xB9D122"
+    }
+  ],
+  "capabilities": [
+    "create",
+    "lounge.shop"
+  ],
+  "capabilities_derived": [
+    "create"
+  ],
+  "db_effects": [],
+  "pair": "SC-0x2467-lounge-shop_buy_r",
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:44",
+    "batch": 10,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 898,
+        "va": "0xB9CDB6",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB9CDB3",
+        "call_va": "0xB9CDBB"
+      },
+      "field_window": {
+        "start_va": "0xB9CD70",
+        "end_va": "0xB9CF36",
+        "guard": null,
+        "closer_or_commit_va": "0xB9CF36",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "shopitemid",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB9CE02"
+            ]
+          },
+          {
+            "name": "id_type",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB9CE1B"
+            ]
+          },
+          {
+            "name": "num",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB9CE23"
+            ]
+          },
+          {
+            "name": "tab_type",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 4,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB9CE3D"
+            ]
+          },
+          {
+            "name": "is_cp",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 5,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB9CE57"
+            ]
+          },
+          {
+            "name": "total_price",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 6,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB9CE71"
+            ]
+          },
+          {
+            "name": "gift_pilot_name",
+            "wire_type": "str",
+            "width": null,
+            "seq": 7,
+            "shape": "str",
+            "evidence_va": [
+              "0xB9CE8D"
+            ]
+          },
+          {
+            "name": "subject",
+            "wire_type": "str",
+            "width": null,
+            "seq": 8,
+            "shape": "str",
+            "evidence_va": [
+              "0xB9CEA9"
+            ]
+          },
+          {
+            "name": "body",
+            "wire_type": "str",
+            "width": null,
+            "seq": 9,
+            "shape": "str",
+            "evidence_va": [
+              "0xB9CEC8"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB9CDF2",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB9CE02",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB9CE1B",
+            "kind": "inline_store",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB9CE23",
+            "kind": "write",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB9CE3D",
+            "kind": "write",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB9CE57",
+            "kind": "write",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB9CE71",
+            "kind": "write",
+            "width": 4,
+            "wire_type": "u32",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB9CE8D",
+            "kind": "write",
+            "width": null,
+            "wire_type": "str",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB9CEA9",
+            "kind": "write",
+            "width": null,
+            "wire_type": "str",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB9CEC8",
+            "kind": "write",
+            "width": null,
+            "wire_type": "str",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB9CF0C",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 9,
+        "checkable": 9,
+        "pairs": [
+          {
+            "field": "shopitemid",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB9CE02",
+            "kind": "inline_store"
+          },
+          {
+            "field": "id_type",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB9CE1B",
+            "kind": "inline_store"
+          },
+          {
+            "field": "num",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB9CE23",
+            "kind": "write"
+          },
+          {
+            "field": "tab_type",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB9CE3D",
+            "kind": "write"
+          },
+          {
+            "field": "is_cp",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB9CE57",
+            "kind": "write"
+          },
+          {
+            "field": "total_price",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB9CE71",
+            "kind": "write"
+          },
+          {
+            "field": "gift_pilot_name",
+            "width": null,
+            "shape": "str",
+            "va": "0xB9CE8D",
+            "kind": "write"
+          },
+          {
+            "field": "subject",
+            "width": null,
+            "shape": "str",
+            "va": "0xB9CEA9",
+            "kind": "write"
+          },
+          {
+            "field": "body",
+            "width": null,
+            "shape": "str",
+            "va": "0xB9CEC8",
+            "kind": "write"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB9CDF2",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB9CD70",
+          "0xB9CF36"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 17,
+          "capacity": 898,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB9CE8D",
+              "kind": "write",
+              "name": ""
+            },
+            {
+              "va": "0xB9CEA9",
+              "kind": "write",
+              "name": ""
+            },
+            {
+              "va": "0xB9CEC8",
+              "kind": "write",
+              "name": ""
+            },
+            {
+              "va": "0xB9CF0C",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）17 / 容量 0x382"
+        }
+      },
+      "closer": {
+        "va": "0xB9CF36",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xB9D110",
+        "mov_va": "0xB9D107",
+        "host": "[eax+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "shopitemid=",
+        "id_type=",
+        "num=",
+        "tab_type=",
+        "is_cp=",
+        "total_price=",
+        "gift_pilot_name=\"",
+        "subject=\"",
+        "body=\""
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0xADB6-lounge-shop_buy.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0xB9CDF2",
+    "notify_va": "0xB9D122",
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xB9CDF2"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "ShopBuy",
+      "role": "request",
+      "wire_length": "4 + 1 + 4 + 1 + 1 + 4 + var(≤25) + var(≤73) + var(≤766)",
+      "members": [
+        {
+          "name": "Shopitemid",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "shopitemid"
+        },
+        {
+          "name": "IdType",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "id_type"
+        },
+        {
+          "name": "Num",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "num"
+        },
+        {
+          "name": "TabType",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "tab_type"
+        },
+        {
+          "name": "IsCp",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "is_cp"
+        },
+        {
+          "name": "TotalPrice",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "total_price"
+        },
+        {
+          "name": "GiftPilotName",
+          "wire_type": "str",
+          "length": "var(≤25)",
+          "field_ref": "gift_pilot_name",
+          "element": null,
+          "element_length": null,
+          "cap": null,
+          "count_field": "num",
+          "count_field_source": "heuristic",
+          "note": "元素成员未建模（composites/ 无此结构），须以 IDA 复核补"
+        },
+        {
+          "name": "Subject",
+          "wire_type": "str",
+          "length": "var(≤73)",
+          "field_ref": "subject",
+          "element": null,
+          "element_length": null,
+          "cap": null,
+          "count_field": "num",
+          "count_field_source": "heuristic",
+          "note": "元素成员未建模（composites/ 无此结构），须以 IDA 复核补"
+        },
+        {
+          "name": "Body",
+          "wire_type": "str",
+          "length": "var(≤766)",
+          "field_ref": "body",
+          "element": null,
+          "element_length": null,
+          "cap": null,
+          "count_field": "num",
+          "count_field_source": "heuristic",
+          "note": "元素成员未建模（composites/ 无此结构），须以 IDA 复核补"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "dd2152e5b364a6dd",
+  "check_fingerprint": "a7aa303094bd9bac"
+}

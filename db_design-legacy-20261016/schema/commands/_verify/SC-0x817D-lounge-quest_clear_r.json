@@ -1,0 +1,189 @@
+{
+ "id": "SC-0x817D-lounge-quest_clear_r",
+ "verified_at": "2026-09-30 15:25:44",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "block",
+ "block": [
+  "0xB69522",
+  "0xB6975D"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 1545,
+   "va": "0xB69537",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xB69534",
+   "call_va": "0xB6953C"
+  },
+  "field_window": {
+   "start_va": "0xB69523",
+   "end_va": "0xB69607",
+   "guard": {
+    "va": "0xB69522",
+    "func": "0xB41120",
+    "module_id": null,
+    "release_va": "0xB41110"
+   },
+   "closer_or_commit_va": "0xB695FC",
+   "within_model_block": true,
+   "range_from": "block"
+  },
+  "primitive_widths": {
+   "direction": "SC",
+   "expected": [
+    {
+     "name": "result",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "B69575",
+      "B6967F"
+     ]
+    },
+    {
+     "name": "quest_id",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 2,
+     "shape": "scalar",
+     "evidence_va": [
+      "B695B5",
+      "B696A9"
+     ]
+    },
+    {
+     "name": "pay_comment",
+     "wire_type": "str",
+     "width": null,
+     "seq": 3,
+     "shape": "str",
+     "evidence_va": [
+      "B695D0",
+      "B696D1"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB69575",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB695B5",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB695D0",
+     "kind": "read",
+     "width": null,
+     "wire_type": "str",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 3,
+   "checkable": 3,
+   "pairs": [
+    {
+     "field": "result",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB69575",
+     "kind": "read"
+    },
+    {
+     "field": "quest_id",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB695B5",
+     "kind": "read"
+    },
+    {
+     "field": "pay_comment",
+     "width": null,
+     "shape": "str",
+     "va": "0xB695D0",
+     "kind": "read"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB69523",
+    "0xB69607"
+   ],
+   "scalar_match_verifiable": true,
+   "capacity_relation": {
+    "observed_min": 8,
+    "capacity": 1545,
+    "relation": "within",
+    "unknown_events": [
+     {
+      "va": "0xB695D0",
+      "kind": "read",
+      "name": ""
+     }
+    ],
+    "is_lower_bound": true,
+    "note": "观测线长（下界）8 / 容量 0x609"
+   }
+  },
+  "closer": {
+   "va": "0xB695FC",
+   "kind": "jnz",
+   "jcc_va": "0xB69600",
+   "seq_va": "0xB695F8",
+   "jcc_dst": "0xB695DE",
+   "cmp": "cmp     ebx, [esp+2C5Ch+var_2C40]",
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x3CC]",
+   "slot_value": 972,
+   "va": "0xB69741",
+   "mov_va": "0xB6972E",
+   "host": "[edx+3CCh]",
+   "argc": 3,
+   "form": "mov_then_call",
+   "error_slot": {
+    "slot": "vt[0x64]",
+    "va": "0xB6958F",
+    "argc": 2
+   }
+  },
+  "log_strings": [
+   "result=",
+   "quest_id=",
+   "pay_comment=\""
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "pay_comment",
+  "quest_id",
+  "result"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 9
+}

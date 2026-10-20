@@ -1,0 +1,358 @@
+{
+  "id": "CS-0x60FC-lounge-msma_color_change",
+  "opcode": "0x60FC",
+  "direction": "CS",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "msma_color_change",
+  "source_dir": "protocol_analysis/commands/CS-0x60FC-lounge-msma_color_change",
+  "meta": {
+    "opcode": "`0x60FC`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`msma_color_change`",
+    "名字符串": "`)<-_proto_lounge_client::send_msma_color_change(` @ `0xeeb654`",
+    "代码位置": "sub_B94C60 @ `0xb94c60`（`0xb94c60`..`0xb94e52`）",
+    "opcode 写入证据": "`0xb94cd4`",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0xE`（14）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)`",
+    "配对命令（同 opcode 反向）": "见 §4.3 与其他命令的关联 / INDEX 反向表"
+  },
+  "handler": "sub_B94C60",
+  "handler_va": "0xb94c60",
+  "block": [
+    "0xB94C60",
+    "0xB94E52"
+  ],
+  "name_str": ")<-_proto_lounge_client::send_msma_color_change(",
+  "name_str_va": "0xeeb654",
+  "capacity": "0xE",
+  "capacity_va": null,
+  "closer_va": "0xB94D58",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": null,
+  "wire": {
+    "length_expr": "8 + 4",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0xE（容量记账口径，非线长）",
+    "field_count": 2,
+    "length_source": "field_sum",
+    "readme_conclusion": "结论：机体换色：机体唯一 id + 颜色。",
+    "readme_close": "2 + 8 + 4 = 14 = 容量 0xE（精确相等）"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "分发给 lounge 协议类处理块（C→S 无 case 块）",
+      "enum": "0x60FC",
+      "evidence_va": [
+        "0xB94CD4"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "2",
+      "length": "8",
+      "wire_type": "u64",
+      "name": "uniqid_ms",
+      "meaning": "机体唯一 id",
+      "purpose": "来源=入参 arg_0（低 32 位 @0xB94CE0）+ arg_4（高 32 位 @0xB94CE6）；内联两次 `mov`（低 32 位在前）；经 `vt[0x58]` 发送",
+      "enum": null,
+      "evidence_va": [
+        "0xB94CE4"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "10",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "color",
+      "meaning": "颜色值",
+      "purpose": "来源=入参 arg_8（@0xB94CF8）；内联 `mov [edx],ecx`；经 `vt[0x58]` 发送",
+      "enum": null,
+      "evidence_va": [
+        "0xB94CFC"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0x60FC（分发器 switch 选择子）",
+      "evidence_va": "0xB94CD4"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0xE B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xB94CA6"
+    },
+    {
+      "step": 3,
+      "kind": "write_scalar",
+      "detail": "uniqid_ms：`u64`（线长 8）—— 机体唯一 id",
+      "evidence_va": "0xB94CE4"
+    },
+    {
+      "step": 4,
+      "kind": "write_scalar",
+      "detail": "color：`u32`（线长 4）—— 颜色值",
+      "evidence_va": "0xB94CFC"
+    },
+    {
+      "step": 5,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xB94D58"
+    },
+    {
+      "step": 6,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xB94DE9"
+    }
+  ],
+  "capabilities": [
+    "update",
+    "lounge.color"
+  ],
+  "capabilities_derived": [
+    "update"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:42",
+    "batch": 2,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 14,
+        "va": "0xB94CA6",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB94CA3",
+        "call_va": "0xB94CA8"
+      },
+      "field_window": {
+        "start_va": "0xB94C60",
+        "end_va": "0xB94D58",
+        "guard": null,
+        "closer_or_commit_va": "0xB94D58",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "uniqid_ms",
+            "wire_type": "u64",
+            "width": 8,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB94CE4"
+            ]
+          },
+          {
+            "name": "color",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB94CFC"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB94CD4",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB94CE4",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB94CFC",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB94D2E",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 1,
+        "checkable": 2,
+        "pairs": [
+          {
+            "field": "color",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB94CE4",
+            "kind": "inline_store"
+          }
+        ],
+        "gaps": [
+          {
+            "field": "uniqid_ms",
+            "wire_type": "u64",
+            "width": 8,
+            "shape": "scalar",
+            "note": "汇编事件序列里找不到与之对位的读写点（缺字段或宽度不符）"
+          }
+        ],
+        "unmatched_actual": [
+          {
+            "va": "0xB94CD4",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          },
+          {
+            "va": "0xB94CFC",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB94C60",
+          "0xB94D58"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 10,
+          "capacity": 14,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB94D2E",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）10 / 容量 0xe"
+        }
+      },
+      "closer": {
+        "va": "0xB94D58",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xB94DE9",
+        "mov_va": "0xB94DE0",
+        "host": "[eax+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "uniqid_ms=",
+        "color="
+      ]
+    },
+    "mismatches": [],
+    "notes": [
+      {
+        "check": "primitive_widths",
+        "note": "定宽对位不可判定：C→S 写线在复合写入器内部 consumed 未知；缺口 uniqid_ms"
+      }
+    ],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0x60FC-lounge-msma_color_change.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0xb94cd4",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "0xB94CD4"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "MsmaColorChange",
+      "role": "request",
+      "wire_length": "8 + 4",
+      "members": [
+        {
+          "name": "UniqidMs",
+          "wire_type": "u64",
+          "length": "8",
+          "field_ref": "uniqid_ms"
+        },
+        {
+          "name": "Color",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "color"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "830991ad0934d7da",
+  "check_fingerprint": "855ff107c29d78b1"
+}

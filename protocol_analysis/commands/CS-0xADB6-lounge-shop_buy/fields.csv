@@ -1,0 +1,11 @@
+序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+0,0,2,u16,opcode,命令号,写入 `buf+0`，供服务端分发；无 case 块（C→S）,0xADB6,0xB9CDF2,确证
+1,2,4,u32,shopitemid,商店商品 id,"来源=入参 `arg_0`（内联 `mov [ebp+2],esi`）",-,0xB9CE02,确证
+2,6,1,u8,id_type,商品 id 类型,"来源=入参 `arg_4`（`mov al,byte ptr [esp+48h+arg_4]` → 内联 `mov [edx],al`）",-,0xB9CE1B,确证
+3,7,4,u32,num,购买数量,来源=入参 `arg_8`；写线原语 `sub_B02D80`(u32),-,0xB9CE23,确证
+4,11,1,u8,tab_type,页签类型,来源=入参 `arg_C`；写线原语 `sub_B061C0`(u8),-,0xB9CE3D,确证
+5,12,1,u8,is_cp,是否 CP 结算,来源=入参 `arg_10`；写线原语 `sub_B061C0`(u8),0/1,0xB9CE57,确证
+6,13,4,u32,total_price,总价,来源=入参 `arg_14`；写线原语 `sub_B02D80`(u32),-,0xB9CE71,确证
+7,17,var(≤25),str,gift_pilot_name,赠礼驾驶员名（NUL 结尾串）,来源=入参 `arg_18`；写线原语 `sub_B02B40`，**`push 19h` = 串槽预算 25**,-,0xB9CE8D,确证
+8,var,var(≤73),str,subject,邮件标题（NUL 结尾串）,来源=入参 `arg_1C`；写线原语 `sub_B02B40`，**`push 49h` = 串槽预算 73**,-,0xB9CEA9,确证
+9,var,var(≤766),str,body,邮件正文（NUL 结尾串）,来源=入参 `arg_20`；写线原语 `sub_B02B40`，**`push 2FEh` = 串槽预算 766**,-,0xB9CEC8,确证

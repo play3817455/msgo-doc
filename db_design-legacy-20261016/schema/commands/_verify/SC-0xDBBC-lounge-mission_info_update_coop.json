@@ -1,0 +1,263 @@
+{
+ "id": "SC-0xDBBC-lounge-mission_info_update_coop",
+ "verified_at": "2026-09-30 15:25:45",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "block",
+ "block": [
+  "0xB8071A",
+  "0xB80AC0"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 97,
+   "va": "0xB80733",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xB80730",
+   "call_va": "0xB80735"
+  },
+  "field_window": {
+   "start_va": "0xB8071F",
+   "end_va": "0xB8087C",
+   "guard": {
+    "va": "0xB8071E",
+    "func": "0xB41120",
+    "module_id": 94,
+    "release_va": "0xB41110"
+   },
+   "closer_or_commit_va": "0xB8085D",
+   "within_model_block": true,
+   "range_from": "block"
+  },
+  "primitive_widths": {
+   "direction": "SC",
+   "expected": [
+    {
+     "name": "is_unlock",
+     "wire_type": "array<u64,4>",
+     "width": null,
+     "seq": 1,
+     "shape": "agg",
+     "evidence_va": [
+      "0xb8075f",
+      "0xb80776",
+      "0xb80788",
+      "0xb808e8"
+     ]
+    },
+    {
+     "name": "is_known",
+     "wire_type": "array<u64,4>",
+     "width": null,
+     "seq": 2,
+     "shape": "agg",
+     "evidence_va": [
+      "0xb807a5",
+      "0xb807b6",
+      "0xb807c8"
+     ]
+    },
+    {
+     "name": "is_clear",
+     "wire_type": "array<u64,4>",
+     "width": null,
+     "seq": 3,
+     "shape": "agg",
+     "evidence_va": [
+      "0xb807e5",
+      "0xb807f6",
+      "0xb80808"
+     ]
+    },
+    {
+     "name": "coop_entry_is_freeze",
+     "wire_type": "u8",
+     "width": 1,
+     "seq": 4,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xb80834",
+      "0xb80a3b"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB8075F",
+     "kind": "opaque",
+     "width": null,
+     "wire_type": null,
+     "name": "sub_B41300",
+     "consumed": 0,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB80776",
+     "kind": "read",
+     "width": 32,
+     "wire_type": "u64",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB807A5",
+     "kind": "opaque",
+     "width": null,
+     "wire_type": null,
+     "name": "sub_B41300",
+     "consumed": 0,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB807B6",
+     "kind": "read",
+     "width": 32,
+     "wire_type": "u64",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB807E5",
+     "kind": "opaque",
+     "width": null,
+     "wire_type": null,
+     "name": "sub_B41300",
+     "consumed": 0,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB807F6",
+     "kind": "read",
+     "width": 32,
+     "wire_type": "u64",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB80834",
+     "kind": "read",
+     "width": 1,
+     "wire_type": "u8",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 1,
+   "checkable": 1,
+   "pairs": [
+    {
+     "field": "coop_entry_is_freeze",
+     "width": 1,
+     "shape": "scalar",
+     "va": "0xB80834",
+     "kind": "read"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [
+    {
+     "va": "0xB8075F",
+     "kind": "opaque",
+     "width": null,
+     "wire_type": null
+    },
+    {
+     "va": "0xB80776",
+     "kind": "read",
+     "width": 32,
+     "wire_type": "u64"
+    },
+    {
+     "va": "0xB807A5",
+     "kind": "opaque",
+     "width": null,
+     "wire_type": null
+    },
+    {
+     "va": "0xB807B6",
+     "kind": "read",
+     "width": 32,
+     "wire_type": "u64"
+    },
+    {
+     "va": "0xB807E5",
+     "kind": "opaque",
+     "width": null,
+     "wire_type": null
+    },
+    {
+     "va": "0xB807F6",
+     "kind": "read",
+     "width": 32,
+     "wire_type": "u64"
+    }
+   ],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB8071F",
+    "0xB8087C"
+   ],
+   "scalar_match_verifiable": true,
+   "capacity_relation": {
+    "observed_min": 97,
+    "capacity": 97,
+    "relation": "exact",
+    "unknown_events": [],
+    "is_lower_bound": false,
+    "note": "观测线长（下界）97 / 容量 0x61"
+   }
+  },
+  "closer": {
+   "va": "0xB8085D",
+   "kind": "jz",
+   "jcc_va": "0xB80861",
+   "seq_va": "0xB80859",
+   "jcc_dst": "0xB8087A",
+   "cmp": "cmp     eax, [esp+2C5Ch+var_2C40]",
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x140]",
+   "slot_value": 320,
+   "va": "0xB80AA4",
+   "mov_va": "0xB80A90",
+   "host": "[edx+140h]",
+   "argc": 4,
+   "form": "mov_then_call",
+   "error_slot": {
+    "slot": "vt[0x64]",
+    "va": "0xB8079A",
+    "argc": 2
+   }
+  },
+  "log_strings": [
+   "is_unlock={",
+   "is_known={",
+   "is_clear={",
+   "coop_entry_is_freeze="
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "coop_entry_is_freeze",
+  "is_clear",
+  "is_known",
+  "is_unlock"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 12
+}

@@ -1,0 +1,183 @@
+{
+ "id": "SC-0xF659-lounge-pilot_over_custom_level_up_estimate_r",
+ "verified_at": "2026-09-30 15:25:46",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "block",
+ "block": [
+  "0xB86F9F",
+  "0xB871ED"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 12,
+   "va": "0xB86FBB",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xB86FB8",
+   "call_va": "0xB86FBD"
+  },
+  "field_window": {
+   "start_va": "0xB86FA7",
+   "end_va": "0xB87091",
+   "guard": {
+    "va": "0xB86FA6",
+    "func": "0xB41120",
+    "module_id": 606,
+    "release_va": "0xB41110"
+   },
+   "closer_or_commit_va": "0xB8706A",
+   "within_model_block": true,
+   "range_from": "block"
+  },
+  "primitive_widths": {
+   "direction": "SC",
+   "expected": [
+    {
+     "name": "result",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB86FF6",
+      "0xB87109"
+     ]
+    },
+    {
+     "name": "price_gp",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 2,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB87036",
+      "0xB87133"
+     ]
+    },
+    {
+     "name": "price_cp",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 3,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB8705A",
+      "0xB87158"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB86FF6",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB87036",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB8705A",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 3,
+   "checkable": 3,
+   "pairs": [
+    {
+     "field": "result",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB86FF6",
+     "kind": "read"
+    },
+    {
+     "field": "price_gp",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB87036",
+     "kind": "read"
+    },
+    {
+     "field": "price_cp",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB8705A",
+     "kind": "read"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB86FA7",
+    "0xB87091"
+   ],
+   "scalar_match_verifiable": true,
+   "capacity_relation": {
+    "observed_min": 12,
+    "capacity": 12,
+    "relation": "exact",
+    "unknown_events": [],
+    "is_lower_bound": false,
+    "note": "观测线长（下界）12 / 容量 0xc"
+   }
+  },
+  "closer": {
+   "va": "0xB8706A",
+   "kind": "jz",
+   "jcc_va": "0xB87070",
+   "seq_va": "0xB87066",
+   "jcc_dst": "0xB8708C",
+   "cmp": "cmp     ebx, [esp+2C5Ch+var_2C40]",
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x5B8]",
+   "slot_value": 1464,
+   "va": "0xB871BF",
+   "mov_va": "0xB871AC",
+   "host": "[eax+5B8h]",
+   "argc": 3,
+   "form": "mov_then_call",
+   "error_slot": {
+    "slot": "vt[0x64]",
+    "va": "0xB87010",
+    "argc": 2
+   }
+  },
+  "log_strings": [
+   "result=",
+   "price_gp=",
+   "price_cp="
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "price_cp",
+  "price_gp",
+  "result"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 14
+}

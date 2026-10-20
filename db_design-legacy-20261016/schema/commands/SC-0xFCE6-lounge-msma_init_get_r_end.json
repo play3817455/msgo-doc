@@ -1,0 +1,197 @@
+{
+  "id": "SC-0xFCE6-lounge-msma_init_get_r_end",
+  "opcode": "0xFCE6",
+  "direction": "SC",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "msma_init_get_r_end",
+  "source_dir": "protocol_analysis/commands/SC-0xFCE6-lounge-msma_init_get_r_end",
+  "meta": {
+    "opcode": "`0xFCE6`",
+    "方向": "SC（服务端 → 客户端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`msma_init_get_r_end`",
+    "名字符串": "`)->_proto_lounge_client::recv_msma_init_get_r_end( ` @ `0xee556c`",
+    "代码位置": "sub_B51930 @ `0xb51930`　块 `0xb884cd`..`0xb8861d`",
+    "opcode 写入/分发证据": "`0xb8853a`（命令名字符串引用点 = case 归属锚点）",
+    "处理块范围": "`0xB884CD`..`0xB8861D`",
+    "声明容量": "无（零负载）",
+    "配对命令（同 opcode 反向）": "（本批次内无同 opcode 反向命令）"
+  },
+  "handler": "sub_B51930",
+  "handler_va": "0xb51930",
+  "block": [
+    "0xB884CD",
+    "0xB8861D"
+  ],
+  "name_str": ")->_proto_lounge_client::recv_msma_init_get_r_end(",
+  "name_str_va": "0xee556c",
+  "capacity": null,
+  "capacity_va": null,
+  "closer_va": "0xB884E5",
+  "dispatch": null,
+  "dispatch_slot": "vt[0x234]",
+  "dispatch_va": null,
+  "wire": {
+    "length_expr": "0",
+    "fixed": true,
+    "var_drivers": [],
+    "field_count": 0,
+    "length_source": "zero_load",
+    "readme_conclusion": "结论：★ **零负载命令（第 13 例）**：无任何负载字节、零字段；入口即做「游标 == 报文末尾」校验，去向为**无参** vt[0x234]()。",
+    "readme_close": "闭合点：0x00B884E5（游标寄存器与报文末尾比较，jz/jnz 走成功分支）。"
+  },
+  "fields": [],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "read_scalar",
+      "detail": "opcode 0xFCE6（分发器 switch 选择子）",
+      "evidence_va": "0xB8853A"
+    },
+    {
+      "step": 2,
+      "kind": "guard",
+      "detail": "进入解码窗口：守卫 `0xB41120`（模块 id 202）→ 之后逐字段读线",
+      "evidence_va": "0xB884D4"
+    },
+    {
+      "step": 3,
+      "kind": "close_check",
+      "detail": "闭合校验：读游标 == 报文末尾（jz）",
+      "evidence_va": "0xB884E5"
+    },
+    {
+      "step": 4,
+      "kind": "dispatch",
+      "detail": "交业务 `vt[0x234]`",
+      "evidence_va": "0xB885C7"
+    },
+    {
+      "step": 5,
+      "kind": "error_path",
+      "detail": "失败路径 `vt[0x64](1, 错误码)`（不是业务去向）",
+      "evidence_va": "0xB884F9"
+    },
+    {
+      "step": 6,
+      "kind": "read_scalar",
+      "detail": "零负载：无报文体字段，仅 opcode + 去向",
+      "evidence_va": "0xB884E5"
+    }
+  ],
+  "capabilities": [
+    "flow",
+    "query"
+  ],
+  "capabilities_derived": [
+    "flow"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:46",
+    "batch": 14,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "absent": true,
+        "reason": "零负载命令：无字段 ⇒ 无容量/闭合点/去向"
+      },
+      "field_window": {
+        "start_va": "0xB884D5",
+        "end_va": "0xB88518",
+        "guard": {
+          "va": "0xB884D4",
+          "func": "0xB41120",
+          "module_id": 202,
+          "release_va": "0xB41110"
+        },
+        "closer_or_commit_va": "0xB884E5",
+        "within_model_block": true,
+        "range_from": "block"
+      },
+      "primitive_widths": {
+        "direction": "SC",
+        "expected": [],
+        "actual": [],
+        "matched": 0,
+        "checkable": 0,
+        "pairs": [],
+        "gaps": [],
+        "unmatched_actual": [],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB884D5",
+          "0xB88518"
+        ],
+        "scalar_match_verifiable": true,
+        "capacity_relation": {
+          "observed_min": 0,
+          "capacity": null,
+          "relation": null,
+          "unknown_events": [],
+          "is_lower_bound": false,
+          "note": "观测线长（下界）0 / 容量 ?"
+        },
+        "zero_load": true
+      },
+      "closer": {
+        "va": "0xB884E5",
+        "kind": "jz",
+        "jcc_va": "0xB884EB",
+        "seq_va": "0xB884E1",
+        "jcc_dst": "0xB88513",
+        "cmp": "cmp     ebx, [esp+2C5Ch+var_2C40]",
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x234]",
+        "slot_value": 564,
+        "va": "0xB885C7",
+        "mov_va": "0xB885BF",
+        "host": "[edx+234h]",
+        "argc": 0,
+        "form": "mov_then_call",
+        "error_slot": {
+          "slot": "vt[0x64]",
+          "va": "0xB884F9",
+          "argc": 2
+        }
+      },
+      "log_strings": [
+        ")->_proto_lounge_client::recv_msma_init_get_r_end( ",
+        " (id:",
+        "V",
+        "]byte",
+        " ) ["
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/SC-0xFCE6-lounge-msma_init_get_r_end.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0xb8853a",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": []
+  },
+  "structs": {
+    "response": {
+      "go_name": "MsmaInitGetREnd",
+      "role": "response",
+      "wire_length": "0",
+      "members": []
+    }
+  },
+  "wire_fingerprint": "1cd880b313b9504f",
+  "check_fingerprint": "d2d0eb51d523f1cb"
+}

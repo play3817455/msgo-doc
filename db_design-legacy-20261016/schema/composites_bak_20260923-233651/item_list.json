@@ -1,0 +1,259 @@
+{
+  "id": "item_list",
+  "title": "商店商品 item_list（23B 线 / 24B 槽 · shop_lineup）",
+  "length": 23,
+  "status": "complete",
+  "reader": "sub_B458A0",
+  "printer": "sub_B4E110",
+  "memory_claim": 24,
+  "wire_layout": "5×4+1+2",
+  "evidence": {
+    "commands": [
+      "SC-0x99A0-lounge-shop_lineup_r",
+      "SC-0xAB7B-lounge-shop_lineup_notify",
+      "SC-0xEA0F-lounge-shop_lineup_one_r"
+    ],
+    "protocol_paths": [
+      "protocol_analysis/commands/SC-0x99A0-lounge-shop_lineup_r/README.md",
+      "protocol_analysis/commands/SC-0xAB7B-lounge-shop_lineup_notify/README.md"
+    ],
+    "note": "shop_lineup 数组元素；9193 result_item_fullopen 为另一 wire_form（8B/20B，sub_B45350），勿交叉套用",
+    "other_wire_forms": [
+      {
+        "name": "result_fullopen",
+        "length": 8,
+        "memory_claim": 20,
+        "reader": "sub_B45350",
+        "printer": "sub_B4D6E0",
+        "command": "SC-0x9193-lounge-result_item_fullopen_r",
+        "protocol_path": "protocol_analysis/commands/SC-0x9193-lounge-result_item_fullopen_r/README.md",
+        "members": "id_type(u8) + itemid(u32) + is_itmbox(u8) + amount(u16)"
+      }
+    ]
+  },
+  "members": [
+    {
+      "name": "shopitem_id",
+      "offset": 0,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "商店商品 ID",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x99A0-lounge-shop_lineup_r",
+          "struct": "item_list",
+          "field_name": "shopitem_id",
+          "offset": 0,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x99A0-lounge-shop_lineup_r/README.md",
+          "section": "§4.3",
+          "reader": "sub_B458A0",
+          "printer": "sub_B4E110",
+          "evidence_va": "0xb458b8"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xb458b8",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 0
+    },
+    {
+      "name": "gp_x01",
+      "offset": 4,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "GP 单价（×1）",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x99A0-lounge-shop_lineup_r",
+          "struct": "item_list",
+          "field_name": "gp_x01",
+          "offset": 4,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x99A0-lounge-shop_lineup_r/README.md",
+          "section": "§4.3",
+          "reader": "sub_B458A0",
+          "printer": "sub_B4E110",
+          "evidence_va": "0xb458ca"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xb458ca",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 4
+    },
+    {
+      "name": "gp_x10",
+      "offset": 8,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "GP 单价（×10）",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x99A0-lounge-shop_lineup_r",
+          "struct": "item_list",
+          "field_name": "gp_x10",
+          "offset": 8,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x99A0-lounge-shop_lineup_r/README.md",
+          "section": "§4.3",
+          "reader": "sub_B458A0",
+          "printer": "sub_B4E110",
+          "evidence_va": "0xb458dc"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xb458dc",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 8
+    },
+    {
+      "name": "cp_x01",
+      "offset": 12,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "CP 单价（×1）",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x99A0-lounge-shop_lineup_r",
+          "struct": "item_list",
+          "field_name": "cp_x01",
+          "offset": 12,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x99A0-lounge-shop_lineup_r/README.md",
+          "section": "§4.3",
+          "reader": "sub_B458A0",
+          "printer": "sub_B4E110",
+          "evidence_va": "0xb458f2"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xb458f2",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 12
+    },
+    {
+      "name": "cp_x10",
+      "offset": 16,
+      "length": 4,
+      "wire_type": "u32",
+      "meaning": "CP 单价（×10）",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x99A0-lounge-shop_lineup_r",
+          "struct": "item_list",
+          "field_name": "cp_x10",
+          "offset": 16,
+          "length": 4,
+          "wire_type": "u32",
+          "protocol_path": "protocol_analysis/commands/SC-0x99A0-lounge-shop_lineup_r/README.md",
+          "section": "§4.3",
+          "reader": "sub_B458A0",
+          "printer": "sub_B4E110",
+          "evidence_va": "0xb458f6"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xb458f6",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 16
+    },
+    {
+      "name": "bit_eff",
+      "offset": 20,
+      "length": 1,
+      "wire_type": "u8",
+      "meaning": "位效果标志",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x99A0-lounge-shop_lineup_r",
+          "struct": "item_list",
+          "field_name": "bit_eff",
+          "offset": 20,
+          "length": 1,
+          "wire_type": "u8",
+          "protocol_path": "protocol_analysis/commands/SC-0x99A0-lounge-shop_lineup_r/README.md",
+          "section": "§4.3",
+          "reader": "sub_B458A0",
+          "printer": "sub_B4E110",
+          "evidence_va": "0xb45907"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xb45907",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 20
+    },
+    {
+      "name": "stock",
+      "offset": 21,
+      "length": 2,
+      "wire_type": "u16",
+      "meaning": "库存",
+      "disposition": "PERSIST",
+      "wire_sources": [
+        {
+          "command": "SC-0x99A0-lounge-shop_lineup_r",
+          "struct": "item_list",
+          "field_name": "stock",
+          "offset": 21,
+          "length": 2,
+          "wire_type": "u16",
+          "protocol_path": "protocol_analysis/commands/SC-0x99A0-lounge-shop_lineup_r/README.md",
+          "section": "§4.3",
+          "reader": "sub_B458A0",
+          "printer": "sub_B4E110",
+          "notes": "槽内 offset 21 对齐填充",
+          "evidence_va": "0xb45921"
+        }
+      ],
+      "asm_verified": true,
+      "asm_evidence_va": "0xb45921",
+      "asm_audit_date": "2026-09-20",
+      "memory_offset": 22
+    }
+  ],
+  "asm_audit": {
+    "verified": "2026-09-20",
+    "reader": "sub_B458A0",
+    "writer": null,
+    "total_bytes": 23,
+    "fields_ok": 7,
+    "fields_fail": 0,
+    "issues": [],
+    "status": "pass",
+    "memory": {
+      "verified": "2026-09-20",
+      "status": "pass",
+      "mem_fields": 1,
+      "fields_ok": 1,
+      "fields_fail": 0,
+      "issues": []
+    }
+  },
+  "wire_memory_remediated": "2026-09-20",
+  "oracle_audit": {
+    "date": "2026-09-23",
+    "tool": "emulab/oracle_fix.py",
+    "verdict_before": "GAP",
+    "verdict_after": "PASS",
+    "changes": [
+      "shopitem_id: memory_offset None -> 0",
+      "gp_x01: memory_offset None -> 4",
+      "gp_x10: memory_offset None -> 8",
+      "cp_x01: memory_offset None -> 12",
+      "cp_x10: memory_offset None -> 16",
+      "bit_eff: memory_offset None -> 20"
+    ]
+  }
+}

@@ -1,0 +1,384 @@
+{
+  "id": "CS-0x0038-lounge-clan_leave",
+  "opcode": "0x0038",
+  "direction": "CS",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "clan_leave",
+  "source_dir": "protocol_analysis/commands/CS-0x0038-lounge-clan_leave",
+  "meta": {
+    "opcode": "`0x0038`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`clan_leave`",
+    "名字符串": "`)<-_proto_lounge_client::send_clan_leave( ` @ `0xeec7c0`",
+    "代码位置": "sub_B9FAD0 @ `0xb9fad0`（`0xb9fad0`..`0xb9fd0e`）",
+    "opcode 写入/分发证据": "`0xb9fb4c`（opcode 写入指令）",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0xE`（14）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽 @`0x00B9FC9A`）；`call vt[0x58](buf, 负载长度)`",
+    "配对命令（同 opcode 反向）": "（本批次内无同 opcode 反向命令）"
+  },
+  "handler": "sub_B9FAD0",
+  "handler_va": "0xb9fad0",
+  "block": [
+    "0xB9FAD0",
+    "0xB9FD0E"
+  ],
+  "name_str": ")<-_proto_lounge_client::send_clan_leave(",
+  "name_str_va": "0xeec7c0",
+  "capacity": "0xE",
+  "capacity_va": null,
+  "closer_va": "0xB9FBEB",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽 @`0x00B9FC9A`）；`call vt[0x58](buf, 负载长度)`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": "0x00B9FC9A",
+  "wire": {
+    "length_expr": "4 + 1 + 1",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0xE（容量记账口径，非线长）",
+    "field_count": 3,
+    "length_source": "field_sum",
+    "readme_conclusion": "结论：3 字段 + opcode：退出战队（含 GM 工具标记）。",
+    "readme_close": "负载 8B，容量 0xE=14 是上限（含边界检查 cmp …, [ebp+0Eh]）。"
+  },
+  "fields": [
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "clan_id",
+      "meaning": "战队 ID",
+      "purpose": "来源=入参 arg_0（`0xB9FB58 mov esi,[esp+arg_0]`），内联 `mov [ecx],esi`；服务端据此定位战队",
+      "enum": null,
+      "evidence_va": [
+        "0xB9FB5C"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 2,
+      "offset": "4",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "clan_kind",
+      "meaning": "战队类别（0=通常 等）",
+      "purpose": "来源=入参 arg_4（`0xB9FB69 mov al,[esp+arg_4]`），内联 `mov [edx],al`；服务端按类别走不同退队流程",
+      "enum": null,
+      "evidence_va": [
+        "0xB9FB75"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 3,
+      "offset": "5",
+      "length": "1",
+      "wire_type": "u8",
+      "name": "is_GMtool",
+      "meaning": "是否 GM 工具发起的退队",
+      "purpose": "来源=入参 arg_8（`0xB9FB78 lea edx,[esp+arg_8]`）经写 u8 原语 `sub_B061C0`；服务端据此跳过常规限制",
+      "enum": null,
+      "evidence_va": [
+        "0xB9FB7D"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0x0038（分发器 switch 选择子）",
+      "evidence_va": "0xB9FB4C"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0xE B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xB9FB16"
+    },
+    {
+      "step": 3,
+      "kind": "write_scalar",
+      "detail": "clan_id：`u32`（线长 4）—— 战队 ID",
+      "evidence_va": "0xB9FB5C"
+    },
+    {
+      "step": 4,
+      "kind": "write_scalar",
+      "detail": "clan_kind：`u8`（线长 1）—— 战队类别（0=通常 等）",
+      "evidence_va": "0xB9FB75"
+    },
+    {
+      "step": 5,
+      "kind": "write_scalar",
+      "detail": "is_GMtool：`u8`（线长 1）—— 是否 GM 工具发起的退队",
+      "evidence_va": "0xB9FB7D"
+    },
+    {
+      "step": 6,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xB9FBEB"
+    },
+    {
+      "step": 7,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xB9FCA5"
+    }
+  ],
+  "capabilities": [
+    "delete",
+    "lounge.clan"
+  ],
+  "capabilities_derived": [
+    "delete"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:42",
+    "batch": 4,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 14,
+        "va": "0xB9FB16",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB9FB13",
+        "call_va": "0xB9FB18"
+      },
+      "field_window": {
+        "start_va": "0xB9FAD0",
+        "end_va": "0xB9FBEB",
+        "guard": null,
+        "closer_or_commit_va": "0xB9FBEB",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "clan_id",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB9FB5C"
+            ]
+          },
+          {
+            "name": "clan_kind",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB9FB75"
+            ]
+          },
+          {
+            "name": "is_GMtool",
+            "wire_type": "u8",
+            "width": 1,
+            "seq": 3,
+            "shape": "scalar",
+            "evidence_va": [
+              "0xB9FB7D"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB9FB4C",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB9FB5C",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB9FB75",
+            "kind": "inline_store",
+            "width": 1,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB9FB7D",
+            "kind": "write",
+            "width": 1,
+            "wire_type": "u8",
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB9FBC1",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 3,
+        "checkable": 3,
+        "pairs": [
+          {
+            "field": "clan_id",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB9FB5C",
+            "kind": "inline_store"
+          },
+          {
+            "field": "clan_kind",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB9FB75",
+            "kind": "inline_store"
+          },
+          {
+            "field": "is_GMtool",
+            "width": 1,
+            "shape": "scalar",
+            "va": "0xB9FB7D",
+            "kind": "write"
+          }
+        ],
+        "gaps": [],
+        "unmatched_actual": [
+          {
+            "va": "0xB9FB4C",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB9FAD0",
+          "0xB9FBEB"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 8,
+          "capacity": 14,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB9FBC1",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）8 / 容量 0xe"
+        }
+      },
+      "closer": {
+        "va": "0xB9FBEB",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xB9FCA5",
+        "mov_va": "0xB9FC9A",
+        "host": "[eax+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "clan_id=",
+        "clan_kind=",
+        "is_GMtool="
+      ]
+    },
+    "mismatches": [],
+    "notes": [],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0x0038-lounge-clan_leave.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0xb9fb4c",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": []
+  },
+  "structs": {
+    "request": {
+      "go_name": "ClanLeave",
+      "role": "request",
+      "wire_length": "4 + 1 + 1",
+      "members": [
+        {
+          "name": "ClanId",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "clan_id"
+        },
+        {
+          "name": "ClanKind",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "clan_kind"
+        },
+        {
+          "name": "IsGMtool",
+          "wire_type": "u8",
+          "length": "1",
+          "field_ref": "is_GMtool"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "f603256f80521a1d",
+  "check_fingerprint": "34eb2e44251f95cc"
+}

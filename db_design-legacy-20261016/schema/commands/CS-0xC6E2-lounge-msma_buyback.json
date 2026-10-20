@@ -1,0 +1,359 @@
+{
+  "id": "CS-0xC6E2-lounge-msma_buyback",
+  "opcode": "0xC6E2",
+  "direction": "CS",
+  "proto": "lounge",
+  "proto_class": "lounge_client",
+  "name": "msma_buyback",
+  "source_dir": "protocol_analysis/commands/CS-0xC6E2-lounge-msma_buyback",
+  "meta": {
+    "opcode": "`0xC6E2`",
+    "方向": "CS（客户端 → 服务端）",
+    "协议类": "`lounge_client`",
+    "命令名": "`msma_buyback`",
+    "名字符串": "`)<-_proto_lounge_client::send_msma_buyback(` @ `0xEEBDFC`",
+    "代码位置": "`0xB99A20`（`0xB99A20`..`0xB99C12`）",
+    "opcode 写入证据": "`0xB99A94`",
+    "处理块范围": "`-` .. `-`（C→S 无 case 块）",
+    "声明容量": "`0x000E`（14）",
+    "容量申请证据": "`0xB99A66`（分配器 `[obj+0Ch]` 的 `vt[0x78]`）",
+    "发送去向": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)` @ `0xB99BA0`",
+    "提交": "`sub_B02FF0` @ `0xB99B18`",
+    "配对命令": "S→C `0xEEFE-lounge-msma_buyback_r`（已 DONE）"
+  },
+  "handler": null,
+  "handler_va": "0xB99A20",
+  "block": [
+    "0xB99A20",
+    "0xB99C12"
+  ],
+  "name_str": ")<-_proto_lounge_client::send_msma_buyback(",
+  "name_str_va": "0xEEBDFC",
+  "capacity": "0xE",
+  "capacity_va": "0xB99A66",
+  "closer_va": "0xB99B18",
+  "dispatch": "`vt[0x58]`（客户端对象虚表槽）；`call vt[0x58](buf, 负载长度)` @ `0xB99BA0`",
+  "dispatch_slot": "vt[0x58]",
+  "dispatch_va": "0xB99BA0",
+  "wire": {
+    "length_expr": "8 + 4",
+    "fixed": true,
+    "var_drivers": [],
+    "capacity_note": "声明容量 0xE（容量记账口径，非线长）",
+    "field_count": 2,
+    "length_source": "field_sum",
+    "readme_conclusion": "字段数：**3**（含 opcode 第 0 项）",
+    "readme_close": "2+8+4 = 14 **== 容量 0xE = 14**（精确相等）。"
+  },
+  "fields": [
+    {
+      "seq": 0,
+      "offset": "0",
+      "length": "2",
+      "wire_type": "u16",
+      "name": "opcode",
+      "meaning": "命令号",
+      "purpose": "写入 `buf+0`，供服务端分发；无 case 块（C→S）",
+      "enum": "0xC6E2",
+      "evidence_va": [
+        "`0xB99A94`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 2
+    },
+    {
+      "seq": 1,
+      "offset": "0",
+      "length": "8",
+      "wire_type": "u64",
+      "name": "uniqid_ms",
+      "meaning": "机体唯一ID（u64）",
+      "purpose": "来源=入参 `arg_0/4`（低 32 位在前、高 32 位在后两次内联 `mov`）→ `vt[0x58](buf,len)` 发送至服务端",
+      "enum": null,
+      "evidence_va": [
+        "`0xB99AA4;0xB99AAF`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 3
+    },
+    {
+      "seq": 2,
+      "offset": "8",
+      "length": "4",
+      "wire_type": "u32",
+      "name": "price",
+      "meaning": "买回价格",
+      "purpose": "来源=入参 `arg_8`（写线指令见证据列）→ `vt[0x58](buf,len)` 发送至服务端",
+      "enum": null,
+      "evidence_va": [
+        "`0xB99ABC`"
+      ],
+      "confidence": "确证",
+      "disposition": "TBD",
+      "entity_ref": null,
+      "csv_line": 4
+    }
+  ],
+  "behavior": [
+    {
+      "step": 1,
+      "kind": "write_scalar",
+      "detail": "opcode 0xC6E2（分发器 switch 选择子）",
+      "evidence_va": "0xB99A94"
+    },
+    {
+      "step": 2,
+      "kind": "alloc",
+      "detail": "分配发送缓冲 0xE B（`[X+78h]` 分配器 + `push IMM`）",
+      "evidence_va": "0xB99A66"
+    },
+    {
+      "step": 3,
+      "kind": "write_scalar",
+      "detail": "uniqid_ms：`u64`（线长 8）—— 机体唯一ID（u64）",
+      "evidence_va": "0xB99AA4"
+    },
+    {
+      "step": 4,
+      "kind": "write_scalar",
+      "detail": "price：`u32`（线长 4）—— 买回价格",
+      "evidence_va": "0xB99ABC"
+    },
+    {
+      "step": 5,
+      "kind": "commit",
+      "detail": "提交/发送 `sub_B02FF0(buf)`：定长报文提交点",
+      "evidence_va": "0xB99B18"
+    },
+    {
+      "step": 6,
+      "kind": "send",
+      "detail": "去向 `vt[0x58](buf, 负载长度)`，实参 2 个",
+      "evidence_va": "0xB99BA9"
+    }
+  ],
+  "capabilities": [
+    "create"
+  ],
+  "capabilities_derived": [
+    "create"
+  ],
+  "db_effects": [],
+  "pair": null,
+  "related": [],
+  "asm_verification": {
+    "status": "BEHAVIOR-DONE",
+    "verified_at": "2026-09-30 15:25:45",
+    "batch": 11,
+    "extractor": "tools/verify_commands_ida.py",
+    "checks": {
+      "capacity": {
+        "value": 14,
+        "va": "0xB99A66",
+        "reg": "edx",
+        "host": "[eax+78h]",
+        "alloc_va": "0xB99A63",
+        "call_va": "0xB99A68"
+      },
+      "field_window": {
+        "start_va": "0xB99A20",
+        "end_va": "0xB99B18",
+        "guard": null,
+        "closer_or_commit_va": "0xB99B18",
+        "within_model_block": true,
+        "range_from": "handler_func"
+      },
+      "primitive_widths": {
+        "direction": "CS",
+        "expected": [
+          {
+            "name": "uniqid_ms",
+            "wire_type": "u64",
+            "width": 8,
+            "seq": 1,
+            "shape": "scalar",
+            "evidence_va": [
+              "`0xB99AA4;0xB99AAF`"
+            ]
+          },
+          {
+            "name": "price",
+            "wire_type": "u32",
+            "width": 4,
+            "seq": 2,
+            "shape": "scalar",
+            "evidence_va": [
+              "`0xB99ABC`"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "va": "0xB99A94",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB99AA4",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB99ABC",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null,
+            "name": "",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          },
+          {
+            "va": "0xB99AEE",
+            "kind": "composite",
+            "width": null,
+            "wire_type": null,
+            "name": "sub_B03020",
+            "consumed": null,
+            "consumed_effective": null,
+            "nested_of": null
+          }
+        ],
+        "matched": 1,
+        "checkable": 2,
+        "pairs": [
+          {
+            "field": "price",
+            "width": 4,
+            "shape": "scalar",
+            "va": "0xB99AA4",
+            "kind": "inline_store"
+          }
+        ],
+        "gaps": [
+          {
+            "field": "uniqid_ms",
+            "wire_type": "u64",
+            "width": 8,
+            "shape": "scalar",
+            "note": "汇编事件序列里找不到与之对位的读写点（缺字段或宽度不符）"
+          }
+        ],
+        "unmatched_actual": [
+          {
+            "va": "0xB99A94",
+            "kind": "inline_store",
+            "width": 2,
+            "wire_type": null
+          },
+          {
+            "va": "0xB99ABC",
+            "kind": "inline_store",
+            "width": 4,
+            "wire_type": null
+          }
+        ],
+        "nested_unmatchable": [],
+        "window": [
+          "0xB99A20",
+          "0xB99B18"
+        ],
+        "scalar_match_verifiable": false,
+        "capacity_relation": {
+          "observed_min": 10,
+          "capacity": 14,
+          "relation": "within",
+          "unknown_events": [
+            {
+              "va": "0xB99AEE",
+              "kind": "composite",
+              "name": "sub_B03020"
+            }
+          ],
+          "is_lower_bound": true,
+          "note": "观测线长（下界）10 / 容量 0xe"
+        }
+      },
+      "closer": {
+        "va": "0xB99B18",
+        "kind": "commit",
+        "jcc_va": null,
+        "seq_va": null,
+        "cmp": null,
+        "va_convention": "cmp"
+      },
+      "dispatch_slot": {
+        "slot": "vt[0x58]",
+        "slot_value": 88,
+        "va": "0xB99BA9",
+        "mov_va": "0xB99BA0",
+        "host": "[eax+58h]",
+        "argc": 2,
+        "form": "mov_then_call",
+        "error_slot": null
+      },
+      "log_strings": [
+        "uniqid_ms=",
+        "price="
+      ]
+    },
+    "mismatches": [],
+    "notes": [
+      {
+        "check": "primitive_widths",
+        "note": "定宽对位不可判定：C→S 写线在复合写入器内部 consumed 未知；缺口 uniqid_ms"
+      }
+    ],
+    "resolved_by_apply": [],
+    "evidence_file": "commands/_verify/CS-0xC6E2-lounge-msma_buyback.json",
+    "previous": null,
+    "filled": []
+  },
+  "extra": {
+    "opcode_write_va": "0xB99A94",
+    "notify_va": null,
+    "error_vas": [],
+    "dispatcher": null,
+    "closure_field": null,
+    "opcode_field_va": [
+      "`0xB99A94`"
+    ]
+  },
+  "structs": {
+    "request": {
+      "go_name": "MsmaBuyback",
+      "role": "request",
+      "wire_length": "8 + 4",
+      "members": [
+        {
+          "name": "UniqidMs",
+          "wire_type": "u64",
+          "length": "8",
+          "field_ref": "uniqid_ms"
+        },
+        {
+          "name": "Price",
+          "wire_type": "u32",
+          "length": "4",
+          "field_ref": "price"
+        }
+      ]
+    }
+  },
+  "wire_fingerprint": "92472456865cac85",
+  "check_fingerprint": "a4d0c4934b28eb49"
+}

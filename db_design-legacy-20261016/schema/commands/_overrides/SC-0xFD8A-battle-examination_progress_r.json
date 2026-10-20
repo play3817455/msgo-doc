@@ -1,0 +1,30 @@
+{
+  "id": "SC-0xFD8A-battle-examination_progress_r",
+  "revision": 1,
+  "verified_at": "2026-09-22",
+  "verifier": "人工（IDA 汇编整函数扫描：元素读取器 + 元素打印器 + 数组预留步进三方对齐）",
+  "reason": "`array<4×u32,5>` 是记法问题：元素名被写成「4×u32」而不是结构名。读取器 sub_B06BA0（4 次 u32 直读，16B）与预留 0x10/槽、`cmp edi,5` 循环 5 次三方一致，元素已在 schema/composites/examination_info_entry.json 建模。",
+  "evidence": [
+    {
+      "what": "元素读取器/打印器与预留步进三方对齐（见 schema/composites 对应文件）",
+      "va": [
+        "0xB06BA0",
+        "0xB30CA9",
+        "0xB30CBA"
+      ],
+      "detail": "本批共 26 行未建模数组字段，逐条进 IDA 扫描元素读取器整函数取线宽，再与元素打印器成员名/内存偏移、数组预留器槽步进交叉验证。"
+    }
+  ],
+  "patch": {
+    "examination_info": {
+      "wire_type": "array<examination_info_entry,5>",
+      "length": "80",
+      "enum": "元素线长 16（4×u32）/ 槽 16，固定 5 元",
+      "evidence_va": [
+        "0xB30CA9",
+        "0xB30CBA",
+        "0xB06BA0"
+      ]
+    }
+  }
+}

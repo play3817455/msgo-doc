@@ -1,0 +1,209 @@
+{
+ "id": "SC-0x0E85-battle-commander_list_get_r",
+ "verified_at": "2026-09-30 15:25:46",
+ "extractor": "tools/verify_commands_ida.py",
+ "ida_script": "db_design/tools/ida_verify_batch.py",
+ "range_from": "block",
+ "block": [
+  "0xB0EC1F",
+  "0xB0EF02"
+ ],
+ "block_truncated": false,
+ "checks": {
+  "capacity": {
+   "value": 24,
+   "va": "0xB0EC3B",
+   "reg": "edx",
+   "host": "[eax+78h]",
+   "alloc_va": "0xB0EC38",
+   "call_va": "0xB0EC3D"
+  },
+  "field_window": {
+   "start_va": "0xB0EC27",
+   "end_va": "0xB0ED55",
+   "guard": {
+    "va": "0xB0EC26",
+    "func": "0xB05DA0",
+    "module_id": 210,
+    "release_va": "0xB05D90"
+   },
+   "closer_or_commit_va": "0xB0ED2E",
+   "within_model_block": true,
+   "range_from": "block"
+  },
+  "primitive_widths": {
+   "direction": "SC",
+   "expected": [
+    {
+     "name": "result",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 1,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB0EC76",
+      "0xB0EC67",
+      "0xB02DE9",
+      "0xB0EDCD",
+      "0xB0EE9E"
+     ]
+    },
+    {
+     "name": "count",
+     "wire_type": "u32",
+     "width": 4,
+     "seq": 2,
+     "shape": "scalar",
+     "evidence_va": [
+      "0xB0ECA8",
+      "0xB0ECD4",
+      "0xB0ECD7",
+      "0xB0EE9A"
+     ]
+    },
+    {
+     "name": "commander_id",
+     "wire_type": "array<u32,N>",
+     "width": null,
+     "seq": 3,
+     "shape": "agg",
+     "evidence_va": [
+      "0xB0ECE3",
+      "0xB0ED00",
+      "0xB0ED0C"
+     ]
+    }
+   ],
+   "actual": [
+    {
+     "va": "0xB0EC76",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB0ECA8",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB0ECE3",
+     "kind": "bounded",
+     "width": 4,
+     "wire_type": null,
+     "name": "sub_B41850",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    },
+    {
+     "va": "0xB0ED00",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32",
+     "name": "",
+     "consumed": null,
+     "consumed_effective": null,
+     "nested_of": null
+    }
+   ],
+   "matched": 2,
+   "checkable": 2,
+   "pairs": [
+    {
+     "field": "result",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB0EC76",
+     "kind": "read"
+    },
+    {
+     "field": "count",
+     "width": 4,
+     "shape": "scalar",
+     "va": "0xB0ECA8",
+     "kind": "read"
+    }
+   ],
+   "gaps": [],
+   "unmatched_actual": [
+    {
+     "va": "0xB0ECE3",
+     "kind": "bounded",
+     "width": 4,
+     "wire_type": null
+    },
+    {
+     "va": "0xB0ED00",
+     "kind": "read",
+     "width": 4,
+     "wire_type": "u32"
+    }
+   ],
+   "nested_unmatchable": [],
+   "window": [
+    "0xB0EC27",
+    "0xB0ED55"
+   ],
+   "scalar_match_verifiable": true,
+   "capacity_relation": {
+    "observed_min": 12,
+    "capacity": 24,
+    "relation": "within",
+    "unknown_events": [
+     {
+      "va": "0xB0ECE3",
+      "kind": "bounded",
+      "name": "sub_B41850"
+     }
+    ],
+    "is_lower_bound": true,
+    "note": "观测线长（下界）12 / 容量 0x18"
+   }
+  },
+  "closer": {
+   "va": "0xB0ED2E",
+   "kind": "jz",
+   "jcc_va": "0xB0ED34",
+   "seq_va": "0xB0ED2A",
+   "jcc_dst": "0xB0ED50",
+   "cmp": "cmp     ecx, [esp+1B3Ch+var_1B24]",
+   "va_convention": "cmp"
+  },
+  "dispatch_slot": {
+   "slot": "vt[0x290]",
+   "slot_value": 656,
+   "va": "0xB0EEA1",
+   "mov_va": "0xB0EE94",
+   "host": "[edx+290h]",
+   "argc": 3,
+   "form": "mov_then_call",
+   "error_slot": {
+    "slot": "vt[0x64]",
+    "va": "0xB0EC90",
+    "argc": 2
+   }
+  },
+  "log_strings": [
+   "result=",
+   "commander_id={"
+  ]
+ },
+ "mismatches": [],
+ "notes": [],
+ "log_name_hits": [
+  "commander_id",
+  "result"
+ ],
+ "status": "ASM-VERIFIED",
+ "batch": 15
+}

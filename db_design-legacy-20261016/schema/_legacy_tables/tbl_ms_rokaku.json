@@ -1,0 +1,129 @@
+{
+  "id": "tbl_ms_rokaku",
+  "title": "机体仓库记录（ms_rokaku 401B / ms_lounge 303B 两种线形）",
+  "status": "complete",
+  "table_disposition": "PERSIST",
+  "purpose": "一名机师的全部机体记录，逐机体一行（`uniqid` 行键）——机体仓库/编成/强化的真源。401B 线含 `weapons[3]`（子表）与络格限制；303B 线是它的前缀线形（无 weapons/limit_*）。",
+  "entity_ref": "ms_rokaku",
+  "row_key": {
+    "columns": [
+      "uniqid"
+    ],
+    "reason": "机体是**逐台**持有的：36 条 CS 命令（`msma_color_change` / `msma_equip_weapon_change` / `msma_weapon_buildup` / `msma_overhaul` / `msma_breakup` / `msma_buyback` / `msma_is_favorite_update` …）都带 `uniqid(u64)` 作为第一字段，再跟一个要改的字段（CS-0x60FC = `uniqid`+`color`，CS-0x4CCB = `uniqid`+`is_favorite`，CS-0x0AA5 = `uniqid`+`eq_slot`+`item_id`）⇒ 一行 = 一台机体。若不声明，表会按 (world_id, pilot_id) 建唯一索引，一名机师的第二台机体就会把第一台 upsert 掉（与 ms_set/equip_set/buildup_info 同一类静默覆盖，见 docs/01「成员行键」）。",
+    "evidence_va": "0xB954E4|0xB94CE4|0xB9343C",
+    "verified": "2026-09-21"
+  },
+  "wire_forms": [
+    {
+      "name": "ms_rokaku",
+      "length": 401,
+      "commands": [
+        "SC-0x48A4-lounge-clan_rokaku_add_ms"
+      ],
+      "protocol_path": "protocol_analysis/commands/SC-0x48A4-lounge-clan_rokaku_add_ms/README.md",
+      "reader": "sub_B43A80",
+      "printer": "sub_B4A6D0"
+    },
+    {
+      "name": "ms_lounge",
+      "length": 303,
+      "prefix_of": "ms_rokaku",
+      "commands": [
+        "SC-0xA832-lounge-msma_add",
+        "SC-0xFE46-lounge-msma_get_buyback_list_r"
+      ],
+      "protocol_path": "protocol_analysis/commands/SC-0xA832-lounge-msma_add/README.md",
+      "reader": "sub_B43570",
+      "printer": "sub_B49DE0",
+      "note": "前 303B 逐字节等于 ms_rokaku 的前 303B（缺 weapons[3] 与 limit_use/limit_coolup）⇒ 同一实体的轻量线形，不是第二张表。两形都由本表一行供数据，按命令用哪个线形就填哪个。"
+    }
+  ],
+  "child_tables": [
+    {
+      "column": "weapons",
+      "table": "game.ms_rokaku__weapons",
+      "element_ref": "unlockw",
+      "count": 3,
+      "reason": "`weapons[3]` 每项 30B（元素复合体 unlockw），是逐台机体的 3 个武器槽状态 ⇒ 子表 3 行；行键继承父行（world_id, pilot_id, uniqid + elem_index），否则两台机体的武器会互相覆盖。"
+    }
+  ],
+  "evidence_commands": [
+    "SC-0x48A4-lounge-clan_rokaku_add_ms",
+    "SC-0xA832-lounge-msma_add",
+    "SC-0xFE46-lounge-msma_get_buyback_list_r",
+    "CS-0x4CCB-lounge-msma_is_favorite_update",
+    "CS-0x60FC-lounge-msma_color_change",
+    "SC-0xA003-lounge-msma_color_change_r",
+    "CS-0x72F1-lounge-msma_decal_change",
+    "SC-0x69C9-lounge-msma_decal_change_r",
+    "CS-0xDF37-lounge-msma_weapon_buildup_extra_cnt_update",
+    "SC-0x5B3F-lounge-msma_weapon_buildup_extra_cnt_update_r",
+    "CS-0x0AA5-lounge-msma_equip_weapon_change",
+    "CS-0x9883-lounge-msma_buildup",
+    "CS-0xCEF4-lounge-msma_overhaul",
+    "CS-0xDADA-lounge-msma_breakup"
+  ],
+  "column_groups": [
+    {
+      "name": "ms_rokaku（401B 线 · 39 成员）",
+      "columns": [
+        "ms_rokaku"
+      ]
+    }
+  ],
+  "columns": [
+    {
+      "name": "ms_rokaku",
+      "disposition": "COMPOSITE",
+      "composite_ref": "ms_rokaku",
+      "meaning": "机体仓库记录（日志串 `ms=`；claim 416B / 线长 401B；303B 前缀形见 ms_lounge）",
+      "wire_sources": [
+        {
+          "command": "SC-0x48A4-lounge-clan_rokaku_add_ms",
+          "struct": "ms_rokaku",
+          "field_name": "ms_rokaku",
+          "offset": 0,
+          "length": 401,
+          "wire_type": "struct",
+          "protocol_path": "protocol_analysis/commands/SC-0x48A4-lounge-clan_rokaku_add_ms/README.md",
+          "section": "§3",
+          "reader": "sub_B43A80",
+          "printer": "sub_B4A6D0",
+          "evidence_va": "0xB43A80",
+          "notes": "S→C；元素线长 401 = 303B lounge 形 + weapons[3]×30B + 2×u32"
+        },
+        {
+          "command": "SC-0xA832-lounge-msma_add",
+          "struct": "ms_lounge",
+          "field_name": "ms_lounge",
+          "offset": 0,
+          "length": 303,
+          "wire_type": "struct",
+          "protocol_path": "protocol_analysis/commands/SC-0xA832-lounge-msma_add/README.md",
+          "section": "§3",
+          "reader": "sub_B43570",
+          "printer": "sub_B49DE0",
+          "evidence_va": "0xB43570",
+          "notes": "S→C；轻量线形（本复合体的前 303B），weapons/limit_* 不在此形内"
+        }
+      ],
+      "asm_verified": true,
+      "children": [
+        {
+          "column": "weapons",
+          "table": "game.ms_rokaku__weapons",
+          "composite_ref": "unlockw",
+          "count": 3,
+          "elem_size": 30
+        }
+      ]
+    }
+  ],
+  "asm_audit": {
+    "composite_ref": "ms_rokaku",
+    "status": "pass",
+    "issues_count": 0,
+    "memory_status": "pass",
+    "memory_issues_count": 0
+  }
+}

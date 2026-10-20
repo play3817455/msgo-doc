@@ -1,0 +1,9 @@
+序号,偏移,长度,线类型,字段名,含义,用途,取值或枚举,证据VA,置信度
+0,-,2,u16,opcode,命令号,分发器 switch 选择子,0x1E0F,0xB120A0,确证
+1,0,2,u16,ent_id,语音实体 ID,经 `vt[0x18C]`；日志 `ent_id=`,-,0xB11F59|0xB120F7,确证
+2,2,4,u32,voice_id,预置语音 ID,经 `vt[0x18C]`；日志 `voice_id=`,-,0xB11F96|0xB12121,确证
+3,6,1,u8,voice_volume,语音音量,经 `vt[0x18C]`；日志 `voice_volume=`,-,0xB11FBA|0xB12149,确证
+4,7,1,u8,is_cutin,是否过场插播,经 `vt[0x18C]`；日志 `is_cutin=`,-,0xB11FDE|0xB12173,确证
+5,8,1,u8,is_party,是否队伍相关,经 `vt[0x18C]`；日志 `is_party=`,-,0xB12006|0xB1219D,确证
+6,9,1,u8,is_use_textmsg,是否用文本消息替代语音,经 `vt[0x18C]`；日志 `is_use_textmsg=`,-,0xB1202E|0xB121C7,确证
+7,10,L+1,str,textmsg,文本消息（NUL 结尾；槽预算 181）,经 `vt[0x18C]`；日志 `textmsg="…"`,槽 181（`push 0B5h`）,0xB1204D(sub_B02BA0)|0xB11F0F 区(push 0B5h),确证
